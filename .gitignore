@@ -7,3 +7,5 @@ __pycache__/
 .gnd-install.json
 .claude/skills/.gnd-install.json
 .codex/skills/.gnd-install.json
+dist/
+.ruff_cache/

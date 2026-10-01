@@ -1,0 +1,489 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gnd:witness:1",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "kind": {
+      "const": "derivation-witness"
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "model_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "candidate_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "raw_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "raw_sha256"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "model_digest",
+        "candidate_digest",
+        "references"
+      ],
+      "additionalProperties": false
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/result"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/base"
+          },
+          {
+            "$ref": "#/$defs/rule"
+          },
+          {
+            "$ref": "#/$defs/comparison"
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "version",
+    "kind",
+    "binding",
+    "results",
+    "nodes"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "scalar": {
+      "type": "object",
+      "properties": {
+        "primitive": {
+          "enum": [
+            "String",
+            "Boolean",
+            "Integer",
+            "Number",
+            "Date",
+            "Float",
+            "DateTime"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "boolean",
+            "integer",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "primitive",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "fact_type": {
+          "type": "string"
+        },
+        "tuple": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scalar"
+          }
+        }
+      },
+      "required": [
+        "fact_type",
+        "tuple"
+      ],
+      "additionalProperties": false
+    },
+    "base": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "base"
+        },
+        "fact_type": {
+          "type": "string"
+        },
+        "tuple": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "origin": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "candidate",
+                "reference"
+              ]
+            },
+            "reference_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "fact_index": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "kind",
+            "reference_id",
+            "fact_index"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "fact_type",
+        "tuple",
+        "origin"
+      ],
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "rule"
+        },
+        "fact_type": {
+          "type": "string"
+        },
+        "clause_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tuple": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "bindings": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "premises": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "fact_type",
+        "clause_index",
+        "tuple",
+        "bindings",
+        "premises"
+      ],
+      "additionalProperties": false
+    },
+    "comparison": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "comparison"
+        },
+        "rule_fact_type": {
+          "type": "string"
+        },
+        "clause_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "where_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bindings": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "premises": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "rule_fact_type",
+        "clause_index",
+        "where_index",
+        "bindings",
+        "premises"
+      ],
+      "additionalProperties": false
+    },
+    "result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "proved"
+            },
+            "reason": {
+              "const": null
+            },
+            "root": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "missing"
+            },
+            "reason": {
+              "const": "target-missing"
+            },
+            "root": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "unknown"
+            },
+            "reason": {
+              "const": "value-unknown"
+            },
+            "root": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "unsupported"
+            },
+            "reason": {
+              "const": "fragment-unsupported"
+            },
+            "root": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "invalid"
+            },
+            "reason": {
+              "const": "proof-invalid"
+            },
+            "root": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "input-refused"
+            },
+            "reason": {
+              "const": "input-invalid"
+            },
+            "root": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "target": {
+              "$ref": "#/$defs/target"
+            },
+            "status": {
+              "const": "resource-refused"
+            },
+            "reason": {
+              "const": "work-limit"
+            },
+            "root": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "request_index",
+            "target",
+            "status",
+            "reason",
+            "root"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update GND Review Panel"
+  short_description: "Update reviewer CLIs with OpenRouter Qwen"
+  default_prompt: "Use $gnd-update-review-panel to update every review harness, enforce Qwen through OpenRouter, and refresh the panel model profile."

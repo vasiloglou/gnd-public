@@ -1,0 +1,572 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/coverage.schema.json",
+  "title": "GND element coverage output",
+  "description": "The vendored-only output contract for the read-only element roadmap. It carries separate class censuses and raw source quotations; it is not an acceptance gate and has no aggregate across classes. Two versioned variants (v5.0 Phase 3, T3.6/R2): schema_version 1 is the frozen three-census shape every model without a structured derivation keeps byte-identically; schema_version 2 adds the required derivation census and the derivation element class exactly when the model declares a structured derivation rule. No optional-key middle ground: each variant's key set is closed and required.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tool",
+    "command",
+    "gnd_version",
+    "model",
+    "sources",
+    "census",
+    "elements",
+    "unmatched_covers",
+    "unstable_addresses",
+    "covers_exemptions"
+  ],
+  "properties": {
+    "schema_version": {
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "description": "Four closed variants on two axes. 1 and 2 are the frozen pair, separated by whether the element universe carries a derivation class; 3 and 4 are their successors, which additionally disclose every accepted check/verify source that never named the model it was produced from. The frozen pair FORBIDS `sources.unbound`, so an old census's silence can never be read as 'there were no gaps' (v5.1 Phase 3, D-P3.2)."
+    },
+    "tool": {
+      "const": "gnd"
+    },
+    "command": {
+      "const": "coverage"
+    },
+    "gnd_version": {
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/model"
+    },
+    "sources": {
+      "$ref": "#/$defs/sources"
+    },
+    "census": {
+      "type": "object"
+    },
+    "elements": {
+      "type": "array"
+    },
+    "unmatched_covers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unmatched"
+      }
+    },
+    "unstable_addresses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unstable"
+      }
+    },
+    "covers_exemptions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/exemption"
+      }
+    }
+  },
+  "$defs": {
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "string_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "refused": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "reason"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiments",
+        "check",
+        "verify",
+        "conformance",
+        "transition",
+        "refused"
+      ],
+      "properties": {
+        "experiments": {
+          "$ref": "#/$defs/string_paths"
+        },
+        "check": {
+          "$ref": "#/$defs/string_paths"
+        },
+        "verify": {
+          "$ref": "#/$defs/string_paths"
+        },
+        "conformance": {
+          "$ref": "#/$defs/string_paths"
+        },
+        "transition": {
+          "$ref": "#/$defs/string_paths"
+        },
+        "refused": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/refused"
+          }
+        },
+        "unbound": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/binding_gap"
+          }
+        }
+      }
+    },
+    "class_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "in_model",
+        "claimed",
+        "corroborated",
+        "unclaimed",
+        "unclaimed_with_evidence"
+      ],
+      "properties": {
+        "in_model": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claimed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "corroborated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unclaimed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unclaimed_with_evidence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment",
+        "path",
+        "conclusions"
+      ],
+      "properties": {
+        "experiment": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "conclusions": {
+          "enum": [
+            "conclusions-present",
+            "no-conclusions"
+          ]
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "path",
+        "quote"
+      ],
+      "properties": {
+        "source": {
+          "enum": [
+            "check",
+            "verify",
+            "conformance",
+            "transition"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "object"
+        }
+      }
+    },
+    "unmatched": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment",
+        "path",
+        "address",
+        "reason"
+      ],
+      "properties": {
+        "experiment": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "unstable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment",
+        "path",
+        "address",
+        "note"
+      ],
+      "properties": {
+        "experiment": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "exemption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment",
+        "path",
+        "exemption"
+      ],
+      "properties": {
+        "experiment": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "exemption": {
+          "const": "tests-only"
+        }
+      }
+    },
+    "census_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "fact_type",
+        "constraint"
+      ],
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/class_counts"
+        },
+        "fact_type": {
+          "$ref": "#/$defs/class_counts"
+        },
+        "constraint": {
+          "$ref": "#/$defs/class_counts"
+        }
+      }
+    },
+    "census_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "fact_type",
+        "constraint",
+        "derivation"
+      ],
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/class_counts"
+        },
+        "fact_type": {
+          "$ref": "#/$defs/class_counts"
+        },
+        "constraint": {
+          "$ref": "#/$defs/class_counts"
+        },
+        "derivation": {
+          "$ref": "#/$defs/class_counts"
+        }
+      }
+    },
+    "element_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address",
+        "class",
+        "addressing",
+        "status",
+        "claims",
+        "evidence"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "class": {
+          "enum": [
+            "operation",
+            "fact_type",
+            "constraint"
+          ]
+        },
+        "addressing": {
+          "enum": [
+            "declared-id",
+            "positional"
+          ]
+        },
+        "status": {
+          "enum": [
+            "corroborated",
+            "claimed",
+            "unclaimed"
+          ]
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "element_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address",
+        "class",
+        "addressing",
+        "status",
+        "claims",
+        "evidence"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "class": {
+          "enum": [
+            "operation",
+            "fact_type",
+            "constraint",
+            "derivation"
+          ]
+        },
+        "addressing": {
+          "enum": [
+            "declared-id",
+            "positional"
+          ]
+        },
+        "status": {
+          "enum": [
+            "corroborated",
+            "claimed",
+            "unclaimed"
+          ]
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "binding_gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "schema_version",
+        "reason"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "check",
+            "verify"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "schema_version": {
+          "enum": [
+            3,
+            4
+          ],
+          "description": "The frozen report version this source presented."
+        },
+        "reason": {
+          "const": "legacy-report-without-model-digest"
+        }
+      },
+      "description": "One accepted check or verify source that predates the model-bound report wire. It is still evidence and still contributes every row it always did; it simply never claimed a model. Rows are keyed by the full path the caller named and sorted by kind then path, so two byte-identical sources at two paths are two rows."
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "census": {
+          "$ref": "#/$defs/census_v1"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element_v1"
+          }
+        },
+        "sources": {
+          "not": {
+            "required": [
+              "unbound"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema_version": {
+          "const": 2
+        },
+        "census": {
+          "$ref": "#/$defs/census_v2"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element_v2"
+          }
+        },
+        "sources": {
+          "not": {
+            "required": [
+              "unbound"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema_version": {
+          "const": 3
+        },
+        "census": {
+          "$ref": "#/$defs/census_v1"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element_v1"
+          }
+        },
+        "sources": {
+          "required": [
+            "unbound"
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema_version": {
+          "const": 4
+        },
+        "census": {
+          "$ref": "#/$defs/census_v2"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element_v2"
+          }
+        },
+        "sources": {
+          "required": [
+            "unbound"
+          ]
+        }
+      }
+    }
+  ]
+}

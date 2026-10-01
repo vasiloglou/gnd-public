@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/migration.schema.json",
+  "title": "GND migration record",
+  "description": "The record a GSD-to-GND migration produces. This file is the ONE home for the record's shape (D15): verify_migration.py enforces it BY LOADING this schema, never by restating its rules, so there is no second place to change and no way for the two to disagree. An unknown field is refused, never silently ignored -- an author who wrote a field believes it did something.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "framework", "roots", "mapping", "not_carried", "model"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "framework": { "type": "string", "minLength": 1 },
+    "roots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" }
+        }
+      }
+    },
+    "mapping": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "closed", "disposition", "artifact", "anchor"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "closed": { "type": "boolean" },
+          "disposition": {
+            "enum": ["model-element", "open-question", "superseded", "history"]
+          },
+          "artifact": { "type": "string", "minLength": 1 },
+          "anchor": { "type": "string" },
+          "model_elements": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["kind", "id"],
+                  "properties": {
+                    "kind": { "enum": ["object_type", "fact_type", "operation", "constraint"] },
+                    "id": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["kind", "fact_type", "index"],
+                  "properties": {
+                    "kind": { "const": "constraint" },
+                    "fact_type": { "type": "string", "minLength": 1 },
+                    "index": { "type": "integer", "minimum": 0 }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "not_carried": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "count"],
+        "properties": {
+          "kind": { "type": "string", "minLength": 1 },
+          "count": { "type": "integer", "minimum": 0 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

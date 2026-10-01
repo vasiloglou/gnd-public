@@ -48,10 +48,16 @@ def check_twins(root):
             assert not p.is_symlink() and not q.is_symlink()
             assert p.read_bytes() == q.read_bytes()
             assert stat.S_IMODE(p.stat().st_mode) == stat.S_IMODE(q.stat().st_mode)
+    names = {p.parent.name for p in (root/'src/gnd/skills').glob('*/SKILL.md')}
+    assert len(names) == 16
     for base in [left, right]:
-        for path in base.rglob('*'):
-            assert not path.is_symlink(), f'Installer links are deferred in P1: {path}'
-        assert not (base / '.gnd-install.json').exists()
+        links = {p.name:p for p in base.iterdir() if p.is_symlink()}
+        assert set(links) == names
+        for name, path in links.items():
+            assert path.exists(), path
+            target = root/'src/gnd/skills'/name
+            assert path.resolve() == target.resolve(), path
+            assert os.readlink(path) == os.path.relpath(target,path.parent), path
 
 
 def check_exercise(root):
@@ -92,7 +98,7 @@ def test_reference_closure_and_declared_bootstrap():
     check_references(ROOT)
 
 
-def test_twins_modes_and_deferred_links():
+def test_twins_modes_and_generated_links():
     check_twins(ROOT)
 
 
@@ -105,16 +111,18 @@ def test_source_owned_units_and_preserved_question_states():
 
 
 def test_manifest_bytes_modes_and_sizes():
-    manifest = json.loads((ROOT / MILESTONE / 'migration/b1-files.json').read_text())
-    assert len(manifest['files']) == len({r['path'] for r in manifest['files']})
-    for row in manifest['files']:
-        p = ROOT / row['path']
-        assert p.is_file() and not p.is_symlink()
-        assert hashlib.sha256(p.read_bytes()).hexdigest() == row['public_sha256']
-        assert stat.S_IMODE(p.stat().st_mode) == row['mode']
-        assert p.stat().st_size == row['bytes'] <= 1048576
-    assert sum(r['bytes'] for r in manifest['files']) <= 67108864
-    assert sum(r['bytes'] for r in manifest['files'] if r['path'].startswith('.gnd-planning/')) <= 2097152
+    # B1 is immutable historical selection; B2 attributes changed current bytes.
+    from test_public_distribution import audit_tree, manifest
+    b1_path = ROOT/MILESTONE/'migration/b1-files.json'
+    assert hashlib.sha256(b1_path.read_bytes()).hexdigest() == '7e2bcccd41671743fdcedad2a856c78b59da7265256c0955256964554bb29c87'
+    b1 = json.loads(b1_path.read_text())
+    current = {r['path']:r for r in manifest(ROOT)['files']}
+    for row in b1['files']:
+        successor = current[row['path']]
+        assert successor['baseline_sha256'] == row['public_sha256']
+        if successor['public_sha256'] != row['public_sha256']:
+            assert successor['kind'] == 'adaptation' and successor['reason']
+    audit_tree(ROOT)
 
 
 @pytest.mark.parametrize('mutation', ['missing-reference', 'twin-bytes', 'twin-mode',
@@ -122,7 +130,7 @@ def test_manifest_bytes_modes_and_sizes():
                                    'fake-transfer', 'question-state'])
 def test_controls_reject_isolated_mutations(tmp_path, mutation):
     staged = tmp_path / 'scaffold'
-    shutil.copytree(ROOT, staged, ignore=shutil.ignore_patterns('.git', '.venv', '__pycache__', '.pytest_cache'))
+    shutil.copytree(ROOT, staged, symlinks=True, ignore=shutil.ignore_patterns('.git', '.venv', '__pycache__', '.pytest_cache', '.gnd-install.json'))
     if mutation == 'missing-reference':
         (staged / '.codex/skills/process-phase/references/standing-rules.md').unlink()
         check = check_references
@@ -155,3 +163,9 @@ def test_controls_reject_isolated_mutations(tmp_path, mutation):
         check(staged)
 
 QUESTION_PIN = "87a273c136ecd36e17a82e68a03babc096d6f46b03a09423ef26b3090125f447"
+
+
+def test_readme_reflects_current_runtime_stage():
+    text = (ROOT / 'README.md').read_text()
+    assert 'P2' in text and 'P3' in text and 'private runtime staging' in text
+    assert 'runtime migration follows' not in text

@@ -1,0 +1,702 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/measurement.schema.json",
+  "title": "GND measurement payload (VER-03, D-01, D-12, D-22)",
+  "description": "Draft 2020-12 schema for the aggregate payload emitted by `gnd measure`. Like report.schema.json this is a runtime OUTPUT contract, not an interchange format — it is deliberately vendored-only, lives outside src/gnd/schema/, and is NOT in SCHEMA_PAIRS (tests/test_schema_sync.py does not touch it). One payload represents exactly one (model, pool_source) pair (C4). There is deliberately NO timestamp field anywhere: re-running `gnd measure` over a committed corpus must reproduce the payload byte-for-byte, and a `generated_at` would be the one field that breaks that. There is deliberately NO aggregate accuracy figure and NO field blending deterministic and LLM error (D-01) — a reviewer must be able to confirm both absences by reading this schema. All six outcome counters, `n`, the three rates and the `evidence` excerpt are REQUIRED on every per_constraint row, and `corpus[]` with per-file hashes is required at the top level, so a payload that dropped a counter, an excerpt or a hash fails validation rather than rendering a partial audit trail.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "tool",
+    "command",
+    "gnd_version",
+    "generator_version",
+    "model",
+    "model_id",
+    "model_digest",
+    "pool_source",
+    "population_count",
+    "seeds",
+    "pools",
+    "manifest",
+    "corpus",
+    "per_constraint",
+    "coverage_summary",
+    "checker_defects",
+    "lanes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "enum": [1, 2, 3]
+    },
+    "tool": {
+      "const": "gnd"
+    },
+    "command": {
+      "const": "measure"
+    },
+    "gnd_version": {
+      "type": "string"
+    },
+    "generator_version": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "model_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_digest": {
+      "type": "string"
+    },
+    "pool_source": {
+      "type": "string",
+      "description": "The single pool source this payload represents (C4)."
+    },
+    "population_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "seeds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "pools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false,
+      "description": "The corpus manifest (index.json) the measured set was read from, with its sha256 — WR-02/IN-02. index.json decides WHICH populations are measured and feeds boundary_cases_derived, boundary_not_derivable and operators_exercised, so a payload whose corpus[] hashes match but whose index differs is a different measurement.",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "corpus": {
+      "type": "array",
+      "minItems": 1,
+      "description": "One entry per measured population, each with the sha256 of the population AND its sidecar — the publication-pinning trail (D-31). Perturbing any input changes a hash here.",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256",
+          "sidecar_path",
+          "sidecar_sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "sidecar_path": {
+            "type": "string"
+          },
+          "sidecar_sha256": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "per_constraint": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/constraint_row"
+      }
+    },
+    "coverage_summary": {
+      "type": "object",
+      "required": [
+        "constraint_count",
+        "population_count",
+        "observation_count",
+        "decided_observations",
+        "wrong_attribution",
+        "isolating_cases",
+        "set_attributed_cases",
+        "applicable_cells",
+        "covered_applicable_cells",
+        "not_applicable_cells",
+        "missing_cells",
+        "boundary_cases_derived",
+        "boundary_not_derivable",
+        "case_kinds",
+        "families_in_model",
+        "families_covered",
+        "case_kinds_present",
+        "band4_reason_codes",
+        "band4_reason_codes_exercised",
+        "operators_exercised",
+        "coverage_fraction",
+        "applicability_matrix"
+      ],
+      "additionalProperties": false,
+      "description": "Counts and COVERAGE FRACTIONS — never an accuracy score (D-01). wrong_attribution is D-21's run-level pin (required 0 on a sound checker); isolating_cases / set_attributed_cases split the violating class so shared per-constraint credit is visible (D-05'). The applicability_matrix is the C5 answer to \"all five case kinds per family\", which is semantically impossible: each (family, case_kind) cell is covered, not-applicable WITH A REASON, or missing, and coverage_fraction = covered_applicable_cells / applicable_cells with not-applicable cells OUT of the denominator, so an unmeasurable family reads as unmeasurable rather than as covered.",
+      "properties": {
+        "constraint_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "population_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decided_observations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "wrong_attribution": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "isolating_cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "set_attributed_cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "applicable_cells": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "covered_applicable_cells": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_applicable_cells": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_cells": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "boundary_cases_derived": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "boundary_not_derivable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unmutated_derivations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["derivation_ref", "reason"],
+            "additionalProperties": false,
+            "properties": {
+              "derivation_ref": {"type": "string", "minLength": 1},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "unsupported_exists_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["constraint_ref", "family", "operator", "mechanism"],
+            "additionalProperties": false,
+            "properties": {
+              "constraint_ref": {"type": "string", "minLength": 1},
+              "family": {"type": "string", "minLength": 1},
+              "operator": {"type": ["string", "null"]},
+              "mechanism": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "case_kinds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "families_in_model": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "families_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "case_kinds_present": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "band4_reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "band4_reason_codes_exercised": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "operators_exercised": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverage_fraction": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1,
+          "description": "covered_applicable_cells / applicable_cells, or null when NO cell is applicable — never a flattering 1.0 over an empty denominator (C2's rule, applied to coverage)."
+        },
+        "applicability_matrix": {
+          "type": "array",
+          "description": "One record per (family, case_kind) cell. A not-applicable cell MUST carry its reason, so a reader can tell an unmeasurable family from a forgotten one.",
+          "items": {
+            "type": "object",
+            "required": [
+              "family",
+              "case_kind",
+              "status",
+              "count",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "family": {
+                "type": "string"
+              },
+              "case_kind": {
+                "type": "string",
+                "enum": [
+                  "conforming",
+                  "boundary",
+                  "violating",
+                  "no-subjects",
+                  "unchecked"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "covered",
+                  "not-applicable",
+                  "missing"
+                ]
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "checker_defects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/defect"
+      },
+      "description": "Direction-agnostic (C9): false-pass, false-fail, tool-defect and wrong_attribution (D-21) kinds all populate this and all fire exit 6. Empty on conforming-only inputs."
+    },
+    "lanes": {
+      "type": "object",
+      "required": [
+        "deterministic",
+        "llm"
+      ],
+      "additionalProperties": false,
+      "description": "D-18: an unrun lane is REPORTED, not silently absent. `llm` is not-applicable-phase-2.",
+      "properties": {
+        "deterministic": {
+          "const": "run"
+        },
+        "llm": {
+          "const": "not-applicable-phase-2"
+        }
+      }
+    },
+    "redaction": {"$ref": "#/$defs/redaction"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"schema_version": {"enum": [1, 2]}}, "required": ["schema_version"]},
+      "then": {"not": {"required": ["redaction"]}}
+    },
+    {
+      "if": {"properties": {"schema_version": {"const": 3}}, "required": ["schema_version"]},
+      "then": {
+        "required": ["redaction"],
+        "properties": {
+          "coverage_summary": {"required": ["unmutated_derivations"]}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "declarations"],
+      "properties": {
+        "mode": {"enum": ["applied", "unredacted"]},
+        "declarations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["case_id", "source", "fact_type", "roles"],
+            "properties": {
+              "case_id": {"type": ["string", "null"]},
+              "source": {"enum": ["role", "fact-type"]},
+              "fact_type": {"type": "string", "minLength": 1},
+              "roles": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    },
+    "cells": {
+      "type": "object",
+      "required": [
+        "correct",
+        "false_pass",
+        "false_fail",
+        "undecided",
+        "masked_by_vacuity",
+        "tool_defect"
+      ],
+      "additionalProperties": false,
+      "description": "The six disjoint outcome counters. All six are required so a reader can audit the partition (their sum == n) without recomputing it, and so a payload that dropped a counter fails validation.",
+      "properties": {
+        "correct": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "false_pass": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "false_fail": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "undecided": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "masked_by_vacuity": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_defect": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "constraint_row": {
+      "type": "object",
+      "required": [
+        "constraint_ref",
+        "constraint_type",
+        "modality",
+        "source",
+        "status",
+        "n",
+        "decided",
+        "coverage",
+        "cells",
+        "false_pass",
+        "expected_nonpass",
+        "false_pass_rate",
+        "false_fail",
+        "satisfied",
+        "false_fail_rate",
+        "undecided_rate",
+        "selective_false_pass",
+        "selective_false_fail",
+        "ground_truth_states_seen",
+        "wrong_attribution",
+        "set_attributed_evidence",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "constraint_ref": {
+          "type": "string"
+        },
+        "constraint_type": {
+          "type": "string"
+        },
+        "modality": {
+          "type": "string"
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "decided": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cells": {
+          "$ref": "#/$defs/cells"
+        },
+        "false_pass": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The false-pass numerator, published beside its rate and denominator (C2)."
+        },
+        "expected_nonpass": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The false-pass CONDITIONAL denominator: observations whose ground truth is violated or no-subjects."
+        },
+        "false_pass_rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "false_pass / expected_nonpass — NOT / n (C2). null when expected_nonpass == 0 (Gemini n==0 guard: no data, never a crash)."
+        },
+        "false_fail": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "satisfied": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The false-fail conditional denominator: observations whose ground truth is satisfied."
+        },
+        "false_fail_rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "false_fail / satisfied. null when satisfied == 0."
+        },
+        "undecided_rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "(undecided + masked_by_vacuity) / n — vacuous stays INSIDE the undecided rate (D-02); masked_by_vacuity is a named sub-bucket, never a leak. null when n == 0."
+        },
+        "selective_false_pass": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "selective_false_fail": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ground_truth_states_seen": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "satisfied",
+              "violated",
+              "no-subjects"
+            ]
+          }
+        },
+        "wrong_attribution": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "D-21: fail/warning observations on this constraint whose ground truth is satisfied, inside violating populations — a NAMED VIEW over false_fail cells (double-counted under this name, never a seventh partition cell). Required 0 on a sound checker; non-zero fires exit 6."
+        },
+        "set_attributed_evidence": {
+          "type": "boolean",
+          "description": "True when this row's evidence includes a set-attributed violating case (isolating == false), so shared per-constraint credit is visible rather than implied (D-05')."
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "population",
+        "verdict"
+      ],
+      "additionalProperties": false,
+      "description": "D-22: a verbatim raw-evidence excerpt — an actual ConstraintVerdict from a named contributing population, so no published number exists without a raw artifact a reader can open.",
+      "properties": {
+        "population": {
+          "type": "string"
+        },
+        "verdict": {
+          "type": "object",
+          "required": [
+            "constraint_ref",
+            "verdict",
+            "message",
+            "reason_code",
+            "offending_facts"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "constraint_ref": {
+              "type": "string"
+            },
+            "verdict": {
+              "enum": [
+                "pass",
+                "fail",
+                "warning",
+                "unchecked",
+                "vacuous"
+              ]
+            },
+            "message": {
+              "type": "string"
+            },
+            "reason_code": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "offending_facts": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    },
+    "defect": {
+      "type": "object",
+      "required": [
+        "kind",
+        "constraint_ref",
+        "modality",
+        "population",
+        "sidecar",
+        "expected_verdict",
+        "observed_verdict",
+        "seed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "false-pass",
+            "false-fail",
+            "tool-defect",
+            "wrong_attribution"
+          ]
+        },
+        "constraint_ref": {
+          "type": "string"
+        },
+        "modality": {
+          "type": "string"
+        },
+        "population": {
+          "type": "string"
+        },
+        "sidecar": {
+          "type": "string"
+        },
+        "expected_verdict": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observed_verdict": {
+          "type": "string"
+        },
+        "seed": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

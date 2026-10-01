@@ -1,0 +1,2579 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/orm-meta.schema.json",
+  "title": "GND ORM conceptual model (full D-01 vocabulary)",
+  "description": "Draft 2020-12 meta-schema for model.orm.yaml \u2014 the complete Halpin ORM 2 constraint vocabulary: uniqueness (internal/external), mandatory, mandatory-disjunctive, value (enum/range/ranges/role-scope hybrid), frequency (internal/external), ring (all variants), subset, equality, exclusion, exclusive-or, value-comparison (intra- and cross-fact-type), cardinality (object/role), subtype-partition, textual \u2014 plus GND's conditional guarded extension and subtyping on object types. Constraint placement follows the source spec: single-fact-type constraints live inline under fact_types[].constraints; cross-fact-type and object-type-scope constraints live top-level under constraints. GND divergences from the RAI source spec: (1) `modality` is REQUIRED on every ACTIVE constraint, never defaulted (D-03); (2) rejected_proposals entries are schema-light and modality is NOT required there \u2014 they are archived proposals preserved to prevent re-proposal, not active constraints. Optional top-level `model_id` (D-06): a stable, opaque identifier for this model. A population header may declare the same field; when both are present and differ, the population was written for a different model and is rejected at load (exit 3). It is OPTIONAL for backward compatibility, compared as an opaque string, and never dereferenced to a path or opened. Version 2 (ORM+) adds one optional top-level section, `operations`: named state transitions carrying parameters, conjunctive positive-atom preconditions, create/assert/retract effects, old-versus-new dynamic value rules, and a REQUIRED, never-defaulted `frame.modality`. `operations` present implies `version: 2`, `version: 3` or `version: 4`; a version-2 document with no `operations` is behaviourally a version-1 document. Snapshot checking ignores `operations` entirely. Threat note (T-01-06): derivation_rule, textual expression, and value-comparison operands are typed as plain strings; the validator never interprets or executes them.",
+  "type": "object",
+  "required": [
+    "version",
+    "object_types",
+    "fact_types"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object"
+    },
+    "object_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/object_type"
+      }
+    },
+    "fact_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fact_type"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/top_level_constraint"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "rejected_proposals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/rejected_proposal"
+      }
+    },
+    "deontic_notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "reference_populations": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "path",
+          "sha256",
+          "fact_types"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "fact_types": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "operations"
+        ]
+      },
+      "then": {
+        "required": [
+          "version"
+        ],
+        "properties": {
+          "version": {
+            "enum": [
+              2,
+              3,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "reference_populations"
+        ]
+      },
+      "then": {
+        "properties": {
+          "version": {
+            "const": 4
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "object_type": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "entity",
+            "value"
+          ]
+        },
+        "reference": {
+          "$ref": "#/$defs/reference"
+        },
+        "primitive": {
+          "enum": [
+            "String",
+            "Integer",
+            "Float",
+            "Number",
+            "Date",
+            "DateTime",
+            "Boolean",
+            "Binary",
+            "Duration"
+          ]
+        },
+        "precision": {
+          "type": "integer"
+        },
+        "scale": {
+          "type": "integer"
+        },
+        "independent": {
+          "type": "boolean"
+        },
+        "subtype_of": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "inherits_reference": {
+          "type": "boolean"
+        },
+        "derivation": {
+          "enum": [
+            "asserted",
+            "derived",
+            "semiderived"
+          ]
+        },
+        "derivation_rule": {
+          "$ref": "#/$defs/derivation_rule"
+        },
+        "storage": {
+          "enum": [
+            "stored",
+            "computed"
+          ]
+        },
+        "provenance": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "entity"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "not": {
+              "required": [
+                "subtype_of"
+              ]
+            }
+          },
+          "then": {
+            "required": [
+              "reference"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "value"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "primitive"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "subtype_of"
+            ]
+          },
+          "then": {
+            "required": [
+              "inherits_reference"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "derivation": {
+                "enum": [
+                  "derived",
+                  "semiderived"
+                ]
+              }
+            },
+            "required": [
+              "derivation"
+            ]
+          },
+          "then": {
+            "required": [
+              "derivation_rule"
+            ]
+          }
+        }
+      ]
+    },
+    "reference": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "popular",
+            "unit-based",
+            "general",
+            "external"
+          ]
+        },
+        "value_type": {
+          "$ref": "#/$defs/identifier"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "measure_type": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "popular"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "value_type"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "measure_type"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "general"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "value_type"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "measure_type"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "unit-based"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "unit",
+              "measure_type"
+            ],
+            "not": {
+              "required": [
+                "value_type"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "external"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "value_type"
+                  ]
+                },
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "measure_type"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "fact_type": {
+      "type": "object",
+      "required": [
+        "id",
+        "reading",
+        "roles"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "reading": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inverse_reading": {
+          "type": "string"
+        },
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "redact": {
+          "type": "boolean"
+        },
+        "arity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "objectified_as": {
+          "$ref": "#/$defs/identifier"
+        },
+        "objectification_independent": {
+          "type": "boolean"
+        },
+        "derivation": {
+          "enum": [
+            "asserted",
+            "derived",
+            "semiderived"
+          ]
+        },
+        "derivation_rule": {
+          "$ref": "#/$defs/derivation_rule"
+        },
+        "storage": {
+          "enum": [
+            "stored",
+            "computed"
+          ]
+        },
+        "sample_population": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/inline_constraint"
+          }
+        },
+        "provenance": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "derivation": {
+                "enum": [
+                  "derived",
+                  "semiderived"
+                ]
+              }
+            },
+            "required": [
+              "derivation"
+            ]
+          },
+          "then": {
+            "required": [
+              "derivation_rule"
+            ]
+          }
+        }
+      ]
+    },
+    "role": {
+      "type": "object",
+      "required": [
+        "object_type",
+        "role_name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "object_type": {
+          "$ref": "#/$defs/identifier"
+        },
+        "role_name": {
+          "$ref": "#/$defs/identifier"
+        },
+        "redact": {
+          "type": "boolean"
+        }
+      }
+    },
+    "role_ref": {
+      "type": "object",
+      "required": [
+        "fact_type",
+        "role"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fact_type": {
+          "$ref": "#/$defs/identifier"
+        },
+        "role": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "inline_value_operand": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "role": {
+              "$ref": "#/$defs/identifier"
+            },
+            "literal": {
+              "$ref": "#/$defs/scalar"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "role"
+              ]
+            },
+            {
+              "required": [
+                "literal"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "scalar": {
+      "type": [
+        "string",
+        "number",
+        "boolean"
+      ]
+    },
+    "value_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "max": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "min_inclusive": {
+          "type": "boolean"
+        },
+        "max_inclusive": {
+          "type": "boolean"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "min"
+          ]
+        },
+        {
+          "required": [
+            "max"
+          ]
+        }
+      ]
+    },
+    "bound": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "min"
+          ]
+        },
+        {
+          "required": [
+            "max"
+          ]
+        }
+      ]
+    },
+    "source_kind": {
+      "description": "The six provenance sources. `imported` (v2) records a claim carried in from another framework's artifact under a verbatim anchor; see provenance-and-modality.md for the required block and the D-03 default-modality row.",
+      "enum": [
+        "explicit",
+        "sample",
+        "common-sense",
+        "llm-inferred",
+        "user-supplied",
+        "imported"
+      ]
+    },
+    "provenance_policy": {
+      "description": "The per-source provenance requirements, factored out of constraint_common so that operation-level obligations (preconditions, dynamic rules) and operations themselves carry the SAME rules by reference rather than by a second copy. Referenced in-place, so `unevaluatedProperties: false` on the referring envelope still sees every property this schema evaluates.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "explicit"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "provenance"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "user-supplied"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "provenance"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "llm-inferred"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "rationale",
+              "provenance"
+            ],
+            "properties": {
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "rationale_world_fact"
+                ],
+                "properties": {
+                  "rationale_world_fact": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "common-sense"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "rationale",
+              "provenance"
+            ],
+            "properties": {
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "library_entry"
+                ],
+                "properties": {
+                  "library_entry": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "matched_pattern": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "sample"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "rationale",
+              "provenance"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "imported"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "provenance"
+            ],
+            "properties": {
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "framework",
+                  "artifact",
+                  "commit",
+                  "sha256",
+                  "anchor"
+                ],
+                "properties": {
+                  "framework": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "commit": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "anchor": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reviewed_in": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "imported"
+              },
+              "status": {
+                "const": "confirmed"
+              }
+            },
+            "required": [
+              "source",
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "provenance"
+            ],
+            "properties": {
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "reviewed_in"
+                ],
+                "properties": {
+                  "reviewed_in": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "constraint_common": {
+      "type": "object",
+      "required": [
+        "type",
+        "source",
+        "status",
+        "modality"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "type": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/source_kind"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed",
+            "rejected"
+          ]
+        },
+        "modality": {
+          "enum": [
+            "alethic",
+            "deontic"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "object"
+        },
+        "owner": {
+          "enum": [
+            "candidate",
+            "reference",
+            "host"
+          ]
+        },
+        "allowed_fixes": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "add-fact",
+              "replace-fact",
+              "delete-fact",
+              "replace-artifact"
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_policy"
+        }
+      ]
+    },
+    "inline_constraint": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/constraint_common"
+        },
+        {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/uniqueness_internal"
+            },
+            {
+              "$ref": "#/$defs/mandatory"
+            },
+            {
+              "$ref": "#/$defs/value_constraint"
+            },
+            {
+              "$ref": "#/$defs/ring"
+            },
+            {
+              "$ref": "#/$defs/frequency_internal"
+            },
+            {
+              "$ref": "#/$defs/anchored"
+            },
+            {
+              "$ref": "#/$defs/value_comparison_inline"
+            }
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "top_level_constraint": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/constraint_common"
+        },
+        {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/uniqueness_external"
+            },
+            {
+              "$ref": "#/$defs/mandatory_disjunctive"
+            },
+            {
+              "$ref": "#/$defs/value_constraint"
+            },
+            {
+              "$ref": "#/$defs/frequency_external"
+            },
+            {
+              "$ref": "#/$defs/subset"
+            },
+            {
+              "$ref": "#/$defs/equality"
+            },
+            {
+              "$ref": "#/$defs/exclusion"
+            },
+            {
+              "$ref": "#/$defs/exclusive_or"
+            },
+            {
+              "$ref": "#/$defs/value_comparison_cross"
+            },
+            {
+              "$ref": "#/$defs/cardinality"
+            },
+            {
+              "$ref": "#/$defs/subtype_partition"
+            },
+            {
+              "$ref": "#/$defs/guarded"
+            },
+            {
+              "$ref": "#/$defs/textual"
+            }
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "uniqueness_internal": {
+      "required": [
+        "type",
+        "roles"
+      ],
+      "properties": {
+        "type": {
+          "const": "uniqueness"
+        },
+        "scope": {
+          "const": "internal"
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "preferred": {
+          "type": "boolean"
+        }
+      }
+    },
+    "uniqueness_external": {
+      "required": [
+        "type",
+        "scope",
+        "role_refs"
+      ],
+      "properties": {
+        "type": {
+          "const": "uniqueness"
+        },
+        "scope": {
+          "const": "external"
+        },
+        "role_refs": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        },
+        "preferred": {
+          "type": "boolean"
+        }
+      }
+    },
+    "mandatory": {
+      "required": [
+        "type",
+        "role"
+      ],
+      "properties": {
+        "type": {
+          "const": "mandatory"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "anchored": {
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "anchored"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recognise": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "integer",
+              "decimal",
+              "percent",
+              "iso-8601-date"
+            ]
+          }
+        }
+      },
+      "dependentRequired": {
+        "recognise": [
+          "role"
+        ]
+      }
+    },
+    "mandatory_disjunctive": {
+      "required": [
+        "type",
+        "role_refs"
+      ],
+      "properties": {
+        "type": {
+          "const": "mandatory-disjunctive"
+        },
+        "role_refs": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        }
+      }
+    },
+    "value_constraint": {
+      "required": [
+        "type",
+        "object_type"
+      ],
+      "properties": {
+        "type": {
+          "const": "value"
+        },
+        "object_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role_ref": {
+          "$ref": "#/$defs/role_ref"
+        },
+        "allowed": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        "range": {
+          "$ref": "#/$defs/value_range"
+        },
+        "ranges": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/value_range"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "allowed"
+          ]
+        },
+        {
+          "required": [
+            "range"
+          ]
+        },
+        {
+          "required": [
+            "ranges"
+          ]
+        }
+      ]
+    },
+    "frequency_internal": {
+      "required": [
+        "type",
+        "scope",
+        "roles",
+        "bound"
+      ],
+      "properties": {
+        "type": {
+          "const": "frequency"
+        },
+        "scope": {
+          "const": "internal"
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "bound": {
+          "$ref": "#/$defs/bound"
+        }
+      }
+    },
+    "frequency_external": {
+      "required": [
+        "type",
+        "scope",
+        "role_refs",
+        "bound"
+      ],
+      "properties": {
+        "type": {
+          "const": "frequency"
+        },
+        "scope": {
+          "const": "external"
+        },
+        "role_refs": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        },
+        "bound": {
+          "$ref": "#/$defs/bound"
+        }
+      }
+    },
+    "ring": {
+      "required": [
+        "type",
+        "variant"
+      ],
+      "properties": {
+        "type": {
+          "const": "ring"
+        },
+        "variant": {
+          "enum": [
+            "irreflexive",
+            "asymmetric",
+            "intransitive",
+            "antisymmetric",
+            "acyclic",
+            "asymmetric-intransitive",
+            "acyclic-intransitive",
+            "symmetric",
+            "symmetric-irreflexive",
+            "symmetric-intransitive",
+            "purely-reflexive",
+            "reflexive",
+            "transitive"
+          ]
+        }
+      }
+    },
+    "subset": {
+      "required": [
+        "type",
+        "subset_role_seq",
+        "superset_role_seq"
+      ],
+      "properties": {
+        "type": {
+          "const": "subset"
+        },
+        "subset_role_seq": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        },
+        "superset_role_seq": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        }
+      }
+    },
+    "equality": {
+      "required": [
+        "type",
+        "role_seq_a",
+        "role_seq_b"
+      ],
+      "properties": {
+        "type": {
+          "const": "equality"
+        },
+        "role_seq_a": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        },
+        "role_seq_b": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        }
+      }
+    },
+    "exclusion": {
+      "required": [
+        "type",
+        "role_seq_a",
+        "role_seq_b"
+      ],
+      "properties": {
+        "type": {
+          "const": "exclusion"
+        },
+        "role_seq_a": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        },
+        "role_seq_b": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role_ref"
+          }
+        }
+      }
+    },
+    "exclusive_or": {
+      "required": [
+        "type",
+        "role_seqs"
+      ],
+      "properties": {
+        "type": {
+          "const": "exclusive-or"
+        },
+        "role_seqs": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/role_ref"
+            }
+          }
+        }
+      }
+    },
+    "comparison_operator": {
+      "enum": [
+        "<",
+        "<=",
+        "=",
+        ">=",
+        ">",
+        "!="
+      ]
+    },
+    "value_comparison_inline": {
+      "required": [
+        "type",
+        "operator",
+        "role_a",
+        "role_b"
+      ],
+      "properties": {
+        "type": {
+          "const": "value-comparison"
+        },
+        "operator": {
+          "$ref": "#/$defs/comparison_operator"
+        },
+        "role_a": {
+          "$ref": "#/$defs/inline_value_operand"
+        },
+        "role_b": {
+          "$ref": "#/$defs/inline_value_operand"
+        }
+      }
+    },
+    "value_comparison_cross": {
+      "required": [
+        "type",
+        "operator",
+        "role_a",
+        "role_b"
+      ],
+      "properties": {
+        "type": {
+          "const": "value-comparison"
+        },
+        "operator": {
+          "$ref": "#/$defs/comparison_operator"
+        },
+        "role_a": {
+          "$ref": "#/$defs/role_ref"
+        },
+        "role_b": {
+          "$ref": "#/$defs/role_ref"
+        }
+      }
+    },
+    "cardinality": {
+      "required": [
+        "type",
+        "scope",
+        "bound"
+      ],
+      "properties": {
+        "type": {
+          "const": "cardinality"
+        },
+        "scope": {
+          "enum": [
+            "object",
+            "role"
+          ]
+        },
+        "object_type": {
+          "type": "string"
+        },
+        "role_ref": {
+          "$ref": "#/$defs/role_ref"
+        },
+        "bound": {
+          "$ref": "#/$defs/bound"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "object"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_type"
+            ],
+            "not": {
+              "required": [
+                "role_ref"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "role"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "required": [
+              "role_ref"
+            ],
+            "not": {
+              "required": [
+                "object_type"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subtype_partition": {
+      "required": [
+        "type",
+        "supertype",
+        "subtypes"
+      ],
+      "properties": {
+        "type": {
+          "const": "subtype-partition"
+        },
+        "supertype": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subtypes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclusive": {
+          "type": "boolean"
+        },
+        "exhaustive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "guarded_comparison": {
+      "type": "object",
+      "required": [
+        "operator",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operator": {
+          "$ref": "#/$defs/comparison_operator"
+        },
+        "left": {
+          "$ref": "#/$defs/term"
+        },
+        "right": {
+          "$ref": "#/$defs/term"
+        }
+      }
+    },
+    "guarded": {
+      "description": "GND's conditional constraint extension: when every antecedent atom holds, the selected atom, comparison, absence, or existential consequent is required.",
+      "required": [
+        "type",
+        "antecedent",
+        "consequent"
+      ],
+      "properties": {
+        "type": {
+          "const": "guarded"
+        },
+        "antecedent": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "consequent": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "atom"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "atom": {
+                  "$ref": "#/$defs/atom"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "comparison"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "comparison": {
+                  "$ref": "#/$defs/guarded_comparison"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "absence"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "absence": {
+                  "$ref": "#/$defs/atom"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "exists"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "exists": {
+                  "type": "object",
+                  "required": [
+                    "atoms"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "atoms": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "$ref": "#/$defs/atom"
+                      }
+                    },
+                    "where": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "$ref": "#/$defs/term_comparison"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "textual": {
+      "required": [
+        "type",
+        "expression"
+      ],
+      "properties": {
+        "type": {
+          "const": "textual"
+        },
+        "expression": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formal_language": {
+          "enum": [
+            "natural",
+            "forml2"
+          ]
+        },
+        "formal_expression": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "rejected_proposal": {
+      "type": "object",
+      "description": "Schema-light by design: archived proposals, not active constraints \u2014 modality is NOT required here (GND D-03 divergence applies only to active constraints). Kept so future runs don't re-propose. An archived CONSTRAINT is identified by its `type`; an archived v2 OPERATION is identified by its `id` and carries no `type`. At least one of the two is therefore required, rather than `type` alone. Deliberately not exactly-one: constraints may now carry an `id` of their own, so an archived constraint legitimately supplies both.",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "const": "rejected"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "required": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "term": {
+      "description": "One scalar term: a literal, a `$name` variable resolved by layer 2, or one closed exact function application. The same recursive language is used by derivation head/where and guarded comparison operands.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/scalar"
+        },
+        {
+          "$ref": "#/$defs/function_term"
+        },
+        {
+          "$ref": "#/$defs/date_literal"
+        },
+        {
+          "$ref": "#/$defs/duration_literal"
+        }
+      ]
+    },
+    "date_literal": {
+      "type": "object",
+      "required": [
+        "date"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "duration_literal": {
+      "type": "object",
+      "required": [
+        "duration_days"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "duration_days": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      }
+    },
+    "function_term": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "fn",
+            "args"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "enum": [
+                "date_add",
+                "date_sub"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "if": {
+            "required": [
+              "fn"
+            ],
+            "properties": {
+              "fn": {
+                "enum": [
+                  "date_add",
+                  "date_sub"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          },
+          "else": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "fn",
+            "args"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "enum": [
+                "neg",
+                "abs"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1
+            }
+          },
+          "if": {
+            "required": [
+              "fn"
+            ],
+            "properties": {
+              "fn": {
+                "enum": [
+                  "neg",
+                  "abs"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          },
+          "else": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "fn",
+            "args"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "enum": [
+                "add",
+                "sub",
+                "mul",
+                "mod"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "if": {
+            "required": [
+              "fn"
+            ],
+            "properties": {
+              "fn": {
+                "enum": [
+                  "add",
+                  "sub",
+                  "mul",
+                  "mod"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          },
+          "else": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "fn",
+            "args"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "enum": [
+                "sqrt",
+                "floor",
+                "ceil"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1
+            }
+          },
+          "if": {
+            "required": [
+              "fn"
+            ],
+            "properties": {
+              "fn": {
+                "enum": [
+                  "sqrt",
+                  "floor",
+                  "ceil"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          },
+          "else": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "fn",
+            "args"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "enum": [
+                "div",
+                "round"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "if": {
+            "required": [
+              "fn"
+            ],
+            "properties": {
+              "fn": {
+                "enum": [
+                  "div",
+                  "round"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          },
+          "else": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "fn",
+            "args"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fn": {
+              "enum": [
+                "haversine"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4
+            }
+          },
+          "if": {
+            "required": [
+              "fn"
+            ],
+            "properties": {
+              "fn": {
+                "enum": [
+                  "haversine"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "args": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          },
+          "else": false
+        }
+      ]
+    },
+    "term_comparison": {
+      "type": "object",
+      "required": [
+        "operator",
+        "left",
+        "right"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operator": {
+          "$ref": "#/$defs/comparison_operator"
+        },
+        "left": {
+          "$ref": "#/$defs/term"
+        },
+        "right": {
+          "$ref": "#/$defs/term"
+        }
+      }
+    },
+    "bindings": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "$ref": "#/$defs/identifier"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/scalar"
+      }
+    },
+    "derivation_rule": {
+      "description": "An opaque string, one legacy clause, or a nonempty union of clauses. Normative semantics: gnd-orm-core/references/representation-format.md, \"Derived fact types\".",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "required": [
+            "body",
+            "head"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "body": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/atom"
+              }
+            },
+            "negate": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/atom"
+              }
+            },
+            "aggregate": {
+              "$ref": "#/$defs/derivation_aggregate"
+            },
+            "where": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/term_comparison"
+              }
+            },
+            "head": {
+              "$ref": "#/$defs/derivation_head"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "clauses",
+            "head"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "clauses": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/derivation_clause"
+              }
+            },
+            "aggregate": {
+              "$ref": "#/$defs/derivation_aggregate"
+            },
+            "where": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/term_comparison"
+              }
+            },
+            "head": {
+              "$ref": "#/$defs/derivation_head"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "clauses"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "clauses": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/derivation_headed_clause"
+              }
+            },
+            "aggregate": {
+              "$ref": "#/$defs/derivation_aggregate"
+            },
+            "where": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/term_comparison"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "derivation_head": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "$ref": "#/$defs/identifier"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/term"
+      }
+    },
+    "derivation_clause": {
+      "type": "object",
+      "required": [
+        "body"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "negate": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "where": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/term_comparison"
+          }
+        }
+      }
+    },
+    "derivation_headed_clause": {
+      "type": "object",
+      "required": [
+        "body",
+        "head"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "negate": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "where": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/term_comparison"
+          }
+        },
+        "head": {
+          "$ref": "#/$defs/derivation_head"
+        }
+      }
+    },
+    "derivation_aggregate": {
+      "description": "One exact aggregate over body bindings. The contribution identity is the ordered over-binding paired with evaluated of value; layer 2 owns scope and primitive restrictions.",
+      "type": "object",
+      "required": [
+        "fn",
+        "of",
+        "over",
+        "as"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fn": {
+          "enum": [
+            "count",
+            "sum",
+            "min",
+            "max",
+            "avg"
+          ]
+        },
+        "of": {
+          "$ref": "#/$defs/term"
+        },
+        "over": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^\\$[a-z][a-z0-9_]*$"
+          }
+        },
+        "as": {
+          "type": "string",
+          "pattern": "^\\$[a-z][a-z0-9_]*$"
+        }
+      }
+    },
+    "atom": {
+      "description": "One POSITIVE fact-presence atom. There is no negation, comparison, arithmetic, aggregation or disjunction in this language \u2014 a precondition is a conjunction of positive atoms and nothing else.",
+      "type": "object",
+      "required": [
+        "fact_type",
+        "bind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fact_type": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bind": {
+          "$ref": "#/$defs/bindings"
+        }
+      }
+    },
+    "obligation": {
+      "description": "One precondition: a named conjunction of positive atoms that must hold in the pre-state. Carries its own REQUIRED modality \u2014 a verdict attaches here, not to the operation.",
+      "type": "object",
+      "required": [
+        "id",
+        "require",
+        "source",
+        "status",
+        "modality"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "require": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/atom"
+          }
+        },
+        "source": {
+          "$ref": "#/$defs/source_kind"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed"
+          ]
+        },
+        "modality": {
+          "enum": [
+            "alethic",
+            "deontic"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_policy"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "effect": {
+      "description": "One state delta. Exactly one of create / assert / retract. A step's effects apply as a SET and the intermediate invariant is checked afterwards, so `retract` plus `assert` on one fact type within one step already IS a replace \u2014 there is deliberately no `replace` primitive.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "create": {
+          "type": "object",
+          "required": [
+            "object_type",
+            "param"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "object_type": {
+              "$ref": "#/$defs/identifier"
+            },
+            "param": {
+              "$ref": "#/$defs/identifier"
+            }
+          }
+        },
+        "assert": {
+          "$ref": "#/$defs/atom"
+        },
+        "retract": {
+          "$ref": "#/$defs/atom"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "create"
+          ]
+        },
+        {
+          "required": [
+            "assert"
+          ]
+        },
+        {
+          "required": [
+            "retract"
+          ]
+        }
+      ]
+    },
+    "dynamic_rule": {
+      "description": "One old-versus-new value comparison over a functionally determined value role: the post-state value of `subject` compared to its pre-state value under `op`. Vacuous on first assignment or on retraction; `unchecked` when the subject is not provably functional.",
+      "type": "object",
+      "required": [
+        "id",
+        "subject",
+        "op",
+        "source",
+        "status",
+        "modality"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "subject": {
+          "type": "object",
+          "required": [
+            "fact_type",
+            "value_role",
+            "bind"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fact_type": {
+              "$ref": "#/$defs/identifier"
+            },
+            "value_role": {
+              "$ref": "#/$defs/identifier"
+            },
+            "bind": {
+              "$ref": "#/$defs/bindings"
+            }
+          }
+        },
+        "op": {
+          "$ref": "#/$defs/comparison_operator"
+        },
+        "source": {
+          "$ref": "#/$defs/source_kind"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed"
+          ]
+        },
+        "modality": {
+          "enum": [
+            "alethic",
+            "deontic"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_policy"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "frame": {
+      "description": "The frame declaration \u2014 REQUIRED on every operation and never defaulted, exactly like constraint modality (D-03). It grades the fact types this operation touches: alethic means an undeclared delta on such a fact type is a hard failure; deontic means it is a warning.",
+      "type": "object",
+      "required": [
+        "modality"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "modality": {
+          "enum": [
+            "alethic",
+            "deontic"
+          ]
+        }
+      }
+    },
+    "operation": {
+      "description": "One named state transition. The operation itself carries source/status/provenance but NO modality: modality lives on each obligation (precondition, dynamic rule, frame), which is where a verdict can attach.",
+      "type": "object",
+      "required": [
+        "id",
+        "reading",
+        "parameters",
+        "effects",
+        "frame",
+        "source",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "reading": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parameters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "object_type"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "object_type": {
+                "$ref": "#/$defs/identifier"
+              }
+            }
+          }
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/obligation"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "dynamic_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dynamic_rule"
+          }
+        },
+        "frame": {
+          "$ref": "#/$defs/frame"
+        },
+        "source": {
+          "$ref": "#/$defs/source_kind"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/provenance_policy"
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

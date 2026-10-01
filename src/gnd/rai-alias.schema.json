@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/rai-alias-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dialect", "source", "output", "roles", "constraints"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "dialect": {"const": "rai-orm"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact", "commit", "sha256"],
+      "properties": {
+        "artifact": {
+          "type": "string",
+          "pattern": "^(?!/)(?![A-Za-z]:/)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//).+$"
+        },
+        "commit": {"type": ["string", "null"], "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "sha256"],
+      "properties": {
+        "filename": {"const": "model.orm.yaml"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_pointer", "source_name", "output_pointer", "output_name"],
+        "properties": {
+          "source_pointer": {"type": "string", "pattern": "^/"},
+          "source_name": {"type": "string", "minLength": 1},
+          "output_pointer": {"type": "string", "pattern": "^/"},
+          "output_name": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_pointer", "output_pointer", "rewrite"],
+        "properties": {
+          "source_pointer": {"type": "string", "pattern": "^/"},
+          "output_pointer": {"type": "string", "pattern": "^/"},
+          "rewrite": {"const": "ring-placement"}
+        }
+      }
+    }
+  }
+}

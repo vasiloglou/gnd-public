@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/pool.schema.json",
+  "title": "GND pool artifact (D-19, D-07′): one shape for every proposer",
+  "description": "The single seam between any pool PROPOSER and deterministic population assembly. An LLM-proposed pool and a Faker-built pool are the SAME shape, validated against this schema, content-addressed by sha256 over the canonical JSON encoding, and carrying provenance that names which source produced it. This is a runtime CONTRACT, deliberately vendored-only and living OUTSIDE src/gnd/schema/ on the report.schema.json precedent — it is NOT the population interchange format the gnd-orm-core skill documents, so it has no canonical twin and is NOT in tests/test_schema_sync.py's SCHEMA_PAIRS. D-15 (the population format is never touched) stays intact. When the pool-proposer skill ships (Phase 2.1) a canonical copy may join the skill tree and the pair may be added to the sync test then. The pool carries VALUES and IDENTIFIERS only, never facts: an LLM can hold per-instance constraints (a value in range, an enum member) but not population-level ones (uniqueness, frequency, joins), so those belong to the assembly layer, never here (RESEARCH-SYNTHESIS §2.2). An admitted pool is still UNTRUSTED: load_pool runs this closed schema then model-relative coherence, and domain_narrative is carried opaquely — never interpolated, evaluated, or executed (T-02-28).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["object_types", "value_types", "provenance"],
+  "properties": {
+    "object_types": {
+      "type": "object",
+      "description": "Map from ENTITY object-type id to a list of identifier values denoting instances of that type. Each value satisfies the type's resolved primitive; where the primitive is unresolvable (unit-based or external reference — resolve-or-skip, C10/D-05) any interchange scalar is accepted and no invented type check is performed.",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "$ref": "#/$defs/scalar" }
+      }
+    },
+    "value_types": {
+      "type": "object",
+      "description": "Map from VALUE object-type id to a list of sample values, each satisfying the type's primitive AND any declared `value` range or `allowed` enum on that type.",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "$ref": "#/$defs/scalar" }
+      }
+    },
+    "domain_narrative": {
+      "type": "string",
+      "description": "One optional paragraph describing the world. Seeds Phase 2.1's document renderer at zero extra cost; carried OPAQUELY here — never interpolated, evaluated, or executed."
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source"],
+      "description": "Who produced the pool and how it is reproduced. The pool's IDENTITY is its content hash, not this block — a lying `source` changes which lane a reader files the pool under, not what the gates accept (T-02-29).",
+      "properties": {
+        "source": {
+          "enum": ["llm-proposed", "faker"],
+          "description": "The proposer tier. Both emit this identical artifact shape (D-17′: complements, not substitutes)."
+        },
+        "rng_seed": {
+          "type": "integer",
+          "description": "Present when a seeded builder produced the pool. Part of the reproducibility tuple (pool_sha256, rng_seed, generator_version, model_id)."
+        },
+        "proposer_model": {
+          "type": "string",
+          "description": "LLM pools only: the model that proposed the pool."
+        },
+        "prompt_version": {
+          "type": "string",
+          "description": "LLM pools only: the proposer prompt version."
+        },
+        "model_id": {
+          "type": "string",
+          "description": "The ORM model id the pool was proposed for."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "scalar": {
+      "type": ["string", "number", "boolean"],
+      "description": "An interchange-format scalar. Numbers must be finite RFC 8259 JSON numbers: NaN and positive/negative Infinity are rejected recursively before schema validation. `number` covers both JSON integers and floats; ORM primitives (Integer/Float/Number/Boolean/String and ISO-8601 Date/DateTime as strings) all render into this set."
+    }
+  }
+}

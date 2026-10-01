@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/fidelity.schema.json",
+  "title": "GND extractor-fidelity payload (SC3, PANEL-1, R-11', D-01, D-22)",
+  "description": "Draft 2020-12 schema for the payload emitted by `gnd fidelity`. Like report.schema.json and measurement.schema.json this is a runtime OUTPUT contract, not an interchange format \u2014 deliberately vendored-only, outside src/gnd/schema/, and NOT in SCHEMA_PAIRS (tests/test_schema_sync.py does not touch it). Three absences are load-bearing and a reviewer must be able to confirm each by reading THIS FILE rather than by auditing the emitter. (1) No interval, ci, confidence_interval or bootstrap property exists at any depth, and every object sets additionalProperties:false, so while R-12's owner-labelled calibration set is deferred there is nothing an interval could honestly be computed from and no place to put one. (2) `calibration.state` is a required const \"uncalibrated\" and `publishable` is a required const false \u2014 the round trip measures the round trip (the renderer authored the ground truth the extractor is scored against), and un-publishability is therefore a schema fact, not prose a reader may skip. (3) No aggregate figure blends fact types (D-01): every rate belongs to exactly one per_fact_type row and is an object carrying its own numerator AND denominator, so 1.0 over one fact can never be confused with 1.0 over two hundred. There is deliberately NO timestamp: two runs over one case set must reproduce byte-for-byte. This payload also carries NO verdict channel \u2014 no verdicts, no band, no acceptance_ready, no counts \u2014 because `gnd verify` emits verdicts and never a rate, and `gnd fidelity` emits rates and never a verdict (R-03'').",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tool",
+    "command",
+    "gnd_version",
+    "model",
+    "artifacts",
+    "cases",
+    "per_fact_type",
+    "calibration",
+    "publishable",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "tool": {
+      "const": "gnd"
+    },
+    "command": {
+      "const": "fidelity"
+    },
+    "gnd_version": {
+      "type": "string"
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A path-spelling-independent model label; `sha256` is the authoritative content identity."
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "applicable_sha256",
+        "projection_sha256"
+      ],
+      "description": "The `gnd extract` bundle this run was scored against. The applicable set DEFINES the row set and therefore every denominator, so it is inside the pinning trail rather than beside it.",
+      "properties": {
+        "applicable_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "projection_sha256": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "cases": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ran",
+        "skipped",
+        "failed",
+        "reasons"
+      ],
+      "description": "The extraction census (R-13'). Rates are computed over `ran` cases ONLY; skipped and failed cases are counted HERE and folded into no denominator anywhere \u2014 an unrun measurement must never look like a passing one.",
+      "properties": {
+        "ran": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "case",
+              "state",
+              "reason"
+            ],
+            "properties": {
+              "case": {
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "skipped",
+                  "failed"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "per_fact_type": {
+      "type": "array",
+      "description": "One row per fact type the applicable-set artifact declares \u2014 including inapplicable ones, which carry their mechanism and contribute to no count (C5). A fact type that simply vanished from this list would be indistinguishable from one that scored perfectly.",
+      "items": {
+        "$ref": "#/$defs/fact_type_row"
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "unquantified_biases"
+      ],
+      "description": "PANEL-1. R-06 (cross-family delta) and R-12 (the N=12 owner-labelled calibration set) are panel-confirmed deferrals, so nothing in this lane bounds the round trip's self-consistency bias. `state` is a constant: there is no state a run of this command could legitimately report other than `uncalibrated`. `unquantified_biases` is an open set with required members (owner decision 2026-08-13, UAT item 1).",
+      "properties": {
+        "state": {
+          "const": "uncalibrated"
+        },
+        "unquantified_biases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "description": "Every reason this number may be too kind. REQUIRED MEMBERS, never removable; additions are permitted without a schema bump. Was a frozen `const` pair until plan 06's FINDING 3 produced a third bias the payload could not name, which pushed it into prose and undercut PANEL-1's rule that un-publishability is a schema fact rather than prose. `contains` still forbids dropping a bias to flatter the number; it permits adding one, which only ever makes the number look worse.",
+          "allOf": [
+            {
+              "contains": {
+                "const": "self-consistency"
+              }
+            },
+            {
+              "contains": {
+                "const": "unmentioned-entity-recall"
+              }
+            },
+            {
+              "contains": {
+                "const": "relation-permutation"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "publishable": {
+      "const": false,
+      "description": "Machine-readable un-publishability (PANEL-1). Const, not merely defaulted: no argument, flag or future caller can flip it while the calibration set is deferred."
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cases",
+        "excerpt"
+      ],
+      "description": "D-22: no published number without one raw artifact a reader can open.",
+      "properties": {
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "case",
+              "state",
+              "source_population_sha256",
+              "extracted_population_sha256",
+              "document_sha256"
+            ],
+            "properties": {
+              "case": {
+                "type": "string",
+                "description": "The case directory name, RELATIVE to --cases: the payload names the case without naming the machine it was measured on."
+              },
+              "state": {
+                "enum": [
+                  "ran",
+                  "skipped",
+                  "failed"
+                ]
+              },
+              "source_population_sha256": {
+                "$ref": "#/$defs/nullable_digest"
+              },
+              "extracted_population_sha256": {
+                "$ref": "#/$defs/nullable_digest"
+              },
+              "document_sha256": {
+                "$ref": "#/$defs/nullable_digest"
+              }
+            }
+          }
+        },
+        "excerpt": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "case",
+            "fact_type",
+            "outcome",
+            "source",
+            "fact",
+            "reason"
+          ],
+          "description": "One outcome-aligned evidence record from a named case, chosen deterministically and preferring a non-tp extraction. Falls back to a missed source fact, or an explicit evidence-unavailable record when a ran case contains no applicable facts. Null only when no case ran.",
+          "properties": {
+            "case": {
+              "type": "string"
+            },
+            "fact_type": {
+              "type": "string"
+            },
+            "outcome": {
+              "enum": [
+                "tp",
+                "unmatched",
+                "unresolved",
+                "ambiguous",
+                "missed",
+                "evidence-unavailable"
+              ]
+            },
+            "source": {
+              "enum": ["extracted", "source", "none"]
+            },
+            "fact": {
+              "type": ["object", "null"],
+              "description": "Quoted raw evidence: role_name -> filler, exactly as the named source wrote it. Null only for evidence-unavailable. Deliberately open because its keys are model role names."
+            },
+            "reason": {
+              "type": ["string", "null"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullable_digest": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "numerator",
+        "denominator",
+        "rate"
+      ],
+      "description": "A rate never travels without its base (R-11'). `rate` is null exactly when `denominator` is 0 \u2014 no data, not zero performance.",
+      "properties": {
+        "numerator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "fact_type_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "applicable",
+        "reason",
+        "matched",
+        "precision",
+        "recall",
+        "unresolved"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "applicable": {
+          "type": "boolean",
+          "description": "Whether this fact type is inside document-extraction scope and has a reference identity the matcher can derive."
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Null when applicable; otherwise the ARTIFACT's mechanism string naming either why structured derivation puts the fact type outside document-extraction scope or what makes its reference identity underivable \u2014 never a bare label."
+        },
+        "matched": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_total",
+            "extracted_total",
+            "tp",
+            "missed",
+            "unmatched",
+            "unresolved",
+            "ambiguous"
+          ],
+          "description": "The partition audit trail. tp + unmatched + unresolved + ambiguous == extracted_total AND tp + missed == source_total, checkable by a reader summing the printed counters.",
+          "properties": {
+            "source_total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "extracted_total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "tp": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "missed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unmatched": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unresolved": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "ambiguous": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "precision": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/rate"
+            }
+          ],
+          "description": "INCLUSIVE (PANEL-5): the denominator is EVERY extracted fact \u2014 unmatched, unresolved and ambiguous included. Every available exclusion flatters."
+        },
+        "recall": {
+          "$ref": "#/$defs/rate"
+        },
+        "unresolved": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/rate"
+            }
+          ],
+          "description": "R-10's third outcome as its own number: an extraction we could not place is not the same as one that is wrong, and folding them into precision or recall is the error this project keeps correcting."
+        }
+      }
+    }
+  }
+}

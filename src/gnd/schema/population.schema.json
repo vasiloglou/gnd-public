@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/population.schema.json",
+  "title": "GND population interchange format (D-10)",
+  "description": "Draft 2020-12 schema for population files — the universal interchange for agent outputs, synthetic data, and eval fixtures (YAML or JSON, one loader: D-11). The `population` header carries declarative metadata: `model` (a reference the loader NEVER opens — T-01-05), `source`, optional `label`, optional `model_id`, and the declared fact-type `covers` used for vacuity detection (D-12). `model_id` (D-06) is the model's own top-level `model_id`, restated here so a population can say which model it was written for: when both the model and the population declare one and they DIFFER, the population is rejected at load (exit 3); when only the model declares one, the cross-check is skipped with a warning and acceptance is NOT withheld; when neither does, there is no check. It is compared as an opaque string and never dereferenced to a path or opened. `instances` holds optional explicit object-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.",
+  "type": "object",
+  "required": ["population", "facts"],
+  "additionalProperties": false,
+  "properties": {
+    "format_version": { "type": "integer", "enum": [1, 2] },
+    "population": {
+      "type": "object",
+      "required": ["model", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "model": { "type": "string", "minLength": 1 },
+        "model_id": { "type": "string", "minLength": 1 },
+        "source": { "enum": ["agent-output", "synthetic", "fixture"] },
+        "label": { "enum": ["conforming", "boundary", "violating"] },
+        "covers": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "instances": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "$ref": "#/$defs/scalar" }
+      }
+    },
+    "facts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/fact_value" }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "format_version": { "const": 2 } }, "required": ["format_version"] },
+      "else": {
+        "properties": {
+          "facts": { "additionalProperties": { "items": { "additionalProperties": { "$ref": "#/$defs/scalar" } } } }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "scalar": { "type": ["string", "number", "boolean"] },
+    "opaque_marker": {
+      "type": "object",
+      "required": ["$opaque"],
+      "additionalProperties": false,
+      "properties": { "$opaque": { "type": "string", "minLength": 1 } }
+    },
+    "fact_value": { "anyOf": [{ "$ref": "#/$defs/scalar" }, { "$ref": "#/$defs/opaque_marker" }] }
+  }
+}

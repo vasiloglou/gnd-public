@@ -1,0 +1,118 @@
+[project]
+# D-01: `gnd` has been taken on PyPI since 2022, so the DISTRIBUTION is
+# `get-nick-done`. The import package and the console script both stay `gnd` —
+# only the name users type after `uv tool install` changes.
+name = "get-nick-done"
+version = "0.1.0"
+description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+authors = [
+    { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
+]
+requires-python = ">=3.11"
+# D-18: the base install stays these three. Phase 2's synthetic-data stack
+# (polyfactory / faker / hypothesis) lands behind an optional extra when there is
+# something to put in it — do NOT scaffold an empty extra now. A fourth entry
+# here fails tests/test_packaged_skills.py::test_base_dependency_set_is_frozen,
+# which is the mechanical form of this policy.
+dependencies = [
+    "jsonschema==4.26.0",
+    "pydantic==2.13.4",
+    "ruamel-yaml==0.19.1",
+]
+
+# D-18: the base install above is deliberately untouched. Phase 2's synthetic-data
+# stack lands here, behind an OPTIONAL extra, so a user who only runs `gnd check`
+# never receives it. `faker` was cleared through the phase's blocking-human
+# package-legitimacy gate (02-02 Task 1) before being pinned: PyPI `Faker`, first
+# released 2010-12-23, 503 releases, repo github.com/joke2k/faker. Polyfactory and
+# Hypothesis are NOT installed — Polyfactory was refuted by measurement (D-17,
+# 0/8 ages in a declared 18..65 range; 8/8 distinct entities forcing zero-row
+# joins) and Hypothesis is deferred. Adding either here, or promoting faker into
+# [project.dependencies], fails tests/test_packaged_skills.py.
+[project.optional-dependencies]
+synth = ["faker==40.36.0"]
+
+[project.scripts]
+# PKG-01. The generated wrapper wraps the call in `sys.exit()`, so `main`'s
+# existing `int` return IS the process exit code and the 0-4/64/70 band contract
+# in gnd/cli.py survives untouched. `python -m gnd` keeps working (D-03) as a
+# development convenience; this is the documented interface.
+gnd = "gnd.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.10,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# The ONLY key this project may set here, and it is mandatory: `uv_build` derives
+# the module name from the distribution name, so renaming to `get-nick-done`
+# (D-01) makes it look for `src/get_nick_done/`. Without this it fails loudly —
+# "Expected a Python module at: src/get_nick_done/__init__.py" — which is why
+# this key is safe to rely on where the include keys are not.
+#
+# Do NOT add `source-include`, `data`, or a `force-include` stanza here to get
+# the skills into the wheel. All three were measured and refuted: `source-include`
+# is sdist-only, `data.purelib` lands at the site-packages root rather than
+# `gnd/skills/`, and `force-include` is not a key this backend has. Worse, the
+# backend SILENTLY IGNORES unrecognised keys — a typo yields a clean
+# "Successfully built" and a skill-less wheel, which is exactly how this defect
+# shipped. The skill tree ships because it physically lives under the module
+# root at `src/gnd/skills/`; that is the whole mechanism. Verify artifacts with
+# `pytest -m distribution`, never a green build message.
+module-name = "gnd"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["fixtures"]
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+markers = [
+  "proof: opt-in proof lane; not selected by the default public development gate",
+  "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
+  "distribution: opt-in distribution lane; not selected by the default public development gate",
+  "evidence: opt-in evidence lane; not selected by the default public development gate",
+  "census: opt-in census lane; not selected by the default public development gate",
+  "live: opt-in live lane; not selected by the default public development gate",
+  "network: opt-in network lane; not selected by the default public development gate",
+  "review_runner: opt-in review_runner lane; not selected by the default public development gate",
+  "slow: opt-in slow lane; not selected by the default public development gate",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# An experiment's retained attempts and its accepted candidate are EVIDENCE:
+# they record what a session actually produced, and reformatting them would
+# forge that record the same way editing a retained agent stream would. They are
+# excluded from linting because their bytes are not ours to change -- not
+# because their style is acceptable.
+#
+# This exemption deliberately does NOT cover the shipped product. The BookRec
+# package that ships lives at examples/bookrec/project/bookrec/, is copied from
+# the accepted gate candidate, and is linted like any other source here. If the
+# copy is dirty, the fix belongs in the session that produced it, never in a
+# post-hoc edit that would break the byte-for-byte copy claim.
+#
+# proof/v6/phase1/generated/ is the contract-carrying copy of the Phase 1 kernel.
+# Its bytes are produced by proof/v6/phase1/generate_proof_source.py, and they
+# are held to something far stricter than a linter: proof/v6/phase1/erasure.py
+# proves that erasing its contract-only calls returns it to
+# src/gnd/proof_kernel.py statement for statement, and that file IS linted. A
+# ruff autofix here would break that identity, which is the whole gate.
+extend-exclude = [
+    "**/EXP-*/runs/*/attempts/**",
+    "**/EXP-*/candidate/**",
+    "proof/v6/phase1/generated/**",
+]
+
+[dependency-groups]
+dev = [
+    # A fresh detached checkout measured the default suite failing at
+    # test_measure_offline's synth-fixture setup. Keeping Faker in dev as well
+    # as the optional runtime extra makes `uv run pytest` honest without
+    # widening the three-package base install.
+    "duckdb==1.5.5",
+    "faker==40.36.0",
+    "pytest==9.1.1",
+    "ruff==0.16.2",
+]

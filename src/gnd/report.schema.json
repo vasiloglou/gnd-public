@@ -1,0 +1,4905 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/report.schema.json",
+  "title": "GND check/validate/verify JSON payload (D-10, D-11, D-12)",
+  "description": "Draft 2020-12 schema for the `--format json` payload emitted by `python -m gnd check`, `python -m gnd validate`, and `python -m gnd verify`. This is a runtime OUTPUT contract, not an interchange format \u2014 it is deliberately vendored-only and lives outside src/gnd/schema/, which tests/test_schema_sync.py holds byte-identical to the gnd-orm-core canonical references. One of two closed fixed-shape tagged records is emitted on every exit path that carries a verdict (0, 1, 2, 3, 4, 70); exit 64 (argparse usage error) deliberately emits none. Version 3 preserves the original keys and forbids `derivations`; version 4 requires it. Within either variant every key is always present with an empty default, and `outcome` is the exit discriminator. Bump `schema_version` on any breaking change.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/legacy_reference_report"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "command",
+        "outcome",
+        "exit_code",
+        "model_digest",
+        "reference_binding",
+        "report",
+        "occurrence_origins"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 12
+        },
+        "command": {
+          "type": "string"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            70
+          ]
+        },
+        "model_digest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "reference_binding": {
+          "type": "object",
+          "required": [
+            "identity_version",
+            "references"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "identity_version": {
+              "const": 1
+            },
+            "references": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "sha256"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "report": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/legacy_reference_report"
+            },
+            {
+              "$ref": "#/$defs/diff_reference_report"
+            }
+          ]
+        },
+        "occurrence_origins": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "origin",
+              "fact_type",
+              "index"
+            ],
+            "properties": {
+              "origin": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "reference_id"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "candidate",
+                      "reference"
+                    ]
+                  },
+                  "reference_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "oneOf": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "candidate"
+                      },
+                      "reference_id": {
+                        "type": "null"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "reference"
+                      },
+                      "reference_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              "fact_type": {
+                "type": "string"
+              },
+              "index": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$ref": "#/$defs/temporal_admission_report"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "command",
+        "outcome",
+        "exit_code",
+        "model_digest",
+        "reference_binding",
+        "report",
+        "occurrence_origins"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 14
+        },
+        "command": {
+          "type": "string"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            70
+          ]
+        },
+        "model_digest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "reference_binding": {
+          "type": "object",
+          "required": [
+            "identity_version",
+            "references"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "identity_version": {
+              "const": 1
+            },
+            "references": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "sha256"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "report": {
+          "$ref": "#/$defs/temporal_admission_report"
+        },
+        "occurrence_origins": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "origin",
+              "fact_type",
+              "index"
+            ],
+            "properties": {
+              "origin": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "reference_id"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "candidate",
+                      "reference"
+                    ]
+                  },
+                  "reference_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "oneOf": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "candidate"
+                      },
+                      "reference_id": {
+                        "type": "null"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "reference"
+                      },
+                      "reference_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              "fact_type": {
+                "type": "string"
+              },
+              "index": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "redacted_marker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "redacted",
+        "roles"
+      ],
+      "properties": {
+        "redacted": {
+          "const": true
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[^.]+\\.[^.]+$"
+          }
+        }
+      }
+    },
+    "witness": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/redacted_marker"
+        },
+        {
+          "$ref": "#/$defs/scalar"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scalar"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/scalar"
+              },
+              {
+                "$ref": "#/$defs/redacted_marker"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "declarations"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "applied",
+            "unredacted"
+          ]
+        },
+        "declarations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "case_id",
+              "source",
+              "fact_type",
+              "roles"
+            ],
+            "properties": {
+              "case_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "enum": [
+                  "role",
+                  "fact-type"
+                ]
+              },
+              "fact_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "roles": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "verdict_v9": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/verdict"
+        },
+        {
+          "properties": {
+            "offending_facts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/witness"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "fact_ref_v10": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_type",
+        "index"
+      ],
+      "properties": {
+        "fact_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "opaque_dependency_v10": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_ref",
+        "role"
+      ],
+      "properties": {
+        "fact_ref": {
+          "$ref": "#/$defs/fact_ref_v10"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "admitted",
+        "blocked"
+      ],
+      "properties": {
+        "admitted": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fact_ref",
+              "opaque_deps"
+            ],
+            "properties": {
+              "fact_ref": {
+                "$ref": "#/$defs/fact_ref_v10"
+              },
+              "opaque_deps": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/opaque_dependency_v10"
+                }
+              }
+            }
+          }
+        },
+        "blocked": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fact_ref",
+              "blocked_by"
+            ],
+            "properties": {
+              "fact_ref": {
+                "$ref": "#/$defs/fact_ref_v10"
+              },
+              "blocked_by": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "verdict_v10": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_ref",
+        "constraint_type",
+        "modality",
+        "source",
+        "status",
+        "verdict",
+        "message",
+        "offending_facts",
+        "reason_code",
+        "refused_facts",
+        "witnesses"
+      ],
+      "properties": {
+        "constraint_ref": {
+          "$ref": "#/$defs/verdict/properties/constraint_ref"
+        },
+        "constraint_type": {
+          "$ref": "#/$defs/verdict/properties/constraint_type"
+        },
+        "modality": {
+          "$ref": "#/$defs/verdict/properties/modality"
+        },
+        "source": {
+          "$ref": "#/$defs/verdict/properties/source"
+        },
+        "status": {
+          "$ref": "#/$defs/verdict/properties/status"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict/properties/verdict"
+        },
+        "message": {
+          "$ref": "#/$defs/verdict/properties/message"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/verdict/properties/reason_code"
+        },
+        "offending_facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fact_ref_v10"
+          }
+        },
+        "refused_facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fact_ref_v10"
+          }
+        },
+        "witnesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/witness"
+          }
+        }
+      }
+    },
+    "derivation_verdict_v9": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/derivation_verdict"
+        },
+        {
+          "properties": {
+            "findings": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/derivation_finding"
+                  },
+                  {
+                    "properties": {
+                      "witness": {
+                        "$ref": "#/$defs/witness"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scalar": {
+      "type": [
+        "string",
+        "number",
+        "boolean"
+      ]
+    },
+    "derivation_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "message",
+        "witness"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "derived-extension-incomplete",
+            "derived-extension-unsound"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "witness": {
+          "type": "object"
+        }
+      }
+    },
+    "derivation_finding_v10": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "message",
+        "witness"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "derived-extension-incomplete",
+            "derived-extension-unsound",
+            "derived-extension-unresolved"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "witness": {
+          "type": "object"
+        }
+      }
+    },
+    "derivation_verdict_v10": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "derivation_ref",
+        "derivation",
+        "modality",
+        "verdict",
+        "message",
+        "findings",
+        "reason_code"
+      ],
+      "properties": {
+        "derivation_ref": {
+          "type": "string",
+          "pattern": "^derivation:\\S+$"
+        },
+        "derivation": {
+          "enum": [
+            "derived",
+            "semiderived"
+          ]
+        },
+        "modality": {
+          "const": "alethic"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "unchecked"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "findings": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/derivation_finding_v10"
+          },
+          "oneOf": [
+            {
+              "maxItems": 0
+            },
+            {
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-incomplete"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unsound"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "minItems": 1,
+              "maxItems": 1,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unresolved"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-incomplete"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unsound"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-incomplete"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unresolved"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unsound"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unresolved"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "minItems": 3,
+              "maxItems": 3,
+              "prefixItems": [
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-incomplete"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unsound"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "derived-extension-unresolved"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "reason_code": {
+          "enum": [
+            null,
+            "derivation-not-covered",
+            "derivation-rule-opaque",
+            "opaque-value",
+            "derived-unknown",
+            "term:mod-zero",
+            "term:exact-value-too-wide",
+            "term:dependency-unavailable",
+            "term:div-zero",
+            "term:sqrt-negative",
+            "term:haversine-coordinate-range",
+            "term:float-overflow"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "pass"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "maxItems": 0
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "fail"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "minItems": 1,
+                "not": {
+                  "prefixItems": [
+                    {
+                      "properties": {
+                        "kind": {
+                          "const": "derived-extension-unresolved"
+                        }
+                      }
+                    }
+                  ],
+                  "maxItems": 1
+                }
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "unchecked"
+              }
+            }
+          },
+          "then": {
+            "oneOf": [
+              {
+                "properties": {
+                  "reason_code": {
+                    "const": "derived-unknown"
+                  },
+                  "findings": {
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "properties": {
+                          "kind": {
+                            "const": "derived-extension-unresolved"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "reason_code": {
+                    "not": {
+                      "enum": [
+                        null,
+                        "derived-unknown"
+                      ]
+                    }
+                  },
+                  "findings": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "derivation": {
+                "const": "semiderived"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "not": {
+                  "contains": {
+                    "properties": {
+                      "kind": {
+                        "const": "derived-extension-unsound"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "derivation_verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "derivation_ref",
+        "derivation",
+        "modality",
+        "verdict",
+        "message",
+        "findings",
+        "reason_code"
+      ],
+      "properties": {
+        "derivation_ref": {
+          "type": "string",
+          "pattern": "^derivation:\\S+$"
+        },
+        "derivation": {
+          "enum": [
+            "derived",
+            "semiderived"
+          ]
+        },
+        "modality": {
+          "const": "alethic"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "unchecked"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "findings": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/derivation_finding"
+          }
+        },
+        "reason_code": {
+          "enum": [
+            "derivation-not-covered",
+            "derivation-rule-opaque",
+            "opaque-value",
+            null
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "pass"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "maxItems": 0
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "fail"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "minItems": 1
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "unchecked"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "maxItems": 0
+              },
+              "reason_code": {
+                "enum": [
+                  "derivation-not-covered",
+                  "derivation-rule-opaque",
+                  "opaque-value"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "findings": {
+                "minItems": 2
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "derived-extension-incomplete"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "derived-extension-unsound"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "verdict": {
+      "type": "object",
+      "required": [
+        "constraint_ref",
+        "constraint_type",
+        "modality",
+        "source",
+        "status",
+        "verdict",
+        "message",
+        "offending_facts",
+        "reason_code"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "constraint_ref": {
+          "type": "string"
+        },
+        "constraint_type": {
+          "type": "string"
+        },
+        "modality": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "description": "The constraint's declared provenance origin (R-01), read from the constraint itself: explicit | sample | common-sense | llm-inferred | user-supplied | imported (v2). PANEL-3 scoping: only source + status are surfaced; the full provenance block (user_quote etc.) is deliberately NOT copied into reports \u2014 additionalProperties:false enforces the exclusion."
+        },
+        "status": {
+          "type": "string",
+          "description": "The constraint's confirmation status (R-01): proposed | confirmed. The only other provenance field PANEL-3 admits into the payload."
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "warning",
+            "unchecked",
+            "vacuous"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "offending_facts": {
+          "type": "array"
+        },
+        "reason_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Machine-readable reason a constraint could not be evaluated (D-12). Non-null if and only if verdict is 'unchecked'."
+        }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The extractor half of `gnd verify` (R-03''/PANEL-3): its fidelity record, kept SEPARATE from the checker's verdicts so the full verifier's two error sources are never blended. Present as {} on every `check`/`validate` payload \u2014 populated only by `gnd verify` (whose builder and tests enforce populated-ness on that path); deliberately NO required list here so the empty object validates.",
+      "properties": {
+        "state": {
+          "enum": [
+            "ran",
+            "skipped",
+            "failed"
+          ],
+          "description": "R-13': the extraction-state vocabulary. `skipped` is written ONLY by an intentional opt-out; absence of files is `failed`, never `skipped`."
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sidecar": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The sidecar path as given on the command line."
+        },
+        "population_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "model_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "projection_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "document": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "document_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "skill": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "skill_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "executing_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "coverage_entry": {
+      "type": "object",
+      "required": [
+        "declared",
+        "facts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "declared": {
+          "enum": [
+            "declared",
+            "undeclared"
+          ]
+        },
+        "facts": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": [
+        "path",
+        "message",
+        "rule_id",
+        "severity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "rule_id": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ]
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": [
+        "type",
+        "message"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "redaction_v11": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "declarations"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "applied",
+            "unredacted"
+          ]
+        },
+        "declarations": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "case_id",
+              "source",
+              "fact_type",
+              "roles"
+            ],
+            "properties": {
+              "case_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "enum": [
+                  "role",
+                  "fact-type"
+                ]
+              },
+              "fact_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "roles": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "legacy_reference_report": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "tool",
+        "command",
+        "outcome",
+        "exit_code",
+        "acceptance_ready",
+        "model",
+        "population",
+        "counts",
+        "verdicts",
+        "coverage",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "warnings",
+        "error",
+        "transition"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "enum": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "description": "Four closed variants, paired by derivation class and by whether the payload names the model that produced it. 3 is the frozen non-structured payload and 4 the frozen structured one; both forbid `model_digest` and remain exactly what they were. 5 and 6 are their model-bound successors, selected by `gnd check` and `gnd verify` once a model has loaded, and both require `model_digest`. A single new version cannot carry both fixed shapes, so the discriminator that already separates 3 from 4 separates 5 from 6 (v5.1 Phase 3, D-P3.1). Version 7 adds a fixed assurance union; versions 3-6 remain frozen."
+        },
+        "model_digest": {
+          "anyOf": [
+            {
+              "description": "The identity of the model this payload was produced from, as `gnd.transition.model_digest` computes it -- the same function a population's validation marker and a walk's `steps.json` use, so a report, a population and a walk agree by construction about what 'this model' means. Present on versions 5 and 6 and forbidden on 3 and 4. A model PATH is a coordinate, not an identity: two models can occupy one path over time and one model can be read from two. Emitted immediately after `model` so the byte delta from the frozen variants is exactly two keys wide.",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "gnd"
+        },
+        "transition": {
+          "description": "The walk, when one was run. THREE-VALUED BY DESIGN, and the distinction is why this key is always present: `null` means this invocation was not a transition run at all; an object with `evaluated: false` means a walk was REFUSED before evaluation began, with the rejection itself travelling in `issues` under a transition:* rule id; `evaluated: true` means a walk was evaluated and the report members are populated. A consumer therefore never has to read `exit_code` to tell 'not a walk' from 'a walk we would not run'.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "evaluated",
+                "model_digest",
+                "operations_digest",
+                "pre_digest",
+                "pre_snapshot",
+                "pre_snapshot_verdicts",
+                "steps",
+                "frame_grading",
+                "frame_verdicts",
+                "post_snapshot"
+              ],
+              "properties": {
+                "evaluated": {
+                  "type": "boolean",
+                  "description": "Whether the walk was evaluated. False means gnd.transition refused it -- exit 3, before any state was computed."
+                },
+                "model_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "As SUPPLIED by the steps document, not as computed here: when a run is refused for a digest mismatch, the caller needs to see what they sent. Null when the document could not be parsed far enough to carry one."
+                },
+                "operations_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "pre_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "pre_snapshot": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "pre_snapshot_verdicts": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "One finding about the walk. Two invariants the model enforces are restated here so a consumer reading only the schema learns them: `reason_code` is non-null if and only if `verdict` is 'unchecked', and `direction` is non-null if and only if `family` is 'frame'.",
+                        "required": [
+                          "family",
+                          "locator",
+                          "kind",
+                          "modality",
+                          "verdict",
+                          "message"
+                        ],
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "pre_snapshot",
+                              "step",
+                              "frame",
+                              "post_snapshot"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "enum": [
+                              "precondition",
+                              "create-freshness",
+                              "retract-target",
+                              "assert-redundant",
+                              "dynamic-rule",
+                              "compiled-subset",
+                              "frame-delta",
+                              "intermediate-unloadable"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "reason_code": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "offending_facts": {
+                            "type": "array"
+                          },
+                          "direction": {
+                            "enum": [
+                              "undeclared-assert",
+                              "undeclared-retract",
+                              null
+                            ]
+                          },
+                          "fact_type": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "obligation": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "allOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "verdict": {
+                                  "const": "unchecked"
+                                }
+                              },
+                              "required": [
+                                "verdict"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "reason_code"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": {
+                                "family": {
+                                  "const": "frame"
+                                }
+                              },
+                              "required": [
+                                "family"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "direction": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "direction"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "direction": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "steps": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "index",
+                          "operation",
+                          "bindings",
+                          "verdicts",
+                          "intermediate"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "operation": {
+                            "type": "string"
+                          },
+                          "bindings": {
+                            "type": "object"
+                          },
+                          "verdicts": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "description": "One finding about the walk. Two invariants the model enforces are restated here so a consumer reading only the schema learns them: `reason_code` is non-null if and only if `verdict` is 'unchecked', and `direction` is non-null if and only if `family` is 'frame'.",
+                              "required": [
+                                "family",
+                                "locator",
+                                "kind",
+                                "modality",
+                                "verdict",
+                                "message"
+                              ],
+                              "properties": {
+                                "family": {
+                                  "enum": [
+                                    "pre_snapshot",
+                                    "step",
+                                    "frame",
+                                    "post_snapshot"
+                                  ]
+                                },
+                                "locator": {
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "enum": [
+                                    "precondition",
+                                    "create-freshness",
+                                    "retract-target",
+                                    "assert-redundant",
+                                    "dynamic-rule",
+                                    "compiled-subset",
+                                    "frame-delta",
+                                    "intermediate-unloadable"
+                                  ]
+                                },
+                                "modality": {
+                                  "type": "string"
+                                },
+                                "verdict": {
+                                  "type": "string"
+                                },
+                                "message": {
+                                  "type": "string"
+                                },
+                                "reason_code": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "offending_facts": {
+                                  "type": "array"
+                                },
+                                "direction": {
+                                  "enum": [
+                                    "undeclared-assert",
+                                    "undeclared-retract",
+                                    null
+                                  ]
+                                },
+                                "fact_type": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "obligation": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "value": {}
+                              },
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "verdict": {
+                                        "const": "unchecked"
+                                      }
+                                    },
+                                    "required": [
+                                      "verdict"
+                                    ]
+                                  },
+                                  "then": {
+                                    "properties": {
+                                      "reason_code": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "reason_code"
+                                    ]
+                                  },
+                                  "else": {
+                                    "properties": {
+                                      "reason_code": {
+                                        "type": "null"
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "family": {
+                                        "const": "frame"
+                                      }
+                                    },
+                                    "required": [
+                                      "family"
+                                    ]
+                                  },
+                                  "then": {
+                                    "properties": {
+                                      "direction": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "direction"
+                                    ]
+                                  },
+                                  "else": {
+                                    "properties": {
+                                      "direction": {
+                                        "type": "null"
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "derived_changes": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "fact_type",
+                                "added",
+                                "removed"
+                              ],
+                              "properties": {
+                                "fact_type": {
+                                  "type": "string"
+                                },
+                                "added": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "removed": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                }
+                              },
+                              "anyOf": [
+                                {
+                                  "properties": {
+                                    "added": {
+                                      "minItems": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "properties": {
+                                    "removed": {
+                                      "minItems": 1
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "intermediate": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "frame_grading": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "fact_type",
+                          "modality",
+                          "reason",
+                          "operations"
+                        ],
+                        "properties": {
+                          "fact_type": {
+                            "type": "string"
+                          },
+                          "modality": {
+                            "type": "string"
+                          },
+                          "reason": {
+                            "enum": [
+                              "all-alethic",
+                              "deontic-toucher"
+                            ]
+                          },
+                          "operations": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "frame_status": {
+                  "enum": [
+                    "not-applicable",
+                    "not-evaluated",
+                    null
+                  ]
+                },
+                "frame_verdicts": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "One finding about the walk. Two invariants the model enforces are restated here so a consumer reading only the schema learns them: `reason_code` is non-null if and only if `verdict` is 'unchecked', and `direction` is non-null if and only if `family` is 'frame'.",
+                        "required": [
+                          "family",
+                          "locator",
+                          "kind",
+                          "modality",
+                          "verdict",
+                          "message"
+                        ],
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "pre_snapshot",
+                              "step",
+                              "frame",
+                              "post_snapshot"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "enum": [
+                              "precondition",
+                              "create-freshness",
+                              "retract-target",
+                              "assert-redundant",
+                              "dynamic-rule",
+                              "compiled-subset",
+                              "frame-delta",
+                              "intermediate-unloadable"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "reason_code": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "offending_facts": {
+                            "type": "array"
+                          },
+                          "direction": {
+                            "enum": [
+                              "undeclared-assert",
+                              "undeclared-retract",
+                              null
+                            ]
+                          },
+                          "fact_type": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "obligation": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "allOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "verdict": {
+                                  "const": "unchecked"
+                                }
+                              },
+                              "required": [
+                                "verdict"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "reason_code"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": {
+                                "family": {
+                                  "const": "frame"
+                                }
+                              },
+                              "required": [
+                                "family"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "direction": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "direction"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "direction": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "post_snapshot": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "computed_post": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "population",
+                        "facts"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "population": {
+                          "type": "object",
+                          "required": [
+                            "model",
+                            "model_id",
+                            "source",
+                            "covers"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "model": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "model_id": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "source": {
+                              "const": "synthetic"
+                            },
+                            "covers": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "facts": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "$ref": "#/$defs/scalar"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "format_version",
+                        "population",
+                        "facts"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "format_version": {
+                          "const": 2
+                        },
+                        "population": {
+                          "type": "object",
+                          "required": [
+                            "model",
+                            "model_id",
+                            "source",
+                            "covers"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "model": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "model_id": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "source": {
+                              "const": "synthetic"
+                            },
+                            "covers": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "facts": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "oneOf": [
+                                  {
+                                    "$ref": "#/$defs/scalar"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "$opaque"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "$opaque": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "command": {
+          "enum": [
+            "check",
+            "validate",
+            "verify"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "violated",
+            "inadequate",
+            "ill_formed",
+            "indeterminate",
+            "internal_error"
+          ],
+          "description": "The discriminator. Maps 1:1 onto exit_code: 0=accepted, 1=violated, 2=inadequate, 3=ill_formed, 4=indeterminate, 70=internal_error."
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            70
+          ],
+          "description": "The process exit code. Band precedence is 3 > 1 > 4 > 2 > 0 (D-08)."
+        },
+        "acceptance_ready": {
+          "type": "boolean",
+          "description": "True if and only if exit_code is 0 (D-08). 'Could not decide' (4) is never acceptance."
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Path to the model as supplied on the command line."
+        },
+        "population": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Path to the population; always null for command 'validate'."
+        },
+        "post": {
+          "enum": [
+            null,
+            "declared",
+            "computed"
+          ]
+        },
+        "counts": {
+          "type": "object",
+          "required": [
+            "pass",
+            "fail",
+            "warning",
+            "unchecked",
+            "vacuous"
+          ],
+          "additionalProperties": false,
+          "description": "Verdict tally, passed through unchanged from CheckReport.counts() \u2014 the same dict the text renderer prints, so the two renderings can never disagree.",
+          "properties": {
+            "pass": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fail": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "warning": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unchecked": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "vacuous": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/verdict"
+              },
+              {
+                "$ref": "#/$defs/verdict_v10"
+              }
+            ]
+          },
+          "description": "One entry per constraint. Empty on exit 3 and 70 (the checker never ran) and for command 'validate'."
+        },
+        "derivations": {
+          "anyOf": [
+            {
+              "description": "One alethic obligation per derived fact type; present only in schema version 4.",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict"
+              },
+              "type": "array"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict_v10"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/coverage_entry"
+          },
+          "description": "Declared-coverage status and fact count per fact type."
+        },
+        "extraction": {
+          "$ref": "#/$defs/extraction"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          },
+          "maxItems": 200,
+          "description": "Error-severity validation issues, populated on exit 3. Capped at MAX_POPULATION_ISSUES (200) so an untrusted population cannot produce an unbounded payload (T-01.1-02)."
+        },
+        "issues_total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Issue count BEFORE truncation. Equals len(issues) unless issues_truncated is true."
+        },
+        "issues_truncated": {
+          "type": "boolean",
+          "description": "True when issues_total exceeded the cap and the array was elided."
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          },
+          "description": "Warning-severity issues (e.g. semantic:modality-policy). Never block a load."
+        },
+        "error": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/error"
+            }
+          ],
+          "description": "Populated on exit 70 (internal checker error) and on the opaque exit-3 load-failure arm where no structured issues exist. Null otherwise."
+        },
+        "assurance": {
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "assurance_level": {
+                    "enum": [
+                      "partial",
+                      "proof-backed"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "production_roster_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "proof_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "scope_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "semantics_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "toolchain_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "assurance_level": {
+                    "const": "proof-backed"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "uncovered_applicable_scope_ids": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "semantic_decision": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "assurance_level": {
+                    "const": "none"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "assumptions": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "assurance_level": {
+              "enum": [
+                "none",
+                "partial",
+                "proof-backed"
+              ]
+            },
+            "production_roster_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "proof_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schema_version": {
+              "const": 1
+            },
+            "scope_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "semantic_decision": {
+              "enum": [
+                "accept",
+                "refuse",
+                "indeterminate",
+                null
+              ]
+            },
+            "semantics_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "toolchain_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "uncovered_applicable_scope_ids": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "schema_version",
+            "semantic_decision",
+            "assurance_level",
+            "scope_digest",
+            "semantics_digest",
+            "production_roster_digest",
+            "proof_digest",
+            "toolchain_digest",
+            "uncovered_applicable_scope_ids",
+            "assumptions"
+          ],
+          "type": "object"
+        },
+        "redaction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/redaction"
+            },
+            {
+              "$ref": "#/$defs/redaction_v11"
+            }
+          ]
+        },
+        "admission": {
+          "$ref": "#/$defs/admission"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "schema_version": {
+              "const": 3
+            },
+            "model_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "description": "The identity of the model this payload was produced from, as `gnd.transition.model_digest` computes it -- the same function a population's validation marker and a walk's `steps.json` use, so a report, a population and a walk agree by construction about what 'this model' means. Present on versions 5 and 6 and forbidden on 3 and 4. A model PATH is a coordinate, not an identity: two models can occupy one path over time and one model can be read from two. Emitted immediately after `model` so the byte delta from the frozen variants is exactly two keys wide."
+            },
+            "derivations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict"
+              },
+              "description": "One alethic obligation per derived fact type; present only in schema version 4."
+            }
+          },
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "derivations"
+                ]
+              },
+              {
+                "required": [
+                  "model_digest"
+                ]
+              }
+            ]
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "assurance"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "required": [
+            "derivations"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 4
+            },
+            "model_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "description": "The identity of the model this payload was produced from, as `gnd.transition.model_digest` computes it -- the same function a population's validation marker and a walk's `steps.json` use, so a report, a population and a walk agree by construction about what 'this model' means. Present on versions 5 and 6 and forbidden on 3 and 4. A model PATH is a coordinate, not an identity: two models can occupy one path over time and one model can be read from two. Emitted immediately after `model` so the byte delta from the frozen variants is exactly two keys wide."
+            },
+            "derivations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict"
+              },
+              "description": "One alethic obligation per derived fact type; present only in schema version 4."
+            }
+          },
+          "not": {
+            "required": [
+              "model_digest"
+            ]
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "assurance"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "required": [
+            "model_digest"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 5
+            },
+            "model_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "description": "The identity of the model this payload was produced from, as `gnd.transition.model_digest` computes it -- the same function a population's validation marker and a walk's `steps.json` use, so a report, a population and a walk agree by construction about what 'this model' means. Present on versions 5 and 6 and forbidden on 3 and 4. A model PATH is a coordinate, not an identity: two models can occupy one path over time and one model can be read from two. Emitted immediately after `model` so the byte delta from the frozen variants is exactly two keys wide."
+            },
+            "derivations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict"
+              },
+              "description": "One alethic obligation per derived fact type; present only in schema version 4."
+            }
+          },
+          "not": {
+            "required": [
+              "derivations"
+            ]
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "assurance"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "required": [
+            "derivations",
+            "model_digest"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 6
+            },
+            "model_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "description": "The identity of the model this payload was produced from, as `gnd.transition.model_digest` computes it -- the same function a population's validation marker and a walk's `steps.json` use, so a report, a population and a walk agree by construction about what 'this model' means. Present on versions 5 and 6 and forbidden on 3 and 4. A model PATH is a coordinate, not an identity: two models can occupy one path over time and one model can be read from two. Emitted immediately after `model` so the byte delta from the frozen variants is exactly two keys wide."
+            },
+            "derivations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict"
+              },
+              "description": "One alethic obligation per derived fact type; present only in schema version 4."
+            }
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "assurance"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "required": [
+            "model_digest",
+            "derivations",
+            "assurance"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 7
+            },
+            "command": {
+              "enum": [
+                "check",
+                "verify"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "model_digest",
+            "derivations",
+            "assurance",
+            "post"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 8
+            },
+            "command": {
+              "const": "check"
+            },
+            "post": {
+              "const": "computed"
+            },
+            "transition": {
+              "type": "object",
+              "required": [
+                "evaluated",
+                "model_digest",
+                "operations_digest",
+                "pre_digest",
+                "pre_snapshot",
+                "pre_snapshot_verdicts",
+                "steps",
+                "frame_grading",
+                "frame_status",
+                "frame_verdicts",
+                "computed_post",
+                "post_snapshot"
+              ],
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "evaluated": {
+                        "const": true
+                      }
+                    },
+                    "required": [
+                      "evaluated"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "frame_status": {
+                        "const": "not-applicable"
+                      },
+                      "frame_verdicts": {
+                        "type": "null"
+                      },
+                      "computed_post": {
+                        "type": "object"
+                      }
+                    }
+                  },
+                  "else": {
+                    "properties": {
+                      "frame_status": {
+                        "const": "not-evaluated"
+                      },
+                      "pre_snapshot": {
+                        "type": "null"
+                      },
+                      "pre_snapshot_verdicts": {
+                        "type": "null"
+                      },
+                      "steps": {
+                        "type": "null"
+                      },
+                      "frame_grading": {
+                        "type": "null"
+                      },
+                      "frame_verdicts": {
+                        "type": "null"
+                      },
+                      "computed_post": {
+                        "type": "null"
+                      },
+                      "post_snapshot": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "schema_version",
+            "tool",
+            "command",
+            "outcome",
+            "exit_code",
+            "acceptance_ready",
+            "model",
+            "model_digest",
+            "population",
+            "post",
+            "counts",
+            "verdicts",
+            "derivations",
+            "coverage",
+            "extraction",
+            "issues",
+            "issues_total",
+            "issues_truncated",
+            "warnings",
+            "error",
+            "transition",
+            "assurance",
+            "redaction"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 9
+            },
+            "post": {
+              "enum": [
+                null,
+                "declared",
+                "computed"
+              ]
+            },
+            "redaction": {
+              "$ref": "#/$defs/redaction"
+            },
+            "verdicts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/verdict_v9"
+              }
+            },
+            "derivations": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/derivation_verdict_v9"
+                  }
+                }
+              ]
+            },
+            "transition": {
+              "type": "object",
+              "required": [
+                "evaluated",
+                "model_digest",
+                "operations_digest",
+                "pre_digest",
+                "pre_snapshot",
+                "pre_snapshot_verdicts",
+                "steps",
+                "frame_grading",
+                "frame_status",
+                "frame_verdicts",
+                "computed_post",
+                "post_snapshot"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "schema_version",
+            "tool",
+            "command",
+            "outcome",
+            "exit_code",
+            "acceptance_ready",
+            "model",
+            "model_digest",
+            "population",
+            "counts",
+            "verdicts",
+            "derivations",
+            "coverage",
+            "extraction",
+            "issues",
+            "issues_total",
+            "issues_truncated",
+            "warnings",
+            "error",
+            "transition",
+            "assurance",
+            "admission"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 10
+            },
+            "command": {
+              "const": "check"
+            },
+            "verdicts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/verdict_v10"
+              }
+            },
+            "derivations": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/derivation_verdict_v10"
+                  }
+                }
+              ]
+            },
+            "admission": {
+              "$ref": "#/$defs/admission"
+            }
+          },
+          "not": {
+            "required": [
+              "post"
+            ]
+          }
+        },
+        {
+          "required": [
+            "schema_version",
+            "tool",
+            "command",
+            "outcome",
+            "exit_code",
+            "acceptance_ready",
+            "model",
+            "model_digest",
+            "population",
+            "post",
+            "counts",
+            "verdicts",
+            "derivations",
+            "coverage",
+            "extraction",
+            "issues",
+            "issues_total",
+            "issues_truncated",
+            "warnings",
+            "error",
+            "transition",
+            "assurance",
+            "redaction"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 11
+            },
+            "post": {
+              "enum": [
+                null,
+                "declared",
+                "computed"
+              ]
+            },
+            "redaction": {
+              "$ref": "#/$defs/redaction_v11"
+            },
+            "verdicts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/verdict_v9"
+              }
+            },
+            "derivations": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/derivation_verdict_v9"
+                  }
+                }
+              ]
+            },
+            "transition": {
+              "type": "object",
+              "required": [
+                "evaluated",
+                "model_digest",
+                "operations_digest",
+                "pre_digest",
+                "pre_snapshot",
+                "pre_snapshot_verdicts",
+                "steps",
+                "frame_grading",
+                "frame_status",
+                "frame_verdicts",
+                "computed_post",
+                "post_snapshot"
+              ]
+            },
+            "command": {
+              "const": "check"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "enum": [
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9
+                ]
+              }
+            },
+            "required": [
+              "schema_version"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "admission"
+              ]
+            },
+            "properties": {
+              "verdicts": {
+                "items": {
+                  "$ref": "#/$defs/verdict"
+                }
+              },
+              "derivations": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/derivation_verdict"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "enum": [
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              }
+            },
+            "required": [
+              "schema_version"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "post"
+              ]
+            },
+            "properties": {
+              "transition": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "frame_status"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "computed_post"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command": {
+                "const": "verify"
+              }
+            },
+            "required": [
+              "command"
+            ]
+          },
+          "then": {
+            "properties": {
+              "extraction": {
+                "required": [
+                  "state",
+                  "reason",
+                  "sidecar",
+                  "population_sha256",
+                  "model_sha256",
+                  "projection_sha256",
+                  "document",
+                  "document_sha256",
+                  "skill",
+                  "skill_version",
+                  "executing_model"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "extraction": {
+                "maxProperties": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "diff_reference_report": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://gnd.dev/schema/diff.schema.json",
+      "title": "GND differential output",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "command",
+        "model_a_digest",
+        "model_b_digest",
+        "vocabulary_digest",
+        "seed",
+        "assurance",
+        "entailment",
+        "populations",
+        "not_derivable"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "gnd-diff/1"
+        },
+        "command": {
+          "const": "diff"
+        },
+        "model_a_digest": {
+          "$ref": "#/$defs/modelDigest"
+        },
+        "model_b_digest": {
+          "$ref": "#/$defs/modelDigest"
+        },
+        "vocabulary_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "assurance": {
+          "const": "none"
+        },
+        "entailment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entailment"
+          }
+        },
+        "populations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/population"
+          }
+        },
+        "not_derivable": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/notDerivable"
+          }
+        }
+      },
+      "$defs": {
+        "modelDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "side": {
+          "enum": [
+            "a",
+            "b"
+          ]
+        },
+        "entailment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "from_model",
+            "to_model",
+            "left_ref",
+            "right_ref",
+            "family",
+            "result",
+            "reason"
+          ],
+          "properties": {
+            "from_model": {
+              "$ref": "#/$defs/side"
+            },
+            "to_model": {
+              "$ref": "#/$defs/side"
+            },
+            "left_ref": {
+              "type": "string"
+            },
+            "right_ref": {
+              "type": "string"
+            },
+            "family": {
+              "type": "string"
+            },
+            "result": {
+              "enum": [
+                "implies",
+                "undecided"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "verdict": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ref",
+            "verdict"
+          ],
+          "properties": {
+            "ref": {
+              "type": "string"
+            },
+            "verdict": {
+              "enum": [
+                "pass",
+                "fail",
+                "warning",
+                "vacuous",
+                "unchecked"
+              ]
+            }
+          }
+        },
+        "check": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "checked",
+                "not_comparable"
+              ]
+            },
+            "band": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "has_vacuous": {
+              "type": "boolean"
+            },
+            "verdicts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/verdict"
+              }
+            },
+            "derivation_verdicts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/verdict"
+              }
+            },
+            "rule": {
+              "type": "string"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "state": {
+                    "const": "checked"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "band",
+                  "has_vacuous",
+                  "verdicts",
+                  "derivation_verdicts"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "state": {
+                    "const": "not_comparable"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "rule"
+                ]
+              }
+            }
+          ]
+        },
+        "gap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target_ref",
+            "verdict",
+            "offending_facts",
+            "witness_sentence"
+          ],
+          "properties": {
+            "target_ref": {
+              "type": "string"
+            },
+            "verdict": {
+              "enum": [
+                "fail",
+                "unchecked"
+              ]
+            },
+            "offending_facts": {
+              "type": "array"
+            },
+            "witness_sentence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "derivation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fact_type",
+            "tuple",
+            "a_status",
+            "b_status",
+            "outcome",
+            "offending_facts"
+          ],
+          "properties": {
+            "fact_type": {
+              "type": "string"
+            },
+            "tuple": {
+              "type": "object"
+            },
+            "a_status": {
+              "enum": [
+                "in",
+                "out",
+                "unknown"
+              ]
+            },
+            "b_status": {
+              "enum": [
+                "in",
+                "out",
+                "unknown"
+              ]
+            },
+            "outcome": {
+              "enum": [
+                "unsound",
+                "incomplete",
+                "unresolved"
+              ]
+            },
+            "offending_facts": {
+              "type": "array"
+            }
+          }
+        },
+        "population": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "population_ref",
+            "population_sha256",
+            "origin",
+            "a",
+            "b",
+            "a_to_b",
+            "b_to_a",
+            "derivations"
+          ],
+          "properties": {
+            "population_ref": {
+              "type": "string"
+            },
+            "population_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "origin": {
+              "enum": [
+                "provided",
+                "synth-a-conforming",
+                "synth-b-conforming",
+                "synth-a-boundary",
+                "synth-b-boundary",
+                "other-model-boundary"
+              ]
+            },
+            "a": {
+              "$ref": "#/$defs/check"
+            },
+            "b": {
+              "$ref": "#/$defs/check"
+            },
+            "a_to_b": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/gap"
+              }
+            },
+            "b_to_a": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/gap"
+              }
+            },
+            "derivations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation"
+              }
+            }
+          }
+        },
+        "notDerivable": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "kind",
+            "subject",
+            "reason"
+          ],
+          "properties": {
+            "source": {
+              "$ref": "#/$defs/side"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "temporal_admission_report": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "tool",
+        "command",
+        "outcome",
+        "exit_code",
+        "acceptance_ready",
+        "model",
+        "population",
+        "counts",
+        "verdicts",
+        "coverage",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "warnings",
+        "error",
+        "transition"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 13
+        },
+        "model_digest": {
+          "anyOf": [
+            {
+              "description": "The identity of the model this payload was produced from, as `gnd.transition.model_digest` computes it -- the same function a population's validation marker and a walk's `steps.json` use, so a report, a population and a walk agree by construction about what 'this model' means. Present on versions 5 and 6 and forbidden on 3 and 4. A model PATH is a coordinate, not an identity: two models can occupy one path over time and one model can be read from two. Emitted immediately after `model` so the byte delta from the frozen variants is exactly two keys wide.",
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "gnd"
+        },
+        "transition": {
+          "description": "The walk, when one was run. THREE-VALUED BY DESIGN, and the distinction is why this key is always present: `null` means this invocation was not a transition run at all; an object with `evaluated: false` means a walk was REFUSED before evaluation began, with the rejection itself travelling in `issues` under a transition:* rule id; `evaluated: true` means a walk was evaluated and the report members are populated. A consumer therefore never has to read `exit_code` to tell 'not a walk' from 'a walk we would not run'.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "evaluated",
+                "model_digest",
+                "operations_digest",
+                "pre_digest",
+                "pre_snapshot",
+                "pre_snapshot_verdicts",
+                "steps",
+                "frame_grading",
+                "frame_verdicts",
+                "post_snapshot"
+              ],
+              "properties": {
+                "evaluated": {
+                  "type": "boolean",
+                  "description": "Whether the walk was evaluated. False means gnd.transition refused it -- exit 3, before any state was computed."
+                },
+                "model_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "As SUPPLIED by the steps document, not as computed here: when a run is refused for a digest mismatch, the caller needs to see what they sent. Null when the document could not be parsed far enough to carry one."
+                },
+                "operations_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "pre_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "pre_snapshot": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "pre_snapshot_verdicts": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "One finding about the walk. Two invariants the model enforces are restated here so a consumer reading only the schema learns them: `reason_code` is non-null if and only if `verdict` is 'unchecked', and `direction` is non-null if and only if `family` is 'frame'.",
+                        "required": [
+                          "family",
+                          "locator",
+                          "kind",
+                          "modality",
+                          "verdict",
+                          "message"
+                        ],
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "pre_snapshot",
+                              "step",
+                              "frame",
+                              "post_snapshot"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "enum": [
+                              "precondition",
+                              "create-freshness",
+                              "retract-target",
+                              "assert-redundant",
+                              "dynamic-rule",
+                              "compiled-subset",
+                              "frame-delta",
+                              "intermediate-unloadable"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "reason_code": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "offending_facts": {
+                            "type": "array"
+                          },
+                          "direction": {
+                            "enum": [
+                              "undeclared-assert",
+                              "undeclared-retract",
+                              null
+                            ]
+                          },
+                          "fact_type": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "obligation": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "allOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "verdict": {
+                                  "const": "unchecked"
+                                }
+                              },
+                              "required": [
+                                "verdict"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "reason_code"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": {
+                                "family": {
+                                  "const": "frame"
+                                }
+                              },
+                              "required": [
+                                "family"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "direction": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "direction"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "direction": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "steps": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "index",
+                          "operation",
+                          "bindings",
+                          "verdicts",
+                          "intermediate"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "operation": {
+                            "type": "string"
+                          },
+                          "bindings": {
+                            "type": "object"
+                          },
+                          "verdicts": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "description": "One finding about the walk. Two invariants the model enforces are restated here so a consumer reading only the schema learns them: `reason_code` is non-null if and only if `verdict` is 'unchecked', and `direction` is non-null if and only if `family` is 'frame'.",
+                              "required": [
+                                "family",
+                                "locator",
+                                "kind",
+                                "modality",
+                                "verdict",
+                                "message"
+                              ],
+                              "properties": {
+                                "family": {
+                                  "enum": [
+                                    "pre_snapshot",
+                                    "step",
+                                    "frame",
+                                    "post_snapshot"
+                                  ]
+                                },
+                                "locator": {
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "enum": [
+                                    "precondition",
+                                    "create-freshness",
+                                    "retract-target",
+                                    "assert-redundant",
+                                    "dynamic-rule",
+                                    "compiled-subset",
+                                    "frame-delta",
+                                    "intermediate-unloadable"
+                                  ]
+                                },
+                                "modality": {
+                                  "type": "string"
+                                },
+                                "verdict": {
+                                  "type": "string"
+                                },
+                                "message": {
+                                  "type": "string"
+                                },
+                                "reason_code": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "offending_facts": {
+                                  "type": "array"
+                                },
+                                "direction": {
+                                  "enum": [
+                                    "undeclared-assert",
+                                    "undeclared-retract",
+                                    null
+                                  ]
+                                },
+                                "fact_type": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "obligation": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "value": {}
+                              },
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "verdict": {
+                                        "const": "unchecked"
+                                      }
+                                    },
+                                    "required": [
+                                      "verdict"
+                                    ]
+                                  },
+                                  "then": {
+                                    "properties": {
+                                      "reason_code": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "reason_code"
+                                    ]
+                                  },
+                                  "else": {
+                                    "properties": {
+                                      "reason_code": {
+                                        "type": "null"
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "family": {
+                                        "const": "frame"
+                                      }
+                                    },
+                                    "required": [
+                                      "family"
+                                    ]
+                                  },
+                                  "then": {
+                                    "properties": {
+                                      "direction": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "direction"
+                                    ]
+                                  },
+                                  "else": {
+                                    "properties": {
+                                      "direction": {
+                                        "type": "null"
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "derived_changes": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "fact_type",
+                                "added",
+                                "removed"
+                              ],
+                              "properties": {
+                                "fact_type": {
+                                  "type": "string"
+                                },
+                                "added": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                },
+                                "removed": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object"
+                                  }
+                                }
+                              },
+                              "anyOf": [
+                                {
+                                  "properties": {
+                                    "added": {
+                                      "minItems": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "properties": {
+                                    "removed": {
+                                      "minItems": 1
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "intermediate": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "frame_grading": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "fact_type",
+                          "modality",
+                          "reason",
+                          "operations"
+                        ],
+                        "properties": {
+                          "fact_type": {
+                            "type": "string"
+                          },
+                          "modality": {
+                            "type": "string"
+                          },
+                          "reason": {
+                            "enum": [
+                              "all-alethic",
+                              "deontic-toucher"
+                            ]
+                          },
+                          "operations": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "frame_status": {
+                  "enum": [
+                    "not-applicable",
+                    "not-evaluated",
+                    null
+                  ]
+                },
+                "frame_verdicts": {
+                  "description": "Null when the walk was refused before evaluation -- 'we did not look', which an empty array would misreport as 'we looked and found none'.",
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "One finding about the walk. Two invariants the model enforces are restated here so a consumer reading only the schema learns them: `reason_code` is non-null if and only if `verdict` is 'unchecked', and `direction` is non-null if and only if `family` is 'frame'.",
+                        "required": [
+                          "family",
+                          "locator",
+                          "kind",
+                          "modality",
+                          "verdict",
+                          "message"
+                        ],
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "pre_snapshot",
+                              "step",
+                              "frame",
+                              "post_snapshot"
+                            ]
+                          },
+                          "locator": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "enum": [
+                              "precondition",
+                              "create-freshness",
+                              "retract-target",
+                              "assert-redundant",
+                              "dynamic-rule",
+                              "compiled-subset",
+                              "frame-delta",
+                              "intermediate-unloadable"
+                            ]
+                          },
+                          "modality": {
+                            "type": "string"
+                          },
+                          "verdict": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "reason_code": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "offending_facts": {
+                            "type": "array"
+                          },
+                          "direction": {
+                            "enum": [
+                              "undeclared-assert",
+                              "undeclared-retract",
+                              null
+                            ]
+                          },
+                          "fact_type": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "obligation": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "allOf": [
+                          {
+                            "if": {
+                              "properties": {
+                                "verdict": {
+                                  "const": "unchecked"
+                                }
+                              },
+                              "required": [
+                                "verdict"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "reason_code"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "reason_code": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "if": {
+                              "properties": {
+                                "family": {
+                                  "const": "frame"
+                                }
+                              },
+                              "required": [
+                                "family"
+                              ]
+                            },
+                            "then": {
+                              "properties": {
+                                "direction": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "direction"
+                              ]
+                            },
+                            "else": {
+                              "properties": {
+                                "direction": {
+                                  "type": "null"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "post_snapshot": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "computed_post": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "population",
+                        "facts"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "population": {
+                          "type": "object",
+                          "required": [
+                            "model",
+                            "model_id",
+                            "source",
+                            "covers"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "model": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "model_id": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "source": {
+                              "const": "synthetic"
+                            },
+                            "covers": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "facts": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "$ref": "#/$defs/scalar"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "format_version",
+                        "population",
+                        "facts"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "format_version": {
+                          "const": 2
+                        },
+                        "population": {
+                          "type": "object",
+                          "required": [
+                            "model",
+                            "model_id",
+                            "source",
+                            "covers"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "model": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "model_id": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "source": {
+                              "const": "synthetic"
+                            },
+                            "covers": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "facts": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "oneOf": [
+                                  {
+                                    "$ref": "#/$defs/scalar"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "$opaque"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "$opaque": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "command": {
+          "enum": [
+            "check",
+            "validate",
+            "verify"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "violated",
+            "inadequate",
+            "ill_formed",
+            "indeterminate",
+            "internal_error"
+          ],
+          "description": "The discriminator. Maps 1:1 onto exit_code: 0=accepted, 1=violated, 2=inadequate, 3=ill_formed, 4=indeterminate, 70=internal_error."
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            70
+          ],
+          "description": "The process exit code. Band precedence is 3 > 1 > 4 > 2 > 0 (D-08)."
+        },
+        "acceptance_ready": {
+          "type": "boolean",
+          "description": "True if and only if exit_code is 0 (D-08). 'Could not decide' (4) is never acceptance."
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Path to the model as supplied on the command line."
+        },
+        "population": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Path to the population; always null for command 'validate'."
+        },
+        "post": {
+          "enum": [
+            null,
+            "declared",
+            "computed"
+          ]
+        },
+        "counts": {
+          "type": "object",
+          "required": [
+            "pass",
+            "fail",
+            "warning",
+            "unchecked",
+            "vacuous"
+          ],
+          "additionalProperties": false,
+          "description": "Verdict tally, passed through unchanged from CheckReport.counts() \u2014 the same dict the text renderer prints, so the two renderings can never disagree.",
+          "properties": {
+            "pass": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fail": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "warning": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unchecked": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "vacuous": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/verdict"
+              },
+              {
+                "$ref": "#/$defs/verdict_v10"
+              }
+            ]
+          },
+          "description": "One entry per constraint. Empty on exit 3 and 70 (the checker never ran) and for command 'validate'."
+        },
+        "derivations": {
+          "anyOf": [
+            {
+              "description": "One alethic obligation per derived fact type; present only in schema version 4.",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict"
+              },
+              "type": "array"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict_v10"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/coverage_entry"
+          },
+          "description": "Declared-coverage status and fact count per fact type."
+        },
+        "extraction": {
+          "$ref": "#/$defs/extraction"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          },
+          "maxItems": 200,
+          "description": "Error-severity validation issues, populated on exit 3. Capped at MAX_POPULATION_ISSUES (200) so an untrusted population cannot produce an unbounded payload (T-01.1-02)."
+        },
+        "issues_total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Issue count BEFORE truncation. Equals len(issues) unless issues_truncated is true."
+        },
+        "issues_truncated": {
+          "type": "boolean",
+          "description": "True when issues_total exceeded the cap and the array was elided."
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          },
+          "description": "Warning-severity issues (e.g. semantic:modality-policy). Never block a load."
+        },
+        "error": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/error"
+            }
+          ],
+          "description": "Populated on exit 70 (internal checker error) and on the opaque exit-3 load-failure arm where no structured issues exist. Null otherwise."
+        },
+        "assurance": {
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "assurance_level": {
+                    "enum": [
+                      "partial",
+                      "proof-backed"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "production_roster_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "proof_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "scope_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "semantics_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "toolchain_digest": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "assurance_level": {
+                    "const": "proof-backed"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "uncovered_applicable_scope_ids": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "semantic_decision": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "assurance_level": {
+                    "const": "none"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "assumptions": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "assurance_level": {
+              "enum": [
+                "none",
+                "partial",
+                "proof-backed"
+              ]
+            },
+            "production_roster_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "proof_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "schema_version": {
+              "const": 1
+            },
+            "scope_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "semantic_decision": {
+              "enum": [
+                "accept",
+                "refuse",
+                "indeterminate",
+                null
+              ]
+            },
+            "semantics_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "toolchain_digest": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "uncovered_applicable_scope_ids": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "schema_version",
+            "semantic_decision",
+            "assurance_level",
+            "scope_digest",
+            "semantics_digest",
+            "production_roster_digest",
+            "proof_digest",
+            "toolchain_digest",
+            "uncovered_applicable_scope_ids",
+            "assumptions"
+          ],
+          "type": "object"
+        },
+        "redaction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/redaction"
+            },
+            {
+              "$ref": "#/$defs/redaction_v11"
+            }
+          ]
+        },
+        "admission": {
+          "$ref": "#/$defs/admission"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "schema_version",
+            "tool",
+            "command",
+            "outcome",
+            "exit_code",
+            "acceptance_ready",
+            "model",
+            "model_digest",
+            "population",
+            "counts",
+            "verdicts",
+            "derivations",
+            "coverage",
+            "extraction",
+            "issues",
+            "issues_total",
+            "issues_truncated",
+            "warnings",
+            "error",
+            "transition",
+            "assurance",
+            "admission"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": 13
+            },
+            "command": {
+              "const": "check"
+            },
+            "verdicts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/verdict_v10"
+              }
+            },
+            "derivations": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/derivation_verdict_v10"
+                  }
+                }
+              ]
+            },
+            "admission": {
+              "$ref": "#/$defs/admission"
+            }
+          },
+          "not": {
+            "required": [
+              "post"
+            ]
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "enum": [
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9
+                ]
+              }
+            },
+            "required": [
+              "schema_version"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "admission"
+              ]
+            },
+            "properties": {
+              "verdicts": {
+                "items": {
+                  "$ref": "#/$defs/verdict"
+                }
+              },
+              "derivations": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/derivation_verdict"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "schema_version": {
+                "enum": [
+                  3,
+                  4,
+                  5,
+                  6,
+                  7
+                ]
+              }
+            },
+            "required": [
+              "schema_version"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "post"
+              ]
+            },
+            "properties": {
+              "transition": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "frame_status"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "computed_post"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command": {
+                "const": "verify"
+              }
+            },
+            "required": [
+              "command"
+            ]
+          },
+          "then": {
+            "properties": {
+              "extraction": {
+                "required": [
+                  "state",
+                  "reason",
+                  "sidecar",
+                  "population_sha256",
+                  "model_sha256",
+                  "projection_sha256",
+                  "document",
+                  "document_sha256",
+                  "skill",
+                  "skill_version",
+                  "executing_model"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "extraction": {
+                "maxProperties": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

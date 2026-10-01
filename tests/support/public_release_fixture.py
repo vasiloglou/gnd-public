@@ -1,10 +1,18 @@
 """Synthetic authentication control, no covered/proved rows or certification."""
+
 import hashlib
 import json
 import shutil
 from pathlib import Path
-from gnd.assurance_evidence import RUNTIME_DEPENDENCIES, production_roster, roster_digest, runtime_identity
+
+from gnd.assurance_evidence import (
+    RUNTIME_DEPENDENCIES,
+    production_roster,
+    roster_digest,
+    runtime_identity,
+)
 from gnd.semantic_registry import REGISTRY
+
 
 def synthetic_release(tmp_path, source):
     package = tmp_path / "gnd"
@@ -82,4 +90,3 @@ def publish(package, manifest):
             }
         )
     )
-

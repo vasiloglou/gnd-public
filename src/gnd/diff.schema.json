@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/diff.schema.json",
+  "title": "GND differential output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "command", "model_a_digest", "model_b_digest", "vocabulary_digest", "seed", "assurance", "entailment", "populations", "not_derivable"],
+  "properties": {
+    "schema_version": {"const": "gnd-diff/1"},
+    "command": {"const": "diff"},
+    "model_a_digest": {"$ref": "#/$defs/modelDigest"},
+    "model_b_digest": {"$ref": "#/$defs/modelDigest"},
+    "vocabulary_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "seed": {"type": "integer", "minimum": 0},
+    "assurance": {"const": "none"},
+    "entailment": {"type": "array", "items": {"$ref": "#/$defs/entailment"}},
+    "populations": {"type": "array", "items": {"$ref": "#/$defs/population"}},
+    "not_derivable": {"type": "array", "items": {"$ref": "#/$defs/notDerivable"}}
+  },
+  "$defs": {
+    "modelDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "side": {"enum": ["a", "b"]},
+    "entailment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["from_model", "to_model", "left_ref", "right_ref", "family", "result", "reason"],
+      "properties": {
+        "from_model": {"$ref": "#/$defs/side"},
+        "to_model": {"$ref": "#/$defs/side"},
+        "left_ref": {"type": "string"}, "right_ref": {"type": "string"},
+        "family": {"type": "string"}, "result": {"enum": ["implies", "undecided"]},
+        "reason": {"type": ["string", "null"]}
+      }
+    },
+    "verdict": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ref", "verdict"],
+      "properties": {"ref": {"type": "string"}, "verdict": {"enum": ["pass", "fail", "warning", "vacuous", "unchecked"]}}
+    },
+    "check": {
+      "type": "object", "additionalProperties": false,
+      "required": ["state"],
+      "properties": {
+        "state": {"enum": ["checked", "not_comparable"]},
+        "band": {"type": "integer", "minimum": 0, "maximum": 4},
+        "has_vacuous": {"type": "boolean"},
+        "verdicts": {"type": "array", "items": {"$ref": "#/$defs/verdict"}},
+        "derivation_verdicts": {"type": "array", "items": {"$ref": "#/$defs/verdict"}},
+        "rule": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"state": {"const": "checked"}}}, "then": {"required": ["band", "has_vacuous", "verdicts", "derivation_verdicts"]}},
+        {"if": {"properties": {"state": {"const": "not_comparable"}}}, "then": {"required": ["rule"]}}
+      ]
+    },
+    "gap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["target_ref", "verdict", "offending_facts", "witness_sentence"],
+      "properties": {
+        "target_ref": {"type": "string"}, "verdict": {"enum": ["fail", "unchecked"]},
+        "offending_facts": {"type": "array"},
+        "witness_sentence": {"type": ["string", "null"]}
+      }
+    },
+    "derivation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fact_type", "tuple", "a_status", "b_status", "outcome", "offending_facts"],
+      "properties": {
+        "fact_type": {"type": "string"}, "tuple": {"type": "object"},
+        "a_status": {"enum": ["in", "out", "unknown"]},
+        "b_status": {"enum": ["in", "out", "unknown"]},
+        "outcome": {"enum": ["unsound", "incomplete", "unresolved"]},
+        "offending_facts": {"type": "array"}
+      }
+    },
+    "population": {
+      "type": "object", "additionalProperties": false,
+      "required": ["population_ref", "population_sha256", "origin", "a", "b", "a_to_b", "b_to_a", "derivations"],
+      "properties": {
+        "population_ref": {"type": "string"},
+        "population_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "origin": {"enum": ["provided", "synth-a-conforming", "synth-b-conforming", "synth-a-boundary", "synth-b-boundary", "other-model-boundary"]},
+        "a": {"$ref": "#/$defs/check"}, "b": {"$ref": "#/$defs/check"},
+        "a_to_b": {"type": "array", "items": {"$ref": "#/$defs/gap"}},
+        "b_to_a": {"type": "array", "items": {"$ref": "#/$defs/gap"}},
+        "derivations": {"type": "array", "items": {"$ref": "#/$defs/derivation"}}
+      }
+    },
+    "notDerivable": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "kind", "subject", "reason"],
+      "properties": {"source": {"$ref": "#/$defs/side"}, "kind": {"type": "string"}, "subject": {"type": "string"}, "reason": {"type": "string"}}
+    }
+  }
+}

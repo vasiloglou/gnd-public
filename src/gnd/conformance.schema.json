@@ -1,0 +1,546 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/conformance.schema.json",
+  "title": "GND model-code conformance payload (GEN-02, G-08, G-15, R-13')",
+  "description": "Draft 2020-12 schema for the payload emitted by `gnd conformance`. This is GND's THIRD claim family and it never blends with the other two (G-15/D-01): `gnd check`/`gnd verify` emit VERDICTS about a population (report.schema.json), `gnd fidelity`/`gnd measure` emit RATES (fidelity/measurement.schema.json), and this payload emits FILES, DIGESTS and DRIFT. There is deliberately no verdict, no band, no acceptance_ready, and no numerator/denominator/rate anywhere at any depth — a reviewer confirms that by reading THIS FILE rather than by auditing the builder, and every object sets additionalProperties:false so none can be added by accident. Declaration counts in `architecture.declared` report the static contract surface; they are neither rates nor verdicts. Like report.schema.json, fidelity.schema.json and measurement.schema.json this is a runtime OUTPUT contract of the `gnd` CLI, not an interchange format the gnd-orm-core skill documents authoring rules for — so it is vendored-only at the module root, lives OUTSIDE src/gnd/schema/, and is deliberately NOT in tests/test_schema_sync.py::SCHEMA_PAIRS (that file's docstring forbids the 'fix'). Three absences and one presence are load-bearing. (1) There is NO timestamp field: two runs over one unchanged project must reproduce byte-for-byte, which is what lets a reviewer re-derive a published conformance result from the repository. (2) `unexamined` is REQUIRED with minItems 0 — present-and-empty, never absent. An absent list is a defect, because a reader cannot tell 'nothing was skipped' from 'the skipping was not reported' (G-08). (3) `limits` is REQUIRED and names the manifest co-edit blind spot: a manifest cannot record its own digest, so integrity detects a unilateral edit to a derived file and NOT a co-edit of that file together with its manifest entry; `gnd doctor` carries the identical bound. A limitation stated only in prose is one skim away from not existing (R-13'). (4) every assertion carries `ran`, so a check that could not run can never be reported as a check that passed. (5) `satisfied` is REQUIRED with minItems 0 for the same reason `unexamined` is: it is assertion #3's half of the partition, naming which FILE satisfied each model fact type and who owns that file, so a fact type covered only by hand-written code is stated rather than passed silently. Plan 03-06 widened this contract with `satisfied`, `model.fact_types`, the `structural` assertion and its finding kinds WITHOUT bumping schema_version: the key set was introduced two plans earlier inside the same unreleased phase and has never shipped in a release, so no consumer is pinned to the narrower shape, and the bump rule exists for a breaking change to a PUBLISHED key set. Phase 2 widened the same unreleased key set with the required architecture assertion and declaration block. The widening's record lives in CONFORMANCE_SCHEMA_VERSION's own comment history.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tool",
+    "command",
+    "gnd_version",
+    "model",
+    "project",
+    "architecture",
+    "assertions",
+    "examined",
+    "unexamined",
+    "satisfied",
+    "findings",
+    "limits",
+    "error"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "tool": {
+      "const": "gnd"
+    },
+    "command": {
+      "const": "conformance"
+    },
+    "gnd_version": {
+      "type": "string"
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "recorded_sha256",
+        "actual_sha256",
+        "fact_types"
+      ],
+      "description": "Assertion #2's two sides, always shown as a PAIR. A finding saying only 'the model changed' is a claim a reader must take on trust; a recorded/actual pair is one they can reproduce with `shasum -a 256`. `fact_types` is assertion #3's denominator, and it lives here rather than under `project` because it is a fact about the MODEL — the count the emitted surface is measured against.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The model's file NAME. Deliberately not a path: the payload names the model without naming the machine it ran on, and the digests below are the authoritative identity."
+        },
+        "fact_types": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "How many of the model's fact types assertion #3 formed an EXPECTATION for. The audit trail for its partition: len(satisfied) + the number of `fact-type-unimplemented` findings equals this exactly, checkable by a reader counting the printed arrays. Equal to the declared fact-type count except where an `identifier-hazard` finding names one that cannot be mapped to a distinct Python symbol at all — such a fact type belongs to neither side of the partition, which is why the count is taken from the expectation rather than from the model's list. Null ONLY when the model could not be LOADED, in which case the structural assertion reports ran:false and `error` is non-null; a digest can be taken over bytes that will not parse, a fact-type count cannot."
+        },
+        "recorded_sha256": {
+          "$ref": "#/$defs/nullable_digest",
+          "description": "What the codegen manifest recorded when the project was generated. Null ONLY when no manifest could be read — in which case every assertion reports ran:false and `error` is non-null."
+        },
+        "actual_sha256": {
+          "$ref": "#/$defs/nullable_digest",
+          "description": "What the model hashes to now. Null ONLY when the model could not be read; a check that could not run never reports a digest it did not compute."
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_version",
+        "recorded_files"
+      ],
+      "description": "The record conformance read. `recorded_files` is the partition's audit trail: len(examined) + len(unexamined) == recorded_files, checkable by a reader counting the printed arrays, so a file cannot be silently dropped from the report by appearing in neither list.",
+      "properties": {
+        "manifest_version": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "recorded_files": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "declared",
+        "scanned"
+      ],
+      "description": "Assertion #4's static declaration evidence. A null contract and null declared value mean no readable valid contract was available; declared zeroes mean a valid all-empty contract. `scanned` names each project-relative file whose bytes assertion #4 obtained, including bytes that later failed decode or parse, but excludes stat-only artifact leaves.",
+      "properties": {
+        "contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/architecture_contract_binding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "declared": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/architecture_declared_counts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scanned": {
+          "type": "array",
+          "minItems": 0,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relpath"
+          }
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "description": "One entry per conformance assertion, each carrying whether it RAN. R-13': a missing measurement must not look green, so an assertion that could not run reports ran:false and zero findings rather than reporting nothing at all. `integrity`, `currency`, `structural` and `architecture` are required members; the list stays open so a later plan's assertion can be ADDED — an addition only ever makes the report say more, so it needs no protection, while a removal would silently narrow the check and does.",
+      "items": {
+        "$ref": "#/$defs/assertion"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "integrity"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "currency"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "structural"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "const": "architecture"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "examined": {
+      "type": "array",
+      "minItems": 0,
+      "description": "Every file conformance actually digest-gated, with both digests. The other half of G-08's partition.",
+      "items": {
+        "$ref": "#/$defs/examined_file"
+      }
+    },
+    "unexamined": {
+      "type": "array",
+      "minItems": 0,
+      "description": "Every file the manifest records that integrity deliberately did NOT digest-gate, each with the reason. REQUIRED with minItems 0: present-and-empty when nothing was skipped, never absent. Extension files are not byte-reproducible, so integrity cannot compare them to a generator-owned digest (G-05); a separate assertion such as architecture may still inspect their current declarations. A payload that omitted this key would let a reader mistake 'nothing was skipped' for 'the skipping was not reported', which is exactly the misreading the check must not enable.",
+      "items": {
+        "$ref": "#/$defs/unexamined_file"
+      }
+    },
+    "satisfied": {
+      "type": "array",
+      "minItems": 0,
+      "description": "Assertion #3's half of G-08's partition: every model fact type whose tool was FOUND, with the file that satisfied it and that file's ownership. REQUIRED with minItems 0 for the same reason `unexamined` is — present-and-empty, never absent — because a reader must be able to tell 'the model declares nothing' from 'the coverage was not reported'. Discovery is a whole-tree scan and NOT the manifest's file list (otherwise a generator hides a missing tool by omitting its file from the manifest), which means a hand-written extension file can satisfy a fact type. That is not forbidden and it is not silent: the ownership here says which file did it, and a fact type satisfied only outside the derived surface also carries a `fact-type-satisfied-by-non-derived` finding.",
+      "items": {
+        "$ref": "#/$defs/satisfied_fact_type"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "minItems": 0,
+      "description": "What conformance found, each naming the file, the model or the fact type it is about. Empty on a conforming project — which is a fact about the derived surface's bytes, currency and NAMED SHAPE only, bounded by `unexamined` and `limits`.",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unchecked"
+      ],
+      "description": "What a GREEN result does not say. Published here rather than in prose (R-13'): a limitation that lives only in a docstring is one skim away from not existing, and this payload is what a CI job branches on.",
+      "properties": {
+        "unchecked": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "The bounds of this check. FIVE required members, none of them removable — `manifest-co-edit`, `extension-unexamined`, `green-is-not-correctness`, `structural-surface-only`, and `architecture-static-only`. The array is open, following fidelity.schema.json's `unquantified_biases` idiom for the same reason: a limit being ADDED only ever makes the result look weaker, so it needs no protection from dishonesty, while a limit being REMOVED to flatter the result does.",
+          "items": {
+            "$ref": "#/$defs/limit"
+          },
+          "allOf": [
+            {
+              "contains": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "const": "manifest-co-edit"
+                  }
+                }
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "const": "extension-unexamined"
+                  }
+                }
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "const": "green-is-not-correctness"
+                  }
+                }
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "const": "structural-surface-only"
+                  }
+                }
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "const": "architecture-static-only"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The selected command-wide error cause, or null. A non-null error means some required observation or reconciliation could not complete; it may coexist with retained successful assertion observations whose rows remain ran:true. This is never a finding: findings describe observed drift, while error records incomplete command work."
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullable_digest": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relpath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A path RELATIVE to the generated project root, exactly as the manifest records it — so the payload names the file without naming the machine. Absolute, drive-lettered and '..'-carrying values are refused by the manifest's lexical rule before conformance opens anything (T-03-25)."
+    },
+    "architecture_contract_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relpath",
+        "sha256"
+      ],
+      "properties": {
+        "relpath": {
+          "$ref": "#/$defs/relpath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "architecture_declared_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modules",
+        "symbols",
+        "artifacts",
+        "artifact_requirements",
+        "entry_points",
+        "smoke_rows"
+      ],
+      "properties": {
+        "modules": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "symbols": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifacts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_requirements": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "entry_points": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "smoke_rows": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ran",
+        "findings"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "The assertion's stable id. Deliberately a pattern rather than a closed enum: the vocabulary is closed in the emitter (gnd.conformance publishes it as module-level data) and open here, so a later plan's assertion does not require a schema edit merely to be named."
+        },
+        "ran": {
+          "type": "boolean",
+          "description": "False when the assertion could not be performed at all. Its `findings` count is then 0 for the same reason it is 0 on a clean project — which is precisely why this flag exists rather than being inferable from the count."
+        },
+        "findings": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many entries in the top-level `findings` array this assertion produced. A count, never a rate: it has no denominator and blends with nothing (D-01)."
+        }
+      }
+    },
+    "examined_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relpath",
+        "recorded_sha256",
+        "actual_sha256"
+      ],
+      "properties": {
+        "relpath": {
+          "$ref": "#/$defs/relpath"
+        },
+        "recorded_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "actual_sha256": {
+          "$ref": "#/$defs/nullable_digest",
+          "description": "Null exactly when the bytes could not be hashed — the file is absent, is not a regular file, or is over the untrusted-input byte cap. Never a sentinel digest: a placeholder would compare unequal and report drift for a reason that is not drift."
+        }
+      }
+    },
+    "unexamined_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relpath",
+        "ownership",
+        "reason"
+      ],
+      "properties": {
+        "relpath": {
+          "$ref": "#/$defs/relpath"
+        },
+        "ownership": {
+          "type": "string",
+          "description": "The manifest's ownership axis. In this schema version only `extension` files land here, and the field is a string rather than a const so the reason a file was skipped stays legible if a later plan skips one for a different cause."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Why integrity did not digest-gate this file. Required and non-empty: an unexamined list whose entries carried no reason would be a list of names a reader could only guess about."
+        }
+      }
+    },
+    "satisfied_fact_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_type_id",
+        "symbol",
+        "relpath",
+        "ownership"
+      ],
+      "properties": {
+        "fact_type_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The model's fact-type id, verbatim. Not the Python symbol: the id is what a reader looks up in the model."
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The Python symbol the id maps to, through gnd.codegen.identifiers.tool_symbol — the ONE mapping the emitter also calls. Published so a reader can see the sanitization (a fact type `import` maps to `import_`) without re-deriving it."
+        },
+        "relpath": {
+          "$ref": "#/$defs/relpath"
+        },
+        "ownership": {
+          "type": "string",
+          "description": "Who owns the file that satisfied this fact type: `derived` (GND emitted it), `extension` (a human or an LLM authored it and the manifest records that), or `unmanaged` (GND has no record of placing it). Only `derived` is a clean satisfaction; the other two also carry a `fact-type-satisfied-by-non-derived` finding, because a derived surface that no longer covers the model is repaired by regeneration and a hand-written one is not."
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "target",
+        "message",
+        "recorded_sha256",
+        "actual_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "The finding vocabulary, closed in the emitter as gnd.conformance.FindingKind (a module-level Literal with no member nothing emits) and open here for the same reason `assertion.id` is: a later plan's finding kind should not need a schema edit to be reportable."
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The project-relative file, the model, the MODEL FACT TYPE id, or the orphan Python symbol this finding is about. Every finding names its subject — a drift report that said only 'something changed' would send a reader to audit the whole tree, and a mutation test asserting on a count could not tell a correct detection from an unrelated crash."
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The human-readable claim, including the abbreviated digest pair where one exists. Mutation checks assert on this text rather than on a finding COUNT, because a count cannot tell a correct detection from an unrelated crash."
+        },
+        "recorded_sha256": {
+          "$ref": "#/$defs/nullable_digest"
+        },
+        "actual_sha256": {
+          "$ref": "#/$defs/nullable_digest"
+        }
+      }
+    },
+    "limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "A stable id a consumer can branch on. The prose in `description` may be reworded; this may not."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The bound in full. Sourced from gnd.codegen.manifest.INTEGRITY_LIMITS, which plan 03-04 published as importable DATA precisely so this payload carries it rather than paraphrasing it — a paraphrase is where a limit quietly softens."
+        }
+      }
+    }
+  }
+}

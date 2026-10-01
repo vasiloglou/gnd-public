@@ -1,29 +1,37 @@
-# Contributing during staging
+# Contributing during runtime staging
 
-Only the reviewed scaffold and development workflow are present. For credential-free
-checks use Python >=3.11 in an isolated environment:
+The coherent package is staged; complete behavior/workflow acceptance is P3.
+All units remain source-owned until an explicit handoff. No target publisher exists.
+Use Python >=3.11 and uv for credential-free development:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-dev.txt
-.venv/bin/python -m pytest -q tests/test_development_scaffold.py tests/test_review_credential_launcher.py
+uv sync --locked --group dev
+uv run gnd install --symlink --project --force
+uv run gnd doctor --project
+uv run pytest -q tests/test_development_scaffold.py tests/test_review_credential_launcher.py
 ```
 
-Tests use synthetic temporary credentials and mock all network/provider calls;
-no API keys, source checkout or private documents are needed for these checks.
-Read [bootstrap limits](docs/development/bootstrap.md) before optional review.
+Fresh tracked links have no machine-local receipt. The one-time --force adoption
+is safe for these installer-produced links; it does not authorize overwriting
+modified files. Never edit links by hand; regenerate using the own installer.
+The unmanaged process-phase and owned plan-review-panel roots are real twins.
 
-Agents discover `process-phase` and the owned `plan-review-panel` compatibility
-entry in both `.codex/skills/` and `.claude/skills/`. These are real twin directories.
-All GND installer-managed links and fresh-clone receipt adoption are deferred to
-P2; there is no P1 `gnd doctor` success claim. Ordinary changes use focused tests.
-A numbered phase requires a spec, explicit owner gate, implementation, adversarial
-review, refactoring review and a record. Begin with the non-authoritative
-[spec](docs/development/examples/phase-spec.md) and [record](docs/development/examples/phase-record.md)
-exercise; they demonstrate fields, not executed work or owner approval.
+The selected P2 build/install gate, invoked explicitly, is:
 
-All units remain source-owned during this staging batch. New authoritative public
-work requires a recorded handoff; migration questions keep their IDs and triggers.
-Do not enable a package publisher or run broad/provider/certification lanes without
-their named selection. Open issues for proposed changes; security reports use the
-private route in [SECURITY](SECURITY.md).
+```bash
+uv run pytest -q -o addopts='' tests/test_public_runtime.py tests/test_public_distribution.py
+```
+
+It builds an sdist, rebuilds a wheel, installs only the base wheel in a temporary
+venv outside this checkout, and checks CLI/API/resources/assurance. No provider
+credentials, private source checkout or historical Git objects are required.
+The distribution gate may fetch pinned build/base dependencies. It is bounded
+migration coverage, not the whole advertised framework test suite or certification.
+See [bootstrap limits](docs/development/bootstrap.md); P4-C5 remains pending.
+
+Numbered work uses a spec, owner gate, implementation, adversarial review,
+refactoring review and record. Begin with the non-authoritative
+[spec](docs/development/examples/phase-spec.md) and
+[record](docs/development/examples/phase-record.md) exercises.
+Do not run broad/provider/native/certification lanes without named selection.
+Never source repository .env files. Report security through [SECURITY](SECURITY.md).

@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assumptions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "excluded_policy_scope_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "files": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "address": {
+            "additionalProperties": false,
+            "properties": {
+              "bytes": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "path": {
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "bytes",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "role": {
+            "enum": [
+              "source",
+              "schema",
+              "scope",
+              "semantics",
+              "toolchain",
+              "proof-source",
+              "proof-result",
+              "dependency"
+            ]
+          }
+        },
+        "required": [
+          "address",
+          "role"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "production_roster_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "proof_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "normative": {
+            "additionalProperties": false,
+            "properties": {
+              "bytes": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "path": {
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "bytes",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "production_owners": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "proof_inputs_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "provider": {
+            "enum": [
+              "nagini",
+              "isabelle",
+              null
+            ]
+          },
+          "result_digest": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scope_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proved",
+              "uncovered",
+              "trusted-refusal",
+              "excluded"
+            ]
+          },
+          "theorems": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "scope_id",
+          "status",
+          "normative",
+          "production_owners",
+          "provider",
+          "theorems",
+          "proof_inputs_digest",
+          "result_digest",
+          "assumptions"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "runtime_domain": {
+      "additionalProperties": false,
+      "properties": {
+        "dependencies": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "artifact_sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "artifact_sha256"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "implementation": {
+          "const": "cpython"
+        },
+        "interpreter_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "machine": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "implementation",
+        "version",
+        "platform",
+        "machine",
+        "interpreter_sha256",
+        "dependencies"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "scope_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "semantics_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "toolchain_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "scope_digest",
+    "semantics_digest",
+    "production_roster_digest",
+    "proof_digest",
+    "toolchain_digest",
+    "runtime_domain",
+    "files",
+    "rows",
+    "assumptions",
+    "excluded_policy_scope_ids"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,838 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "G00",
+      "story": "One original assertion has one current collected successor and complete surface coverage; handoff prerequisites are satisfied.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G01",
+      "story": "The original assertion exists but its mapping row vanished.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G02",
+      "story": "Two rows claim the same original assertion.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          },
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G03",
+      "story": "The successor points to a test that collection did not find.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/missing.py::test_missing"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G04",
+      "story": "An assertion is archived without declaring what historical claim remains unavailable.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "historical",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": "",
+            "selection": "unselected"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G05",
+      "story": "A selected test requires an explicitly private source fixture.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [
+          "private-consumer-input"
+        ],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G06",
+      "story": "The declared original digest differs from the pinned source identity.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G07",
+      "story": "A mapping invents a new selection lane.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "secret"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G08",
+      "story": "An unexecuted native surface is labelled current evidence.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "optional-unverified",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G09",
+      "story": "The current CLI inventory has a command omitted from the surface map.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check",
+          "cli:validate"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G10",
+      "story": "Development authority is requested despite an unaccounted source delta.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": false,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G11",
+      "story": "Development authority is requested despite failed required acceptance.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": false,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G12",
+      "story": "A fixture-only test definition has no harness consumer.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "fixture-only",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G13",
+      "story": "An exclusively historical wheel identity stays archived, does not contribute to current coverage, and requests no handoff.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "historical",
+            "claim": "exact historical wheel digest",
+            "target_nodes": [],
+            "changed_boundary": "none",
+            "archive_limit": "Only the digest of the original private historical wheel; no current behavior assertion.",
+            "selection": "unselected"
+          }
+        ],
+        "expected_surfaces": [],
+        "surfaces": [],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": false
+      }
+    },
+    {
+      "id": "G14",
+      "story": "A current successor replaces private fixture coordinates while preserving the assertion and documenting the changed boundary.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "successor",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "independently authored public fixture replaces private source coordinates",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G15",
+      "story": "The API inventory contains a new actual signature absent from the declared surface map.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check",
+          "api:check(model,population,*,references)"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G16",
+      "story": "Two equivalent original assertions share one current successor; each has an explicit preservation argument. Synthetic identities only.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "tests/source.py::test_duplicate": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "consolidated",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "same accepting/refusing predicate; both originals preserved by tests/current.py::test_current and its dirty control",
+            "archive_limit": null,
+            "selection": "default"
+          },
+          {
+            "source_node": "tests/source.py::test_duplicate",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "disposition": "consolidated",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "same accepting/refusing predicate; both originals preserved by tests/current.py::test_current and its dirty control",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G17",
+      "story": "A duplicate is consolidated into a shared successor without explaining preservation of its original protective assertion.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "tests/source.py::test_duplicate": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "consolidated",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "same accepting/refusing predicate; both originals preserved by tests/current.py::test_current and its dirty control",
+            "archive_limit": null,
+            "selection": "default"
+          },
+          {
+            "source_node": "tests/source.py::test_duplicate",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "disposition": "consolidated",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    },
+    {
+      "id": "G18",
+      "story": "The reviewed closure reports private material embedded inside a fixture payload; innocuous filenames do not authorize its import. Marker is synthetic, not a secret.",
+      "packet": {
+        "originals": {
+          "tests/source.py::test_current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "collected": [
+          "tests/current.py::test_current"
+        ],
+        "rows": [
+          {
+            "source_node": "tests/source.py::test_current",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "disposition": "current",
+            "claim": "named accepting and refusing behavior",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "changed_boundary": "none",
+            "archive_limit": null,
+            "selection": "default"
+          }
+        ],
+        "expected_surfaces": [
+          "cli:check"
+        ],
+        "surfaces": [
+          {
+            "id": "cli:check",
+            "target_nodes": [
+              "tests/current.py::test_current"
+            ],
+            "execution": "current",
+            "limitations": []
+          }
+        ],
+        "private_dependencies": [
+          "nested-fixture-content:synthetic-private-marker"
+        ],
+        "source_delta_accounted": true,
+        "acceptance_passed": true,
+        "handoff_requested": true
+      }
+    }
+  ]
+}

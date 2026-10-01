@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "files": {
+    "README.md": {
+      "bytes": 1454,
+      "sha256": "f62feeeee2901cb9b2e0340870f4e8cf83c78b3b90ac7132eba79687f206641e"
+    },
+    "answers.json": {
+      "bytes": 1633,
+      "sha256": "cb0d30bda70ff0f5fe464bace0a729b7fd1f956ab3e54f99d6cdbf269495fd3c"
+    },
+    "inputs.json": {
+      "bytes": 27238,
+      "sha256": "ad5506112024ea8315cc7782e2dd5dd323b6cd2980cbbc31b0c91547282a22dd"
+    }
+  }
+}

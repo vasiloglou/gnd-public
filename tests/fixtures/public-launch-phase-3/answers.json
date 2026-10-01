@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "G00",
+      "exit": 0,
+      "reason": null
+    },
+    {
+      "id": "G01",
+      "exit": 1,
+      "reason": "missing-original"
+    },
+    {
+      "id": "G02",
+      "exit": 1,
+      "reason": "duplicate-original"
+    },
+    {
+      "id": "G03",
+      "exit": 1,
+      "reason": "missing-target"
+    },
+    {
+      "id": "G04",
+      "exit": 1,
+      "reason": "missing-archive-limit"
+    },
+    {
+      "id": "G05",
+      "exit": 1,
+      "reason": "private-dependency"
+    },
+    {
+      "id": "G06",
+      "exit": 1,
+      "reason": "source-digest-mismatch"
+    },
+    {
+      "id": "G07",
+      "exit": 1,
+      "reason": "unknown-selection"
+    },
+    {
+      "id": "G08",
+      "exit": 1,
+      "reason": "unsupported-optional-claim"
+    },
+    {
+      "id": "G09",
+      "exit": 1,
+      "reason": "missing-surface"
+    },
+    {
+      "id": "G10",
+      "exit": 1,
+      "reason": "unaccounted-source-delta"
+    },
+    {
+      "id": "G11",
+      "exit": 1,
+      "reason": "failed-acceptance"
+    },
+    {
+      "id": "G12",
+      "exit": 1,
+      "reason": "missing-fixture-consumer"
+    },
+    {
+      "id": "G13",
+      "exit": 0,
+      "reason": null
+    },
+    {
+      "id": "G14",
+      "exit": 0,
+      "reason": null
+    },
+    {
+      "id": "G15",
+      "exit": 1,
+      "reason": "missing-surface"
+    },
+    {
+      "id": "G16",
+      "exit": 0,
+      "reason": null
+    },
+    {
+      "id": "G17",
+      "exit": 1,
+      "reason": "unsupported-consolidation"
+    },
+    {
+      "id": "G18",
+      "exit": 1,
+      "reason": "private-dependency"
+    }
+  ]
+}

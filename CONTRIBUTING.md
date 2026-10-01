@@ -2,7 +2,9 @@
 
 The coherent package is staged; complete behavior/workflow acceptance is P3.
 All units remain source-owned until an explicit handoff. No target publisher exists.
-Use Python >=3.11 and uv for credential-free development:
+Use Python >=3.11 and uv 0.10.10 for this staged build profile. CI pins the
+same version; P4 will decide the final release tool profile. Credential-free
+development:
 
 ```bash
 uv sync --locked --group dev

@@ -11,6 +11,8 @@ jobs:
         with:
           python-version: '3.11'
       - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.10.10'
       - run: uv sync --locked --group dev
       - run: uv run gnd install --symlink --project --force
       - run: uv run gnd doctor --project

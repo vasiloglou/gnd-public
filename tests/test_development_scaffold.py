@@ -169,3 +169,11 @@ def test_readme_reflects_current_runtime_stage():
     text = (ROOT / 'README.md').read_text()
     assert 'P2' in text and 'P3' in text and 'private runtime staging' in text
     assert 'runtime migration follows' not in text
+
+
+def test_ci_uses_verified_p2_build_profile():
+    from ruamel.yaml import YAML
+    workflow = YAML(typ='safe').load((ROOT / '.github/workflows/development.yml').read_text())
+    pins = [step.get('with', {}).get('version') for step in workflow['jobs']['phase2']['steps']
+            if step.get('uses') == 'astral-sh/setup-uv@v6']
+    assert pins == ['0.10.10']

@@ -161,6 +161,10 @@ def package_probe(tmp_path_factory):
         env.pop(key, None)
     env["PYTHONNOUSERSITE"] = "1"
     logs = {}
+    logs["uv_version"] = run(["uv", "--version"], outside, env)
+    assert logs["uv_version"].split()[:2] == ["uv", "0.10.10"], (
+        "P2 verified build profile requires uv 0.10.10"
+    )
     logs["lock"] = run(["uv", "lock", "--check"], ROOT, env)
     logs["sdist"] = run(["uv", "build", "--sdist", "--out-dir", artifacts], ROOT, env)
     (sdist,) = artifacts.glob("*.tar.gz")

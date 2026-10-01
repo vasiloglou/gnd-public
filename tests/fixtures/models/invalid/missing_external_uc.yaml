@@ -1,0 +1,23 @@
+# Rejected by semantic:external-ref-uc — 'enrolment' declares reference.mode
+# external but no top-level external uniqueness constraint identifies it.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: enrolment
+    name: Enrolment
+    kind: entity
+    reference: { mode: external }
+fact_types:
+  - id: enrolment_of_person
+    reading: "{Enrolment} is of {Person}"
+    roles:
+      - { object_type: enrolment, role_name: enrolment }
+      - { object_type: person, role_name: person }

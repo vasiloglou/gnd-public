@@ -1,0 +1,19 @@
+version: 1
+model_id: urn:gnd-fixture:phase3-consumers:legacy-derived@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+
+fact_types:
+  - id: item_seeded
+    reading: "{Item} is seeded"
+    roles: [{ object_type: item, role_name: item }]
+  - id: item_ranked
+    reading: "{Item} is ranked"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule: "ranked by the nightly batch scorer; never computed by GND"
+
+constraints: []
+rejected_proposals: []

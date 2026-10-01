@@ -111,7 +111,7 @@ def test_source_owned_units_and_preserved_question_states():
 
 
 def test_manifest_bytes_modes_and_sizes():
-    # B1 is immutable historical selection; B2 attributes changed current bytes.
+    # B1 is immutable historical selection; The current batch attributes changed bytes.
     from test_public_distribution import audit_tree, manifest
     b1_path = ROOT/MILESTONE/'migration/b1-files.json'
     assert hashlib.sha256(b1_path.read_bytes()).hexdigest() == '7e2bcccd41671743fdcedad2a856c78b59da7265256c0955256964554bb29c87'

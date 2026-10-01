@@ -1,0 +1,261 @@
+# tests/fixtures/checker/setfam.orm.yaml
+# Checker fixture model for the set-algebra and counting families:
+# uniqueness (external), mandatory-disjunctive, subset, equality, exclusion,
+# exclusive-or, frequency (internal + external), cardinality (object + role),
+# and the value role-scope hybrid. Booking mirrors the externally-identified
+# entity pattern (composite identifier via the top-level external UC).
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+
+  - id: room
+    name: Room
+    kind: entity
+    reference: { mode: popular, value_type: room_code }
+
+  - id: room_code
+    name: RoomCode
+    kind: value
+    primitive: String
+
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+
+  - id: course_code
+    name: CourseCode
+    kind: value
+    primitive: String
+
+  - id: seats
+    name: Seats
+    kind: value
+    primitive: Integer
+
+  # Externally identified: its composite identifier is the external UC below.
+  - id: booking
+    name: Booking
+    kind: entity
+    reference: { mode: external }
+
+fact_types:
+  - id: booking_by_person
+    reading: "{Booking} is by {Person}"
+    roles:
+      - { object_type: booking, role_name: booking }
+      - { object_type: person, role_name: person }
+    constraints:
+      - type: uniqueness
+        roles: [booking]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A booking is made by exactly one person." }
+      - type: mandatory
+        role: booking
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A booking cannot exist without its person." }
+
+  - id: booking_of_room
+    reading: "{Booking} is of {Room}"
+    roles:
+      - { object_type: booking, role_name: booking }
+      - { object_type: room, role_name: room }
+    constraints:
+      - type: uniqueness
+        roles: [booking]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A booking targets exactly one room." }
+
+  - id: person_teaches_course
+    reading: "{Person} teaches {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+
+  - id: person_takes_course
+    reading: "{Person} takes {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [person]
+        bound: { min: 1, max: 2 }
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_note: "A person takes at most two courses at a time." }
+
+  - id: person_leads_course
+    reading: "{Person} leads {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+
+  - id: person_is_registered
+    reading: "{Person} is registered"
+    roles:
+      - { object_type: person, role_name: person }
+
+  - id: person_is_enrolled
+    reading: "{Person} is enrolled"
+    roles:
+      - { object_type: person, role_name: person }
+
+  - id: person_is_active
+    reading: "{Person} is active"
+    roles:
+      - { object_type: person, role_name: person }
+
+  - id: person_is_suspended
+    reading: "{Person} is suspended"
+    roles:
+      - { object_type: person, role_name: person }
+
+  - id: person_is_student
+    reading: "{Person} is student"
+    roles:
+      - { object_type: person, role_name: person }
+
+  - id: person_is_staff
+    reading: "{Person} is staff"
+    roles:
+      - { object_type: person, role_name: person }
+
+  - id: room_has_seats
+    reading: "{Room} has {Seats}"
+    roles:
+      - { object_type: room, role_name: room }
+      - { object_type: seats, role_name: seats }
+
+constraints:
+  # [0] uniqueness — external (composite identifier for Booking)
+  - type: uniqueness
+    scope: external
+    role_refs:
+      - { fact_type: booking_by_person, role: person }
+      - { fact_type: booking_of_room, role: room }
+    preferred: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A booking is identified by its person and room together." }
+
+  # [1] mandatory-disjunctive
+  - type: mandatory-disjunctive
+    role_refs:
+      - { fact_type: person_teaches_course, role: person }
+      - { fact_type: person_takes_course, role: person }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every person either teaches or takes at least one course." }
+
+  # [2] frequency — external
+  - type: frequency
+    scope: external
+    role_refs:
+      - { fact_type: booking_by_person, role: person }
+      - { fact_type: booking_of_room, role: room }
+    bound: { max: 2 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "A person books the same room at most twice." }
+
+  # [3] subset (leading a course implies taking it)
+  - type: subset
+    subset_role_seq:
+      - { fact_type: person_leads_course, role: person }
+      - { fact_type: person_leads_course, role: course }
+    superset_role_seq:
+      - { fact_type: person_takes_course, role: person }
+      - { fact_type: person_takes_course, role: course }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Whoever leads a course also takes that course." }
+
+  # [4] equality (registered iff enrolled)
+  - type: equality
+    role_seq_a:
+      - { fact_type: person_is_registered, role: person }
+    role_seq_b:
+      - { fact_type: person_is_enrolled, role: person }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A person is registered exactly when they are enrolled." }
+
+  # [5] exclusion
+  - type: exclusion
+    role_seq_a:
+      - { fact_type: person_is_active, role: person }
+    role_seq_b:
+      - { fact_type: person_is_suspended, role: person }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "No person is simultaneously active and suspended." }
+
+  # [6] exclusive-or (every person is student xor staff)
+  - type: exclusive-or
+    role_seqs:
+      - [{ fact_type: person_is_student, role: person }]
+      - [{ fact_type: person_is_staff, role: person }]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every person is either a student or staff, never both." }
+
+  # [7] cardinality — object
+  - type: cardinality
+    scope: object
+    object_type: room
+    bound: { max: 3 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "The building has at most three bookable rooms." }
+
+  # [8] cardinality — role
+  - type: cardinality
+    scope: role
+    role_ref: { fact_type: person_teaches_course, role: person }
+    bound: { max: 2 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "At most two distinct persons teach." }
+
+  # [9] value — role-scope hybrid (object_type names the value type, role_ref narrows)
+  - type: value
+    object_type: seats
+    role_ref: { fact_type: room_has_seats, role: seats }
+    range: { min: 1, max: 500 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "Room capacity is between 1 and 500 seats." }

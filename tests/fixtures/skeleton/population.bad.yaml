@@ -1,0 +1,19 @@
+# tests/fixtures/skeleton/population.bad.yaml
+# Violating population:
+#   - movie 1 has TWO title facts        -> alethic uniqueness  -> fail
+#   - movie 3 has NO title fact          -> alethic mandatory   -> fail (closed-world)
+#   - year 1520 out of [1888, 2100]      -> deontic value range -> warning
+population:
+  model: model.orm.yaml
+  source: fixture
+  label: violating
+  covers: [movie_has_title, movie_released_in_year]
+instances:
+  movie: [1, 2, 3]
+facts:
+  movie_has_title:
+    - { movie: 1, title: "The Departed" }
+    - { movie: 1, title: "Also The Departed" }
+    - { movie: 2, title: "Inception" }
+  movie_released_in_year:
+    - { movie: 1, year: 1520 }

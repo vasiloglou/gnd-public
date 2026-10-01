@@ -1,0 +1,34 @@
+# The anti-vacuity fixture (Pitfall 1, D-12): every fact type declared covered,
+# zero facts anywhere, no instance rosters. An agent gaming "make the checker
+# pass" by emitting nothing must see ZERO pass verdicts — every
+# population-dependent constraint is vacuous and the CLI exits 2.
+population:
+  model: setfam.orm.yaml
+  source: fixture
+  covers:
+    - booking_by_person
+    - booking_of_room
+    - person_teaches_course
+    - person_takes_course
+    - person_leads_course
+    - person_is_registered
+    - person_is_enrolled
+    - person_is_active
+    - person_is_suspended
+    - person_is_student
+    - person_is_staff
+    - room_has_seats
+instances: {}
+facts:
+  booking_by_person: []
+  booking_of_room: []
+  person_teaches_course: []
+  person_takes_course: []
+  person_leads_course: []
+  person_is_registered: []
+  person_is_enrolled: []
+  person_is_active: []
+  person_is_suspended: []
+  person_is_student: []
+  person_is_staff: []
+  room_has_seats: []

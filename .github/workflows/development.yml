@@ -19,3 +19,31 @@ jobs:
       - run: uv run pytest -q tests/test_development_scaffold.py tests/test_review_credential_launcher.py
       - name: Explicit bounded P2 distribution selection
         run: uv run pytest -q -o addopts='' tests/test_public_runtime.py tests/test_public_distribution.py
+      - name: Reviewed P3 subset; full phase acceptance remains pending
+        run: >-
+          uv run pytest -q
+          tests/test_address.py
+          tests/test_atom_bind.py
+          tests/test_checker_families.py
+          tests/test_codegen_emit.py
+          tests/test_conformance_drift.py
+          tests/test_doccheck.py
+          tests/test_exp_session_e2e.py
+          tests/test_extract_cli.py
+          tests/test_extract_manifest.py
+          tests/test_junit_reader.py
+          tests/test_measure_score.py
+          tests/test_model_identity.py
+          tests/test_model_validation.py
+          tests/test_public_api.py
+          tests/test_public_coverage_progress.py
+          tests/test_public_installer.py
+          tests/test_public_migration.py
+          tests/test_pyrel_export_boundaries.py
+          tests/test_recovery_inventory.py
+          tests/test_review_report.py
+          tests/test_review_request.py
+          tests/test_synth_derivation_refusal.py
+          tests/test_synth_mutate_derivation.py
+          tests/test_synth_tagged_comparison.py
+          --tb=short

@@ -1,0 +1,17 @@
+# Rejected by semantic:id-unique — 'person_id' declared twice across object_types.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: person_id
+    name: PersonIdAgain
+    kind: value
+    primitive: String
+fact_types: []

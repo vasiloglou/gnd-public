@@ -1,0 +1,4250 @@
+{
+  "deselected": [
+    {
+      "markers": [
+        "distribution"
+      ],
+      "node": "tests/test_public_distribution.py::test_curated_manifest_and_source_owned_ledger"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_curated_diff_refuses_mutants[unlisted]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_curated_diff_refuses_mutants[changed-b1]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_internal_audit_refuses_hostile_shapes[list-root]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_internal_audit_refuses_hostile_shapes[scalar-row]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_internal_audit_refuses_hostile_shapes[traversal]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_internal_audit_refuses_hostile_shapes[nonfinite]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_internal_audit_refuses_hostile_shapes[deep-json]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_internal_audit_refuses_hostile_shapes[oversize]"
+    },
+    {
+      "markers": [
+        "distribution"
+      ],
+      "node": "tests/test_public_distribution.py::test_artifact_and_installed_resource_sets"
+    },
+    {
+      "markers": [
+        "distribution"
+      ],
+      "node": "tests/test_public_distribution.py::test_import_origin_contamination_control"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_refuses_unhashable_kind_as_assertion[kind0]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_manifest_refuses_unhashable_kind_as_assertion[kind1]"
+    },
+    {
+      "markers": [
+        "distribution"
+      ],
+      "node": "tests/test_public_distribution.py::test_symlink_identity_survives_linux_mode"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[duplicate-wheel]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[duplicate-sdist]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[extra-wheel]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[extra-sdist]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C0]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C1]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C2]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C3]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C4]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C5]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C6]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C7]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C8]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C9]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_behavior[C10]"
+    },
+    {
+      "markers": [
+        "distribution"
+      ],
+      "node": "tests/test_public_runtime.py::test_installed_import_help_and_api_surface"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_named_failure_causes_reject_mutants[C1]"
+    },
+    {
+      "markers": [
+        "distribution",
+        "parametrize"
+      ],
+      "node": "tests/test_public_runtime.py::test_named_failure_causes_reject_mutants[C3]"
+    }
+  ],
+  "selected": [
+    {
+      "markers": [],
+      "node": "tests/test_address.py::test_derivation_address_is_coherent_and_distinct"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_address.py::test_derivation_address_round_trips_through_the_global_parser"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[42]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[not-an-atom]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[[]]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[['bind']]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{'bind': None}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{'bind': []}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{'bind': 'roles'}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{'bind': 7}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{'bind': True}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_atom_bind.py::test_a_hostile_shape_yields_an_empty_mapping_and_never_raises[{'no-bind-key': {'item': '$item'}}]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_atom_bind.py::test_every_scalar_term_the_schema_allows_survives_the_reader"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_atom_bind.py::test_keys_are_coerced_to_strings"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_atom_bind.py::test_presence_is_asked_separately_from_emptiness"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_atom_bind.py::test_no_raw_bind_access_remains_in_the_ruled_scope"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_atom_bind.py::test_the_one_exemption_re_derives_its_own_reason"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_atom_bind.py::test_every_consumer_reaches_the_binding_through_the_one_reader"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[uniqueness-external]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[mandatory-disjunctive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[frequency-external]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[subset]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[equality]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[exclusion]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[exclusive-or]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[cardinality-object]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[cardinality-role]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[value-hybrid]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_pass[frequency-internal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[uniqueness-external]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[mandatory-disjunctive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[frequency-external]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[subset]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[equality]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[exclusion]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[exclusive-or]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[cardinality-object]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[cardinality-role]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[value-hybrid]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_setfam_family_fail[frequency-internal]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_ring_variants_cover_meta_schema_enum"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-irreflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-asymmetric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-antisymmetric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-acyclic]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-asymmetric-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-acyclic-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-symmetric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-symmetric-irreflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-symmetric-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-purely-reflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-reflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_pass[ring-transitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-irreflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-asymmetric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-antisymmetric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-acyclic]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-asymmetric-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-acyclic-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-symmetric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-symmetric-irreflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-symmetric-intransitive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-purely-reflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-reflexive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_variant_fail[ring-transitive]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_ring_acyclic_fail_names_two_cycle_members"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_find_cycle_helper_names_members"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_pass[value-comparison-inline]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_pass[value-comparison-literal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_pass[value-comparison-cross]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_pass[subtype-partition-observable]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_fail[value-comparison-inline]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_fail[value-comparison-literal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_fail[value-comparison-cross]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_misc_family_fail[subtype-partition-observable]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_time_relative_value_comparison_unchecked[pass-pop]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_time_relative_value_comparison_unchecked[fail-pop]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_subtype_partition_derived_membership_unchecked[pass-pop]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_subtype_partition_derived_membership_unchecked[fail-pop]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_flagless_subtype_partition_is_unchecked_not_satisfied"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_explicitly_false_flags_assert_nothing_either"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_textual_unchecked_with_verbatim_expression"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_disjoint_anchor_join_is_unchecked_not_cross_join"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_aligned_anchor_join_still_evaluates"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_value_constraint_checks_roster_instances"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_role_scoped_value_is_vacuous_when_only_another_role_of_its_type_is_populated"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_facts_missing_a_covered_role_are_rejected_at_load"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_uniqueness_ignores_incomplete_facts_rather_than_colliding_them"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_mandatory_typo_role_is_unchecked_not_silent_pass"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_ring_on_non_binary_fact_type_is_unchecked_not_crash"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[irreflexive-facts0-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[asymmetric-facts1-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[antisymmetric-facts2-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[symmetric-facts3-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[intransitive-facts4-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[transitive-facts5-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[purely-reflexive-facts6-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[reflexive-facts7-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ring_components_use_orm_identity_for_unresolved_reference_nodes[acyclic-facts8-pass]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_quote_neutralizes_embedded_quotes"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<-int-vs-str]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<-str-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<-bool-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<-int-vs-none]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<=-int-vs-str]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<=-str-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<=-bool-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[<=-int-vs-none]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>-int-vs-str]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>-str-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>-bool-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>-int-vs-none]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>=-int-vs-str]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>=-str-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>=-bool-vs-int]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_ordering_across_uncomparable_types_is_undecidable[>=-int-vs-none]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_equality_remains_total_across_types[int-vs-str]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_equality_remains_total_across_types[int-vs-none]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_equality_remains_total_across_types[str-vs-same-str]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_equality_remains_total_across_types[int-vs-equal-float]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_a_bound_not_orderable_against_the_value_is_undecidable"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_nan_is_not_inside_every_range"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_one_undecidable_member_does_not_let_the_rest_evaluate_into_a_pass"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_a_definite_violation_alongside_an_undecidable_one_is_still_reported"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_uncomparable_value_comparison_operands_are_unchecked_not_coerced"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_equal_operator_over_mixed_types_still_yields_a_definite_verdict"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_datetime_comparison_uses_chronology_not_lexical_order"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_datetime_equality_normalizes_equivalent_offsets"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_boolean_and_integer_have_distinct_orm_identity"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_integer_and_float_renderings_share_numeric_orm_identity"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_boolean_does_not_match_integer_enum_member"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_boolean_and_integer_are_not_duplicate_uniqueness_values"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_direct_ambiguous_value_constraint_is_unchecked"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_datetime_range_uses_chronological_offset_order"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_text_report_neutralizes_unicode_line_separators[\\x85-\\\\x85]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_text_report_neutralizes_unicode_line_separators[\\u2028-\\\\u2028]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_text_report_neutralizes_unicode_line_separators[\\u2029-\\\\u2029]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_direct_mixed_subject_disjunction_is_unchecked"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_tagged_inline_literals_preserve_declared_scalar_type[string-leading-zero]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_tagged_inline_literals_preserve_declared_scalar_type[boolean]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_legacy_literals_use_the_other_roles_primitive[legacy-string-leading-zero]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_checker_families.py::test_legacy_literals_use_the_other_roles_primitive[legacy-boolean]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_direct_ambiguous_join_is_unchecked_instead_of_dropping_rows"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_multirole_xor_without_overlap_is_unchecked_never_pass"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_multirole_xor_overlap_still_fails_despite_the_undecidable_half"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_single_role_xor_is_unchanged_by_the_multirole_repair"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_checker_families.py::test_derivation_rule_and_textual_never_evaluated"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_reading_text_instantiates_placeholders"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_reading_text_renders_a_role_qualified_placeholder"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_reading_text_of_none_is_the_empty_string"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_reading_text_is_public_in_the_module_all"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_tool_docstring_names_the_reading_and_every_role"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_tool_docstring_falls_back_to_the_fact_type_id_when_the_reading_is_absent"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[''']"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[\"\"\"]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[{Thing} '''\\n\\nimport os\\nos.system('touch /tmp/pwned')\\n''']"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[\\\\''']"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[\\\\\\\\''']"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring['''+__import__('os').system('id')+''']"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[{Thing} \\r\\n tail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_cannot_terminate_or_reshape_the_docstring[{Thing}\\u2028\\u2029\\x85next]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_tool_docstring_routes_model_text_through_the_shipped_neutralizer"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_docstring_module_imports_the_public_extraction_not_a_copy"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_a_hostile_reading_still_produces_a_module_that_parses"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_emit_project_describes_the_tree_without_touching_the_filesystem"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_every_emitted_python_file_parses_over_every_fixture_model"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_keyword_model_emits_valid_python_with_sanitized_symbols"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_two_emissions_are_byte_identical_with_a_model_derived_floor"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_emitted_tree_imports_no_provider_or_network_library"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_planting_import_anthropic_in_a_copy_reds_the_scan"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_provider_table_is_published_and_covers_the_known_clients"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_generated_skill_frontmatter_round_trips"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_generated_skill_explains_and_binds_its_model_argument"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_default_skill_name_normalises_dotted_model_stems"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_default_skill_name_refuses_more_than_sixty_four_characters"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_banner_is_a_compiled_regex_matching_line_one"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_emitter_calls_the_shipped_projection_rather_than_re_deriving_it"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_applicable_artifact_equals_the_shipped_derivation"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_verbalization_artifact_equals_the_shipped_derivation"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_a_non_empty_target_is_refused_and_nothing_is_destroyed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_every_file_is_classified_derived_or_extension"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_render_tools_module_and_render_skill_document_are_published"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_an_emitted_module_that_does_not_parse_is_an_internal_gate_breach"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_the_emitted_tool_is_callable_and_keys_facts_by_raw_role_names"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_codegen_emit.py::test_emitted_docstrings_keep_their_line_structure"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_a_fresh_project_yields_zero_findings_from_both_assertions"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_one_edited_byte_in_a_derived_file_is_named_by_exactly_one_finding"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_a_deleted_derived_file_is_reported_missing_rather_than_crashing"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_an_edited_extension_file_produces_no_finding_and_is_reported_unexamined"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_partition_covers_every_manifest_entry_exactly_once"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_an_edited_model_produces_one_finding_carrying_both_digests"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_currency_target_is_operator_neutral_for_absolute_and_relative_models"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_integrity_stays_green_when_only_the_model_moved"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_model_digest_over_an_unreadable_model_refuses_rather_than_guessing"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_currency_is_importable_with_no_cli_in_the_process"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_finding_kind_is_a_module_level_closed_literal_with_no_unemitted_member"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_a_finding_is_frozen_so_a_reader_cannot_edit_the_evidence"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_a_manifest_relpath_is_re_checked_before_any_file_is_opened"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_conformance_never_imports_the_project_under_inspection"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_an_oversized_derived_file_is_reported_from_stat_and_never_hashed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_a_symlink_at_a_derived_path_is_reported_and_never_followed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_conformance_refuses_a_symlinked_manifest_even_when_outside_bytes_match"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_conformance_refuses_an_intermediate_symlink_without_hashing_outside_bytes"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_conformance_drift.py::test_structural_scan_does_not_follow_a_post_integrity_swap[leaf]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_conformance_drift.py::test_structural_scan_does_not_follow_a_post_integrity_swap[intermediate]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_final_reconciliation_catches_a_derived_mutation_at_the_root_rebind"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_conformance_drift.py::test_structural_source_failures_publish_only_relative_closed_causes[stat]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_conformance_drift.py::test_structural_source_failures_publish_only_relative_closed_causes[read]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_conformance_package_is_covered_by_the_generation_lane_scan"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_over_a_fresh_project_exits_zero"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_exits_thirteen_and_names_the_edited_file"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_exits_thirteen_and_shows_the_model_digest_pair"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_exits_zero_over_an_edited_extension_file_and_lists_it_unexamined"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_over_a_directory_with_no_manifest_exits_sixty_six"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_over_a_missing_model_exits_sixty_six"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_cli_over_an_unreadable_manifest_exits_three"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_conformance_drift.py::test_the_conformance_description_enumerates_every_exit_path"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_twins_modes_and_generated_links"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_non_authoritative_spec_record_exercise"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_source_owned_units_and_preserved_question_states"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_manifest_bytes_modes_and_sizes"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[missing-reference]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[twin-bytes]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[twin-mode]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[broken-link]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[unlabeled-sample]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[missing-boundary]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[fake-transfer]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_development_scaffold.py::test_controls_reject_isolated_mutations[question-state]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_readme_reflects_current_runtime_stage"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_development_scaffold.py::test_ci_uses_verified_p2_build_profile"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_passes_full_vocabulary_with_inapplicable_rows_present"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_rejects_unmentioned_applicable_entity"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_requires_all_three_distractor_kinds"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_rejects_absent_fact_that_exists"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_missing_applicable_artifact_exits_66"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_binding_mismatch_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doccheck.py::test_doccheck_empty_renderer_identity_exits_3"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_public_single_attempt_accepts_and_recomputes_every_persisted_digest[claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_public_single_attempt_accepts_and_recomputes_every_persisted_digest[codex]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_second_attempt_receives_only_the_exact_current_feedback_bytes_and_digest"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_cancellation_after_staging_discards_private_bytes_and_publishes_no_attempt"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_malformed_verifier_return_is_closed_without_stranded_staging"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update0-process-group cleanup]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update1-different agent adapter]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update2-lacks agent instruction identity]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update3-different agent instructions]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update4-stale retry feedback]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update5-stale fixed adapter arguments]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update6-successful invocation must exit normally]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update7-successful invocation must exit normally]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update8-failed invocation cannot claim exit zero]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update9-timed-out invocation requires termination provenance]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_custom_invocation_proof_mismatch_refuses_before_staging[update10-unstarted invocation cannot contain main-process streams]"
+    },
+    {
+      "markers": [
+        "skipif"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_symlinked_run_parent_cannot_place_evidence_inside_mutable_candidate"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_verifier_owned_timeout_replays_as_verifier_failure_without_an_extra_launch"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_resume_binds_contract_policy_adapter_and_prompt_before_launch"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_crashing_invoker_consumes_one_durable_launch_and_restart_never_reuses_it"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-exact-all-required-acceptance-accepted-accepted-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-missing-required-output-missing-verifier-failure-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-malformed-exit-mismatch-mismatch-verifier-failure-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-alethic-indeterminate-deontic-warning-modality-budget-exhausted-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-same-score-different-candidate-same-score-budget-exhausted-2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-a-b-a-oscillation-oscillation-oscillation-3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-attempt-wall-exhaustion-descendant-cleanup-wall-budget-exhausted-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_every_reference_corpus_case_runs_through_the_public_entrypoint[session-stdout-stderr-flood-flood-agent-failure-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_verifier_bands_never_escape_as_the_parent_session_exit[model_fixture0-subject_fixture0-None-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_verifier_bands_never_escape_as_the_parent_session_exit[model_fixture1-subject_fixture1-None-2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_verifier_bands_never_escape_as_the_parent_session_exit[model_fixture2-None-not: [valid-3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_verifier_bands_never_escape_as_the_parent_session_exit[model_fixture3-subject_fixture3-None-4]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_do_nothing_agent_reds_against_a_contract_it_never_satisfied"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_produced_output_differing_from_the_expectation_reds"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_agent_producing_the_contracted_output_is_accepted"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_agent_failure_is_a_well_formed_nonacceptance"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_process_payload_mismatch_cannot_spoof_public_acceptance"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_candidate_cannot_shadow_the_fixed_gnd_verifier_module"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_run_distinguishes_missing_malformed_and_path_refusal"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_spec_kind_and_contract_identity_must_match_before_agent_spawn"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_cli_can_tighten_but_not_loosen_or_inject_process_configuration"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_exp_session_e2e.py::test_unexpected_controller_defect_maps_to_internal_without_traceback"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_session_outcome_never_controls_experiment_closure[True]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_exp_session_e2e.py::test_session_outcome_never_controls_experiment_closure[False]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_cli.py::test_extract_cli_emits_the_bundle"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_cli.py::test_extract_cli_rejects_invalid_model"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_cli.py::test_extract_cli_refuses_escaping_out_path"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_cli.py::test_interrupted_bundle_replacement_leaves_a_rejectable_index"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_unknown_field_is_rejected"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[absolute]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[parent-escape]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[nested-escape]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[windows-root]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[windows-drive-relative]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[empty]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[blank]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_absolute_and_escaping_paths_are_rejected[nul]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_missing_digest_is_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_bad_distractor_kind_is_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_absent_fact_distractor_requires_fact_type_and_roles"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_valid_contracts_load"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_protocol_version_is_required_and_fixed[None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_protocol_version_is_required_and_fixed[0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_protocol_version_is_required_and_fixed[2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_protocol_version_is_required_and_fixed[999]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_handoff_identities_are_exact_and_nonempty[manifest_overrides0-sidecar_overrides0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_handoff_identities_are_exact_and_nonempty[manifest_overrides1-sidecar_overrides1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_extract_manifest.py::test_handoff_identities_are_exact_and_nonempty[manifest_overrides2-sidecar_overrides2]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_oversized_manifest_is_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_lexical_normalize_is_lexical_only_and_strings_only"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_identity_domains_are_separate"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_identity_key_normalizes_strings_first"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_identity_module_is_independent"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_extract_manifest.py::test_contracts_declare_extra_forbid_and_required_digests"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_results_coordinate_shape_is_refused_before_root_io[]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_results_coordinate_shape_is_refused_before_root_io[/report.xml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_results_coordinate_shape_is_refused_before_root_io[../report.xml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_results_coordinate_shape_is_refused_before_root_io[a/./report.xml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_results_coordinate_shape_is_refused_before_root_io[a//report.xml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_results_coordinate_shape_is_refused_before_root_io[C:/x.xml]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_descriptor_fallback_opens_and_verifies_each_component"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_descriptor_fallback_never_follows_a_symlink[parent]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_descriptor_fallback_never_follows_a_symlink[leaf]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_non_directory_parent_and_absent_leaf_have_distinct_registered_reasons"
+    },
+    {
+      "markers": [
+        "skipif"
+      ],
+      "node": "tests/test_junit_reader.py::test_final_fifo_is_classified_without_a_blocking_read"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_byte_budget_hashes_exactly_the_admitted_bytes_and_reads_only_one_over"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_supported_encoding_signals_and_declarations_agree[utf-8--UTF-8]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_supported_encoding_signals_and_declarations_agree[utf-8-\\xef\\xbb\\xbf-utf-8]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_supported_encoding_signals_and_declarations_agree[utf-16-le-\\xff\\xfe-UTF-16]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_supported_encoding_signals_and_declarations_agree[utf-16-be--UTF-16BE]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_unsupported_inconsistent_and_undecodable_encodings_are_total[<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><testsuite/>]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_unsupported_inconsistent_and_undecodable_encodings_are_total[\\xff\\xfe<\\x00?\\x00x\\x00m\\x00l\\x00 \\x00v\\x00e\\x00r\\x00s\\x00i\\x00o\\x00n\\x00=\\x00\"\\x001\\x00.\\x000\\x00\"\\x00 \\x00e\\x00n\\x00c\\x00o\\x00d\\x00i\\x00n\\x00g\\x00=\\x00\"\\x00U\\x00T\\x00F\\x00-\\x001\\x006\\x00B\\x00E\\x00\"\\x00?\\x00>\\x00<\\x00t\\x00e\\x00s\\x00t\\x00s\\x00u\\x00i\\x00t\\x00e\\x00/\\x00>\\x00]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_unsupported_inconsistent_and_undecodable_encodings_are_total[\\x00\\x00\\xfe\\xff\\x00\\x00\\x00<]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_unsupported_inconsistent_and_undecodable_encodings_are_total[\\x80]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_whole_decoded_document_is_scanned_before_parser_creation"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_expat_handlers_reject_dtds_defensively_when_scan_is_bypassed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_expat_syntax_errors_are_registered"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_element_budget_reaches_the_real_maximum_and_stops_before_element_one_over"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_depth_budget_reaches_the_real_maximum_and_stops_before_level_one_over"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_text_budget_reaches_the_real_maximum_and_never_retains_a_crossing_chunk"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_arbitrary_single_byte_documents_never_escape_as_exceptions"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_render_is_forward_total_for_modules_classes_and_parametrize_text"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_one_junit_identity_cannot_select_two_required_ids"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_one_required_id_cannot_be_emitted_twice"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_outcome_is_only_one_unqualified_direct_child"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_suite_summaries_cover_all_descendant_unqualified_testcases"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_an_integer_summary_too_large_for_python_conversion_stays_a_junit_refusal"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_namespaced_testcase_cannot_supply_a_required_id"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_decision_row_1_outranks_every_candidate_controlled_fact"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_simultaneous_lifecycle_faults_follow_the_registrys_written_order"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_decision_row_2_lifecycle_facts_gate_sufficient_results[child0-tests:child-timeout]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_decision_row_2_lifecycle_facts_gate_sufficient_results[child1-tests:child-signal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_decision_row_2_lifecycle_facts_gate_sufficient_results[child2-tests:child-nonzero]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_decision_row_2_lifecycle_facts_gate_sufficient_results[child3-tests:descendant-survived]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_decision_rows_3_and_4_outrank_mapping_and_snapshot_facts[tests:results-xml-malformed]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_junit_reader.py::test_decision_rows_3_and_4_outrank_mapping_and_snapshot_facts[tests:junit-summary]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_junit_reader.py::test_decision_rows_5_through_8_are_total_and_ordered"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_cells_is_total_over_all_thirty_keys"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[satisfied-pass-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[satisfied-fail-false_fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[satisfied-warning-tool_defect]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[satisfied-unchecked-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[satisfied-vacuous-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[violated-pass-false_pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[violated-fail-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[violated-warning-tool_defect]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[violated-unchecked-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[violated-vacuous-masked_by_vacuity]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[no-subjects-pass-false_pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[no-subjects-fail-false_fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[no-subjects-warning-tool_defect]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[no-subjects-unchecked-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_alethic_cells_match_research[no-subjects-vacuous-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[satisfied-pass-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[satisfied-fail-tool_defect]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[satisfied-warning-false_fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[satisfied-unchecked-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[satisfied-vacuous-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[violated-pass-false_pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[violated-fail-tool_defect]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[violated-warning-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[violated-unchecked-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[violated-vacuous-masked_by_vacuity]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[no-subjects-pass-false_pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[no-subjects-fail-tool_defect]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[no-subjects-warning-false_fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[no-subjects-unchecked-undecided]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_deontic_cells_match_research[no-subjects-vacuous-correct]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_textual_expected_unchecked_scores_correct_when_it_abstains"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_textual_expected_unchecked_pass_is_a_false_pass"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_textual_expected_unchecked_fail_is_a_tool_defect"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_a_genuine_coverage_gap_is_undecided_not_correct"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-satisfied-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-satisfied-warning]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-satisfied-vacuous]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-violated-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-violated-warning]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-no-subjects-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-no-subjects-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[alethic-no-subjects-warning]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-satisfied-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-satisfied-warning]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-satisfied-vacuous]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-violated-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-violated-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-no-subjects-pass]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-no-subjects-fail]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_an_expectation_the_table_calls_an_error_is_refused[deontic-no-subjects-warning]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[alethic-satisfied-pass-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[alethic-violated-fail-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[alethic-violated-vacuous-masked_by_vacuity]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[alethic-no-subjects-vacuous-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[deontic-satisfied-pass-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[deontic-violated-warning-correct]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[deontic-violated-vacuous-masked_by_vacuity]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_score.py::test_a_consistent_expectation_meeting_its_own_verdict_scores_from_the_table[deontic-no-subjects-vacuous-correct]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_the_flagged_pairs_score_exactly_as_the_table_says"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_a_new_verdict_state_raises_rather_than_defaulting"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_a_new_ground_truth_state_raises"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_partition_holds_on_random_count_vectors"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_a_miscategorised_observation_is_refused_loudly"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_false_pass_rate_uses_the_conditional_denominator"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_dilution_does_not_move_the_false_pass_rate"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_false_fail_rate_uses_satisfied_denominator"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_no_observations_yields_none_rates_not_zero_division"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_zero_expected_nonpass_yields_none_false_pass_rate"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_all_masked_by_vacuity_is_not_three_perfect_zeroes"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_deontic_false_pass_is_measured_against_the_verdict"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_score.py::test_withholds_acceptance_matches_pattern_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_identity.py::test_there_is_exactly_one_definition"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_identity.py::test_a_model_below_the_invocation_directory_keeps_its_relative_label"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_identity.py::test_a_model_outside_the_invocation_directory_falls_back_to_its_basename"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_identity.py::test_the_label_is_the_same_from_another_checkout"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_identity.py::test_the_label_is_independent_of_path_spelling[models/model.orm.yaml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_identity.py::test_the_label_is_independent_of_path_spelling[./models/model.orm.yaml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_identity.py::test_the_label_is_independent_of_path_spelling[models/../models/model.orm.yaml]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_normative_semantic_rule_inventory_matches_registration_order"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_full_vocabulary_loads_clean"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_full_vocabulary_exercises_every_family"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_explicit_fact_type_arity_must_match_role_count"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_omitted_fact_type_arity_remains_implicit"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_derived_fact_type_requires_non_empty_derivation_rule[None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_derived_fact_type_requires_non_empty_derivation_rule[]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_count_bounds_are_non_negative_integers[invalid_bound0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_count_bounds_are_non_negative_integers[invalid_bound1]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_count_bound_minimum_cannot_exceed_maximum"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_full_vocabulary_has_external_uniqueness_and_scoped_frequency"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_deontic_notes_round_trip_without_data_loss"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_semantic_warnings_survive_alongside_semantic_errors"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_direct_model_rejects_unknown_top_level_fields"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_cli_validate_full_vocabulary_exits_0"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_unknown_constraint_type_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_missing_modality_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_missing_modality_cli_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_constraint_typo_field_rejected"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_identifiers_follow_lower_snake_case_grammar[fact-id-control-character]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_identifiers_follow_lower_snake_case_grammar[role-name-uppercase]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_unresolvable_reference_modes_forbid_value_type[unit-based]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_unresolvable_reference_modes_forbid_value_type[external]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_value_constraint_rejects_multiple_forms"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_cardinality_scope_rejects_other_scope_target"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_range_endpoints_load_for_matching_primitive[character-range]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_range_endpoints_load_for_matching_primitive[date-range]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_range_endpoints_must_match_resolved_primitive[mixed-endpoints]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_range_endpoints_must_match_resolved_primitive[invalid-date]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_range_endpoints_must_match_resolved_primitive[number-for-string]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_value_range_minimum_cannot_exceed_maximum[numeric-ranges-entry]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_value_range_minimum_cannot_exceed_maximum[date]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_value_range_minimum_cannot_exceed_maximum[datetime]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_single_role_disjunction_requires_same_declared_subject_type[mandatory-disjunctive]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_single_role_disjunction_requires_same_declared_subject_type[exclusive-or]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_cross_fact_join_rejects_duplicate_same_type_anchors"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_reading_placeholder_labels_must_follow_role_object_type_order[{Country} identifies {Person}]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_reading_placeholder_labels_must_follow_role_object_type_order[{Unrelated} identifies {Country}]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_llm_inferred_requires_world_fact"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[duplicate_id.yaml-semantic:id-unique-person_id]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[bad_role_ref.yaml-semantic:role-ref-ghost]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[bad_cross_ref.yaml-semantic:cross-ref-nonsmoker]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[reading_placeholders.yaml-semantic:reading-placeholders-person_smokes]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[duplicate_role_names.yaml-semantic:role-names-distinct-person_knows_person]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[duplicate_role_names_cross_type.orm.yaml-semantic:role-names-distinct-movie_has_title]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[bad_subtype_ref.yaml-semantic:subtype-ref-ghost]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[missing_external_uc.yaml-semantic:external-ref-uc-enrolment]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[bad_reference_value_type.yaml-semantic:reference-value-type-person_name]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[explicit_not_confirmed.yaml-semantic:status-source-person_smokes]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_semantic_rule_rejections[rejected_in_active.yaml-semantic:status-source-rejected]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_at_least_8_distinct_semantic_rule_ids"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_ref_typos_rejected[mandatory-role]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_ref_typos_rejected[uniqueness-roles]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_ref_typos_rejected[frequency-roles]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_ref_typos_rejected[value-comparison-operands]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_ref_typos_rejected[subtype-partition-subtypes]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_model_validation.py::test_string_ref_typos_rejected[value-object-type]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_value_comparison_literal_operand_still_allowed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_tagged_value_comparison_operands_load"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_ring_on_incompatible_binary_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_ring_on_non_binary_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_role_sequences_of_unequal_length_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_role_sequences_incompatible_at_a_position_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_unequal_arity_is_reported_by_one_rule_not_two"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_position_wise_rule_terminates_on_a_subtype_cycle"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_setfam_sequence_constraints_are_not_falsely_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_alethic_textual_constraint_warns_and_still_loads"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_alethic_textual_model_still_validates_at_exit_0"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_deontic_textual_constraint_does_not_warn"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_modality_policy_fixture_loads_with_warning"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_validation_issue_severity_defaults_to_error"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_cli_validate_prints_warning_and_exits_0"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_model_size_cap_enforced"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_model_yaml_aliases_rejected"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_common_sense_constraint_requires_auditable_provenance"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_model_load_error_cli_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_full_vocabulary_warns_only_about_its_alethic_textual_constraint"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_model_validation.py::test_skeleton_model_loads_with_no_warnings"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_api.py::test_public_exports_and_current_keyword_signatures"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_api.py::test_loaded_model_validation_rechecks_nested_mutation"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_api.py::test_bad_object_shapes_raise_type_error_before_evaluation[<lambda>0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_api.py::test_bad_object_shapes_raise_type_error_before_evaluation[<lambda>1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_api.py::test_bad_object_shapes_raise_type_error_before_evaluation[<lambda>2]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_coverage_progress.py::test_partial_slices_refuse_complete_original_accounting"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_coverage_progress.py::test_progress_retains_unresolved_cases_and_refuses_handoff"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_coverage_progress.py::test_static_target_selectors_resolve_to_actual_test_definitions"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[copy-project-claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[copy-project-codex]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[copy-global-claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[copy-global-codex]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[symlink-project-claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[symlink-project-codex]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[symlink-global-claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_owned_lifecycle_preserves_foreign_content[symlink-global-codex]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_collision_needs_force_and_modified_copy_survives[claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_collision_needs_force_and_modified_copy_survives[codex]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_retargeted_link_neither_unlinked_nor_followed[claude]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_installer.py::test_retargeted_link_neither_unlinked_nor_followed[codex]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G00]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G01]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G02]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G03]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G04]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G05]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G06]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G07]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G08]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G09]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G10]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G11]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G12]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G13]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G14]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G15]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G16]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G17]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_approved_instrument_case[G18]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_roots_refuse_without_traceback[None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_roots_refuse_without_traceback[bad1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_roots_refuse_without_traceback[True]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_roots_refuse_without_traceback[1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_roots_refuse_without_traceback[text]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_roots_refuse_without_traceback[bad5]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[originals-bad0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[originals-bad1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[collected-bad2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[rows-None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[surfaces-None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[expected_surfaces-bad5]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[private_dependencies-bad6]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[acceptance_passed-1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[handoff_requested-yes]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_packet_fields_refuse[source_delta_accounted-None]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[source_node-bad0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[source_node-../escape.py::test_x]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[source_sha256-bad2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[disposition-bad3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[selection-bad4]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[claim-]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[target_nodes-bad6]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[target_nodes-bad7]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_row_fields_refuse[changed_boundary-None]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_migration.py::test_loader_admits_exact_cap_and_refuses_one_over_before_parse"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_migration.py::test_compressed_admitted_bytes_and_expansion_cap"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[duplicate-key]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[nan]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[infinity]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[invalid-utf8]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[oversize-integer]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[deep-json]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[nonobject-row]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_public_migration.py::test_hostile_serializations_refuse[bad-gzip]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_migration.py::test_symlink_and_fifo_maps_refuse"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_migration.py::test_fixed_denominator_validation_has_bounded_cost"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_public_migration.py::test_approval_instrument_rejects_constant_accept_and_constant_refuse"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_malformed_consumed_model_fields_are_input_errors[kind]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_malformed_consumed_model_fields_are_input_errors[reference]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_malformed_consumed_model_fields_are_input_errors[role]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_malformed_consumed_model_fields_are_input_errors[cycle]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_pyrel_export_boundaries.py::test_recursive_yaml_alias_is_refused"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_pyrel_export_boundaries.py::test_nonregular_input_refused_without_opening"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_pyrel_export_boundaries.py::test_failed_write_removes_own_partial_file"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_pyrel_export_boundaries.py::test_require_output_failure_is_not_a_missing_named_connection"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_malformed_consumed_fields_are_rejected[mandatory-number]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_malformed_consumed_fields_are_rejected[uniqueness-number]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_malformed_consumed_fields_are_rejected[unknown-role]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_malformed_consumed_fields_are_rejected[reference-mode]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[Date-not-a-date]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[Date-2026-99-99]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[Date-2026-02-29]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[Date-20260904]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[DateTime-not-a-datetime]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[DateTime-2026-09-04T25:00]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_review_invalid_temporal_population_is_rejected[DateTime-2026-09-04]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_valid_temporal_population_remains_admitted[Date-2024-02-29]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_valid_temporal_population_remains_admitted[DateTime-2026-09-04T12:30:01.25Z]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_valid_temporal_population_remains_admitted[DateTime-2026-09-04 12:30-0400]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_pyrel_export_boundaries.py::test_valid_temporal_population_remains_admitted[DateTime-2026-09-04t12:30z]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_fixture_is_exactly_the_four_named_committed_byte_cases"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_fixture_selected_path_census_is_exactly_once_and_referentially_closed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_fixture_pins_supported_static_inputs_and_four_typed_locators"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_fixture_ambiguity_is_one_inert_two_digest_proposal_not_an_asserted_fact"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_fixture_third_row_is_the_exact_closed_false_negative_frontier"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_fixture_fourth_row_combines_nested_exclusion_symlink_cycle_and_stale_bytes"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_every_case_names_exactly_three_canonical_outputs_without_a_self_hash"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_root_categories_are_closed_and_paths_are_repository_relative"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_mechanical_inventory_is_sorted_repeatable_and_census_closed"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_recovery_inventory.py::test_scanner_matches_every_committed_corpus_identity_and_locator[recovery-mechanical-python-schema]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_recovery_inventory.py::test_scanner_matches_every_committed_corpus_identity_and_locator[recovery-ambiguous-semantic-proposal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_recovery_inventory.py::test_scanner_matches_every_committed_corpus_identity_and_locator[recovery-unsupported-dynamic-mixed-frontier]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_recovery_inventory.py::test_scanner_matches_every_committed_corpus_identity_and_locator[recovery-traversal-symlink-stale-digest]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_inert_marker_yields_one_evidence_backed_proposal_and_no_fact_assertion"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_unsupported_dynamic_unresolved_and_mixed_inputs_do_not_disappear"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_nested_file_is_parsed_but_vendor_and_symlinks_are_never_followed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_binary_parse_error_and_caps_are_frontier_not_silent_skips"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_proposal_markers_cannot_hide_unsupported_dynamic_or_invalid_source"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_nested_imports_and_common_metaprogramming_are_honest_frontier"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_large_destructuring_alias_graph_is_linear_and_explicitly_capped"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_structured_alias_dates_nan_and_resource_caps_fail_closed_as_frontier"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_directory_and_global_selected_path_observations_are_bounded"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_preopen_growth_cannot_escape_the_aggregate_byte_cap"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_repeated_symbols_and_colliding_proposal_slugs_get_stable_unique_ids"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_whole_repository_dot_root_is_supported_safely"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_scanner_does_not_import_execute_spawn_install_probe_or_open_network"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_recovery_inventory.py::test_scanner_source_has_no_execution_or_live_probe_escape_hatch"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_aliases_are_imported_from_the_owner_only_codex_env"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_parent_environment_wins_without_reading_the_file"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_unrelated_names_and_shell_syntax_are_never_executed"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_incomplete_or_ambiguous_files_fail_closed[QWEN_API_KEY_2=q\\n-ZAI_API_KEY]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_incomplete_or_ambiguous_files_fail_closed[OPENROUTER_API_KEY=q\\nOPENROUTER_API_KEY=q\\nZAI_API_KEY=z\\n-repeats]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_exact_name_wins_over_legacy_alias"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_permissive_or_symlinked_file_is_refused"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_provider_rejection_stops_before_launch_and_hides_response[401]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_provider_rejection_stops_before_launch_and_hides_response[403]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_provider_rejection_stops_before_launch_and_hides_response[429]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_provider_rejection_stops_before_launch_and_hides_response[500]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_network_timeout_is_sanitized"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_successful_provider_check_never_reads_private_key_metadata"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_auth_redirect_is_not_followed"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_authenticated_launch_preserves_selected_effort_and_credentials[False]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_authenticated_launch_preserves_selected_effort_and_credentials[True]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_missing_keys_refuse_without_network_or_repo_env"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_name_check_and_usage_do_not_call_provider[args0-0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_name_check_and_usage_do_not_call_provider[args1-64]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_malformed_trusted_text_refuses[OPENROUTER_API_KEY=\"unfinished\\n]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_malformed_trusted_text_refuses[not-an-assignment]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_malformed_trusted_text_refuses[1BAD=q\\n]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_credential_launcher.py::test_malformed_trusted_text_refuses[OPENROUTER_API_KEY=123\\nOPENROUTER_API_KEY=q\\n]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_oversized_and_invalid_utf8_trusted_file_refuse"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_non_regular_trusted_file_refuses"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_repository_env_is_never_opened"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_production_opener_installs_the_no_redirect_handler"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_credential_launcher.py::test_foreign_owned_trusted_file_refuses"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_finalization_quorum_is_exactly_three_distinct_successful_reviewers[0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_finalization_quorum_is_exactly_three_distinct_successful_reviewers[1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_finalization_quorum_is_exactly_three_distinct_successful_reviewers[2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_finalization_quorum_is_exactly_three_distinct_successful_reviewers[3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_finalization_quorum_is_exactly_three_distinct_successful_reviewers[4]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_agreement_requires_two_distinct_successful_supporters[0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_agreement_requires_two_distinct_successful_supporters[1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_agreement_requires_two_distinct_successful_supporters[2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_agreement_requires_two_distinct_successful_supporters[3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_agreement_requires_two_distinct_successful_supporters[4]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_two_concerns_from_one_reviewer_are_not_agreement"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_singleton_concern_is_retained_under_divergent_views"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_complete_concern_accounting_rejects_omission_duplication_and_forgery[omit-missing|account]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_complete_concern_accounting_rejects_omission_duplication_and_forgery[duplicate-divergent-duplicate|once]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_complete_concern_accounting_rejects_omission_duplication_and_forgery[group-and-divergent-duplicate|once]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_complete_concern_accounting_rejects_omission_duplication_and_forgery[unknown-concern-unknown|concern]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_complete_concern_accounting_rejects_omission_duplication_and_forgery[failed-reviewer-successful|reviewer]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_complete_concern_accounting_rejects_omission_duplication_and_forgery[forged-supporters-support]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_prioritized_fix_resolves_every_supporter_to_requested_artifact_evidence"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_prioritized_fix_cannot_omit_one_supporter_from_addressed_agreement"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_prioritized_fix_rejects_one_missing_supporter_evidence_reference"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_prioritized_fix_cannot_lose_evidence_invent_concerns_or_forge_supporters[update0-concern]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_prioritized_fix_cannot_lose_evidence_invent_concerns_or_forge_supporters[update1-evidence]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_prioritized_fix_cannot_lose_evidence_invent_concerns_or_forge_supporters[update2-evidence|index]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_prioritized_fix_cannot_lose_evidence_invent_concerns_or_forge_supporters[update3-support]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_report.py::test_prioritized_fix_cannot_lose_evidence_invent_concerns_or_forge_supporters[update4-unknown|concern]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_run_digest_and_stored_quorum_are_revalidated_during_finalization"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_synthesis_records_are_recursively_closed_frozen_and_canonical"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_markdown_rendering_is_deterministic_and_neutralizes_heading_control_injection"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_the_rendered_report_states_what_each_response_cost_to_read"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_a_legacy_run_says_its_completeness_was_never_recorded"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_finalization_and_rendering_have_no_reviewed_artifact_writer_surface"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_the_report_counts_retained_concerns_by_relevance"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_report.py::test_a_round_with_no_blocking_concern_says_the_next_instrument_is_code"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_load_review_request_accepts_exactly_three_digest_bound_variants[plan-PlanReviewRequest-paths0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_load_review_request_accepts_exactly_three_digest_bound_variants[experiment-outcome-ExperimentOutcomeReviewRequest-paths1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_load_review_request_accepts_exactly_three_digest_bound_variants[spec-results-delta-SpecResultsDeltaReviewRequest-paths2]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_public_request_records_are_recursively_closed_and_frozen"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_validation_is_strict_and_rejects_blank_nested_text[mutation0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_validation_is_strict_and_rejects_blank_nested_text[mutation1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_validation_is_strict_and_rejects_blank_nested_text[mutation2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_validation_is_strict_and_rejects_blank_nested_text[mutation3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_validation_is_strict_and_rejects_blank_nested_text[mutation4]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_validation_is_strict_and_rejects_blank_nested_text[mutation5]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_spec_results_delta_roles_must_name_three_distinct_artifacts"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_union_rejects_schema_drift_and_mixed_kind_members[mutation0-schema version]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_union_rejects_schema_drift_and_mixed_kind_members[mutation1-closed kind]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_union_rejects_schema_drift_and_mixed_kind_members[mutation2-top-level unknown field]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_union_rejects_schema_drift_and_mixed_kind_members[mutation3-command injection field]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_union_rejects_schema_drift_and_mixed_kind_members[mutation4-mixed-kind member]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_unknown_fields_are_rejected_at_every_nested_request_depth"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_rubric_requires_nonempty_unique_criteria[criteria0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_rubric_requires_nonempty_unique_criteria[criteria1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_rubric_requires_nonempty_unique_criteria[criteria2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_rubric_requires_nonempty_unique_criteria[criteria3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[/etc/passwd]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[../outside.md]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[nested/../../outside.md]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[C:\\\\\\\\Windows\\\\\\\\system.ini]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[C:drive-relative.md]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[nested\\\\\\\\escape.md]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[./plan.md]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[plan.md/]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_artifact_paths_are_normalized_repository_relative_only[plan\\x00.md]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_file_path_is_repository_relative[../request.json]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_file_path_is_repository_relative[/tmp/request.json]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_request_file_path_is_repository_relative[C:\\\\\\\\x]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_loader_rejects_missing_stale_symlink_and_nonregular_artifacts"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_loader_rejects_symlinked_request_and_repository_root"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_loader_rejects_intermediate_symlink_for_request_or_artifact"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_loader_enforces_request_per_file_and_aggregate_caps"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_loader_rejects_duplicate_keys_trailing_json_and_nonfinite_constants"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_reviewer_response_validates_complete_closed_json_and_expected_identity"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_reviewer_response_evidence_must_name_a_requested_artifact"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_coercion_unknown_enums_blank_evidence_and_approval_with_concerns[<lambda>0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_coercion_unknown_enums_blank_evidence_and_approval_with_concerns[<lambda>1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_coercion_unknown_enums_blank_evidence_and_approval_with_concerns[<lambda>2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_coercion_unknown_enums_blank_evidence_and_approval_with_concerns[<lambda>3]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_coercion_unknown_enums_blank_evidence_and_approval_with_concerns[<lambda>4]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_coercion_unknown_enums_blank_evidence_and_approval_with_concerns[<lambda>5]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_wrong_identity_and_nested_schema_drift[<lambda>-reviewer]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_wrong_identity_and_nested_schema_drift[<lambda>-invalid0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_wrong_identity_and_nested_schema_drift[<lambda>-invalid1]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_wrong_identity_and_nested_schema_drift[<lambda>-invalid2]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_review_request.py::test_reviewer_response_rejects_wrong_identity_and_nested_schema_drift[<lambda>-concern]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_a_repeated_concern_identifier_is_dropped_rather_than_fatal"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_reviewer_response_parser_rejects_duplicate_keys_trailing_nan_and_nonobject"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_validate_review_request_rejects_nonmapping_and_unknown_kind"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_a_fenced_reviewer_response_parses_because_refusing_it_was_our_defect"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_a_current_version_response_must_classify_every_concern"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_review_request.py::test_a_current_version_request_must_carry_the_standing_mvp_criterion"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_derivation_refusal.py::test_synth_refuses_a_structured_derivation_model_at_the_generator_band"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_derivation_refusal.py::test_synth_refusal_message_names_the_structured_fact_types"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_derivation_refusal.py::test_synth_over_a_legacy_string_derivation_model_is_unchanged"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_mutate_derivation.py::test_predict_violations_refuses_a_structured_derivation_model"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_mutate_derivation.py::test_predict_violations_is_unchanged_for_legacy_string_models"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_mutate_derivation.py::test_the_subtype_derivation_hardcode_is_still_correct"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_role_and_literal_synthesize_and_measure[string]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_role_and_literal_synthesize_and_measure[boolean]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_role_and_literal_synthesize_and_measure[numeric]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_role_and_literal_synthesize_and_measure[date]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_literal_on_the_left_reverses_the_operator"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_numeric_literal_derives_boundary_cases"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_tagged_comparison.py::test_tagged_untypeable_literal_is_measured_as_unchecked"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_synth_tagged_comparison.py::test_legacy_bare_string_operands_remain_supported"
+    }
+  ],
+  "status": "collection-only; not execution"
+}

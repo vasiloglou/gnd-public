@@ -1,0 +1,67 @@
+# Violating population for setfam.orm.yaml — every family's fail case.
+# Every fact type still carries at least one fact so failures are genuine
+# evaluations, never vacuous.
+population:
+  model: setfam.orm.yaml
+  source: fixture
+  label: violating
+  covers:
+    - booking_by_person
+    - booking_of_room
+    - person_teaches_course
+    - person_takes_course
+    - person_leads_course
+    - person_is_registered
+    - person_is_enrolled
+    - person_is_active
+    - person_is_suspended
+    - person_is_student
+    - person_is_staff
+    - room_has_seats
+instances:
+  person: [1, 2, 3, 4, 5, 6]
+  room: ["R1", "R2", "R3", "R4"]
+facts:
+  # Three bookings by the same (person, room) composite:
+  # external UC duplicate AND frequency-external count 3 > max 2.
+  booking_by_person:
+    - { booking: "b1", person: 1 }
+    - { booking: "b2", person: 1 }
+    - { booking: "b3", person: 1 }
+  booking_of_room:
+    - { booking: "b1", room: "R1" }
+    - { booking: "b2", room: "R1" }
+    - { booking: "b3", room: "R1" }
+  # Persons 3 and 4 neither teach nor take -> mandatory-disjunctive fail.
+  # Three distinct teachers -> cardinality-role fail (max 2).
+  person_teaches_course:
+    - { person: 1, course: "C1" }
+    - { person: 5, course: "C1" }
+    - { person: 6, course: "C2" }
+  # Person 2 takes three courses -> frequency-internal fail (max 2).
+  person_takes_course:
+    - { person: 2, course: "C1" }
+    - { person: 2, course: "C2" }
+    - { person: 2, course: "C3" }
+  # (3, C9) leads but does not take -> subset fail.
+  person_leads_course:
+    - { person: 3, course: "C9" }
+  # registered {1} vs enrolled {2} -> equality fail.
+  person_is_registered:
+    - { person: 1 }
+  person_is_enrolled:
+    - { person: 2 }
+  # Person 1 active AND suspended -> exclusion fail.
+  person_is_active:
+    - { person: 1 }
+  person_is_suspended:
+    - { person: 1 }
+  # Person 2 both student and staff; persons 3..6 neither -> exclusive-or fail.
+  person_is_student:
+    - { person: 1 }
+    - { person: 2 }
+  person_is_staff:
+    - { person: 2 }
+  # Zero seats -> value hybrid fail (min 1). Room roster of 4 -> cardinality-object fail (max 3).
+  room_has_seats:
+    - { room: "R1", seats: 0 }

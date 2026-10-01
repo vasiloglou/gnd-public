@@ -1,0 +1,24 @@
+# Conforming population for basics.orm.yaml — every constraint evaluates and
+# passes; nothing is vacuous (all fact types covered and populated).
+population:
+  model: basics.orm.yaml
+  source: fixture
+  label: conforming
+  covers:
+    - student_has_nickname
+    - student_has_grade
+    - student_likes_color
+instances:
+  student: [1, 2]
+facts:
+  student_has_nickname:
+    - { student: 1, nickname: "ace" }
+    - { student: 2, nickname: "bee" }
+  student_has_grade:
+    - { student: 1, grade: 90 }
+    - { student: 2, grade: 75 }
+  student_likes_color:
+    - { student: 1, color: "red" }
+    - { student: 1, color: "green" }
+    - { student: 2, color: "blue" }
+    - { student: 2, color: "red" }

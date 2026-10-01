@@ -1,0 +1,37 @@
+# tests/fixtures/adversarial/populations/xor_multirole.overlap.yaml
+#
+# The companion to `xor_multirole.neither.yaml`, and the guard against
+# OVER-correcting it. ("P1","C1") appears in BOTH sequences: P1 teaches C1 and
+# also takes it. The EXCLUSION half of the multi-role `exclusive-or` is fully
+# decidable over compatible role sequences, and it has a witness.
+#
+# A found witness is a PROOF of violation, irrespective of the disjunctive half
+# nobody can decide. So the verdict must stay `fail` (alethic) -> exit 1, never
+# be downgraded to `unchecked` -> exit 4 just because the other component is
+# indeterminate. That is D-08's band precedence 1 > 4 stated at the level of a
+# single constraint: violation outranks indeterminacy.
+#
+# Unlike its sibling this case is NOT a RED probe — it exits 1 before plan
+# 01.1-05 and after it. That is deliberate: it exists to fail if the fix to
+# probe #3 is applied too broadly, i.e. if the multi-role branch is rewritten to
+# report `unchecked` unconditionally. Without it, hiding a real violation behind
+# band 4 would break no test.
+#
+# ("P2","C2") is present in `person_takes_course` only, so the population also
+# carries a tuple the exclusion half clears — the fail must be attributable to
+# the overlap, not to the constraint refusing every population.
+#
+# Structurally well formed against its model (CORE-04 passes it cleanly).
+population:
+  model: xor_multirole.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - person_teaches_course
+    - person_takes_course
+facts:
+  person_teaches_course:
+    - { person: "P1", course: "C1" }
+  person_takes_course:
+    - { person: "P1", course: "C1" }
+    - { person: "P2", course: "C2" }

@@ -1,0 +1,62 @@
+# tests/fixtures/models/invalid/role_seq_type_compat.orm.yaml
+#
+# Rejected by semantic:role-seq-type-compat (CORE-06, D-13 clause 3) — the
+# `equality` constraint's two role sequences have EQUAL arity (1), but position
+# 0 pairs a `person`-typed role against a `course`-typed one, and `person` and
+# `course` share no common supertype.
+#
+# Equal length is necessary but not sufficient for ORM 2 sequence
+# compatibility: the constraint asserts that the same tuple appears in both
+# projections, which is meaningless when the values at a position are drawn
+# from disjoint populations. "Compatible" is the definition already in this
+# codebase — a non-empty intersection of the two ancestor closures, i.e. the
+# same object type or types sharing a common supertype — reused from
+# semantic:ring-binary rather than re-derived, so there is exactly one notion
+# of type compatibility here and it inherits that helper's cycle safety.
+#
+# Like its arity sibling this is a MODEL defect and must fail at `gnd validate`
+# (exit 3), not at check time. Before this rule the model validated clean at
+# exit 0, and the constraint went on to be evaluated over an intersection that
+# is empty for reasons of TYPING rather than of population — a verdict that
+# looks like a decided `pass` and is not one.
+#
+# The sequences are equal-length on purpose so the arity rule stays silent and
+# this fixture pins the position-wise rule alone.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: String
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+  - id: course_code
+    name: CourseCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: person_is_registered
+    reading: "{Person} is registered"
+    roles:
+      - { object_type: person, role_name: person }
+  - id: course_is_offered
+    reading: "{Course} is offered"
+    roles:
+      - { object_type: course, role_name: course }
+constraints:
+  - type: equality
+    role_seq_a:
+      - { fact_type: person_is_registered, role: person }
+    role_seq_b:
+      - { fact_type: course_is_offered, role: course }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "Registration and course offering move together." }

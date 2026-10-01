@@ -1,0 +1,39 @@
+# Violating population for misc.orm.yaml.
+population:
+  model: misc.orm.yaml
+  source: fixture
+  label: violating
+  covers:
+    - task_scores
+    - task_has_points
+    - task_logged_on
+    - task_started_on
+    - task_finished_on
+    - vehicle_has_plate
+    - gadget_has_label
+instances:
+  # Vehicle 30 is both car and truck (exclusive violation); vehicles 3 and 20
+  # are in neither subtype (exhaustive violation).
+  car: [10, 30]
+  truck: [30]
+facts:
+  # low 9 > high 3 -> role-to-role value-comparison fail.
+  task_scores:
+    - { task: 1, low: 9, high: 3 }
+  # 150 > literal 100 -> literal-operand value-comparison fail.
+  task_has_points:
+    - { task: 1, points: 150 }
+  # Time-relative operand stays unchecked regardless of data.
+  task_logged_on:
+    - { task: 1, at: "2026-01-01" }
+  # started 2026-05-01 > finished 2026-04-01 -> cross value-comparison fail.
+  task_started_on:
+    - { task: 1, on: "2026-05-01" }
+  task_finished_on:
+    - { task: 1, on: "2026-04-01" }
+  vehicle_has_plate:
+    - { vehicle: 10, plate: "AAA" }
+    - { vehicle: 20, plate: "BBB" }
+    - { vehicle: 3, plate: "CCC" }
+  gadget_has_label:
+    - { gadget: 7, label: "g7" }

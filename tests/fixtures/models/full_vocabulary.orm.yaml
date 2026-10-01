@@ -1,0 +1,501 @@
+# tests/fixtures/models/full_vocabulary.orm.yaml
+# The living proof of D-01: one compact HR-domain model exercising EVERY Halpin
+# ORM 2 constraint family in the GND YAML form. If a family cannot be expressed
+# here, the meta-schema lacks syntax and D-01 is violated.
+#
+# Families covered:
+#   uniqueness (internal + external), mandatory, mandatory-disjunctive,
+#   value (enum + range + role-scope hybrid), frequency (internal + external),
+#   ring (acyclic + irreflexive), subset, equality, exclusion, exclusive-or,
+#   value-comparison, cardinality (object + role), subtype-partition, textual —
+#   plus subtyping on object types with a derivation_rule.
+#
+# D-03-consistent modality defaults: explicit/user-supplied + confirmed -> alethic;
+# llm-inferred/common-sense + proposed -> deontic. Modality is ALWAYS explicit.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: employee
+    name: Employee
+    kind: entity
+    reference: { mode: popular, value_type: employee_id }
+    provenance: { origin: fixture }
+
+  - id: employee_id
+    name: EmployeeId
+    kind: value
+    primitive: Integer
+
+  - id: employee_name
+    name: EmployeeName
+    kind: value
+    primitive: String
+
+  - id: gender
+    name: Gender
+    kind: value
+    primitive: String
+
+  - id: department
+    name: Department
+    kind: entity
+    reference: { mode: popular, value_type: department_code }
+
+  - id: department_code
+    name: DepartmentCode
+    kind: value
+    primitive: String
+
+  - id: project
+    name: Project
+    kind: entity
+    reference: { mode: general, value_type: project_name }
+
+  - id: project_name
+    name: ProjectName
+    kind: value
+    primitive: String
+
+  - id: salary
+    name: Salary
+    kind: entity
+    reference: { mode: unit-based, unit: USD, measure_type: Money }
+
+  - id: hours
+    name: Hours
+    kind: value
+    primitive: Integer
+
+  - id: calendar_date
+    name: CalendarDate
+    kind: value
+    primitive: Date
+
+  # Externally identified entity — its composite identifier is the top-level
+  # external uniqueness constraint below.
+  - id: assignment
+    name: Assignment
+    kind: entity
+    reference: { mode: external }
+
+  # Subtype with derivation rule (derived -> derivation_rule required).
+  - id: contractor_employee
+    name: ContractorEmployee
+    kind: entity
+    subtype_of: [employee]
+    inherits_reference: true
+    derivation: derived
+    derivation_rule: "Each ContractorEmployee is an Employee who is not full-time and not part-time."
+    storage: computed
+
+  - id: permanent_employee
+    name: PermanentEmployee
+    kind: entity
+    subtype_of: [employee]
+    inherits_reference: true
+    derivation: asserted
+
+fact_types:
+  - id: employee_has_name
+    reading: "{Employee} has {EmployeeName}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: employee_name, role_name: name }
+    constraints:
+      # uniqueness — internal (1:n)
+      - type: uniqueness
+        roles: [employee]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each employee has exactly one registered name." }
+      # mandatory
+      - type: mandatory
+        role: employee
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every employee must have a name on file." }
+
+  - id: employee_has_gender
+    reading: "{Employee} has {Gender}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: gender, role_name: gender }
+    constraints:
+      - type: uniqueness
+        roles: [employee]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One recorded gender per employee." }
+
+  - id: employee_earns_salary
+    reading: "{Employee} earns {Salary}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: salary, role_name: salary }
+    constraints:
+      - type: uniqueness
+        roles: [employee]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each employee has a single current salary." }
+
+  # Self-referential binary — ring constraint host; explicit role names mandatory.
+  - id: employee_reports_to_employee
+    reading: "{Employee:subordinate} reports to {Employee:manager}"
+    roles:
+      - { object_type: employee, role_name: subordinate }
+      - { object_type: employee, role_name: manager }
+    constraints:
+      - type: uniqueness
+        roles: [subordinate]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each employee reports to at most one manager." }
+      # ring — acyclic
+      - type: ring
+        variant: acyclic
+        source: common-sense
+        status: proposed
+        modality: deontic
+        rationale: "Reporting chains do not loop back on themselves in a sane org chart."
+        provenance: { library_entry: ring-reports-to, matched_pattern: "manager/employee self-reference" }
+      # ring — irreflexive
+      - type: ring
+        variant: irreflexive
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_note: "Confirmed: nobody is their own manager." }
+
+  - id: employee_works_on_project
+    reading: "{Employee} works on {Project}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: project, role_name: project }
+    constraints:
+      # uniqueness — spanning (m:n)
+      - type: uniqueness
+        roles: [employee, project]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An employee is on a project once; no duplicate memberships." }
+      # frequency — internal (team size bound per project)
+      - type: frequency
+        scope: internal
+        roles: [project]
+        bound: { min: 1, max: 10 }
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_note: "Teams are capped at ten members." }
+
+  - id: employee_leads_project
+    reading: "{Employee} leads {Project}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: project, role_name: project }
+    constraints:
+      - type: uniqueness
+        roles: [project]
+        source: common-sense
+        status: proposed
+        modality: deontic
+        rationale: "A project normally has a single lead."
+        provenance: { library_entry: project-single-lead, matched_pattern: "employee leads project" }
+
+  - id: employee_heads_department
+    reading: "{Employee} heads {Department}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: department, role_name: department }
+    constraints:
+      - type: uniqueness
+        roles: [department]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A department has exactly one head." }
+
+  # The two fact types that jointly identify Assignment (external UC below).
+  - id: assignment_of_employee
+    reading: "{Assignment} is of {Employee}"
+    roles:
+      - { object_type: assignment, role_name: assignment }
+      - { object_type: employee, role_name: employee }
+    constraints:
+      - type: uniqueness
+        roles: [assignment]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An assignment belongs to one employee." }
+      - type: mandatory
+        role: assignment
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An assignment cannot exist without its employee." }
+
+  - id: assignment_on_project
+    reading: "{Assignment} is on {Project}"
+    roles:
+      - { object_type: assignment, role_name: assignment }
+      - { object_type: project, role_name: project }
+    constraints:
+      - type: uniqueness
+        roles: [assignment]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An assignment targets one project." }
+
+  - id: assignment_has_hours
+    reading: "{Assignment} has logged {Hours}"
+    roles:
+      - { object_type: assignment, role_name: assignment }
+      - { object_type: hours, role_name: hours }
+    constraints:
+      - type: uniqueness
+        roles: [assignment]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One running hours total per assignment." }
+
+  - id: assignment_has_overtime_hours
+    reading: "{Assignment} has overtime {Hours}"
+    roles:
+      - { object_type: assignment, role_name: assignment }
+      - { object_type: hours, role_name: hours }
+
+  # Ternary with same-typed date roles — hosts the inline value-comparison.
+  - id: project_ran_from_date_to_date
+    reading: "{Project} ran from {CalendarDate:start} to {CalendarDate:end}"
+    roles:
+      - { object_type: project, role_name: project }
+      - { object_type: calendar_date, role_name: start }
+      - { object_type: calendar_date, role_name: end }
+    constraints:
+      - type: uniqueness
+        roles: [project]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A project has one recorded run interval." }
+      # value-comparison (intra-fact-type)
+      - type: value-comparison
+        operator: "<="
+        role_a: start
+        role_b: end
+        source: common-sense
+        status: proposed
+        modality: deontic
+        rationale: "A project cannot end before it starts."
+        provenance: { library_entry: ordered-start-end, matched_pattern: "project start/end roles" }
+
+  # Unaries — subset/exclusion/exclusive-or material.
+  - id: employee_is_fulltime
+    reading: "{Employee} is full-time"
+    roles:
+      - { object_type: employee, role_name: employee }
+
+  - id: employee_is_parttime
+    reading: "{Employee} is part-time"
+    roles:
+      - { object_type: employee, role_name: employee }
+
+  - id: employee_is_active
+    reading: "{Employee} is active"
+    roles:
+      - { object_type: employee, role_name: employee }
+
+  - id: employee_is_terminated
+    reading: "{Employee} is terminated"
+    roles:
+      - { object_type: employee, role_name: employee }
+
+constraints:
+  # uniqueness — external (composite identifier for Assignment)
+  - type: uniqueness
+    scope: external
+    role_refs:
+      - { fact_type: assignment_of_employee, role: employee }
+      - { fact_type: assignment_on_project, role: project }
+    preferred: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "An assignment is identified by its employee and project together." }
+
+  # mandatory-disjunctive (inclusive-or)
+  - type: mandatory-disjunctive
+    role_refs:
+      - { fact_type: employee_works_on_project, role: employee }
+      - { fact_type: employee_heads_department, role: employee }
+    source: llm-inferred
+    status: proposed
+    modality: deontic
+    rationale: "Employees are expected to either work on a project or head a department."
+    provenance:
+      rationale_world_fact: "Organizations assign staff to productive roles; idle headcount is exceptional."
+
+  # value — enumeration (object-type scope)
+  - type: value
+    object_type: gender
+    allowed: ["M", "F", "X"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Gender is recorded as M, F, or X." }
+
+  # value — range (object-type scope)
+  - type: value
+    object_type: hours
+    range: { min: 0, max: 1000, min_inclusive: true, max_inclusive: true }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "Logged hours are non-negative and bounded by a sanity cap."
+    provenance: { library_entry: non-negative-hours, matched_pattern: "hours value type" }
+
+  # value — role-scope hybrid (object_type names the primitive, role_ref narrows)
+  - type: value
+    object_type: hours
+    role_ref: { fact_type: assignment_has_overtime_hours, role: hours }
+    range: { min: 0, max: 200 }
+    source: llm-inferred
+    status: proposed
+    modality: deontic
+    rationale: "Overtime is a small fraction of total logged hours."
+    provenance:
+      rationale_world_fact: "Labor regulations cap overtime well below regular working hours."
+
+  # frequency — external
+  - type: frequency
+    scope: external
+    role_refs:
+      - { fact_type: employee_works_on_project, role: employee }
+      - { fact_type: employee_leads_project, role: employee }
+    bound: { max: 4 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "An employee appears in at most four project engagements." }
+
+  # subset (two-role sequences: leading a project implies working on it)
+  - type: subset
+    subset_role_seq:
+      - { fact_type: employee_leads_project, role: employee }
+      - { fact_type: employee_leads_project, role: project }
+    superset_role_seq:
+      - { fact_type: employee_works_on_project, role: employee }
+      - { fact_type: employee_works_on_project, role: project }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "Whoever leads a project also works on that project."
+    provenance: { library_entry: project-lead-works-on, matched_pattern: "lead and assignment role sequences" }
+
+  # equality (an assignment is of an employee iff it is on a project)
+  - type: equality
+    role_seq_a:
+      - { fact_type: assignment_of_employee, role: assignment }
+    role_seq_b:
+      - { fact_type: assignment_on_project, role: assignment }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "An assignment always has both an employee and a project side."
+    provenance: { library_entry: assignment-paired-sides, matched_pattern: "assignment role sequences" }
+
+  # exclusion
+  - type: exclusion
+    role_seq_a:
+      - { fact_type: employee_is_active, role: employee }
+    role_seq_b:
+      - { fact_type: employee_is_terminated, role: employee }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "No employee is simultaneously active and terminated."
+    provenance: { library_entry: exclusive-employment-state, matched_pattern: "active/terminated roles" }
+
+  # exclusive-or (partition over employment basis)
+  - type: exclusive-or
+    role_seqs:
+      - [{ fact_type: employee_is_fulltime, role: employee }]
+      - [{ fact_type: employee_is_parttime, role: employee }]
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "Every employee is either full-time or part-time, never both."
+    provenance: { library_entry: employment-basis-partition, matched_pattern: "full-time/part-time roles" }
+
+  # cardinality — object
+  - type: cardinality
+    scope: object
+    object_type: department
+    bound: { min: 1, max: 12 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "The company runs between one and twelve departments." }
+
+  # cardinality — role
+  - type: cardinality
+    scope: role
+    role_ref: { fact_type: employee_heads_department, role: employee }
+    bound: { max: 12 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "At most twelve employees head departments (one per department)." }
+
+  # subtype-partition (exclusive + exhaustive over Employee)
+  - type: subtype-partition
+    supertype: employee
+    subtypes: [contractor_employee, permanent_employee]
+    exclusive: true
+    exhaustive: true
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "Every employee is engaged either as a contractor or permanently."
+    provenance: { library_entry: employee-engagement-partition, matched_pattern: "contractor/permanent subtypes" }
+
+  # textual (catch-all)
+  - type: textual
+    expression: "Each Employee who heads a Department must be a PermanentEmployee."
+    formal_language: natural
+    formal_expression: null
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "Stated during the review session." }
+
+rejected_proposals:
+  # Schema-light entries: modality NOT required here — these are archived
+  # proposals, not active constraints (documented in orm-meta.schema.json).
+  - type: ring
+    fact_type: employee_reports_to_employee
+    variant: intransitive
+    source: common-sense
+    status: rejected
+    rationale: "Library entry: reports-to-intransitive."
+    provenance: { library_entry: ring-reports-to-intransitive, matched_pattern: "manager/employee self-reference" }
+    rejection_reason: "Skip-level reporting exists during reorganizations."
+    rejected_at: "2026-08-08"

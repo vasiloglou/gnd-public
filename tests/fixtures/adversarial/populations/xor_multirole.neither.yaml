@@ -1,0 +1,46 @@
+# tests/fixtures/adversarial/populations/xor_multirole.neither.yaml
+#
+# 01.1-CONTEXT.md probe #3, reproduced: the tuples present satisfy exactly one
+# sequence each, so the EXCLUSION half of the multi-role `exclusive-or` finds no
+# overlap — and the pairs that satisfy NEITHER sequence, ("P1","C2") and
+# ("P2","C1"), are precisely the ones the disjunctive half would have to rule on.
+#
+# It cannot. ORM 2's disjunctive-mandatory component is defined over a set of
+# roles played by ONE object type; over multi-role sequences there is no
+# ORM-defined universe (Halpin, ORM 2 TechReport §2.7-2.8). So the constraint is
+# half decidable, and the honest verdict is `unchecked` with reason
+# `xor-disjunctive-undefined` -> alethic -> exit 4.
+#
+# Before plan 01.1-05 this reported
+#   pass=1 fail=0 warning=0 unchecked=0 vacuous=0   ->  exit 0
+# with the message
+#   "Each tuple plays exactly one of ('person_teaches_course.person',
+#    'person_teaches_course.course'); ('person_takes_course.person',
+#    'person_takes_course.course') — satisfied."
+# because `_check_exclusive_or`'s multi-role branch hardcoded the disjunctive
+# component's violation list to `[]`, so an empty exclusion overlap fell straight
+# through to `pass`. The checker did not merely decline to evaluate the half it
+# could not decide; it affirmatively stated the whole constraint was satisfied.
+#
+# Both fact types carry facts and both are declared in `covers`, so the verdict
+# is a real evaluation and not D-12's vacuous state — without that the case
+# would exit 2 and prove nothing about the disjunctive half.
+#
+# This population is STRUCTURALLY well formed against its model (CORE-04 passes
+# it cleanly): every fact fills exactly the declared role set with String-typed
+# values. It probes the CHECKER, which is why it does not exit 3.
+population:
+  model: xor_multirole.orm.yaml
+  source: agent-output
+  # `boundary`, not `violating`: no component this checker can decide is
+  # broken here. The population sits exactly on the frontier between what the
+  # exclusion half proves and what the disjunctive half cannot reach.
+  label: boundary
+  covers:
+    - person_teaches_course
+    - person_takes_course
+facts:
+  person_teaches_course:
+    - { person: "P1", course: "C1" }
+  person_takes_course:
+    - { person: "P2", course: "C2" }

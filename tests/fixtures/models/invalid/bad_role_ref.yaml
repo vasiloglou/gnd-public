@@ -1,0 +1,18 @@
+# Rejected by semantic:role-ref — role references undeclared object type 'ghost'.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: person_likes_ghost
+    reading: "{Person} likes {Ghost}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: ghost, role_name: ghost }

@@ -1,0 +1,18 @@
+# Rejected by semantic:reading-placeholders — the reading of 'person_smokes' has
+# two {Type} placeholders but the fact type declares only one role.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: person_smokes
+    reading: "{Person} smokes {Cigarette}"
+    roles:
+      - { object_type: person, role_name: person }

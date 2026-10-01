@@ -1,4 +1,4 @@
-"""Explicitly selected, bounded P2 artifact and curated-diff controls."""
+"""Bounded artifact controls over the current attributed public staging tree."""
 
 import email
 import hashlib
@@ -18,11 +18,10 @@ pytestmark = pytest.mark.distribution
 
 ROOT = Path(__file__).resolve().parents[1]
 M = Path(".gnd-planning/milestones/public-launch")
-MANIFEST = M / "migration/b2-files.json"
+MANIFEST = M / "migration/b3-files.json"
 LATE = {
     MANIFEST.as_posix(),
-    (M / "migration/b2-receipt.md").as_posix(),
-    (M / "002-phase-2.md").as_posix(),
+    (M / "migration/b3-receipt.md").as_posix(),
 }
 IGNORED_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", ".ruff_cache", "dist"}
 
@@ -226,6 +225,7 @@ def test_curated_diff_refuses_mutants(tmp_path, mutation):
         b"{" * 10000,
         b"x" * 2097153,
     ],
+    ids=["list-root", "scalar-row", "traversal", "nonfinite", "deep-json", "oversize"],
 )
 def test_manifest_internal_audit_refuses_hostile_shapes(tmp_path, raw):
     p = tmp_path / MANIFEST

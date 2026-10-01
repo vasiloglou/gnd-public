@@ -1,0 +1,18 @@
+# Rejected by semantic:subtype-ref — subtype_of names undeclared object type 'ghost'.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: student
+    name: Student
+    kind: entity
+    subtype_of: [ghost]
+    inherits_reference: true
+fact_types: []

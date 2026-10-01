@@ -1,0 +1,28 @@
+# NOT rejected — loads successfully, but carries the D-03 policy WARNING
+# semantic:modality-policy: an unconfirmed llm-inferred constraint claiming
+# alethic modality is the over-modeling pattern D-03 defends against.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: person_smokes
+    reading: "{Person} smokes"
+    roles:
+      - { object_type: person, role_name: person }
+    constraints:
+      - type: uniqueness
+        roles: [person]
+        source: llm-inferred
+        status: proposed
+        modality: alethic
+        rationale: "A person's smoking status is a single current fact."
+        provenance:
+          rationale_world_fact: "Smoking status is conventionally recorded as one value per person."

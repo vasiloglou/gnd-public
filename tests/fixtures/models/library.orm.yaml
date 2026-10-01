@@ -1,0 +1,642 @@
+# tests/fixtures/models/library.orm.yaml
+# The model the GENERATOR HAS NEVER MET (G-19, plan 03-07 task 1).
+#
+# `full_vocabulary.orm.yaml` is codegen's home turf: every plan from 03-03 to
+# 03-06 emitted, hashed, drifted and re-checked against it, and the emitter's
+# shape was chosen while looking at it. `dispatch.orm.yaml` is unfamiliar to
+# codegen but familiar to the extractor. This file is unfamiliar to BOTH, and it
+# exists because Phase 2 found five oracle defects and every single one of them
+# surfaced through a model the tool under test had not been written against.
+#
+# It is NOT a rename of full_vocabulary. The axes that matter to a generator are
+# varied deliberately, and each one is a shape full_vocabulary cannot produce:
+#
+#   ARITY            a QUATERNARY fact type (`loan_records_copy_to_borrower`,
+#                    4 roles). full_vocabulary's maximum is 3, and exactly one
+#                    fact type reaches it. A 4-role reading, a 4-parameter tool
+#                    signature and a 4-column projection are all new surface.
+#
+#   ROLE NAMING      role names deliberately DIVERGE from their object type ids
+#                    (`borrower` fills a role named `member`, `copy` fills roles
+#                    named `item`, `volume` and `subject`). full_vocabulary
+#                    names most roles after their object type, so a generator
+#                    that quietly keyed on the object type instead of the role
+#                    would have looked correct there and cannot here.
+#
+#   REFERENCE MODES  the PRINCIPAL entity (`borrower`) is `general`, not
+#                    `popular` — full_vocabulary reserves `general` for a
+#                    secondary entity — and the `unit-based` entity measures a
+#                    DURATION in days rather than money in USD, so a generator
+#                    with USD/Money anywhere in its derivation shows it here.
+#
+#   CONSTRAINT FAMILY  `value` in its PLURAL `ranges:` form — a union of
+#                    intervals. full_vocabulary exercises `allowed`, `range` and
+#                    the role-scope hybrid, and never `ranges`. This is also the
+#                    shape 03-CONTEXT's F-05 residual claimed would not converge
+#                    under `gnd synth`; RESEARCH §7.2 could not reproduce that
+#                    (three probes, all exit 0), and carrying the form here
+#                    keeps the open question attached to a real artifact.
+#
+#   RING VARIANTS    `symmetric` and `asymmetric`. full_vocabulary carries
+#                    `acyclic`, `irreflexive` and `intransitive`; these two are
+#                    disjoint from that set.
+#
+# Every other Halpin family full_vocabulary exercises is exercised here too, so
+# the model is a genuinely new POINT in the space rather than a subset of it.
+#
+# D-03-consistent modality: explicit/user-supplied + confirmed -> alethic;
+# llm-inferred/common-sense + proposed -> deontic. Modality is ALWAYS explicit.
+# The textual constraint is DEONTIC on purpose: D-20 makes an alethic textual
+# constraint a permanent indeterminacy warning, and this fixture has no reason
+# to carry one.
+
+version: 1
+
+model_id: gnd-fixture-library-v1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  # The principal entity is GENERAL-mode, where full_vocabulary's principal
+  # entity is popular-mode. A borrower is identified by the card they hold.
+  - id: borrower
+    name: Borrower
+    kind: entity
+    reference: { mode: general, value_type: card_number }
+    provenance: { origin: fixture }
+
+  - id: card_number
+    name: CardNumber
+    kind: value
+    primitive: String
+
+  - id: borrower_name
+    name: BorrowerName
+    kind: value
+    primitive: String
+
+  - id: title
+    name: Title
+    kind: entity
+    reference: { mode: popular, value_type: isbn }
+
+  - id: isbn
+    name: Isbn
+    kind: value
+    primitive: String
+
+  - id: genre
+    name: Genre
+    kind: value
+    primitive: String
+
+  - id: publication_year
+    name: PublicationYear
+    kind: value
+    primitive: Integer
+
+  # Externally identified: a physical copy is identified by the pair
+  # (title it is of, shelf mark it carries) — the external uniqueness
+  # constraint at the bottom of this file.
+  - id: copy
+    name: Copy
+    kind: entity
+    reference: { mode: external }
+
+  - id: shelf_mark
+    name: ShelfMark
+    kind: value
+    primitive: String
+
+  - id: branch
+    name: Branch
+    kind: entity
+    reference: { mode: popular, value_type: branch_code }
+
+  - id: branch_code
+    name: BranchCode
+    kind: value
+    primitive: String
+
+  - id: librarian
+    name: Librarian
+    kind: entity
+    reference: { mode: popular, value_type: staff_number }
+
+  - id: staff_number
+    name: StaffNumber
+    kind: value
+    primitive: Integer
+
+  # unit-based over a DURATION, not money — full_vocabulary's unit-based entity
+  # is Salary in USD/Money.
+  - id: loan_period
+    name: LoanPeriod
+    kind: entity
+    reference: { mode: unit-based, unit: day, measure_type: Duration }
+
+  - id: calendar_day
+    name: CalendarDay
+    kind: value
+    primitive: Date
+
+  - id: fine_amount
+    name: FineAmount
+    kind: value
+    primitive: Number
+
+  # Subtype partition over the physical copy.
+  - id: circulating_copy
+    name: CirculatingCopy
+    kind: entity
+    subtype_of: [copy]
+    inherits_reference: true
+    derivation: asserted
+
+  - id: reference_copy
+    name: ReferenceCopy
+    kind: entity
+    subtype_of: [copy]
+    inherits_reference: true
+    derivation: derived
+    derivation_rule: "Each ReferenceCopy is a Copy that is not a CirculatingCopy."
+    storage: computed
+
+fact_types:
+  - id: borrower_has_name
+    reading: "{Borrower} has {BorrowerName}"
+    inverse_reading: "{BorrowerName} names {Borrower}"
+    roles:
+      # NOTE the divergence: the object type is `borrower`, the role is `member`.
+      - { object_type: borrower, role_name: member }
+      - { object_type: borrower_name, role_name: full_name }
+    constraints:
+      - type: uniqueness
+        roles: [member]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each borrower has exactly one recorded name." }
+      - type: mandatory
+        role: member
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every borrower on file has a name." }
+
+  - id: borrower_holds_card
+    reading: "{Borrower} holds {CardNumber}"
+    roles:
+      - { object_type: borrower, role_name: member }
+      - { object_type: card_number, role_name: card }
+    constraints:
+      # 1:1 — uniqueness on BOTH roles, which is what makes `general` reference
+      # mode identify the borrower.
+      - type: uniqueness
+        roles: [member]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A borrower holds one card." }
+      - type: uniqueness
+        roles: [card]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A card number is never reissued to a second borrower." }
+      - type: mandatory
+        role: member
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every borrower holds a card." }
+
+  - id: borrower_registered_at_branch
+    reading: "{Borrower} is registered at {Branch}"
+    roles:
+      - { object_type: borrower, role_name: member }
+      - { object_type: branch, role_name: home_branch }
+    constraints:
+      - type: uniqueness
+        roles: [member]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each borrower has one home branch." }
+      - type: mandatory
+        role: member
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every borrower is registered somewhere." }
+
+  - id: title_has_isbn
+    reading: "{Title} has {Isbn}"
+    roles:
+      - { object_type: title, role_name: work }
+      - { object_type: isbn, role_name: code }
+    constraints:
+      - type: uniqueness
+        roles: [work]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A title has exactly one ISBN." }
+      - type: uniqueness
+        roles: [code]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An ISBN names one title." }
+
+  - id: title_published_in_year
+    reading: "{Title} was published in {PublicationYear}"
+    roles:
+      - { object_type: title, role_name: work }
+      - { object_type: publication_year, role_name: year }
+    constraints:
+      - type: uniqueness
+        roles: [work]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One publication year per title in this catalogue." }
+
+  - id: title_has_genre
+    reading: "{Title} is shelved under {Genre}"
+    roles:
+      - { object_type: title, role_name: work }
+      - { object_type: genre, role_name: category }
+    constraints:
+      - type: uniqueness
+        roles: [work]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A title sits under one genre heading." }
+
+  - id: copy_is_of_title
+    reading: "{Copy} is a copy of {Title}"
+    roles:
+      # `copy` fills a role named `item` here, `volume` below, `subject` further
+      # down — one object type under three role names, which full_vocabulary
+      # never does.
+      - { object_type: copy, role_name: item }
+      - { object_type: title, role_name: work }
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A physical copy is a copy of exactly one title." }
+      - type: mandatory
+        role: item
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every copy on the shelves belongs to a title." }
+
+  - id: copy_has_shelf_mark
+    reading: "{Copy} carries {ShelfMark}"
+    roles:
+      - { object_type: copy, role_name: volume }
+      - { object_type: shelf_mark, role_name: mark }
+    constraints:
+      - type: uniqueness
+        roles: [volume]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A copy carries one shelf mark." }
+      - type: mandatory
+        role: volume
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every copy is shelf-marked before it circulates." }
+
+  - id: copy_held_at_branch
+    reading: "{Copy} is held at {Branch}"
+    roles:
+      - { object_type: copy, role_name: item }
+      - { object_type: branch, role_name: holding_branch }
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A copy lives at one branch." }
+
+  # THE QUATERNARY. Four roles, two of them the same primitive Date under
+  # different role names — so an emitter that keys on the object type rather
+  # than the role name collapses two distinct columns into one.
+  - id: loan_records_copy_to_borrower
+    reading: "{Copy} was lent to {Borrower} on {CalendarDay} until {CalendarDay}"
+    roles:
+      - { object_type: copy, role_name: item }
+      - { object_type: borrower, role_name: member }
+      - { object_type: calendar_day, role_name: lent_on }
+      - { object_type: calendar_day, role_name: due_on }
+    constraints:
+      - type: uniqueness
+        roles: [item, lent_on]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One loan per copy per day it goes out." }
+      # value-comparison, INLINE form, across two roles of the same fact type.
+      - type: value-comparison
+        operator: "<"
+        role_a: { role: lent_on }
+        role_b: { role: due_on }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A loan is always due after the day it was lent." }
+
+  - id: title_is_reserved_by_borrower
+    reading: "{Title} is reserved by {Borrower}"
+    roles:
+      - { object_type: title, role_name: work }
+      - { object_type: borrower, role_name: member }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [member]
+        bound: { min: 1, max: 5 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A borrower may hold between one and five reservations." }
+
+  - id: borrower_owes_fine
+    reading: "{Borrower} owes {FineAmount}"
+    roles:
+      - { object_type: borrower, role_name: member }
+      - { object_type: fine_amount, role_name: owed }
+    constraints:
+      - type: uniqueness
+        roles: [member]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One running balance per borrower." }
+
+  - id: title_grants_loan_period
+    reading: "{Title} is lent for {LoanPeriod}"
+    roles:
+      - { object_type: title, role_name: work }
+      - { object_type: loan_period, role_name: term }
+    constraints:
+      - type: uniqueness
+        roles: [work]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each title has one standard loan period." }
+
+  - id: librarian_manages_branch
+    reading: "{Librarian} manages {Branch}"
+    roles:
+      - { object_type: librarian, role_name: staff }
+      - { object_type: branch, role_name: managed_branch }
+    constraints:
+      - type: uniqueness
+        roles: [staff]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A librarian manages at most one branch." }
+
+  - id: copy_is_on_loan
+    reading: "{Copy} is on loan"
+    roles:
+      - { object_type: copy, role_name: subject }
+
+  - id: copy_is_withdrawn
+    reading: "{Copy} is withdrawn"
+    roles:
+      - { object_type: copy, role_name: subject }
+
+  - id: copy_is_shelved
+    reading: "{Copy} is shelved"
+    roles:
+      - { object_type: copy, role_name: subject }
+
+  # RING — symmetric. Disjoint from full_vocabulary's {acyclic, irreflexive,
+  # intransitive}.
+  - id: borrower_shares_household_with_borrower
+    reading: "{Borrower} shares a household with {Borrower}"
+    roles:
+      - { object_type: borrower, role_name: member }
+      - { object_type: borrower, role_name: housemate }
+    constraints:
+      - type: ring
+        variant: symmetric
+        source: common-sense
+        status: proposed
+        modality: deontic
+        rationale: "Sharing a household is a mutual relationship."
+        provenance:
+          library_entry: "ring/symmetric/co-residence"
+          matched_pattern: "shares X with"
+
+  # RING — asymmetric. Also disjoint from full_vocabulary's set.
+  - id: title_supersedes_title
+    reading: "{Title} supersedes {Title}"
+    roles:
+      - { object_type: title, role_name: successor }
+      - { object_type: title, role_name: predecessor }
+    constraints:
+      - type: ring
+        variant: asymmetric
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A new edition supersedes the old one, never the other way round." }
+
+constraints:
+  # uniqueness — EXTERNAL: a copy is identified by (its title, its shelf mark).
+  - type: uniqueness
+    scope: external
+    role_refs:
+      - { fact_type: copy_is_of_title, role: work }
+      - { fact_type: copy_has_shelf_mark, role: mark }
+    preferred: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A shelf mark is unique within a title." }
+
+  # mandatory-disjunctive: every copy is on loan, withdrawn, or shelved.
+  - type: mandatory-disjunctive
+    role_refs:
+      - { fact_type: copy_is_on_loan, role: subject }
+      - { fact_type: copy_is_withdrawn, role: subject }
+      - { fact_type: copy_is_shelved, role: subject }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every copy is either out, withdrawn, or on the shelf." }
+
+  # value — the PLURAL `ranges:` form, absent from full_vocabulary. A union of
+  # two intervals: the historical reserve and the modern catalogue.
+  - type: value
+    object_type: publication_year
+    ranges:
+      - { min: 1450, max: 1799, min_inclusive: true, max_inclusive: true }
+      - { min: 1800, max: 2030, min_inclusive: true, max_inclusive: true }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "The catalogue runs from the incunabula through next year's acquisitions." }
+
+  # value — enumeration.
+  - type: value
+    object_type: genre
+    allowed: ["fiction", "history", "science", "reference", "poetry"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Five shelving categories, and no others." }
+
+  # value — singular range.
+  - type: value
+    object_type: fine_amount
+    range: { min: 0, max: 250, min_inclusive: true, max_inclusive: true }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Fines are capped at 250." }
+
+  # frequency — EXTERNAL, across two fact types.
+  - type: frequency
+    scope: external
+    role_refs:
+      - { fact_type: title_is_reserved_by_borrower, role: work }
+      - { fact_type: borrower_registered_at_branch, role: home_branch }
+    bound: { max: 3 }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "A branch should not hoard reservations for one title."
+    provenance:
+      library_entry: "frequency/external/queue-fairness"
+      matched_pattern: "at most N per"
+
+  # subset: only a borrower registered at a branch may reserve a title.
+  - type: subset
+    subset_role_seq:
+      - { fact_type: title_is_reserved_by_borrower, role: member }
+    superset_role_seq:
+      - { fact_type: borrower_registered_at_branch, role: member }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "You must be registered before you can reserve." }
+
+  # equality: a copy has a shelf mark exactly when it is of a title.
+  - type: equality
+    role_seq_a:
+      - { fact_type: copy_is_of_title, role: item }
+    role_seq_b:
+      - { fact_type: copy_has_shelf_mark, role: volume }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Cataloguing assigns the title and the shelf mark together." }
+
+  # exclusion: a copy cannot be both out and withdrawn.
+  - type: exclusion
+    role_seq_a:
+      - { fact_type: copy_is_on_loan, role: subject }
+    role_seq_b:
+      - { fact_type: copy_is_withdrawn, role: subject }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A withdrawn copy is never on loan." }
+
+  # exclusive-or: out or shelved, exactly one.
+  - type: exclusive-or
+    role_seqs:
+      - [{ fact_type: copy_is_on_loan, role: subject }]
+      - [{ fact_type: copy_is_shelved, role: subject }]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A copy is either out or on the shelf, never both and never neither." }
+
+  # value-comparison — CROSS-fact-type form.
+  - type: value-comparison
+    operator: "<="
+    role_a: { fact_type: title_published_in_year, role: year }
+    role_b: { fact_type: title_published_in_year, role: year }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Publication years are compared against themselves in the catalogue audit." }
+
+  # cardinality — OBJECT scope.
+  - type: cardinality
+    scope: object
+    object_type: branch
+    bound: { min: 1, max: 40 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "The system runs between one and forty branches." }
+
+  # cardinality — ROLE scope.
+  - type: cardinality
+    scope: role
+    role_ref: { fact_type: librarian_manages_branch, role: staff }
+    bound: { max: 40 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "At most forty branch managers." }
+
+  # subtype-partition over the physical copy.
+  - type: subtype-partition
+    supertype: copy
+    subtypes: [circulating_copy, reference_copy]
+    exclusive: true
+    exhaustive: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every copy is either circulating or reference, never both." }
+
+  # textual — DEONTIC on purpose (D-20: an alethic textual constraint is a
+  # permanent indeterminacy, and this fixture has no reason to carry one).
+  - type: textual
+    expression: "A ReferenceCopy is never lent to a Borrower."
+    formal_language: natural
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "Reference material stays in the building."
+    provenance:
+      library_entry: "textual/non-circulating-reference"
+      matched_pattern: "never lent"

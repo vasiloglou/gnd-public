@@ -1,0 +1,59 @@
+{
+  "status": "initial reviewed subset only; full P3 acceptance pending",
+  "files": [
+    {
+      "target": "tests/test_address.py",
+      "source_sha256": "c1336bbade47c9818a4a6bfdde60cd70059598aee9b12888d1be2961f190d887",
+      "target_sha256": "c1336bbade47c9818a4a6bfdde60cd70059598aee9b12888d1be2961f190d887",
+      "content_review": "Complete source text inspected; synthetic temporary inputs only, no external fixture tree or private provider payload imported.",
+      "adaptation": "none"
+    },
+    {
+      "target": "tests/test_atom_bind.py",
+      "source_sha256": "ed864e46a3f41d51a39b5806e0f2d172bc6e581751c514bc479ebd57b55d98de",
+      "target_sha256": "ed864e46a3f41d51a39b5806e0f2d172bc6e581751c514bc479ebd57b55d98de",
+      "content_review": "Complete source text inspected; synthetic temporary inputs only, no external fixture tree or private provider payload imported.",
+      "adaptation": "none"
+    },
+    {
+      "target": "tests/test_measure_score.py",
+      "source_sha256": "60b4cd67a5dc0d8be50185d7d7f502dffce938b2a3e7664b26b37242ac423586",
+      "target_sha256": "60b4cd67a5dc0d8be50185d7d7f502dffce938b2a3e7664b26b37242ac423586",
+      "content_review": "Complete source text inspected; synthetic temporary inputs only, no external fixture tree or private provider payload imported.",
+      "adaptation": "none"
+    },
+    {
+      "target": "tests/test_junit_reader.py",
+      "source_sha256": "26df257dac6ff0d054b19c9f41866309853b7672100810a283918ed931900698",
+      "target_sha256": "26df257dac6ff0d054b19c9f41866309853b7672100810a283918ed931900698",
+      "content_review": "Complete source text inspected; synthetic temporary inputs only, no external fixture tree or private provider payload imported.",
+      "adaptation": "none"
+    },
+    {
+      "target": "tests/test_review_request.py",
+      "source_sha256": "e91845b2919e56ebd99e5b16e4819d5f0589830d33928d49d3dbcc98b9bf1f92",
+      "target_sha256": "399f800fdad6d784b7ca1119f1f3a7da496bf2c945791939611cdadcf1582ee9",
+      "content_review": "Complete source text inspected; synthetic temporary inputs only, no external fixture tree or private provider payload imported.",
+      "adaptation": "remove saved provider artifact assertion"
+    },
+    {
+      "target": "tests/test_model_identity.py",
+      "source_sha256": "c89cd3481e76480dfdb4e656ccb2448349f5e8d5777bfe993ace5a6425f2697c",
+      "target_sha256": "2c21b8928810d1839908c6095c28a6e4534c0d848dd7e803a52dc8a59b1e8c9b",
+      "content_review": "Complete source text inspected; synthetic temporary inputs only, no external fixture tree or private provider payload imported.",
+      "adaptation": "selected interpreter and no editable checkout PYTHONPATH in child"
+    },
+    {
+      "target": "tests/support/digests.py",
+      "source_sha256": "baa7330b74b1f86ff6e8e00ef9bf07a7c2da3ae6c22b746c450191d8ee8df2ac",
+      "content_review": "Entire helper inspected; hashlib and local Path only; no credentials/private data",
+      "adaptation": "none",
+      "target_sha256": "baa7330b74b1f86ff6e8e00ef9bf07a7c2da3ae6c22b746c450191d8ee8df2ac"
+    }
+  ],
+  "definitions": 88,
+  "case_map_sha256": "7fcdc0cae9d315e9018671064a260519d30047bc3b3e53ce9fd2f2075105eff1",
+  "privacy_limit": "Manual review plus dependency inspection of named files; no whole-tree clearance implied.",
+  "parameter_expansion": "Exact selected node IDs from target-only pytest collection; no execution claim.",
+  "case_map_file_sha256": "6287eba25cf1a0bdb3524d7c000390371aec51a5992ced4b8272dd1fecbf1a44"
+}

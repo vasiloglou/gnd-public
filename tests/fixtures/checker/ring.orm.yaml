@@ -1,0 +1,192 @@
+# tests/fixtures/checker/ring.orm.yaml
+# Ring fixture model: one binary same-type fact type per ring variant in the
+# meta-schema's ring enum, each carrying exactly that variant as an alethic
+# constraint. Populations ring_pass / ring_fail exercise every variant.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: node
+    name: Node
+    kind: entity
+    reference: { mode: popular, value_type: node_id }
+
+  - id: node_id
+    name: NodeId
+    kind: value
+    primitive: Integer
+
+fact_types:
+  - id: rel_irreflexive
+    reading: "{Node:a} relates-irreflexive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: irreflexive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The irreflexive relation over nodes." }
+
+  - id: rel_asymmetric
+    reading: "{Node:a} relates-asymmetric {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: asymmetric
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The asymmetric relation over nodes." }
+
+  - id: rel_intransitive
+    reading: "{Node:a} relates-intransitive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: intransitive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The intransitive relation over nodes." }
+
+  - id: rel_antisymmetric
+    reading: "{Node:a} relates-antisymmetric {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: antisymmetric
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The antisymmetric relation over nodes." }
+
+  - id: rel_acyclic
+    reading: "{Node:a} relates-acyclic {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: acyclic
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The acyclic relation over nodes." }
+
+  - id: rel_asymmetric_intransitive
+    reading: "{Node:a} relates-asymmetric-intransitive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: asymmetric-intransitive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The asymmetric-intransitive relation over nodes." }
+
+  - id: rel_acyclic_intransitive
+    reading: "{Node:a} relates-acyclic-intransitive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: acyclic-intransitive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The acyclic-intransitive relation over nodes." }
+
+  - id: rel_symmetric
+    reading: "{Node:a} relates-symmetric {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: symmetric
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The symmetric relation over nodes." }
+
+  - id: rel_symmetric_irreflexive
+    reading: "{Node:a} relates-symmetric-irreflexive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: symmetric-irreflexive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The symmetric-irreflexive relation over nodes." }
+
+  - id: rel_symmetric_intransitive
+    reading: "{Node:a} relates-symmetric-intransitive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: symmetric-intransitive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The symmetric-intransitive relation over nodes." }
+
+  - id: rel_purely_reflexive
+    reading: "{Node:a} relates-purely-reflexive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: purely-reflexive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The purely-reflexive relation over nodes." }
+
+  - id: rel_reflexive
+    reading: "{Node:a} relates-reflexive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: reflexive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The reflexive relation over nodes." }
+
+  - id: rel_transitive
+    reading: "{Node:a} relates-transitive {Node:b}"
+    roles:
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+    constraints:
+      - type: ring
+        variant: transitive
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The transitive relation over nodes." }

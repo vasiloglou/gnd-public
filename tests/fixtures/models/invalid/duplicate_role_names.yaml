@@ -1,0 +1,19 @@
+# Rejected by semantic:role-names-distinct — both person-typed roles of
+# 'person_knows_person' carry the same role_name.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: person_knows_person
+    reading: "{Person} knows {Person}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: person, role_name: person }

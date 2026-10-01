@@ -1,0 +1,117 @@
+# tests/fixtures/pyrel-oracle/basics.orm.yaml
+# PyRel-oracle fixture model for the base constraint families the checker
+# fixtures do not exercise as a pass/fail pair: spanning internal uniqueness
+# (duplicate facts), mandatory violated via a roster instance, object-scope
+# value enumeration and range, the reference-widening range on an identifying
+# value type, and the min side of internal frequency.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: student
+    name: Student
+    kind: entity
+    reference: { mode: popular, value_type: student_id }
+
+  - id: student_id
+    name: StudentId
+    kind: value
+    primitive: Integer
+
+  - id: nickname
+    name: Nickname
+    kind: value
+    primitive: String
+
+  - id: grade
+    name: Grade
+    kind: value
+    primitive: Integer
+
+  - id: color
+    name: Color
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: student_has_nickname
+    reading: "{Student} has nickname {Nickname}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: nickname, role_name: nickname }
+    constraints:
+      # Spanning UC: each (student, nickname) pairing occurs at most once.
+      - type: uniqueness
+        roles: [student, nickname]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A student holds each nickname at most once." }
+      - type: mandatory
+        role: student
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every student has at least one nickname." }
+
+  - id: student_has_grade
+    reading: "{Student} has grade {Grade}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: grade, role_name: grade }
+    constraints:
+      - type: uniqueness
+        roles: [student]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A student has exactly one grade." }
+
+  - id: student_likes_color
+    reading: "{Student} likes {Color}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: color, role_name: color }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [student]
+        bound: { min: 2, max: 3 }
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_note: "A student who likes colors likes two or three of them." }
+
+constraints:
+  # [0] value — enumeration over an object type.
+  - type: value
+    object_type: color
+    allowed: ["red", "green", "blue"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Colors are red, green, or blue." }
+
+  # [1] value — range over an object type.
+  - type: value
+    object_type: grade
+    range: { min: 0, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Grades run from 0 to 100." }
+
+  # [2] value — range on the identifying value type: exercises reference
+  # widening (student refs in facts ARE StudentId occurrences).
+  - type: value
+    object_type: student_id
+    range: { min: 1, max: 999 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "Student ids are three digits at most." }

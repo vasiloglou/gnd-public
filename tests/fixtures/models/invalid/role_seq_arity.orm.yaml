@@ -1,0 +1,63 @@
+# tests/fixtures/models/invalid/role_seq_arity.orm.yaml
+#
+# Rejected by semantic:role-seq-arity (CORE-06, D-13 clause 3) — the `subset`
+# constraint compares a 2-role subset sequence against a 1-role superset
+# sequence.
+#
+# ORM 2 set-comparison constraints (subset, equality, exclusion, and the
+# exclusion half of exclusive-or) are defined over COMPATIBLE role sequences,
+# and compatibility presupposes equal arity: a (person, course) pair has no
+# defined containment relation to a bare (person). Halpin, ORM 2 TechReport
+# §2.8.
+#
+# This is a MODEL defect, so it must fail at `gnd validate` (exit 3) before any
+# population exists — the precedent is `semantic:ring-binary`, which enforces
+# Halpin's ring precondition at the same layer. Before this rule the model
+# validated clean at exit 0 and the defect surfaced only later, at check time,
+# as a constraint the checker evaluated over mismatched projections.
+#
+# Everything else here is deliberately well formed: the ids resolve, the roles
+# exist, the readings agree with the roles, and position 0 of both sequences is
+# typed `person`, so this fixture pins the ARITY rule alone and cannot pass by
+# accidentally tripping semantic:cross-ref or semantic:role-seq-type-compat.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: String
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+  - id: course_code
+    name: CourseCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: person_leads_course
+    reading: "{Person} leads {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+  - id: person_takes_course
+    reading: "{Person} takes {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+constraints:
+  - type: subset
+    subset_role_seq:
+      - { fact_type: person_leads_course, role: person }
+      - { fact_type: person_leads_course, role: course }
+    superset_role_seq:
+      - { fact_type: person_takes_course, role: person }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "Whoever leads a course also takes it." }

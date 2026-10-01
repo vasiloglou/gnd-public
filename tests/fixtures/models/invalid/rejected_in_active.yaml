@@ -1,0 +1,23 @@
+# Rejected by semantic:status-source — status:rejected constraints live ONLY in
+# rejected_proposals, never in the active constraint lists.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types: []
+constraints:
+  - type: value
+    object_type: person_id
+    allowed: [1, 2, 3]
+    source: common-sense
+    status: rejected
+    modality: deontic
+    rationale: "Fixture: a rejected constraint incorrectly kept in the active list."
+    provenance: { library_entry: fixture-values, matched_pattern: "person id enumeration" }

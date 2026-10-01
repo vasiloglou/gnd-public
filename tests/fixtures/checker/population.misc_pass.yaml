@@ -1,0 +1,34 @@
+# Conforming population for misc.orm.yaml.
+population:
+  model: misc.orm.yaml
+  source: fixture
+  label: conforming
+  covers:
+    - task_scores
+    - task_has_points
+    - task_logged_on
+    - task_started_on
+    - task_finished_on
+    - vehicle_has_plate
+    - gadget_has_label
+instances:
+  car: [10]
+  truck: [20]
+facts:
+  task_scores:
+    - { task: 1, low: 2, high: 8 }
+  task_has_points:
+    - { task: 1, points: 50 }
+  task_logged_on:
+    - { task: 1, at: "2026-01-01" }
+  task_started_on:
+    - { task: 1, on: "2026-01-01" }
+    - { task: 2, on: "2026-02-01" }
+  task_finished_on:
+    - { task: 1, on: "2026-03-01" }
+    - { task: 2, on: "2026-02-15" }
+  vehicle_has_plate:
+    - { vehicle: 10, plate: "AAA" }
+    - { vehicle: 20, plate: "BBB" }
+  gadget_has_label:
+    - { gadget: 7, label: "g7" }

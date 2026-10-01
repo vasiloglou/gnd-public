@@ -1,0 +1,96 @@
+# tests/fixtures/adversarial/models/xor_multirole.orm.yaml
+#
+# Adversarial probe (CORE-05 / CORE-06, D-15 as revised by 01.1-CONTEXT.md
+# Amendment B): the minimum valid model carrying a MULTI-ROLE `exclusive-or`.
+#
+# Two binary fact types over the SAME pair of object types, and one alethic
+# `exclusive-or` whose two `role_seqs` each hold TWO role references — so the
+# constraint compares (person, course) TUPLES, not single values.
+#
+# That arity is the whole point. An ORM 2 exclusive-or is the orthogonal
+# combination of two component constraints (Halpin, ORM 2 TechReport §2.7-2.8):
+#
+#   * EXCLUSION (circled x)  — takes compatible role SEQUENCES. Decidable here:
+#     intersect the two tuple projections.
+#   * INCLUSIVE-OR / disjunctive mandatory (circled dot) — takes a set of ROLES
+#     played by ONE object type, and quantifies over that object type's instance
+#     population. There is NO ORM 2 construct "disjunctive mandatory over
+#     multi-role sequences", so for arity > 1 there is no universe to quantify
+#     over at all.
+#
+# Before plan 01.1-05, `checker._check_exclusive_or`'s multi-role branch
+# computed the exclusion half correctly and then hardcoded the disjunctive
+# half's violation list to `[]` (checker.py:785, `neither = []`). With no
+# overlap the constraint therefore fell through to `pass` and printed
+#   "Each tuple plays exactly one of (...); (...) — satisfied."
+# That is 01.1-CONTEXT.md probe #3: not a missed violation, an affirmative
+# claim of satisfaction over a half the checker never evaluated.
+#
+# The fix is NOT to synthesise a universe. A position-wise Cartesian product of
+# `_instances_of(person)` x `_instances_of(course)` would assert "every person
+# either teaches or takes EVERY course" — a claim no modeller writing an xor
+# intends, turning a false pass into a false fail (Amendment B, refuting D-15's
+# original prescription). The correct verdict is `unchecked`, which is what
+# CORE-05 and ROADMAP SC-2 said all along.
+#
+# The model itself MUST validate clean (`gnd validate` exits 0): both sequences
+# are equal-arity and position-wise type-compatible, so the two new layer-2
+# rules this plan adds (semantic:role-seq-arity, semantic:role-seq-type-compat)
+# have nothing to say about it. This case probes the CHECKER.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: String
+
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+
+  - id: course_code
+    name: CourseCode
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: person_teaches_course
+    reading: "{Person} teaches {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+
+  - id: person_takes_course
+    reading: "{Person} takes {Course}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: course, role_name: course }
+
+constraints:
+  # ALETHIC on purpose. An `unchecked` verdict only withholds acceptance when
+  # the constraint is alethic (D-07): a deontic one is feedback-only and leaves
+  # the band untouched, so a deontic xor here would exit 0 and prove nothing.
+  - type: exclusive-or
+    role_seqs:
+      - - { fact_type: person_teaches_course, role: person }
+        - { fact_type: person_teaches_course, role: course }
+      - - { fact_type: person_takes_course, role: person }
+        - { fact_type: person_takes_course, role: course }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "For any person and course, they either teach it or take it, never both."

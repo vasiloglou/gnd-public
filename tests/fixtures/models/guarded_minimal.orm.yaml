@@ -1,0 +1,92 @@
+version: 1
+
+model_id: urn:gnd-fixture:guarded-minimal@1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: expense
+    name: Expense
+    kind: entity
+    reference: { mode: popular, value_type: expense_id }
+  - id: expense_id
+    name: ExpenseId
+    kind: value
+    primitive: Integer
+  - id: category
+    name: Category
+    kind: value
+    primitive: String
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+  - id: status
+    name: Status
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: expense_in_category
+    reading: "{Expense} is in {Category}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: category, role_name: category }
+  - id: expense_has_amount
+    reading: "{Expense} has {Amount}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: amount, role_name: amount }
+  - id: expense_has_status
+    reading: "{Expense} has {Status}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: status, role_name: status }
+
+constraints:
+  - id: policy_limit_travel
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - fact_type: expense_in_category
+        bind: { expense: "$e", category: travel }
+      - fact_type: expense_has_amount
+        bind: { expense: "$e", amount: "$a" }
+    consequent:
+      comparison: { operator: "<=", left: "$a", right: 2000 }
+    provenance: { user_quote: "Travel expenses must not exceed the policy limit." }
+
+  - id: policy_mark_large_expense
+    type: guarded
+    modality: deontic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - fact_type: expense_has_amount
+        bind: { expense: "$e", amount: "$a" }
+    consequent:
+      atom:
+        fact_type: expense_has_status
+        bind: { expense: "$e", status: review }
+    provenance: { user_quote: "A large expense is marked for review." }
+
+  - id: policy_travel_not_blocked
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - fact_type: expense_in_category
+        bind: { expense: "$e", category: travel }
+    consequent:
+      absence:
+        fact_type: expense_has_status
+        bind: { expense: "$e", status: blocked }
+    provenance: { user_quote: "A travel expense must not be blocked." }
+
+rejected_proposals: []

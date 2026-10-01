@@ -1,0 +1,206 @@
+# tests/fixtures/checker/misc.orm.yaml
+# Checker fixture model for value-comparison (inline role-to-role, inline
+# literal operand, inline time-relative operand, cross-fact-type), the
+# subtype-partition family (observable case + derivation-only case), and the
+# always-unchecked textual family.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: task
+    name: Task
+    kind: entity
+    reference: { mode: popular, value_type: task_id }
+
+  - id: task_id
+    name: TaskId
+    kind: value
+    primitive: Integer
+
+  - id: score
+    name: Score
+    kind: value
+    primitive: Integer
+
+  - id: stamp
+    name: Stamp
+    kind: value
+    primitive: Date
+
+  - id: vehicle
+    name: Vehicle
+    kind: entity
+    reference: { mode: popular, value_type: vehicle_id }
+
+  - id: vehicle_id
+    name: VehicleId
+    kind: value
+    primitive: Integer
+
+  - id: plate
+    name: Plate
+    kind: value
+    primitive: String
+
+  # Observable subtypes: membership arrives via explicit instances: rosters.
+  - id: car
+    name: Car
+    kind: entity
+    subtype_of: [vehicle]
+    inherits_reference: true
+    derivation: asserted
+
+  - id: truck
+    name: Truck
+    kind: entity
+    subtype_of: [vehicle]
+    inherits_reference: true
+    derivation: asserted
+
+  - id: gadget
+    name: Gadget
+    kind: entity
+    reference: { mode: popular, value_type: gadget_id }
+
+  - id: gadget_id
+    name: GadgetId
+    kind: value
+    primitive: Integer
+
+  - id: glabel
+    name: GLabel
+    kind: value
+    primitive: String
+
+  # Derivation-only subtype: membership exists ONLY via the opaque
+  # derivation_rule string -> the partition over it must report unchecked.
+  - id: widget
+    name: Widget
+    kind: entity
+    subtype_of: [gadget]
+    inherits_reference: true
+    derivation: derived
+    derivation_rule: "Each Widget is a Gadget that whirs."
+    storage: computed
+
+fact_types:
+  - id: task_scores
+    reading: "{Task} scored from {Score:low} to {Score:high}"
+    roles:
+      - { object_type: task, role_name: task }
+      - { object_type: score, role_name: low }
+      - { object_type: score, role_name: high }
+    constraints:
+      # value-comparison: role-to-role (inline)
+      - type: value-comparison
+        operator: "<="
+        role_a: low
+        role_b: high
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "The low score never exceeds the high score." }
+
+  - id: task_has_points
+    reading: "{Task} has points {Score}"
+    roles:
+      - { object_type: task, role_name: task }
+      - { object_type: score, role_name: points }
+    constraints:
+      # value-comparison: literal operand (inline)
+      - type: value-comparison
+        operator: "<="
+        role_a: points
+        role_b: "100"
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Points are capped at 100." }
+
+  - id: task_logged_on
+    reading: "{Task} logged on {Stamp}"
+    roles:
+      - { object_type: task, role_name: task }
+      - { object_type: stamp, role_name: at }
+    constraints:
+      # value-comparison: time-relative operand -> unchecked (no reference clock)
+      - type: value-comparison
+        operator: "<="
+        role_a: at
+        role_b: "NOW()"
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A task is never logged in the future." }
+
+  - id: task_started_on
+    reading: "{Task} started on {Stamp}"
+    roles:
+      - { object_type: task, role_name: task }
+      - { object_type: stamp, role_name: on }
+
+  - id: task_finished_on
+    reading: "{Task} finished on {Stamp}"
+    roles:
+      - { object_type: task, role_name: task }
+      - { object_type: stamp, role_name: on }
+
+  - id: vehicle_has_plate
+    reading: "{Vehicle} has plate {Plate}"
+    roles:
+      - { object_type: vehicle, role_name: vehicle }
+      - { object_type: plate, role_name: plate }
+
+  - id: gadget_has_label
+    reading: "{Gadget} has label {GLabel}"
+    roles:
+      - { object_type: gadget, role_name: gadget }
+      - { object_type: glabel, role_name: label }
+
+constraints:
+  # [0] value-comparison: cross-fact-type (joined on the shared Task role)
+  - type: value-comparison
+    operator: "<="
+    role_a: { fact_type: task_started_on, role: on }
+    role_b: { fact_type: task_finished_on, role: on }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A task never finishes before it starts." }
+
+  # [1] subtype-partition: observable membership (instances: rosters)
+  - type: subtype-partition
+    supertype: vehicle
+    subtypes: [car, truck]
+    exclusive: true
+    exhaustive: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every vehicle is exactly one of car or truck." }
+
+  # [2] subtype-partition: derivation-only membership -> unchecked
+  - type: subtype-partition
+    supertype: gadget
+    subtypes: [widget]
+    exclusive: false
+    exhaustive: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every gadget is a widget." }
+
+  # [3] textual: always unchecked, expression stored verbatim as quoted data
+  - type: textual
+    expression: "Each Task is reviewed by exactly one reviewer before it closes."
+    formal_language: natural
+    formal_expression: null
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_note: "Stated during the review session." }

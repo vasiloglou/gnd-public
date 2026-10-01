@@ -1,0 +1,580 @@
+[
+  {
+    "case_id": "session-exact-all-required-acceptance",
+    "input_blobs": [
+      {
+        "path": "inputs/session-exact-all-required-acceptance.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 44,
+        "sha256": "c7c6addc4d6b19678b1385982a57fd2a111a5e98fdfe087ed97e0c6259d2749c",
+        "bytes": "{\"scenario\":\"all-required\",\"input\":\"alpha\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "accepted"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0001/verifier/session-exact-all-required-acceptance.json"
+          ]
+        }
+      ],
+      "best_path": "best.json",
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-exact-all-required-acceptance.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-exact-all-required-acceptance.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "attempt_manifest_sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "candidate_sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-missing-required-output",
+    "input_blobs": [
+      {
+        "path": "inputs/session-missing-required-output.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 47,
+        "sha256": "9b5318695a2684f6e1411bccea76d3a09ea2bb653ca70635c73dacaaaede8b0d",
+        "bytes": "{\"scenario\":\"missing-required\",\"input\":\"beta\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "verifier-failure"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": []
+        }
+      ],
+      "best_path": null,
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-missing-required-output.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-malformed-exit-mismatch",
+    "input_blobs": [
+      {
+        "path": "inputs/session-malformed-exit-mismatch.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 45,
+        "sha256": "250a23d5360901b2b49d59967a5683eba3d9e7f3ce7abfc78cbff7e75020db22",
+        "bytes": "{\"scenario\":\"exit-mismatch\",\"input\":\"gamma\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "verifier-failure"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0001/verifier/session-malformed-exit-mismatch.json"
+          ]
+        }
+      ],
+      "best_path": null,
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-malformed-exit-mismatch.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-malformed-exit-mismatch.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-alethic-indeterminate-deontic-warning",
+    "input_blobs": [
+      {
+        "path": "inputs/session-alethic-indeterminate-deontic-warning.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 40,
+        "sha256": "0b372363bd5d7c104d2463c8a389aaf8885684f9fc8337542aeb1987ba40ee45",
+        "bytes": "{\"scenario\":\"modality\",\"input\":\"delta\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "budget-exhausted"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0001/verifier/session-alethic-indeterminate-deontic-warning.json"
+          ]
+        }
+      ],
+      "best_path": "best.json",
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-alethic-indeterminate-deontic-warning.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-alethic-indeterminate-deontic-warning.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "attempt_manifest_sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "candidate_sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    },
+    "semantic_label_reference": "labels/session-alethic-indeterminate-deontic-warning.md"
+  },
+  {
+    "case_id": "session-same-score-different-candidate",
+    "input_blobs": [
+      {
+        "path": "inputs/session-same-score-different-candidate.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 44,
+        "sha256": "f1ace049cfe3252126c509f6570be82fa85bf4a705ec202e49a19c824587f153",
+        "bytes": "{\"scenario\":\"same-score\",\"input\":\"epsilon\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "budget-exhausted"
+    },
+    "assertions": ["distinct-candidate-digests-are-not-recurrence"],
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0001/verifier/session-same-score-different-candidate.json"
+          ]
+        },
+        {
+          "index": 2,
+          "launch_intent_path": "launches/0002.json",
+          "attempt_manifest_path": "attempts/0002/attempt.json",
+          "candidate_inventory_path": "attempts/0002/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0002/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0002/agent.stdout",
+          "agent_stderr_path": "attempts/0002/agent.stderr",
+          "feedback_path": "attempts/0002/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0002/verifier/session-same-score-different-candidate.json"
+          ]
+        }
+      ],
+      "best_path": "best.json",
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-same-score-different-candidate.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-same-score-different-candidate.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0002.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0002.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0002/candidate/population.yaml", "to": "attempts/0002/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0002/candidate.inventory.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0002/agent.stdout", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0002/agent.stderr", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0002/feedback.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0002/verifier/session-same-score-different-candidate.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "attempt_manifest_sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "candidate_sha256"},
+        {"from": "attempts/0002/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-a-b-a-oscillation",
+    "input_blobs": [
+      {
+        "path": "inputs/session-a-b-a-oscillation.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 42,
+        "sha256": "b6bc126b77a000dcc48f8772e76d67f075c9ab03143719396c9cf0787f2454e7",
+        "bytes": "{\"scenario\":\"oscillation\",\"input\":\"zeta\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "oscillation"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0001/verifier/session-a-b-a-oscillation.json"
+          ]
+        },
+        {
+          "index": 2,
+          "launch_intent_path": "launches/0002.json",
+          "attempt_manifest_path": "attempts/0002/attempt.json",
+          "candidate_inventory_path": "attempts/0002/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0002/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0002/agent.stdout",
+          "agent_stderr_path": "attempts/0002/agent.stderr",
+          "feedback_path": "attempts/0002/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0002/verifier/session-a-b-a-oscillation.json"
+          ]
+        },
+        {
+          "index": 3,
+          "launch_intent_path": "launches/0003.json",
+          "attempt_manifest_path": "attempts/0003/attempt.json",
+          "candidate_inventory_path": "attempts/0003/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0003/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0003/agent.stdout",
+          "agent_stderr_path": "attempts/0003/agent.stderr",
+          "feedback_path": "attempts/0003/feedback.json",
+          "verifier_payload_paths": [
+            "attempts/0003/verifier/session-a-b-a-oscillation.json"
+          ]
+        }
+      ],
+      "best_path": "best.json",
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-a-b-a-oscillation.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-a-b-a-oscillation.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0002.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0002.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0002/candidate/population.yaml", "to": "attempts/0002/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0002/candidate.inventory.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0002/agent.stdout", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0002/agent.stderr", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0002/feedback.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0002/verifier/session-a-b-a-oscillation.json", "to": "attempts/0002/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0003.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0003.json", "to": "attempts/0003/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0003/candidate/population.yaml", "to": "attempts/0003/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0003/candidate.inventory.json", "to": "attempts/0003/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0003/agent.stdout", "to": "attempts/0003/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0003/agent.stderr", "to": "attempts/0003/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0003/feedback.json", "to": "attempts/0003/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0003/verifier/session-a-b-a-oscillation.json", "to": "attempts/0003/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "attempt_manifest_sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "candidate_sha256"},
+        {"from": "attempts/0003/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-attempt-wall-exhaustion-descendant-cleanup",
+    "input_blobs": [
+      {
+        "path": "inputs/session-attempt-wall-exhaustion-descendant-cleanup.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 45,
+        "sha256": "964509277d396f5bcb7b2504a67ebd7d2e20dc4baf16004f3ce1a5334a9e5fef",
+        "bytes": "{\"scenario\":\"wall-exhaustion\",\"input\":\"eta\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "budget-exhausted"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": []
+        }
+      ],
+      "best_path": null,
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-attempt-wall-exhaustion-descendant-cleanup.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-stdout-stderr-flood",
+    "input_blobs": [
+      {
+        "path": "inputs/session-stdout-stderr-flood.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 44,
+        "sha256": "76aa4026b956b11c5dea6b8d9fa038157d7cc8ad6ef2d5174b7ebdf231b404b3",
+        "bytes": "{\"scenario\":\"stream-flood\",\"input\":\"theta\"}\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "agent-failure"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": []
+        }
+      ],
+      "best_path": null,
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-stdout-stderr-flood.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-declared-output-differs-from-expectation",
+    "input_blobs": [
+      {
+        "path": "inputs/session-declared-output-differs-from-expectation.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 55,
+        "sha256": "138ebdfcb13f2dfa8d8365cbb8b2f04aa14e61e502af5f3e92f936410a8133b0",
+        "bytes": "{\"scenario\":\"declared-output-differs\",\"input\":\"alpha\"}\n"
+      }
+    ],
+    "expected_output_blobs": [
+      {
+        "path": "expected/population.yaml",
+        "media_type": "application/yaml",
+        "encoding": "utf-8",
+        "size_bytes": 628,
+        "sha256": "6a55b78b29b6a0fe582d542331cd3fb26b3f4067e1bb5f8e133a77694af65acb",
+        "bytes": "# tests/fixtures/skeleton/population.good.yaml\n# Conforming population: every movie has exactly one title, years in range, one sequel pair.\npopulation:\n  model: model.orm.yaml\n  source: fixture\n  label: conforming\n  covers: [movie_has_title, movie_released_in_year, movie_sequel_of_movie]\ninstances:\n  movie: [1, 2]\nfacts:\n  movie_has_title:\n    - { movie: 1, title: \"The Departed\" }\n    - { movie: 2, title: \"Infernal Affairs\" }\n  movie_released_in_year:\n    - { movie: 1, year: 2006 }\n    - { movie: 2, year: 2002 }\n  movie_sequel_of_movie:\n    - { sequel: 1, original: 2 }\n# the contracted expectation the agent must produce\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "budget-exhausted"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": ["attempts/0001/verifier/session-declared-output-differs-from-expectation.json"]
+        }
+      ],
+      "best_path": "best.json",
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-declared-output-differs-from-expectation.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "expected/population.yaml", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].expected_outputs[].sha256"},
+        {"from": "expected/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-declared-output-differs-from-expectation.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "attempt_manifest_sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "candidate_sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  },
+  {
+    "case_id": "session-declared-output-never-produced",
+    "input_blobs": [
+      {
+        "path": "inputs/session-declared-output-never-produced.json",
+        "media_type": "application/json",
+        "encoding": "utf-8",
+        "size_bytes": 62,
+        "sha256": "a6d46ea6fe6c9d37b32b99bef30a493a2f480bf6526a5dd71632c713aea6e3db",
+        "bytes": "{\"scenario\":\"declared-output-never-produced\",\"input\":\"alpha\"}\n"
+      }
+    ],
+    "expected_output_blobs": [
+      {
+        "path": "expected/population.yaml",
+        "media_type": "application/yaml",
+        "encoding": "utf-8",
+        "size_bytes": 628,
+        "sha256": "6a55b78b29b6a0fe582d542331cd3fb26b3f4067e1bb5f8e133a77694af65acb",
+        "bytes": "# tests/fixtures/skeleton/population.good.yaml\n# Conforming population: every movie has exactly one title, years in range, one sequel pair.\npopulation:\n  model: model.orm.yaml\n  source: fixture\n  label: conforming\n  covers: [movie_has_title, movie_released_in_year, movie_sequel_of_movie]\ninstances:\n  movie: [1, 2]\nfacts:\n  movie_has_title:\n    - { movie: 1, title: \"The Departed\" }\n    - { movie: 2, title: \"Infernal Affairs\" }\n  movie_released_in_year:\n    - { movie: 1, year: 2006 }\n    - { movie: 2, year: 2002 }\n  movie_sequel_of_movie:\n    - { sequel: 1, original: 2 }\n# the contracted expectation the agent must produce\n"
+      }
+    ],
+    "machine_label": {
+      "owner": "test-engineer",
+      "disposition": "budget-exhausted"
+    },
+    "expected_evidence": {
+      "session_contract_path": "session.contract.json",
+      "attempts": [
+        {
+          "index": 1,
+          "launch_intent_path": "launches/0001.json",
+          "attempt_manifest_path": "attempts/0001/attempt.json",
+          "candidate_inventory_path": "attempts/0001/candidate.inventory.json",
+          "candidate_snapshot_paths": ["attempts/0001/candidate/population.yaml"],
+          "agent_stdout_path": "attempts/0001/agent.stdout",
+          "agent_stderr_path": "attempts/0001/agent.stderr",
+          "feedback_path": "attempts/0001/feedback.json",
+          "verifier_payload_paths": ["attempts/0001/verifier/session-declared-output-never-produced.json"]
+        }
+      ],
+      "best_path": "best.json",
+      "result_path": "result.json",
+      "digest_edges": [
+        {"from": "inputs/session-declared-output-never-produced.json", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].inputs[].sha256"},
+        {"from": "expected/population.yaml", "to": "session.contract.json", "model": "DataDrivenContract", "field": "cases[].expected_outputs[].sha256"},
+        {"from": "expected/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "session.contract.json", "to": "launches/0001.json", "model": "LaunchIntent", "field": "contract_sha256"},
+        {"from": "launches/0001.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "launch_intent.sha256"},
+        {"from": "attempts/0001/candidate/population.yaml", "to": "attempts/0001/candidate.inventory.json", "model": "CandidateInventory", "field": "files[].sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "candidate_inventory_sha256"},
+        {"from": "attempts/0001/agent.stdout", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stdout.sha256"},
+        {"from": "attempts/0001/agent.stderr", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "agent_stderr.sha256"},
+        {"from": "attempts/0001/feedback.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "feedback.sha256"},
+        {"from": "attempts/0001/verifier/session-declared-output-never-produced.json", "to": "attempts/0001/attempt.json", "model": "AttemptRecord", "field": "raw_verifier_payloads[].sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "attempt_manifest_sha256"},
+        {"from": "attempts/0001/candidate.inventory.json", "to": "best.json", "model": "BestAttemptIdentity", "field": "candidate_sha256"},
+        {"from": "attempts/0001/attempt.json", "to": "result.json", "model": "SessionResult", "field": "referenced_evidence_digests.attempt_manifest_sha256"}
+      ]
+    }
+  }
+]

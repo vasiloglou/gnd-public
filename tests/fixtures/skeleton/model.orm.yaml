@@ -1,0 +1,100 @@
+# tests/fixtures/skeleton/model.orm.yaml
+# Walking-skeleton model: the tiniest fully GND-form ORM model.
+# Every constraint carries explicit source, status, AND modality (D-03: modality never omitted).
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+    provenance:
+      origin: fixture
+      user_quote: "Each movie has a unique numeric ID."
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+
+  - id: year
+    name: Year
+    kind: value
+    primitive: Integer
+
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: title, role_name: title }]
+    sample_population:
+      - { movie: 1, title: "The Departed" }
+      - { movie: 2, title: "Inception" }
+    provenance: { origin: fixture }
+    constraints:
+      - type: uniqueness
+        roles: [movie]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Each Movie has one canonical title in our catalog."
+      - type: mandatory
+        role: movie
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Every movie must have a title."
+
+  - id: movie_released_in_year
+    reading: "{Movie} released in {Year}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: year, role_name: year }]
+    sample_population:
+      - { movie: 1, year: 2006 }
+      - { movie: 2, year: 2010 }
+    constraints:
+      - type: uniqueness
+        roles: [movie]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "A movie has a single release year."
+
+  - id: movie_sequel_of_movie
+    reading: "{Movie:sequel} is sequel of {Movie:original}"
+    roles: [{ object_type: movie, role_name: sequel }, { object_type: movie, role_name: original }]
+    sample_population:
+      - { sequel: 2, original: 1 }
+    constraints:
+      # The skeleton checker does NOT implement ring — this constraint proves the
+      # `unchecked` verdict (D-02: never silently passed).
+      - type: ring
+        variant: acyclic
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Sequel chains never loop back to an earlier movie."
+
+constraints:
+  - type: value
+    object_type: year
+    range: { min: 1888, max: 2100, min_inclusive: true, max_inclusive: true }
+    source: llm-inferred
+    status: proposed
+    modality: deontic   # D-03 default for unconfirmed llm-inferred — proves the `warning` path
+    rationale: "1888 is the year of the first known motion picture; 2100 is a generous upper cap."
+    provenance:
+      rationale_world_fact: "Roundhay Garden Scene (1888) is widely cited as the first surviving motion picture."

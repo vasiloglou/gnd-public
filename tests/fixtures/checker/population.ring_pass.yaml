@@ -1,0 +1,59 @@
+# Conforming population: every ring variant satisfied.
+population:
+  model: ring.orm.yaml
+  source: fixture
+  label: conforming
+  covers:
+    - rel_irreflexive
+    - rel_asymmetric
+    - rel_intransitive
+    - rel_antisymmetric
+    - rel_acyclic
+    - rel_asymmetric_intransitive
+    - rel_acyclic_intransitive
+    - rel_symmetric
+    - rel_symmetric_irreflexive
+    - rel_symmetric_intransitive
+    - rel_purely_reflexive
+    - rel_reflexive
+    - rel_transitive
+instances: {}
+facts:
+  rel_irreflexive:
+    - { a: 1, b: 2 }
+  rel_asymmetric:
+    - { a: 1, b: 2 }
+  rel_intransitive:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 3 }
+  rel_antisymmetric:
+    - { a: 1, b: 2 }
+    - { a: 1, b: 1 }
+  rel_acyclic:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 3 }
+  rel_asymmetric_intransitive:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 3 }
+  rel_acyclic_intransitive:
+    - { a: 1, b: 2 }
+  rel_symmetric:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 1 }
+  rel_symmetric_irreflexive:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 1 }
+  rel_symmetric_intransitive:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 1 }
+  rel_purely_reflexive:
+    - { a: 1, b: 1 }
+    - { a: 2, b: 2 }
+  rel_reflexive:
+    - { a: 1, b: 1 }
+    - { a: 2, b: 2 }
+    - { a: 1, b: 2 }
+  rel_transitive:
+    - { a: 1, b: 2 }
+    - { a: 2, b: 3 }
+    - { a: 1, b: 3 }

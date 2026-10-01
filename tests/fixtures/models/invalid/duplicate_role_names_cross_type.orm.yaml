@@ -1,0 +1,57 @@
+# Rejected by semantic:role-names-distinct (CR-03) — the two roles of
+# 'movie_has_title' share the role_name `x` while having DIFFERENT object types.
+#
+# The rule used to bucket roles by object_type and flag a duplicate only inside
+# one bucket, so this model validated CLEAN at exit 0. That is not cosmetic:
+# `_fact_type_roles` returns a SET of role names, so this fact type's declared
+# role set had ONE member for TWO roles, and popvalidate's R5
+# (`population:missing-role`) compares the supplied key set against that
+# shrunken set. A population of facts each supplying only `x`:
+#
+#   facts:
+#     movie_has_title:
+#       - { x: "The Departed" }
+#       - { x: "Inception" }
+#
+# was therefore structurally conformant, and the alethic `mandatory` on `x`
+# below reported
+#   pass=1 fail=0 warning=0 unchecked=0 vacuous=0   ->  exit 0
+# CONTEXT.md probe #1, restored through a different door. With an
+# `instances: {movie: [...]}` roster the same model produced a SPURIOUS alethic
+# fail instead — wrong in the other direction.
+#
+# `checker._check_mandatory` compounds it: it resolves the role's object type
+# with `next(...)`, silently taking whichever duplicate is declared first.
+#
+# Establishing source: representation-format.md — "`role_name`: required on
+# every role … cross-references and the checker key on it" and
+# "`{ fact_type: <id>, role: <role_name> }` … must resolve" — both unsatisfiable
+# when one name addresses two roles. Halpin's ORM 2 role names are likewise
+# unique per predicate.
+#
+# `duplicate_role_names.yaml` is the same defect in its same-object-type special
+# case, which the old rule did catch; this file is the general case it did not.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: title }
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles:
+      - { object_type: movie, role_name: x }
+      - { object_type: title, role_name: x }
+    constraints:
+      - type: mandatory
+        role: x
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every movie has a title." }

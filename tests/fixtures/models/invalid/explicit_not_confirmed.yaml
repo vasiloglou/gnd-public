@@ -1,0 +1,25 @@
+# Rejected by semantic:status-source — a source:explicit constraint must be
+# status:confirmed (DDL/user-stated constraints are not proposed for review).
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: person_smokes
+    reading: "{Person} smokes"
+    roles:
+      - { object_type: person, role_name: person }
+    constraints:
+      - type: uniqueness
+        roles: [person]
+        source: explicit
+        status: proposed
+        modality: alethic
+        provenance: { user_quote: "A person either smokes or does not." }

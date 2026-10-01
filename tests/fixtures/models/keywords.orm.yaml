@@ -1,0 +1,118 @@
+# tests/fixtures/models/keywords.orm.yaml
+# The G-21 hazard made permanent: a VALID ORM model whose object-type ids,
+# fact-type ids and role names are Python KEYWORDS.
+#
+# Why it exists. `src/gnd/schema/orm-meta.schema.json`'s `$defs.identifier` is
+# `^[a-z][a-z0-9_]*$`, and `object_type.id`, `fact_type.id`, `role.role_name`
+# and `role.object_type` all `$ref` it. Thirty-five Python keywords match that
+# pattern, so this file passes `gnd validate` at exit 0 and `gnd extract` at
+# exit 0 (extract is immune — JSON keys are unconstrained). Naive codegen then
+# emits `def import(from, return):`, a SyntaxError on the user's disk.
+#
+# The fixture is therefore not a curiosity: it is the reachability proof for
+# T-03-12, and every codegen plan from 03-03 onward emits over it and asserts
+# the result parses. RESEARCH §3.4 constructed the original; this is it made
+# a committed artifact.
+#
+# Deliberately NOT included: a pair of ids that collide after sanitization
+# (e.g. both `import` and `import_`). Such a model is legitimately
+# ungeneratable and `IdentifierError` is the correct outcome — but this fixture
+# must stay EMITTABLE, because its whole job downstream is to be codegen'd and
+# have every emitted `.py` parsed. The collision case is a unit test over
+# constructed ids, not a fixture.
+#
+# Keywords exercised (hard): class, pass, lambda, del, import, global, yield,
+# from, return, for, in, as, is. (soft): type, match.
+#
+# D-03-consistent modality: explicit + confirmed -> alethic. Modality is
+# ALWAYS explicit.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  # Hard keyword as an entity-type id, identified by another hard keyword.
+  - id: "class"
+    name: Class
+    kind: entity
+    reference: { mode: popular, value_type: "pass" }
+    provenance: { origin: fixture }
+
+  - id: "pass"
+    name: PassCode
+    kind: value
+    primitive: String
+
+  - id: "lambda"
+    name: Lambda
+    kind: entity
+    reference: { mode: popular, value_type: "del" }
+
+  - id: "del"
+    name: DelCode
+    kind: value
+    primitive: Integer
+
+  # Soft keywords: legal identifiers today, but they shadow builtins and are a
+  # lint hazard, so the sanitizer suffixes them too.
+  - id: "type"
+    name: TypeLabel
+    kind: value
+    primitive: String
+
+  - id: "match"
+    name: MatchLabel
+    kind: value
+    primitive: String
+
+fact_types:
+  # `def import(from, return)` — RESEARCH §3.4's verbatim SyntaxError.
+  - id: "import"
+    reading: "{Class} imports {Lambda}"
+    roles:
+      - { object_type: "class", role_name: "from" }
+      - { object_type: "lambda", role_name: "return" }
+    constraints:
+      - type: uniqueness
+        roles: ["from"]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A class imports at most one lambda." }
+      - type: mandatory
+        role: "from"
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every class imports something." }
+
+  - id: "global"
+    reading: "{Class} is labelled {TypeLabel}"
+    roles:
+      - { object_type: "class", role_name: "for" }
+      - { object_type: "type", role_name: "in" }
+    constraints:
+      - type: uniqueness
+        roles: ["for"]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A class carries exactly one label." }
+
+  - id: "yield"
+    reading: "{Lambda} yields {MatchLabel}"
+    roles:
+      - { object_type: "lambda", role_name: "as" }
+      - { object_type: "match", role_name: "is" }
+    constraints:
+      - type: uniqueness
+        roles: ["as"]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A lambda yields one match." }

@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "case_id": "recovery-mechanical-python-schema",
+      "selected_roots": [
+        {"category": "source", "path": "src"},
+        {"category": "test", "path": "tests"},
+        {"category": "docs", "path": "docs"},
+        {"category": "config", "path": "config"},
+        {"category": "schema", "path": "schema"}
+      ],
+      "input_blobs": [
+        {
+          "path": "src/domain.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 211,
+          "sha256": "bcf781b06ca8e323d494ae24f6e7fda00b23e2c0ebdf2d8fe0929b5ae5746b29",
+          "bytes_base64": "ZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzCmZyb20gZW51bSBpbXBvcnQgRW51bQoKY2xhc3MgU3RhdHVzKHN0ciwgRW51bSk6CiAgICBPUEVOID0gIm9wZW4iCgpAZGF0YWNsYXNzKGZyb3plbj1UcnVlKQpjbGFzcyBPcmRlcjoKICAgIG9yZGVyX2lkOiBpbnQKICAgIHN0YXR1czogU3RhdHVzCgphc3NlcnQgU3RhdHVzLk9QRU4udmFsdWUgPT0gIm9wZW4iCg=="
+        },
+        {
+          "path": "tests/test_domain.py",
+          "root_category": "test",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 89,
+          "sha256": "4d227e7783dbc41ec146f688285e67c6ce42ebc051f968f19d99a2a9bff7b7be",
+          "bytes_base64": "ZGVmIHRlc3Rfb3JkZXJfaWRlbnRpdHlfaXNfc3RhYmxlKCkgLT4gTm9uZToKICAgIGFzc2VydCB7Im9yZGVyX2lkIjogN31bIm9yZGVyX2lkIl0gPT0gNwo="
+        },
+        {
+          "path": "docs/domain.md",
+          "root_category": "docs",
+          "entry_kind": "file",
+          "media_type": "text/markdown",
+          "encoding": "utf-8",
+          "byte_length": 78,
+          "sha256": "868d46030f64dac75e0748db98175043070abbcf1c754e37443d99529dfe3698",
+          "bytes_base64": "IyBPcmRlciBsaWZlY3ljbGUKCkFuIE9yZGVyIGhhcyBhIFN0YXR1cy4gVGhlIHN0YXR1cyBpcyB2aXNpYmxlIHRvIG9wZXJhdG9ycy4K"
+        },
+        {
+          "path": "config/domain.yaml",
+          "root_category": "config",
+          "entry_kind": "file",
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "byte_length": 43,
+          "sha256": "a645240c004d31382dda90540f39bb26bbf3bd9151a56d8ecf6a3e9e7e6f2475",
+          "bytes_base64": "b3JkZXI6CiAgc3RhdHVzZXM6CiAgICAtIG9wZW4KICAgIC0gY2xvc2VkCg=="
+        },
+        {
+          "path": "schema/domain.schema.json",
+          "root_category": "schema",
+          "entry_kind": "file",
+          "media_type": "application/schema+json",
+          "encoding": "utf-8",
+          "byte_length": 209,
+          "sha256": "342dab67d2868cd72f88f8d3609d596020935965e5af061d2ef84cd15bd5d4ce",
+          "bytes_base64": "eyIkc2NoZW1hIjoiaHR0cHM6Ly9qc29uLXNjaGVtYS5vcmcvZHJhZnQvMjAyMC0xMi9zY2hlbWEiLCIkZGVmcyI6eyJPcmRlciI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJvcmRlcl9pZCI6eyJ0eXBlIjoiaW50ZWdlciJ9LCJzdGF0dXMiOnsiZW51bSI6WyJvcGVuIiwiY2xvc2VkIl19fSwicmVxdWlyZWQiOlsib3JkZXJfaWQiLCJzdGF0dXMiXX19fQo="
+        }
+      ],
+      "selected_paths": [
+        "config/domain.yaml",
+        "docs/domain.md",
+        "schema/domain.schema.json",
+        "src/domain.py",
+        "tests/test_domain.py"
+      ],
+      "expected": {
+        "evidence": [
+          {"evidence_id": "ev-order-class", "path": "src/domain.py", "sha256": "bcf781b06ca8e323d494ae24f6e7fda00b23e2c0ebdf2d8fe0929b5ae5746b29", "excerpt_sha256": "925db771202f773ea212afc27891c0d73a5b8ffa41e5bc5fbfb57cb66d288b35", "locator": {"kind": "python-symbol", "symbol": "Order", "line_start": 8, "line_end": 10}},
+          {"evidence_id": "ev-status-enum", "path": "src/domain.py", "sha256": "bcf781b06ca8e323d494ae24f6e7fda00b23e2c0ebdf2d8fe0929b5ae5746b29", "excerpt_sha256": "2d1b8393fbb1104c9c4feaa7dff85959dd019e010b01abf92ae80aa02f6b7924", "locator": {"kind": "python-symbol", "symbol": "Status", "line_start": 4, "line_end": 5}},
+          {"evidence_id": "ev-status-assertion", "path": "src/domain.py", "sha256": "bcf781b06ca8e323d494ae24f6e7fda00b23e2c0ebdf2d8fe0929b5ae5746b29", "excerpt_sha256": "1e77e0bf85edfcdd31c6ebacd8fd28c84295a63c88c24d2f8e3da0a49c22277a", "locator": {"kind": "line", "line_start": 12, "line_end": 12}},
+          {"evidence_id": "ev-order-test", "path": "tests/test_domain.py", "sha256": "4d227e7783dbc41ec146f688285e67c6ce42ebc051f968f19d99a2a9bff7b7be", "excerpt_sha256": "4d227e7783dbc41ec146f688285e67c6ce42ebc051f968f19d99a2a9bff7b7be", "locator": {"kind": "python-symbol", "symbol": "test_order_identity_is_stable", "line_start": 1, "line_end": 2}},
+          {"evidence_id": "ev-order-doc", "path": "docs/domain.md", "sha256": "868d46030f64dac75e0748db98175043070abbcf1c754e37443d99529dfe3698", "excerpt_sha256": "cb1c5d8f38bbb590b1cc850d856f86d331255ed1ed20ee0e9a5e8e80ea1c369c", "locator": {"kind": "line", "line_start": 3, "line_end": 3}},
+          {"evidence_id": "ev-status-config", "path": "config/domain.yaml", "sha256": "a645240c004d31382dda90540f39bb26bbf3bd9151a56d8ecf6a3e9e7e6f2475", "excerpt_sha256": "3a2a12f577d7f4303e469d969c3af61c3522f1fe294d32d7ec0f92c05706ebd0", "locator": {"kind": "yaml-path", "path": ["order", "statuses"]}},
+          {"evidence_id": "ev-order-schema", "path": "schema/domain.schema.json", "sha256": "342dab67d2868cd72f88f8d3609d596020935965e5af061d2ef84cd15bd5d4ce", "excerpt_sha256": "3a2a12f577d7f4303e469d969c3af61c3522f1fe294d32d7ec0f92c05706ebd0", "locator": {"kind": "json-pointer", "pointer": "/$defs/Order/properties/status/enum"}}
+        ],
+        "modeled_elements": [
+          {"element_id": "object:order", "element_kind": "object-type", "model_pointer": "/object_types/0", "evidence_ids": ["ev-order-class", "ev-order-schema"]},
+          {"element_id": "object:status", "element_kind": "object-type", "model_pointer": "/object_types/1", "evidence_ids": ["ev-status-enum", "ev-status-config"]},
+          {"element_id": "fact:order-has-status", "element_kind": "fact-type", "model_pointer": "/fact_types/0", "evidence_ids": ["ev-order-class", "ev-order-doc"]},
+          {"element_id": "role:order-has-status:order", "element_kind": "role", "model_pointer": "/fact_types/0/roles/0", "evidence_ids": ["ev-order-class"]},
+          {"element_id": "role:order-has-status:status", "element_kind": "role", "model_pointer": "/fact_types/0/roles/1", "evidence_ids": ["ev-order-schema"]},
+          {"element_id": "constraint:status-enum", "element_kind": "constraint", "model_pointer": "/fact_types/0/constraints/0", "evidence_ids": ["ev-status-assertion", "ev-order-test", "ev-status-config", "ev-order-schema"], "source": "explicit", "status": "confirmed", "modality": "alethic"}
+        ],
+        "ambiguities": [],
+        "frontier": [],
+        "exclusions": [],
+        "census": [
+          {"path": "config/domain.yaml", "disposition": "parsed", "reference_ids": ["ev-status-config"]},
+          {"path": "docs/domain.md", "disposition": "parsed", "reference_ids": ["ev-order-doc"]},
+          {"path": "schema/domain.schema.json", "disposition": "parsed", "reference_ids": ["ev-order-schema"]},
+          {"path": "src/domain.py", "disposition": "parsed", "reference_ids": ["ev-order-class", "ev-status-assertion", "ev-status-enum"]},
+          {"path": "tests/test_domain.py", "disposition": "parsed", "reference_ids": ["ev-order-test"]}
+        ],
+        "outputs": [
+          {"path": "model.orm.yaml", "digest_binding": "required"},
+          {"path": "model.verbalization.txt", "digest_binding": "required"},
+          {"path": "model.recovery.json", "digest_binding": "self-unbound"}
+        ],
+        "verification_evidence": ["canonical-load-model", "complete-verbalization", "digest-bound-locators", "exact-census"]
+      }
+    },
+    {
+      "case_id": "recovery-ambiguous-semantic-proposal",
+      "selected_roots": [
+        {"category": "source", "path": "src"},
+        {"category": "docs", "path": "docs"}
+      ],
+      "input_blobs": [
+        {
+          "path": "src/approval.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 83,
+          "sha256": "f24c5e0101b4e14ca23d746e6267ece5eb3b36fdab133fcb87c851d572cf54d2",
+          "bytes_base64": "IyByZWNvdmVyeS1wcm9wb3NhbDogUmVxdWVzdCBoYXMgQXBwcm92ZXIKY2xhc3MgQXBwcm92YWw6CiAgICBhcHByb3Zlcjogc3RyIHwgTm9uZQo="
+        },
+        {
+          "path": "docs/approval.md",
+          "root_category": "docs",
+          "entry_kind": "file",
+          "media_type": "text/markdown",
+          "encoding": "utf-8",
+          "byte_length": 106,
+          "sha256": "51f21552cd37e3ec9c117de6e34ce91aa4416a7f43c359a4a2ffe081979c5335",
+          "bytes_base64": "cmVjb3ZlcnktcHJvcG9zYWw6IFJlcXVlc3QgaGFzIEFwcHJvdmVyCkVhY2ggcmVxdWVzdCB1c3VhbGx5IGhhcyBvbmUgYXBwcm92ZXIsIGV4Y2VwdCBlbWVyZ2VuY3kgcmVxdWVzdHMuCg=="
+        }
+      ],
+      "selected_paths": ["docs/approval.md", "src/approval.py"],
+      "expected": {
+        "evidence": [
+          {"evidence_id": "ev-approval-class", "path": "src/approval.py", "sha256": "f24c5e0101b4e14ca23d746e6267ece5eb3b36fdab133fcb87c851d572cf54d2", "excerpt_sha256": "3189d508d4fb2e92327c51cc92dde99a395234c7ca7ed2e7b7d91ce68991ae50", "locator": {"kind": "python-symbol", "symbol": "Approval", "line_start": 2, "line_end": 3}},
+          {"evidence_id": "ev-approval-doc", "path": "docs/approval.md", "sha256": "51f21552cd37e3ec9c117de6e34ce91aa4416a7f43c359a4a2ffe081979c5335", "excerpt_sha256": "51f21552cd37e3ec9c117de6e34ce91aa4416a7f43c359a4a2ffe081979c5335", "locator": {"kind": "line", "line_start": 1, "line_end": 2}}
+        ],
+        "modeled_elements": [
+          {"element_id": "object:approval", "element_kind": "object-type", "model_pointer": "/object_types/0", "evidence_ids": ["ev-approval-class"]}
+        ],
+        "ambiguities": [
+          {"proposal_id": "proposal:request-has-approver", "element_id": "fact:request-has-approver", "element_kind": "fact-type", "source": "llm-inferred", "status": "proposed", "modality": "deontic", "rationale": "A repository naming/documentation hint is semantic evidence, not a mechanically declared invariant; owner review is required.", "evidence_ids": ["ev-approval-class", "ev-approval-doc"], "prior_proposal_id": null}
+        ],
+        "frontier": [],
+        "exclusions": [],
+        "census": [
+          {"path": "docs/approval.md", "disposition": "ambiguous", "reference_ids": ["proposal:request-has-approver"]},
+          {"path": "src/approval.py", "disposition": "ambiguous", "reference_ids": ["proposal:request-has-approver"]}
+        ],
+        "outputs": [
+          {"path": "model.orm.yaml", "digest_binding": "required"},
+          {"path": "model.verbalization.txt", "digest_binding": "required"},
+          {"path": "model.recovery.json", "digest_binding": "self-unbound"}
+        ],
+        "verification_evidence": ["proposal-has-evidence", "proposal-remains-deontic", "whole-model-review", "exact-census"]
+      }
+    },
+    {
+      "case_id": "recovery-unsupported-dynamic-mixed-frontier",
+      "selected_roots": [
+        {"category": "source", "path": "src"}
+      ],
+      "input_blobs": [
+        {
+          "path": "src/unsupported.rs",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-rust",
+          "encoding": "utf-8",
+          "byte_length": 36,
+          "sha256": "2969f2a0128241b2e28c1438a4392c2cf63fd0da53d19af8ca4661a12eca7207",
+          "bytes_base64": "cHViIHN0cnVjdCBDdXN0b21lciB7IHB1YiBpZDogdTY0IH0K"
+        },
+        {
+          "path": "src/dynamic.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 65,
+          "sha256": "946560767779692bac0de2d287953d3bf3afedbbab1b446eafb6ce4085878eba",
+          "bytes_base64": "bmFtZSA9ICJDdXN0b21lciIKZXhlYygiQ3VzdG9tZXIgPSB0eXBlKG5hbWUsICgpLCB7XCJpZFwiOiAxfSkiKQo="
+        },
+        {
+          "path": "src/unresolved.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 98,
+          "sha256": "4b5a597ae7db178af93ad8731cd23da0647e5685a88611cae51e6eb85851d4bb",
+          "bytes_base64": "ZnJvbSBwcml2YXRlX2RvbWFpbiBpbXBvcnQgQ3VzdG9tZXIKCmRlZiBjdXN0b21lcl9pZCh2YWx1ZTogQ3VzdG9tZXIpIC0+IGludDoKICAgIHJldHVybiB2YWx1ZS5pZAo="
+        },
+        {
+          "path": "src/mixed.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 84,
+          "sha256": "938b13c3091f932d202b65ea83c62261dc6fd8f279cb92497cd854701e5f013b",
+          "bytes_base64": "IyByZWNvdmVyeS1sYW5ndWFnZTogcHl0aG9uK3NxbApjbGFzcyBUaWNrZXQ6CiAgICBwYXNzCgpTRUxFQ1Qgc3RhdHVzIEZST00gdGlja2V0czsK"
+        }
+      ],
+      "selected_paths": ["src/dynamic.py", "src/mixed.py", "src/unresolved.py", "src/unsupported.rs"],
+      "expected": {
+        "evidence": [],
+        "modeled_elements": [],
+        "ambiguities": [],
+        "frontier": [
+          {"frontier_id": "frontier:dynamic", "path": "src/dynamic.py", "reason": "dynamic-construct", "sha256": "946560767779692bac0de2d287953d3bf3afedbbab1b446eafb6ce4085878eba"},
+          {"frontier_id": "frontier:mixed", "path": "src/mixed.py", "reason": "mixed-language", "sha256": "938b13c3091f932d202b65ea83c62261dc6fd8f279cb92497cd854701e5f013b"},
+          {"frontier_id": "frontier:unresolved", "path": "src/unresolved.py", "reason": "unresolved-import", "sha256": "4b5a597ae7db178af93ad8731cd23da0647e5685a88611cae51e6eb85851d4bb"},
+          {"frontier_id": "frontier:unsupported", "path": "src/unsupported.rs", "reason": "unsupported-language", "sha256": "2969f2a0128241b2e28c1438a4392c2cf63fd0da53d19af8ca4661a12eca7207"}
+        ],
+        "exclusions": [],
+        "census": [
+          {"path": "src/dynamic.py", "disposition": "frontier", "reference_ids": ["frontier:dynamic"]},
+          {"path": "src/mixed.py", "disposition": "frontier", "reference_ids": ["frontier:mixed"]},
+          {"path": "src/unresolved.py", "disposition": "frontier", "reference_ids": ["frontier:unresolved"]},
+          {"path": "src/unsupported.rs", "disposition": "frontier", "reference_ids": ["frontier:unsupported"]}
+        ],
+        "outputs": [
+          {"path": "model.orm.yaml", "digest_binding": "required"},
+          {"path": "model.verbalization.txt", "digest_binding": "required"},
+          {"path": "model.recovery.json", "digest_binding": "self-unbound"}
+        ],
+        "verification_evidence": ["closed-frontier", "no-invented-elements", "exact-census"]
+      }
+    },
+    {
+      "case_id": "recovery-traversal-symlink-stale-digest",
+      "selected_roots": [
+        {"category": "source", "path": "src"},
+        {"category": "source", "path": "vendor"}
+      ],
+      "input_blobs": [
+        {
+          "path": "src/nested/domain.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 37,
+          "sha256": "274d3a71cac2906d6d60c2f4ec5bad387b0a2b48bb78fceaf93f7c7ef68209f7",
+          "bytes_base64": "Y2xhc3MgRG9tYWluRXZlbnQ6CiAgICBldmVudF9pZDogaW50Cg=="
+        },
+        {
+          "path": "vendor/lib.py",
+          "root_category": "source",
+          "entry_kind": "file",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "byte_length": 30,
+          "sha256": "aa0c66d77fa6e5102c8b0248aa275060bc6589f5b03e8cdba904215bb856320b",
+          "bytes_base64": "Y2xhc3MgVmVuZG9yZWRUaGluZzoKICAgIHBhc3MK"
+        },
+        {
+          "path": "src/alias.py",
+          "root_category": "source",
+          "entry_kind": "symlink",
+          "link_target": "nested/domain.py",
+          "media_type": "inode/symlink",
+          "encoding": "utf-8",
+          "byte_length": 16,
+          "sha256": "eef77cd2bdc0a98f873eb2bd4a8e2fa785b6d493e124773443ce8eb8fa595c6d",
+          "bytes_base64": "bmVzdGVkL2RvbWFpbi5weQ=="
+        },
+        {
+          "path": "src/loop",
+          "root_category": "source",
+          "entry_kind": "symlink",
+          "link_target": "..",
+          "media_type": "inode/symlink",
+          "encoding": "utf-8",
+          "byte_length": 2,
+          "sha256": "5ec1f7e700f37c3d0b2981d04855fc34b94aaa15457b05ca571817442d228f81",
+          "bytes_base64": "Li4="
+        }
+      ],
+      "selected_paths": ["src/alias.py", "src/loop", "src/nested/domain.py", "vendor/lib.py"],
+      "expected": {
+        "evidence": [
+          {"evidence_id": "ev-domain-event-class", "path": "src/nested/domain.py", "sha256": "274d3a71cac2906d6d60c2f4ec5bad387b0a2b48bb78fceaf93f7c7ef68209f7", "excerpt_sha256": "274d3a71cac2906d6d60c2f4ec5bad387b0a2b48bb78fceaf93f7c7ef68209f7", "locator": {"kind": "python-symbol", "symbol": "DomainEvent", "line_start": 1, "line_end": 2}}
+        ],
+        "modeled_elements": [
+          {"element_id": "object:domain-event", "element_kind": "object-type", "model_pointer": "/object_types/0", "evidence_ids": ["ev-domain-event-class"]}
+        ],
+        "ambiguities": [],
+        "frontier": [
+          {"frontier_id": "frontier:alias-symlink", "path": "src/alias.py", "reason": "symlink", "sha256": "eef77cd2bdc0a98f873eb2bd4a8e2fa785b6d493e124773443ce8eb8fa595c6d"},
+          {"frontier_id": "frontier:loop-symlink", "path": "src/loop", "reason": "symlink-cycle", "sha256": "5ec1f7e700f37c3d0b2981d04855fc34b94aaa15457b05ca571817442d228f81"}
+        ],
+        "exclusions": [
+          {"exclusion_id": "exclusion:vendor", "path": "vendor/lib.py", "reason": "vendored"}
+        ],
+        "census": [
+          {"path": "src/alias.py", "disposition": "frontier", "reference_ids": ["frontier:alias-symlink"]},
+          {"path": "src/loop", "disposition": "frontier", "reference_ids": ["frontier:loop-symlink"]},
+          {"path": "src/nested/domain.py", "disposition": "parsed", "reference_ids": ["ev-domain-event-class"]},
+          {"path": "vendor/lib.py", "disposition": "excluded", "reference_ids": ["exclusion:vendor"]}
+        ],
+        "outputs": [
+          {"path": "model.orm.yaml", "digest_binding": "required"},
+          {"path": "model.verbalization.txt", "digest_binding": "required"},
+          {"path": "model.recovery.json", "digest_binding": "self-unbound"}
+        ],
+        "verification_evidence": ["nested-traversal", "symlink-refusal", "root-confinement", "stale-digest-refusal", "exact-census"]
+      },
+      "mutations": [
+        {
+          "mutation_id": "stale-evidence-digest",
+          "path": "src/nested/domain.py",
+          "replacement_byte_length": 37,
+          "replacement_sha256": "8d54cc6c66b8bbedc827632641132fdd2c79fd903a72e479e87b77309c0aa0e9",
+          "replacement_bytes_base64": "Y2xhc3MgRG9tYWluRXZlbnQ6CiAgICBldmVudF9pZDogc3RyCg==",
+          "expected_error": "stale-digest"
+        }
+      ]
+    }
+  ]
+}

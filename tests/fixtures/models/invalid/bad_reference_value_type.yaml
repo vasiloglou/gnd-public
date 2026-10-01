@@ -1,0 +1,10 @@
+# Rejected by semantic:reference-value-type — reference block names
+# 'person_name', which is not declared as a value-kind object type.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_name }
+fact_types: []

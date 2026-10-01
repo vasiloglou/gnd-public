@@ -1,0 +1,315 @@
+# tests/fixtures/models/dispatch.orm.yaml
+# The UNFAMILIAR model (R-09''): a courier-dispatch domain authored fresh for
+# phase 02.1 plan 06, so that no earlier GND component has ever processed it.
+#
+# Why it exists: Phase 2's record is that every oracle defect surfaced via a
+# model the generator had not met, and the panel narrowed R-09 to "one model
+# the skills have never seen, exercising the `external`-mode reference path".
+# `delivery` is externally identified by the top-level external uniqueness
+# constraint over `role_refs`, so the matcher's COMPOSITE resolution path runs
+# on ground `refscheme.py` has never walked.
+#
+# Deliberate differences from full_vocabulary.orm.yaml, each with a reason:
+#   * NO `textual` constraint and NO derived subtype. Both emit `unchecked`
+#     verdicts, which park EVERY population at band 4 under D-08's precedence
+#     (3 > 1 > 4 > 2 > 0). full_vocabulary is structurally incapable of
+#     reaching exit 0 or exit 2 for exactly that reason (measured: its whole
+#     158-population corpus is bands 1 and 4 only), so the pass / vacuous /
+#     deontic-warning cells of the dogfood matrix have to live here.
+#   * NO `plural_ranges` / `date_range` value forms and no `Date` primitive
+#     (the F-05 residual bounds what synth/assemble can construct).
+#
+# Families covered: uniqueness (internal 1:n, internal spanning m:n, and the
+# EXTERNAL composite identifier), mandatory, value (enumeration + numeric
+# range), frequency (internal), exclusion.
+#
+# D-03-consistent modality defaults: explicit/user-supplied + confirmed ->
+# alethic; llm-inferred/common-sense + proposed -> deontic. Modality is
+# ALWAYS explicit.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: courier
+    name: Courier
+    kind: entity
+    reference: { mode: popular, value_type: courier_id }
+    provenance: { origin: fixture }
+
+  - id: courier_id
+    name: CourierId
+    kind: value
+    primitive: Integer
+
+  - id: courier_name
+    name: CourierName
+    kind: value
+    primitive: String
+
+  - id: depot
+    name: Depot
+    kind: entity
+    reference: { mode: popular, value_type: depot_code }
+
+  - id: depot_code
+    name: DepotCode
+    kind: value
+    primitive: String
+
+  - id: parcel
+    name: Parcel
+    kind: entity
+    reference: { mode: popular, value_type: parcel_code }
+
+  - id: parcel_code
+    name: ParcelCode
+    kind: value
+    primitive: String
+
+  # General-mode entity: identified by a name that is not a code.
+  - id: route
+    name: Route
+    kind: entity
+    reference: { mode: general, value_type: route_name }
+
+  - id: route_name
+    name: RouteName
+    kind: value
+    primitive: String
+
+  # Externally identified entity — its composite identifier is the top-level
+  # external uniqueness constraint below. This is R-09'''s live target.
+  - id: delivery
+    name: Delivery
+    kind: entity
+    reference: { mode: external }
+
+  - id: weight_kg
+    name: WeightKg
+    kind: value
+    primitive: Integer
+
+  - id: stop_count
+    name: StopCount
+    kind: value
+    primitive: Integer
+
+  - id: parcel_status
+    name: ParcelStatus
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: courier_has_name
+    reading: "{Courier} has {CourierName}"
+    roles:
+      - { object_type: courier, role_name: courier }
+      - { object_type: courier_name, role_name: name }
+    constraints:
+      - type: uniqueness
+        roles: [courier]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each courier is on the roster under exactly one name." }
+      - type: mandatory
+        role: courier
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A courier without a name on the roster is not a courier." }
+
+  - id: courier_based_at_depot
+    reading: "{Courier} is based at {Depot}"
+    roles:
+      - { object_type: courier, role_name: courier }
+      - { object_type: depot, role_name: depot }
+    constraints:
+      - type: uniqueness
+        roles: [courier]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A courier reports to one home depot." }
+
+  - id: route_starts_at_depot
+    reading: "{Route} starts at {Depot}"
+    roles:
+      - { object_type: route, role_name: route }
+      - { object_type: depot, role_name: depot }
+    constraints:
+      - type: uniqueness
+        roles: [route]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every route leaves from a single depot." }
+
+  # Spanning (m:n) uniqueness plus the internal frequency bound.
+  - id: courier_drives_route
+    reading: "{Courier} drives {Route}"
+    roles:
+      - { object_type: courier, role_name: courier }
+      - { object_type: route, role_name: route }
+    constraints:
+      - type: uniqueness
+        roles: [courier, route]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A courier is rostered onto a route once; no duplicate rosterings." }
+      - type: frequency
+        scope: internal
+        roles: [route]
+        bound: { min: 1, max: 3 }
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_note: "A route carries between one and three rostered couriers." }
+
+  - id: parcel_has_weight
+    reading: "{Parcel} weighs {WeightKg}"
+    roles:
+      - { object_type: parcel, role_name: parcel }
+      - { object_type: weight_kg, role_name: weight }
+    constraints:
+      - type: uniqueness
+        roles: [parcel]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One weigh-in per parcel." }
+
+  - id: parcel_has_status
+    reading: "{Parcel} has {ParcelStatus}"
+    roles:
+      - { object_type: parcel, role_name: parcel }
+      - { object_type: parcel_status, role_name: status }
+    constraints:
+      - type: uniqueness
+        roles: [parcel]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A parcel shows one current status." }
+
+  # The two fact types that jointly identify Delivery (external UC below).
+  - id: delivery_of_parcel
+    reading: "{Delivery} is of {Parcel}"
+    roles:
+      - { object_type: delivery, role_name: delivery }
+      - { object_type: parcel, role_name: parcel }
+    constraints:
+      - type: uniqueness
+        roles: [delivery]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A delivery carries one parcel." }
+      - type: mandatory
+        role: delivery
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A delivery cannot exist without its parcel." }
+
+  - id: delivery_on_route
+    reading: "{Delivery} is on {Route}"
+    roles:
+      - { object_type: delivery, role_name: delivery }
+      - { object_type: route, role_name: route }
+    constraints:
+      - type: uniqueness
+        roles: [delivery]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A delivery runs on one route." }
+
+  - id: delivery_by_courier
+    reading: "{Delivery} is handled by {Courier}"
+    roles:
+      - { object_type: delivery, role_name: delivery }
+      - { object_type: courier, role_name: courier }
+    constraints:
+      - type: uniqueness
+        roles: [delivery]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One courier owns a delivery end to end." }
+
+  - id: delivery_has_stop_count
+    reading: "{Delivery} made {StopCount} stops"
+    roles:
+      - { object_type: delivery, role_name: delivery }
+      - { object_type: stop_count, role_name: stops }
+    constraints:
+      - type: uniqueness
+        roles: [delivery]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One stop tally per delivery." }
+
+  # Unaries — the exclusion pair.
+  - id: courier_is_on_shift
+    reading: "{Courier} is on shift"
+    roles:
+      - { object_type: courier, role_name: courier }
+
+  - id: courier_is_off_duty
+    reading: "{Courier} is off duty"
+    roles:
+      - { object_type: courier, role_name: courier }
+
+constraints:
+  # uniqueness — EXTERNAL (the composite identifier for Delivery, R-09'')
+  - type: uniqueness
+    scope: external
+    role_refs:
+      - { fact_type: delivery_of_parcel, role: parcel }
+      - { fact_type: delivery_on_route, role: route }
+    preferred: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A delivery is identified by its parcel and its route together." }
+
+  # value — enumeration (object-type scope), ALETHIC
+  - type: value
+    object_type: parcel_status
+    allowed: ["pending", "in-transit", "delivered", "returned"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Status is one of pending, in-transit, delivered or returned." }
+
+  # value — numeric range (object-type scope), DEONTIC #1
+  - type: value
+    object_type: weight_kg
+    range: { min: 0, max: 30, min_inclusive: true, max_inclusive: true }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "A single courier lifts a parcel unaided, so parcel weight is capped at 30 kg."
+    provenance: { library_entry: liftable-parcel-weight, matched_pattern: "weight value type on a courier-carried parcel" }
+
+  # exclusion — DEONTIC #2
+  - type: exclusion
+    role_seq_a:
+      - { fact_type: courier_is_on_shift, role: courier }
+    role_seq_b:
+      - { fact_type: courier_is_off_duty, role: courier }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "No courier is simultaneously on shift and off duty."
+    provenance: { library_entry: exclusive-duty-state, matched_pattern: "on-shift/off-duty roles" }

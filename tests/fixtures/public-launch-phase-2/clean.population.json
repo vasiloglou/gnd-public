@@ -1,0 +1,22 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "label": "conforming",
+    "covers": [
+      "movie_has_title"
+    ]
+  },
+  "facts": {
+    "movie_has_title": [
+      {
+        "movie": 1,
+        "title": "North"
+      },
+      {
+        "movie": 2,
+        "title": "South"
+      }
+    ]
+  }
+}

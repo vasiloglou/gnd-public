@@ -1,0 +1,33 @@
+# Rejected by semantic:cross-ref — subset references role 'nonsmoker', which does
+# not exist on fact type 'person_smokes'.
+version: 1
+source: { kind: text-conversation }
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: person_smokes
+    reading: "{Person} smokes"
+    roles:
+      - { object_type: person, role_name: person }
+  - id: person_runs
+    reading: "{Person} runs"
+    roles:
+      - { object_type: person, role_name: person }
+constraints:
+  - type: subset
+    subset_role_seq:
+      - { fact_type: person_smokes, role: nonsmoker }
+    superset_role_seq:
+      - { fact_type: person_runs, role: person }
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: "Smokers who run — placeholder rationale for the fixture."
+    provenance: { library_entry: smoking-risk, matched_pattern: "smoker role subset" }

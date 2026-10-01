@@ -1,0 +1,21 @@
+# Synthetic public-launch approval fixture; not a recovered customer model.
+version: 1
+source: {kind: text-conversation}
+object_types:
+  - {id: movie, name: Movie, kind: entity, reference: {mode: popular, value_type: movie_id}}
+  - {id: movie_id, name: MovieId, kind: value, primitive: Integer}
+  - {id: title, name: Title, kind: value, primitive: String}
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles: [{object_type: movie, role_name: movie}, {object_type: title, role_name: title}]
+    constraints:
+      - {type: uniqueness, roles: [movie], source: user-supplied, status: confirmed, modality: alethic, provenance: {user_note: "Synthetic fixture: one title per movie."}}
+constraints:
+  - type: value
+    object_type: title
+    allowed: [North, South]
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: {user_note: "Synthetic fixture: only these two titles are allowed."}

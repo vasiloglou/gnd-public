@@ -1,0 +1,13 @@
+{
+  "status": "proposed-unexecuted",
+  "files": {
+    "README.md": "986022d51e8bfd2c1b60fce75ebdd19caea1c689e704afa58ee851be035b105d",
+    "answers.md": "016aba5d013af1649b17e859956c8ac11f3679cee93714ee52cc8c6aae7aea52",
+    "clean.population.json": "5a76778d231e4d65aa4cb9501f929f8e76084104908ada9c08fa6ecf77d0ecd1",
+    "empty.population.json": "398e9f8e2df970df15db33102d122b8065cb7e1c6e608156f326fbc5340f2e73",
+    "invalid.orm.yaml": "3c3ad08cd83dec31fe5e3a898b5438bc01cd616786b746aec1c810194973f76c",
+    "model.orm.yaml": "2d230fd677acbad32764b1465ed8e706dd76df7c8456a89a0010385ac5725881",
+    "textual.orm.yaml": "f481dcfed1728d7daf42c130d5412f2b399d47b07aab5d4c2341f37a764e92d8",
+    "violation.population.json": "c191d9889cc7fd2bcbd0a12cff9df18e26b7bc34e876456fc688fbce42d76aed"
+  }
+}

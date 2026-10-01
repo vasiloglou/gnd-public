@@ -1,0 +1,13 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "label": "boundary",
+    "covers": [
+      "movie_has_title"
+    ]
+  },
+  "facts": {
+    "movie_has_title": []
+  }
+}

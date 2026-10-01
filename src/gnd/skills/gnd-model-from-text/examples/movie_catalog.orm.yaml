@@ -1,0 +1,155 @@
+# examples/movie_catalog.orm.yaml
+# Reference solution for the canonical small text-first CSDP run.
+# See movie_catalog.dialogue.md for the full dialogue this YAML traces back to.
+# GND form: every active constraint carries an explicit modality per the D-03 policy
+# (all constraints here are confirmed -> alethic).
+
+version: 1
+
+source:
+  kind: text-conversation
+  session_id: movie_catalog_demo
+  started_at: "2026-05-14T10:00:00Z"
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+    provenance:
+      origin: csdp-step-1
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "Each movie has a unique numeric ID, we generate them on creation."
+
+  - id: director
+    name: Director
+    kind: entity
+    reference: { mode: general, value_type: director_name }
+    provenance:
+      origin: csdp-step-1
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "Directors are identified by their full name — we don't have a separate ID system for them."
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: director_name
+    name: DirectorName
+    kind: value
+    primitive: String
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+    provenance:
+      origin: csdp-step-1
+      rationale: "Declared value type for the movie title role (roles may only reference declared object types)."
+
+  - id: year
+    name: Year
+    kind: value
+    primitive: Integer
+
+  - id: rating
+    name: Rating
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: title, role_name: title }]
+    sample_population:
+      - { movie: 1, title: "The Departed" }
+      - { movie: 2, title: "Inception" }
+      - { movie: 3, title: "Parasite" }
+    provenance: { csdp_step: 1, dialogue_turn: 4 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 18, user_quote: "Each Movie has one canonical title in our catalog." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 24, user_quote: "Yes." } }
+
+  - id: movie_directed_by_director
+    reading: "{Movie} directed by {Director}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: director, role_name: director }]
+    sample_population:
+      - { movie: 1, director: "Martin Scorsese" }
+      - { movie: 2, director: "Christopher Nolan" }
+      - { movie: 3, director: "Bong Joon-ho" }
+    provenance: { csdp_step: 1, dialogue_turn: 5 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 20, user_quote: "We pick one director for co-directed films. So yes, one Director per Movie." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 25, user_quote: "Yes. We don't catalog Movies without a director credit." } }
+
+  - id: movie_released_in_year
+    reading: "{Movie} released in {Year}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: year, role_name: year }]
+    sample_population:
+      - { movie: 1, year: 2006 }
+      - { movie: 2, year: 2010 }
+      - { movie: 3, year: 2019 }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 22, user_quote: "Yes." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 26, user_quote: "Required." } }
+
+  - id: movie_has_rating
+    reading: "{Movie} has rating {Rating}"
+    roles: [{ object_type: movie, role_name: movie }, { object_type: rating, role_name: rating }]
+    sample_population:
+      - { movie: 1, rating: "R" }
+      - { movie: 2, rating: "PG-13" }
+      - { movie: 3, rating: "R" }
+    constraints:
+      - { type: uniqueness, roles: [movie], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 23, user_quote: "Yes." } }
+      - { type: mandatory, role: movie, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 27, user_quote: "Required." } }
+
+constraints:
+  - type: value
+    object_type: rating
+    allowed: ['G', 'PG', 'PG-13', 'R', 'NC-17']
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "MPAA rating system; user specified the full allowed set."
+    provenance:
+      csdp_step: 1
+      dialogue_turn: 4
+      user_quote: "MPAA ratings only — we use the five-tier system: G, PG, PG-13, R, NC-17."
+
+  - type: value
+    object_type: year
+    range: { min: 1888, max: 2100, min_inclusive: true, max_inclusive: true }
+    source: llm-inferred
+    status: confirmed
+    modality: alethic
+    rationale: "1888 is the year the first known movie was made; 2100 is a generous upper cap (user-extended from current_year). Alethic is permitted here per D-03 because the user confirmed the constraint at Step 6d."
+    provenance:
+      llm_prompt_id: movie-year-range
+      rationale_world_fact: "Roundhay Garden Scene (1888) is widely cited as the first surviving motion picture; 2100 covers any plausible upcoming release."
+      reviewed_at_step_6d: true
+      csdp_step: 6
+      dialogue_turn: 32
+      user_quote: "Use 2100 as a far-future cap rather than current_year."
+
+rejected_proposals:
+  - type: uniqueness
+    status: rejected
+    scope: external
+    role_refs:
+      - { fact_type: movie_directed_by_director, role: director }
+      - { fact_type: movie_released_in_year, role: year }
+    source: common-sense
+    rationale: "Soft heuristic: same Director doesn't typically direct two movies in the same year."
+    rejection_reason: "User cited Steven Soderbergh as a counter-example: 'Soderbergh directed two movies in 2018... he's done several.'"
+    rejected_at: "2026-05-14"
+    provenance:
+      library_entry: director-year-uniqueness
+      matched_pattern: "director/movie/year role combination"
+      csdp_step: 6
+      dialogue_turn: 35

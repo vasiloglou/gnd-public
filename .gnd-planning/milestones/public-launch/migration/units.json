@@ -1,0 +1,1010 @@
+{
+  "schema_version": 1,
+  "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+  "source_acceptance_commit": "9b3da000aaf938435d700d16a1f23597d9e77645",
+  "batch": "B1",
+  "authority_transfer": false,
+  "publisher_enabled": false,
+  "units": [
+    {
+      "id": "runtime",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "adapt-reviewed",
+      "tracked_files": 230,
+      "tracked_bytes": 5537456,
+      "dependencies": [
+        "legacy-assurance"
+      ]
+    },
+    {
+      "id": "test-acceptance",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "adapt-reviewed",
+      "tracked_files": 2994,
+      "tracked_bytes": 17449632,
+      "dependencies": [
+        "runtime",
+        "historical-examples",
+        "historical-tooling",
+        "private-consumer-fixtures",
+        "historical-test-support",
+        "restricted-history",
+        "development-kit"
+      ]
+    },
+    {
+      "id": "development-kit",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "adapt-reviewed",
+      "tracked_files": 49,
+      "tracked_bytes": 157138,
+      "dependencies": [
+        "runtime"
+      ]
+    },
+    {
+      "id": "project-shell",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "adapt-reviewed",
+      "tracked_files": 13,
+      "tracked_bytes": 209450,
+      "dependencies": [
+        "runtime",
+        "test-acceptance",
+        "development-kit"
+      ]
+    },
+    {
+      "id": "starter-examples",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "adapt-reviewed",
+      "tracked_files": 24,
+      "tracked_bytes": 32688,
+      "dependencies": [
+        "runtime"
+      ]
+    },
+    {
+      "id": "legacy-assurance",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "archive-with-claim-map",
+      "tracked_files": 4001,
+      "tracked_bytes": 29528957,
+      "dependencies": []
+    },
+    {
+      "id": "historical-examples",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "archive-with-claim-map",
+      "tracked_files": 1392,
+      "tracked_bytes": 12928163,
+      "dependencies": []
+    },
+    {
+      "id": "historical-tooling",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "archive-with-claim-map",
+      "tracked_files": 759,
+      "tracked_bytes": 6675916,
+      "dependencies": []
+    },
+    {
+      "id": "restricted-history",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "excluded-private",
+      "tracked_files": 120211,
+      "tracked_bytes": 1067030800,
+      "dependencies": []
+    },
+    {
+      "id": "private-consumer-fixtures",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "excluded-private",
+      "tracked_files": 30,
+      "tracked_bytes": 324977,
+      "dependencies": []
+    },
+    {
+      "id": "restricted-vendored-panel",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "excluded-private",
+      "tracked_files": 4,
+      "tracked_bytes": 34676,
+      "dependencies": []
+    },
+    {
+      "id": "historical-test-support",
+      "authority": "vasiloglou/gnd",
+      "state": "source-owned",
+      "classification": "archive-with-claim-map",
+      "tracked_files": 4,
+      "tracked_bytes": 7903289,
+      "dependencies": []
+    }
+  ],
+  "question_states": [
+    {
+      "id": "OQ-CLOSE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-CLOSE-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-CLOSE-3",
+      "state": "superseded"
+    },
+    {
+      "id": "OQ-CLOSE-V3-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-CLOSE-V3-2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-CLOSE-V3-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-CLOSE-V4-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-CLOSE-V4-2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-CLOSE-V4-3",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-CLOSE-V4-4",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P1-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P1-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P1-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P1-4",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P1-5",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P1-CORPUS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P2-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P2-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P2-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P2-PLAN-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-4",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-5",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-DEP-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P3-DUP-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-IDS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-NAME-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P3-PANEL-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-PANEL-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-PANEL-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P3-QWEN-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4",
+      "state": "superseded"
+    },
+    {
+      "id": "OQ-P4-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-4",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-5",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-CLONE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P4-FIDELITY-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P4-FLAKY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-NODEID-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P4-OPEN-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P4-PANEL-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-PANEL-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P4-PATH-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P5-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P5-2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P5-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P5-4",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P5-5",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P5-D08-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P5-SEMANTICS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P6",
+      "state": "superseded"
+    },
+    {
+      "id": "OQ-P6-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P6-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P6-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-P6-4",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P6-5",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-P6-6",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-CLOSE-DOGFOOD-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-CLOSE-EXTRACT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-CLOSE-PANEL-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-CLOSE-PANEL-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V5-COVERS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-GATE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P1-BIND-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P1-DIGEST-DRIFT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P1-FM01-DIGEST-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P1-REGISTRY-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P1-SD1-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P1-WALLCLOCK-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P3-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V5-P3-2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P3-3",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P3-4",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P4-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P4-2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-P4-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V5-P4-4",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V5-PANEL-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V5-PANEL-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V5-PANEL-3",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-CLAUDE-SEAT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P1-BIND-28-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P1-BUDGET-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P1-CHANGESET-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P1-D06-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P1-PATHDEP-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P2-HEADER-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P2-PANEL-NOTE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P2-PLAN-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3-JSONEMIT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3-PLAN-COUNT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3-PLAN-COVERAGE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3-PLAN-SKILLS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3-PREPHASE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3-TRANSITION-JSON-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P3-VERSIONTYPE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P3-WALL-PROBE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V51-P3B-AUDIT200-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3B-CLOSESCOPE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3B-LINKCOUNT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3B-CANONJSON-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3B-CENSUS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3B-STATE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-P3B-SELFROUTE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-R2-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V51-SKILLPIN-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V52-P1-INTERP-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V52-P1-CENSUS-TAX-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V52-P1-IMPORTWALK-1",
+      "state": "open"
+    },
+    {
+      "id": "OQ-V52-P1-PARTITION-1",
+      "state": "open"
+    },
+    {
+      "id": "OQ-V52-P1-TEXTUAL-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V52-P1-DECLINES-1",
+      "state": "open"
+    },
+    {
+      "id": "OQ-V52-P3-SOURCE-BIND-1",
+      "state": "open"
+    },
+    {
+      "id": "OQ-V52-CLOSE-CANONJSON-1",
+      "state": "open"
+    },
+    {
+      "id": "OQ-V52-CLOSE-TIMEREL-1",
+      "state": "open"
+    },
+    {
+      "id": "OQ-V60-P1-ROUTE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P1-ASSUMPTIONS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P1-BUDGET-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P1-TOOLCAPS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P1-ASSURANCE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P1-COMPOSERS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P1-REPRSORT-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P2B-REFUSAL-PRECISION-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P25-CLOSURE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P25-EVIDENCE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P25-LAUNCH-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P25-STATUS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P25-WALL-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P2-SCALE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P2-WITNESS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P2-TRUST-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P2-FORECAST-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P3-GUARD-GRANULARITY",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P3-TIMING-ATTESTATION",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-R5-REPAIR-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P4-INHERITANCE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V60-P7-AMD64-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P7-MACOS-ISOLATION-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V60-P7-BASELINE-RULE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-RELSTORE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-COMPOSITE-REF-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-PYREL-GUARDED-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-P1-CONTRACT-CLOSURE",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-P1-MUTATION-DELTA",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-P1-RSS",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V61-P2-TEXT-OWNERSHIP",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-PROOF-COVERAGE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-FLOAT-PARITY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-TERM-SITES-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-EXTERNAL-RECEIPT-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-CORPUS-REGRESSION-GATE",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-RECERTIFICATION",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-PROOF-COVERAGE-2",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-CERTIFICATION-2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-PROOF-COVERAGE-3",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-CERTIFICATION-3",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-P4-PARITY-PLAN-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-P4-HYGIENE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P5-PARITY-RECEIPT-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P5-INSTALLED-WHEEL-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-FLOATS-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V62-CORR-SHAPES-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-SCOPE-POLICY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-DYNAMIC-PARTIAL-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-V61-LANE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-BRANCH-META-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-SYNTH-MEASURE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-NOTE-LEAK-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-GATE-TESTS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-SUCCESSOR-SOURCE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-P8-HARNESS-HARDENING-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V61-CLOSE-MATRIX-SETUP-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V61-CLOSE-ADAPTER-POLICY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-CLOSE-CAPABILITY-FLAGS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V62-CLOSE-REASON-EVENTS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-NORMALISE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-MODEL-CALLS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-PARSE-CODES-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-DOC-RECALL-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-ANCHOR-RECOGNISER-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-ENTAILMENT-GENERAL-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-V71-HANDOFF-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P2-N04",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P2-NATIVE-AGGREGATE",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V70-P2-EVALUATOR-UNIFICATION",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P3-W4-SCHEMA",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P4-JOIN-CONSOLIDATION",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P6-MODEL-READER",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P7-C4",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P7-CROSSWALK",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-P8-BROAD-GATES",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V70-CLOSE-BROAD-REDS",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-SPEND-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-LEAN-DISCHARGE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-CALENDAR-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-CERTIFICATE-FRAGMENTS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-EXPORT-FRAGMENTS-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-PRIVACY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-INMEMORY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V71-P4-H1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V71-P4-H2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V71-P4-R1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V71-P4-R2",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V71-P4-G1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V72-P1-ARTIFACT-COPIES",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-XDIST-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-PIN-POLICY-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-REPLAY-RECEIPT-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-EVIDENCE-SIZE-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-P3-CADENCE-PLAN-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V63-P2-SOURCE-GATE-1",
+      "state": "closed"
+    },
+    {
+      "id": "OQ-V63-P4-DENOMINATOR-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-P6-ROLLBACK-LOCATION-1",
+      "state": "carried"
+    },
+    {
+      "id": "OQ-V63-CLOSE-HELPER-TAIL-1",
+      "state": "carried"
+    }
+  ]
+}

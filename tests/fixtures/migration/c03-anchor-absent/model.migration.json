@@ -1,0 +1,86 @@
+{
+  "framework": "gsd",
+  "mapping": [
+    {
+      "anchor": "An event has exactly one kind.",
+      "artifact": "base/REQUIREMENTS.md",
+      "closed": true,
+      "disposition": "model-element",
+      "id": "CORE-01",
+      "model_elements": [
+        {
+          "id": "c_event_kind_unique",
+          "kind": "constraint"
+        },
+        {
+          "id": "event_has_kind",
+          "kind": "fact_type"
+        }
+      ]
+    },
+    {
+      "anchor": "Every event names the actor that raised it, and never more than one.",
+      "artifact": "base/REQUIREMENTS.md",
+      "closed": true,
+      "disposition": "model-element",
+      "id": "CORE-02",
+      "model_elements": [
+        {
+          "fact_type": "event_has_actor",
+          "index": 0,
+          "kind": "constraint"
+        },
+        {
+          "fact_type": "event_has_actor",
+          "index": 1,
+          "kind": "constraint"
+        }
+      ]
+    },
+    {
+      "anchor": "Recording an event changes nothing but that event's own facts.",
+      "artifact": "base/REQUIREMENTS.md",
+      "closed": true,
+      "disposition": "model-element",
+      "id": "CORE-03",
+      "model_elements": [
+        {
+          "id": "record_event",
+          "kind": "operation"
+        }
+      ]
+    },
+    {
+      "anchor": "Events can be amended after the fact",
+      "artifact": "base/REQUIREMENTS.md",
+      "closed": false,
+      "disposition": "open-question",
+      "id": "CORE-04"
+    },
+    {
+      "anchor": "Cross-project event search",
+      "artifact": "base/REQUIREMENTS.md",
+      "closed": false,
+      "disposition": "superseded",
+      "id": "CORE-05"
+    }
+  ],
+  "model": {
+    "path": "base/v2_migration_corpus.orm.yaml",
+    "sha256": "3b8976b0318d17f2b04518c5729b9bfaafd89b13ad1c058c90aa94e4a897fc85"
+  },
+  "not_carried": [
+    {
+      "count": 12,
+      "kind": "phase plan files",
+      "note": "narrative history; not carried, stated"
+    }
+  ],
+  "roots": [
+    {
+      "path": "base/REQUIREMENTS.md",
+      "sha256": "7602a024f78885bab783a916aa58b3195e48b7903297d72570d79bbcef894484"
+    }
+  ],
+  "schema_version": 1
+}

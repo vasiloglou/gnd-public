@@ -1,0 +1,116 @@
+# tests/fixtures/migration/base/model.orm.yaml
+#
+# The corpus model. Small on purpose, and shaped by ONE requirement: every
+# element-reference form A5 must resolve has to be present, and so does at
+# least one element that CANNOT be named by a declared id.
+#
+# Constraints are the reason this model exists in this shape. `id` is OPTIONAL
+# on a constraint (orm-meta.schema.json, $defs/constraint_common requires only
+# type/source/status/modality), and every constraint in every other committed
+# fixture omits it. A migration that could only name declared ids would be
+# unable to address the bulk of any real model -- which is exactly what panel
+# round 1 found (P-4). So:
+#
+#   * `event_has_kind` carries a constraint WITH a declared id (c_event_kind_unique)
+#   * `event_has_actor` carries two constraints with NO id, addressable only
+#     positionally, at index 0 and index 1
+#
+# Index 1 matters as much as index 0: a resolver that always reads the first
+# constraint would pass a corpus that only ever addressed index 0.
+
+version: 2
+
+model_id: urn:gnd-fixture:migration-corpus@1
+
+source:
+  kind: codebase
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: event
+    name: Event
+    kind: entity
+    reference: { mode: popular, value_type: event_id }
+
+  - id: event_id
+    name: EventId
+    kind: value
+    primitive: String
+
+  - id: event_kind
+    name: EventKind
+    kind: value
+    primitive: String
+
+  - id: actor
+    name: Actor
+    kind: entity
+    reference: { mode: popular, value_type: actor_id }
+
+  - id: actor_id
+    name: ActorId
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: event_has_kind
+    reading: "{Event} has kind {EventKind}"
+    roles:
+      - { object_type: event, role_name: event }
+      - { object_type: event_kind, role_name: kind }
+    constraints:
+      - id: c_event_kind_unique
+        type: uniqueness
+        scope: internal
+        roles: [event]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "An event has exactly one kind."
+
+  - id: event_has_actor
+    reading: "{Event} was raised by {Actor}"
+    roles:
+      - { object_type: event, role_name: event }
+      - { object_type: actor, role_name: actor }
+    constraints:
+      - type: uniqueness
+        scope: internal
+        roles: [event]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "One event, one actor."
+      - type: mandatory
+        role: event
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "Every event names who raised it."
+
+operations:
+  - id: record_event
+    reading: "{Event} was raised by {Actor}"
+    parameters:
+      - { name: event, object_type: event }
+      - { name: kind,  object_type: event_kind }
+      - { name: actor, object_type: actor }
+    effects:
+      - create: { object_type: event, param: event }
+      - assert: { fact_type: event_has_kind,
+                  bind: { event: "$event", kind: "$kind" } }
+      - assert: { fact_type: event_has_actor,
+                  bind: { event: "$event", actor: "$actor" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 7, user_quote: "Recording an event changes nothing else." }

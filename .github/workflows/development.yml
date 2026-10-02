@@ -23,6 +23,7 @@ jobs:
         run: >-
           uv run pytest -q
           tests/test_address.py
+          tests/test_adopt_migration.py
           tests/test_archsmoke.py
           tests/test_artifacts.py
           tests/test_atom_bind.py
@@ -39,7 +40,17 @@ jobs:
           tests/test_doccheck.py
           tests/test_doctor_uninstall.py
           tests/test_evolution_conformance.py
+          tests/test_exp_bands.py
+          tests/test_exp_close.py
+          tests/test_exp_close_codegen_gate.py
+          tests/test_exp_close_work_gate.py
+          tests/test_exp_frontmatter.py
+          tests/test_exp_paths.py
+          tests/test_exp_session_contract.py
           tests/test_exp_session_e2e.py
+          tests/test_exp_session_eval.py
+          tests/test_exp_session_store.py
+          tests/test_exp_spec.py
           tests/test_extract_cli.py
           tests/test_extract_manifest.py
           tests/test_fidelity_payload.py
@@ -60,7 +71,9 @@ jobs:
           tests/test_public_installer.py
           tests/test_public_migration.py
           tests/test_pyrel_export_boundaries.py
+          tests/test_recovery_adversarial.py
           tests/test_recovery_inventory.py
+          tests/test_recovery_report.py
           tests/test_report_json.py
           tests/test_review_report.py
           tests/test_review_request.py

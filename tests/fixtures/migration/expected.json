@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "cases": {
+    "c01-clean": {
+      "exit": 0,
+      "assertion": null,
+      "stdout_last_line": "model-elements: 3"
+    },
+    "c02-root-digest-drift": {
+      "exit": 1,
+      "assertion": "A1",
+      "message_names": "base/REQUIREMENTS.md",
+      "assertions": [
+        "A1"
+      ]
+    },
+    "c03-anchor-absent": {
+      "exit": 1,
+      "assertion": "A2c",
+      "message_names": "CORE-01",
+      "assertions": [
+        "A2c"
+      ]
+    },
+    "c04-anchor-empty": {
+      "exit": 1,
+      "assertion": "A2b",
+      "message_names": "CORE-01",
+      "assertions": [
+        "A2b"
+      ]
+    },
+    "c05-anchor-whitespace": {
+      "exit": 1,
+      "assertion": "A2b",
+      "message_names": "CORE-01",
+      "assertions": [
+        "A2b"
+      ]
+    },
+    "c06-artifact-unpinned": {
+      "exit": 1,
+      "assertion": "A2a",
+      "message_names": "base/v2_migration_corpus.orm.yaml",
+      "assertions": [
+        "A2a"
+      ]
+    },
+    "c07-id-undisposed": {
+      "exit": 1,
+      "assertion": "A3",
+      "message_names": "CORE-05",
+      "assertions": [
+        "A3"
+      ]
+    },
+    "c08-id-disposed-twice": {
+      "exit": 1,
+      "assertion": "A3",
+      "message_names": "CORE-04",
+      "assertions": [
+        "A3"
+      ]
+    },
+    "c09-id-unknown": {
+      "exit": 1,
+      "assertion": "A3",
+      "message_names": "CORE-99",
+      "assertions": [
+        "A3"
+      ]
+    },
+    "c10-unclosed-history": {
+      "exit": 1,
+      "assertion": "A4",
+      "message_names": "CORE-04",
+      "assertions": [
+        "A4"
+      ]
+    },
+    "c11-element-absent": {
+      "exit": 1,
+      "assertion": "A5",
+      "message_names": "delete_event",
+      "assertions": [
+        "A5"
+      ]
+    },
+    "c12-element-wrong-kind": {
+      "exit": 1,
+      "assertion": "A5",
+      "message_names": "operation",
+      "assertions": [
+        "A5"
+      ]
+    },
+    "c13-constraint-positional-only": {
+      "exit": 0,
+      "assertion": null,
+      "stdout_last_line": "model-elements: 3"
+    },
+    "c14-constraint-index-out-of-range": {
+      "exit": 1,
+      "assertion": "A5",
+      "message_names": "index 2",
+      "assertions": [
+        "A5"
+      ]
+    },
+    "c15-no-model-elements": {
+      "exit": 1,
+      "assertion": "A6",
+      "message_names": "model-elements: 0",
+      "assertions": [
+        "A6"
+      ]
+    },
+    "c16-id-source-redirect": {
+      "exit": 3,
+      "assertion": "A0",
+      "message_names": "requirements_artifact"
+    },
+    "c17-multi-violation": {
+      "exit": 1,
+      "assertion": "A1",
+      "first_reported": "A1",
+      "assertions": [
+        "A1",
+        "A2b",
+        "A4"
+      ]
+    },
+    "c18-empty-model-elements": {
+      "exit": 1,
+      "assertion": "A5",
+      "message_names": "CORE-03",
+      "assertions": [
+        "A5"
+      ]
+    },
+    "c19-closed-flag-lie": {
+      "exit": 1,
+      "assertion": "A3b",
+      "message_names": "CORE-04",
+      "assertions": [
+        "A3b"
+      ]
+    },
+    "c20-model-digest-drift": {
+      "exit": 1,
+      "assertion": "A1",
+      "message_names": "base/v2_migration_corpus.orm.yaml",
+      "assertions": [
+        "A1"
+      ]
+    },
+    "c21-disposition-unknown": {
+      "exit": 3,
+      "assertion": "A0",
+      "message_names": "parked"
+    },
+    "c22-positional-bogus-fact-type": {
+      "exit": 1,
+      "assertion": "A5",
+      "message_names": "no_such_fact_type",
+      "assertions": [
+        "A5"
+      ]
+    },
+    "c23-requirements-not-in-roots": {
+      "exit": 1,
+      "assertion": "A2a",
+      "message_names": "base/REQUIREMENTS.md",
+      "assertions": [
+        "A2a"
+      ]
+    },
+    "c24-not-json": {
+      "exit": 3,
+      "assertion": "A0",
+      "message_names": "not JSON"
+    },
+    "c25-nan-constant": {
+      "exit": 3,
+      "assertion": "A0"
+    },
+    "c26-top-level-list": {
+      "exit": 3,
+      "assertion": "A0"
+    },
+    "c27-infinity-constant": {
+      "exit": 3,
+      "assertion": "A0"
+    },
+    "c28-root-escape": {
+      "exit": 3,
+      "assertion": "A0",
+      "message_names": "../outside.md"
+    },
+    "c29-absolute-path": {
+      "exit": 3,
+      "assertion": "A0",
+      "message_names": "/etc/hosts"
+    },
+    "c30-order-a2-before-a3": {
+      "exit": 1,
+      "assertion": "A2b",
+      "assertions": [
+        "A2b",
+        "A3"
+      ],
+      "first_reported": "A2b"
+    }
+  },
+  "declared_assertions": [
+    "A0",
+    "A1",
+    "A2a",
+    "A2b",
+    "A2c",
+    "A3",
+    "A3b",
+    "A4",
+    "A5",
+    "A6"
+  ],
+  "generated_not_committed": {
+    "A0": [
+      {
+        "label": "cap-plus-one",
+        "exit": 3
+      },
+      {
+        "label": "cap-on-read-byte-count",
+        "exit": 3,
+        "observable": "bytes_read"
+      },
+      {
+        "label": "aggregate-cap",
+        "exit": 3
+      },
+      {
+        "label": "artifact-count-cap",
+        "exit": 3
+      },
+      {
+        "label": "deep-nesting",
+        "exit": 3
+      },
+      {
+        "label": "long-integer-literal",
+        "exit": 3
+      }
+    ]
+  }
+}

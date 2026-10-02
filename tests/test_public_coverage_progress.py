@@ -13,7 +13,7 @@ MIGRATION = ROOT / ".gnd-planning/milestones/public-launch/migration"
 
 
 def reviewed_rows():
-    return tuple(row for name in ('b3-extra', 'b3-initial', 'b3-reviewed', 'b4-artifacts', 'b4-core', 'b4-population', 'b4-synth', 'b4-transition', 'b5-codegen', 'b5-install-conformance', 'b5-terms', 'b6-doctor', 'b6-reports')
+    return tuple(row for name in ('b3-extra', 'b3-initial', 'b3-reviewed', 'b4-artifacts', 'b4-core', 'b4-population', 'b4-synth', 'b4-transition', 'b5-codegen', 'b5-install-conformance', 'b5-terms', 'b6-doctor', 'b6-recovery', 'b6-reports', 'b6-sessions')
                  for row in load_case_map(MIGRATION / f"{name}-case-map.jsonl.gz"))
 
 
@@ -39,22 +39,30 @@ def test_progress_retains_unresolved_cases_and_refuses_handoff():
     rows = reviewed_rows()
     originals = original_identities()
     progress = json.loads((MIGRATION / "progress.json").read_text())
-    assert len(rows) == len({row["source_node"] for row in rows}) == 1228
+    assert len(rows) == len({row["source_node"] for row in rows}) == 1599
     assert {row["source_node"] for row in rows} <= set(originals)
     assert progress["reviewed_dispositions"] == len(rows)
-    assert progress["unresolved_definitions"] == len(originals) - len(rows) == 4103
+    assert progress["unresolved_definitions"] == len(originals) - len(rows) == 3732
     assert progress["status"] == "incomplete"
     assert progress["handoff_authorized"] is False
+    collection = json.loads((MIGRATION / "collection.json").read_text())
+    selected = {item["node"] for item in collection["selected"]}
+    observed = selected | {item["node"] for item in collection["deselected"]}
+    assert all(set(row["target_nodes"]) <= selected for row in rows
+               if row["selection"] == "default")
     validate_case_map(rows, originals={row["source_node"]: originals[row["source_node"]]
-                                     for row in rows},
-                      collected={node for row in rows for node in row["target_nodes"]})
+                                     for row in rows}, collected=observed)
 
 
 def test_static_target_selectors_resolve_to_actual_test_definitions():
     import ast
+    definitions = {}
     for row in reviewed_rows():
         for node in row["target_nodes"]:
             relative, name = node.split("::")
             name = name.split("[", 1)[0]
-            tree = ast.parse((ROOT / relative).read_text())
-            assert name in {item.name for item in tree.body if isinstance(item, ast.FunctionDef)}
+            if relative not in definitions:
+                tree = ast.parse((ROOT / relative).read_text())
+                definitions[relative] = {item.name for item in tree.body
+                                         if isinstance(item, ast.FunctionDef)}
+            assert name in definitions[relative]

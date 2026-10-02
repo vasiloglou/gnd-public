@@ -1,5 +1,5 @@
 {
-  "scope": "P3 reviewed subset through additional batch 3 in progress and owner-approved batch 2 CI performance amendment; acceptance incomplete",
+  "scope": "P3 reviewed subset through approved additional batch 3 in progress; acceptance incomplete",
   "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
   "source_high_water": "d8ac975e080a428fd7e32aea493cad722e54f7d1",
   "target_baseline": "8ab28f2501a0d0fdb392dd324eca694f9448b907",
@@ -497,8 +497,8 @@
       "path": ".github/workflows/development.yml",
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
-      "bytes": 3502,
-      "public_sha256": "be209880216c5d7afdc1075e0cf9879bc865e3b59dcc21c5ab2bac219e08aa55",
+      "bytes": 4021,
+      "public_sha256": "11d406290c88b652abb01e20f6f586e2a2e8d50c3ce8af3d8911cdff6d48b8d1",
       "mode": 420,
       "baseline_sha256": "af43e3d35763ef8eb928361589399c7402eb1afefe5e4516e6354abc93e15646"
     },
@@ -908,6 +908,33 @@
       "mode": 420
     },
     {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-recovery-case-map.jsonl.gz",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "332c7fad466e1f6649e7e8dce6a2bef3fa6b5855c13bd0a86b4bad3605aa6417",
+      "bytes": 6896,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-recovery-content-review.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "d9922c34d468a7341cc61d9597c5536d666d5836fc6dcb99c17f60c0b310f551",
+      "bytes": 17079,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-recovery-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "6cede8299580019253f1ce2a69aec13873bdd846e9a7a94e04262db551036ab0",
+      "bytes": 8011,
+      "mode": 420
+    },
+    {
       "path": ".gnd-planning/milestones/public-launch/migration/b6-reports-case-map.jsonl.gz",
       "kind": "authored",
       "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
@@ -935,12 +962,39 @@
       "mode": 420
     },
     {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-sessions-case-map.jsonl.gz",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "6021a5b1bcaf6844c868385c477247963d0c27bfc547bb10e4841cf9cf51832e",
+      "bytes": 14956,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-sessions-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "dc649a87a319e7ff3ae01a9cc9771159fa6d6bc13c0e65edbb33ae1119bff05e",
+      "bytes": 8522,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-sessions-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "df44865ca91a92f02643fce9f30c3c45cbbe07570db35ec4f4a11144f5dea0d0",
+      "bytes": 25756,
+      "mode": 420
+    },
+    {
       "path": ".gnd-planning/milestones/public-launch/migration/collection.json",
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 368544,
-      "public_sha256": "fa4443459808b4ecf04cd3a1effab0a982240ed6f60ae7b25590146a25662de8",
+      "bytes": 595232,
+      "public_sha256": "003bee664980ccb5a2cc3f9e8db7e87a6b1a9aefb19aaa3a3bf014094befa955",
       "mode": 420
     },
     {
@@ -994,7 +1048,7 @@
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
       "bytes": 493,
-      "public_sha256": "f18fce487ef629db4efeedd0c0f988d051ccd0faad8add2804667805932ee7b9",
+      "public_sha256": "212c9ef159d5db2a7b40b6a8af0b4091e0df127cad8b62f11e41bee975045abf",
       "mode": 420
     },
     {
@@ -4769,6 +4823,321 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/migration/README.md",
+      "kind": "adaptation",
+      "reason": "Independently authored generic fixture description; private spec/record/panel chronology retained source-only. Same consumer and assertion branches.",
+      "baseline_sha256": "abeb689e4c73c3e00b28fa3370f9f12a7f64fc621fe5f7aa071dd826f0890816",
+      "public_sha256": "5a5317b9154bfb0874bf134a7c330a415a5965b004d19281524a7a0a79548433",
+      "bytes": 905,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/base/EMPTY.md",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a3aba14aea7a259c5c916a9f32301b8eb9c1812fbcfbbf53009971a55acceb42",
+      "public_sha256": "a3aba14aea7a259c5c916a9f32301b8eb9c1812fbcfbbf53009971a55acceb42",
+      "bytes": 56,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/base/REQUIREMENTS.md",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "7602a024f78885bab783a916aa58b3195e48b7903297d72570d79bbcef894484",
+      "public_sha256": "7602a024f78885bab783a916aa58b3195e48b7903297d72570d79bbcef894484",
+      "bytes": 1150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/base/v2_migration_corpus.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "3b8976b0318d17f2b04518c5729b9bfaafd89b13ad1c058c90aa94e4a897fc85",
+      "public_sha256": "3b8976b0318d17f2b04518c5729b9bfaafd89b13ad1c058c90aa94e4a897fc85",
+      "bytes": 3469,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c01-clean/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "bfdd689a6655cbb760f7933bc1b92f7aa4f3d5a26b181f52a612416a69f2701e",
+      "public_sha256": "bfdd689a6655cbb760f7933bc1b92f7aa4f3d5a26b181f52a612416a69f2701e",
+      "bytes": 2150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c02-root-digest-drift/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0706fd69aebbd46d4649f613330d2a5dac3adbc19605b3e5c1d4bec12977e221",
+      "public_sha256": "0706fd69aebbd46d4649f613330d2a5dac3adbc19605b3e5c1d4bec12977e221",
+      "bytes": 2150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c03-anchor-absent/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "24f09b0f7c469d4fa68761279edaed9fa3c1e675ccb4479552770ebff7442b1f",
+      "public_sha256": "24f09b0f7c469d4fa68761279edaed9fa3c1e675ccb4479552770ebff7442b1f",
+      "bytes": 2109,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c04-anchor-empty/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "1f4771fb7d3ee77e0400b6a7696ba6c258e5899e149a94a6ccbe9a05c94bb498",
+      "public_sha256": "1f4771fb7d3ee77e0400b6a7696ba6c258e5899e149a94a6ccbe9a05c94bb498",
+      "bytes": 2079,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c05-anchor-whitespace/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "dc8b9cf824992466e5c174af2fc5f8e08faae914733f73d4ebf6094bc975b9fc",
+      "public_sha256": "dc8b9cf824992466e5c174af2fc5f8e08faae914733f73d4ebf6094bc975b9fc",
+      "bytes": 2086,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c06-artifact-unpinned/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "09c40e5520bd98a1be90e48c12937a01397d7a27eb9949655633841965853c84",
+      "public_sha256": "09c40e5520bd98a1be90e48c12937a01397d7a27eb9949655633841965853c84",
+      "bytes": 2163,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c07-id-undisposed/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "ff8cc61e3dd32da46970ef43198e782137d1f75d37c00a673230cf4fbbbbf116",
+      "public_sha256": "ff8cc61e3dd32da46970ef43198e782137d1f75d37c00a673230cf4fbbbbf116",
+      "bytes": 1969,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c08-id-disposed-twice/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "87264fc53f08a0208b21bf302e07f55489badb0d8b838dd3e3369d2802f17bce",
+      "public_sha256": "87264fc53f08a0208b21bf302e07f55489badb0d8b838dd3e3369d2802f17bce",
+      "bytes": 2344,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c09-id-unknown/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "306c2728926e2dbffcee56f3671c460716dab493bbb37556180fa8582185a72c",
+      "public_sha256": "306c2728926e2dbffcee56f3671c460716dab493bbb37556180fa8582185a72c",
+      "bytes": 2379,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c10-unclosed-history/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "41838b923e92320fadc658a2229983accc62e4116c2c648070f5ddbfe85eda6a",
+      "public_sha256": "41838b923e92320fadc658a2229983accc62e4116c2c648070f5ddbfe85eda6a",
+      "bytes": 2144,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c11-element-absent/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "9872de1a1a5900b253161f44bd8a94a9c77bc54a3db3d915733d2e88036e5f9e",
+      "public_sha256": "9872de1a1a5900b253161f44bd8a94a9c77bc54a3db3d915733d2e88036e5f9e",
+      "bytes": 2150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c12-element-wrong-kind/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "f183f5ed2cb9211eb892f054f9acb773eebf55ff043c2470106dc7c7b1a8eadc",
+      "public_sha256": "f183f5ed2cb9211eb892f054f9acb773eebf55ff043c2470106dc7c7b1a8eadc",
+      "bytes": 2150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c13-constraint-positional-only/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a4d2f051edcb17d1a4eb88157cad1dd148b07af8b47ace04239783dda85af67d",
+      "public_sha256": "a4d2f051edcb17d1a4eb88157cad1dd148b07af8b47ace04239783dda85af67d",
+      "bytes": 2089,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c14-constraint-index-out-of-range/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "fbf8bc3167d3b60f1b1601342767868b525346d0b12295438d09a618e4e848cc",
+      "public_sha256": "fbf8bc3167d3b60f1b1601342767868b525346d0b12295438d09a618e4e848cc",
+      "bytes": 2034,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c15-no-model-elements/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "074d38f92a1556b0c589a2b262c32373c32c2ee83fe010d0d1fffbac8ba0db94",
+      "public_sha256": "074d38f92a1556b0c589a2b262c32373c32c2ee83fe010d0d1fffbac8ba0db94",
+      "bytes": 1557,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c16-id-source-redirect/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "e81d6f674f6f1849d116367890df28b7decb41a35ec305c1c84a8f448f6ebf96",
+      "public_sha256": "e81d6f674f6f1849d116367890df28b7decb41a35ec305c1c84a8f448f6ebf96",
+      "bytes": 2194,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c17-multi-violation/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "f024fb2811bdfff96cf00bab453255593efa9c255b48903b36e74c84c84b9b84",
+      "public_sha256": "f024fb2811bdfff96cf00bab453255593efa9c255b48903b36e74c84c84b9b84",
+      "bytes": 2073,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c18-empty-model-elements/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "653f48b3985679c47e43cd436a7d196918a2434b53dabd51beffc24856132a4a",
+      "public_sha256": "653f48b3985679c47e43cd436a7d196918a2434b53dabd51beffc24856132a4a",
+      "bytes": 2061,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c19-closed-flag-lie/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "1434642226012c41dfbb230ec1eadce8f0a4a86eb909c9739240e12e821d6201",
+      "public_sha256": "1434642226012c41dfbb230ec1eadce8f0a4a86eb909c9739240e12e821d6201",
+      "bytes": 2143,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c20-model-digest-drift/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a7c792c783775ab2b8584a87b93c5a4971672b70e5cb1f6c5d1cc33e6c9648b8",
+      "public_sha256": "a7c792c783775ab2b8584a87b93c5a4971672b70e5cb1f6c5d1cc33e6c9648b8",
+      "bytes": 2150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c21-disposition-unknown/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "7f3cfcafa40305862f404a6f787123f185630cc01602b2a870429a2cd3bc9eca",
+      "public_sha256": "7f3cfcafa40305862f404a6f787123f185630cc01602b2a870429a2cd3bc9eca",
+      "bytes": 2143,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c22-positional-bogus-fact-type/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5ed3f657e2221d4ea543f2c7a36ace06ef074580ed7d508d1ef49df4c7344e5c",
+      "public_sha256": "5ed3f657e2221d4ea543f2c7a36ace06ef074580ed7d508d1ef49df4c7344e5c",
+      "bytes": 2036,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c23-requirements-not-in-roots/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5a982378ca108939518d915bddfe55ef1ac04b048984b7bba7d3ffbac4456772",
+      "public_sha256": "5a982378ca108939518d915bddfe55ef1ac04b048984b7bba7d3ffbac4456772",
+      "bytes": 2163,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c24-not-json/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "bcccda8396231bc8a84a86596d1c6ec048220ef138f2414224e74a2a3c58b2a2",
+      "public_sha256": "bcccda8396231bc8a84a86596d1c6ec048220ef138f2414224e74a2a3c58b2a2",
+      "bytes": 24,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c25-nan-constant/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "873ce35d8e9051b0194166b0a9503d7e4e9283fbb3a597dbd1251e2d96a799c2",
+      "public_sha256": "873ce35d8e9051b0194166b0a9503d7e4e9283fbb3a597dbd1251e2d96a799c2",
+      "bytes": 31,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c26-top-level-list/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "public_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c27-infinity-constant/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "05337c60f755ce82edec22f939f21ae79bec59892c1ba6ebb099813589dde212",
+      "public_sha256": "05337c60f755ce82edec22f939f21ae79bec59892c1ba6ebb099813589dde212",
+      "bytes": 36,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c28-root-escape/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "1d86a83c9e59547223521e50533c246fa8247dd440a3fc4ed9938bf163bf0b09",
+      "public_sha256": "1d86a83c9e59547223521e50533c246fa8247dd440a3fc4ed9938bf163bf0b09",
+      "bytes": 2277,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c29-absolute-path/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5ecb33e756f5dd887981ae8483559579cd0a2a19fadbcac2f233a4179d336c2d",
+      "public_sha256": "5ecb33e756f5dd887981ae8483559579cd0a2a19fadbcac2f233a4179d336c2d",
+      "bytes": 2274,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/c30-order-a2-before-a3/model.migration.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "cc1f40ffd4e387ec03a0ffb15538b42650b44052f06a1303149ce71d6963c9a4",
+      "public_sha256": "cc1f40ffd4e387ec03a0ffb15538b42650b44052f06a1303149ce71d6963c9a4",
+      "bytes": 1898,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/migration/expected.json",
+      "kind": "adaptation",
+      "reason": "Remove private panel chronology comment fields only; every runtime expected outcome, assertion ID, count and ordering unchanged.",
+      "baseline_sha256": "3951b5524756c0d60e8c4e42948366051228663420c70b4d4dc2afe2a87ee4e8",
+      "public_sha256": "04a44e9522b847894cf613ab82b71bc3c120a363c7b967e7be5e1c2b0a247bfd",
+      "bytes": 5052,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/models/dispatch.orm.yaml",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
@@ -5135,6 +5504,42 @@
       "baseline_sha256": null,
       "bytes": 27238,
       "public_sha256": "ad5506112024ea8315cc7782e2dd5dd323b6cd2980cbbc31b0c91547282a22dd",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/public-session-results/v1-accepted/runs/run-0001/result.json",
+      "kind": "adaptation",
+      "reason": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "baseline_sha256": null,
+      "public_sha256": "37c25b6946a291123c9c7b5b0d535163bffacb7e17769062a838d25c53a29ea0",
+      "bytes": 516,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/public-session-results/v1-refused/runs/run-0001/result.json",
+      "kind": "adaptation",
+      "reason": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "baseline_sha256": null,
+      "public_sha256": "4da5ecdf11d2039015c0f64a65f121c2e6cadbac30a6a652b169218b2b0661c0",
+      "bytes": 400,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/public-session-results/v2-accepted/runs/run-0001/result.json",
+      "kind": "adaptation",
+      "reason": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "baseline_sha256": null,
+      "public_sha256": "f27ed5793c61ce61413cc1ff310d37b779778b463d4181e58f9eb1cdd0d2dbfd",
+      "bytes": 563,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/public-session-results/v2-refused/runs/run-0001/result.json",
+      "kind": "adaptation",
+      "reason": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "baseline_sha256": null,
+      "public_sha256": "e08ee831c6abaaa41274afc148aebc2e6607e7e899bb652717d23d9f2878fd3f",
+      "bytes": 447,
       "mode": 420
     },
     {
@@ -5696,6 +6101,15 @@
       "mode": 420
     },
     {
+      "path": "tests/test_adopt_migration.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "bd94c5827e739bc8ea1e9e67391eef29f22806159caa5bb240d9f5d4a42577e5",
+      "public_sha256": "c2d6444205b225533321758eb040e424227777deddeb4eed5f3aa8e4be831c6d",
+      "bytes": 23861,
+      "mode": 420
+    },
+    {
       "path": "tests/test_archsmoke.py",
       "kind": "identical-import",
       "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
@@ -5849,12 +6263,102 @@
       "mode": 420
     },
     {
+      "path": "tests/test_exp_bands.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "9de41d178273e5eb2563e61a36a32d0630fbdbcaac9fcf8b16b39c2d42e98fdb",
+      "public_sha256": "835006c6b6ee855fd2d0c0e8387d89cba1633619de830065b08969f301f42488",
+      "bytes": 17430,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_close.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "7d05145bc761098a0265ea0237a5046d0fe43c39fdb84a48d4111d09a5d7bbbb",
+      "public_sha256": "b6b653a0048070b4ed0310fe1ee7f450c14ff661ec4a035db5cccff4e8a4fc33",
+      "bytes": 19039,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_close_codegen_gate.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "2b463dd58833b7ca71bed848df84d6ee3c375c8fe0ee7e1b80abe8b4670d3dc6",
+      "public_sha256": "b1ad4a59de9f81ca21df277abce62d7cf3382e2be47994849533e252c94ad08a",
+      "bytes": 14485,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_close_work_gate.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "c95e200d3afa1c602a3e8c006e4d5e7ada0a934a307ee114b4805b164ddcb5d1",
+      "public_sha256": "ef413ff241d5991a8b615ebeb6f251deb2ed543b283cc7cded5912eb73057154",
+      "bytes": 35306,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_frontmatter.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "32eb56ca7e49841a3d15c07d389f7be5b220013880607adef940eb5ee7eadf33",
+      "public_sha256": "75536bcf19d44c3392ef2edfec65c6bc8d4adc05405ecdb608d84aa485cfc972",
+      "bytes": 5660,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_paths.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "4eaae5073f8e4734b0efb1a07b0e6591f2c41e285d37798e3f3ca207b6fd748a",
+      "public_sha256": "6f8fc05a71362de57abf89560c9dbe7c57e19f728e1fc5b418ecf3f6d3facb3a",
+      "bytes": 5935,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_session_contract.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "d50d10e61f4e4863aea87df061b59396d6a00da6dae6fbf64fb00f1cfe9150f4",
+      "public_sha256": "8e13431ab1af4a62843a03c53ffb690e0fdaef2cbbdb3039a2c28ff75b139486",
+      "bytes": 38933,
+      "mode": 420
+    },
+    {
       "path": "tests/test_exp_session_e2e.py",
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": "31fc0f8fc71b18a5c71eb626657a105b53d10dc809e9caf5b49adf74e554fcdb",
       "bytes": 64250,
       "public_sha256": "e012df83e1bda0ca28968e1c556f4935a9e776cdc647e7960c5d2d4dedf652a1",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_session_eval.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "bac2fa717bdab8afdbe3496fc6994d4f46bee3c18b235c10edbab0428a69aff3",
+      "public_sha256": "f852080f8e721b43bd167428d67d15e8e70ba3be346083332e070f57d1a4c973",
+      "bytes": 52578,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_session_store.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "16344ddc1912dc69a42c965a6a681d9a126029dbc54916c5292ef745d5d8502c",
+      "public_sha256": "f9ee1dcc756b60fa9189ce9cdc6c8c6db946a12b7c9f1869d299233f2f3f62db",
+      "bytes": 38912,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_spec.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "7ac9c32f3e964d0f7d25534088d2502b75e91c348f8e3211c66782fe1518f16a",
+      "public_sha256": "bcb53e382862b5ba486b7f339a5e68b02d7bf1c66698016d2e7397ef11b66af3",
+      "bytes": 6292,
       "mode": 420
     },
     {
@@ -6006,8 +6510,8 @@
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 2714,
-      "public_sha256": "2d2b13cdb0b7ce35d8c377631628784195f003c2cd3cd568624ae76668c38c2c",
+      "bytes": 3181,
+      "public_sha256": "d352546bd8189beb34a6d05fd8a8505ec63baef8c8dbcb3d85c3dc6124b35719",
       "mode": 420
     },
     {
@@ -6056,12 +6560,30 @@
       "mode": 420
     },
     {
+      "path": "tests/test_recovery_adversarial.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "79140e53d69fc3a5afbc811701393d4046dd591c9bfe2ea217c9e1231283b078",
+      "public_sha256": "79140e53d69fc3a5afbc811701393d4046dd591c9bfe2ea217c9e1231283b078",
+      "bytes": 51458,
+      "mode": 420
+    },
+    {
       "path": "tests/test_recovery_inventory.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "75bacdf304fa8795ea54c6c77b849c0c0a19f812804e32d966d3e21246fa54d3",
       "bytes": 26682,
       "public_sha256": "75bacdf304fa8795ea54c6c77b849c0c0a19f812804e32d966d3e21246fa54d3",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_recovery_report.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "eb866e6405e92e79fcb630cd60e5069c0ba1ac079ccec566b5b11b3a43ef4b7d",
+      "public_sha256": "de1ed35bbf0099c57737c49412678a4b828ac39a43129bb095fb204d0ca9e63c",
+      "bytes": 27500,
       "mode": 420
     },
     {

@@ -1,0 +1,114 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_exp_session_contract.py",
+      "source_sha256": "d50d10e61f4e4863aea87df061b59396d6a00da6dae6fbf64fb00f1cfe9150f4",
+      "target_sha256": "8e13431ab1af4a62843a03c53ffb690e0fdaef2cbbdb3039a2c28ff75b139486",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately. Replace invalid model:fixture placeholder with already-reviewed valid skeleton model so contract success/path-refusal branches reach their original asserted conditions; all expected values, mutation cases and wire assertions unchanged.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_session_eval.py",
+      "source_sha256": "bac2fa717bdab8afdbe3496fc6994d4f46bee3c18b235c10edbab0428a69aff3",
+      "target_sha256": "f852080f8e721b43bd167428d67d15e8e70ba3be346083332e070f57d1a4c973",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_close.py",
+      "source_sha256": "7d05145bc761098a0265ea0237a5046d0fe43c39fdb84a48d4111d09a5d7bbbb",
+      "target_sha256": "b6b653a0048070b4ed0310fe1ee7f450c14ff661ec4a035db5cccff4e8a4fc33",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_close_work_gate.py",
+      "source_sha256": "c95e200d3afa1c602a3e8c006e4d5e7ada0a934a307ee114b4805b164ddcb5d1",
+      "target_sha256": "ef413ff241d5991a8b615ebeb6f251deb2ed543b283cc7cded5912eb73057154",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately. Private real-session census replaced by four independently authored frozen reader fixtures: both v1/v2 and accepted/nonaccepted, preserving nonempty corpus, own-disposition agreement, run-directory identity, exact versions and both verdicts. No real retained session success asserted. I001 import whitespace normalized only.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_bands.py",
+      "source_sha256": "9de41d178273e5eb2563e61a36a32d0630fbdbcaac9fcf8b16b39c2d42e98fdb",
+      "target_sha256": "835006c6b6ee855fd2d0c0e8387d89cba1633619de830065b08969f301f42488",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_close_codegen_gate.py",
+      "source_sha256": "2b463dd58833b7ca71bed848df84d6ee3c375c8fe0ee7e1b80abe8b4670d3dc6",
+      "target_sha256": "b1ad4a59de9f81ca21df277abce62d7cf3382e2be47994849533e252c94ad08a",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_frontmatter.py",
+      "source_sha256": "32eb56ca7e49841a3d15c07d389f7be5b220013880607adef940eb5ee7eadf33",
+      "target_sha256": "75536bcf19d44c3392ef2edfec65c6bc8d4adc05405ecdb608d84aa485cfc972",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_paths.py",
+      "source_sha256": "4eaae5073f8e4734b0efb1a07b0e6591f2c41e285d37798e3f3ca207b6fd748a",
+      "target_sha256": "6f8fc05a71362de57abf89560c9dbe7c57e19f728e1fc5b418ecf3f6d3facb3a",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_spec.py",
+      "source_sha256": "7ac9c32f3e964d0f7d25534088d2502b75e91c348f8e3211c66782fe1518f16a",
+      "target_sha256": "bcb53e382862b5ba486b7f339a5e68b02d7bf1c66698016d2e7397ef11b66af3",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_exp_session_store.py",
+      "source_sha256": "16344ddc1912dc69a42c965a6a681d9a126029dbc54916c5292ef745d5d8502c",
+      "target_sha256": "f9ee1dcc756b60fa9189ce9cdc6c8c6db946a12b7c9f1869d299233f2f3f62db",
+      "adaptation": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/phase4_reference/session.json",
+      "source_sha256": "da163a2b0b20d0217454f446a285db5e50ebcf6bd2d3e6720c00f8be9e7aa855",
+      "target_sha256": "da163a2b0b20d0217454f446a285db5e50ebcf6bd2d3e6720c00f8be9e7aa855",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/public-session-results/v1-accepted/runs/run-0001/result.json",
+      "source_sha256": null,
+      "target_sha256": "37c25b6946a291123c9c7b5b0d535163bffacb7e17769062a838d25c53a29ea0",
+      "adaptation": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "review": "Complete generic wire fields reviewed; v1/v2 acceptance/refusal paired with exact run identity."
+    },
+    {
+      "target": "tests/fixtures/public-session-results/v1-refused/runs/run-0001/result.json",
+      "source_sha256": null,
+      "target_sha256": "4da5ecdf11d2039015c0f64a65f121c2e6cadbac30a6a652b169218b2b0661c0",
+      "adaptation": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "review": "Complete generic wire fields reviewed; v1/v2 acceptance/refusal paired with exact run identity."
+    },
+    {
+      "target": "tests/fixtures/public-session-results/v2-accepted/runs/run-0001/result.json",
+      "source_sha256": null,
+      "target_sha256": "f27ed5793c61ce61413cc1ff310d37b779778b463d4181e58f9eb1cdd0d2dbfd",
+      "adaptation": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "review": "Complete generic wire fields reviewed; v1/v2 acceptance/refusal paired with exact run identity."
+    },
+    {
+      "target": "tests/fixtures/public-session-results/v2-refused/runs/run-0001/result.json",
+      "source_sha256": null,
+      "target_sha256": "e08ee831c6abaaa41274afc148aebc2e6607e7e899bb652717d23d9f2878fd3f",
+      "adaptation": "Independently hand-authored synthetic frozen reader wire record; no real-session, source-truth or assurance claim.",
+      "review": "Complete generic wire fields reviewed; v1/v2 acceptance/refusal paired with exact run identity."
+    }
+  ],
+  "definitions": 283,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "6021a5b1bcaf6844c868385c477247963d0c27bfc547bb10e4841cf9cf51832e"
+}

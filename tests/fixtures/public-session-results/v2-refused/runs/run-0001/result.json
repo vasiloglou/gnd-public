@@ -1,0 +1,16 @@
+{
+  "acceptance_modes": [
+    "exact-bytes"
+  ],
+  "attempt_count": 1,
+  "best_attempt": null,
+  "best_attempt_manifest_sha256": null,
+  "best_candidate_sha256": null,
+  "disposition": "budget-exhausted",
+  "referenced_evidence_digests": {
+    "attempt_manifest_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "run_id": "run-0001",
+  "schema_version": 2,
+  "terminal_reason": "synthetic frozen reader refusal"
+}

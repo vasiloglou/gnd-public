@@ -1,0 +1,45 @@
+# tests/fixtures/adversarial/models/hostile_values.orm.yaml
+#
+# Adversarial probe (T-01.1-04, Tampering): a model with an ALETHIC uniqueness
+# constraint that the companion population violates, so untrusted fact values
+# are guaranteed to reach the JSON payload — through both the verbalized
+# `message` and `offending_facts`. That is what makes the escaping property
+# testable end to end rather than only in a unit test.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: note
+    name: Note
+    kind: entity
+    reference: { mode: popular, value_type: note_id }
+
+  - id: note_id
+    name: NoteId
+    kind: value
+    primitive: Integer
+
+  - id: body
+    name: Body
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: note_has_body
+    reading: "{Note} has body {Body}"
+    roles:
+      - { object_type: note, role_name: note }
+      - { object_type: body, role_name: body }
+    constraints:
+      - type: uniqueness
+        roles: [note]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Each note has exactly one body."

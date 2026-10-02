@@ -13,7 +13,7 @@ MIGRATION = ROOT / ".gnd-planning/milestones/public-launch/migration"
 
 
 def reviewed_rows():
-    return tuple(row for name in ('b3-extra', 'b3-initial', 'b3-reviewed', 'b4-artifacts', 'b4-core', 'b4-population', 'b4-synth', 'b4-transition', 'b5-codegen', 'b5-install-conformance', 'b5-terms')
+    return tuple(row for name in ('b3-extra', 'b3-initial', 'b3-reviewed', 'b4-artifacts', 'b4-core', 'b4-population', 'b4-synth', 'b4-transition', 'b5-codegen', 'b5-install-conformance', 'b5-terms', 'b6-doctor', 'b6-reports')
                  for row in load_case_map(MIGRATION / f"{name}-case-map.jsonl.gz"))
 
 
@@ -39,10 +39,10 @@ def test_progress_retains_unresolved_cases_and_refuses_handoff():
     rows = reviewed_rows()
     originals = original_identities()
     progress = json.loads((MIGRATION / "progress.json").read_text())
-    assert len(rows) == len({row["source_node"] for row in rows}) == 1105
+    assert len(rows) == len({row["source_node"] for row in rows}) == 1228
     assert {row["source_node"] for row in rows} <= set(originals)
     assert progress["reviewed_dispositions"] == len(rows)
-    assert progress["unresolved_definitions"] == len(originals) - len(rows) == 4226
+    assert progress["unresolved_definitions"] == len(originals) - len(rows) == 4103
     assert progress["status"] == "incomplete"
     assert progress["handoff_authorized"] is False
     validate_case_map(rows, originals={row["source_node"]: originals[row["source_node"]]

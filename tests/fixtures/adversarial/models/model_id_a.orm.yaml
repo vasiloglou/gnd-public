@@ -1,0 +1,55 @@
+# tests/fixtures/adversarial/models/model_id_a.orm.yaml
+#
+# Adversarial probe (CORE-04 R9, D-06): a model that declares a top-level
+# `model_id`. Everything else about it is deliberately unremarkable — one binary
+# fact type with one alethic uniqueness constraint — so the ONLY thing the two
+# companion populations vary is the population header's identity field.
+#
+# Until the optional `model_id` field is declared in the meta-schema, this model
+# is REJECTED at layer 1: the meta-schema top level is
+# `additionalProperties: false`, so an undeclared field is a hard schema error
+# and `gnd validate` exits 3. That is the correct RED state for the two R9
+# corpus cases — do NOT work around it by dropping `model_id` from this fixture.
+#
+# `model_id` is compared as an OPAQUE STRING. Nothing resolves it to a path and
+# nothing opens it; the URN shape below is a convention, not a locator (T-01.1-01).
+
+model_id: "urn:gnd:model:adversarial-model-id-a"
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: String
+
+  - id: person_name
+    name: PersonName
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: person_has_name
+    reading: "{Person} has name {PersonName}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: person_name, role_name: name }
+    constraints:
+      - type: uniqueness
+        roles: [person]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Each person has one recorded name."

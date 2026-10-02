@@ -1,0 +1,16 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_doctor_uninstall.py",
+      "source_sha256": "e237337bb258558e66c89ae09eb38d175f77c43a0284229341a4fe46b63bc5be",
+      "target_sha256": "62e385a86b3ed3f9586eb659cb6eb3639bbbed8b9319c928f5747decb6cfb00f",
+      "adaptation": "Public unmanaged review compatibility inventory has only two SKILL.md files; excluded vendor runner and private development bodies are not copied. Closed links, file partitions, byte/execute parity, receipt exclusion and isolated synthetic external-skill controls retained.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    }
+  ],
+  "definitions": 64,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "8c52669fe5f54c3e4fb8b4727eccec30915fe59b93d6499ff41bdb637e976219"
+}

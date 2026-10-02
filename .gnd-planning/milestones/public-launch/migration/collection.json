@@ -3277,6 +3277,370 @@
     },
     {
       "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_every_placed_file_current_after_a_fresh_install"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_stale_when_the_package_moved_on"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_missing_for_a_recorded_file_that_is_gone"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_modified_for_a_user_edit"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_collided_for_a_file_no_manifest_records"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_never_reports_create_as_a_state"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_is_blind_to_unrelated_occupants_of_a_shared_root"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_adds_no_second_classifier"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_a_dangling_symlink_as_missing_and_names_it"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_a_symlink_install_current"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_refuses_a_manifest_declaring_a_higher_schema"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_refuses_a_manifest_carrying_an_escaping_path"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_a_user_scope_install_shadowing_a_project_one"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_the_directory_the_executable_was_found_in_not_its_target"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_reports_not_on_path_when_the_found_directory_really_is_absent"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_names_the_codex_location_gnd_does_not_write"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_diagnose_offers_no_alternative_root_for_claude"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_exits_zero_when_everything_is_current"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_maps_each_state_to_its_exit_code[missing-is-10]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_maps_each_state_to_its_exit_code[modified-is-10]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_maps_each_state_to_its_exit_code[collided-is-11]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_reports_stale_as_drift"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_with_no_manifest_anywhere_exits_12_and_names_every_root"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_checks_both_scopes_whichever_flag_was_passed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_prints_the_executable_directory_and_a_path_verdict"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_names_the_alternative_codex_location"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_refuses_a_corrupt_manifest_and_exits_10[higher-schema]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_refuses_a_corrupt_manifest_and_exits_10[escaping-path]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_elides_a_long_state_list"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_offers_no_format_flag"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_doctor_help_is_available"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_deletes_every_hash_matching_file_and_prunes"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_retains_a_user_modified_file_byte_identical"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_retains_a_file_the_manifest_never_claimed"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_prunes_only_the_directories_it_emptied"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_deletes_the_manifest_last"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_refuses_an_escaping_entry_and_deletes_nothing_anywhere"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_refuses_a_higher_schema_and_deletes_nothing"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_unlinks_a_symlink_install_without_following_it"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_remove_unlinks_a_dangling_link_rather_than_leaving_litter"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_removes_a_clean_install_and_exits_zero"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_retains_a_user_edit_names_it_and_exits_10"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_with_no_manifest_exits_12_and_changes_nothing"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_refuses_a_corrupt_receipt_and_deletes_nothing"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_only_touches_the_scope_it_was_pointed_at"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_offers_no_format_flag"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_help_is_available"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_repository_carries_exactly_the_pinned_link_targets"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_repository_links_reach_a_real_skill_md"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_a_development_install_reproduces_the_repository_link_targets"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[user-edit-survives-uninstall]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[traversal-total-refusal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[schema-confusion-refusal]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[symlink-uninstall-never-follows]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[shared-root-survives-uninstall]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[uninstall-then-doctor-reports-nothing-installed]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_remove_adversarial_case[planted-parent-symlink-refusal]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_remove_corpus_covers_seven_named_cases"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_each_discovery_root_links_exactly_the_packaged_skills[.claude/skills]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_each_discovery_root_links_exactly_the_packaged_skills[.codex/skills]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.claude/skills]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.codex/skills]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_pinned_link_map_cannot_lag_the_packaged_tree"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_every_discovery_link_is_tracked_at_symlink_mode"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_foreign_review_panel_stays_an_unmanaged_real_directory"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_local_process_skill_stays_unpackaged_and_unmanaged"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_two_discovery_roots_carry_identical_unmanaged_skills"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_a_link_reads_current_only_when_target_receipt_and_bytes_all_agree"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[retargeted-to-another-real-skill]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[replaced-by-a-real-directory-of-identical-bytes]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[receipt-disagrees-with-the-placed-link]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[link-dropped-entirely]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[bytes-behind-the-link-substituted]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_doctor_uninstall.py::test_a_diverging_link_is_never_reported_current[a-file-behind-the-link-removed]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_link_divergence_corpus_covers_all_three_inputs"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_the_installer_refuses_to_adopt_an_unmanaged_directory_at_a_gnd_owned_name"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_a_legacy_receipt_is_converged_only_by_the_documented_remedy"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_removes_owned_links_and_leaves_a_foreign_sibling_intact"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_doctor_uninstall.py::test_uninstall_retains_a_retargeted_link_and_never_follows_it"
+    },
+    {
+      "markers": [],
       "node": "tests/test_evolution_conformance.py::test_apply_publishes_and_rechecks_conformance_in_one_command"
     },
     {
@@ -4630,6 +4994,248 @@
     {
       "markers": [],
       "node": "tests/test_measure_negative_control.py::test_the_undecided_flip_control_fails_against_the_real_checker"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_measure_lane_imports_no_provider_or_network_module"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_no_provider_client_anywhere_in_the_package"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_no_network_library_is_reachable_from_the_measure_lane"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_no_network_library_is_reachable_from_the_extraction_lane"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_no_network_library_is_reachable_from_the_generation_lane"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_g01_g04_declared_network_edge_has_one_module_home"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_model_evolve_skill_is_offline_and_preserves_write_authority"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_public_evolution_handlers_are_thin_offline_service_delegates"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_measurement_bytes_ignore_absolute_vs_relative_invocation_paths"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_a_malformed_closed_index[scalar]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_a_malformed_closed_index[list]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_a_malformed_closed_index[non-list-populations]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_a_malformed_closed_index[missing-field]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_a_malformed_closed_index[wrong-and-extra]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_duplicate_normalized_index_paths_without_touching_artifacts[population]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_duplicate_normalized_index_paths_without_touching_artifacts[sidecar]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[seed-999]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[band-0]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[class-boundary]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[case_kind-boundary]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[operator-fabricated-operator]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[boundary_side-fabricated-side]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[epsilon-fabricated-epsilon]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[target-constraints[999]]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[predicted_verdict-unchecked]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[violates_target-constraints[999]]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[violates-fabricated10]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[isolating-True]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[isolation_verified-True]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_index_metadata[baseline_seed-999]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_measure_rejects_unbound_not_derivable_metadata"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_payload_validates_against_the_vendored_schema"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_payload_carries_no_aggregate_accuracy_number"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_evidence_excerpt_names_a_corpus_population_and_matches_check"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_text_render_puts_coverage_before_rates"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_stale_population_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_swapped_sidecar_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_wrong_model_sidecar_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_sidecar_claiming_a_violation_passes_correctly_exits_3"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_pruned_index_is_refused_rather_than_measured_on_a_narrower_denominator"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_quarantined_case_is_not_treated_as_an_unlisted_population"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_the_payload_records_the_index_digest"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_corpus_spanning_two_pool_digests_is_refused"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_constraint_with_no_verdict_anywhere_is_refused"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_constraint_that_vanishes_from_SOME_populations_is_refused"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_the_census_invariant_holds_on_the_real_corpus"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_the_reconciliation_is_against_the_model_not_the_corpus"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_two_measures_over_one_corpus_are_byte_identical"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_a_perturbed_population_changes_the_payload"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_measure_offline.py::test_the_allocated_exit_codes_are_disjoint_with_seven_to_nine_unallocated"
     },
     {
       "markers": [],
@@ -7352,6 +7958,194 @@
     {
       "markers": [],
       "node": "tests/test_recovery_inventory.py::test_scanner_source_has_no_execution_or_live_probe_escape_hatch"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_every_band_emits_a_payload_validating_against_the_schema[exit-0-accepted]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_every_band_emits_a_payload_validating_against_the_schema[exit-1-violated]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_every_band_emits_a_payload_validating_against_the_schema[exit-2-inadequate]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_every_band_emits_a_payload_validating_against_the_schema[exit-3-ill-formed]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_every_band_emits_a_payload_validating_against_the_schema[exit-4-indeterminate]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_acceptance_ready_is_true_only_at_exit_0[exit-0-accepted]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_acceptance_ready_is_true_only_at_exit_0[exit-1-violated]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_acceptance_ready_is_true_only_at_exit_0[exit-2-inadequate]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_acceptance_ready_is_true_only_at_exit_0[exit-3-ill-formed]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_acceptance_ready_is_true_only_at_exit_0[exit-4-indeterminate]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_every_key_is_always_present"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_extraction_block_is_present_on_every_exit_path"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_schema_enforces_command_specific_extraction_shape"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_json_counts_match_the_text_renderer[skeleton-good]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_json_counts_match_the_text_renderer[skeleton-bad]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_json_counts_match_the_text_renderer[setfam-empty]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_json_counts_match_the_text_renderer[misc-pass]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_unchecked_verdicts_carry_a_reason_code_and_others_do_not"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_validate_payload_has_no_population"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_ill_formed_population_exit_3_carries_structured_issues"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_layer2_population_issues_reach_the_payload"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_population_warnings_are_forwarded_to_the_payload"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_ill_formed_model_exit_3_carries_structured_issues"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_issues_are_capped_with_the_elision_reported"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_internal_error_payload_is_tagged_and_valid"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_hostile_fact_values_round_trip_without_breaking_the_payload"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_exit_3_carries_the_warnings_from_the_same_layer_2_pass"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_exit_3_text_output_prints_those_warnings_too"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_check_forwards_model_warnings_alongside_the_band_they_explain"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_check_text_output_prints_model_warnings"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_text_output_is_capped_like_the_payload"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_the_exception_summary_is_bounded_too"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_emit_refuses_a_non_finite_value_rather_than_writing_a_bare_nan"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_a_non_emittable_payload_degrades_to_a_valid_internal_error"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_invalid_format_exits_64_with_no_payload[check-xml]"
+    },
+    {
+      "markers": [
+        "parametrize"
+      ],
+      "node": "tests/test_report_json.py::test_invalid_format_exits_64_with_no_payload[validate-yaml]"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_default_format_is_text"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_v5_v6_keysets_and_schema"
+    },
+    {
+      "markers": [],
+      "node": "tests/test_report_json.py::test_v4_derivation_invariants_are_schema_enforced"
     },
     {
       "markers": [],

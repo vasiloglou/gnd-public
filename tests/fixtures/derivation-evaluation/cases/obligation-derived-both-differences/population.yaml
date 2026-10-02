@@ -1,0 +1,10 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:obligation-derived-both-differences@1
+  source: fixture
+  label: boundary
+  covers: [seed, result]
+instances: {}
+facts:
+  seed: [{ item: alpha }]
+  result: [{ item: surplus }]

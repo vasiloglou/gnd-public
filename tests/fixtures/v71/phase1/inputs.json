@@ -956,7 +956,7 @@
       "parameters": {
         "count": 10000
       },
-      "story": "10000 distinct reached temporal applications; bounded within five seconds."
+      "story": "10000 distinct reached temporal applications; bounded within ten seconds for the public end-to-end CLI profile."
     },
     {
       "id": "B18-over-limit",
@@ -967,7 +967,7 @@
       "parameters": {
         "count": 10001
       },
-      "story": "10001 distinct reached temporal applications; bounded within five seconds."
+      "story": "10001 distinct reached temporal applications; bounded within ten seconds for the public end-to-end CLI profile."
     },
     {
       "id": "B19-temporal-refusal",

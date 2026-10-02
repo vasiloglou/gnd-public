@@ -1,0 +1,36 @@
+# tests/fixtures/adversarial/populations/model_id_absent_and_malformed.yaml
+#
+# WR-05 reproduced: this population trips BOTH severities on one layer-2 pass.
+#
+# - ERROR: `person_has_nam` is not a fact type in this model
+#   (`population:unknown-fact-type`), and the one fact of `person_has_name`
+#   omits the `name` role (`population:missing-role`).
+# - WARNING: the model declares `model_id: urn:gnd:model:adversarial-model-id-a`
+#   and this population declares none (`population:model-id-absent`).
+#
+# `load_population` computed `warnings` only AFTER the error check had already
+# raised, so the warning was assembled for a CLEAN load and discarded for a
+# dirty one — the exact inversion of where it is useful.
+# `PopulationValidationError` carried only errors, so `_cmd_check`'s exit-3 arm
+# emitted `issues=error.issues` with `warnings: []`.
+#
+# That matters here specifically: "you are missing a fact type and a role" plus
+# "you declared no model_id, so the header cross-check was skipped" together say
+# "you may have validated against the wrong model", which is the actual repair.
+# The error alone says only "typo somewhere". D-04 makes exit 3 the outcome
+# where a retry loop most needs the full picture.
+#
+# `model_id_absent.yaml` is the same warning WITHOUT any error (exit 0), so the
+# pair separates "a warning never withholds acceptance" from "a warning is never
+# discarded because an error exists".
+population:
+  model: model_id_a.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - person_has_name
+facts:
+  person_has_name:
+    - { person: "P1" }
+  person_has_nam:
+    - { person: "P2", name: "Grace Hopper" }

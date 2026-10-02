@@ -25,8 +25,8 @@
     {
       "target": "tests/test_v71_phase1_dates.py",
       "source_sha256": "c8c0d8e4543172d1043e39cbb9d09acded136bb54ea753aeb3951c9f4e51b907",
-      "target_sha256": "069a1519c14c268b0bf922ffc6164194d1c89a6a6d0fb4cb5610ec6191398aa3",
-      "adaptation": "Explicitly validate model/population paths, then normalize exactly two checkout prefixes for two legacy output successors; all other raw output bytes remain hash checked. Original corpus answers unchanged.",
+      "target_sha256": "bb6fc2a794eb560ae0bb65beb036659b2edba489274f0b3369ff458230a1eabc",
+      "adaptation": "Explicitly validate model/population paths, then normalize exactly two checkout prefixes for two legacy output successors; all other raw output bytes remain hash checked. Original corpus answers unchanged.; Owner-approved public B17/B18 CLI performance allowance5\u219210seconds and exact story/manifest rebinding. Counts, outcomes, refusal and subprocess deadline unchanged.",
       "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
     },
     {
@@ -186,8 +186,8 @@
     {
       "target": "tests/fixtures/v71/phase1/inputs.json",
       "source_sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70",
-      "target_sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70",
-      "adaptation": "none",
+      "target_sha256": "9ec35ff0cd6450cd988794201839e7f3a894fd08ec40669cd526e7947660a326",
+      "adaptation": "none; Owner-approved public B17/B18 CLI performance allowance5\u219210seconds and exact story/manifest rebinding. Counts, outcomes, refusal and subprocess deadline unchanged.",
       "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
     },
     {
@@ -200,8 +200,8 @@
     {
       "target": "tests/fixtures/v71/phase1/manifest.json",
       "source_sha256": "2c79eb89905f7d603a90d8ee17aa0578a65e4c09e0b3253a001dd106eb98e7f6",
-      "target_sha256": "2c79eb89905f7d603a90d8ee17aa0578a65e4c09e0b3253a001dd106eb98e7f6",
-      "adaptation": "none",
+      "target_sha256": "c7ad20676b82b75cb9a31e6a86cc9626649da3ed758fd60990f56717373aaa61",
+      "adaptation": "none; Owner-approved public B17/B18 CLI performance allowance5\u219210seconds and exact story/manifest rebinding. Counts, outcomes, refusal and subprocess deadline unchanged.",
       "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
     },
     {
@@ -264,5 +264,5 @@
   "definitions": 38,
   "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
   "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
-  "case_map_file_sha256": "9b87f6be8c01bfa40e791261fb47a4055d1226addadd57a0c1daad87c424a81c"
+  "case_map_file_sha256": "ae6346ae23f9109d3f689318c26fd46092b9247643553969f217d0f3db9ca6d5"
 }

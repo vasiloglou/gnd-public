@@ -1,0 +1,28 @@
+# tests/fixtures/adversarial/populations/omission.missing_role.yaml
+#
+# THE defect this phase was inserted for (CONTEXT.md probe #1). Both facts
+# supply only `title` and OMIT the `movie` role that `movie_has_title`
+# declares. In ORM an instance of an n-ary fact type fills all n roles, so
+# these are not partial facts — they are not facts.
+#
+# Before CORE-04 this reported `pass=2 fail=0 warning=0 unchecked=0
+# vacuous=0` and exited 0. After CORE-04 it is rejected at LOAD with exit 3
+# (ill-formed shape) — NOT exit 1 (mandatory violation): shape is not a rule
+# (D-04), and a retry loop needs the two kinds of feedback kept apart.
+#
+# The `instances:` roster is deliberately ABSENT, matching CONTEXT.md probe #1.
+# With a roster the omission would surface as a mandatory FAILURE (exit 1) by
+# luck rather than by design; with no roster `_instances_of` derives the
+# universe from the facts themselves, the omitted role contributes nothing, and
+# both constraints report "— satisfied". The defect is affirmative acceptance,
+# and this fixture must reproduce it exactly.
+population:
+  model: omission.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - movie_has_title
+facts:
+  movie_has_title:
+    - { title: "The Departed" }
+    - { title: "Inception" }

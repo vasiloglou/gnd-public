@@ -1,0 +1,23 @@
+# tests/fixtures/adversarial/populations/hostile_values.yaml
+#
+# Untrusted-content-echo probe (T-01.1-04). Every body value carries characters
+# that break naive string concatenation into JSON: a double quote, a backslash,
+# a newline, and a control character. Note 1 carries two bodies, so the alethic
+# uniqueness constraint FAILS and these values are echoed into the payload's
+# verdict `message` and `offending_facts`.
+#
+# The corpus asserts exit 1. tests/test_report_json.py asserts the round trip:
+# the values survive json.loads intact and the payload stays parseable. Values
+# reach the payload only via json.dumps, which escapes all four correctly.
+population:
+  model: hostile_values.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - note_has_body
+instances:
+  note: [1]
+facts:
+  note_has_body:
+    - { note: 1, body: "quote\" backslash\\ newline\n control\x01 end" }
+    - { note: 1, body: "brace} bracket] dollar$ null\x00 end" }

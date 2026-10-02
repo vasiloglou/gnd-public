@@ -18,8 +18,8 @@
       "sha256": "311848b02db68b9e2922fa983dec09d4503cc35c90aa465ef41096872876c51b"
     },
     "inputs.json": {
-      "bytes": 41213,
-      "sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70"
+      "bytes": 41287,
+      "sha256": "9ec35ff0cd6450cd988794201839e7f3a894fd08ec40669cd526e7947660a326"
     },
     "release/model.orm.yaml": {
       "bytes": 3250,

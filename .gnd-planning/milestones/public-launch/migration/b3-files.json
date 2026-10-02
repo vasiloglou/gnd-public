@@ -1,5 +1,5 @@
 {
-  "scope": "P3 reviewed subset through approved additional batch 2; acceptance incomplete",
+  "scope": "P3 reviewed subset through additional batch 3 in progress and owner-approved batch 2 CI performance amendment; acceptance incomplete",
   "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
   "source_high_water": "d8ac975e080a428fd7e32aea493cad722e54f7d1",
   "target_baseline": "8ab28f2501a0d0fdb392dd324eca694f9448b907",
@@ -497,8 +497,8 @@
       "path": ".github/workflows/development.yml",
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
-      "bytes": 3385,
-      "public_sha256": "4e34a32d617d1505b3c5af3ed04f4aa43a94af308b48ddacd59cef71f69363f7",
+      "bytes": 3502,
+      "public_sha256": "be209880216c5d7afdc1075e0cf9879bc865e3b59dcc21c5ab2bac219e08aa55",
       "mode": 420,
       "baseline_sha256": "af43e3d35763ef8eb928361589399c7402eb1afefe5e4516e6354abc93e15646"
     },
@@ -858,8 +858,8 @@
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "public_sha256": "9b87f6be8c01bfa40e791261fb47a4055d1226addadd57a0c1daad87c424a81c",
-      "bytes": 3494,
+      "public_sha256": "ae6346ae23f9109d3f689318c26fd46092b9247643553969f217d0f3db9ca6d5",
+      "bytes": 3600,
       "mode": 420
     },
     {
@@ -867,8 +867,8 @@
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "public_sha256": "8bacfa1a7744d78f679874010d5cf11be07a850b745bd17675626e49733aef02",
-      "bytes": 15839,
+      "public_sha256": "4a5d4a76a85f30004b8104e0b2e5b638249deee22f66462b429a8a85c12a0d79",
+      "bytes": 16349,
       "mode": 420
     },
     {
@@ -881,12 +881,66 @@
       "mode": 420
     },
     {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-doctor-case-map.jsonl.gz",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "8c52669fe5f54c3e4fb8b4727eccec30915fe59b93d6499ff41bdb637e976219",
+      "bytes": 3376,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-doctor-content-review.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "f23edccea2f64d9264d1cfe9605db3fad92b80fa38b6e10f69faac17591b3895",
+      "bytes": 1053,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-doctor-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "d9f2dbfc691dd6f35c3e9aeefdb54d2846948fd11059f6b80400859b9b536b8d",
+      "bytes": 5827,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-reports-case-map.jsonl.gz",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "8a0e3fab293d1a023f8302cc74e6ae1a0b5a3ed12ade47b9604f3d78645f8b81",
+      "bytes": 3346,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-reports-content-review.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "a78bd38475c7ea1d4f2be6c760bb6da038a1623e9dc431fb55f0912056174804",
+      "bytes": 5254,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b6-reports-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "7c6e23033b7022f5ffd1921dfe994cddc385047592ebd605568e8ff23599e42c",
+      "bytes": 5372,
+      "mode": 420
+    },
+    {
       "path": ".gnd-planning/milestones/public-launch/migration/collection.json",
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 343127,
-      "public_sha256": "2c506894e475f6a8a2ea66244c8a3a50fd8134f9bc3dc27686ae5d54e78d0631",
+      "bytes": 368544,
+      "public_sha256": "fa4443459808b4ecf04cd3a1effab0a982240ed6f60ae7b25590146a25662de8",
       "mode": 420
     },
     {
@@ -940,7 +994,7 @@
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
       "bytes": 493,
-      "public_sha256": "05639763af071156d6c4952a29269d1bf0b66ef020a2b74ce18b070b681e20d3",
+      "public_sha256": "f18fce487ef629db4efeedd0c0f988d051ccd0faad8add2804667805932ee7b9",
       "mode": 420
     },
     {
@@ -3896,6 +3950,24 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/adversarial/models/hostile_values.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "16d1291e2e4640f2840fd4c978eaafde8fccbb0260ad3559e84c8e8601c4fefe",
+      "public_sha256": "16d1291e2e4640f2840fd4c978eaafde8fccbb0260ad3559e84c8e8601c4fefe",
+      "bytes": 1159,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/models/model_id_a.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0b0bdbc6a1ceca156b7d76d6db40e1d1ee6d8472428178db84b86b38fd14c1e0",
+      "public_sha256": "0b0bdbc6a1ceca156b7d76d6db40e1d1ee6d8472428178db84b86b38fd14c1e0",
+      "bytes": 1741,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml",
       "kind": "identical-import",
       "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
@@ -3950,6 +4022,15 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/adversarial/populations/hostile_values.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "49348390ea455ab82890658eeff51da8dd5bbc7edbd1b4fb455dd832b1651016",
+      "public_sha256": "49348390ea455ab82890658eeff51da8dd5bbc7edbd1b4fb455dd832b1651016",
+      "bytes": 959,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/adversarial/populations/line_forgery.json",
       "kind": "identical-import",
       "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
@@ -3959,12 +4040,30 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/adversarial/populations/model_id_absent_and_malformed.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d7274c50a8f3ccf2b907eaf53884dc207f8ffc27188f70e4ee340fdb7cd64527",
+      "public_sha256": "d7274c50a8f3ccf2b907eaf53884dc207f8ffc27188f70e4ee340fdb7cd64527",
+      "bytes": 1648,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/adversarial/populations/no_subjects_cardinality_min.yaml",
       "kind": "identical-import",
       "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
       "baseline_sha256": "95aa61f899bfa566ef5bde9036a8418337b90c0da30eecbafdaec49e96501873",
       "public_sha256": "95aa61f899bfa566ef5bde9036a8418337b90c0da30eecbafdaec49e96501873",
       "bytes": 602,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/populations/omission.missing_role.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "7532ccd543a5659013230dd3ec36f2a62153ab108b86aaa0f5f0e7d9c1b492a8",
+      "public_sha256": "7532ccd543a5659013230dd3ec36f2a62153ab108b86aaa0f5f0e7d9c1b492a8",
+      "bytes": 1281,
       "mode": 420
     },
     {
@@ -4631,6 +4730,42 @@
       "baseline_sha256": "2ca8009ad4ab9eb487d867939c806fe9a293c4f91f7cfb3e583d50f570b28808",
       "public_sha256": "2ca8009ad4ab9eb487d867939c806fe9a293c4f91f7cfb3e583d50f570b28808",
       "bytes": 6545,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "7e700c426cba94dc45370898f2fa09108ab429571d6e452a9ee95ded83139639",
+      "public_sha256": "7e700c426cba94dc45370898f2fa09108ab429571d6e452a9ee95ded83139639",
+      "bytes": 624,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "e8a08b0596b93b650b202f5f4f6448e386fa6ed021e29b2374c2908bbe41a8bc",
+      "public_sha256": "e8a08b0596b93b650b202f5f4f6448e386fa6ed021e29b2374c2908bbe41a8bc",
+      "bytes": 262,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "76d92942f64d53ee0029b844ddb8f78e63f90b5dfe8e51a24a5705759188bf15",
+      "public_sha256": "76d92942f64d53ee0029b844ddb8f78e63f90b5dfe8e51a24a5705759188bf15",
+      "bytes": 613,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "10648836401d290045bfd412e09906e15e6fede19b6335656742520db7ef49b4",
+      "public_sha256": "10648836401d290045bfd412e09906e15e6fede19b6335656742520db7ef49b4",
+      "bytes": 249,
       "mode": 420
     },
     {
@@ -5409,19 +5544,19 @@
     },
     {
       "path": "tests/fixtures/v71/phase1/inputs.json",
-      "kind": "identical-import",
-      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70",
-      "public_sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70",
-      "bytes": 41213,
+      "public_sha256": "9ec35ff0cd6450cd988794201839e7f3a894fd08ec40669cd526e7947660a326",
+      "bytes": 41287,
       "mode": 420
     },
     {
       "path": "tests/fixtures/v71/phase1/manifest.json",
-      "kind": "identical-import",
-      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": "2c79eb89905f7d603a90d8ee17aa0578a65e4c09e0b3253a001dd106eb98e7f6",
-      "public_sha256": "2c79eb89905f7d603a90d8ee17aa0578a65e4c09e0b3253a001dd106eb98e7f6",
+      "public_sha256": "c7ad20676b82b75cb9a31e6a86cc9626649da3ed758fd60990f56717373aaa61",
       "bytes": 1023,
       "mode": 420
     },
@@ -5696,6 +5831,15 @@
       "mode": 420
     },
     {
+      "path": "tests/test_doctor_uninstall.py",
+      "kind": "adaptation",
+      "reason": "Public unmanaged review compatibility inventory has only two SKILL.md files; excluded vendor runner and private development bodies are not copied. Closed links, file partitions, byte/execute parity, receipt exclusion and isolated synthetic external-skill controls retained.",
+      "baseline_sha256": "e237337bb258558e66c89ae09eb38d175f77c43a0284229341a4fe46b63bc5be",
+      "public_sha256": "62e385a86b3ed3f9586eb659cb6eb3639bbbed8b9319c928f5747decb6cfb00f",
+      "bytes": 95162,
+      "mode": 420
+    },
+    {
       "path": "tests/test_evolution_conformance.py",
       "kind": "identical-import",
       "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
@@ -5765,6 +5909,15 @@
       "baseline_sha256": "e26c5f6eba84e28874bbb7088706687ebb9e98023fb4f497c25ed586c0bf5f17",
       "public_sha256": "c88d99b676701ae21fcb53359709089d18fe55d1a078f940004a05a6c03182c9",
       "bytes": 25035,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "kind": "adaptation",
+      "reason": "Private application editorial attribution removed; original closed exit-code subset, alias and reserved-headroom assertions retained without claiming complete current CLI allocation.",
+      "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
+      "public_sha256": "b07c1b90b9c9b5a5253478dcc56a4b132a5f679f5797f2b44a0041669908babd",
+      "bytes": 46407,
       "mode": 420
     },
     {
@@ -5853,8 +6006,8 @@
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 2687,
-      "public_sha256": "b9731bc16f037b94930da1c11a87fda98a72210be98697e49a67a0a76e613122",
+      "bytes": 2714,
+      "public_sha256": "2d2b13cdb0b7ce35d8c377631628784195f003c2cd3cd568624ae76668c38c2c",
       "mode": 420
     },
     {
@@ -5909,6 +6062,15 @@
       "baseline_sha256": "75bacdf304fa8795ea54c6c77b849c0c0a19f812804e32d966d3e21246fa54d3",
       "bytes": 26682,
       "public_sha256": "75bacdf304fa8795ea54c6c77b849c0c0a19f812804e32d966d3e21246fa54d3",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_report_json.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "public_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "bytes": 30758,
       "mode": 420
     },
     {
@@ -6123,8 +6285,8 @@
       "kind": "adaptation",
       "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": "c8c0d8e4543172d1043e39cbb9d09acded136bb54ea753aeb3951c9f4e51b907",
-      "public_sha256": "069a1519c14c268b0bf922ffc6164194d1c89a6a6d0fb4cb5610ec6191398aa3",
-      "bytes": 23945,
+      "public_sha256": "bb6fc2a794eb560ae0bb65beb036659b2edba489274f0b3369ff458230a1eabc",
+      "bytes": 23946,
       "mode": 420
     },
     {

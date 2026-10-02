@@ -545,7 +545,7 @@ def test_phase1_corpus(case: dict, tmp_path: Path, request: pytest.FixtureReques
     assert result.returncode == answer["expected_exit"], result.stdout + result.stderr
     if surface == "bulk-check":
         request.node.user_properties.append(("temporal_cli_seconds", elapsed))
-        assert elapsed < 5, f"temporal work limit took {elapsed:.2f}s"
+        assert elapsed < 10, f"temporal work limit took {elapsed:.2f}s"
     if command[-1] == "json" and result.stdout.startswith("{"):
         payload = _json_result(result)
         assert payload["exit_code"] == answer["expected_exit"]

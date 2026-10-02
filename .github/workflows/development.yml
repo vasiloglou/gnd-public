@@ -37,6 +37,7 @@ jobs:
           tests/test_coverage_payload.py
           tests/test_digest_helpers.py
           tests/test_doccheck.py
+          tests/test_doctor_uninstall.py
           tests/test_evolution_conformance.py
           tests/test_exp_session_e2e.py
           tests/test_extract_cli.py
@@ -45,6 +46,7 @@ jobs:
           tests/test_install.py
           tests/test_junit_reader.py
           tests/test_measure_negative_control.py
+          tests/test_measure_offline.py
           tests/test_measure_score.py
           tests/test_model_evolution.py
           tests/test_model_identity.py
@@ -59,6 +61,7 @@ jobs:
           tests/test_public_migration.py
           tests/test_pyrel_export_boundaries.py
           tests/test_recovery_inventory.py
+          tests/test_report_json.py
           tests/test_review_report.py
           tests/test_review_request.py
           tests/test_ring_frozen.py

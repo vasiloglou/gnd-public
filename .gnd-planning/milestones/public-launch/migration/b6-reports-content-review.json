@@ -1,0 +1,86 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_report_json.py",
+      "source_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "target_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_measure_offline.py",
+      "source_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
+      "target_sha256": "b07c1b90b9c9b5a5253478dcc56a4b132a5f679f5797f2b44a0041669908babd",
+      "adaptation": "Private application editorial attribution removed; original closed exit-code subset, alias and reserved-headroom assertions retained without claiming complete current CLI allocation.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/adversarial/models/hostile_values.orm.yaml",
+      "source_sha256": "16d1291e2e4640f2840fd4c978eaafde8fccbb0260ad3559e84c8e8601c4fefe",
+      "target_sha256": "16d1291e2e4640f2840fd4c978eaafde8fccbb0260ad3559e84c8e8601c4fefe",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/adversarial/populations/hostile_values.yaml",
+      "source_sha256": "49348390ea455ab82890658eeff51da8dd5bbc7edbd1b4fb455dd832b1651016",
+      "target_sha256": "49348390ea455ab82890658eeff51da8dd5bbc7edbd1b4fb455dd832b1651016",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/adversarial/populations/omission.missing_role.yaml",
+      "source_sha256": "7532ccd543a5659013230dd3ec36f2a62153ab108b86aaa0f5f0e7d9c1b492a8",
+      "target_sha256": "7532ccd543a5659013230dd3ec36f2a62153ab108b86aaa0f5f0e7d9c1b492a8",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/adversarial/models/model_id_a.orm.yaml",
+      "source_sha256": "0b0bdbc6a1ceca156b7d76d6db40e1d1ee6d8472428178db84b86b38fd14c1e0",
+      "target_sha256": "0b0bdbc6a1ceca156b7d76d6db40e1d1ee6d8472428178db84b86b38fd14c1e0",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/adversarial/populations/model_id_absent_and_malformed.yaml",
+      "source_sha256": "d7274c50a8f3ccf2b907eaf53884dc207f8ffc27188f70e4ee340fdb7cd64527",
+      "target_sha256": "d7274c50a8f3ccf2b907eaf53884dc207f8ffc27188f70e4ee340fdb7cd64527",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml",
+      "source_sha256": "76d92942f64d53ee0029b844ddb8f78e63f90b5dfe8e51a24a5705759188bf15",
+      "target_sha256": "76d92942f64d53ee0029b844ddb8f78e63f90b5dfe8e51a24a5705759188bf15",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/population.yaml",
+      "source_sha256": "10648836401d290045bfd412e09906e15e6fede19b6335656742520db7ef49b4",
+      "target_sha256": "10648836401d290045bfd412e09906e15e6fede19b6335656742520db7ef49b4",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml",
+      "source_sha256": "7e700c426cba94dc45370898f2fa09108ab429571d6e452a9ee95ded83139639",
+      "target_sha256": "7e700c426cba94dc45370898f2fa09108ab429571d6e452a9ee95ded83139639",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/population.yaml",
+      "source_sha256": "e8a08b0596b93b650b202f5f4f6448e386fa6ed021e29b2374c2908bbe41a8bc",
+      "target_sha256": "e8a08b0596b93b650b202f5f4f6448e386fa6ed021e29b2374c2908bbe41a8bc",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    }
+  ],
+  "definitions": 59,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "8a0e3fab293d1a023f8302cc74e6ae1a0b5a3ed12ade47b9604f3d78645f8b81"
+}

@@ -1,0 +1,62 @@
+# tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml
+#
+# The second over-correction control for F-02, and the sharpest one: an alethic
+# `cardinality` LOWER bound on the same unplayed object type.
+#
+# "There is at least one Colour" over a population containing no Colour is not
+# an undecided constraint — it is a DECIDED, VIOLATED one. A count of zero is the
+# evidence. So the F-02 repair must not convert every empty-universe verdict to
+# vacuous; it may overturn only a `pass`, which is the only verdict that
+# constituted an affirmative claim over nothing.
+#
+# Without this case the narrowing is invisible: a repair that answered vacuous
+# on any empty universe would still pass the F-02 case itself, and would quietly
+# demote a true alethic failure from exit 1 to exit 2.
+#
+# The model MUST validate clean (`gnd validate` exits 0).
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+
+  - id: score
+    name: Score
+    kind: value
+    primitive: Integer
+
+  - id: colour
+    name: Colour
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: person_has_score
+    reading: "{Person} has score {Score}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: score, role_name: score }
+
+constraints:
+  - type: cardinality
+    scope: object
+    object_type: colour
+    bound: { min: 1 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "There is at least one colour."

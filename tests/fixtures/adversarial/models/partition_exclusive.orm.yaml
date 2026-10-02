@@ -1,0 +1,94 @@
+# tests/fixtures/adversarial/models/partition_exclusive.orm.yaml
+#
+# The GUARD against over-correcting CR-02. Byte-for-byte
+# `partition_flagless.orm.yaml` plus `exclusive: true` on the one constraint.
+#
+# CR-02's repair reports `unchecked` when a `subtype-partition` asserts neither
+# component and rejects the shape at load. Rewriting the family to report
+# `unchecked` more broadly than that would hide a REAL violation behind band 4
+# and break no test — so this pairing pins the opposite direction: the same
+# population, the same subtypes, one flag set, and a genuine exclusion
+# violation ("P_BOTH" is in both `student` and `staff`) must still exit 1.
+#
+# Unlike its flagless sibling this model validates CLEAN at exit 0 and this
+# case exits 1 both BEFORE and after the fix. It is not a RED probe; it is the
+# fence around one.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: String
+
+  - id: course
+    name: Course
+    kind: value
+    primitive: String
+
+  - id: duty
+    name: Duty
+    kind: value
+    primitive: String
+
+  - id: student
+    name: Student
+    kind: entity
+    subtype_of: [person]
+    inherits_reference: true
+    derivation: asserted
+
+  - id: staff
+    name: Staff
+    kind: entity
+    subtype_of: [person]
+    inherits_reference: true
+    derivation: asserted
+
+fact_types:
+  # Subtype membership is observable through these subtype-typed roles.
+  - id: student_takes_course
+    reading: "{Student} takes {Course}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+
+  - id: staff_performs_duty
+    reading: "{Staff} performs {Duty}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: duty, role_name: duty }
+
+  # Populates `person` directly, so "P_LONELY" is in the supertype universe
+  # while belonging to no subtype.
+  - id: person_has_id_card
+    reading: "{Person} has id card {PersonId}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: person_id, role_name: card }
+
+constraints:
+  # One flag set: the "exclusive only" reading — "No person is more than one of:
+  # student, staff." Alethic, so the violation is a `fail` and a `fail` is exit 1.
+  # `exhaustive` stays unset, so "P_LONELY" (in no subtype) is correctly NOT a
+  # violation here — which is also what proves the two components are evaluated
+  # independently rather than as a bundle.
+  - type: subtype-partition
+    supertype: person
+    subtypes: [student, staff]
+    exclusive: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "People here are students and staff." }

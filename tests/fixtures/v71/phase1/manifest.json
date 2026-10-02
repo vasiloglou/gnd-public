@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "files": {
+    "README.md": {
+      "bytes": 1056,
+      "sha256": "1e2086eaacb0df4c075a251551a8eea897dcd5d15fcde6f7c1aeb8f012b0b448"
+    },
+    "answers.json": {
+      "bytes": 8495,
+      "sha256": "4c821f49b550c5013b3a1ae04ea7f9786ed20a3dab763716fbc940ef2ece90cf"
+    },
+    "dispatch/model.orm.yaml": {
+      "bytes": 3376,
+      "sha256": "2560b816b4736537f54b9cca69e46bcf0e4f3d855ca52e8bb81b0563887511b0"
+    },
+    "dispatch/population.pop.json": {
+      "bytes": 1346,
+      "sha256": "311848b02db68b9e2922fa983dec09d4503cc35c90aa465ef41096872876c51b"
+    },
+    "inputs.json": {
+      "bytes": 41213,
+      "sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70"
+    },
+    "release/model.orm.yaml": {
+      "bytes": 3250,
+      "sha256": "a2d3ce2a068460016be2d0bb2ee8b301ef9d602dd9730a5baeb8698d9a8070a3"
+    },
+    "release/population.pop.json": {
+      "bytes": 1311,
+      "sha256": "35fad91cee44f6c60a948f13c53443de61d68c6a3209c3b6f273cd18525149fa"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-06-entry-point-raises",
+  "story": "An uncaught traceback exits 1 against a declared 0: a band mismatch naming 0 and 1."
+}

@@ -1,0 +1,8 @@
+{
+  "format_version": 2,
+  "population": {"model": "join-model.orm.yaml", "model_id": "urn:gnd-fixture:v70-phase3-join@1", "source": "fixture", "covers": ["left_score", "right_score"]},
+  "facts": {
+    "left_score": [{"record": "R1", "score": {"$opaque": "unread-left-score"}}],
+    "right_score": [{"record": "R1", "score": 60}]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "steps_schema": 1,
+  "model": "../v2_operations.orm.yaml",
+  "model_digest": "sha256:819491f97e3a5882217d852b7c21b70487ca082bf9f88ffbded5e6cdb5e3ccc5",
+  "operations_digest": "sha256:010eca136a9cfa6b05dc58177bfad76922a869c61f13f2297c4028fc268bb8cd",
+  "steps": [
+    {
+      "op": "attach_review_note",
+      "bindings": {
+        "item": "WI-1",
+        "note": "N-1",
+        "reviewer": "R-1"
+      }
+    }
+  ]
+}

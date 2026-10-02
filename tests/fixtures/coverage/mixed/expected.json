@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "tree": "mixed",
+  "arguments": [
+    "v2_operations.orm.yaml",
+    "--experiments",
+    "experiments",
+    "--check",
+    "evidence/check.json",
+    "--verify",
+    "evidence/verify.json",
+    "--conformance",
+    "evidence/conformance.json",
+    "--transition",
+    "evidence/transition.json"
+  ],
+  "answer": {
+    "model_digest": "sha256:819491f97e3a5882217d852b7c21b70487ca082bf9f88ffbded5e6cdb5e3ccc5",
+    "census": {
+      "operation": {
+        "in_model": 2,
+        "claimed": 2,
+        "corroborated": 1,
+        "unclaimed": 0,
+        "unclaimed_with_evidence": 0
+      },
+      "fact_type": {
+        "in_model": 4,
+        "claimed": 1,
+        "corroborated": 1,
+        "unclaimed": 3,
+        "unclaimed_with_evidence": 3
+      },
+      "constraint": {
+        "in_model": 3,
+        "claimed": 3,
+        "corroborated": 3,
+        "unclaimed": 0,
+        "unclaimed_with_evidence": 0
+      }
+    },
+    "element_status": {
+      "operation:attach_review_note": "corroborated",
+      "operation:flag_work_item": "claimed",
+      "fact_type:work_item_has_state": "unclaimed",
+      "fact_type:work_item_reviewed_by": "unclaimed",
+      "fact_type:work_item_has_note": "corroborated",
+      "fact_type:work_item_has_priority": "unclaimed",
+      "constraint:one_state_per_item": "corroborated",
+      "fact_types[work_item_has_state].constraints[1]": "corroborated",
+      "constraint:one_priority_per_item": "corroborated"
+    },
+    "addressing": {
+      "constraint:one_state_per_item": "declared-id",
+      "constraint:one_priority_per_item": "declared-id",
+      "fact_types[work_item_has_state].constraints[1]": "positional"
+    },
+    "conclusions": {
+      "conclusions-present": [
+        "operation:attach_review_note",
+        "fact_type:work_item_has_note",
+        "constraint:one_state_per_item",
+        "constraint:one_priority_per_item",
+        "fact_types[work_item_has_state].constraints[1]"
+      ],
+      "no-conclusions": [
+        "operation:flag_work_item"
+      ]
+    },
+    "evidence_addresses": {
+      "check": [
+        "fact_type:work_item_has_state",
+        "fact_type:work_item_reviewed_by",
+        "fact_type:work_item_has_note",
+        "fact_type:work_item_has_priority",
+        "constraint:one_state_per_item",
+        "fact_types[work_item_has_state].constraints[1]",
+        "constraint:one_priority_per_item"
+      ],
+      "verify": [
+        "fact_type:work_item_has_state",
+        "fact_type:work_item_reviewed_by",
+        "fact_type:work_item_has_note",
+        "fact_type:work_item_has_priority",
+        "constraint:one_state_per_item",
+        "fact_types[work_item_has_state].constraints[1]",
+        "constraint:one_priority_per_item"
+      ],
+      "conformance": [
+        "fact_type:work_item_has_state",
+        "fact_type:work_item_reviewed_by",
+        "fact_type:work_item_has_note",
+        "fact_type:work_item_has_priority"
+      ],
+      "transition": [
+        "operation:attach_review_note",
+        "fact_type:work_item_has_state",
+        "fact_type:work_item_has_note"
+      ]
+    },
+    "unmatched_covers": [
+      {
+        "experiment": "EXP-502-claimed-and-unmatched",
+        "path": "experiments/EXP-502-claimed-and-unmatched/SPEC.md",
+        "address": "constraint:no_such_constraint",
+        "reason": "the model declares no element with this id"
+      }
+    ],
+    "unstable_addresses": [
+      {
+        "experiment": "EXP-501-corroborated",
+        "path": "experiments/EXP-501-corroborated/SPEC.md",
+        "address": "fact_types[work_item_has_state].constraints[1]",
+        "note": "positional; reordering the model's constraints silently retargets this row"
+      }
+    ],
+    "covers_exemptions": [
+      {
+        "experiment": "EXP-503-tests-only",
+        "path": "experiments/EXP-503-tests-only/SPEC.md",
+        "exemption": "tests-only"
+      }
+    ],
+    "refused_sources": []
+  }
+}

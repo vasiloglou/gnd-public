@@ -23,18 +23,36 @@ jobs:
         run: >-
           uv run pytest -q
           tests/test_address.py
+          tests/test_archsmoke.py
+          tests/test_artifacts.py
           tests/test_atom_bind.py
           tests/test_checker_families.py
+          tests/test_codegen_architecture.py
           tests/test_codegen_emit.py
+          tests/test_codegen_force.py
+          tests/test_codegen_manifest.py
           tests/test_conformance_drift.py
+          tests/test_conformance_payload.py
+          tests/test_conformance_structural.py
+          tests/test_coverage_payload.py
+          tests/test_digest_helpers.py
           tests/test_doccheck.py
+          tests/test_evolution_conformance.py
           tests/test_exp_session_e2e.py
           tests/test_extract_cli.py
           tests/test_extract_manifest.py
+          tests/test_fidelity_payload.py
+          tests/test_install.py
           tests/test_junit_reader.py
+          tests/test_measure_negative_control.py
           tests/test_measure_score.py
+          tests/test_model_evolution.py
           tests/test_model_identity.py
           tests/test_model_validation.py
+          tests/test_model_verbalization.py
+          tests/test_poolfile.py
+          tests/test_population_load.py
+          tests/test_popvalidate.py
           tests/test_public_api.py
           tests/test_public_coverage_progress.py
           tests/test_public_installer.py
@@ -43,7 +61,26 @@ jobs:
           tests/test_recovery_inventory.py
           tests/test_review_report.py
           tests/test_review_request.py
+          tests/test_ring_frozen.py
+          tests/test_schema_sync.py
+          tests/test_skeleton_e2e.py
+          tests/test_subtype_universe.py
+          tests/test_synth_boundary.py
+          tests/test_synth_conforming.py
           tests/test_synth_derivation_refusal.py
+          tests/test_synth_expectation_independence.py
+          tests/test_synth_false_pass_quarantine.py
+          tests/test_synth_mutate.py
           tests/test_synth_mutate_derivation.py
+          tests/test_synth_oracle_value_range.py
           tests/test_synth_tagged_comparison.py
+          tests/test_synth_values.py
+          tests/test_v62_phase2_intermediate.py
+          tests/test_v62_phase3_terms.py
+          tests/test_v62_phase5_terms.py
+          tests/test_v70_phase3_opaque.py
+          tests/test_v70_phase4_runtime.py
+          tests/test_v70_phase4_transition.py
+          tests/test_v71_phase1_dates.py
+          tests/test_verify_cli.py
           --tb=short

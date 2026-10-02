@@ -1,0 +1,7 @@
+population:
+  model: ../library.orm.yaml
+  model_id: gnd-fixture-library-v1
+  source: fixture
+  covers: []
+
+facts: {}

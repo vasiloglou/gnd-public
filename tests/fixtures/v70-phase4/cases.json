@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "patch_language": "add, remove, replace on slash-separated object keys or zero-based array positions; '-' appends",
+  "cases": [
+    {"id": "P01-scalar-control", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": true},
+    {"id": "P02-opaque-claimed", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/observed/-", "value": {"record": "R1", "item": {"$opaque": "missing-item"}}},
+        {"op": "add", "path": "/facts/inferred/-", "value": {"record": "R1", "item": "B"}}
+      ]},
+    {"id": "P03-opaque-unclaimed", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/observed/-", "value": {"record": "R1", "item": {"$opaque": "missing-item"}}}
+      ]},
+    {"id": "P04-three-findings", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/observed/-", "value": {"record": "R1", "item": {"$opaque": "missing-item"}}},
+        {"op": "replace", "path": "/facts/inferred", "value": [
+          {"record": "R1", "item": "B"}, {"record": "R2", "item": "C"}
+        ]}
+      ]},
+    {"id": "P05-semiderived-unknown", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": true,
+      "model_edits": [{"op": "replace", "path": "/fact_types/1/derivation", "value": "semiderived"}],
+      "population_edits": [
+        {"op": "add", "path": "/facts/observed/-", "value": {"record": "R1", "item": {"$opaque": "missing-item"}}},
+        {"op": "add", "path": "/facts/inferred/-", "value": {"record": "R1", "item": "B"}}
+      ]},
+    {"id": "P06-semiderived-surplus", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": true,
+      "model_edits": [{"op": "replace", "path": "/fact_types/1/derivation", "value": "semiderived"}],
+      "population_edits": [
+        {"op": "add", "path": "/facts/inferred/-", "value": {"record": "R2", "item": "C"}}
+      ]},
+    {"id": "P07-no-admission-projection", "model": "positive.orm.yaml", "population": "positive.pop.json", "admission": false,
+      "population_edits": [
+        {"op": "add", "path": "/facts/observed/-", "value": {"record": "R1", "item": {"$opaque": "missing-item"}}},
+        {"op": "add", "path": "/facts/inferred/-", "value": {"record": "R1", "item": "B"}}
+      ]},
+    {"id": "N01-negation-unknown", "model": "negation.orm.yaml", "population": "negation.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/blocked/-", "value": {"record": {"$opaque": "missing-blocked-id"}}}
+      ]},
+    {"id": "N02-negation-unknown-unclaimed", "model": "negation.orm.yaml", "population": "negation.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/blocked/-", "value": {"record": {"$opaque": "missing-blocked-id"}}},
+        {"op": "replace", "path": "/facts/permitted", "value": []}
+      ]},
+    {"id": "N03-negation-definite-hit", "model": "negation.orm.yaml", "population": "negation.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/blocked/-", "value": {"record": "R1"}},
+        {"op": "replace", "path": "/facts/permitted", "value": []}
+      ]},
+    {"id": "N04-negation-definite-miss", "model": "negation.orm.yaml", "population": "negation.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "add", "path": "/facts/blocked/-", "value": {"record": "R2"}}
+      ]},
+    {"id": "R01-recursive-unknown", "model": "recursive.orm.yaml", "population": "recursive.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "replace", "path": "/facts/edge/1/target", "value": {"$opaque": "missing-node"}}
+      ]},
+    {"id": "R02-recursive-unclaimed", "model": "recursive.orm.yaml", "population": "recursive.pop.json", "admission": true,
+      "population_edits": [
+        {"op": "replace", "path": "/facts/edge/1/target", "value": {"$opaque": "missing-node"}},
+        {"op": "replace", "path": "/facts/reaches", "value": [{"source": "A", "target": "B"}]}
+      ]},
+    {"id": "T01-walk-unknown-precondition", "model": "recursive.orm.yaml", "population": "recursive.pop.json", "steps": "visit.steps.json",
+      "population_edits": [
+        {"op": "replace", "path": "/facts/edge/1/target", "value": {"$opaque": "missing-node"}}
+      ]},
+    {"id": "T02-walk-scalar-control", "model": "recursive.orm.yaml", "population": "recursive.pop.json", "steps": "visit.steps.json"}
+  ]
+}

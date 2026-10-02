@@ -1,0 +1,39 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase3-admission@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: record_id, name: RecordId, kind: value, primitive: String}
+  - {id: holder, name: Holder, kind: value, primitive: String}
+  - {id: amount, name: Amount, kind: value, primitive: Integer}
+  - {id: approval, name: Approval, kind: value, primitive: String}
+  - {id: notice, name: Notice, kind: value, primitive: String}
+  - id: record
+    name: Record
+    kind: entity
+    reference: {mode: popular, value_type: record_id}
+fact_types:
+  - id: record_key
+    reading: "{RecordId} identifies a record"
+    roles: [{object_type: record_id, role_name: id}]
+    constraints:
+      - {type: value, object_type: record_id, role_ref: {fact_type: record_key, role: id}, allowed: [R1, R2], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "The two records are R1 and R2."}}
+  - id: record_has_holder
+    reading: "{Record} has holder {Holder}"
+    roles: [{object_type: record, role_name: record}, {object_type: holder, role_name: holder}]
+    constraints:
+      - {type: uniqueness, roles: [holder], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "Each holder occurs once."}}
+  - id: record_has_amount
+    reading: "{Record} has amount {Amount}"
+    roles: [{object_type: record, role_name: record}, {object_type: amount, role_name: amount}]
+    constraints:
+      - {type: value, object_type: amount, role_ref: {fact_type: record_has_amount, role: amount}, allowed: [10, 20], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "The admitted amounts are 10 and 20."}}
+  - id: approval_for_record
+    reading: "{Record} has approval {Approval}"
+    roles: [{object_type: record, role_name: record}, {object_type: approval, role_name: approval}]
+    depends_on: [record_has_amount]
+  - id: notice_for_record
+    reading: "{Record} has notice {Notice}"
+    roles: [{object_type: record, role_name: record}, {object_type: notice, role_name: notice}]
+    depends_on: [approval_for_record]
+constraints: []
+rejected_proposals: []

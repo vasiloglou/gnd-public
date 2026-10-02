@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "S-14-negative-control-empty-parametrization",
+  "story": "NEGATIVE CONTROL. Mutation: drop every declared row from the parametrization while the contract still declares them. The declares-rows guard must go RED. If it stays green the guard is vacuous and a silently empty smoke suite passes.",
+  "kind": "negative-control",
+  "must_red": [
+    "S-01-accepting-row"
+  ]
+}

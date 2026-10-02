@@ -1,0 +1,37 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_install.py",
+      "source_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "target_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_conformance_payload.py",
+      "source_sha256": "3d91333d549c05c14b06eab3941d0f2798b5e422db8430964c5576fc3d461523",
+      "target_sha256": "340f4b244f411c8b60ead825d4c935970ba80bd969f695d2bf75f6e62f61849e",
+      "adaptation": "Private renderer application replaced by independently generated generic declared extension; current report schema variants checked; only explicit schema literal helper extracted; semantic assertions retained.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/static/expected.json",
+      "source_sha256": "70f59ba1eebd6c5f95ab8837d57659e5331a477c4425a47a303308461076031b",
+      "target_sha256": "70f59ba1eebd6c5f95ab8837d57659e5331a477c4425a47a303308461076031b",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/support/runtime_schema_inventory.py",
+      "source_sha256": null,
+      "target_sha256": "a6eb77c0b7cd7d3ad79fe092a39fc48045569e6e2392d0838ad944aeb4b849e3",
+      "adaptation": "Explicit source schema literal plus current judgment schema obligation; independent disk traversal preserved and installed distribution bound to approved exact runtime manifest.",
+      "review": "Original eleven-path guard omits current shipped judgment schema and reproduces failure on unchanged source; successor adds exact current P2 resource."
+    }
+  ],
+  "definitions": 101,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "d059ce7671ced1a1591384c73530f159e1dc9f73954132d1f26234681d6dd203"
+}

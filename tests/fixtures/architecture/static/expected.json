@@ -1,0 +1,1374 @@
+{
+  "schema_version": 1,
+  "case_count": 48,
+  "cases": {
+    "C-01-contract-malformed": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "8f9302f65614f26c0ac129b3a69b2617d858989920ca60be65da649dc4b34118"
+      },
+      "declared": null,
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-unreadable",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "architecture contract",
+            "invalid"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-02-contract-oversized": {
+      "ran": true,
+      "contract": null,
+      "declared": null,
+      "scanned": [],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-unreadable",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "architecture contract",
+            "1048576",
+            "over"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-03-contract-symlink": {
+      "ran": true,
+      "contract": null,
+      "declared": null,
+      "scanned": [],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-unreadable",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "architecture contract",
+            "symlink"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-04-contract-directory": {
+      "ran": true,
+      "contract": null,
+      "declared": null,
+      "scanned": [],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-unreadable",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "architecture contract",
+            "not a regular file"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-05-source-count-budget": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "31794645363a5dd88e5cc53c15add7ae9375f566610f541ee58cfe8faac29929"
+      },
+      "declared": {
+        "modules": 1025,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-unreadable",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "unique source",
+            "1024"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-06-source-byte-budget": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "315afbb2298bf8c7356163d868b93b7350d4eb42f3e77cad0d27a516d69e753d"
+      },
+      "declared": {
+        "modules": 65,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-unreadable",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "aggregate source",
+            "67108864"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-07-manifest-listed-contract-missing": {
+      "ran": true,
+      "contract": null,
+      "declared": null,
+      "scanned": [],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-missing",
+          "target": "architecture.contract.yaml",
+          "message_contains": [
+            "manifest",
+            "architecture.contract.yaml",
+            "missing"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-08-pre-v4-contract-absent": {
+      "ran": true,
+      "contract": null,
+      "declared": null,
+      "scanned": [],
+      "contract_absent": true,
+      "findings": [],
+      "exit": 0
+    },
+    "C-09-valid-empty-contract": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "62748ada75d8697c4d46be375711791f13d5e73ae5b61b2aeac2bb92161aba93"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 0
+    },
+    "C-10-module-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-module-missing",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "missing"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-11-module-symlink": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-module-missing",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "symlink"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-12-module-directory": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-module-missing",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "not a regular file"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-13-required-by-only-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "619b5575c2ed21b6c0977e17e668c93296302519a4108308a4eacf173ffffe0b"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-module-missing",
+          "target": "dependency.py",
+          "message_contains": [
+            "dependency.py",
+            "missing"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-14-all-role-source-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-module-missing",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "missing"
+          ]
+        },
+        {
+          "kind": "entry-point-module-missing",
+          "target": "app",
+          "message_contains": [
+            "app.py",
+            "missing"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-15-source-invalid-utf8": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "unparseable-source",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "architecture-source-decode"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-16-source-syntax-error": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "unparseable-source",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "architecture-source-parse"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-17-source-oversized": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "unparseable-source",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "architecture-source-oversized"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-18-source-read-refusal": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "unparseable-source",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "architecture-source-read"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-19-symbol-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-symbol-missing",
+          "target": "app.py:main",
+          "message_contains": [
+            "app.py",
+            "main",
+            "effective function"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-20-symbol-replaced-by-assignment": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-symbol-missing",
+          "target": "app.py:main",
+          "message_contains": [
+            "app.py",
+            "main",
+            "effective function"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-21-symbol-replaced-by-class": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-symbol-missing",
+          "target": "app.py:main",
+          "message_contains": [
+            "app.py",
+            "main",
+            "effective function"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-22-symbol-replaced-by-import": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-symbol-missing",
+          "target": "app.py:main",
+          "message_contains": [
+            "app.py",
+            "main",
+            "effective function"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-23-symbol-parameter-value-mismatch": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "eda23a1bb768b97b1bad4317ae0f0fbcdd715a8f7779b124570782489e0983f5"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "symbol-shape-mismatch",
+          "target": "app.py:main",
+          "message_contains": [
+            "main",
+            "argv",
+            "args"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-24-symbol-parameter-order-mismatch": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "d2a383f07f9b48bb6b6f7eab3f091eecf0887fd317233727a897e5f51ea72254"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "symbol-shape-mismatch",
+          "target": "app.py:main",
+          "message_contains": [
+            "main",
+            "argv",
+            "context"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-25-artifact-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "d7a4a9bbf891ceab726843053d80e0da635ba97f1a5f43fda163b412b407aabc"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-artifact-missing",
+          "target": "artifacts/data.json",
+          "message_contains": [
+            "artifacts/data.json",
+            "missing"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-26-artifact-symlink": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "d7a4a9bbf891ceab726843053d80e0da635ba97f1a5f43fda163b412b407aabc"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-artifact-missing",
+          "target": "artifacts/data.json",
+          "message_contains": [
+            "artifacts/data.json",
+            "symlink"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-27-artifact-directory": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "d7a4a9bbf891ceab726843053d80e0da635ba97f1a5f43fda163b412b407aabc"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-artifact-missing",
+          "target": "artifacts/data.json",
+          "message_contains": [
+            "artifacts/data.json",
+            "not a regular file"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-28-artifact-absent-with-wrong-path": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-artifact-missing",
+          "target": "artifacts/data.json",
+          "message_contains": [
+            "artifacts/data.json",
+            "missing"
+          ]
+        },
+        {
+          "kind": "artifact-path-mismatch",
+          "target": "app.py",
+          "message_contains": [
+            "artifacts/data.json",
+            "wrong/data.json",
+            "line 2"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-29-pathlib-path-mismatch": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "artifact-path-mismatch",
+          "target": "app.py",
+          "message_contains": [
+            "artifacts/data.json",
+            "wrong/data.json",
+            "line 2"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-30-os-path-mismatch": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "artifact-path-mismatch",
+          "target": "app.py",
+          "message_contains": [
+            "artifacts/data.json",
+            "wrong/data.json",
+            "line 2"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-31-correct-artifact-path": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 0
+    },
+    "C-32-correct-and-wrong-siblings": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "artifact-path-mismatch",
+          "target": "app.py",
+          "message_contains": [
+            "artifacts/data.json",
+            "wrong/data.json",
+            "line 3"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-33-literal-name-indirection-limit": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 0
+    },
+    "C-34-escape-above-root-limit": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 0
+    },
+    "C-35-artifact-reference-basename-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "0c3ac0399b4c030216c4947cf314b083185b78ae2b2759787c2d9faa0045a112"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "artifact-reference-unfound",
+          "target": "app.py",
+          "message_contains": [
+            "app.py",
+            "data.json",
+            "literal basename"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-36-two-source-suppression": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "17c46a27aa510f522ac4d14914cddd87d6c2ebd02899a44d7996dad354f4d9a0"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 1,
+        "artifact_requirements": 2,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml",
+        "bad.py",
+        "good.py"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "unparseable-source",
+          "target": "bad.py",
+          "message_contains": [
+            "bad.py",
+            "architecture-source-parse"
+          ]
+        },
+        {
+          "kind": "artifact-path-mismatch",
+          "target": "good.py",
+          "message_contains": [
+            "artifacts/data.json",
+            "wrong/data.json",
+            "line 2"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-37-entry-module-absent": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "ff295de3ad80987118cd5971734aa5614bd3cc69daba914520a06e1e203ccc68"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "entry-point-module-missing",
+          "target": "app",
+          "message_contains": [
+            "app.py",
+            "missing"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-38-entry-module-symlink": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "ff295de3ad80987118cd5971734aa5614bd3cc69daba914520a06e1e203ccc68"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "entry-point-module-missing",
+          "target": "app",
+          "message_contains": [
+            "app.py",
+            "symlink"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-39-entry-module-directory": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "ff295de3ad80987118cd5971734aa5614bd3cc69daba914520a06e1e203ccc68"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "entry-point-module-missing",
+          "target": "app",
+          "message_contains": [
+            "app.py",
+            "not a regular file"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-40-invalid-dotted-entry-module": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "1b474cfa6b22e688f3a5d70ca38cffad76259f0dbf7edde15fab285638eb1531"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "entry-point-module-missing",
+          "target": "bad-module",
+          "message_contains": [
+            "bad-module",
+            "invalid dotted module"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-41-entry-flag-missing": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "ff295de3ad80987118cd5971734aa5614bd3cc69daba914520a06e1e203ccc68"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "entry-point-flag-unfound",
+          "target": "app:--input",
+          "message_contains": [
+            "flag",
+            "--input"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-42-entry-subcommand-missing": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "ff295de3ad80987118cd5971734aa5614bd3cc69daba914520a06e1e203ccc68"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "entry-point-flag-unfound",
+          "target": "app:run",
+          "message_contains": [
+            "subcommand",
+            "run"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-43-nested-entry-literals": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "ff295de3ad80987118cd5971734aa5614bd3cc69daba914520a06e1e203ccc68"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 0
+    },
+    "C-44-unknown-consumed-fact": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "01b5a1f096deb1fe78f5947b4c4f707fa323bdef347b7b9be23e328b4af6dec4"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-fact-type-unknown",
+          "target": "unknown_fact",
+          "message_contains": [
+            "consumes",
+            "unknown_fact"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-45-unknown-produced-fact": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "12fb03a5a5afc317ddf18d262ca80674ed4b429af809730153c46c59e8c0ea81"
+      },
+      "declared": {
+        "modules": 0,
+        "symbols": 0,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "contract-fact-type-unknown",
+          "target": "unknown_fact",
+          "message_contains": [
+            "produces",
+            "unknown_fact"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-46-root-race-band-74": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 74,
+      "service_error_contains": [
+        "root-race"
+      ],
+      "service_architecture_ran": true
+    },
+    "C-47-symlinked-source-ancestor": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "45e3f62fef9f6ba5f922d21157d15f1e3f2002d72426df50c77c7797a1a195d1"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 0,
+        "artifact_requirements": 0,
+        "entry_points": 0,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [
+        {
+          "kind": "declared-module-missing",
+          "target": "pkg/app.py",
+          "message_contains": [
+            "pkg/app.py",
+            "symlinked ancestor"
+          ]
+        }
+      ],
+      "exit": 13
+    },
+    "C-48-full-conforming-control": {
+      "ran": true,
+      "contract": {
+        "relpath": "architecture.contract.yaml",
+        "sha256": "4b437983ee5c94429e0eab4a41e525fc48ec01918d28cf22b5ca7437be87be4c"
+      },
+      "declared": {
+        "modules": 1,
+        "symbols": 1,
+        "artifacts": 1,
+        "artifact_requirements": 1,
+        "entry_points": 1,
+        "smoke_rows": 0
+      },
+      "scanned": [
+        "app.py",
+        "architecture.contract.yaml"
+      ],
+      "contract_absent": false,
+      "findings": [],
+      "exit": 0
+    }
+  }
+}

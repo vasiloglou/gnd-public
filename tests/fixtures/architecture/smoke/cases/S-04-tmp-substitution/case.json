@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-04-tmp-substitution",
+  "story": "Two rows each write to {tmp}/out.json. Both pass, and the two tmp dirs differ."
+}

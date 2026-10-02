@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "S-08-negative-control-never-spawns",
+  "story": "NEGATIVE CONTROL. Mutation: make run_row return the declared band without ever spawning. S-03, S-06 and S-11 must all go RED. If they stay green the corpus cannot tell a working runner from one that never runs anything.",
+  "kind": "negative-control",
+  "must_red": [
+    "S-03-band-mismatch",
+    "S-06-entry-point-raises",
+    "S-11-entry-point-unresolvable"
+  ]
+}

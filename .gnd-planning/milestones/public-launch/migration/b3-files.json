@@ -1,5 +1,5 @@
 {
-  "scope": "B3 reviewed subset only; phase acceptance incomplete",
+  "scope": "P3 reviewed subset through approved additional batch 2; acceptance incomplete",
   "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
   "source_high_water": "d8ac975e080a428fd7e32aea493cad722e54f7d1",
   "target_baseline": "8ab28f2501a0d0fdb392dd324eca694f9448b907",
@@ -496,9 +496,9 @@
     {
       "path": ".github/workflows/development.yml",
       "kind": "adaptation",
-      "reason": "P3 explicitly selected test bootstrap, current staging manifest or bounded reviewed-subset CI; runtime behavior unchanged.",
-      "bytes": 1864,
-      "public_sha256": "d25f075343aa25012f5125f886b97f52efd04deddb43d74772949379779a5af9",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "bytes": 3385,
+      "public_sha256": "4e34a32d617d1505b3c5af3ed04f4aa43a94af308b48ddacd59cef71f69363f7",
       "mode": 420,
       "baseline_sha256": "af43e3d35763ef8eb928361589399c7402eb1afefe5e4516e6354abc93e15646"
     },
@@ -585,20 +585,20 @@
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/b3-extra-case-map.jsonl.gz",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
       "bytes": 4171,
-      "public_sha256": "870cbab1f85a6ccf6578d8713d6926bcd08ce220325e6fcaf618dbfa319c4a81",
+      "public_sha256": "699cf271efae750957b5104b74fee173710e46189841df2981df8bbd77c2abb0",
       "mode": 420
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/b3-extra-content-review.json",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 7120,
-      "public_sha256": "6443f4cc235bb00b7ff499ab3daeed50bd27ce9272826d989250b036972c0933",
+      "bytes": 7096,
+      "public_sha256": "231c4b28260318e76ad3b7db6358d24c819c27815028620e155e4084785adb3e",
       "mode": 420
     },
     {
@@ -612,20 +612,20 @@
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/b3-initial-case-map.jsonl.gz",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
       "bytes": 6046,
-      "public_sha256": "6287eba25cf1a0bdb3524d7c000390371aec51a5992ced4b8272dd1fecbf1a44",
+      "public_sha256": "3078a2902f2bfec86bb224a2b89fb8252d0ea6ac361c478d199558fda89b83b3",
       "mode": 420
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/b3-initial-content-review.json",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 3523,
-      "public_sha256": "e7fae155ee215298831f5a09f659b07e43c9acfa606d4986cd8f1ced4529dffe",
+      "bytes": 3499,
+      "public_sha256": "b6f6612959b0e90ad5b9d175a27ef0eb5b856e8a450aa288ecbdf665cf7d3d10",
       "mode": 420
     },
     {
@@ -639,20 +639,20 @@
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/b3-reviewed-case-map.jsonl.gz",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 11554,
-      "public_sha256": "1ae60820135063e0ef82b84c2f6d738d3bf4b2d7ed987c869f4208c5c8f705e2",
+      "bytes": 11659,
+      "public_sha256": "558e322afb36323ef3cddc7f53db63b18e182e9593cf9b14244c8dea72ea7255",
       "mode": 420
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/b3-reviewed-content-review.json",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 19597,
-      "public_sha256": "97eb2859326727a5728380c29afbc6740cc5cab4c7668ca16b18232e0ddb06f3",
+      "bytes": 19704,
+      "public_sha256": "07aa8d854df53151877a957536d7b61761d2094eb035ac18b2b2fa5a219dcd79",
       "mode": 420
     },
     {
@@ -665,12 +665,228 @@
       "mode": 420
     },
     {
-      "path": ".gnd-planning/milestones/public-launch/migration/collection.json",
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-artifacts-case-map.jsonl.gz",
       "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
       "baseline_sha256": null,
-      "bytes": 132907,
-      "public_sha256": "c3a4735a8c0b760176ea1e5055f6e2816432e2cc7bc027327ddad07edb3c85b9",
+      "public_sha256": "22be16b4ca9c05e6c098fcb3861d44ece981b76c834bf9396c748d054e5a5d99",
+      "bytes": 4544,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-artifacts-content-review.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "69c8c847debb3c851b011797617645581caa3a90595f88bd9f7551058bf40a1d",
+      "bytes": 1314,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-artifacts-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "904e10c7d2acf93bb7309e8803ae0971056b89abe0b0fd93eb31b9f04996cf95",
+      "bytes": 7829,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-core-case-map.jsonl.gz",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "bb7b752744ad98889d075670befddaae3c81f2bc9b03ac0d03fcf154280e328f",
+      "bytes": 11572,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-core-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "c80cdf788740e9fcefc9584df967378a1a742251741c4c3bd3528698d0e6f7a2",
+      "bytes": 31101,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-core-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "8eed6c2c8e7b1090f765e07f3e6da9dbd911b3d1bf0c46ae674b404fd8d9f90e",
+      "bytes": 18385,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-population-case-map.jsonl.gz",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "f26052a6d02760b885b64e337f02f0a4abe16f00c6e4327d635c5abd03c9ee78",
+      "bytes": 2260,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-population-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "50850f7a3e27831745eeba8b837fa0468598846f8f22de2d0c3482be6433692a",
+      "bytes": 3184,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-population-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "3d0eafe1413e9c1a50052eaae7f91f9079e72946125f4e2bbbeb472e757ce9cd",
+      "bytes": 4644,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-synth-case-map.jsonl.gz",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "aa5fc24a5b2ca775e06fb9965d75e37cae0a8ae482fc8ffd828138d5e2fd917d",
+      "bytes": 7388,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-synth-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "5f001681782ec90a89eb9e463276738d61afa5037bd15c7539b90938c1c05d96",
+      "bytes": 9635,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-synth-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "a034d263622c23908dddda54eb6692d8c3c9090f5e142d0b5025bc07bf024d8a",
+      "bytes": 10923,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-transition-case-map.jsonl.gz",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "ec51a81a92a079d250f207183789eb683296863dd944302a2ffd7d3051edbf6d",
+      "bytes": 796,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-transition-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "fd406ea91cd262b2557db7b20021b099d982eb519477e5361b30ac3be1f1572c",
+      "bytes": 6077,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b4-transition-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "28ecd5d10c8d31abe38a23aca5aae015db5674514564c5c2217f7ca5a57f5c4a",
+      "bytes": 549,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-codegen-case-map.jsonl.gz",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "98027447de6a65a3dc601d3767d0d32de9033aa5a70bda55557b75eed615f2f7",
+      "bytes": 7748,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-codegen-content-review.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "87b23e392b6214221088a85b9b1316c500bcd35e7cc8541b19a6af4b631f0590",
+      "bytes": 15091,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-codegen-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "c062d2348910fe99bcd9593af75cc33bf239809c99170b195be5a8b213d58d1a",
+      "bytes": 13107,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-install-conformance-case-map.jsonl.gz",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "d059ce7671ced1a1591384c73530f159e1dc9f73954132d1f26234681d6dd203",
+      "bytes": 5118,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-install-conformance-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "300b5b5d08e5fee34f387003cd6731684d5bb204837f39ac0805591ae1b4a1cd",
+      "bytes": 2348,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-install-conformance-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "0cedd4299347fbf9e6ec3ec6c2391805bcc996eaab28eca55581b2e4ae8941b0",
+      "bytes": 9194,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-terms-case-map.jsonl.gz",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "9b87f6be8c01bfa40e791261fb47a4055d1226addadd57a0c1daad87c424a81c",
+      "bytes": 3494,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-terms-content-review.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "8bacfa1a7744d78f679874010d5cf11be07a850b745bd17675626e49733aef02",
+      "bytes": 15839,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b5-terms-originals.json",
+      "kind": "authored",
+      "reason": "Safe bounded reviewed-subset public accounting metadata; original predicates remain private.",
+      "baseline_sha256": null,
+      "public_sha256": "f3b0cb36903b4ca52b7618848867bd63e885b81e6c7eb7255a251c029209794d",
+      "bytes": 3461,
+      "mode": 420
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/collection.json",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "bytes": 343127,
+      "public_sha256": "2c506894e475f6a8a2ea66244c8a3a50fd8134f9bc3dc27686ae5d54e78d0631",
       "mode": 420
     },
     {
@@ -720,11 +936,11 @@
     },
     {
       "path": ".gnd-planning/milestones/public-launch/migration/progress.json",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 491,
-      "public_sha256": "f25594c3812c475d59d6331f2d4ac725ff50a3666f35348af46d2a47c05c19f7",
+      "bytes": 493,
+      "public_sha256": "05639763af071156d6c4952a29269d1bf0b66ef020a2b74ce18b070b681e20d3",
       "mode": 420
     },
     {
@@ -3671,12 +3887,84 @@
       "baseline_sha256": null
     },
     {
+      "path": "tests/fixtures/adversarial/models/float_range.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "16590aa6dede7c2e71438c4055a1e92333cfa1f2a3ffbf916305ee8011b1fb68",
+      "public_sha256": "16590aa6dede7c2e71438c4055a1e92333cfa1f2a3ffbf916305ee8011b1fb68",
+      "bytes": 2562,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "65e229928465c2ee17367634619e7037c1c83c83f6f88f6f64f8894686a880b9",
+      "public_sha256": "65e229928465c2ee17367634619e7037c1c83c83f6f88f6f64f8894686a880b9",
+      "bytes": 1706,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/models/omission.orm.yaml",
+      "kind": "adaptation",
+      "reason": "Remove private development narrative comments; preserve entire model and hostile-input semantics.",
+      "baseline_sha256": "43d6df7969e806a3a9be9c16f512f9b59ee5be0d1f2129a4fed3c7585e5c8ac3",
+      "public_sha256": "9787f3907741077e5c76a2bd7638a0915aafeb70ac040ec9c377f3a8a7983918",
+      "bytes": 965,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/models/partition_exclusive.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a178cc1edd8c751972811f4b66ba7b40ccf396f0180ce43e15798545f30b816d",
+      "public_sha256": "a178cc1edd8c751972811f4b66ba7b40ccf396f0180ce43e15798545f30b816d",
+      "bytes": 2879,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/models/reference_value_type.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "2671ac1a6457888d6565cc47c10159d5ce145f1c29dd2c70241623af0dea1cb3",
+      "public_sha256": "2671ac1a6457888d6565cc47c10159d5ce145f1c29dd2c70241623af0dea1cb3",
+      "bytes": 3211,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "44ac04570364558a1497389aac6402bfe6c7808a348a51aa3f7af65c66160040",
+      "public_sha256": "44ac04570364558a1497389aac6402bfe6c7808a348a51aa3f7af65c66160040",
+      "bytes": 2875,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/adversarial/models/xor_multirole.orm.yaml",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "6c3d139df063386ec0828dd14ebe5b9238c0b1eeceb03b0b9eb387586a929bb5",
       "bytes": 3843,
       "public_sha256": "6c3d139df063386ec0828dd14ebe5b9238c0b1eeceb03b0b9eb387586a929bb5",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/populations/line_forgery.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "7ae73d13adb11eed0776fea685a9f7b7a6f7c1780b17257a8c6d64d7738cb5c3",
+      "public_sha256": "7ae73d13adb11eed0776fea685a9f7b7a6f7c1780b17257a8c6d64d7738cb5c3",
+      "bytes": 289,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/adversarial/populations/no_subjects_cardinality_min.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "95aa61f899bfa566ef5bde9036a8418337b90c0da30eecbafdaec49e96501873",
+      "public_sha256": "95aa61f899bfa566ef5bde9036a8418337b90c0da30eecbafdaec49e96501873",
+      "bytes": 602,
       "mode": 420
     },
     {
@@ -3695,6 +3983,285 @@
       "baseline_sha256": "e28d1cb7955d8630649de85f5b4cea81676e860fcacd5d09e0c5b8f39d381dd3",
       "bytes": 1702,
       "public_sha256": "e28d1cb7955d8630649de85f5b4cea81676e860fcacd5d09e0c5b8f39d381dd3",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/README.md",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "37be02e3ac455384c34de34bca74de0aaa605099a219e4773f7cb376973065f5",
+      "public_sha256": "37be02e3ac455384c34de34bca74de0aaa605099a219e4773f7cb376973065f5",
+      "bytes": 2065,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/base/app.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "10a4b62050c887f4056ae2889f0acd5dd4fbb2786f180fef93d9e6433c1b4970",
+      "public_sha256": "10a4b62050c887f4056ae2889f0acd5dd4fbb2786f180fef93d9e6433c1b4970",
+      "bytes": 1640,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/base/seed.txt",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "b37761ecedc8b0d0db1fa2c47578ed2ab7738e07f2fc8ef974ad4978ea52e58f",
+      "public_sha256": "b37761ecedc8b0d0db1fa2c47578ed2ab7738e07f2fc8ef974ad4978ea52e58f",
+      "bytes": 11,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-01-accepting-row/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "f0e074a6e1e4fc56723f90b8ec06ddac4c2491b1b5a553f13c698073b7d3f984",
+      "public_sha256": "f0e074a6e1e4fc56723f90b8ec06ddac4c2491b1b5a553f13c698073b7d3f984",
+      "bytes": 432,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-01-accepting-row/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "ba1b1742370500e75a2de362e5bd02fda3e5387b832a7641f087fcce89ceaf81",
+      "public_sha256": "ba1b1742370500e75a2de362e5bd02fda3e5387b832a7641f087fcce89ceaf81",
+      "bytes": 142,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-02-refusing-row/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "2c8e6c1c5bce7ba420526173a73811a9694e683caa8e7072259bae51224193d4",
+      "public_sha256": "2c8e6c1c5bce7ba420526173a73811a9694e683caa8e7072259bae51224193d4",
+      "bytes": 436,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-02-refusing-row/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "91a9f20c9fd8adeab3c2053d89906b3232ea22653fa67cc6fc2052106d286603",
+      "public_sha256": "91a9f20c9fd8adeab3c2053d89906b3232ea22653fa67cc6fc2052106d286603",
+      "bytes": 153,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-03-band-mismatch/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a753bc3a16d71edd4f8c267a97990cf332b0571676025aaa9f695b95f49e8305",
+      "public_sha256": "a753bc3a16d71edd4f8c267a97990cf332b0571676025aaa9f695b95f49e8305",
+      "bytes": 437,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-03-band-mismatch/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "82cee662cde4bf621628c80537e5a97f7dfeafc24f9f0e1075b915754751991b",
+      "public_sha256": "82cee662cde4bf621628c80537e5a97f7dfeafc24f9f0e1075b915754751991b",
+      "bytes": 154,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-04-tmp-substitution/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "c1cfc922e66bb3e672ab8a43ae07990e756468a9b6fd108824c0e81f757a9449",
+      "public_sha256": "c1cfc922e66bb3e672ab8a43ae07990e756468a9b6fd108824c0e81f757a9449",
+      "bytes": 541,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-04-tmp-substitution/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d7cebd88dcd52ca79b692e4f136f4e34c5346b28ba12ac4c90d8c45a4844c851",
+      "public_sha256": "d7cebd88dcd52ca79b692e4f136f4e34c5346b28ba12ac4c90d8c45a4844c851",
+      "bytes": 152,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-05-relative-fixture-from-cwd/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a65fdd436723bd5295a02b0f4a3ec12a114b99406fd346c4389a2ea6957aa1ec",
+      "public_sha256": "a65fdd436723bd5295a02b0f4a3ec12a114b99406fd346c4389a2ea6957aa1ec",
+      "bytes": 453,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-05-relative-fixture-from-cwd/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a5c13353043db3a12a4cc1294b899e63a032db9379a81b2184de1eb046401fb5",
+      "public_sha256": "a5c13353043db3a12a4cc1294b899e63a032db9379a81b2184de1eb046401fb5",
+      "bytes": 167,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-06-entry-point-raises/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "1e4a9e969c311dedf5b9ff2aa0ddaa4a7d89641fb53ae2ecc0ea50142374e94b",
+      "public_sha256": "1e4a9e969c311dedf5b9ff2aa0ddaa4a7d89641fb53ae2ecc0ea50142374e94b",
+      "bytes": 433,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-06-entry-point-raises/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "599fb10c18d94d765ef0d935a7d1ad62cad46e4230bad85476fd5e10f87bf0a3",
+      "public_sha256": "599fb10c18d94d765ef0d935a7d1ad62cad46e4230bad85476fd5e10f87bf0a3",
+      "bytes": 159,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-07-no-smoke-rows/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "7eb205292e8a6eb6e1b0d2be9eecf59c251ca35ff8d04dc0ec692d9db91195bc",
+      "public_sha256": "7eb205292e8a6eb6e1b0d2be9eecf59c251ca35ff8d04dc0ec692d9db91195bc",
+      "bytes": 370,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-07-no-smoke-rows/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d235cc2c0c4015e3251bb83b3bf6bfdfc97f35c58a9571670944619546b0630d",
+      "public_sha256": "d235cc2c0c4015e3251bb83b3bf6bfdfc97f35c58a9571670944619546b0630d",
+      "bytes": 227,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-08-negative-control-never-spawns/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "086e60a2fe31aae2b44da84c7342a79b36e0316b39d2db92a2aebafa16a7bf8f",
+      "public_sha256": "086e60a2fe31aae2b44da84c7342a79b36e0316b39d2db92a2aebafa16a7bf8f",
+      "bytes": 450,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-09-timeout-with-spawned-child/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "f7a44dd96e807321f3ca193860ded92b426f033ceafe1691ea6400414786f4ef",
+      "public_sha256": "f7a44dd96e807321f3ca193860ded92b426f033ceafe1691ea6400414786f4ef",
+      "bytes": 443,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-09-timeout-with-spawned-child/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5b0f1b9ea5dc055a9cd72e8be03aba052a25035ddbcbaacea3565e88c0db4603",
+      "public_sha256": "5b0f1b9ea5dc055a9cd72e8be03aba052a25035ddbcbaacea3565e88c0db4603",
+      "bytes": 186,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-10-uncited-declared-exit/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "431aad63027cd3a20ef7c9d8a8d46cc4333edc9538ac1e9a733859c61f5d87f7",
+      "public_sha256": "431aad63027cd3a20ef7c9d8a8d46cc4333edc9538ac1e9a733859c61f5d87f7",
+      "bytes": 473,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-10-uncited-declared-exit/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d72716680d256501766d67e7c1039c243daef32c1e233cf56dd9f320a80690bd",
+      "public_sha256": "d72716680d256501766d67e7c1039c243daef32c1e233cf56dd9f320a80690bd",
+      "bytes": 183,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-11-entry-point-unresolvable/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "533cf2c3e1b113cf0bafcb0a55ccdc1d8d8ac2a8840dcc5fc7a493b4278ff884",
+      "public_sha256": "533cf2c3e1b113cf0bafcb0a55ccdc1d8d8ac2a8840dcc5fc7a493b4278ff884",
+      "bytes": 465,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-11-entry-point-unresolvable/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5e33d524e8f763c305883363683dd89a041d6662e521c86b703bd43011def137",
+      "public_sha256": "5e33d524e8f763c305883363683dd89a041d6662e521c86b703bd43011def137",
+      "bytes": 321,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-12-output-flood/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "34546e4dcb98304d1c1b6d4a57d104d656ce0ec56f0d4ec397176c4587749bf3",
+      "public_sha256": "34546e4dcb98304d1c1b6d4a57d104d656ce0ec56f0d4ec397176c4587749bf3",
+      "bytes": 440,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-12-output-flood/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a2f80edb607f528b46408fb05e14026a5ef7cff3140908c9a17f0b370a4952d2",
+      "public_sha256": "a2f80edb607f528b46408fb05e14026a5ef7cff3140908c9a17f0b370a4952d2",
+      "bytes": 207,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-13-invalid-utf8-output/architecture.contract.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "9a70a3bf5eb329c4725441ca5d05ee42886109cf77119a5b8747d4d0da6a2b3a",
+      "public_sha256": "9a70a3bf5eb329c4725441ca5d05ee42886109cf77119a5b8747d4d0da6a2b3a",
+      "bytes": 440,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-13-invalid-utf8-output/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "903b57ed18719619339d1787390cab08ec5a5f1a9bfa25bf0654d037fa4d6428",
+      "public_sha256": "903b57ed18719619339d1787390cab08ec5a5f1a9bfa25bf0654d037fa4d6428",
+      "bytes": 181,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/cases/S-14-negative-control-empty-parametrization/case.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "792c691e098510c407c1e930014547bf2d5b944ecb90041b7681b3e5873255f8",
+      "public_sha256": "792c691e098510c407c1e930014547bf2d5b944ecb90041b7681b3e5873255f8",
+      "bytes": 405,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/smoke/expected.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "801de46219e5dce573c2ed972cd399ab28278363f2ee6c43009a0b2ca886e73f",
+      "public_sha256": "801de46219e5dce573c2ed972cd399ab28278363f2ee6c43009a0b2ca886e73f",
+      "bytes": 4632,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/architecture/static/expected.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "70f59ba1eebd6c5f95ab8837d57659e5331a477c4425a47a303308461076031b",
+      "public_sha256": "70f59ba1eebd6c5f95ab8837d57659e5331a477c4425a47a303308461076031b",
+      "bytes": 34068,
       "mode": 420
     },
     {
@@ -3785,6 +4352,285 @@
       "baseline_sha256": "36e0b7de814162e137c9ae29871d1ac35327629cba3318c1465f212d545e44c9",
       "bytes": 7655,
       "public_sha256": "36e0b7de814162e137c9ae29871d1ac35327629cba3318c1465f212d545e44c9",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/evidence/check.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "d1ce36d0957f122c7bb7992a2ac70c862d148fb53e43885f4120dc48ab82586c",
+      "public_sha256": "d1ce36d0957f122c7bb7992a2ac70c862d148fb53e43885f4120dc48ab82586c",
+      "bytes": 1861,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/evidence/conformance.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "e3286eb24822b7b60bf74eaeac55f5e91dec8162aebd27f9c86e4b1557ec7974",
+      "public_sha256": "e3286eb24822b7b60bf74eaeac55f5e91dec8162aebd27f9c86e4b1557ec7974",
+      "bytes": 6452,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/evidence/transition.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "b1c1645e85ba0226c00fd02a5328771dd9fcc87d1a0b7380f479ba7f53ee2352",
+      "public_sha256": "b1c1645e85ba0226c00fd02a5328771dd9fcc87d1a0b7380f479ba7f53ee2352",
+      "bytes": 5131,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/evidence/verify.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "291c28d36e034a36fb303154abd62b1279066063f2aa862cb96098b24f0698d7",
+      "public_sha256": "291c28d36e034a36fb303154abd62b1279066063f2aa862cb96098b24f0698d7",
+      "bytes": 2131,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/expected.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "5b83d482b2f27ffea187e420a36f9fbda504bf2a6fb47ee65b9d30efb9193b71",
+      "public_sha256": "5b83d482b2f27ffea187e420a36f9fbda504bf2a6fb47ee65b9d30efb9193b71",
+      "bytes": 3925,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/expected.payload.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "15574e8593d5a37d798ece46e4f064927051dba691a433bc023bc01ccb1be3de",
+      "public_sha256": "15574e8593d5a37d798ece46e4f064927051dba691a433bc023bc01ccb1be3de",
+      "bytes": 21663,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/experiments/EXP-501-corroborated/CONCLUSIONS.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "a436afbdc6f3d225601b55ce57baf8c20a06e7615ca759e781d7259960c94828",
+      "public_sha256": "a436afbdc6f3d225601b55ce57baf8c20a06e7615ca759e781d7259960c94828",
+      "bytes": 150,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/experiments/EXP-501-corroborated/SPEC.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "72a6dd0cb623a0af1043532b392dd7f7f1325acf37943c45124e1bd54fffc153",
+      "public_sha256": "72a6dd0cb623a0af1043532b392dd7f7f1325acf37943c45124e1bd54fffc153",
+      "bytes": 659,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/experiments/EXP-502-claimed-and-unmatched/SPEC.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "c269f803bf175d93db513d56151fc5f258756b535066dcb188cb22747d55681d",
+      "public_sha256": "c269f803bf175d93db513d56151fc5f258756b535066dcb188cb22747d55681d",
+      "bytes": 453,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/experiments/EXP-503-tests-only/SPEC.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "54ca9f9703799c89d7a5edfc7b646a9ee9b719624108e609a42d455fb61767a2",
+      "public_sha256": "54ca9f9703799c89d7a5edfc7b646a9ee9b719624108e609a42d455fb61767a2",
+      "bytes": 359,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/experiments/EXP-504-conclusions-without-evidence/CONCLUSIONS.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "81b31713f9f5f5fe4a24067738c0e96e65a6c355598e44763a7fdb28735af728",
+      "public_sha256": "81b31713f9f5f5fe4a24067738c0e96e65a6c355598e44763a7fdb28735af728",
+      "bytes": 404,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/experiments/EXP-504-conclusions-without-evidence/SPEC.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "123edc37d7b650b6774a3ec59df14aeab17979017760d20eabf59f7fdbc78f28",
+      "public_sha256": "123edc37d7b650b6774a3ec59df14aeab17979017760d20eabf59f7fdbc78f28",
+      "bytes": 1167,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/inputs/check.population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "4c5aad449987995ad4789a41b7e12f9b473fa13257685c8eef689ed1705b3733",
+      "public_sha256": "4c5aad449987995ad4789a41b7e12f9b473fa13257685c8eef689ed1705b3733",
+      "bytes": 152,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/inputs/transition.post.population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "373937b1f5e3c74bb829b4bf7405b89f5f09949070fbfcfcd5e8181b1820ebbd",
+      "public_sha256": "373937b1f5e3c74bb829b4bf7405b89f5f09949070fbfcfcd5e8181b1820ebbd",
+      "bytes": 449,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/inputs/transition.pre.population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "cbe6d6414cabd5589b7379fba59d79d2d5ee4a6354f7f5489a0aa40150dbeb9e",
+      "public_sha256": "cbe6d6414cabd5589b7379fba59d79d2d5ee4a6354f7f5489a0aa40150dbeb9e",
+      "bytes": 423,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/inputs/transition.steps.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "fff07569001dd3c1aeda50bf609786c6024aae0bb95d801e60962244ad74d50d",
+      "public_sha256": "fff07569001dd3c1aeda50bf609786c6024aae0bb95d801e60962244ad74d50d",
+      "bytes": 420,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/mixed/v2_operations.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "fd07d1b6d3c75cc20b42e8590cb9e2d0790d010af20503e2995570fa0bbdc7a1",
+      "public_sha256": "fd07d1b6d3c75cc20b42e8590cb9e2d0790d010af20503e2995570fa0bbdc7a1",
+      "bytes": 6377,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/positional/evidence/check.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "3da259170c24ea53521010cb3156807a0b0c9b592db52abcc41d49dc60b54b9c",
+      "public_sha256": "3da259170c24ea53521010cb3156807a0b0c9b592db52abcc41d49dc60b54b9c",
+      "bytes": 16704,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/positional/expected.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "95b28c9ccd8b8ff9b9f21f647f019c183a37f7a72ae6c69ae8dad04c93a4c259",
+      "public_sha256": "95b28c9ccd8b8ff9b9f21f647f019c183a37f7a72ae6c69ae8dad04c93a4c259",
+      "bytes": 2117,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/positional/expected.payload.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "4bfb85f1b0ce1f55f84c9cbfe37846926d347b0fee20b391f12b34abec7f2627",
+      "public_sha256": "4bfb85f1b0ce1f55f84c9cbfe37846926d347b0fee20b391f12b34abec7f2627",
+      "bytes": 33569,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/positional/experiments/EXP-511-positional/SPEC.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "b8445a58be24b8e08c18acf06bf41d4063be3977665d8a3bc8f5c141dbcbe1d3",
+      "public_sha256": "b8445a58be24b8e08c18acf06bf41d4063be3977665d8a3bc8f5c141dbcbe1d3",
+      "bytes": 511,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/positional/inputs/check.population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "c9b77ab4682efc19ee003aeee367587b864ea229baef64d895f83ebff7d76878",
+      "public_sha256": "c9b77ab4682efc19ee003aeee367587b864ea229baef64d895f83ebff7d76878",
+      "bytes": 118,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/positional/library.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "4cb4b2c7946dd2923955f7bfc60c653281662158edde89e49e55cd45760fbcfd",
+      "public_sha256": "4cb4b2c7946dd2923955f7bfc60c653281662158edde89e49e55cd45760fbcfd",
+      "bytes": 21714,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/evidence/check-all-fail.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "a99a6b126ab8ca9dc717c6c850db73d29d535f18a596a1cec932bc4ff022726a",
+      "public_sha256": "a99a6b126ab8ca9dc717c6c850db73d29d535f18a596a1cec932bc4ff022726a",
+      "bytes": 2421,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/evidence/transition-refused.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "01d3816360b936b2523bd1a1606dfc3e2a01bdf44bfcebbc9b0b992d8cccc8b8",
+      "public_sha256": "01d3816360b936b2523bd1a1606dfc3e2a01bdf44bfcebbc9b0b992d8cccc8b8",
+      "bytes": 1128,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/expected.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "d7d18798a8366d1ec416a710248dcfd6d272a5d6fd62ff9b34c15acde12bde0d",
+      "public_sha256": "d7d18798a8366d1ec416a710248dcfd6d272a5d6fd62ff9b34c15acde12bde0d",
+      "bytes": 2521,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/expected.payload.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "4be18806449a33534bf74ded40947bd0bd51f04add86bf9b5234c82e89b22642",
+      "public_sha256": "4be18806449a33534bf74ded40947bd0bd51f04add86bf9b5234c82e89b22642",
+      "bytes": 5994,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/experiments/EXP-521-refused/SPEC.md",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "be766ef298112f8d56d7cfe6b4f6f87b252b60a33f2d0e511df2eb0ebbafdc11",
+      "public_sha256": "be766ef298112f8d56d7cfe6b4f6f87b252b60a33f2d0e511df2eb0ebbafdc11",
+      "bytes": 576,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/inputs/all-fail.population.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "86843d6959b36e179e7a3887f10568a38fde59d285adc1a0f550da64f60dd71f",
+      "public_sha256": "86843d6959b36e179e7a3887f10568a38fde59d285adc1a0f550da64f60dd71f",
+      "bytes": 511,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/inputs/transition.steps.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "9c714f6dfce022bbf6cecdde23f91cec3e17b6280d901e5fb87f13def5bae8f3",
+      "public_sha256": "9c714f6dfce022bbf6cecdde23f91cec3e17b6280d901e5fb87f13def5bae8f3",
+      "bytes": 433,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/coverage/refused/v2_worked_example.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "2ca8009ad4ab9eb487d867939c806fe9a293c4f91f7cfb3e583d50f570b28808",
+      "public_sha256": "2ca8009ad4ab9eb487d867939c806fe9a293c4f91f7cfb3e583d50f570b28808",
+      "bytes": 6545,
       "mode": 420
     },
     {
@@ -3959,6 +4805,24 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/models/v2_operations.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "2e0c14f107760bb022fba38f4c755f93dd3ac5f0b7ee61ef590deb402371c9b7",
+      "public_sha256": "2e0c14f107760bb022fba38f4c755f93dd3ac5f0b7ee61ef590deb402371c9b7",
+      "bytes": 6346,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/models/v2_worked_example.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "2ca8009ad4ab9eb487d867939c806fe9a293c4f91f7cfb3e583d50f570b28808",
+      "public_sha256": "2ca8009ad4ab9eb487d867939c806fe9a293c4f91f7cfb3e583d50f570b28808",
+      "bytes": 6545,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/phase3-consumers/answers/synth-refusal.json",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
@@ -3986,6 +4850,15 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/phase4_reference/evolution.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "72e9c6b5af3016f348204e7e7f2be7cc08068c26e01a2900c07c2eedc0fb4f6d",
+      "public_sha256": "72e9c6b5af3016f348204e7e7f2be7cc08068c26e01a2900c07c2eedc0fb4f6d",
+      "bytes": 19431,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/phase4_reference/recovery.json",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
@@ -4001,6 +4874,15 @@
       "baseline_sha256": "da163a2b0b20d0217454f446a285db5e50ebcf6bd2d3e6720c00f8be9e7aa855",
       "bytes": 38059,
       "public_sha256": "da163a2b0b20d0217454f446a285db5e50ebcf6bd2d3e6720c00f8be9e7aa855",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/pools/full_vocabulary.llm.pool.json",
+      "kind": "adaptation",
+      "reason": "Synthetic values and source classification preserved; private session/provider labels replaced.",
+      "baseline_sha256": "e923f8b402093d188ce148517cb25cab2997721da53de18763820075e994495a",
+      "public_sha256": "b6678a20050a5f5ca07e273fcf71fc2e1f7f6502c46175c3c8e69dd7f5926b09",
+      "bytes": 2708,
       "mode": 420
     },
     {
@@ -4139,6 +5021,15 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/skeleton/model.bad.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "c8effe0144af06bc2337ffdd429551356052ff1b4e876484da885629352c8196",
+      "public_sha256": "c8effe0144af06bc2337ffdd429551356052ff1b4e876484da885629352c8196",
+      "bytes": 595,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/skeleton/model.orm.yaml",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
@@ -4157,12 +5048,399 @@
       "mode": 420
     },
     {
+      "path": "tests/fixtures/skeleton/population.good.json",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "5cd81ba87e5a749ee7936016b58eae88a898ba3eb639c723715ac6e11597c8b5",
+      "public_sha256": "5cd81ba87e5a749ee7936016b58eae88a898ba3eb639c723715ac6e11597c8b5",
+      "bytes": 557,
+      "mode": 420
+    },
+    {
       "path": "tests/fixtures/skeleton/population.good.yaml",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "c54c41028dacf4e4af42fb35cc588fee08ad60575d367edb0a43996302654fe2",
       "bytes": 576,
       "public_sha256": "c54c41028dacf4e4af42fb35cc588fee08ad60575d367edb0a43996302654fe2",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/skeleton/population.vacuous.yaml",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "a929b20c074c4e85c972d7bbedaf89eec0e5ae49667f3f3f84c43d87c7df32df",
+      "public_sha256": "a929b20c074c4e85c972d7bbedaf89eec0e5ae49667f3f3f84c43d87c7df32df",
+      "bytes": 368,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase2/answers.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "ab035abad4de56dc1cdb5881f874ee235d2c3711a2be2671a781e588c7d463f3",
+      "public_sha256": "ab035abad4de56dc1cdb5881f874ee235d2c3711a2be2671a781e588c7d463f3",
+      "bytes": 2785,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase2/cases.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "69da4d27426265345c48ab608b04936781629fc0cea6b6e327bb248d8182a6f5",
+      "public_sha256": "69da4d27426265345c48ab608b04936781629fc0cea6b6e327bb248d8182a6f5",
+      "bytes": 5807,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase2/models/dynamic.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "b2157aafa84a668ed5d8c8297bb3bbd844bd355711dd18430ceabd99d5b8ce5a",
+      "public_sha256": "b2157aafa84a668ed5d8c8297bb3bbd844bd355711dd18430ceabd99d5b8ce5a",
+      "bytes": 5218,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase2/populations/post-self-justifying.pop.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "df29fb40465eba125f21f18bb23b8f33afe2f3fe27398ee5232e7000d9852e2c",
+      "public_sha256": "df29fb40465eba125f21f18bb23b8f33afe2f3fe27398ee5232e7000d9852e2c",
+      "bytes": 622,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase2/populations/pre-open.pop.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5bc8554c84a5cfaa77b6339001ec36e5009ba26ab244008952bdd5041ea2a886",
+      "public_sha256": "5bc8554c84a5cfaa77b6339001ec36e5009ba26ab244008952bdd5041ea2a886",
+      "bytes": 536,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase2/walks/ticket.steps.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "e359c4b15a3545c61b9408ab84a12b212f7f5db0f5ecdc1d53159f7c9ec95e39",
+      "public_sha256": "e359c4b15a3545c61b9408ab84a12b212f7f5db0f5ecdc1d53159f7c9ec95e39",
+      "bytes": 523,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase3/answers.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "8bedd022232f9eb55cc44a8f44fa5f03d6b6a321a00e3660d2f31d9206006fdc",
+      "public_sha256": "8bedd022232f9eb55cc44a8f44fa5f03d6b6a321a00e3660d2f31d9206006fdc",
+      "bytes": 5162,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase3/cases.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a2f77721c50c81786565b19f1b657b8c45248fa5e018321ca7222416b6123df0",
+      "public_sha256": "a2f77721c50c81786565b19f1b657b8c45248fa5e018321ca7222416b6123df0",
+      "bytes": 6985,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase3/models/exact-terms.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "3e3665529da3eb22af3fa43dfce05fb8634529b0e9f466e549a55fefc38ef442",
+      "public_sha256": "3e3665529da3eb22af3fa43dfce05fb8634529b0e9f466e549a55fefc38ef442",
+      "bytes": 4031,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase3/populations/term-clean.pop.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "cb3cc01ba1ab7080639ca8a8d641c5610206970e92291d0c868435c1c3395f26",
+      "public_sha256": "cb3cc01ba1ab7080639ca8a8d641c5610206970e92291d0c868435c1c3395f26",
+      "bytes": 820,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase3/populations/term-input.pop.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "85988ee5e30e819da3e82403132ee1c1cbfcfb87109a4003c6ea5988e381ec1e",
+      "public_sha256": "85988ee5e30e819da3e82403132ee1c1cbfcfb87109a4003c6ea5988e381ec1e",
+      "bytes": 866,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v62-phase3/walks/approve.steps.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "624a86bbb7dfae34d7d91b85ce60ea7251e90aeae7b8bbeabaf0b2bad31c4e04",
+      "public_sha256": "624a86bbb7dfae34d7d91b85ce60ea7251e90aeae7b8bbeabaf0b2bad31c4e04",
+      "bytes": 391,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/answers.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "4eba964d1c4a6cabb2bb6fb66c6a8831e253cebd27b631668cad0e88aa7bf445",
+      "public_sha256": "4eba964d1c4a6cabb2bb6fb66c6a8831e253cebd27b631668cad0e88aa7bf445",
+      "bytes": 37713,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/cases.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "cddfd01e64266d93e52a65ba2a34f6a53b7bc71d118bbe24d10494a72b6cac6d",
+      "public_sha256": "cddfd01e64266d93e52a65ba2a34f6a53b7bc71d118bbe24d10494a72b6cac6d",
+      "bytes": 12453,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/join-control.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "059e398b1846dd197aa311ab1c9e649ca798c507465dbf354c095771e054505f",
+      "public_sha256": "059e398b1846dd197aa311ab1c9e649ca798c507465dbf354c095771e054505f",
+      "bytes": 284,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/join-model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "b5e5b8b397d8156f6d8d149bed094588bd267e730f764dca494f50ec9bca5bc8",
+      "public_sha256": "b5e5b8b397d8156f6d8d149bed094588bd267e730f764dca494f50ec9bca5bc8",
+      "bytes": 1030,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/join-opaque.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "e34f26663a4636165fc08c17c5f5300cf64b7255cd4ff1426af972a48da9fbc0",
+      "public_sha256": "e34f26663a4636165fc08c17c5f5300cf64b7255cd4ff1426af972a48da9fbc0",
+      "bytes": 337,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "2a76259b95c8d22a83b6dc3fa7d28c197491ef551651e7bb44dbc8059f0af8ba",
+      "public_sha256": "2a76259b95c8d22a83b6dc3fa7d28c197491ef551651e7bb44dbc8059f0af8ba",
+      "bytes": 2161,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase3/population.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "884b850f0eefc93ae45bb158570a76663138fa5689dabb81a7c035872fb1e963",
+      "public_sha256": "884b850f0eefc93ae45bb158570a76663138fa5689dabb81a7c035872fb1e963",
+      "bytes": 754,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/answers.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d89cc8054057ba7f7bf9eddfadcf95c862a9c492c3be638d700d878678317e5e",
+      "public_sha256": "d89cc8054057ba7f7bf9eddfadcf95c862a9c492c3be638d700d878678317e5e",
+      "bytes": 5438,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/cases.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "b937079ab46370368cc0658fad2927de185d9d9ac49d6593fd92f6924a208578",
+      "public_sha256": "b937079ab46370368cc0658fad2927de185d9d9ac49d6593fd92f6924a208578",
+      "bytes": 4694,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/legacy-v7.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d62eb82337d1f322b14d53ac3d6cd5b98ba747fe283ae505472f04dfffabbcb3",
+      "public_sha256": "d62eb82337d1f322b14d53ac3d6cd5b98ba747fe283ae505472f04dfffabbcb3",
+      "bytes": 3857,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/legacy-v8.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0d0e8ed498e7be9e23124abea770e08f50450a7b0355cf72f0361972d7386753",
+      "public_sha256": "0d0e8ed498e7be9e23124abea770e08f50450a7b0355cf72f0361972d7386753",
+      "bytes": 2598,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/negation.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "cc1e33b05994c2b9eb9efa731bf59f14e16a385b87a563500ee197ca8c0ce743",
+      "public_sha256": "cc1e33b05994c2b9eb9efa731bf59f14e16a385b87a563500ee197ca8c0ce743",
+      "bytes": 774,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/negation.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0f6378e5c8931dbaea863a471bd8721628eac8e435db19efd173158a5d6a4304",
+      "public_sha256": "0f6378e5c8931dbaea863a471bd8721628eac8e435db19efd173158a5d6a4304",
+      "bytes": 346,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/positive.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "c38d1ed115cbfda5645cc264378dec5eb8288ca910e7ec62e5817cdba003e39c",
+      "public_sha256": "c38d1ed115cbfda5645cc264378dec5eb8288ca910e7ec62e5817cdba003e39c",
+      "bytes": 795,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/positive.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a89151c58eade331eef63ea7e56e13b273eb113a17ab45d256e0e37b1ef4b818",
+      "public_sha256": "a89151c58eade331eef63ea7e56e13b273eb113a17ab45d256e0e37b1ef4b818",
+      "bytes": 338,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/recursive.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "729ad094c683b02268a65b022f9e36044971634e0f8dc8d2f7bf44aa6ff0e5cf",
+      "public_sha256": "729ad094c683b02268a65b022f9e36044971634e0f8dc8d2f7bf44aa6ff0e5cf",
+      "bytes": 1826,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/recursive.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a336e9e8f7ff9afc23538ff53ef5f1000eac968c11006161108f34fae7fa2945",
+      "public_sha256": "a336e9e8f7ff9afc23538ff53ef5f1000eac968c11006161108f34fae7fa2945",
+      "bytes": 482,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v70-phase4/visit.steps.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "6d3e397be10644d9870ea17798490ddc060aeb99d68b3fcf055dbddd5414c2b7",
+      "public_sha256": "6d3e397be10644d9870ea17798490ddc060aeb99d68b3fcf055dbddd5414c2b7",
+      "bytes": 131,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/dispatch/model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "b41f8390b3e6555f0ebb4995d6fec0e139e4f445fc7397e79ea87bd9e90c0c1d",
+      "public_sha256": "b41f8390b3e6555f0ebb4995d6fec0e139e4f445fc7397e79ea87bd9e90c0c1d",
+      "bytes": 2341,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/dispatch/population.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "143f379e6121c0262f7d4cbb9096852a6f2eaaa954d90295aec3ae6549942b20",
+      "public_sha256": "143f379e6121c0262f7d4cbb9096852a6f2eaaa954d90295aec3ae6549942b20",
+      "bytes": 850,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1-portable-stdout.json",
+      "kind": "adaptation",
+      "reason": "Opaque hashes of independently reproduced accepted source output with only two checkout coordinate prefixes normalized. Original private output not copied.",
+      "baseline_sha256": null,
+      "public_sha256": "7abd4466fdbb15891ba347c610f26c6204f6920edc0c9eb32b6148fa5c79645f",
+      "bytes": 184,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/README.md",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "1e2086eaacb0df4c075a251551a8eea897dcd5d15fcde6f7c1aeb8f012b0b448",
+      "public_sha256": "1e2086eaacb0df4c075a251551a8eea897dcd5d15fcde6f7c1aeb8f012b0b448",
+      "bytes": 1056,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/answers.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "4c821f49b550c5013b3a1ae04ea7f9786ed20a3dab763716fbc940ef2ece90cf",
+      "public_sha256": "4c821f49b550c5013b3a1ae04ea7f9786ed20a3dab763716fbc940ef2ece90cf",
+      "bytes": 8495,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/dispatch/model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "2560b816b4736537f54b9cca69e46bcf0e4f3d855ca52e8bb81b0563887511b0",
+      "public_sha256": "2560b816b4736537f54b9cca69e46bcf0e4f3d855ca52e8bb81b0563887511b0",
+      "bytes": 3376,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/dispatch/population.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "311848b02db68b9e2922fa983dec09d4503cc35c90aa465ef41096872876c51b",
+      "public_sha256": "311848b02db68b9e2922fa983dec09d4503cc35c90aa465ef41096872876c51b",
+      "bytes": 1346,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/inputs.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70",
+      "public_sha256": "0d5c5dcfafc279f60766122ea4dad029991ce434cf152686139fd1e8dfd7dd70",
+      "bytes": 41213,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/manifest.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "2c79eb89905f7d603a90d8ee17aa0578a65e4c09e0b3253a001dd106eb98e7f6",
+      "public_sha256": "2c79eb89905f7d603a90d8ee17aa0578a65e4c09e0b3253a001dd106eb98e7f6",
+      "bytes": 1023,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/release/model.orm.yaml",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "a2d3ce2a068460016be2d0bb2ee8b301ef9d602dd9730a5baeb8698d9a8070a3",
+      "public_sha256": "a2d3ce2a068460016be2d0bb2ee8b301ef9d602dd9730a5baeb8698d9a8070a3",
+      "bytes": 3250,
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/v71/phase1/release/population.pop.json",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "35fad91cee44f6c60a948f13c53443de61d68c6a3209c3b6f273cd18525149fa",
+      "public_sha256": "35fad91cee44f6c60a948f13c53443de61d68c6a3209c3b6f273cd18525149fa",
+      "bytes": 1311,
       "mode": 420
     },
     {
@@ -4238,12 +5516,66 @@
       "mode": 420
     },
     {
+      "path": "tests/support/runtime_schema_inventory.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": null,
+      "public_sha256": "a6eb77c0b7cd7d3ad79fe092a39fc48045569e6e2392d0838ad944aeb4b849e3",
+      "bytes": 448,
+      "mode": 420
+    },
+    {
+      "path": "tests/support/v62_phase2_corpus.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "72cc334edca8aa47ad40e0dd88d9506bcb18ba0e3667ceb27982ad5c0d1f2abd",
+      "public_sha256": "72cc334edca8aa47ad40e0dd88d9506bcb18ba0e3667ceb27982ad5c0d1f2abd",
+      "bytes": 1861,
+      "mode": 420
+    },
+    {
+      "path": "tests/support/v62_phase3_corpus.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5f7d35c1cc958d8ef85c8f7847a92c0917172a0b5ab785d4a87395bf7f8cef26",
+      "public_sha256": "5f7d35c1cc958d8ef85c8f7847a92c0917172a0b5ab785d4a87395bf7f8cef26",
+      "bytes": 1113,
+      "mode": 420
+    },
+    {
+      "path": "tests/support/v70_phase4.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0cbe0eaf9446188eb5f38fb78a9727207069e52311d0bbb3a856af2e53863c63",
+      "public_sha256": "0cbe0eaf9446188eb5f38fb78a9727207069e52311d0bbb3a856af2e53863c63",
+      "bytes": 1160,
+      "mode": 420
+    },
+    {
       "path": "tests/test_address.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "c1336bbade47c9818a4a6bfdde60cd70059598aee9b12888d1be2961f190d887",
       "bytes": 1131,
       "public_sha256": "c1336bbade47c9818a4a6bfdde60cd70059598aee9b12888d1be2961f190d887",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_archsmoke.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "81349581d70e9231285fcd6724d45549cb5f635b2482aaa60f243c62aabf0279",
+      "public_sha256": "81349581d70e9231285fcd6724d45549cb5f635b2482aaa60f243c62aabf0279",
+      "bytes": 22260,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_artifacts.py",
+      "kind": "adaptation",
+      "reason": "Exclude the unresolved retained duplicate-inventory case and its private historical roster; preserve the other 37 independently current primitive controls.",
+      "baseline_sha256": "1acac3ab4f483e761d89ddc513750ddabbfef7c06bdc48919d0b38ea3ec439b1",
+      "public_sha256": "764b502a65e32077f8e640ac3f1f7e06ba730c25620a6ba70baa0e804382e7c6",
+      "bytes": 53403,
       "mode": 420
     },
     {
@@ -4265,12 +5597,39 @@
       "mode": 420
     },
     {
+      "path": "tests/test_codegen_architecture.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "b82b21f22ecfc2b85545cc6217ad69495e94e74314450759b5ce36125f5237dc",
+      "public_sha256": "b82b21f22ecfc2b85545cc6217ad69495e94e74314450759b5ce36125f5237dc",
+      "bytes": 5265,
+      "mode": 420
+    },
+    {
       "path": "tests/test_codegen_emit.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "460800194db6afc21715624f83b7d1bbc5e517c199ac028fe94b4dbe8f9128ce",
       "bytes": 23805,
       "public_sha256": "460800194db6afc21715624f83b7d1bbc5e517c199ac028fe94b4dbe8f9128ce",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_codegen_force.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "public_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "bytes": 68000,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_codegen_manifest.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "public_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "bytes": 31924,
       "mode": 420
     },
     {
@@ -4283,6 +5642,33 @@
       "mode": 420
     },
     {
+      "path": "tests/test_conformance_payload.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "3d91333d549c05c14b06eab3941d0f2798b5e422db8430964c5576fc3d461523",
+      "public_sha256": "340f4b244f411c8b60ead825d4c935970ba80bd969f695d2bf75f6e62f61849e",
+      "bytes": 41182,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_conformance_structural.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "8c5abfbe54e4b1af4d6211de3aca60fdc504ee5e0dcbd1c3b59bfb52bd135ea5",
+      "public_sha256": "8c5abfbe54e4b1af4d6211de3aca60fdc504ee5e0dcbd1c3b59bfb52bd135ea5",
+      "bytes": 52471,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_coverage_payload.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "63a27656d671df75c03696e6d5bd04365cd8c3f7adfdf90b512a7a7d4f0e71f2",
+      "public_sha256": "63a27656d671df75c03696e6d5bd04365cd8c3f7adfdf90b512a7a7d4f0e71f2",
+      "bytes": 25401,
+      "mode": 420
+    },
+    {
       "path": "tests/test_development_scaffold.py",
       "kind": "adaptation",
       "reason": "P3 explicitly selected test bootstrap, current staging manifest or bounded reviewed-subset CI; runtime behavior unchanged.",
@@ -4290,6 +5676,15 @@
       "public_sha256": "883d469d380f2f261ea8931b6ec3b1adf51391e31c007fcba2c3bbf5d0de3155",
       "mode": 420,
       "baseline_sha256": "ebfc81869fc8fa33e2449e84505015fd34225806a96396b47bb57ade5114b544"
+    },
+    {
+      "path": "tests/test_digest_helpers.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "416e84b666f1fea7f4d88e8dedf9a0d66e433ec7b9d18a885a0cd2f10d5490d9",
+      "public_sha256": "416e84b666f1fea7f4d88e8dedf9a0d66e433ec7b9d18a885a0cd2f10d5490d9",
+      "bytes": 1255,
+      "mode": 420
     },
     {
       "path": "tests/test_doccheck.py",
@@ -4301,12 +5696,21 @@
       "mode": 420
     },
     {
-      "path": "tests/test_exp_session_e2e.py",
+      "path": "tests/test_evolution_conformance.py",
       "kind": "identical-import",
-      "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "9d89177cc647efa4b16d2d156ab1c3c4378dbf89d9cb292044bd48e3d9805c22",
+      "public_sha256": "9d89177cc647efa4b16d2d156ab1c3c4378dbf89d9cb292044bd48e3d9805c22",
+      "bytes": 51314,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_exp_session_e2e.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": "31fc0f8fc71b18a5c71eb626657a105b53d10dc809e9caf5b49adf74e554fcdb",
-      "bytes": 64182,
-      "public_sha256": "31fc0f8fc71b18a5c71eb626657a105b53d10dc809e9caf5b49adf74e554fcdb",
+      "bytes": 64250,
+      "public_sha256": "e012df83e1bda0ca28968e1c556f4935a9e776cdc647e7960c5d2d4dedf652a1",
       "mode": 420
     },
     {
@@ -4328,6 +5732,24 @@
       "mode": 420
     },
     {
+      "path": "tests/test_fidelity_payload.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "afb18c115c0a630a9766be81a02c138c4d7020fbbaae845ac016982d859dbb57",
+      "public_sha256": "afb18c115c0a630a9766be81a02c138c4d7020fbbaae845ac016982d859dbb57",
+      "bytes": 31022,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_install.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "public_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "bytes": 68867,
+      "mode": 420
+    },
+    {
       "path": "tests/test_junit_reader.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
@@ -4337,12 +5759,30 @@
       "mode": 420
     },
     {
+      "path": "tests/test_measure_negative_control.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "e26c5f6eba84e28874bbb7088706687ebb9e98023fb4f497c25ed586c0bf5f17",
+      "public_sha256": "c88d99b676701ae21fcb53359709089d18fe55d1a078f940004a05a6c03182c9",
+      "bytes": 25035,
+      "mode": 420
+    },
+    {
       "path": "tests/test_measure_score.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "60b4cd67a5dc0d8be50185d7d7f502dffce938b2a3e7664b26b37242ac423586",
       "bytes": 19187,
       "public_sha256": "60b4cd67a5dc0d8be50185d7d7f502dffce938b2a3e7664b26b37242ac423586",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_model_evolution.py",
+      "kind": "adaptation",
+      "reason": "Exclude five unresolved retained-evidence cases and their private helper chain; retain every independently synthetic current case. No claim that excluded cases are historical.",
+      "baseline_sha256": "ca40a37ddb91a5c90b210517decf3660db6bb000f31dcdd5c91e5767369782db",
+      "public_sha256": "c44c2512d973ec1e45b3b16fc07ae17ea6008056001e36d297b1162acbe156ce",
+      "bytes": 61169,
       "mode": 420
     },
     {
@@ -4364,6 +5804,42 @@
       "mode": 420
     },
     {
+      "path": "tests/test_model_verbalization.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "5968621fc23296e07df66fd0a0a0cb6008f5ae438e8eeefce95e66e1c8e61b46",
+      "public_sha256": "5968621fc23296e07df66fd0a0a0cb6008f5ae438e8eeefce95e66e1c8e61b46",
+      "bytes": 6777,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_poolfile.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "9036bdab59ec6bc7933dbc0b342c1ab584ca87b9eb4fdb868fc305f7bf4c4525",
+      "public_sha256": "9036bdab59ec6bc7933dbc0b342c1ab584ca87b9eb4fdb868fc305f7bf4c4525",
+      "bytes": 23706,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_population_load.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "6e3f72c5573d1627fd628806efa5e47934250243b1ad9afd124a6a48fd136aef",
+      "public_sha256": "6e3f72c5573d1627fd628806efa5e47934250243b1ad9afd124a6a48fd136aef",
+      "bytes": 22707,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_popvalidate.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "84ae27dab3914d7d4a8b00fe7adb423c76f1ffdcb880225a671a1e1cb0007571",
+      "public_sha256": "84ae27dab3914d7d4a8b00fe7adb423c76f1ffdcb880225a671a1e1cb0007571",
+      "bytes": 32651,
+      "mode": 420
+    },
+    {
       "path": "tests/test_public_api.py",
       "kind": "authored",
       "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
@@ -4374,11 +5850,11 @@
     },
     {
       "path": "tests/test_public_coverage_progress.py",
-      "kind": "authored",
-      "reason": "Approved synthetic instrument, bounded current control, safe public subset metadata, or previously excluded immutable B2 evidence.",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
       "baseline_sha256": null,
-      "bytes": 2561,
-      "public_sha256": "cabdd36ef5fa803b6c496255d07fb0067043f6058f830595f036a49c5224d05c",
+      "bytes": 2687,
+      "public_sha256": "b9731bc16f037b94930da1c11a87fda98a72210be98697e49a67a0a76e613122",
       "mode": 420
     },
     {
@@ -4463,12 +5939,93 @@
       "mode": 420
     },
     {
+      "path": "tests/test_ring_frozen.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0550932154669ee69c25b29e08cc644a53ba0f4dfeccd650fa704cca309553fe",
+      "public_sha256": "0550932154669ee69c25b29e08cc644a53ba0f4dfeccd650fa704cca309553fe",
+      "bytes": 2373,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_schema_sync.py",
+      "kind": "adaptation",
+      "reason": "Current paired-schema synchronization only; fixed old schema identity remains archived source-only.",
+      "baseline_sha256": "05789b11d262fb36f89ce5dc0349a6c8878029d9cb648854d43b1deca2f2b227",
+      "public_sha256": "f1ca0d38df970a8b43774cf189d7cd8473fa0d04f408869588d5d621291cc9af",
+      "bytes": 2394,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_skeleton_e2e.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "4c7c2e0b66eaa92ac3d7f692b2d2f7d489a4cb174dffec6b856eed12a09f95fd",
+      "public_sha256": "4c7c2e0b66eaa92ac3d7f692b2d2f7d489a4cb174dffec6b856eed12a09f95fd",
+      "bytes": 9444,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_subtype_universe.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0d076f77f0db4136cec6364eba53a24071efba5d40669c3c262c5c5446872a24",
+      "public_sha256": "0d076f77f0db4136cec6364eba53a24071efba5d40669c3c262c5c5446872a24",
+      "bytes": 14271,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_synth_boundary.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "58103876ebcea2e31e4fca414e2a5fd704440faa47f61659305381d067363563",
+      "public_sha256": "58103876ebcea2e31e4fca414e2a5fd704440faa47f61659305381d067363563",
+      "bytes": 38090,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_synth_conforming.py",
+      "kind": "adaptation",
+      "reason": "Nested check selects current paired-schema guard explicitly; synthetic pool provenance omits private session/provider labels.",
+      "baseline_sha256": "d3d0e579f781bfc5ffee6c8347b9b3ec31d84c7182b6648f08d6cf3d407319dd",
+      "public_sha256": "74ce3004881d845fbfc44343804038af78032ec1c81fd747013cdfc76408e1c2",
+      "bytes": 39502,
+      "mode": 420
+    },
+    {
       "path": "tests/test_synth_derivation_refusal.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "27268c3a6a6ffbedab7a5b6065325cf6833784a2a127143cf1dba2c0722881ab",
       "bytes": 2678,
       "public_sha256": "27268c3a6a6ffbedab7a5b6065325cf6833784a2a127143cf1dba2c0722881ab",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_synth_expectation_independence.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "d402db61424240cda4014a0a8103c9a55ea75e4842629b8bf14cd0006225ec55",
+      "public_sha256": "ec775a137fde663595c5587b4abea12dfa1ac9273a542e8aaf517e34f8508e65",
+      "bytes": 10561,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_synth_false_pass_quarantine.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0b71dfbc86136f7971cf30415eae58bfe3a6313e017f43a20ee914c0e89be42a",
+      "public_sha256": "0b71dfbc86136f7971cf30415eae58bfe3a6313e017f43a20ee914c0e89be42a",
+      "bytes": 7349,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_synth_mutate.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "a77efd2b2e13fa3c82a7403fe24257eea93f0d17af34b87f58e8a11dc646acf9",
+      "public_sha256": "a77efd2b2e13fa3c82a7403fe24257eea93f0d17af34b87f58e8a11dc646acf9",
+      "bytes": 34898,
       "mode": 420
     },
     {
@@ -4481,12 +6038,102 @@
       "mode": 420
     },
     {
+      "path": "tests/test_synth_oracle_value_range.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "ef3dabcc70c231a5f59e8b16e3afc59bef7e476380befa5ebc467e36c4f29101",
+      "public_sha256": "ef3dabcc70c231a5f59e8b16e3afc59bef7e476380befa5ebc467e36c4f29101",
+      "bytes": 15865,
+      "mode": 420
+    },
+    {
       "path": "tests/test_synth_tagged_comparison.py",
       "kind": "identical-import",
       "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
       "baseline_sha256": "efc73a14586919bc32bfeafd488d8ed925615251bf82f9dbe56dc36b5a340f1f",
       "bytes": 4819,
       "public_sha256": "efc73a14586919bc32bfeafd488d8ed925615251bf82f9dbe56dc36b5a340f1f",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_synth_values.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "d83c9ba7dfbc2b1155d98d7cbf518b05c1f33f7a6e538f1852f1783053937df8",
+      "public_sha256": "d83c9ba7dfbc2b1155d98d7cbf518b05c1f33f7a6e538f1852f1783053937df8",
+      "bytes": 17245,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v62_phase2_intermediate.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "2df201900333563836f4076b58d44264114635f5676478325ae5d4f63514fa30",
+      "public_sha256": "b4d9faa0b01ce7a8f91ac678b21906235ffa4a9e8b69fbeb2fe9c94d0e7e0b31",
+      "bytes": 1477,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v62_phase3_terms.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "487296d6f23d5e5509a30592ac0f65c52c44841e41f35909a19b40f1508357d0",
+      "public_sha256": "cfa377b6c661361d5ae38fc4c4dea6a1a8ea6af94385e9dbdf30174254085357",
+      "bytes": 18148,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v62_phase5_terms.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "722e27941601c1804e0d418d4ea68b877aa61686ea99bebc00a115baa10ad598",
+      "public_sha256": "722e27941601c1804e0d418d4ea68b877aa61686ea99bebc00a115baa10ad598",
+      "bytes": 6692,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v70_phase3_opaque.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "41ba6173898875641ff302a3654f698832ca6caa28bce30896b8ddb7ba1c9da9",
+      "public_sha256": "41ba6173898875641ff302a3654f698832ca6caa28bce30896b8ddb7ba1c9da9",
+      "bytes": 3538,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v70_phase4_runtime.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "c7ba7ae078166b6e81cb7697001b9c17580fc7c078ce4ae8d40ec966f007816e",
+      "public_sha256": "6242589345bc8ea6bb4bb52a2e49e1c728eabf736744e296e3c628d3674db137",
+      "bytes": 5320,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v70_phase4_transition.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "c82f960012b9569ce0e8eaba4009366437ecd98c6a71bc9c8019f77fc20c8d66",
+      "public_sha256": "dd63c53d4e89a4960bf088e0c51ef34a189e452dab9cbf816c7d98d6ebde629f",
+      "bytes": 6993,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_v71_phase1_dates.py",
+      "kind": "adaptation",
+      "reason": "Approved bounded P3 reviewed-subset progress, test selection or exact synthetic successor; runtime unchanged.",
+      "baseline_sha256": "c8c0d8e4543172d1043e39cbb9d09acded136bb54ea753aeb3951c9f4e51b907",
+      "public_sha256": "069a1519c14c268b0bf922ffc6164194d1c89a6a6d0fb4cb5610ec6191398aa3",
+      "bytes": 23945,
+      "mode": 420
+    },
+    {
+      "path": "tests/test_verify_cli.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "65d61e5a145a9ab086b7aa437d7e628a44c022bda4679b03de85c08817ce1276",
+      "public_sha256": "65d61e5a145a9ab086b7aa437d7e628a44c022bda4679b03de85c08817ce1276",
+      "bytes": 17869,
       "mode": 420
     },
     {

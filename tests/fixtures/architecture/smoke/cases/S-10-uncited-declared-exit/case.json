@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-10-uncited-declared-exit",
+  "story": "Three exits are declared and two are cited. uncited_exits returns the third; it is reported, not failed."
+}

@@ -1,0 +1,247 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_codegen_force.py",
+      "source_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "target_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_codegen_manifest.py",
+      "source_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "target_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_conformance_structural.py",
+      "source_sha256": "8c5abfbe54e4b1af4d6211de3aca60fdc504ee5e0dcbd1c3b59bfb52bd135ea5",
+      "target_sha256": "8c5abfbe54e4b1af4d6211de3aca60fdc504ee5e0dcbd1c3b59bfb52bd135ea5",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_archsmoke.py",
+      "source_sha256": "81349581d70e9231285fcd6724d45549cb5f635b2482aaa60f243c62aabf0279",
+      "target_sha256": "81349581d70e9231285fcd6724d45549cb5f635b2482aaa60f243c62aabf0279",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/README.md",
+      "source_sha256": "37be02e3ac455384c34de34bca74de0aaa605099a219e4773f7cb376973065f5",
+      "target_sha256": "37be02e3ac455384c34de34bca74de0aaa605099a219e4773f7cb376973065f5",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/base/app.py",
+      "source_sha256": "10a4b62050c887f4056ae2889f0acd5dd4fbb2786f180fef93d9e6433c1b4970",
+      "target_sha256": "10a4b62050c887f4056ae2889f0acd5dd4fbb2786f180fef93d9e6433c1b4970",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/base/seed.txt",
+      "source_sha256": "b37761ecedc8b0d0db1fa2c47578ed2ab7738e07f2fc8ef974ad4978ea52e58f",
+      "target_sha256": "b37761ecedc8b0d0db1fa2c47578ed2ab7738e07f2fc8ef974ad4978ea52e58f",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-01-accepting-row/architecture.contract.yaml",
+      "source_sha256": "f0e074a6e1e4fc56723f90b8ec06ddac4c2491b1b5a553f13c698073b7d3f984",
+      "target_sha256": "f0e074a6e1e4fc56723f90b8ec06ddac4c2491b1b5a553f13c698073b7d3f984",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-01-accepting-row/case.json",
+      "source_sha256": "ba1b1742370500e75a2de362e5bd02fda3e5387b832a7641f087fcce89ceaf81",
+      "target_sha256": "ba1b1742370500e75a2de362e5bd02fda3e5387b832a7641f087fcce89ceaf81",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-02-refusing-row/architecture.contract.yaml",
+      "source_sha256": "2c8e6c1c5bce7ba420526173a73811a9694e683caa8e7072259bae51224193d4",
+      "target_sha256": "2c8e6c1c5bce7ba420526173a73811a9694e683caa8e7072259bae51224193d4",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-02-refusing-row/case.json",
+      "source_sha256": "91a9f20c9fd8adeab3c2053d89906b3232ea22653fa67cc6fc2052106d286603",
+      "target_sha256": "91a9f20c9fd8adeab3c2053d89906b3232ea22653fa67cc6fc2052106d286603",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-03-band-mismatch/architecture.contract.yaml",
+      "source_sha256": "a753bc3a16d71edd4f8c267a97990cf332b0571676025aaa9f695b95f49e8305",
+      "target_sha256": "a753bc3a16d71edd4f8c267a97990cf332b0571676025aaa9f695b95f49e8305",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-03-band-mismatch/case.json",
+      "source_sha256": "82cee662cde4bf621628c80537e5a97f7dfeafc24f9f0e1075b915754751991b",
+      "target_sha256": "82cee662cde4bf621628c80537e5a97f7dfeafc24f9f0e1075b915754751991b",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-04-tmp-substitution/architecture.contract.yaml",
+      "source_sha256": "c1cfc922e66bb3e672ab8a43ae07990e756468a9b6fd108824c0e81f757a9449",
+      "target_sha256": "c1cfc922e66bb3e672ab8a43ae07990e756468a9b6fd108824c0e81f757a9449",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-04-tmp-substitution/case.json",
+      "source_sha256": "d7cebd88dcd52ca79b692e4f136f4e34c5346b28ba12ac4c90d8c45a4844c851",
+      "target_sha256": "d7cebd88dcd52ca79b692e4f136f4e34c5346b28ba12ac4c90d8c45a4844c851",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-05-relative-fixture-from-cwd/architecture.contract.yaml",
+      "source_sha256": "a65fdd436723bd5295a02b0f4a3ec12a114b99406fd346c4389a2ea6957aa1ec",
+      "target_sha256": "a65fdd436723bd5295a02b0f4a3ec12a114b99406fd346c4389a2ea6957aa1ec",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-05-relative-fixture-from-cwd/case.json",
+      "source_sha256": "a5c13353043db3a12a4cc1294b899e63a032db9379a81b2184de1eb046401fb5",
+      "target_sha256": "a5c13353043db3a12a4cc1294b899e63a032db9379a81b2184de1eb046401fb5",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-06-entry-point-raises/architecture.contract.yaml",
+      "source_sha256": "1e4a9e969c311dedf5b9ff2aa0ddaa4a7d89641fb53ae2ecc0ea50142374e94b",
+      "target_sha256": "1e4a9e969c311dedf5b9ff2aa0ddaa4a7d89641fb53ae2ecc0ea50142374e94b",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-06-entry-point-raises/case.json",
+      "source_sha256": "599fb10c18d94d765ef0d935a7d1ad62cad46e4230bad85476fd5e10f87bf0a3",
+      "target_sha256": "599fb10c18d94d765ef0d935a7d1ad62cad46e4230bad85476fd5e10f87bf0a3",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-07-no-smoke-rows/architecture.contract.yaml",
+      "source_sha256": "7eb205292e8a6eb6e1b0d2be9eecf59c251ca35ff8d04dc0ec692d9db91195bc",
+      "target_sha256": "7eb205292e8a6eb6e1b0d2be9eecf59c251ca35ff8d04dc0ec692d9db91195bc",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-07-no-smoke-rows/case.json",
+      "source_sha256": "d235cc2c0c4015e3251bb83b3bf6bfdfc97f35c58a9571670944619546b0630d",
+      "target_sha256": "d235cc2c0c4015e3251bb83b3bf6bfdfc97f35c58a9571670944619546b0630d",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-08-negative-control-never-spawns/case.json",
+      "source_sha256": "086e60a2fe31aae2b44da84c7342a79b36e0316b39d2db92a2aebafa16a7bf8f",
+      "target_sha256": "086e60a2fe31aae2b44da84c7342a79b36e0316b39d2db92a2aebafa16a7bf8f",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-09-timeout-with-spawned-child/architecture.contract.yaml",
+      "source_sha256": "f7a44dd96e807321f3ca193860ded92b426f033ceafe1691ea6400414786f4ef",
+      "target_sha256": "f7a44dd96e807321f3ca193860ded92b426f033ceafe1691ea6400414786f4ef",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-09-timeout-with-spawned-child/case.json",
+      "source_sha256": "5b0f1b9ea5dc055a9cd72e8be03aba052a25035ddbcbaacea3565e88c0db4603",
+      "target_sha256": "5b0f1b9ea5dc055a9cd72e8be03aba052a25035ddbcbaacea3565e88c0db4603",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-10-uncited-declared-exit/architecture.contract.yaml",
+      "source_sha256": "431aad63027cd3a20ef7c9d8a8d46cc4333edc9538ac1e9a733859c61f5d87f7",
+      "target_sha256": "431aad63027cd3a20ef7c9d8a8d46cc4333edc9538ac1e9a733859c61f5d87f7",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-10-uncited-declared-exit/case.json",
+      "source_sha256": "d72716680d256501766d67e7c1039c243daef32c1e233cf56dd9f320a80690bd",
+      "target_sha256": "d72716680d256501766d67e7c1039c243daef32c1e233cf56dd9f320a80690bd",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-11-entry-point-unresolvable/architecture.contract.yaml",
+      "source_sha256": "533cf2c3e1b113cf0bafcb0a55ccdc1d8d8ac2a8840dcc5fc7a493b4278ff884",
+      "target_sha256": "533cf2c3e1b113cf0bafcb0a55ccdc1d8d8ac2a8840dcc5fc7a493b4278ff884",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-11-entry-point-unresolvable/case.json",
+      "source_sha256": "5e33d524e8f763c305883363683dd89a041d6662e521c86b703bd43011def137",
+      "target_sha256": "5e33d524e8f763c305883363683dd89a041d6662e521c86b703bd43011def137",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-12-output-flood/architecture.contract.yaml",
+      "source_sha256": "34546e4dcb98304d1c1b6d4a57d104d656ce0ec56f0d4ec397176c4587749bf3",
+      "target_sha256": "34546e4dcb98304d1c1b6d4a57d104d656ce0ec56f0d4ec397176c4587749bf3",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-12-output-flood/case.json",
+      "source_sha256": "a2f80edb607f528b46408fb05e14026a5ef7cff3140908c9a17f0b370a4952d2",
+      "target_sha256": "a2f80edb607f528b46408fb05e14026a5ef7cff3140908c9a17f0b370a4952d2",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-13-invalid-utf8-output/architecture.contract.yaml",
+      "source_sha256": "9a70a3bf5eb329c4725441ca5d05ee42886109cf77119a5b8747d4d0da6a2b3a",
+      "target_sha256": "9a70a3bf5eb329c4725441ca5d05ee42886109cf77119a5b8747d4d0da6a2b3a",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-13-invalid-utf8-output/case.json",
+      "source_sha256": "903b57ed18719619339d1787390cab08ec5a5f1a9bfa25bf0654d037fa4d6428",
+      "target_sha256": "903b57ed18719619339d1787390cab08ec5a5f1a9bfa25bf0654d037fa4d6428",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/cases/S-14-negative-control-empty-parametrization/case.json",
+      "source_sha256": "792c691e098510c407c1e930014547bf2d5b944ecb90041b7681b3e5873255f8",
+      "target_sha256": "792c691e098510c407c1e930014547bf2d5b944ecb90041b7681b3e5873255f8",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/architecture/smoke/expected.json",
+      "source_sha256": "801de46219e5dce573c2ed972cd399ab28278363f2ee6c43009a0b2ca886e73f",
+      "target_sha256": "801de46219e5dce573c2ed972cd399ab28278363f2ee6c43009a0b2ca886e73f",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    }
+  ],
+  "definitions": 144,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "98027447de6a65a3dc601d3767d0d32de9033aa5a70bda55557b75eed615f2f7"
+}

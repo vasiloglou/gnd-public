@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-13-invalid-utf8-output",
+  "story": "The child writes invalid UTF-8. Decoding must replace, never raise: the row still yields a SmokeOutcome."
+}

@@ -1,0 +1,23 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase4-positive@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: record, name: Record, kind: value, primitive: String}
+  - {id: item, name: Item, kind: value, primitive: String}
+fact_types:
+  - id: observed
+    reading: "{Record} contains {Item}"
+    roles:
+      - {object_type: record, role_name: record}
+      - {object_type: item, role_name: item}
+  - id: inferred
+    reading: "{Record} implies {Item}"
+    roles:
+      - {object_type: record, role_name: record}
+      - {object_type: item, role_name: item}
+    derivation: derived
+    derivation_rule:
+      body: [{fact_type: observed, bind: {record: "$r", item: "$i"}}]
+      head: {record: "$r", item: "$i"}
+constraints: []
+rejected_proposals: []

@@ -1,0 +1,554 @@
+{
+  "schema_version": 1,
+  "base_model": "model.orm.yaml",
+  "base_population": "population.pop.json",
+  "patch_language": "add, remove, replace on slash-separated object keys or zero-based array positions; '-' appends to an array",
+  "cases": [
+    {
+      "id": "A01-clean-partition",
+      "admission": true
+    },
+    {
+      "id": "A02-explicit-transitive-block",
+      "admission": true,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_amount/0/amount",
+          "value": 99
+        }
+      ]
+    },
+    {
+      "id": "A03-unchecked-transitive-block",
+      "admission": true,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_amount/0/amount",
+          "value": {
+            "$opaque": "amount-unread"
+          }
+        }
+      ]
+    },
+    {
+      "id": "A04-uncompared-opaque-admitted",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/1/constraints",
+          "value": []
+        }
+      ],
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "A05-duplicate-occurrence-address",
+      "admission": true,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_amount/0/amount",
+          "value": 99
+        },
+        {
+          "op": "add",
+          "path": "/facts/approval_for_record/-",
+          "value": {
+            "record": "R1",
+            "approval": "yes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "A06-implicit-reference-block",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/0/constraints/0/allowed",
+          "value": [
+            "R2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A07-deontic-warning-admitted",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/1/constraints/0/modality",
+          "value": "deontic"
+        }
+      ],
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": "Bob"
+        }
+      ]
+    },
+    {
+      "id": "A08-cycle-terminates",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/3/depends_on",
+          "value": [
+            "record_has_amount",
+            "notice_for_record"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A09-global-unchecked-no-fact-ref",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "add",
+          "path": "/fact_types/1/constraints/-",
+          "value": {
+            "type": "anchored",
+            "role": "holder",
+            "source": "explicit",
+            "status": "confirmed",
+            "modality": "alethic",
+            "provenance": {
+              "user_quote": "The holder is named."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "J01-joined-scalar-control",
+      "admission": false,
+      "model_file": "join-model.orm.yaml",
+      "population_file": "join-control.pop.json"
+    },
+    {
+      "id": "J02-joined-opaque-refusal",
+      "admission": false,
+      "model_file": "join-model.orm.yaml",
+      "population_file": "join-opaque.pop.json"
+    },
+    {
+      "id": "L01-absent-version-scalar",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "remove",
+          "path": "/format_version"
+        }
+      ]
+    },
+    {
+      "id": "L02-explicit-one-scalar",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/format_version",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "L03-absent-version-marker",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "remove",
+          "path": "/format_version"
+        },
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "L04-version-one-marker",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/format_version",
+          "value": 1
+        },
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "L05-version-two-marker",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "L06-extra-marker-key",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder",
+            "extra": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "L07-empty-marker-label",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "L08-numeric-marker-label",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "L09-marker-in-roster",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "add",
+          "path": "/instances/holder",
+          "value": [
+            {
+              "$opaque": "unread-holder"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L10-ordinary-wrong-primitive",
+      "legacy_model": true,
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_amount/0/amount",
+          "value": "ten"
+        }
+      ]
+    },
+    {
+      "id": "M01-known-dependency",
+      "admission": false
+    },
+    {
+      "id": "M02-unknown-dependency",
+      "admission": false,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/3/depends_on",
+          "value": [
+            "missing_fact_type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M03-duplicate-dependency",
+      "admission": false,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/3/depends_on",
+          "value": [
+            "record_has_amount",
+            "record_has_amount"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M04-cycle-is-legal",
+      "admission": false,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/3/depends_on",
+          "value": [
+            "record_has_amount",
+            "notice_for_record"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "O01-scalar-uniqueness-fail",
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": "Bob"
+        }
+      ]
+    },
+    {
+      "id": "O02-two-opaque-distinct",
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-a"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/1/holder",
+          "value": {
+            "$opaque": "unread-b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "O03-two-opaque-same-label",
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/1/holder",
+          "value": {
+            "$opaque": "unread"
+          }
+        }
+      ]
+    },
+    {
+      "id": "O04-opaque-number-comparison",
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_amount/0/amount",
+          "value": {
+            "$opaque": "amount-unread"
+          }
+        }
+      ]
+    },
+    {
+      "id": "O05-fail-precedes-opaque",
+      "admission": false,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_amount/0/amount",
+          "value": 99
+        },
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "O06-derived-opaque-refusal",
+      "admission": false,
+      "model_edits": [
+        {
+          "op": "add",
+          "path": "/fact_types/-",
+          "value": {
+            "id": "holder_is_known",
+            "reading": "{Record} has a known holder",
+            "roles": [
+              {
+                "object_type": "record",
+                "role_name": "record"
+              }
+            ],
+            "derivation": "derived",
+            "derivation_rule": {
+              "body": [
+                {
+                  "fact_type": "record_has_holder",
+                  "bind": {
+                    "record": "$r",
+                    "holder": "$h"
+                  }
+                }
+              ],
+              "head": {
+                "record": "$r"
+              }
+            }
+          }
+        }
+      ],
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder"
+          }
+        },
+        {
+          "op": "add",
+          "path": "/facts/holder_is_known",
+          "value": []
+        },
+        {
+          "op": "add",
+          "path": "/population/covers/-",
+          "value": "holder_is_known"
+        }
+      ]
+    },
+    {
+      "id": "W01-redacted-legacy-version",
+      "admission": false,
+      "model_edits": [
+        {
+          "op": "add",
+          "path": "/fact_types/1/roles/1/redact",
+          "value": true
+        }
+      ],
+      "legacy_model": true,
+      "population_edits": [
+        {
+          "op": "remove",
+          "path": "/format_version"
+        }
+      ]
+    },
+    {
+      "id": "W02-redacted-admission-version",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "add",
+          "path": "/fact_types/1/roles/1/redact",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "W03-admission-population-refusal",
+      "admission": true,
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "unread-holder",
+            "extra": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "W04-admission-model-refusal",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "replace",
+          "path": "/fact_types/3/depends_on",
+          "value": [
+            "missing_fact_type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "W05-opaque-redaction-canary",
+      "admission": true,
+      "model_edits": [
+        {
+          "op": "add",
+          "path": "/fact_types/1/roles/1/redact",
+          "value": true
+        }
+      ],
+      "population_edits": [
+        {
+          "op": "replace",
+          "path": "/facts/record_has_holder/0/holder",
+          "value": {
+            "$opaque": "SECRET-OPAQUE-CANARY"
+          }
+        }
+      ]
+    }
+  ]
+}

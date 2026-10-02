@@ -1,0 +1,16 @@
+# Corpus contract. Loader-valid by construction; the story is in case.json.
+contract_version: 1
+modules: []
+artifacts: []
+entry_points:
+- module: not_a_real_module
+  subcommands: []
+  flags: []
+  consumes: []
+  produces: []
+  exits: [{code: 0, meaning: corpus exit 0}, {code: 1, meaning: corpus exit 1}, {code: 3, meaning: corpus exit 3}, {code: 7, meaning: corpus exit 7}]
+smoke:
+- id: never-starts
+  entry_point: not_a_real_module
+  argv: ["ok"]
+  expect_exit: 1

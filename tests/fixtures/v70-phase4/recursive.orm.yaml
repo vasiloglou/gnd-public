@@ -1,0 +1,51 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase4-recursive@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: node, name: Node, kind: value, primitive: String}
+fact_types:
+  - id: edge
+    reading: "{Node} leads directly to {Node}"
+    roles:
+      - {object_type: node, role_name: source}
+      - {object_type: node, role_name: target}
+  - id: reaches
+    reading: "{Node} reaches {Node}"
+    roles:
+      - {object_type: node, role_name: source}
+      - {object_type: node, role_name: target}
+    derivation: derived
+    derivation_rule:
+      clauses:
+        - body: [{fact_type: edge, bind: {source: "$x", target: "$y"}}]
+          head: {source: "$x", target: "$y"}
+        - body:
+            - {fact_type: edge, bind: {source: "$x", target: "$middle"}}
+            - {fact_type: reaches, bind: {source: "$middle", target: "$y"}}
+          head: {source: "$x", target: "$y"}
+  - id: visited
+    reading: "{Node} visited {Node}"
+    roles:
+      - {object_type: node, role_name: source}
+      - {object_type: node, role_name: target}
+operations:
+  - id: visit
+    reading: "{Node:source} visits reachable {Node:target}"
+    parameters:
+      - {name: source, object_type: node}
+      - {name: target, object_type: node}
+    preconditions:
+      - id: must_reach
+        require: [{fact_type: reaches, bind: {source: "$source", target: "$target"}}]
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: {user_quote: "The destination must be reachable."}
+    effects:
+      - assert: {fact_type: visited, bind: {source: "$source", target: "$target"}}
+    frame: {modality: alethic}
+    source: user-supplied
+    status: confirmed
+    provenance: {user_quote: "Visiting records the route used."}
+constraints: []
+rejected_proposals: []

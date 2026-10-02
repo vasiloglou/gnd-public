@@ -1,0 +1,1612 @@
+{
+  "schema_version": 1,
+  "source": "v7.1 Phase 1 owner-approved prose",
+  "cases": [
+    {
+      "id": "B01-dispatch-equal",
+      "branch": "B01",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [],
+      "parameters": {},
+      "story": "Pickup 2026-10-02 plus two days reaches the deadline exactly."
+    },
+    {
+      "id": "B01-dispatch-one-day-late",
+      "branch": "B01",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "2026-10-03"
+        }
+      ],
+      "parameters": {},
+      "story": "One-token pickup mutation makes the arrival one day late."
+    },
+    {
+      "id": "B02-release-equal",
+      "branch": "B02",
+      "domain": "release",
+      "surface": "check",
+      "edits": [],
+      "parameters": {},
+      "story": "Approval 2026-10-06 plus three days reaches the release deadline exactly."
+    },
+    {
+      "id": "B02-release-one-day-late",
+      "branch": "B02",
+      "domain": "release",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/release_approved_on/0/approval_day",
+          "value": "2026-10-07"
+        }
+      ],
+      "parameters": {},
+      "story": "One-token approval mutation misses the release deadline by a day."
+    },
+    {
+      "id": "B03-early",
+      "branch": "B03",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "2026-10-01"
+        }
+      ],
+      "parameters": {},
+      "story": "The same dispatch is one day inside its allowance."
+    },
+    {
+      "id": "B03-zero",
+      "branch": "B03",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": 0
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "2026-10-04"
+        }
+      ],
+      "parameters": {},
+      "story": "Zero days leaves the date unchanged."
+    },
+    {
+      "id": "B04-boolean",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": true
+        }
+      ],
+      "parameters": {},
+      "story": "A Duration role refuses boolean."
+    },
+    {
+      "id": "B04-float",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": 2.0
+        }
+      ],
+      "parameters": {},
+      "story": "A Duration role refuses float."
+    },
+    {
+      "id": "B04-string",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": "2"
+        }
+      ],
+      "parameters": {},
+      "story": "A Duration role refuses string."
+    },
+    {
+      "id": "B04-negative",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": -1
+        }
+      ],
+      "parameters": {},
+      "story": "A Duration role refuses negative."
+    },
+    {
+      "id": "B04-over-cap",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": 1000001
+        }
+      ],
+      "parameters": {},
+      "story": "A Duration role refuses over-cap."
+    },
+    {
+      "id": "B05-boolean",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": true
+        }
+      ],
+      "parameters": {},
+      "story": "The duration_days tag refuses boolean."
+    },
+    {
+      "id": "B05-float",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": 2.0
+        }
+      ],
+      "parameters": {},
+      "story": "The duration_days tag refuses float."
+    },
+    {
+      "id": "B05-string",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": "2"
+        }
+      ],
+      "parameters": {},
+      "story": "The duration_days tag refuses string."
+    },
+    {
+      "id": "B05-negative",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": -1
+        }
+      ],
+      "parameters": {},
+      "story": "The duration_days tag refuses negative."
+    },
+    {
+      "id": "B05-over-cap",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": 1000001
+        }
+      ],
+      "parameters": {},
+      "story": "The duration_days tag refuses over-cap."
+    },
+    {
+      "id": "B05-extra-key",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": {
+            "duration_days": 2,
+            "unit": "days"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A tagged literal has no extra keys."
+    },
+    {
+      "id": "B05-missing-key",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": {}
+        }
+      ],
+      "parameters": {},
+      "story": "A tagged literal requires duration_days."
+    },
+    {
+      "id": "B06-integer",
+      "branch": "B06",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": 2
+        }
+      ],
+      "parameters": {},
+      "story": "Untagged scalars are not Duration."
+    },
+    {
+      "id": "B06-string",
+      "branch": "B06",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": "2"
+        }
+      ],
+      "parameters": {},
+      "story": "Untagged scalars are not Duration."
+    },
+    {
+      "id": "B06-numeric-add-duration",
+      "branch": "B06",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "add",
+            "args": [
+              "$pickup",
+              {
+                "duration_days": 2
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "The numeric add function does not accept Duration."
+    },
+    {
+      "id": "B07-non-leap",
+      "branch": "B07",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/0",
+          "value": {
+            "date": "2023-02-29"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A tagged date refuses non-leap."
+    },
+    {
+      "id": "B07-wrong-format",
+      "branch": "B07",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/0",
+          "value": {
+            "date": "02/29/2024"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A tagged date refuses wrong-format."
+    },
+    {
+      "id": "B07-year-zero",
+      "branch": "B07",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/0",
+          "value": {
+            "date": "0000-01-01"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A tagged date refuses year-zero."
+    },
+    {
+      "id": "B07-leap-date",
+      "branch": "B07",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/0",
+          "value": {
+            "date": "2024-02-29"
+          }
+        },
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": 1
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2024-03-01"
+        }
+      ],
+      "parameters": {},
+      "story": "2024-02-29 is a real leap date."
+    },
+    {
+      "id": "B08-date-plus-integer",
+      "branch": "B08",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/0",
+          "value": 2
+        }
+      ],
+      "parameters": {},
+      "story": "Temporal function refuses date-plus-integer."
+    },
+    {
+      "id": "B08-reversed-operands",
+      "branch": "B08",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/0",
+          "value": {
+            "duration_days": 2
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Temporal function refuses reversed-operands."
+    },
+    {
+      "id": "B08-wrong-arity",
+      "branch": "B08",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              "$pickup"
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Temporal grammar refuses wrong-arity."
+    },
+    {
+      "id": "B08-unknown-function",
+      "branch": "B08",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "business_add",
+            "args": [
+              "$pickup",
+              {
+                "duration_days": 2
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Temporal grammar refuses unknown-function."
+    },
+    {
+      "id": "B08-date-date-sub",
+      "branch": "B08",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_sub",
+            "args": [
+              "$pickup",
+              {
+                "date": "2026-10-01"
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Temporal grammar refuses date-date-sub."
+    },
+    {
+      "id": "B08-datetime-operand",
+      "branch": "B08",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/object_types/4/primitive",
+          "value": "DateTime"
+        }
+      ],
+      "parameters": {},
+      "story": "A DateTime role is not a calendar-day Date operand."
+    },
+    {
+      "id": "B09-version-1",
+      "branch": "B09",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/version",
+          "value": 1
+        }
+      ],
+      "parameters": {},
+      "story": "Legacy model version 1 cannot carry temporal syntax."
+    },
+    {
+      "id": "B09-version-2",
+      "branch": "B09",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/version",
+          "value": 2
+        }
+      ],
+      "parameters": {},
+      "story": "Legacy model version 2 cannot carry temporal syntax."
+    },
+    {
+      "id": "B10-deontic-warning",
+      "branch": "B10",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/modality",
+          "value": "deontic"
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "2026-10-03"
+        }
+      ],
+      "parameters": {},
+      "story": "A late deontic deadline warns and keeps band zero."
+    },
+    {
+      "id": "B11-empty-subject",
+      "branch": "B11",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on",
+          "value": []
+        }
+      ],
+      "parameters": {},
+      "story": "No pickup subject makes the guarded deadline vacuous."
+    },
+    {
+      "id": "B12-opaque-pickup",
+      "branch": "B12",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": {
+            "$opaque": "opaque-pickup"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A reached opaque temporal operand is unknown."
+    },
+    {
+      "id": "B12-opaque-duration",
+      "branch": "B12",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": {
+            "$opaque": "opaque-duration"
+          }
+        },
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": "$days"
+        },
+        {
+          "target": "model",
+          "op": "append",
+          "path": "/constraints/0/antecedent",
+          "value": {
+            "fact_type": "dispatch_allowance_days",
+            "bind": {
+              "shipment": "$shipment",
+              "days": "$days"
+            }
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A reached opaque temporal operand is unknown."
+    },
+    {
+      "id": "B13-overflow",
+      "branch": "B13",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              {
+                "date": "9999-12-31"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Valid input produces an unrepresentable overflow result."
+    },
+    {
+      "id": "B13-underflow",
+      "branch": "B13",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_sub",
+            "args": [
+              {
+                "date": "0001-01-01"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Valid input produces an unrepresentable underflow result."
+    },
+    {
+      "id": "B14-unknown-and-failure",
+      "branch": "B14",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": {
+            "$opaque": "pickup"
+          }
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/facts/dispatch_pickup_on",
+          "value": {
+            "shipment": "SHIP-18",
+            "pickup": "2026-10-03"
+          }
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/facts/dispatch_shipping_deadline",
+          "value": {
+            "shipment": "SHIP-18",
+            "deadline": "2026-10-04"
+          }
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/facts/dispatch_shipment_origin",
+          "value": {
+            "shipment": "SHIP-18",
+            "warehouse": "WH-A"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "One unknown and one false binding do not fabricate a guarded failure."
+    },
+    {
+      "id": "B15-bad-model-before-population",
+      "branch": "B15",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1/duration_days",
+          "value": -1
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "not-a-date"
+        }
+      ],
+      "parameters": {},
+      "story": "Model error is reported before population error."
+    },
+    {
+      "id": "B15-bad-pop-before-eval",
+      "branch": "B15",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "not-a-date"
+        },
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              {
+                "date": "9999-12-31"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Population typing precedes date overflow evaluation."
+    },
+    {
+      "id": "B16-leap-in",
+      "branch": "B16",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              {
+                "date": "2024-02-28"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2024-02-29"
+        }
+      ],
+      "parameters": {},
+      "story": "Literal Gregorian vector: 2024-02-28 + 1 = 2024-02-29."
+    },
+    {
+      "id": "B16-leap-out",
+      "branch": "B16",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              {
+                "date": "2024-02-29"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2024-03-01"
+        }
+      ],
+      "parameters": {},
+      "story": "Literal Gregorian vector: 2024-02-29 + 1 = 2024-03-01."
+    },
+    {
+      "id": "B16-year-roll",
+      "branch": "B16",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              {
+                "date": "2023-12-31"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2024-01-01"
+        }
+      ],
+      "parameters": {},
+      "story": "Literal Gregorian vector: 2023-12-31 + 1 = 2024-01-01."
+    },
+    {
+      "id": "B16-off-by-one-mutation",
+      "branch": "B16",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_add",
+            "args": [
+              {
+                "date": "2024-02-28"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2024-02-28"
+        }
+      ],
+      "parameters": {},
+      "story": "A one-day wrong result must fail."
+    },
+    {
+      "id": "B17-at-limit",
+      "branch": "B17",
+      "domain": "dispatch",
+      "surface": "bulk-check",
+      "edits": [],
+      "parameters": {
+        "count": 10000
+      },
+      "story": "10000 distinct reached temporal applications; bounded within five seconds."
+    },
+    {
+      "id": "B18-over-limit",
+      "branch": "B18",
+      "domain": "dispatch",
+      "surface": "bulk-check",
+      "edits": [],
+      "parameters": {
+        "count": 10001
+      },
+      "story": "10001 distinct reached temporal applications; bounded within five seconds."
+    },
+    {
+      "id": "B19-temporal-refusal",
+      "branch": "B19",
+      "domain": "dispatch",
+      "surface": "synth",
+      "edits": [],
+      "parameters": {},
+      "story": "synth refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B20-temporal-refusal",
+      "branch": "B20",
+      "domain": "dispatch",
+      "surface": "measure",
+      "edits": [],
+      "parameters": {},
+      "story": "measure refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B21-temporal-refusal",
+      "branch": "B21",
+      "domain": "dispatch",
+      "surface": "codegen",
+      "edits": [],
+      "parameters": {},
+      "story": "codegen refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B22-temporal-refusal",
+      "branch": "B22",
+      "domain": "dispatch",
+      "surface": "conformance",
+      "edits": [],
+      "parameters": {},
+      "story": "conformance refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B26-temporal-refusal",
+      "branch": "B26",
+      "domain": "dispatch",
+      "surface": "diff",
+      "edits": [],
+      "parameters": {},
+      "story": "diff refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B27-temporal-refusal",
+      "branch": "B27",
+      "domain": "dispatch",
+      "surface": "extract",
+      "edits": [],
+      "parameters": {},
+      "story": "extract refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B28-temporal-refusal",
+      "branch": "B28",
+      "domain": "dispatch",
+      "surface": "doccheck",
+      "edits": [],
+      "parameters": {},
+      "story": "doccheck refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B29-temporal-refusal",
+      "branch": "B29",
+      "domain": "dispatch",
+      "surface": "export-pyrel",
+      "edits": [],
+      "parameters": {},
+      "story": "export-pyrel refuses temporal model before publishing success output."
+    },
+    {
+      "id": "B23-transition-late",
+      "branch": "B23",
+      "domain": "dispatch",
+      "surface": "transition",
+      "edits": [],
+      "parameters": {
+        "mutation": "late"
+      },
+      "story": "One declared step moves a dispatch pickup to the day-late state."
+    },
+    {
+      "id": "B24-transition-opaque",
+      "branch": "B24",
+      "domain": "dispatch",
+      "surface": "transition",
+      "edits": [],
+      "parameters": {
+        "mutation": "opaque"
+      },
+      "story": "One declared step moves a dispatch pickup to an opaque state."
+    },
+    {
+      "id": "B25-legacy-diff",
+      "branch": "B25",
+      "domain": "dispatch",
+      "surface": "legacy-diff",
+      "edits": [],
+      "parameters": {},
+      "story": "A v1 model diff retains its applicable payload and exit."
+    },
+    {
+      "id": "B30-package-pins",
+      "branch": "B30",
+      "domain": "dispatch",
+      "surface": "package-pins",
+      "edits": [],
+      "parameters": {},
+      "story": "Canonical schema and packaged prose agree on temporal wire and refusal boundaries."
+    },
+    {
+      "id": "B31-legacy-numeric",
+      "branch": "B31",
+      "domain": "dispatch",
+      "surface": "legacy-numeric",
+      "edits": [],
+      "parameters": {},
+      "story": "An existing numeric exact-term case keeps its old output."
+    },
+    {
+      "id": "B32-legacy-date",
+      "branch": "B32",
+      "domain": "dispatch",
+      "surface": "legacy-date",
+      "edits": [],
+      "parameters": {},
+      "story": "An existing Date/DateTime comparison case keeps its old output."
+    },
+    {
+      "id": "B33-report-version",
+      "branch": "B33",
+      "domain": "dispatch",
+      "surface": "report-version",
+      "edits": [],
+      "parameters": {},
+      "story": "Legacy report versions are unchanged and temporal ordinary check selects v11."
+    },
+    {
+      "id": "B34-derivation-head",
+      "branch": "B34",
+      "domain": "dispatch",
+      "surface": "forbidden-site",
+      "edits": [],
+      "parameters": {
+        "site": "derivation-head"
+      },
+      "story": "The temporal term is refused at derivation-head while the non-temporal control is valid."
+    },
+    {
+      "id": "B35-derivation-where",
+      "branch": "B35",
+      "domain": "dispatch",
+      "surface": "forbidden-site",
+      "edits": [],
+      "parameters": {
+        "site": "derivation-where"
+      },
+      "story": "The temporal term is refused at derivation-where while the non-temporal control is valid."
+    },
+    {
+      "id": "B36-operation-binding",
+      "branch": "B36",
+      "domain": "dispatch",
+      "surface": "forbidden-site",
+      "edits": [],
+      "parameters": {
+        "site": "operation-binding"
+      },
+      "story": "The temporal term is refused at operation-binding while the non-temporal control is valid."
+    },
+    {
+      "id": "B37-guarded-exists-where",
+      "branch": "B37",
+      "domain": "dispatch",
+      "surface": "forbidden-site",
+      "edits": [],
+      "parameters": {
+        "site": "guarded-exists-where"
+      },
+      "story": "The temporal term is refused at guarded-exists-where while the non-temporal control is valid."
+    },
+    {
+      "id": "B38-cross-primitive-binding",
+      "branch": "B38",
+      "domain": "dispatch",
+      "surface": "cross-primitive-binding",
+      "edits": [],
+      "parameters": {},
+      "story": "One variable cannot bind both Duration and Integer roles."
+    },
+    {
+      "id": "B39-bound-duration-two",
+      "branch": "B39",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": "$days"
+        },
+        {
+          "target": "model",
+          "op": "append",
+          "path": "/constraints/0/antecedent",
+          "value": {
+            "fact_type": "dispatch_allowance_days",
+            "bind": {
+              "shipment": "$shipment",
+              "days": "$days"
+            }
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "Role-bound two-day Duration satisfies the deadline."
+    },
+    {
+      "id": "B39-bound-duration-three",
+      "branch": "B39",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left/args/1",
+          "value": "$days"
+        },
+        {
+          "target": "model",
+          "op": "append",
+          "path": "/constraints/0/antecedent",
+          "value": {
+            "fact_type": "dispatch_allowance_days",
+            "bind": {
+              "shipment": "$shipment",
+              "days": "$days"
+            }
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": 3
+        }
+      ],
+      "parameters": {},
+      "story": "Changing only the role-bound duration to three days violates the deadline."
+    },
+    {
+      "id": "B40-deontic-unknown",
+      "branch": "B40",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/modality",
+          "value": "deontic"
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": {
+            "$opaque": "pickup"
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "A deontic unknown is visible without raising the exit band."
+    },
+    {
+      "id": "B41-at-depth",
+      "branch": "B41",
+      "domain": "dispatch",
+      "surface": "deep-term",
+      "edits": [],
+      "parameters": {
+        "levels": 31
+      },
+      "story": "A chain of 31 nested date_add nodes exercises the depth boundary."
+    },
+    {
+      "id": "B41-over-depth",
+      "branch": "B41",
+      "domain": "dispatch",
+      "surface": "deep-term",
+      "edits": [],
+      "parameters": {
+        "levels": 32
+      },
+      "story": "A chain of 32 nested date_add nodes exercises the depth boundary."
+    },
+    {
+      "id": "B42-duration-compare-pass",
+      "branch": "B42",
+      "domain": "dispatch",
+      "surface": "direct-duration",
+      "edits": [],
+      "parameters": {},
+      "story": "Duration-to-Duration comparison accepts two role values."
+    },
+    {
+      "id": "B42-duration-compare-fail",
+      "branch": "B42",
+      "domain": "dispatch",
+      "surface": "direct-duration",
+      "edits": [],
+      "parameters": {
+        "larger": true
+      },
+      "story": "One-day larger Duration violates the typed comparison."
+    },
+    {
+      "id": "B42-duration-integer-mix",
+      "branch": "B42",
+      "domain": "dispatch",
+      "surface": "direct-duration",
+      "edits": [],
+      "parameters": {
+        "integer": true
+      },
+      "story": "A Duration role compared to Integer is a model error."
+    },
+    {
+      "id": "B43-duration-range-inside",
+      "branch": "B43",
+      "domain": "dispatch",
+      "surface": "duration-range",
+      "edits": [],
+      "parameters": {},
+      "story": "Inclusive Duration range admits both endpoints."
+    },
+    {
+      "id": "B43-duration-range-outside",
+      "branch": "B43",
+      "domain": "dispatch",
+      "surface": "duration-range",
+      "edits": [],
+      "parameters": {
+        "outside": true
+      },
+      "story": "One day outside the range violates the constraint."
+    },
+    {
+      "id": "B43-duration-range-bool",
+      "branch": "B43",
+      "domain": "dispatch",
+      "surface": "duration-range",
+      "edits": [],
+      "parameters": {
+        "invalid_endpoint": true
+      },
+      "story": "Invalid bool range endpoint is a model error."
+    },
+    {
+      "id": "B43-duration-range-float",
+      "branch": "B43",
+      "domain": "dispatch",
+      "surface": "duration-range",
+      "edits": [],
+      "parameters": {
+        "invalid_endpoint": 2.0
+      },
+      "story": "Invalid float range endpoint is a model error."
+    },
+    {
+      "id": "B43-duration-range-negative",
+      "branch": "B43",
+      "domain": "dispatch",
+      "surface": "duration-range",
+      "edits": [],
+      "parameters": {
+        "invalid_endpoint": -1
+      },
+      "story": "Invalid negative range endpoint is a model error."
+    },
+    {
+      "id": "B43-duration-range-over-cap",
+      "branch": "B43",
+      "domain": "dispatch",
+      "surface": "duration-range",
+      "edits": [],
+      "parameters": {
+        "invalid_endpoint": 1000001
+      },
+      "story": "Invalid over-cap range endpoint is a model error."
+    },
+    {
+      "id": "B04-zero-role",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": 0
+        }
+      ],
+      "parameters": {},
+      "story": "Zero-day Duration role is admitted and leaves the literal guarded rule true."
+    },
+    {
+      "id": "B04-max-role",
+      "branch": "B04",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_allowance_days/0/days",
+          "value": 1000000
+        }
+      ],
+      "parameters": {},
+      "story": "The maximum valid Duration role is admitted and leaves the literal guarded rule true."
+    },
+    {
+      "id": "B05-valid-tag",
+      "branch": "B05",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [],
+      "parameters": {},
+      "story": "The exact tagged duration literal validates."
+    },
+    {
+      "id": "B07-invalid-role",
+      "branch": "B07",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": "2023-02-29"
+        }
+      ],
+      "parameters": {},
+      "story": "A malformed Date role value is rejected as input."
+    },
+    {
+      "id": "B12-unreached-opaque",
+      "branch": "B12",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "append",
+          "path": "/fact_types",
+          "value": {
+            "id": "dispatch_unused_date",
+            "reading": "{DispatchShipment} has unused date {DispatchCalendarDay}",
+            "roles": [
+              {
+                "object_type": "dispatch_shipment",
+                "role_name": "shipment"
+              },
+              {
+                "object_type": "dispatch_calendar_day",
+                "role_name": "date"
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_unused_date",
+          "value": [
+            {
+              "shipment": "SHIP-17",
+              "date": {
+                "$opaque": "unreached"
+              }
+            }
+          ]
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/population/covers",
+          "value": "dispatch_unused_date"
+        }
+      ],
+      "parameters": {},
+      "story": "An opaque Date in a covered fact type outside the guarded antecedent is never evaluated."
+    },
+    {
+      "id": "B14-separate-alethic-fail",
+      "branch": "B14",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_pickup_on/0/pickup",
+          "value": {
+            "$opaque": "pickup"
+          }
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/facts/dispatch_pickup_on",
+          "value": {
+            "shipment": "SHIP-18",
+            "pickup": "2026-10-03"
+          }
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/facts/dispatch_shipping_deadline",
+          "value": {
+            "shipment": "SHIP-18",
+            "deadline": "2026-10-04"
+          }
+        },
+        {
+          "target": "population",
+          "op": "append",
+          "path": "/facts/dispatch_shipment_origin",
+          "value": {
+            "shipment": "SHIP-18",
+            "warehouse": "WH-A"
+          }
+        },
+        {
+          "target": "model",
+          "op": "append",
+          "path": "/constraints",
+          "value": {
+            "type": "value",
+            "object_type": "dispatch_allowance",
+            "range": {
+              "min": 0,
+              "max": 1
+            },
+            "source": "user-supplied",
+            "status": "confirmed",
+            "modality": "alethic",
+            "provenance": {
+              "user_quote": "Allowances must not exceed one day."
+            }
+          }
+        }
+      ],
+      "parameters": {},
+      "story": "An independent definite alethic range failure selects overall exit 1 while the guarded temporal constraint remains unchecked."
+    },
+    {
+      "id": "B16-sub-leap",
+      "branch": "B16",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_sub",
+            "args": [
+              {
+                "date": "2024-03-01"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2024-02-29"
+        }
+      ],
+      "parameters": {},
+      "story": "Gregorian subtraction vector: 2024-03-01 - 1 = 2024-02-29."
+    },
+    {
+      "id": "B16-sub-year",
+      "branch": "B16",
+      "domain": "dispatch",
+      "surface": "check",
+      "edits": [
+        {
+          "target": "model",
+          "op": "set",
+          "path": "/constraints/0/consequent/comparison/left",
+          "value": {
+            "fn": "date_sub",
+            "args": [
+              {
+                "date": "2024-01-01"
+              },
+              {
+                "duration_days": 1
+              }
+            ]
+          }
+        },
+        {
+          "target": "population",
+          "op": "set",
+          "path": "/facts/dispatch_shipping_deadline/0/deadline",
+          "value": "2023-12-31"
+        }
+      ],
+      "parameters": {},
+      "story": "Gregorian subtraction vector: 2024-01-01 - 1 = 2023-12-31."
+    },
+    {
+      "id": "B42-untagged-integer",
+      "branch": "B42",
+      "domain": "dispatch",
+      "surface": "validate",
+      "edits": [],
+      "parameters": {
+        "untagged_integer": true
+      },
+      "story": "A raw integer literal cannot stand for the second Duration operand."
+    }
+  ]
+}

@@ -1,0 +1,531 @@
+{
+  "census": {
+    "constraint": {
+      "claimed": 3,
+      "corroborated": 3,
+      "in_model": 3,
+      "unclaimed": 0,
+      "unclaimed_with_evidence": 0
+    },
+    "fact_type": {
+      "claimed": 1,
+      "corroborated": 1,
+      "in_model": 4,
+      "unclaimed": 3,
+      "unclaimed_with_evidence": 3
+    },
+    "operation": {
+      "claimed": 2,
+      "corroborated": 1,
+      "in_model": 2,
+      "unclaimed": 0,
+      "unclaimed_with_evidence": 0
+    }
+  },
+  "command": "coverage",
+  "covers_exemptions": [
+    {
+      "exemption": "tests-only",
+      "experiment": "EXP-503-tests-only",
+      "path": "experiments/EXP-503-tests-only/SPEC.md"
+    }
+  ],
+  "elements": [
+    {
+      "address": "operation:attach_review_note",
+      "addressing": "declared-id",
+      "claims": [
+        {
+          "conclusions": "conclusions-present",
+          "experiment": "EXP-501-corroborated",
+          "path": "experiments/EXP-501-corroborated/SPEC.md"
+        }
+      ],
+      "class": "operation",
+      "evidence": [
+        {
+          "path": "evidence/transition.json",
+          "quote": {
+            "index": 1,
+            "operation": "attach_review_note",
+            "verdicts": []
+          },
+          "source": "transition"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "operation:flag_work_item",
+      "addressing": "declared-id",
+      "claims": [
+        {
+          "conclusions": "no-conclusions",
+          "experiment": "EXP-502-claimed-and-unmatched",
+          "path": "experiments/EXP-502-claimed-and-unmatched/SPEC.md"
+        },
+        {
+          "conclusions": "conclusions-present",
+          "experiment": "EXP-504-conclusions-without-evidence",
+          "path": "experiments/EXP-504-conclusions-without-evidence/SPEC.md"
+        }
+      ],
+      "class": "operation",
+      "evidence": [],
+      "status": "claimed"
+    },
+    {
+      "address": "fact_type:work_item_has_state",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 0
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 0
+          },
+          "source": "verify"
+        },
+        {
+          "path": "evidence/conformance.json",
+          "quote": {
+            "fact_type_id": "work_item_has_state",
+            "ownership": "derived",
+            "relpath": "v2_operations/tools.py",
+            "symbol": "work_item_has_state",
+            "unchecked": [
+              {
+                "description": "a manifest cannot record its own digest, so an edit to a derived file that is CO-EDITED with its manifest entry is undetectable by digest comparison; this is an integrity bound, not tamper evidence (gnd doctor has the identical limit)",
+                "id": "manifest-co-edit"
+              },
+              {
+                "description": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+                "id": "extension-unexamined"
+              },
+              {
+                "description": "a green digest comparison says the derived surface is unedited and current, never that the generated code is correct (G-08)",
+                "id": "green-is-not-correctness"
+              },
+              {
+                "description": "assertion #3 binds the NAMES and SIGNATURES of the emitted tools to the fact types and role names that the model declares; it does not read a function body. A tool whose name and parameters agree with the model may still compute the wrong thing, and the only check that catches that is the runtime verifier over the population the generated agent actually produces",
+                "id": "structural-surface-only"
+              },
+              {
+                "description": "assertion #4 checks declared paths, module-level positional shape, fact-type membership, recognized path expressions and whole-AST flag or subcommand string presence without executing project code; string presence does not prove argparse wiring, declared exits are unverified without smoke rows, unrecognized expressions and cross-module indirection are not guessed, computed-only artifact names can report reference-unfound, dotted entry modules use only project-root flat module paths, weakening remains visible only in declared counts and review, pure-existence artifacts arm no path check, and the two service observations are point-in-time reads rather than an atomic filesystem snapshot",
+                "id": "architecture-static-only"
+              },
+              {
+                "description": "the codegen manifest does not list an architecture contract and no contract leaf exists, so assertion #4 has no declarations to inspect",
+                "id": "architecture-contract-absent"
+              }
+            ]
+          },
+          "source": "conformance"
+        },
+        {
+          "path": "evidence/transition.json",
+          "quote": {
+            "fact_type": "work_item_has_state",
+            "modality": "alethic",
+            "operations": [
+              "attach_review_note"
+            ],
+            "reason": "all-alethic"
+          },
+          "source": "transition"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraint:one_state_per_item",
+      "addressing": "declared-id",
+      "claims": [
+        {
+          "conclusions": "conclusions-present",
+          "experiment": "EXP-501-corroborated",
+          "path": "experiments/EXP-501-corroborated/SPEC.md"
+        }
+      ],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[work_item_has_state].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "constraint_ref": "fact_types[work_item_has_state].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "verify"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "fact_types[work_item_has_state].constraints[1]",
+      "addressing": "positional",
+      "claims": [
+        {
+          "conclusions": "conclusions-present",
+          "experiment": "EXP-501-corroborated",
+          "path": "experiments/EXP-501-corroborated/SPEC.md"
+        }
+      ],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[work_item_has_state].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "constraint_ref": "fact_types[work_item_has_state].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "verify"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "fact_type:work_item_reviewed_by",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "verify"
+        },
+        {
+          "path": "evidence/conformance.json",
+          "quote": {
+            "fact_type_id": "work_item_reviewed_by",
+            "ownership": "derived",
+            "relpath": "v2_operations/tools.py",
+            "symbol": "work_item_reviewed_by",
+            "unchecked": [
+              {
+                "description": "a manifest cannot record its own digest, so an edit to a derived file that is CO-EDITED with its manifest entry is undetectable by digest comparison; this is an integrity bound, not tamper evidence (gnd doctor has the identical limit)",
+                "id": "manifest-co-edit"
+              },
+              {
+                "description": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+                "id": "extension-unexamined"
+              },
+              {
+                "description": "a green digest comparison says the derived surface is unedited and current, never that the generated code is correct (G-08)",
+                "id": "green-is-not-correctness"
+              },
+              {
+                "description": "assertion #3 binds the NAMES and SIGNATURES of the emitted tools to the fact types and role names that the model declares; it does not read a function body. A tool whose name and parameters agree with the model may still compute the wrong thing, and the only check that catches that is the runtime verifier over the population the generated agent actually produces",
+                "id": "structural-surface-only"
+              },
+              {
+                "description": "assertion #4 checks declared paths, module-level positional shape, fact-type membership, recognized path expressions and whole-AST flag or subcommand string presence without executing project code; string presence does not prove argparse wiring, declared exits are unverified without smoke rows, unrecognized expressions and cross-module indirection are not guessed, computed-only artifact names can report reference-unfound, dotted entry modules use only project-root flat module paths, weakening remains visible only in declared counts and review, pure-existence artifacts arm no path check, and the two service observations are point-in-time reads rather than an atomic filesystem snapshot",
+                "id": "architecture-static-only"
+              },
+              {
+                "description": "the codegen manifest does not list an architecture contract and no contract leaf exists, so assertion #4 has no declarations to inspect",
+                "id": "architecture-contract-absent"
+              }
+            ]
+          },
+          "source": "conformance"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:work_item_has_note",
+      "addressing": "declared-id",
+      "claims": [
+        {
+          "conclusions": "conclusions-present",
+          "experiment": "EXP-501-corroborated",
+          "path": "experiments/EXP-501-corroborated/SPEC.md"
+        }
+      ],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "verify"
+        },
+        {
+          "path": "evidence/conformance.json",
+          "quote": {
+            "fact_type_id": "work_item_has_note",
+            "ownership": "derived",
+            "relpath": "v2_operations/tools.py",
+            "symbol": "work_item_has_note",
+            "unchecked": [
+              {
+                "description": "a manifest cannot record its own digest, so an edit to a derived file that is CO-EDITED with its manifest entry is undetectable by digest comparison; this is an integrity bound, not tamper evidence (gnd doctor has the identical limit)",
+                "id": "manifest-co-edit"
+              },
+              {
+                "description": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+                "id": "extension-unexamined"
+              },
+              {
+                "description": "a green digest comparison says the derived surface is unedited and current, never that the generated code is correct (G-08)",
+                "id": "green-is-not-correctness"
+              },
+              {
+                "description": "assertion #3 binds the NAMES and SIGNATURES of the emitted tools to the fact types and role names that the model declares; it does not read a function body. A tool whose name and parameters agree with the model may still compute the wrong thing, and the only check that catches that is the runtime verifier over the population the generated agent actually produces",
+                "id": "structural-surface-only"
+              },
+              {
+                "description": "assertion #4 checks declared paths, module-level positional shape, fact-type membership, recognized path expressions and whole-AST flag or subcommand string presence without executing project code; string presence does not prove argparse wiring, declared exits are unverified without smoke rows, unrecognized expressions and cross-module indirection are not guessed, computed-only artifact names can report reference-unfound, dotted entry modules use only project-root flat module paths, weakening remains visible only in declared counts and review, pure-existence artifacts arm no path check, and the two service observations are point-in-time reads rather than an atomic filesystem snapshot",
+                "id": "architecture-static-only"
+              },
+              {
+                "description": "the codegen manifest does not list an architecture contract and no contract leaf exists, so assertion #4 has no declarations to inspect",
+                "id": "architecture-contract-absent"
+              }
+            ]
+          },
+          "source": "conformance"
+        },
+        {
+          "path": "evidence/transition.json",
+          "quote": {
+            "fact_type": "work_item_has_note",
+            "modality": "alethic",
+            "operations": [
+              "attach_review_note"
+            ],
+            "reason": "all-alethic"
+          },
+          "source": "transition"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "fact_type:work_item_has_priority",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "verify"
+        },
+        {
+          "path": "evidence/conformance.json",
+          "quote": {
+            "fact_type_id": "work_item_has_priority",
+            "ownership": "derived",
+            "relpath": "v2_operations/tools.py",
+            "symbol": "work_item_has_priority",
+            "unchecked": [
+              {
+                "description": "a manifest cannot record its own digest, so an edit to a derived file that is CO-EDITED with its manifest entry is undetectable by digest comparison; this is an integrity bound, not tamper evidence (gnd doctor has the identical limit)",
+                "id": "manifest-co-edit"
+              },
+              {
+                "description": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+                "id": "extension-unexamined"
+              },
+              {
+                "description": "a green digest comparison says the derived surface is unedited and current, never that the generated code is correct (G-08)",
+                "id": "green-is-not-correctness"
+              },
+              {
+                "description": "assertion #3 binds the NAMES and SIGNATURES of the emitted tools to the fact types and role names that the model declares; it does not read a function body. A tool whose name and parameters agree with the model may still compute the wrong thing, and the only check that catches that is the runtime verifier over the population the generated agent actually produces",
+                "id": "structural-surface-only"
+              },
+              {
+                "description": "assertion #4 checks declared paths, module-level positional shape, fact-type membership, recognized path expressions and whole-AST flag or subcommand string presence without executing project code; string presence does not prove argparse wiring, declared exits are unverified without smoke rows, unrecognized expressions and cross-module indirection are not guessed, computed-only artifact names can report reference-unfound, dotted entry modules use only project-root flat module paths, weakening remains visible only in declared counts and review, pure-existence artifacts arm no path check, and the two service observations are point-in-time reads rather than an atomic filesystem snapshot",
+                "id": "architecture-static-only"
+              },
+              {
+                "description": "the codegen manifest does not list an architecture contract and no contract leaf exists, so assertion #4 has no declarations to inspect",
+                "id": "architecture-contract-absent"
+              }
+            ]
+          },
+          "source": "conformance"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraint:one_priority_per_item",
+      "addressing": "declared-id",
+      "claims": [
+        {
+          "conclusions": "conclusions-present",
+          "experiment": "EXP-501-corroborated",
+          "path": "experiments/EXP-501-corroborated/SPEC.md"
+        }
+      ],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[work_item_has_priority].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        },
+        {
+          "path": "evidence/verify.json",
+          "quote": {
+            "constraint_ref": "fact_types[work_item_has_priority].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "verify"
+        }
+      ],
+      "status": "corroborated"
+    }
+  ],
+  "gnd_version": "0.1.0",
+  "model": {
+    "digest": "sha256:819491f97e3a5882217d852b7c21b70487ca082bf9f88ffbded5e6cdb5e3ccc5",
+    "path": "v2_operations.orm.yaml",
+    "version": 2
+  },
+  "schema_version": 3,
+  "sources": {
+    "check": [
+      "evidence/check.json"
+    ],
+    "conformance": [
+      "evidence/conformance.json"
+    ],
+    "experiments": [
+      "experiments"
+    ],
+    "refused": [],
+    "transition": [
+      "evidence/transition.json"
+    ],
+    "unbound": [
+      {
+        "kind": "check",
+        "path": "evidence/check.json",
+        "reason": "legacy-report-without-model-digest",
+        "schema_version": 3
+      },
+      {
+        "kind": "verify",
+        "path": "evidence/verify.json",
+        "reason": "legacy-report-without-model-digest",
+        "schema_version": 3
+      }
+    ],
+    "verify": [
+      "evidence/verify.json"
+    ]
+  },
+  "tool": "gnd",
+  "unmatched_covers": [
+    {
+      "address": "constraint:no_such_constraint",
+      "experiment": "EXP-502-claimed-and-unmatched",
+      "path": "experiments/EXP-502-claimed-and-unmatched/SPEC.md",
+      "reason": "the model declares no element with this id"
+    }
+  ],
+  "unstable_addresses": [
+    {
+      "address": "fact_types[work_item_has_state].constraints[1]",
+      "experiment": "EXP-501-corroborated",
+      "note": "positional; reordering the model's constraints silently retargets this row",
+      "path": "experiments/EXP-501-corroborated/SPEC.md"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-11-entry-point-unresolvable",
+  "story": "THE CASE THE WHOLE REFUSAL GROUP EXISTS FOR. The row declares expect_exit 1 and names an entry point that does not resolve. python -m on a missing module exits 1, so an exit-code comparison would call this a PASS. It must be DID_NOT_START."
+}

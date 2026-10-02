@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase3-admission@1",
+    "source": "fixture",
+    "covers": ["record_key", "record_has_holder", "record_has_amount", "approval_for_record", "notice_for_record"]
+  },
+  "instances": {},
+  "facts": {
+    "record_key": [{"id": "R1"}, {"id": "R2"}],
+    "record_has_holder": [{"record": "R1", "holder": "Alice"}, {"record": "R2", "holder": "Bob"}],
+    "record_has_amount": [{"record": "R1", "amount": 10}, {"record": "R2", "amount": 20}],
+    "approval_for_record": [{"record": "R1", "approval": "yes"}, {"record": "R2", "approval": "yes"}],
+    "notice_for_record": [{"record": "R1", "notice": "sent"}, {"record": "R2", "notice": "sent"}]
+  }
+}

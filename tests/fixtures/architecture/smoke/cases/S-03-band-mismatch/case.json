@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-03-band-mismatch",
+  "story": "The row declares 0 and the entry point exits 3. The failure must name BOTH numbers."
+}

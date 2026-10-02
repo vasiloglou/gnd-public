@@ -1,0 +1,97 @@
+# tests/fixtures/adversarial/models/reference_value_type.orm.yaml
+#
+# Adversarial probe (F-01): an alethic `value` constraint declared on an entity
+# type's REFERENCE VALUE TYPE, in a model that validates clean at exit 0.
+#
+# `movie` is identified by `movie_id`, and `movie_id` — not `movie` — is what the
+# constraint names. No role is typed to `movie_id` anywhere in the model, so
+# before the F-01 fix the checker's universe walk collected nothing for it and
+# reported `pass` — "Each movie_id value must be between '1' and '100' —
+# satisfied." — at exit 0 with `acceptance_ready: true`, over a population whose
+# only fact carries `movie: 999999`.
+#
+# The values ARE in the population. `population-format.md`: "Entity values in
+# facts use the entity's reference-scheme value ... `movie: 1` means the Movie
+# whose MovieId is 1". The loader itself resolves `movie -> movie_id` in order to
+# TYPE-CHECK 999999 as an Integer MovieId and rejects the population at exit 3
+# when it is not one; the checker then declined to range-check the same value as
+# a MovieId. One value cannot be a MovieId for typing and not a MovieId for
+# constraints.
+#
+# Two families of the same shape are covered, because they are two branches of
+# `_check_value`:
+#   - `movie_id` carries a numeric RANGE
+#   - `director_name` carries an `allowed` ENUM
+# The companion `reference_cardinality.orm.yaml` covers the cardinality family.
+#
+# The model MUST validate clean (`gnd validate` exits 0) — these cases probe the
+# CHECKER, not the model loader.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: director
+    name: Director
+    kind: entity
+    reference: { mode: popular, value_type: director_name }
+
+  - id: director_name
+    name: DirectorName
+    kind: value
+    primitive: String
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles:
+      - { object_type: movie, role_name: movie }
+      - { object_type: title, role_name: title }
+
+  - id: movie_directed_by
+    reading: "{Movie} is directed by {Director}"
+    roles:
+      - { object_type: movie, role_name: movie }
+      - { object_type: director, role_name: director }
+
+constraints:
+  # Range branch. `movie_id` is played by no role; every MovieId in the
+  # population arrives as the identifying value of a `movie`-typed role.
+  - type: value
+    object_type: movie_id
+    range: { min: 1, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "Movie ids run from 1 to 100."
+
+  # Enum branch, same shape one family over: `director_name` is played by no
+  # role either, and its members arrive as `director`-typed role values.
+  - type: value
+    object_type: director_name
+    allowed: ["Scorsese", "Nolan"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "The only directors on file are Scorsese and Nolan."

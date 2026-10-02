@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "tree": "refused",
+  "arguments": [
+    "v2_worked_example.orm.yaml",
+    "--experiments",
+    "experiments",
+    "--check",
+    "evidence/check-all-fail.json",
+    "--transition",
+    "evidence/transition-refused.json"
+  ],
+  "answer": {
+    "model_digest": "sha256:fbcfde082dbcbb76ddb12be314ab5ae622b8dad4c023a7447ed3d95180d32e41",
+    "census": {
+      "operation": {
+        "in_model": 1,
+        "claimed": 1,
+        "corroborated": 0,
+        "unclaimed": 0,
+        "unclaimed_with_evidence": 0
+      },
+      "fact_type": {
+        "in_model": 3,
+        "claimed": 0,
+        "corroborated": 0,
+        "unclaimed": 3,
+        "unclaimed_with_evidence": 3
+      },
+      "constraint": {
+        "in_model": 4,
+        "claimed": 1,
+        "corroborated": 1,
+        "unclaimed": 3,
+        "unclaimed_with_evidence": 3
+      }
+    },
+    "element_status": {
+      "operation:submit_expense_to_workday": "claimed",
+      "fact_type:expense_has_status": "unclaimed",
+      "fact_type:expense_submitted_to_workday": "unclaimed",
+      "fact_type:chain_has_threshold": "unclaimed",
+      "fact_types[expense_has_status].constraints[0]": "corroborated",
+      "fact_types[expense_has_status].constraints[1]": "unclaimed",
+      "fact_types[expense_submitted_to_workday].constraints[0]": "unclaimed",
+      "fact_types[chain_has_threshold].constraints[0]": "unclaimed"
+    },
+    "check_verdicts": [
+      {
+        "constraint_ref": "fact_types[expense_has_status].constraints[0]",
+        "verdict": "fail"
+      },
+      {
+        "constraint_ref": "fact_types[expense_has_status].constraints[1]",
+        "verdict": "fail"
+      },
+      {
+        "constraint_ref": "fact_types[expense_submitted_to_workday].constraints[0]",
+        "verdict": "fail"
+      },
+      {
+        "constraint_ref": "fact_types[chain_has_threshold].constraints[0]",
+        "verdict": "fail"
+      }
+    ],
+    "transition_evaluated": false,
+    "transition_evidence_rows": 0,
+    "refused_sources": [
+      {
+        "path": "evidence/transition-refused.json",
+        "reason": "the walk was refused before evaluation"
+      }
+    ],
+    "unstable_addresses": [
+      {
+        "experiment": "EXP-521-refused",
+        "path": "experiments/EXP-521-refused/SPEC.md",
+        "address": "fact_types[expense_has_status].constraints[0]",
+        "note": "positional; reordering the model's constraints silently retargets this row"
+      }
+    ],
+    "unmatched_covers": [],
+    "covers_exemptions": []
+  }
+}

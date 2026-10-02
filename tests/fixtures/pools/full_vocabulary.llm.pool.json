@@ -1,0 +1,152 @@
+{
+  "domain_narrative": "A mid-sized software company staffs projects out of a handful of departments. Each employee has one registered name, one recorded gender, and one current salary; some report to a manager, none report to themselves, and reporting chains never loop. Employees work on projects (teams capped at ten) and a few lead or head departments. Assignments pair an employee with a project and log hours; overtime is a small slice of the total. Every employee is engaged either as a contractor or permanently.",
+  "object_types": {
+    "employee": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008
+    ],
+    "department": [
+      "ENG",
+      "SAL",
+      "HR",
+      "FIN",
+      "OPS",
+      "MKT",
+      "LEG",
+      "IT"
+    ],
+    "project": [
+      "Apollo",
+      "Borealis",
+      "Cascade",
+      "Deimos",
+      "Everest",
+      "Frontier",
+      "Gemini",
+      "Horizon"
+    ],
+    "salary": [
+      72000,
+      85000,
+      94000,
+      103000,
+      118000,
+      129000,
+      141000,
+      156000
+    ],
+    "assignment": [
+      "ASN-001",
+      "ASN-002",
+      "ASN-003",
+      "ASN-004",
+      "ASN-005",
+      "ASN-006",
+      "ASN-007",
+      "ASN-008"
+    ],
+    "contractor_employee": [
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008
+    ],
+    "permanent_employee": [
+      3001,
+      3002,
+      3003,
+      3004,
+      3005,
+      3006,
+      3007,
+      3008
+    ]
+  },
+  "value_types": {
+    "employee_id": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008
+    ],
+    "employee_name": [
+      "Ada Lovelace",
+      "Grace Hopper",
+      "Alan Turing",
+      "Katherine Johnson",
+      "Edsger Dijkstra",
+      "Barbara Liskov",
+      "Dennis Ritchie",
+      "Radia Perlman"
+    ],
+    "gender": [
+      "F",
+      "F",
+      "M",
+      "F",
+      "M",
+      "F",
+      "M",
+      "X"
+    ],
+    "department_code": [
+      "ENG",
+      "SAL",
+      "HR",
+      "FIN",
+      "OPS",
+      "MKT",
+      "LEG",
+      "IT"
+    ],
+    "project_name": [
+      "Apollo",
+      "Borealis",
+      "Cascade",
+      "Deimos",
+      "Everest",
+      "Frontier",
+      "Gemini",
+      "Horizon"
+    ],
+    "hours": [
+      8,
+      24,
+      40,
+      80,
+      120,
+      160,
+      320,
+      480
+    ],
+    "calendar_date": [
+      "2021-01-11",
+      "2021-03-15",
+      "2021-06-01",
+      "2021-09-20",
+      "2022-01-10",
+      "2022-04-04",
+      "2022-08-22",
+      "2022-11-30"
+    ]
+  },
+  "provenance": {
+    "source": "llm-proposed",
+    "proposer_model": "synthetic-fixture",
+    "prompt_version": "public-example/1"
+  }
+}

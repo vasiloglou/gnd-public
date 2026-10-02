@@ -1,0 +1,16 @@
+{
+  "steps_schema": 1,
+  "model": "../v2_worked_example.orm.yaml",
+  "model_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "operations_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "steps": [
+    {
+      "op": "submit_expense_to_workday",
+      "bindings": {
+        "expense": 1,
+        "submission": "WD-3",
+        "chain": "C-1"
+      }
+    }
+  ]
+}

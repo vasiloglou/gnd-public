@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "machine_label_owner": "cases[].name",
+  "cases": [
+    {
+      "name": "evolution-safe-additive",
+      "inputs": {
+        "before_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "e0f05e13f57813b2c92f8e7e15dc3ca9d1c1de04475d721b919ac931de8faefe"
+        },
+        "candidate_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"priority\",\"name\":\"Priority\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]},{\"id\":\"work_item_has_priority\",\"reading\":\"{WorkItem} has {Priority}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"priority\",\"role_name\":\"priority\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"A work item usually has one current priority.\",\"provenance\":{\"rationale_world_fact\":\"Planning systems commonly expose one current priority per work item.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "0e1505aa39a2a051ed328d427c159e7b01ca8eaa6f526387282e6c6602c6a09f"
+        }
+      },
+      "expected": {
+        "proposal": ["proposal_id", "expected_model_sha256", "candidate_model", "operations", "rationale", "audit", "linked_projects"],
+        "preview": ["proposal_sha256", "before_model", "candidate_model", "verbalization", "validation", "affected_references", "preview_sha256"],
+        "before_model": ["media_type", "encoding", "text", "sha256"],
+        "candidate_model": ["media_type", "encoding", "text", "sha256"],
+        "verbalization": ["media_type", "encoding", "text", "sha256"],
+        "validation": ["valid", "warnings", "model_sha256"],
+        "cas": ["expected_model_sha256", "observed_model_sha256", "commit_point", "published"],
+        "linked_project_conformance": ["project_id", "root", "expected_tree_sha256", "before_tree_sha256", "after_tree_sha256", "payload", "payload_sha256", "exit_code"],
+        "affected_code": ["ordered_references", "generated_code_written", "extension_code_written"],
+        "final_record_identity": ["proposal_sha256", "preview_sha256", "intent_sha256", "old_model_sha256", "new_model_sha256", "record_identity_sha256"]
+      }
+    },
+    {
+      "name": "evolution-rename-delete-blast-radius",
+      "inputs": {
+        "before_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "e0f05e13f57813b2c92f8e7e15dc3ca9d1c1de04475d721b919ac931de8faefe"
+        },
+        "candidate_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"summary\",\"name\":\"Summary\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "9a3e6161a172e982d34e752edd89758eca9d35f55745b620c356213dadedc881"
+        },
+        "supplied_artifacts": [
+          {
+            "artifact_id": "fixture-population",
+            "artifact_kind": "population",
+            "path": "fixtures/population.json",
+            "media_type": "application/json",
+            "encoding": "utf-8",
+            "text": "{\"model_id\":\"evolution-demo\",\"facts\":{\"work_item_has_title\":[{\"work_item\":1,\"title\":\"One\"}]}}\n",
+            "sha256": "f6856728de733255050e219207bb330a941d332efc9d6813e53a101b6d66b84d",
+            "references": ["fact_types[work_item_has_title]", "object_types[title]"]
+          },
+          {
+            "artifact_id": "fixture-provenance",
+            "artifact_kind": "provenance",
+            "path": "fixtures/provenance.json",
+            "media_type": "application/json",
+            "encoding": "utf-8",
+            "text": "{\"source\":\"owner-reviewed fixture\",\"references\":[\"object_types[title]\"]}\n",
+            "sha256": "35a2fabc8198c4e3f02459c4df1315cd077f5e52eaae6ac381b5990bb9762561",
+            "references": ["object_types[title]"]
+          },
+          {
+            "artifact_id": "fixture-consumer",
+            "artifact_kind": "supplied-artifact",
+            "path": "notes/consumer.txt",
+            "media_type": "text/plain",
+            "encoding": "utf-8",
+            "text": "uses: object_types[title]\nuses: fact_types[work_item_has_title]\n",
+            "sha256": "d533c459f9e04467a005f563a7e5a010454bdffee7657e7273efb201db9a2ff9",
+            "references": ["fact_types[work_item_has_title]", "object_types[title]"]
+          }
+        ]
+      },
+      "expected": {
+        "proposal": ["proposal_id", "expected_model_sha256", "candidate_model", "operations", "rationale", "audit", "linked_projects", "artifacts"],
+        "preview": ["proposal_sha256", "before_model", "candidate_model", "verbalization", "validation", "affected_references", "breaking", "blast_radius", "accepted_blast_radius_sha256", "preview_sha256"],
+        "before_model": ["media_type", "encoding", "text", "sha256"],
+        "candidate_model": ["media_type", "encoding", "text", "sha256"],
+        "verbalization": ["media_type", "encoding", "text", "sha256"],
+        "validation": ["valid", "warnings", "model_sha256"],
+        "cas": ["expected_model_sha256", "observed_model_sha256", "commit_point", "published"],
+        "linked_project_conformance": ["project_id", "root", "expected_tree_sha256", "before_tree_sha256", "after_tree_sha256", "payload", "payload_sha256", "exit_code"],
+        "affected_code": ["ordered_references", "generated_code_written", "extension_code_written", "blast_radius"],
+        "blast_radius": [
+          {"surface": "supplied-artifact", "reference": "artifacts[fixture-consumer]"},
+          {"surface": "population", "reference": "artifacts[fixture-population]"},
+          {"surface": "provenance", "reference": "artifacts[fixture-provenance]"},
+          {"surface": "fact-type", "reference": "fact_types[work_item_has_title]"},
+          {"surface": "constraint", "reference": "fact_types[work_item_has_title].constraints[uniqueness:b7955b03ab3d509fe4b34b7b6553a5e3038f492adc7c9cd42c1331ee356e0313:0]"},
+          {"surface": "provenance", "reference": "fact_types[work_item_has_title].constraints[uniqueness:b7955b03ab3d509fe4b34b7b6553a5e3038f492adc7c9cd42c1331ee356e0313:0].provenance"},
+          {"surface": "reading", "reference": "fact_types[work_item_has_title].reading[b3744ac9a7c6417d65082242352abb176e95550e158ccb9aab003e857baec2e7:0]"},
+          {"surface": "role", "reference": "fact_types[work_item_has_title].roles[title]"},
+          {"surface": "role", "reference": "fact_types[work_item_has_title].roles[work_item]"},
+          {"surface": "model", "reference": "model"},
+          {"surface": "verbalization", "reference": "model.verbalization"},
+          {"surface": "object-type", "reference": "object_types[summary]"},
+          {"surface": "object-type", "reference": "object_types[title]"}
+        ],
+        "finalization_state": ["schema_version", "state", "proposal_id", "proposal_sha256", "preview_sha256", "intent_sha256", "old_model_sha256", "new_model_sha256", "verbalization_sha256", "verbalization_before_kind", "verbalization_before_sha256", "state_identity_sha256"],
+        "final_record_identity": ["proposal_sha256", "preview_sha256", "intent_sha256", "old_model_sha256", "new_model_sha256", "blast_radius_sha256", "accepted_blast_radius_sha256", "finalization_state_sha256", "record_identity_sha256"],
+        "extension_owner": "Plan 04-06 may extend breaking-change and blast-radius assertions without renaming or replacing this row."
+      }
+    },
+    {
+      "name": "evolution-concurrent-cas-refusal",
+      "inputs": {
+        "before_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "e0f05e13f57813b2c92f8e7e15dc3ca9d1c1de04475d721b919ac931de8faefe"
+        },
+        "candidate_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"priority\",\"name\":\"Priority\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]},{\"id\":\"work_item_has_priority\",\"reading\":\"{WorkItem} has {Priority}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"priority\",\"role_name\":\"priority\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"A work item usually has one current priority.\",\"provenance\":{\"rationale_world_fact\":\"Planning systems commonly expose one current priority per work item.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "0e1505aa39a2a051ed328d427c159e7b01ca8eaa6f526387282e6c6602c6a09f"
+        }
+      },
+      "expected": {
+        "proposal": ["proposal_id", "expected_model_sha256", "candidate_model", "operations", "rationale", "audit", "linked_projects"],
+        "preview": ["proposal_sha256", "before_model", "candidate_model", "verbalization", "validation", "affected_references", "preview_sha256"],
+        "before_model": ["media_type", "encoding", "text", "sha256"],
+        "candidate_model": ["media_type", "encoding", "text", "sha256"],
+        "verbalization": ["media_type", "encoding", "text", "sha256"],
+        "validation": ["valid", "warnings", "model_sha256"],
+        "cas": ["expected_model_sha256", "observed_model_sha256", "commit_point", "published", "conflict"],
+        "linked_project_conformance": ["project_id", "root", "expected_tree_sha256", "before_tree_sha256", "after_tree_sha256", "payload", "payload_sha256", "exit_code"],
+        "affected_code": ["ordered_references", "generated_code_written", "extension_code_written"],
+        "final_record_identity": ["proposal_sha256", "preview_sha256", "intent_sha256", "old_model_sha256", "new_model_sha256", "record_identity_sha256"]
+      }
+    },
+    {
+      "name": "evolution-clean-and-drift-linked-conformance",
+      "inputs": {
+        "before_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "e0f05e13f57813b2c92f8e7e15dc3ca9d1c1de04475d721b919ac931de8faefe"
+        },
+        "candidate_model": {
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "text": "{\"version\":1,\"model_id\":\"evolution-demo\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"work_item\",\"name\":\"WorkItem\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"work_item_id\"}},{\"id\":\"work_item_id\",\"name\":\"WorkItemId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"title\",\"name\":\"Title\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"priority\",\"name\":\"Priority\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"work_item_has_title\",\"reading\":\"{WorkItem} has {Title}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"title\",\"role_name\":\"title\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each work item has one title.\"}}]},{\"id\":\"work_item_has_priority\",\"reading\":\"{WorkItem} has {Priority}\",\"roles\":[{\"object_type\":\"work_item\",\"role_name\":\"work_item\"},{\"object_type\":\"priority\",\"role_name\":\"priority\"}],\"constraints\":[{\"type\":\"uniqueness\",\"roles\":[\"work_item\"],\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"A work item usually has one current priority.\",\"provenance\":{\"rationale_world_fact\":\"Planning systems commonly expose one current priority per work item.\"}}]}],\"constraints\":[],\"rejected_proposals\":[{\"type\":\"value\",\"status\":\"rejected\",\"rationale\":\"Titles are not enumerated.\"}]}\n",
+          "sha256": "0e1505aa39a2a051ed328d427c159e7b01ca8eaa6f526387282e6c6602c6a09f"
+        }
+      },
+      "expected": {
+        "proposal": ["proposal_id", "expected_model_sha256", "candidate_model", "operations", "rationale", "audit", "linked_projects"],
+        "preview": ["proposal_sha256", "before_model", "candidate_model", "verbalization", "validation", "affected_references", "preview_sha256"],
+        "before_model": ["media_type", "encoding", "text", "sha256"],
+        "candidate_model": ["media_type", "encoding", "text", "sha256"],
+        "verbalization": ["media_type", "encoding", "text", "sha256"],
+        "validation": ["valid", "warnings", "model_sha256"],
+        "cas": ["expected_model_sha256", "observed_model_sha256", "commit_point", "published"],
+        "linked_project_conformance": ["project_id", "root", "expected_tree_sha256", "before_tree_sha256", "after_tree_sha256", "payload", "payload_sha256", "exit_code"],
+        "affected_code": ["ordered_references", "generated_code_written", "extension_code_written"],
+        "final_record_identity": ["proposal_sha256", "preview_sha256", "intent_sha256", "old_model_sha256", "new_model_sha256", "record_identity_sha256"]
+      }
+    }
+  ]
+}

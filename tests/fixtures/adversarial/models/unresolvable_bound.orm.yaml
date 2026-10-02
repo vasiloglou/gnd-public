@@ -1,0 +1,76 @@
+# tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml
+#
+# Adversarial probe (CORE-06, D-13 clause 4): the ONE path on which the
+# `_in_range` ordering guard is genuinely reachable.
+#
+# CORE-04 (plan 01.1-03) normally rejects a type-invalid value at LOAD, so a
+# String never reaches a numeric range comparison — see the
+# `typed-range-string-value` case, which exits 3. But D-05 is "resolve or skip,
+# never guess": when a role's object type has NO resolvable primitive, the type
+# check is deliberately SKIPPED, silently and correctly.
+#
+# `mass` is exactly such a type. Its reference mode is `unit-based`, which the
+# meta-schema requires to carry `unit` + `measure_type` and NOT `value_type`,
+# so `popvalidate.resolve_primitive("mass")` returns None and R7 emits nothing.
+# The population's String therefore loads clean and reaches
+# `checker._check_value`, where the alethic numeric range evaluates
+# `"heavy" < 1` and raises
+#   TypeError: '<' not supported between instances of 'str' and 'int'
+# which the CLI maps to exit 70 (EX_SOFTWARE) — a checker BUG reported for what
+# is really an unverifiable pairing of data and bound.
+#
+# After D-13 clause 4 the guard returns the undecidable value instead: the
+# constraint is `unchecked` with reason `bound-type-mismatch` and, being
+# alethic, the run exits 4. The checker declines rather than crashing.
+#
+# This is why the guard is defense in depth and NOT dead code: CORE-04 covers
+# every role whose primitive resolves, and this model is the complement.
+#
+# The model itself MUST validate clean (`gnd validate` exits 0) — this case
+# probes the CHECKER, not the model loader.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: batch
+    name: Batch
+    kind: entity
+    reference: { mode: popular, value_type: batch_id }
+
+  - id: batch_id
+    name: BatchId
+    kind: value
+    primitive: String
+
+  # unit-based reference: identity is a magnitude in a unit, not a value type.
+  # No `value_type` key exists to resolve through, so D-05 skips the type check
+  # for every role typed to it.
+  - id: mass
+    name: Mass
+    kind: entity
+    reference: { mode: unit-based, unit: kilogram, measure_type: mass }
+
+fact_types:
+  - id: batch_has_mass
+    reading: "{Batch} has mass {Mass}"
+    roles:
+      - { object_type: batch, role_name: batch }
+      - { object_type: mass, role_name: mass }
+
+constraints:
+  # ALETHIC numeric range over the unresolvable type. `_check_value` collects
+  # the closed-world population of `mass` and orders each value against these
+  # bounds — the comparison the guard must decline rather than crash on.
+  - type: value
+    object_type: mass
+    range: { min: 1, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "A batch weighs between 1 and 100 kilograms."

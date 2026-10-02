@@ -1,0 +1,415 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "B01-dispatch-equal",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B01-dispatch-one-day-late",
+      "expected_exit": 1,
+      "expected_verdict": "fail"
+    },
+    {
+      "id": "B02-release-equal",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B02-release-one-day-late",
+      "expected_exit": 1,
+      "expected_verdict": "fail"
+    },
+    {
+      "id": "B03-early",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B03-zero",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B04-boolean",
+      "expected_exit": 3
+    },
+    {
+      "id": "B04-float",
+      "expected_exit": 3
+    },
+    {
+      "id": "B04-string",
+      "expected_exit": 3
+    },
+    {
+      "id": "B04-negative",
+      "expected_exit": 3
+    },
+    {
+      "id": "B04-over-cap",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-boolean",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-float",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-string",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-negative",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-over-cap",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-extra-key",
+      "expected_exit": 3
+    },
+    {
+      "id": "B05-missing-key",
+      "expected_exit": 3
+    },
+    {
+      "id": "B06-integer",
+      "expected_exit": 3
+    },
+    {
+      "id": "B06-string",
+      "expected_exit": 3
+    },
+    {
+      "id": "B06-numeric-add-duration",
+      "expected_exit": 3
+    },
+    {
+      "id": "B07-non-leap",
+      "expected_exit": 3
+    },
+    {
+      "id": "B07-wrong-format",
+      "expected_exit": 3
+    },
+    {
+      "id": "B07-year-zero",
+      "expected_exit": 3
+    },
+    {
+      "id": "B07-leap-date",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B08-date-plus-integer",
+      "expected_exit": 3
+    },
+    {
+      "id": "B08-reversed-operands",
+      "expected_exit": 3
+    },
+    {
+      "id": "B08-wrong-arity",
+      "expected_exit": 3
+    },
+    {
+      "id": "B08-unknown-function",
+      "expected_exit": 3
+    },
+    {
+      "id": "B08-date-date-sub",
+      "expected_exit": 3
+    },
+    {
+      "id": "B08-datetime-operand",
+      "expected_exit": 3
+    },
+    {
+      "id": "B09-version-1",
+      "expected_exit": 3
+    },
+    {
+      "id": "B09-version-2",
+      "expected_exit": 3
+    },
+    {
+      "id": "B10-deontic-warning",
+      "expected_exit": 0,
+      "expected_verdict": "warning"
+    },
+    {
+      "id": "B11-empty-subject",
+      "expected_exit": 2,
+      "expected_verdict": "vacuous"
+    },
+    {
+      "id": "B12-opaque-pickup",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked",
+      "expected_reason_code": "term:opaque-date-operand"
+    },
+    {
+      "id": "B12-opaque-duration",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked",
+      "expected_reason_code": "term:opaque-date-operand"
+    },
+    {
+      "id": "B13-overflow",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked",
+      "expected_reason_code": "term:date-out-of-range"
+    },
+    {
+      "id": "B13-underflow",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked",
+      "expected_reason_code": "term:date-out-of-range"
+    },
+    {
+      "id": "B14-unknown-and-failure",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked"
+    },
+    {
+      "id": "B15-bad-model-before-population",
+      "expected_exit": 3
+    },
+    {
+      "id": "B15-bad-pop-before-eval",
+      "expected_exit": 3
+    },
+    {
+      "id": "B16-leap-in",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B16-leap-out",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B16-year-roll",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B16-off-by-one-mutation",
+      "expected_exit": 1,
+      "expected_verdict": "fail"
+    },
+    {
+      "id": "B17-at-limit",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B18-over-limit",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked",
+      "expected_reason_code": "term:temporal-work-limit"
+    },
+    {
+      "id": "B19-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B20-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B21-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B22-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B26-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B27-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B28-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B29-temporal-refusal",
+      "expected_exit": 3
+    },
+    {
+      "id": "B23-transition-late",
+      "expected_exit": 1,
+      "expected_verdict": "fail"
+    },
+    {
+      "id": "B24-transition-opaque",
+      "expected_exit": 4,
+      "expected_verdict": "unchecked"
+    },
+    {
+      "id": "B25-legacy-diff",
+      "expected_exit": 0,
+      "stdout_sha256": "78a6ae473bd4da9aff2c0af921ec11b322aedee1dd7ec13fb299ade38a4c6b8b"
+    },
+    {
+      "id": "B30-package-pins",
+      "expected_exit": 0
+    },
+    {
+      "id": "B31-legacy-numeric",
+      "expected_exit": 0,
+      "stdout_sha256": "ede70ef9473964f53cff6604d8e388c40b8670b3103dde163d49b78204ab14f1"
+    },
+    {
+      "id": "B32-legacy-date",
+      "expected_exit": 0,
+      "stdout_sha256": "89392cb2b551300cd10c7651a03cd1cbd95536fd883238b09cfb7fd073034070"
+    },
+    {
+      "id": "B33-report-version",
+      "expected_exit": 0
+    },
+    {
+      "id": "B34-derivation-head",
+      "expected_exit": 3
+    },
+    {
+      "id": "B35-derivation-where",
+      "expected_exit": 3
+    },
+    {
+      "id": "B36-operation-binding",
+      "expected_exit": 3
+    },
+    {
+      "id": "B37-guarded-exists-where",
+      "expected_exit": 3
+    },
+    {
+      "id": "B38-cross-primitive-binding",
+      "expected_exit": 3
+    },
+    {
+      "id": "B39-bound-duration-two",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B39-bound-duration-three",
+      "expected_exit": 1,
+      "expected_verdict": "fail"
+    },
+    {
+      "id": "B40-deontic-unknown",
+      "expected_exit": 0,
+      "expected_verdict": "unchecked"
+    },
+    {
+      "id": "B41-at-depth",
+      "expected_exit": 0
+    },
+    {
+      "id": "B41-over-depth",
+      "expected_exit": 3
+    },
+    {
+      "id": "B42-duration-compare-pass",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B42-duration-compare-fail",
+      "expected_exit": 1,
+      "expected_verdict": "fail"
+    },
+    {
+      "id": "B42-duration-integer-mix",
+      "expected_exit": 3
+    },
+    {
+      "id": "B43-duration-range-inside",
+      "expected_exit": 0,
+      "expected_verdict": "pass",
+      "expected_constraint_ref": "constraints[1]"
+    },
+    {
+      "id": "B43-duration-range-outside",
+      "expected_exit": 1,
+      "expected_verdict": "fail",
+      "expected_constraint_ref": "constraints[1]"
+    },
+    {
+      "id": "B43-duration-range-bool",
+      "expected_exit": 3
+    },
+    {
+      "id": "B43-duration-range-float",
+      "expected_exit": 3
+    },
+    {
+      "id": "B43-duration-range-negative",
+      "expected_exit": 3
+    },
+    {
+      "id": "B43-duration-range-over-cap",
+      "expected_exit": 3
+    },
+    {
+      "id": "B04-zero-role",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B04-max-role",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B05-valid-tag",
+      "expected_exit": 0
+    },
+    {
+      "id": "B07-invalid-role",
+      "expected_exit": 3
+    },
+    {
+      "id": "B12-unreached-opaque",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B14-separate-alethic-fail",
+      "expected_exit": 1,
+      "expected_verdict": "unchecked",
+      "overall_deciding_ref": "constraints[1]"
+    },
+    {
+      "id": "B16-sub-leap",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B16-sub-year",
+      "expected_exit": 0,
+      "expected_verdict": "pass"
+    },
+    {
+      "id": "B42-untagged-integer",
+      "expected_exit": 3
+    }
+  ]
+}

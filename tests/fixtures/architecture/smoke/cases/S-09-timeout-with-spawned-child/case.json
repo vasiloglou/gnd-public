@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-09-timeout-with-spawned-child",
+  "story": "The entry point spawns a child and sleeps past the row timeout. TIMED_OUT, and NO descendant survives."
+}

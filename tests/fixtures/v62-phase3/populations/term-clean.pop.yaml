@@ -1,0 +1,23 @@
+population:
+  model: ../models/exact-terms.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase3-exact-terms@1
+  source: fixture
+  covers: [input, residue, doubled_residue, permitted, ticket_status]
+facts:
+  input:
+    - { ticket: negative, value: -1, divisor: 30 }
+    - { ticket: negative-divisor, value: 1, divisor: -30 }
+    - { ticket: SECRET-TERM-314159, value: 89, divisor: 30 }
+  residue:
+    - { ticket: negative, residue: 29 }
+    - { ticket: negative-divisor, residue: -29 }
+    - { ticket: SECRET-TERM-314159, residue: 29 }
+  doubled_residue:
+    - { ticket: negative, doubled: 58 }
+    - { ticket: negative-divisor, doubled: -58 }
+    - { ticket: SECRET-TERM-314159, doubled: 58 }
+  permitted:
+    - { ticket: negative }
+    - { ticket: negative-divisor }
+    - { ticket: SECRET-TERM-314159 }
+  ticket_status: []

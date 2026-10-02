@@ -1,0 +1,19 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "recursive.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase4-recursive@1",
+    "source": "fixture",
+    "covers": ["edge", "reaches", "visited"]
+  },
+  "instances": {},
+  "facts": {
+    "edge": [{"source": "A", "target": "B"}, {"source": "B", "target": "C"}],
+    "reaches": [
+      {"source": "A", "target": "B"},
+      {"source": "A", "target": "C"},
+      {"source": "B", "target": "C"}
+    ],
+    "visited": []
+  }
+}

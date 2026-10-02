@@ -1,0 +1,67 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v71-dispatch-temporal@1",
+    "label": "conforming",
+    "source": "fixture",
+    "covers": [
+      "dispatch_shipment_origin",
+      "dispatch_shipment_product",
+      "dispatch_shipping_deadline",
+      "dispatch_catalog_allows",
+      "dispatch_route_leg",
+      "dispatch_pickup_on",
+      "dispatch_allowance_days"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_shipment_origin": [
+      {
+        "shipment": "SHIP-17",
+        "warehouse": "WH-A"
+      }
+    ],
+    "dispatch_shipment_product": [
+      {
+        "shipment": "SHIP-17",
+        "product": "GEAR-2"
+      }
+    ],
+    "dispatch_shipping_deadline": [
+      {
+        "shipment": "SHIP-17",
+        "deadline": "2026-10-04"
+      }
+    ],
+    "dispatch_catalog_allows": [
+      {
+        "warehouse": "WH-A",
+        "product": "GEAR-2"
+      }
+    ],
+    "dispatch_route_leg": [
+      {
+        "origin": "WH-A",
+        "destination": "HUB-B"
+      },
+      {
+        "origin": "HUB-B",
+        "destination": "PORT-C"
+      }
+    ],
+    "dispatch_pickup_on": [
+      {
+        "shipment": "SHIP-17",
+        "pickup": "2026-10-02"
+      }
+    ],
+    "dispatch_allowance_days": [
+      {
+        "shipment": "SHIP-17",
+        "days": 2
+      }
+    ]
+  },
+  "format_version": 2
+}

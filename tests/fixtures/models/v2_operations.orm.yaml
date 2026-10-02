@@ -1,0 +1,204 @@
+# tests/fixtures/models/v2_operations.orm.yaml
+#
+# The ORM+ v2 loader fixture: two operations, chosen so that between them every
+# v2 construct is exercised at least once and every v2 semantic rule has
+# something to run against.
+#
+#   * `attach_review_note` carries an ALETHIC frame, all three effect verbs
+#     (create / assert / retract), a precondition, and a dynamic rule whose
+#     subject IS provably functional.
+#   * `flag_work_item` is the minimal legal operation: one parameter, one
+#     effect, a DEONTIC frame, and neither preconditions nor dynamic rules.
+#
+# `tests/test_model_v2.py` also uses this document as the base for every
+# rejecting case: each case is this model with one named edit, so what a rule
+# rejects is visible as a diff against a model that validates.
+#
+# It deliberately does NOT duplicate the worked example — that lives in
+# v2_worked_example.orm.yaml, whose bytes are pinned against the specification.
+
+version: 2
+
+model_id: urn:gnd-fixture:v2-operations@1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: work_item
+    name: WorkItem
+    kind: entity
+    reference: { mode: popular, value_type: work_item_id }
+
+  - id: work_item_id
+    name: WorkItemId
+    kind: value
+    primitive: String
+
+  - id: work_state
+    name: WorkState
+    kind: value
+    primitive: String
+
+  - id: reviewer
+    name: Reviewer
+    kind: entity
+    reference: { mode: popular, value_type: reviewer_id }
+
+  - id: reviewer_id
+    name: ReviewerId
+    kind: value
+    primitive: String
+
+  - id: note
+    name: Note
+    kind: entity
+    reference: { mode: popular, value_type: note_id }
+
+  - id: note_id
+    name: NoteId
+    kind: value
+    primitive: String
+
+  - id: priority
+    name: Priority
+    kind: value
+    primitive: Integer
+
+  # Unit-based, so `semantic:op-create-ref-mode` has a target that is not
+  # merely undeclared — a create on this type is well formed and still wrong.
+  - id: effort
+    name: Effort
+    kind: entity
+    reference: { mode: unit-based, unit: h, measure_type: Duration }
+
+fact_types:
+  - id: work_item_has_state
+    reading: "{WorkItem} has state {WorkState}"
+    roles:
+      - { object_type: work_item, role_name: item }
+      - { object_type: work_state, role_name: state }
+    constraints:
+      - type: uniqueness
+        scope: internal
+        roles: [item]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "A work item is in one state."
+      - type: mandatory
+        role: item
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "Every work item has a state."
+
+  - id: work_item_reviewed_by
+    reading: "{WorkItem} is reviewed by {Reviewer}"
+    roles:
+      - { object_type: work_item, role_name: item }
+      - { object_type: reviewer, role_name: reviewer }
+
+  - id: work_item_has_note
+    reading: "{WorkItem} has note {Note}"
+    roles:
+      - { object_type: work_item, role_name: item }
+      - { object_type: note, role_name: note }
+
+  - id: work_item_has_priority
+    reading: "{WorkItem} has priority {Priority}"
+    roles:
+      - { object_type: work_item, role_name: item }
+      - { object_type: priority, role_name: priority }
+    constraints:
+      # This is what makes `threshold`-style old-versus-new comparison decidable:
+      # without it the dynamic rule below would load with a
+      # `semantic:op-dynamic-functional` warning.
+      - id: one_priority_per_item
+        type: uniqueness
+        scope: internal
+        roles: [item]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "A work item has one priority at a time."
+
+operations:
+  - id: attach_review_note
+    reading: "{WorkItem} gains review note {Note} from {Reviewer}"
+    parameters:
+      - { name: item, object_type: work_item }
+      - { name: note, object_type: note }
+      - { name: reviewer, object_type: reviewer }
+    preconditions:
+      - id: pre_reviewed
+        require:
+          - fact_type: work_item_reviewed_by
+            bind: { item: "$item", reviewer: "$reviewer" }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance:
+          csdp_step: 7
+          user_quote: "Only a reviewer of the item may leave a review note."
+    effects:
+      - create: { object_type: note, param: note }
+      - assert:
+          fact_type: work_item_has_note
+          bind: { item: "$item", note: "$note" }
+      - retract:
+          fact_type: work_item_has_state
+          bind: { item: "$item" }
+      - assert:
+          fact_type: work_item_has_state
+          bind: { item: "$item", state: "noted" }
+    dynamic_rules:
+      # The subject must be a fact type THIS operation touches, or the rule can
+      # never fire and semantic:op-dynamic-untouched says so. This one was
+      # previously work_item_has_priority, which no effect here touches: the
+      # intent ("reviewing should not quietly de-prioritise the item") is a
+      # guardrail against a change this operation cannot make, and the FRAME
+      # check is what covers undeclared changes to an untouched fact type.
+      - id: state_must_change
+        subject:
+          fact_type: work_item_has_state
+          value_role: state
+          bind: { item: "$item" }
+        op: "!="
+        modality: deontic
+        source: user-supplied
+        status: confirmed
+        provenance:
+          added_at_step: 7d
+          user_note: "Attaching a review note should move the item out of its old state."
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance:
+      csdp_step: 7
+      user_quote: "Attaching a review note is the reviewer's one write."
+
+  - id: flag_work_item
+    reading: "{WorkItem} is flagged"
+    parameters:
+      - { name: item, object_type: work_item }
+    effects:
+      - assert:
+          fact_type: work_item_has_state
+          bind: { item: "$item", state: "flagged" }
+    frame: { modality: deontic }
+    source: user-supplied
+    status: confirmed
+    provenance:
+      added_at_step: 7d
+      user_quote: "Anyone can flag; it is advisory."

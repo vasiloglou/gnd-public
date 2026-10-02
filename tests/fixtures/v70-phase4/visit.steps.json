@@ -1,0 +1,5 @@
+{
+  "steps_schema": 1,
+  "model": "recursive.orm.yaml",
+  "steps": [{"op": "visit", "bindings": {"source": "A", "target": "C"}}]
+}

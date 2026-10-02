@@ -1,0 +1,1478 @@
+{
+  "schema_version": 1,
+  "claim": "Prospective source-authored Phase 3 answers; current GND runtime results were not used.",
+  "file_sha256": {
+    "README.md": "5fd8b259498b3fb7b84fe9a6747b59e2ab51f6e56e7909b33ee4984d93281fa1",
+    "model.orm.yaml": "2a76259b95c8d22a83b6dc3fa7d28c197491ef551651e7bb44dbc8059f0af8ba",
+    "population.pop.json": "884b850f0eefc93ae45bb158570a76663138fa5689dabb81a7c035872fb1e963",
+    "cases.json": "cddfd01e64266d93e52a65ba2a34f6a53b7bc71d118bbe24d10494a72b6cac6d",
+    "legacy-v7.json": "a5a13cbe1d6d9fb6230ef79f5b3525afabf8bd0e1557f9f80027c9c7a7231926",
+    "legacy-v9.json": "fd48dcf3bfe793131395f1f82ff6e6171aad82dda43e3721478c269379954b70",
+    "wire-v10-example.json": "e55407b4f31d9f9fd0cd77b94371bb63fd4a3573769d68772af61afc927ca9dd",
+    "join-model.orm.yaml": "b5e5b8b397d8156f6d8d149bed094588bd267e730f764dca494f50ec9bca5bc8",
+    "join-control.pop.json": "059e398b1846dd197aa311ab1c9e649ca798c507465dbf354c095771e054505f",
+    "join-opaque.pop.json": "e34f26663a4636165fc08c17c5f5300cf64b7255cd4ff1426af972a48da9fbc0"
+  },
+  "cases": {
+    "A01-clean-partition": {
+      "exit": 0,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "A02-explicit-transitive-block": {
+      "exit": 1,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "fail",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          }
+        ]
+      }
+    },
+    "A03-unchecked-transitive-block": {
+      "exit": 4,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          }
+        ]
+      }
+    },
+    "A04-uncompared-opaque-admitted": {
+      "exit": 0,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": [
+              {
+                "fact_ref": {
+                  "fact_type": "record_has_holder",
+                  "index": 0
+                },
+                "role": "holder"
+              }
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "A05-duplicate-occurrence-address": {
+      "exit": 1,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "fail",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 2
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_amount].constraints[0]"
+            ]
+          }
+        ]
+      }
+    },
+    "A06-implicit-reference-block": {
+      "exit": 1,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "fail",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_key].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_key].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_key].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_key].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_key].constraints[0]"
+            ]
+          }
+        ]
+      }
+    },
+    "A07-deontic-warning-admitted": {
+      "exit": 0,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "warning",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "A08-cycle-terminates": {
+      "exit": 0,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "A09-global-unchecked-no-fact-ref": {
+      "exit": 4,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[1]",
+          "verdict": "unchecked",
+          "reason_code": "anchor-sidecar-absent"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "J01-joined-scalar-control": {
+      "exit": 0,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "J02-joined-opaque-refusal": {
+      "exit": 4,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        }
+      ]
+    },
+    "L01-absent-version-scalar": {
+      "exit": 0,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "L02-explicit-one-scalar": {
+      "exit": 0,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "L03-absent-version-marker": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "L04-version-one-marker": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "L05-version-two-marker": {
+      "exit": 4,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "L06-extra-marker-key": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "L07-empty-marker-label": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "L08-numeric-marker-label": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "L09-marker-in-roster": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "L10-ordinary-wrong-primitive": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "M01-known-dependency": {
+      "exit": 0,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "M02-unknown-dependency": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "M03-duplicate-dependency": {
+      "exit": 3,
+      "schema_version": 7,
+      "verdicts": []
+    },
+    "M04-cycle-is-legal": {
+      "exit": 0,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "O01-scalar-uniqueness-fail": {
+      "exit": 1,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "fail",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "O02-two-opaque-distinct": {
+      "exit": 4,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "O03-two-opaque-same-label": {
+      "exit": 4,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "O04-opaque-number-comparison": {
+      "exit": 4,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        }
+      ]
+    },
+    "O05-fail-precedes-opaque": {
+      "exit": 1,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "fail",
+          "reason_code": null
+        }
+      ]
+    },
+    "O06-derived-opaque-refusal": {
+      "exit": 4,
+      "schema_version": 7,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "derivations": [
+        {
+          "derivation_ref": "derivation:holder_is_known",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        }
+      ]
+    },
+    "W01-redacted-legacy-version": {
+      "exit": 0,
+      "schema_version": 9,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ]
+    },
+    "W02-redacted-admission-version": {
+      "exit": 0,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "W03-admission-population-refusal": {
+      "exit": 3,
+      "schema_version": 10,
+      "verdicts": [],
+      "admission": {
+        "admitted": [],
+        "blocked": []
+      }
+    },
+    "W04-admission-model-refusal": {
+      "exit": 3,
+      "schema_version": 10,
+      "verdicts": [],
+      "admission": {
+        "admitted": [],
+        "blocked": []
+      }
+    },
+    "W05-opaque-redaction-canary": {
+      "exit": 4,
+      "schema_version": 10,
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[record_key].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        },
+        {
+          "constraint_ref": "fact_types[record_has_holder].constraints[0]",
+          "verdict": "unchecked",
+          "reason_code": "opaque-value"
+        },
+        {
+          "constraint_ref": "fact_types[record_has_amount].constraints[0]",
+          "verdict": "pass",
+          "reason_code": null
+        }
+      ],
+      "admission": {
+        "admitted": [
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "approval_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "notice_for_record",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_amount",
+              "index": 1
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 0
+            },
+            "opaque_deps": []
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_key",
+              "index": 1
+            },
+            "opaque_deps": []
+          }
+        ],
+        "blocked": [
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 0
+            },
+            "blocked_by": [
+              "fact_types[record_has_holder].constraints[0]"
+            ]
+          },
+          {
+            "fact_ref": {
+              "fact_type": "record_has_holder",
+              "index": 1
+            },
+            "blocked_by": [
+              "fact_types[record_has_holder].constraints[0]"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

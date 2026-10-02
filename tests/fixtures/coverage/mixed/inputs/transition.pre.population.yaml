@@ -1,0 +1,14 @@
+population:
+  model: ../v2_operations.orm.yaml
+  model_id: urn:gnd-fixture:v2-operations@1
+  source: fixture
+  covers: [work_item_has_state, work_item_reviewed_by, work_item_has_note, work_item_has_priority]
+
+facts:
+  work_item_has_state:
+    - { item: WI-1, state: reviewed }
+  work_item_reviewed_by:
+    - { item: WI-1, reviewer: R-1 }
+  work_item_has_note: []
+  work_item_has_priority:
+    - { item: WI-1, priority: 1 }

@@ -1,0 +1,1265 @@
+{
+  "census": {
+    "constraint": {
+      "claimed": 2,
+      "corroborated": 2,
+      "in_model": 39,
+      "unclaimed": 37,
+      "unclaimed_with_evidence": 37
+    },
+    "fact_type": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 19,
+      "unclaimed": 19,
+      "unclaimed_with_evidence": 19
+    },
+    "operation": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 0,
+      "unclaimed": 0,
+      "unclaimed_with_evidence": 0
+    }
+  },
+  "command": "coverage",
+  "covers_exemptions": [],
+  "elements": [
+    {
+      "address": "fact_type:borrower_has_name",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_has_name].constraints[0]",
+      "addressing": "positional",
+      "claims": [
+        {
+          "conclusions": "no-conclusions",
+          "experiment": "EXP-511-positional",
+          "path": "experiments/EXP-511-positional/SPEC.md"
+        }
+      ],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_has_name].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "fact_types[borrower_has_name].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_has_name].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:borrower_holds_card",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_holds_card].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_holds_card].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_holds_card].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_holds_card].constraints[1]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_holds_card].constraints[2]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_holds_card].constraints[2]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:borrower_registered_at_branch",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_registered_at_branch].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_registered_at_branch].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_registered_at_branch].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_registered_at_branch].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:title_has_isbn",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_has_isbn].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_has_isbn].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_has_isbn].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_has_isbn].constraints[1]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:title_published_in_year",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_published_in_year].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_published_in_year].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:title_has_genre",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_has_genre].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_has_genre].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:copy_is_of_title",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[copy_is_of_title].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[copy_is_of_title].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[copy_is_of_title].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[copy_is_of_title].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:copy_has_shelf_mark",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[copy_has_shelf_mark].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[copy_has_shelf_mark].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[copy_has_shelf_mark].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[copy_has_shelf_mark].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:copy_held_at_branch",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[copy_held_at_branch].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[copy_held_at_branch].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:loan_records_copy_to_borrower",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[loan_records_copy_to_borrower].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[loan_records_copy_to_borrower].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[loan_records_copy_to_borrower].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[loan_records_copy_to_borrower].constraints[1]",
+            "constraint_type": "value-comparison",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:title_is_reserved_by_borrower",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_is_reserved_by_borrower].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_is_reserved_by_borrower].constraints[0]",
+            "constraint_type": "frequency",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:borrower_owes_fine",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_owes_fine].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_owes_fine].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:title_grants_loan_period",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_grants_loan_period].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_grants_loan_period].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:librarian_manages_branch",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[librarian_manages_branch].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[librarian_manages_branch].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:copy_is_on_loan",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:copy_is_withdrawn",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:copy_is_shelved",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:borrower_shares_household_with_borrower",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[borrower_shares_household_with_borrower].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[borrower_shares_household_with_borrower].constraints[0]",
+            "constraint_type": "ring",
+            "modality": "deontic",
+            "reason_code": null,
+            "source": "common-sense",
+            "status": "proposed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:title_supersedes_title",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "declared": "undeclared",
+            "facts": 0
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[title_supersedes_title].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "fact_types[title_supersedes_title].constraints[0]",
+            "constraint_type": "ring",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[0]",
+      "addressing": "positional",
+      "claims": [
+        {
+          "conclusions": "no-conclusions",
+          "experiment": "EXP-511-positional",
+          "path": "experiments/EXP-511-positional/SPEC.md"
+        }
+      ],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "mandatory-disjunctive",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[2]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "value",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[3]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "value",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[4]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "value",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[5]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "frequency",
+            "modality": "deontic",
+            "reason_code": null,
+            "source": "common-sense",
+            "status": "proposed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[6]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "subset",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[7]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "equality",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[8]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "exclusion",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[9]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "exclusive-or",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[10]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "value-comparison",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "user-supplied",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[11]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "cardinality",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "fail"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[12]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[12]",
+            "constraint_type": "cardinality",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "vacuous"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[13]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[13]",
+            "constraint_type": "subtype-partition",
+            "modality": "alethic",
+            "reason_code": "subtype-derivation-only",
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "unchecked"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "constraints[14]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check.json",
+          "quote": {
+            "constraint_ref": "constraints[14]",
+            "constraint_type": "textual",
+            "modality": "deontic",
+            "reason_code": "textual-not-mechanical",
+            "source": "common-sense",
+            "status": "proposed",
+            "verdict": "unchecked"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    }
+  ],
+  "gnd_version": "0.1.0",
+  "model": {
+    "digest": "sha256:8c598378a7509c43a7907faf29410c6b25bb7bf4d838920143ee39ef109920d3",
+    "path": "library.orm.yaml",
+    "version": 1
+  },
+  "schema_version": 3,
+  "sources": {
+    "check": [
+      "evidence/check.json"
+    ],
+    "conformance": [],
+    "experiments": [
+      "experiments"
+    ],
+    "refused": [],
+    "transition": [],
+    "unbound": [
+      {
+        "kind": "check",
+        "path": "evidence/check.json",
+        "reason": "legacy-report-without-model-digest",
+        "schema_version": 3
+      }
+    ],
+    "verify": []
+  },
+  "tool": "gnd",
+  "unmatched_covers": [],
+  "unstable_addresses": [
+    {
+      "address": "fact_types[borrower_has_name].constraints[0]",
+      "experiment": "EXP-511-positional",
+      "note": "positional; reordering the model's constraints silently retargets this row",
+      "path": "experiments/EXP-511-positional/SPEC.md"
+    },
+    {
+      "address": "constraints[0]",
+      "experiment": "EXP-511-positional",
+      "note": "positional; reordering the model's constraints silently retargets this row",
+      "path": "experiments/EXP-511-positional/SPEC.md"
+    }
+  ]
+}

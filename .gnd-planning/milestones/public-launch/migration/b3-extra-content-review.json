@@ -115,6 +115,6 @@
   ],
   "definitions": 68,
   "privacy_limit": "Exact reviewed files only; no private panel/proof/evidence archive.",
-  "parameter_expansion": "Exact selected node IDs from target-only pytest collection; no execution claim.",
-  "case_map_file_sha256": "870cbab1f85a6ccf6578d8713d6926bcd08ce220325e6fcaf618dbfa319c4a81"
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "699cf271efae750957b5104b74fee173710e46189841df2981df8bbd77c2abb0"
 }

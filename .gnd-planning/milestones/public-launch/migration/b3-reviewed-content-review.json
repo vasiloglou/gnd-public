@@ -32,8 +32,8 @@
     {
       "target": "tests/test_exp_session_e2e.py",
       "source_sha256": "31fc0f8fc71b18a5c71eb626657a105b53d10dc809e9caf5b49adf74e554fcdb",
-      "target_sha256": "31fc0f8fc71b18a5c71eb626657a105b53d10dc809e9caf5b49adf74e554fcdb",
-      "adaptation": "none",
+      "target_sha256": "e012df83e1bda0ca28968e1c556f4935a9e776cdc647e7960c5d2d4dedf652a1",
+      "adaptation": "Owner-approved bounded 20-second allowance for two synthetic multi-attempt controls; expected semantics and timeout controls unchanged.",
       "review": "Complete module assertion/content review by mechanical reader; root reproduced fixture/dependency and current assertion anchors."
     },
     {
@@ -315,6 +315,6 @@
   ],
   "definitions": 201,
   "privacy_limit": "Named bytes only; source archive and detailed crosswalk remain private.",
-  "parameter_expansion": "Exact selected node IDs from target-only pytest collection; no execution claim.",
-  "case_map_file_sha256": "1ae60820135063e0ef82b84c2f6d738d3bf4b2d7ed987c869f4208c5c8f705e2"
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "558e322afb36323ef3cddc7f53db63b18e182e9593cf9b14244c8dea72ea7255"
 }

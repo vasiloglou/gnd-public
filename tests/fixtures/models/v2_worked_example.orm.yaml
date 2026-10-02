@@ -1,0 +1,174 @@
+# tests/fixtures/models/v2_worked_example.orm.yaml
+#
+# The ORM+ v2 worked example, pinned (A7).
+#
+# The `operations:` section below is the SAME BYTES as the worked example in
+# `representation-format.md`, and `tests/test_model_v2.py` compares the two.
+# It exists because the v2.0 review panel found two defects in the specification's
+# example that the specification's own language did not have: a dynamic rule bound
+# `$chain`, which was never declared as a parameter, and the effects retracted
+# `expense_has_status` with no compensating assert, leaving a mandatory role
+# unfilled. Both were example defects, not language defects — a step's effects
+# apply as a SET and the invariant is checked afterwards, so `retract` plus
+# `assert` on one fact type within one step already IS a replace. Pinning the
+# corrected bytes is what stops the specification's example from drifting away
+# from the implemented language a third time.
+#
+# The surrounding model is the smallest one that makes the example resolvable:
+# the three fact types it touches, the object types those need, and the internal
+# uniqueness constraint over `chain_has_threshold` that makes the dynamic rule's
+# subject provably functional (without it the example would load with a
+# `semantic:op-dynamic-functional` warning, and a warning-free exit-0 fixture is
+# the stronger pin).
+
+version: 2
+
+model_id: urn:gnd-fixture:v2-worked-example@1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: expense
+    name: Expense
+    kind: entity
+    reference: { mode: popular, value_type: expense_id }
+
+  - id: expense_id
+    name: ExpenseId
+    kind: value
+    primitive: Integer
+
+  - id: expense_status
+    name: ExpenseStatus
+    kind: value
+    primitive: String
+
+  - id: workday_submission
+    name: WorkdaySubmission
+    kind: entity
+    reference: { mode: popular, value_type: submission_id }
+
+  - id: submission_id
+    name: SubmissionId
+    kind: value
+    primitive: String
+
+  - id: approval_chain
+    name: ApprovalChain
+    kind: entity
+    reference: { mode: popular, value_type: chain_id }
+
+  - id: chain_id
+    name: ChainId
+    kind: value
+    primitive: String
+
+  - id: threshold_eur
+    name: ThresholdEur
+    kind: value
+    primitive: Integer
+
+fact_types:
+  - id: expense_has_status
+    reading: "{Expense} has status {ExpenseStatus}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: expense_status, role_name: status }
+    constraints:
+      - type: uniqueness
+        scope: internal
+        roles: [expense]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "An expense is in exactly one state at a time."
+      - type: mandatory
+        role: expense
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "Every expense has a state from the moment it is filed."
+
+  - id: expense_submitted_to_workday
+    reading: "{Expense} is submitted to Workday as {WorkdaySubmission}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: workday_submission, role_name: submission }
+    constraints:
+      - type: uniqueness
+        scope: internal
+        roles: [expense]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "One expense reaches Workday once."
+
+  - id: chain_has_threshold
+    reading: "{ApprovalChain} has threshold {ThresholdEur}"
+    roles:
+      - { object_type: approval_chain, role_name: chain }
+      - { object_type: threshold_eur, role_name: threshold }
+    constraints:
+      - type: uniqueness
+        scope: internal
+        roles: [chain]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          user_quote: "A chain has one approval threshold."
+
+operations:
+  - id: submit_expense_to_workday
+    reading: "{Expense} is submitted to Workday as {WorkdaySubmission}"
+    parameters:
+      - { name: expense,    object_type: expense }
+      - { name: submission, object_type: workday_submission }
+      - { name: chain,      object_type: approval_chain }
+    preconditions:                      # conjunctive POSITIVE atoms only
+      - id: pre_approved
+        require:
+          - { fact_type: expense_has_status,
+              bind: { expense: "$expense", status: "approved" } }   # literal binding OK
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { csdp_step: 7, dialogue_turn: 44,
+                      user_quote: "Nothing reaches Workday before approval." }
+    effects:                            # applied as a SET, then the invariant is checked
+      - create: { object_type: workday_submission, param: submission }  # caller mints the id
+      - assert: { fact_type: expense_submitted_to_workday,              # every role ground
+                  bind: { expense: "$expense", submission: "$submission" } }
+      - retract: { fact_type: expense_has_status,                       # wildcards allowed
+                   bind: { expense: "$expense" } }
+      - assert:  { fact_type: expense_has_status,                       # the compensating
+                   bind: { expense: "$expense", status: "submitted" } } # half of the replace
+    dynamic_rules:                      # old-vs-new functional value comparison
+      - id: status_must_change          # the subject must be a fact type THIS
+        subject: { fact_type: expense_has_status,    # operation touches, or the
+                   value_role: status,               # rule can never fire and
+                   bind: { expense: "$expense" } }   # op-dynamic-untouched warns
+        op: "!="                        # new op old; in < <= = >= > !=
+        modality: deontic
+        source: user-supplied
+        status: confirmed
+        provenance: { added_at_step: 7d }
+    frame: { modality: deontic }        # REQUIRED, never defaulted. Grading is per FACT
+                                        # TYPE: this operation's deontic frame makes the
+                                        # fact types IT touches deontic, and never
+                                        # downgrades another operation's alethic ones.
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 7, dialogue_turn: 44 }

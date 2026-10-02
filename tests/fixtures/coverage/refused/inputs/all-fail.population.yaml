@@ -1,0 +1,16 @@
+population:
+  model: ../v2_worked_example.orm.yaml
+  model_id: urn:gnd-fixture:v2-worked-example@1
+  source: fixture
+  covers: [expense_has_status, expense_submitted_to_workday, chain_has_threshold]
+
+facts:
+  expense_has_status:
+    - { expense: 1, status: draft }
+    - { expense: 1, status: approved }
+  expense_submitted_to_workday:
+    - { expense: 2, submission: WD-1 }
+    - { expense: 2, submission: WD-2 }
+  chain_has_threshold:
+    - { chain: C-1, threshold: 100 }
+    - { chain: C-1, threshold: 200 }

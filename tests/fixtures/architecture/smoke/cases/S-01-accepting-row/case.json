@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-01-accepting-row",
+  "story": "One accepting row runs the entry point and reaches its declared band 0."
+}

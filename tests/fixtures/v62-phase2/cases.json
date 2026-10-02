@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "model": "models/dynamic.orm.yaml",
+  "steps": "walks/ticket.steps.json",
+  "populations": {
+    "pre_open": "populations/pre-open.pop.yaml",
+    "post_resolved": "populations/post-resolved.pop.yaml",
+    "post_self_justifying": "populations/post-self-justifying.pop.yaml"
+  },
+  "canary": "SECRET-TICKET-314159",
+  "cases": [
+    {
+      "id": "A01",
+      "family": "order",
+      "branch": "refresh-before-intermediate"
+    },
+    {
+      "id": "B01",
+      "family": "dynamic-rule",
+      "branch": "old-new-pass"
+    },
+    {
+      "id": "B02",
+      "family": "dynamic-rule",
+      "branch": "old-new-alethic-fail"
+    },
+    {
+      "id": "B03",
+      "family": "dynamic-rule",
+      "branch": "no-new-vacuous"
+    },
+    {
+      "id": "B04",
+      "family": "dynamic-rule",
+      "branch": "nonfunctional-unchecked"
+    },
+    {
+      "id": "B05",
+      "family": "dynamic-rule",
+      "branch": "no-old-vacuous"
+    },
+    {
+      "id": "B06",
+      "family": "dynamic-rule",
+      "branch": "deontic-warning"
+    },
+    {
+      "id": "C01",
+      "family": "changes",
+      "branch": "added"
+    },
+    {
+      "id": "C02",
+      "family": "changes",
+      "branch": "removed"
+    },
+    {
+      "id": "C03",
+      "family": "changes",
+      "branch": "no-delta"
+    },
+    {
+      "id": "D01",
+      "family": "post",
+      "branch": "computed-final-claim"
+    },
+    {
+      "id": "D02",
+      "family": "post",
+      "branch": "matching-final"
+    },
+    {
+      "id": "D03",
+      "family": "post",
+      "branch": "frame-separated"
+    },
+    {
+      "id": "E01",
+      "family": "coverage",
+      "branch": "missing-pre-leaf"
+    },
+    {
+      "id": "E02",
+      "family": "coverage",
+      "branch": "unrelated-gap"
+    },
+    {
+      "id": "E03",
+      "family": "coverage",
+      "branch": "redacted-gap"
+    },
+    {
+      "id": "E04",
+      "family": "coverage",
+      "branch": "missing-post-leaf"
+    },
+    {
+      "id": "E05",
+      "family": "coverage",
+      "branch": "refresh-only-gap"
+    },
+    {
+      "id": "E06",
+      "family": "coverage",
+      "branch": "dynamic-rule-only-gap"
+    },
+    {
+      "id": "E07",
+      "family": "coverage",
+      "branch": "missing-dynamic-head"
+    },
+    {
+      "id": "F01",
+      "family": "order",
+      "branch": "negated-pre-state"
+    },
+    {
+      "id": "F02",
+      "family": "order",
+      "branch": "later-step-refreshed"
+    },
+    {
+      "id": "G01",
+      "family": "semiderived",
+      "branch": "poison-upper"
+    },
+    {
+      "id": "G02",
+      "family": "semiderived",
+      "branch": "surplus-survives"
+    },
+    {
+      "id": "G03",
+      "family": "validation",
+      "branch": "assert-semiderived"
+    },
+    {
+      "id": "G04",
+      "family": "validation",
+      "branch": "retract-semiderived"
+    },
+    {
+      "id": "G05",
+      "family": "semiderived",
+      "branch": "constraint-inert"
+    },
+    {
+      "id": "G06",
+      "family": "semiderived",
+      "branch": "precondition-inert"
+    },
+    {
+      "id": "G07",
+      "family": "semiderived",
+      "branch": "dynamic-subject-inert"
+    },
+    {
+      "id": "G08",
+      "family": "semiderived",
+      "branch": "computed-delta"
+    },
+    {
+      "id": "V01",
+      "family": "validation",
+      "branch": "complete-dynamic"
+    },
+    {
+      "id": "V02",
+      "family": "validation",
+      "branch": "incomplete-dynamic"
+    },
+    {
+      "id": "H01",
+      "family": "intermediate",
+      "branch": "no-derived-claim"
+    },
+    {
+      "id": "H02",
+      "family": "intermediate",
+      "branch": "constraint-fail"
+    },
+    {
+      "id": "H03",
+      "family": "intermediate",
+      "branch": "pre-claim-retained"
+    },
+    {
+      "id": "I01",
+      "family": "dynamic-gate",
+      "branch": "touch-delta"
+    },
+    {
+      "id": "I02",
+      "family": "dynamic-gate",
+      "branch": "touch-no-delta"
+    },
+    {
+      "id": "I03",
+      "family": "dynamic-gate",
+      "branch": "no-touch"
+    },
+    {
+      "id": "I04",
+      "family": "dynamic-gate",
+      "branch": "asserted-subject-inherited"
+    },
+    {
+      "id": "I05",
+      "family": "installed",
+      "branch": "installed-mvp"
+    },
+    {
+      "id": "I06",
+      "family": "dynamic-gate",
+      "branch": "mixed-lane-order"
+    },
+    {
+      "id": "M01",
+      "family": "mvp",
+      "branch": "clean"
+    },
+    {
+      "id": "M02",
+      "family": "mvp",
+      "branch": "dirty"
+    },
+    {
+      "id": "M03",
+      "family": "mvp",
+      "branch": "plan"
+    },
+    {
+      "id": "P01",
+      "family": "plan",
+      "branch": "asserted-only"
+    },
+    {
+      "id": "P02",
+      "family": "plan",
+      "branch": "empty-omission"
+    },
+    {
+      "id": "P03",
+      "family": "redaction",
+      "branch": "projected-change"
+    },
+    {
+      "id": "Q01",
+      "family": "report",
+      "branch": "raw-v7"
+    },
+    {
+      "id": "Q02",
+      "family": "report",
+      "branch": "raw-plan-v8"
+    },
+    {
+      "id": "Q03",
+      "family": "report",
+      "branch": "projected-v9"
+    },
+    {
+      "id": "Q04",
+      "family": "report",
+      "branch": "empty-delta-refusal"
+    },
+    {
+      "id": "Q05",
+      "family": "report",
+      "branch": "text-summary"
+    },
+    {
+      "id": "R01",
+      "family": "registry",
+      "branch": "closure"
+    },
+    {
+      "id": "A02",
+      "family": "assurance",
+      "branch": "new-only-none"
+    },
+    {
+      "id": "K01",
+      "family": "pins",
+      "branch": "phase1-map"
+    },
+    {
+      "id": "S01",
+      "family": "selective",
+      "branch": "full-parity"
+    },
+    {
+      "id": "S02",
+      "family": "selective",
+      "branch": "no-touch-cost"
+    },
+    {
+      "id": "S03",
+      "family": "selective",
+      "branch": "transitive-chain"
+    }
+  ]
+}
+

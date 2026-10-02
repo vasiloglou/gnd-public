@@ -654,6 +654,7 @@ def test_second_attempt_receives_only_the_exact_current_feedback_bytes_and_diges
         monkeypatch,
         subject_fixture=SKELETON / "population.bad.yaml",
         max_attempts=2,
+        wall_seconds=20.0,
         expected_bytes=accepted_population,
     )
     _write_exact_feedback_retry_agent(
@@ -1290,7 +1291,7 @@ def test_every_reference_corpus_case_runs_through_the_public_entrypoint(
     )
     # Version and main process retain one shared deadline. The wall fixture
     # uses a shell builtin probe and must prove its child actually started.
-    wall_seconds = 0.5 if scenario == "wall" else 5.0
+    wall_seconds = 0.5 if scenario == "wall" else (20.0 if scenario == "oscillation" else 5.0)
     root = _make_experiment(
         tmp_path,
         monkeypatch,

@@ -1,0 +1,74 @@
+# tests/fixtures/adversarial/models/float_range.orm.yaml
+#
+# Adversarial probe (CR-04): the minimum valid model in which a NaN reaches an
+# ORDERING comparison against an alethic range.
+#
+# `celsius` is a Float value type carrying an alethic `range: {min: -50, max:
+# 60}`. It is the Float twin of `typed_range.orm.yaml`, and it must be a Float
+# rather than an Integer because a Python `int` is always finite: NaN can only
+# arrive through a Float/Number role.
+#
+# Before CR-04, `popvalidate._is_number` accepted any `float` including `nan`,
+# so R7 passed it through; `checker._orderable(nan, 60)` was True (both
+# numeric, neither bool), so `_in_range` took the deciding branch and computed
+#   below = nan < -50  -> False
+#   above = nan >  60  -> False
+#   return not (below or above) -> True
+# conflating "not proven outside" with "inside". Result:
+#   {"outcome":"accepted","exit_code":0,"acceptance_ready":true,
+#    "counts":{"pass":1,...},
+#    "verdicts":[{"verdict":"pass","message":"Each celsius value must be
+#      between '-50' and '60' — satisfied."}]}
+#
+# IEEE 754-2019 §5.11: every ordered comparison involving NaN is *unordered*,
+# so `min <= x <= max` is FALSE, never true. Unlike every other unorderable
+# pairing the checker meets, Python does not raise on `nan < 60` — so this one
+# had no crash to notice, which is precisely why it survived 341 green tests.
+#
+# `.inf` is NOT part of this probe: it orders totally and correctly against
+# finite bounds. It is nonetheless rejected at the loader alongside NaN, because
+# RFC 8259 §6 permits neither in JSON and accepting it in YAML only would break
+# D-11 parity.
+#
+# The model itself MUST validate clean (`gnd validate` exits 0) — this case
+# probes the POPULATION path.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: reading
+    name: Reading
+    kind: entity
+    reference: { mode: popular, value_type: reading_id }
+
+  - id: reading_id
+    name: ReadingId
+    kind: value
+    primitive: String
+
+  - id: celsius
+    name: Celsius
+    kind: value
+    primitive: Float
+
+fact_types:
+  - id: reading_has_celsius
+    reading: "{Reading} has temperature {Celsius}"
+    roles:
+      - { object_type: reading, role_name: reading }
+      - { object_type: celsius, role_name: celsius }
+
+constraints:
+  - type: value
+    object_type: celsius
+    range: { min: -50, max: 60 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "A temperature reading is between -50 and 60 degrees."

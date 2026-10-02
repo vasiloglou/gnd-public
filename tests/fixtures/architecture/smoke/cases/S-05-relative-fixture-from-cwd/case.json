@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-05-relative-fixture-from-cwd",
+  "story": "A relative fixture path resolves because cwd is the project root, not the repo root."
+}

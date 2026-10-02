@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "tree": "positional",
+  "arguments": [
+    "library.orm.yaml",
+    "--experiments",
+    "experiments",
+    "--check",
+    "evidence/check.json"
+  ],
+  "answer": {
+    "model_digest": "sha256:8c598378a7509c43a7907faf29410c6b25bb7bf4d838920143ee39ef109920d3",
+    "model_version": 1,
+    "census": {
+      "operation": {
+        "in_model": 0,
+        "claimed": 0,
+        "corroborated": 0,
+        "unclaimed": 0,
+        "unclaimed_with_evidence": 0
+      },
+      "fact_type": {
+        "in_model": 19,
+        "claimed": 0,
+        "corroborated": 0,
+        "unclaimed": 19,
+        "unclaimed_with_evidence": 19
+      },
+      "constraint": {
+        "in_model": 39,
+        "claimed": 2,
+        "corroborated": 2,
+        "unclaimed": 37,
+        "unclaimed_with_evidence": 37
+      }
+    },
+    "claimed_elements": [
+      {
+        "address": "fact_types[borrower_has_name].constraints[0]",
+        "addressing": "positional",
+        "status": "corroborated",
+        "conclusions": "no-conclusions"
+      },
+      {
+        "address": "constraints[0]",
+        "addressing": "positional",
+        "status": "corroborated",
+        "conclusions": "no-conclusions"
+      }
+    ],
+    "all_constraint_addresses_are": "positional",
+    "check_verdict_counts": {
+      "fail": 1,
+      "unchecked": 2,
+      "vacuous": 36
+    },
+    "unchecked_reason_codes": [
+      "subtype-derivation-only",
+      "textual-not-mechanical"
+    ],
+    "unstable_addresses": [
+      {
+        "experiment": "EXP-511-positional",
+        "path": "experiments/EXP-511-positional/SPEC.md",
+        "address": "fact_types[borrower_has_name].constraints[0]",
+        "note": "positional; reordering the model's constraints silently retargets this row"
+      },
+      {
+        "experiment": "EXP-511-positional",
+        "path": "experiments/EXP-511-positional/SPEC.md",
+        "address": "constraints[0]",
+        "note": "positional; reordering the model's constraints silently retargets this row"
+      }
+    ],
+    "unmatched_covers": [],
+    "covers_exemptions": [],
+    "refused_sources": []
+  }
+}

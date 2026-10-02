@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "case_count": 14,
+  "cases": {
+    "S-01-accepting-row": {
+      "rows": [
+        {
+          "id": "accepts",
+          "status": "matched",
+          "expect_exit": 0,
+          "actual_exit": 0
+        }
+      ]
+    },
+    "S-02-refusing-row": {
+      "rows": [
+        {
+          "id": "refuses",
+          "status": "matched",
+          "expect_exit": 3,
+          "actual_exit": 3
+        }
+      ]
+    },
+    "S-03-band-mismatch": {
+      "rows": [
+        {
+          "id": "mismatch",
+          "status": "band-mismatch",
+          "expect_exit": 0,
+          "actual_exit": 3,
+          "message_contains": [
+            "mismatch",
+            "0",
+            "3"
+          ]
+        }
+      ]
+    },
+    "S-04-tmp-substitution": {
+      "rows": [
+        {
+          "id": "writes-a",
+          "status": "matched",
+          "expect_exit": 0,
+          "actual_exit": 0
+        },
+        {
+          "id": "writes-b",
+          "status": "matched",
+          "expect_exit": 0,
+          "actual_exit": 0
+        }
+      ],
+      "assertions": {
+        "tmp_dirs_distinct": true,
+        "tmp_dirs_fresh": true
+      }
+    },
+    "S-05-relative-fixture-from-cwd": {
+      "rows": [
+        {
+          "id": "reads-seed",
+          "status": "matched",
+          "expect_exit": 0,
+          "actual_exit": 0,
+          "stdout_contains": [
+            "seed-value"
+          ]
+        }
+      ]
+    },
+    "S-06-entry-point-raises": {
+      "rows": [
+        {
+          "id": "raises",
+          "status": "band-mismatch",
+          "expect_exit": 0,
+          "actual_exit": 1,
+          "message_contains": [
+            "raises",
+            "0",
+            "1"
+          ]
+        }
+      ]
+    },
+    "S-07-no-smoke-rows": {
+      "rows": [],
+      "assertions": {
+        "declares_rows_skips": true,
+        "skip_message_contains": [
+          "architecture.contract.yaml",
+          "no smoke rows"
+        ]
+      }
+    },
+    "S-09-timeout-with-spawned-child": {
+      "timeout_seconds": 2,
+      "rows": [
+        {
+          "id": "hangs",
+          "status": "timed-out",
+          "expect_exit": 0,
+          "actual_exit": null,
+          "message_contains": [
+            "hangs",
+            "timed out"
+          ]
+        }
+      ],
+      "assertions": {
+        "no_surviving_descendants": true
+      }
+    },
+    "S-10-uncited-declared-exit": {
+      "rows": [
+        {
+          "id": "cites-zero",
+          "status": "matched",
+          "expect_exit": 0,
+          "actual_exit": 0
+        },
+        {
+          "id": "cites-three",
+          "status": "matched",
+          "expect_exit": 3,
+          "actual_exit": 3
+        }
+      ],
+      "assertions": {
+        "uncited_exits": [
+          [
+            "app",
+            7
+          ]
+        ]
+      }
+    },
+    "S-11-entry-point-unresolvable": {
+      "rows": [
+        {
+          "id": "never-starts",
+          "status": "did-not-start",
+          "expect_exit": 1,
+          "actual_exit": null,
+          "message_contains": [
+            "never-starts",
+            "not_a_real_module",
+            "did not start"
+          ]
+        }
+      ],
+      "assertions": {
+        "never_compared_to_band": true
+      }
+    },
+    "S-12-output-flood": {
+      "rows": [
+        {
+          "id": "floods",
+          "status": "output-cap-exceeded",
+          "expect_exit": 0,
+          "actual_exit": null,
+          "message_contains": [
+            "floods",
+            "cap"
+          ]
+        }
+      ],
+      "assertions": {
+        "capture_at_most_bytes_per_stream": 65536,
+        "no_surviving_descendants": true
+      }
+    },
+    "S-13-invalid-utf8-output": {
+      "rows": [
+        {
+          "id": "bad-bytes",
+          "status": "matched",
+          "expect_exit": 0,
+          "actual_exit": 0,
+          "stdout_contains": [
+            "�"
+          ]
+        }
+      ],
+      "assertions": {
+        "no_exception_escaped": true
+      }
+    },
+    "S-08-negative-control-never-spawns": {
+      "kind": "negative-control",
+      "mutation": "run_row returns SmokeOutcome(status=matched, actual_exit=expect_exit) without spawning",
+      "must_red": [
+        "S-03-band-mismatch",
+        "S-06-entry-point-raises",
+        "S-11-entry-point-unresolvable"
+      ]
+    },
+    "S-14-negative-control-empty-parametrization": {
+      "kind": "negative-control",
+      "mutation": "build_smoke_module parametrizes over () while the contract still declares rows",
+      "must_red": [
+        "S-01-accepting-row"
+      ],
+      "guard": "test_smoke_declares_rows"
+    }
+  }
+}

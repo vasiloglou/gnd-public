@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-12-output-flood",
+  "story": "The child writes far more than MAX_CAPTURE_BYTES. The read is cut at the cap, the group is killed, and the status is OUTPUT_CAP_EXCEEDED."
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "id": "S-07-no-smoke-rows",
+  "story": "The contract declares NO rows. Nothing runs, and the declares-rows guard SKIPS with a message naming the contract -- the vacuity is announced, never silent."
+}

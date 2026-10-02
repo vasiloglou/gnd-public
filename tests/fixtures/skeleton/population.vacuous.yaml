@@ -1,0 +1,11 @@
+# tests/fixtures/skeleton/population.vacuous.yaml
+# Vacuous population (D-12): declares coverage of movie_has_title but contains zero
+# facts for it — every movie_has_title-scoped constraint must report `vacuous`,
+# never a silent all-pass.
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers: [movie_has_title]
+instances: {}
+facts:
+  movie_has_title: []

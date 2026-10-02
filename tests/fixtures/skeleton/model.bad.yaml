@@ -1,0 +1,33 @@
+# tests/fixtures/skeleton/model.bad.yaml
+# Structurally ill-formed model: fact_types is a string, not an array.
+# jsonschema must report an error at $.fact_types.
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+
+  - id: year
+    name: Year
+    kind: value
+    primitive: Integer
+
+fact_types: oops

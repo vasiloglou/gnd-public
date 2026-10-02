@@ -1,10 +1,10 @@
 {
   "status": "incomplete",
   "original_definitions": 5331,
-  "reviewed_dispositions": 357,
-  "unresolved_definitions": 4974,
-  "current_or_successor_definitions": 356,
-  "historical_definitions": 1,
+  "reviewed_dispositions": 1105,
+  "unresolved_definitions": 4226,
+  "current_or_successor_definitions": 1103,
+  "historical_definitions": 2,
   "handoff_authorized": false,
   "original_identities_sha256": "1deccce9d4db4c32b7160c59a2699ca03de214ecd54765cbc3d112ff7931ea4f",
   "limit": "Static definitions, not expanded pytest collection or execution. Only reviewed slices have dispositions. No public launch or ownership transfer."

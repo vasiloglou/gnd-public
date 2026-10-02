@@ -1,0 +1,148 @@
+{
+  "architecture": {
+    "contract": null,
+    "declared": null,
+    "scanned": []
+  },
+  "assertions": [
+    {
+      "findings": 0,
+      "id": "integrity",
+      "ran": true
+    },
+    {
+      "findings": 0,
+      "id": "currency",
+      "ran": true
+    },
+    {
+      "findings": 0,
+      "id": "structural",
+      "ran": true
+    },
+    {
+      "findings": 0,
+      "id": "architecture",
+      "ran": true
+    }
+  ],
+  "command": "conformance",
+  "error": null,
+  "examined": [
+    {
+      "actual_sha256": "d9456f01054450dc0c346199bf027c24fd67e4f3b137673efa42e0d8a9d21429",
+      "recorded_sha256": "d9456f01054450dc0c346199bf027c24fd67e4f3b137673efa42e0d8a9d21429",
+      "relpath": "SKILL.md"
+    },
+    {
+      "actual_sha256": "5050a03be29ae635d234356fe2f3d9a1c4a03488888b63722999b994330e8343",
+      "recorded_sha256": "5050a03be29ae635d234356fe2f3d9a1c4a03488888b63722999b994330e8343",
+      "relpath": "artifacts/v2_operations.applicable.json"
+    },
+    {
+      "actual_sha256": "7b307a853b5abf174c1971880f033f92c9bf7ef38a899c47c4b900aba6ac2066",
+      "recorded_sha256": "7b307a853b5abf174c1971880f033f92c9bf7ef38a899c47c4b900aba6ac2066",
+      "relpath": "artifacts/v2_operations.artifacts.json"
+    },
+    {
+      "actual_sha256": "13ba2264b0e388c0a02ee0befb9f69eddd4865f1439556c78fb5cb3e045b5cc0",
+      "recorded_sha256": "13ba2264b0e388c0a02ee0befb9f69eddd4865f1439556c78fb5cb3e045b5cc0",
+      "relpath": "artifacts/v2_operations.projection.schema.json"
+    },
+    {
+      "actual_sha256": "4ab3c5f3977503d1667104df0a226ec6887751d21e6c339fa0b29a32b44831b3",
+      "recorded_sha256": "4ab3c5f3977503d1667104df0a226ec6887751d21e6c339fa0b29a32b44831b3",
+      "relpath": "artifacts/v2_operations.verbalization.txt"
+    },
+    {
+      "actual_sha256": "b3c4e9573b080498cd9bb3867b396134d87dccb2f9cd25093071385b1cfeba78",
+      "recorded_sha256": "b3c4e9573b080498cd9bb3867b396134d87dccb2f9cd25093071385b1cfeba78",
+      "relpath": "v2_operations/__init__.py"
+    },
+    {
+      "actual_sha256": "69e920747af2f974a4592b473e4a9f3d0e52527bc37caef36c27fff20d7059cb",
+      "recorded_sha256": "69e920747af2f974a4592b473e4a9f3d0e52527bc37caef36c27fff20d7059cb",
+      "relpath": "v2_operations/tools.py"
+    }
+  ],
+  "findings": [],
+  "gnd_version": "0.1.0",
+  "limits": {
+    "unchecked": [
+      {
+        "description": "a manifest cannot record its own digest, so an edit to a derived file that is CO-EDITED with its manifest entry is undetectable by digest comparison; this is an integrity bound, not tamper evidence (gnd doctor has the identical limit)",
+        "id": "manifest-co-edit"
+      },
+      {
+        "description": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+        "id": "extension-unexamined"
+      },
+      {
+        "description": "a green digest comparison says the derived surface is unedited and current, never that the generated code is correct (G-08)",
+        "id": "green-is-not-correctness"
+      },
+      {
+        "description": "assertion #3 binds the NAMES and SIGNATURES of the emitted tools to the fact types and role names that the model declares; it does not read a function body. A tool whose name and parameters agree with the model may still compute the wrong thing, and the only check that catches that is the runtime verifier over the population the generated agent actually produces",
+        "id": "structural-surface-only"
+      },
+      {
+        "description": "assertion #4 checks declared paths, module-level positional shape, fact-type membership, recognized path expressions and whole-AST flag or subcommand string presence without executing project code; string presence does not prove argparse wiring, declared exits are unverified without smoke rows, unrecognized expressions and cross-module indirection are not guessed, computed-only artifact names can report reference-unfound, dotted entry modules use only project-root flat module paths, weakening remains visible only in declared counts and review, pure-existence artifacts arm no path check, and the two service observations are point-in-time reads rather than an atomic filesystem snapshot",
+        "id": "architecture-static-only"
+      },
+      {
+        "description": "the codegen manifest does not list an architecture contract and no contract leaf exists, so assertion #4 has no declarations to inspect",
+        "id": "architecture-contract-absent"
+      }
+    ]
+  },
+  "model": {
+    "actual_sha256": "fd07d1b6d3c75cc20b42e8590cb9e2d0790d010af20503e2995570fa0bbdc7a1",
+    "fact_types": 4,
+    "id": "v2_operations.orm.yaml",
+    "recorded_sha256": "fd07d1b6d3c75cc20b42e8590cb9e2d0790d010af20503e2995570fa0bbdc7a1"
+  },
+  "project": {
+    "manifest_version": 1,
+    "recorded_files": 9
+  },
+  "satisfied": [
+    {
+      "fact_type_id": "work_item_has_note",
+      "ownership": "derived",
+      "relpath": "v2_operations/tools.py",
+      "symbol": "work_item_has_note"
+    },
+    {
+      "fact_type_id": "work_item_has_priority",
+      "ownership": "derived",
+      "relpath": "v2_operations/tools.py",
+      "symbol": "work_item_has_priority"
+    },
+    {
+      "fact_type_id": "work_item_has_state",
+      "ownership": "derived",
+      "relpath": "v2_operations/tools.py",
+      "symbol": "work_item_has_state"
+    },
+    {
+      "fact_type_id": "work_item_reviewed_by",
+      "ownership": "derived",
+      "relpath": "v2_operations/tools.py",
+      "symbol": "work_item_reviewed_by"
+    }
+  ],
+  "schema_version": 1,
+  "tool": "gnd",
+  "unexamined": [
+    {
+      "ownership": "extension",
+      "reason": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+      "relpath": "pyproject.toml"
+    },
+    {
+      "ownership": "extension",
+      "reason": "extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension",
+      "relpath": "references/gnd-v2-operations-notes.md"
+    }
+  ]
+}

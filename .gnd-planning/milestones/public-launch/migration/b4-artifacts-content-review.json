@@ -1,0 +1,23 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_popvalidate.py",
+      "source_sha256": "84ae27dab3914d7d4a8b00fe7adb423c76f1ffdcb880225a671a1e1cb0007571",
+      "target_sha256": "84ae27dab3914d7d4a8b00fe7adb423c76f1ffdcb880225a671a1e1cb0007571",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_artifacts.py",
+      "source_sha256": "1acac3ab4f483e761d89ddc513750ddabbfef7c06bdc48919d0b38ea3ec439b1",
+      "target_sha256": "764b502a65e32077f8e640ac3f1f7e06ba730c25620a6ba70baa0e804382e7c6",
+      "adaptation": "Exclude the unresolved retained duplicate-inventory case and its private historical roster; preserve the other 37 independently current primitive controls.",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    }
+  ],
+  "definitions": 86,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "22be16b4ca9c05e6c098fcb3861d44ece981b76c834bf9396c748d054e5a5d99"
+}

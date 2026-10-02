@@ -1,0 +1,115 @@
+version: 2
+model_id: urn:gnd-fixture:v62-phase3-exact-terms@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: ticket, name: Ticket, kind: value, primitive: String }
+  - { id: integer, name: Integer, kind: value, primitive: Integer }
+  - { id: status, name: Status, kind: value, primitive: String }
+
+fact_types:
+  - id: input
+    reading: "{Ticket} has value {Integer} and divisor {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: value, redact: true }
+      - { object_type: integer, role_name: divisor }
+  - id: residue
+    reading: "{Ticket} has residue {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: residue }
+    constraints:
+      - id: one_residue_per_ticket
+        type: uniqueness
+        scope: internal
+        roles: [ticket]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each ticket has at most one residue." }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: input, bind: { ticket: "$ticket", value: "$value", divisor: "$divisor" } }
+      where:
+        - operator: "="
+          left: { fn: add, args: ["$value", 0] }
+          right: "$value"
+        - operator: "="
+          left: { fn: sub, args: ["$value", 0] }
+          right: "$value"
+        - operator: "="
+          left: { fn: mul, args: ["$value", 2] }
+          right: { fn: add, args: ["$value", "$value"] }
+        - operator: "="
+          left: { fn: neg, args: [{ fn: neg, args: ["$value"] }] }
+          right: "$value"
+        - operator: ">="
+          left: { fn: abs, args: ["$value"] }
+          right: 0
+      head:
+        ticket: "$ticket"
+        residue: { fn: mod, args: ["$value", "$divisor"] }
+  - id: doubled_residue
+    reading: "{Ticket} has doubled residue {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: doubled }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: residue, bind: { ticket: "$ticket", residue: "$residue" } }
+      head:
+        ticket: "$ticket"
+        doubled: { fn: add, args: ["$residue", "$residue"] }
+  - id: permitted
+    reading: "{Ticket} is permitted"
+    roles: [{ object_type: ticket, role_name: ticket }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: residue, bind: { ticket: "$ticket", residue: "$residue" } }
+      where:
+        - { operator: "<", left: "$residue", right: 30 }
+      head: { ticket: "$ticket" }
+  - id: ticket_status
+    reading: "{Ticket} has status {Status}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: status, role_name: status }
+
+operations:
+  - id: approve
+    reading: "{Ticket} is approved"
+    parameters: [{ name: ticket, object_type: ticket }]
+    preconditions:
+      - id: residue_permits_approval
+        require: [{ fact_type: permitted, bind: { ticket: "$ticket" } }]
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Only a permitted ticket may be approved." }
+    effects:
+      - assert: { fact_type: ticket_status, bind: { ticket: "$ticket", status: approved } }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Approval changes only the status." }
+
+constraints:
+  - id: doubled_residue_is_bounded
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: input, bind: { ticket: "$ticket", value: "$value", divisor: "$divisor" } }
+    consequent:
+      comparison:
+        operator: "<"
+        left: { fn: abs, args: [{ fn: mod, args: ["$value", "$divisor"] }] }
+        right: { fn: abs, args: ["$divisor"] }
+    provenance: { user_quote: "A nonzero divisor bounds the absolute residue." }
+
+rejected_proposals: []

@@ -1,0 +1,11 @@
+{
+  "steps_schema": 1,
+  "model": "../models/dynamic.orm.yaml",
+  "model_digest": "sha256:d837cd1601b5c8d59ce7d023739563e14e5d22f2f5f7c913a39c93604b95367b",
+  "operations_digest": "sha256:a52b9ba582c9413f34d6ba5d44ae95097fa8e5b63a27a20eecae6bdeeec7f3fe",
+  "steps": [
+    { "op": "add_evidence", "bindings": { "ticket": "SECRET-TICKET-314159" } },
+    { "op": "raise_score", "bindings": { "ticket": "SECRET-TICKET-314159", "new_score": 2 } },
+    { "op": "resolve", "bindings": { "ticket": "SECRET-TICKET-314159" } }
+  ]
+}

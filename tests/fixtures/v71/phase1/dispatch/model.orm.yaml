@@ -1,0 +1,128 @@
+constraints:
+- antecedent:
+  - bind:
+      pickup: $pickup
+      shipment: $shipment
+    fact_type: dispatch_pickup_on
+  - bind:
+      deadline: $deadline
+      shipment: $shipment
+    fact_type: dispatch_shipping_deadline
+  consequent:
+    comparison:
+      left:
+        args:
+        - $pickup
+        - duration_days: 2
+        fn: date_add
+      operator: <=
+      right: $deadline
+  id: dispatch_shipping_window
+  modality: alethic
+  provenance:
+    user_quote: >-
+      Pickup plus the two-calendar-day allowance may not exceed the shipping deadline.
+  source: user-supplied
+  status: confirmed
+  type: guarded
+fact_types:
+- constraints:
+  - modality: alethic
+    provenance:
+      user_quote: Every dispatch shipment has an origin warehouse.
+    role: shipment
+    source: explicit
+    status: confirmed
+    type: mandatory
+  id: dispatch_shipment_origin
+  reading: '{DispatchShipment} originates at {DispatchWarehouse}'
+  roles:
+  - object_type: dispatch_shipment
+    role_name: shipment
+  - object_type: dispatch_warehouse
+    role_name: warehouse
+- id: dispatch_shipment_product
+  reading: '{DispatchShipment} carries {DispatchProduct}'
+  roles:
+  - object_type: dispatch_shipment
+    role_name: shipment
+  - object_type: dispatch_product
+    role_name: product
+- id: dispatch_shipping_deadline
+  reading: '{DispatchShipment} has shipping deadline {DispatchCalendarDay}'
+  roles:
+  - object_type: dispatch_shipment
+    role_name: shipment
+  - object_type: dispatch_calendar_day
+    role_name: deadline
+- id: dispatch_catalog_allows
+  reading: '{DispatchWarehouse} may ship {DispatchProduct}'
+  roles:
+  - object_type: dispatch_warehouse
+    role_name: warehouse
+  - object_type: dispatch_product
+    role_name: product
+- id: dispatch_route_leg
+  reading: '{DispatchWaypoint} has a direct route to {DispatchWaypoint}'
+  roles:
+  - object_type: dispatch_waypoint
+    role_name: origin
+  - object_type: dispatch_waypoint
+    role_name: destination
+- id: dispatch_packaging_label
+  reading: '{DispatchShipment} has packaging label {DispatchLabel}'
+  roles:
+  - object_type: dispatch_shipment
+    role_name: shipment
+  - object_type: dispatch_label
+    role_name: label
+- id: dispatch_pickup_on
+  reading: '{DispatchShipment} is picked up on {DispatchCalendarDay}'
+  roles:
+  - object_type: dispatch_shipment
+    role_name: shipment
+  - object_type: dispatch_calendar_day
+    role_name: pickup
+- id: dispatch_allowance_days
+  reading: '{DispatchShipment} has allowance {DispatchAllowance}'
+  roles:
+  - object_type: dispatch_shipment
+    role_name: shipment
+  - object_type: dispatch_allowance
+    role_name: days
+model_id: urn:gnd-fixture:v71-dispatch-temporal@1
+object_types:
+- id: dispatch_shipment
+  kind: value
+  name: DispatchShipment
+  primitive: String
+- id: dispatch_warehouse
+  kind: value
+  name: DispatchWarehouse
+  primitive: String
+- id: dispatch_product
+  kind: value
+  name: DispatchProduct
+  primitive: String
+- id: dispatch_waypoint
+  kind: value
+  name: DispatchWaypoint
+  primitive: String
+- id: dispatch_calendar_day
+  kind: value
+  name: DispatchCalendarDay
+  primitive: Date
+- id: dispatch_label
+  kind: value
+  name: DispatchLabel
+  primitive: String
+- id: dispatch_allowance
+  kind: value
+  name: DispatchAllowance
+  primitive: Duration
+rejected_proposals: []
+source:
+  confidence: standard
+  kind: text-conversation
+  mode: one-shot
+version: 3

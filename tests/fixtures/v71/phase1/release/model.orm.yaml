@@ -1,0 +1,129 @@
+constraints:
+- antecedent:
+  - bind:
+      approval_day: $approval
+      release: $release
+    fact_type: release_approved_on
+  - bind:
+      deadline: $deadline
+      release: $release
+    fact_type: release_deadline
+  consequent:
+    comparison:
+      left:
+        args:
+        - $approval
+        - duration_days: 3
+        fn: date_add
+      operator: <=
+      right: $deadline
+  id: release_approval_window
+  modality: alethic
+  provenance:
+    user_quote: >-
+      Approval plus the three-calendar-day window may not exceed the release deadline.
+  source: user-supplied
+  status: confirmed
+  type: guarded
+fact_types:
+- id: release_contains_service
+  reading: '{ReleaseBatch} contains {ReleaseService}'
+  roles:
+  - object_type: release_batch
+    role_name: release
+  - object_type: release_service
+    role_name: service
+- id: release_targets_environment
+  reading: '{ReleaseBatch} targets {ReleaseEnvironment}'
+  roles:
+  - object_type: release_batch
+    role_name: release
+  - object_type: release_environment
+    role_name: environment
+- constraints:
+  - modality: alethic
+    provenance:
+      user_quote: A release has at most one deadline.
+    roles:
+    - release
+    source: explicit
+    status: confirmed
+    type: uniqueness
+  id: release_deadline
+  reading: '{ReleaseBatch} has deadline {ReleaseCalendarDay}'
+  roles:
+  - object_type: release_batch
+    role_name: release
+  - object_type: release_calendar_day
+    role_name: deadline
+- id: release_approved_on
+  reading: '{ReleaseBatch} was approved on {ReleaseCalendarDay}'
+  roles:
+  - object_type: release_batch
+    role_name: release
+  - object_type: release_calendar_day
+    role_name: approval_day
+- id: release_catalog_allows
+  reading: '{ReleaseService} is approved for {ReleaseEnvironment}'
+  roles:
+  - object_type: release_service
+    role_name: service
+  - object_type: release_environment
+    role_name: environment
+- id: release_dependency
+  reading: '{ReleaseService} depends directly on {ReleaseService}'
+  roles:
+  - object_type: release_service
+    role_name: dependent
+  - object_type: release_service
+    role_name: prerequisite
+- id: release_note_link
+  reading: '{ReleaseBatch} has release note {ReleaseNote}'
+  roles:
+  - object_type: release_batch
+    role_name: release
+  - object_type: release_note
+    role_name: note
+- id: release_window_days
+  reading: '{ReleaseBatch} has release window {ReleaseWindow}'
+  roles:
+  - object_type: release_batch
+    role_name: release
+  - object_type: release_window
+    role_name: days
+model_id: urn:gnd-fixture:v71-release-temporal@1
+object_types:
+- id: release_batch
+  kind: value
+  name: ReleaseBatch
+  primitive: String
+- id: release_service
+  kind: value
+  name: ReleaseService
+  primitive: String
+- id: release_environment
+  kind: value
+  name: ReleaseEnvironment
+  primitive: String
+- id: release_calendar_day
+  kind: value
+  name: ReleaseCalendarDay
+  primitive: Date
+- id: release_approver
+  kind: value
+  name: ReleaseApprover
+  primitive: String
+- id: release_note
+  kind: value
+  name: ReleaseNote
+  primitive: String
+- id: release_window
+  kind: value
+  name: ReleaseWindow
+  primitive: Duration
+rejected_proposals: []
+source:
+  confidence: standard
+  kind: text-conversation
+  mode: one-shot
+version: 3

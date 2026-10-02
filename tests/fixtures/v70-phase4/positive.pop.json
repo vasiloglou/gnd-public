@@ -1,0 +1,14 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "positive.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase4-positive@1",
+    "source": "fixture",
+    "covers": ["observed", "inferred"]
+  },
+  "instances": {},
+  "facts": {
+    "observed": [{"record": "R0", "item": "A"}],
+    "inferred": [{"record": "R0", "item": "A"}]
+  }
+}

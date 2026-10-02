@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "file_sha256": {
+    "README.md": "2690adb53087015976715293578e389e4d6929835595822e2c11583fc8f80d80",
+    "cases.json": "b937079ab46370368cc0658fad2927de185d9d9ac49d6593fd92f6924a208578",
+    "legacy-v7.json": "d62eb82337d1f322b14d53ac3d6cd5b98ba747fe283ae505472f04dfffabbcb3",
+    "legacy-v8.json": "0d0e8ed498e7be9e23124abea770e08f50450a7b0355cf72f0361972d7386753",
+    "negation.orm.yaml": "cc1e33b05994c2b9eb9efa731bf59f14e16a385b87a563500ee197ca8c0ce743",
+    "negation.pop.json": "0f6378e5c8931dbaea863a471bd8721628eac8e435db19efd173158a5d6a4304",
+    "positive.orm.yaml": "c38d1ed115cbfda5645cc264378dec5eb8288ca910e7ec62e5817cdba003e39c",
+    "positive.pop.json": "a89151c58eade331eef63ea7e56e13b273eb113a17ab45d256e0e37b1ef4b818",
+    "recursive.orm.yaml": "729ad094c683b02268a65b022f9e36044971634e0f8dc8d2f7bf44aa6ff0e5cf",
+    "recursive.pop.json": "a336e9e8f7ff9afc23538ff53ef5f1000eac968c11006161108f34fae7fa2945",
+    "visit.steps.json": "6d3e397be10644d9870ea17798490ddc060aeb99d68b3fcf055dbddd5414c2b7"
+  },
+  "cases": {
+    "P01-scalar-control": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "P02-opaque-claimed": {
+      "exit": 4,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "unchecked",
+          "reason_code": "derived-unknown",
+          "findings": [
+            "derived-extension-unresolved"
+          ],
+          "witnesses": [
+            {
+              "record": "R1",
+              "item": "B"
+            }
+          ]
+        }
+      ]
+    },
+    "P03-opaque-unclaimed": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "P04-three-findings": {
+      "exit": 1,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "fail",
+          "reason_code": null,
+          "findings": [
+            "derived-extension-incomplete",
+            "derived-extension-unsound",
+            "derived-extension-unresolved"
+          ],
+          "witnesses": [
+            {
+              "record": "R0",
+              "item": "A"
+            },
+            {
+              "record": "R2",
+              "item": "C"
+            },
+            {
+              "record": "R1",
+              "item": "B"
+            }
+          ]
+        }
+      ]
+    },
+    "P05-semiderived-unknown": {
+      "exit": 4,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "unchecked",
+          "reason_code": "derived-unknown",
+          "findings": [
+            "derived-extension-unresolved"
+          ],
+          "witnesses": [
+            {
+              "record": "R1",
+              "item": "B"
+            }
+          ]
+        }
+      ]
+    },
+    "P06-semiderived-surplus": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "P07-no-admission-projection": {
+      "exit": 4,
+      "schema_version": 7,
+      "derivations": [
+        {
+          "verdict": "unchecked",
+          "reason_code": "opaque-value",
+          "findings": []
+        }
+      ]
+    },
+    "N01-negation-unknown": {
+      "exit": 4,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "unchecked",
+          "reason_code": "derived-unknown",
+          "findings": [
+            "derived-extension-unresolved"
+          ],
+          "witnesses": [
+            {
+              "record": "R1"
+            }
+          ]
+        }
+      ]
+    },
+    "N02-negation-unknown-unclaimed": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "N03-negation-definite-hit": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "N04-negation-definite-miss": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "R01-recursive-unknown": {
+      "exit": 4,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "unchecked",
+          "reason_code": "derived-unknown",
+          "findings": [
+            "derived-extension-unresolved"
+          ],
+          "witnesses": [
+            {
+              "source": "A",
+              "target": "C"
+            }
+          ]
+        }
+      ]
+    },
+    "R02-recursive-unclaimed": {
+      "exit": 0,
+      "schema_version": 10,
+      "derivations": [
+        {
+          "verdict": "pass",
+          "reason_code": null,
+          "findings": []
+        }
+      ]
+    },
+    "T01-walk-unknown-precondition": {
+      "exit": 4,
+      "precondition": {
+        "verdict": "unchecked",
+        "reason_code": "derived-unknown"
+      },
+      "visit_logged": true
+    },
+    "T02-walk-scalar-control": {
+      "exit": 0,
+      "precondition": null,
+      "visit_logged": true
+    }
+  }
+}

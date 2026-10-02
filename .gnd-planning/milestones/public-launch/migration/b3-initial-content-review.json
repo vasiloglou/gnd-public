@@ -54,6 +54,6 @@
   "definitions": 88,
   "case_map_sha256": "7fcdc0cae9d315e9018671064a260519d30047bc3b3e53ce9fd2f2075105eff1",
   "privacy_limit": "Manual review plus dependency inspection of named files; no whole-tree clearance implied.",
-  "parameter_expansion": "Exact selected node IDs from target-only pytest collection; no execution claim.",
-  "case_map_file_sha256": "6287eba25cf1a0bdb3524d7c000390371aec51a5992ced4b8272dd1fecbf1a44"
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "3078a2902f2bfec86bb224a2b89fb8252d0ea6ac361c478d199558fda89b83b3"
 }

@@ -1,0 +1,146 @@
+version: 2
+model_id: urn:gnd-fixture:v62-phase2-dynamic@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: ticket, name: Ticket, kind: value, primitive: String }
+  - { id: status, name: Status, kind: value, primitive: String }
+  - { id: score, name: Score, kind: value, primitive: Integer }
+fact_types:
+  - id: evidence
+    reading: "{Ticket} has evidence"
+    roles: [{ object_type: ticket, role_name: ticket, redact: true }]
+  - id: blocked
+    reading: "{Ticket} is blocked"
+    roles: [{ object_type: ticket, role_name: ticket }]
+  - id: evidence_score
+    reading: "{Ticket} has evidence score {Score}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: score, role_name: score }
+    constraints:
+      - id: one_evidence_score_per_ticket
+        type: uniqueness
+        scope: internal
+        roles: [ticket]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each ticket has at most one evidence score." }
+  - id: resolvable
+    reading: "{Ticket} is resolvable"
+    roles: [{ object_type: ticket, role_name: ticket, redact: true }]
+    derivation: semiderived
+    derivation_rule:
+      body:
+        - { fact_type: evidence, bind: { ticket: "$ticket" } }
+      negate:
+        - { fact_type: blocked, bind: { ticket: "$ticket" } }
+      head: { ticket: "$ticket" }
+  - id: ready
+    reading: "{Ticket} is ready"
+    roles: [{ object_type: ticket, role_name: ticket, redact: true }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: resolvable, bind: { ticket: "$ticket" } }
+      head: { ticket: "$ticket" }
+  - id: ticket_score
+    reading: "{Ticket} has computed score {Score}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: score, role_name: score }
+    constraints:
+      - id: one_ticket_score_per_ticket
+        type: uniqueness
+        scope: internal
+        roles: [ticket]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each ticket has one computed score." }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: evidence_score, bind: { ticket: "$ticket", score: "$score" } }
+      head: { ticket: "$ticket", score: "$score" }
+  - id: ticket_status
+    reading: "{Ticket} has status {Status}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: status, role_name: status }
+    constraints:
+      - id: one_status_per_ticket
+        type: uniqueness
+        scope: internal
+        roles: [ticket]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each ticket has one status." }
+  - id: note
+    reading: "{Ticket} has a note"
+    roles: [{ object_type: ticket, role_name: ticket }]
+operations:
+  - id: add_evidence
+    reading: "{Ticket} receives evidence"
+    parameters:
+      - { name: ticket, object_type: ticket }
+    effects:
+      - assert: { fact_type: evidence, bind: { ticket: "$ticket" } }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Adding evidence changes only evidence." }
+  - id: resolve
+    reading: "{Ticket} is resolved"
+    parameters:
+      - { name: ticket, object_type: ticket }
+    preconditions:
+      - id: must_be_ready
+        require:
+          - { fact_type: ready, bind: { ticket: "$ticket" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Only ready tickets may be resolved." }
+    effects:
+      - retract: { fact_type: ticket_status, bind: { ticket: "$ticket" } }
+      - assert: { fact_type: ticket_status, bind: { ticket: "$ticket", status: "resolved" } }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Resolution changes only status." }
+  - id: raise_score
+    reading: "{Ticket} score becomes {Score}"
+    parameters:
+      - { name: ticket, object_type: ticket }
+      - { name: new_score, object_type: score }
+    effects:
+      - retract: { fact_type: evidence_score, bind: { ticket: "$ticket" } }
+      - assert: { fact_type: evidence_score, bind: { ticket: "$ticket", score: "$new_score" } }
+    dynamic_rules:
+      - id: score_never_decreases
+        subject:
+          { fact_type: ticket_score, value_role: score, bind: { ticket: "$ticket" } }
+        op: ">="
+        modality: alethic
+        source: user-supplied
+        status: confirmed
+        provenance: { user_quote: "Computed ticket score never decreases." }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Score updates replace the evidence score." }
+  - id: annotate
+    reading: "{Ticket} is annotated"
+    parameters:
+      - { name: ticket, object_type: ticket }
+    effects:
+      - assert: { fact_type: note, bind: { ticket: "$ticket" } }
+    frame: { modality: deontic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Annotation changes a note." }
+constraints: []
+rejected_proposals: []
+

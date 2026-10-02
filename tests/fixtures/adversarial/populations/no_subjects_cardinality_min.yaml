@@ -1,0 +1,17 @@
+# tests/fixtures/adversarial/populations/no_subjects_cardinality_min.yaml
+#
+# No Colour anywhere, against an alethic `cardinality min: 1` on `colour`.
+#
+# Exit 1 BEFORE the F-02 fix and exit 1 AFTER it. That equality is the whole
+# assertion: the empty-universe vacuity rule must overturn only a `pass`, never a
+# decided `fail`. A count of zero is the constraint's own evidence, not the
+# absence of evidence.
+population:
+  model: no_subjects_cardinality_min.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - person_has_score
+facts:
+  person_has_score:
+    - { person: 1, score: 10 }

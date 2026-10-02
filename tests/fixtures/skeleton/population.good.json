@@ -1,0 +1,24 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "label": "conforming",
+    "covers": ["movie_has_title", "movie_released_in_year", "movie_sequel_of_movie"]
+  },
+  "instances": {
+    "movie": [1, 2]
+  },
+  "facts": {
+    "movie_has_title": [
+      {"movie": 1, "title": "The Departed"},
+      {"movie": 2, "title": "Infernal Affairs"}
+    ],
+    "movie_released_in_year": [
+      {"movie": 1, "year": 2006},
+      {"movie": 2, "year": 2002}
+    ],
+    "movie_sequel_of_movie": [
+      {"sequel": 1, "original": 2}
+    ]
+  }
+}

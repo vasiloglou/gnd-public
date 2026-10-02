@@ -1,0 +1,232 @@
+{
+  "census": {
+    "constraint": {
+      "claimed": 1,
+      "corroborated": 1,
+      "in_model": 4,
+      "unclaimed": 3,
+      "unclaimed_with_evidence": 3
+    },
+    "fact_type": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 3,
+      "unclaimed": 3,
+      "unclaimed_with_evidence": 3
+    },
+    "operation": {
+      "claimed": 1,
+      "corroborated": 0,
+      "in_model": 1,
+      "unclaimed": 0,
+      "unclaimed_with_evidence": 0
+    }
+  },
+  "command": "coverage",
+  "covers_exemptions": [],
+  "elements": [
+    {
+      "address": "operation:submit_expense_to_workday",
+      "addressing": "declared-id",
+      "claims": [
+        {
+          "conclusions": "no-conclusions",
+          "experiment": "EXP-521-refused",
+          "path": "experiments/EXP-521-refused/SPEC.md"
+        }
+      ],
+      "class": "operation",
+      "evidence": [],
+      "status": "claimed"
+    },
+    {
+      "address": "fact_type:expense_has_status",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 2
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[expense_has_status].constraints[0]",
+      "addressing": "positional",
+      "claims": [
+        {
+          "conclusions": "no-conclusions",
+          "experiment": "EXP-521-refused",
+          "path": "experiments/EXP-521-refused/SPEC.md"
+        }
+      ],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "constraint_ref": "fact_types[expense_has_status].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "fail"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "corroborated"
+    },
+    {
+      "address": "fact_types[expense_has_status].constraints[1]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "constraint_ref": "fact_types[expense_has_status].constraints[1]",
+            "constraint_type": "mandatory",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "fail"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:expense_submitted_to_workday",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 2
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[expense_submitted_to_workday].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "constraint_ref": "fact_types[expense_submitted_to_workday].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "fail"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:chain_has_threshold",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 2
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_types[chain_has_threshold].constraints[0]",
+      "addressing": "positional",
+      "claims": [],
+      "class": "constraint",
+      "evidence": [
+        {
+          "path": "evidence/check-all-fail.json",
+          "quote": {
+            "constraint_ref": "fact_types[chain_has_threshold].constraints[0]",
+            "constraint_type": "uniqueness",
+            "modality": "alethic",
+            "reason_code": null,
+            "source": "explicit",
+            "status": "confirmed",
+            "verdict": "fail"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    }
+  ],
+  "gnd_version": "0.1.0",
+  "model": {
+    "digest": "sha256:fbcfde082dbcbb76ddb12be314ab5ae622b8dad4c023a7447ed3d95180d32e41",
+    "path": "v2_worked_example.orm.yaml",
+    "version": 2
+  },
+  "schema_version": 3,
+  "sources": {
+    "check": [
+      "evidence/check-all-fail.json"
+    ],
+    "conformance": [],
+    "experiments": [
+      "experiments"
+    ],
+    "refused": [
+      {
+        "path": "evidence/transition-refused.json",
+        "reason": "the walk was refused before evaluation"
+      }
+    ],
+    "transition": [
+      "evidence/transition-refused.json"
+    ],
+    "unbound": [
+      {
+        "kind": "check",
+        "path": "evidence/check-all-fail.json",
+        "reason": "legacy-report-without-model-digest",
+        "schema_version": 3
+      }
+    ],
+    "verify": []
+  },
+  "tool": "gnd",
+  "unmatched_covers": [],
+  "unstable_addresses": [
+    {
+      "address": "fact_types[expense_has_status].constraints[0]",
+      "experiment": "EXP-521-refused",
+      "note": "positional; reordering the model's constraints silently retargets this row",
+      "path": "experiments/EXP-521-refused/SPEC.md"
+    }
+  ]
+}

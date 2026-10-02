@@ -1,0 +1,27 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase3-join@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: record_id, name: RecordId, kind: value, primitive: String}
+  - {id: score, name: Score, kind: value, primitive: Integer}
+  - id: record
+    name: Record
+    kind: entity
+    reference: {mode: popular, value_type: record_id}
+fact_types:
+  - id: left_score
+    reading: "{Record} has left score {Score}"
+    roles: [{object_type: record, role_name: record}, {object_type: score, role_name: score}]
+  - id: right_score
+    reading: "{Record} has right score {Score}"
+    roles: [{object_type: record, role_name: record}, {object_type: score, role_name: score}]
+constraints:
+  - type: value-comparison
+    operator: ">="
+    role_a: {fact_type: left_score, role: score}
+    role_b: {fact_type: right_score, role: score}
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: {user_quote: "The left score is at least the right score."}
+rejected_proposals: []

@@ -1,0 +1,67 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v71-release-temporal@1",
+    "label": "conforming",
+    "source": "fixture",
+    "covers": [
+      "release_contains_service",
+      "release_targets_environment",
+      "release_deadline",
+      "release_approved_on",
+      "release_catalog_allows",
+      "release_dependency",
+      "release_window_days"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "release_contains_service": [
+      {
+        "release": "REL-4",
+        "service": "API"
+      }
+    ],
+    "release_targets_environment": [
+      {
+        "release": "REL-4",
+        "environment": "PROD"
+      }
+    ],
+    "release_deadline": [
+      {
+        "release": "REL-4",
+        "deadline": "2026-10-09"
+      }
+    ],
+    "release_approved_on": [
+      {
+        "release": "REL-4",
+        "approval_day": "2026-10-06"
+      }
+    ],
+    "release_catalog_allows": [
+      {
+        "service": "API",
+        "environment": "PROD"
+      }
+    ],
+    "release_dependency": [
+      {
+        "dependent": "API",
+        "prerequisite": "AUTH"
+      },
+      {
+        "dependent": "AUTH",
+        "prerequisite": "DB"
+      }
+    ],
+    "release_window_days": [
+      {
+        "release": "REL-4",
+        "days": 3
+      }
+    ]
+  },
+  "format_version": 2
+}

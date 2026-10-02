@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "answers": {
+    "A01": {
+      "exit": 0
+    },
+    "B01": {
+      "exit": 0
+    },
+    "B02": {
+      "exit": 1,
+      "band": 1
+    },
+    "B03": {
+      "exit": 2,
+      "band": 2
+    },
+    "B04": {
+      "exit": 4,
+      "band": 4,
+      "reason": "transition:dynamic-subject-not-functional"
+    },
+    "B05": {
+      "exit": 2,
+      "band": 2
+    },
+    "B06": {
+      "exit": 0
+    },
+    "C01": {
+      "exit": 0
+    },
+    "C02": {
+      "exit": 0
+    },
+    "C03": {
+      "exit": 0
+    },
+    "D01": {
+      "exit": 1,
+      "claim": "fail-against-computed-final",
+      "frame": "separate"
+    },
+    "D02": {
+      "exit": 0
+    },
+    "D03": {
+      "exit": 1,
+      "band": 1
+    },
+    "E01": {
+      "exit": 3
+    },
+    "E02": {
+      "exit": 0
+    },
+    "E03": {
+      "exit": 3
+    },
+    "E04": {
+      "exit": 3
+    },
+    "E05": {
+      "exit": 3
+    },
+    "E06": {
+      "exit": 3
+    },
+    "E07": {
+      "exit": 3
+    },
+    "F01": {
+      "exit": 0
+    },
+    "F02": {
+      "exit": 0
+    },
+    "G01": {
+      "exit": 0
+    },
+    "G02": {
+      "exit": 0
+    },
+    "G03": {
+      "exit": 3
+    },
+    "G04": {
+      "exit": 3
+    },
+    "G05": {
+      "exit": 1
+    },
+    "G06": {
+      "exit": 1
+    },
+    "G07": {
+      "exit": 0
+    },
+    "G08": {
+      "exit": 0
+    },
+    "V01": {
+      "exit": 0
+    },
+    "V02": {
+      "exit": 3
+    },
+    "H01": {
+      "exit": 0
+    },
+    "H02": {
+      "exit": 1,
+      "band": 1
+    },
+    "H03": {
+      "exit": 1,
+      "band": 1
+    },
+    "I01": {
+      "exit": 0
+    },
+    "I02": {
+      "exit": 0
+    },
+    "I03": {
+      "exit": 0
+    },
+    "I04": {
+      "exit": 0
+    },
+    "I05": {
+      "exit": 0
+    },
+    "I06": {
+      "exit": 0
+    },
+    "M01": {
+      "exit": 0
+    },
+    "M02": {
+      "exit": 1,
+      "band": 1
+    },
+    "M03": {
+      "exit": 0,
+      "computed_post": "asserted-only"
+    },
+    "P01": {
+      "exit": 0,
+      "computed_post": "asserted-only"
+    },
+    "P02": {
+      "exit": 0
+    },
+    "P03": {
+      "exit": 0
+    },
+    "Q01": {
+      "exit": 0
+    },
+    "Q02": {
+      "exit": 0
+    },
+    "Q03": {
+      "exit": 0
+    },
+    "Q04": {
+      "exit": 0,
+      "constructor_refuses_empty": true,
+      "schema_refuses_empty": true
+    },
+    "Q05": {
+      "exit": 0
+    },
+    "R01": {
+      "exit": 0
+    },
+    "A02": {
+      "exit": 0,
+      "assurance": "none"
+    },
+    "K01": {
+      "exit": 0,
+      "pins": "phase1-exact"
+    },
+    "S01": {
+      "exit": 0,
+      "parity": "incremental-equals-full"
+    },
+    "S02": {
+      "exit": 0,
+      "selected_heads": 0,
+      "strata_evaluated": 0
+    },
+    "S03": {
+      "exit": 0,
+      "recomputed": [
+        "resolvable",
+        "ready"
+      ]
+    }
+  }
+}

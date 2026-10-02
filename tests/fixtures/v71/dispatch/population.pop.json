@@ -1,0 +1,26 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v71-dispatch-legacy@1",
+    "label": "conforming",
+    "source": "fixture",
+    "covers": [
+      "dispatch_shipment_origin",
+      "dispatch_shipment_product",
+      "dispatch_shipping_deadline",
+      "dispatch_catalog_allows",
+      "dispatch_route_leg"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_shipment_origin": [{"shipment": "SHIP-17", "warehouse": "WH-A"}],
+    "dispatch_shipment_product": [{"shipment": "SHIP-17", "product": "GEAR-2"}],
+    "dispatch_shipping_deadline": [{"shipment": "SHIP-17", "deadline": "2026-10-04"}],
+    "dispatch_catalog_allows": [{"warehouse": "WH-A", "product": "GEAR-2"}],
+    "dispatch_route_leg": [
+      {"origin": "WH-A", "destination": "HUB-B"},
+      {"origin": "HUB-B", "destination": "PORT-C"}
+    ]
+  }
+}

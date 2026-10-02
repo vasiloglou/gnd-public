@@ -1,0 +1,58 @@
+{
+  "status": "Reviewed bounded subset; acceptance incomplete",
+  "files": [
+    {
+      "target": "tests/test_population_load.py",
+      "source_sha256": "6e3f72c5573d1627fd628806efa5e47934250243b1ad9afd124a6a48fd136aef",
+      "target_sha256": "6e3f72c5573d1627fd628806efa5e47934250243b1ad9afd124a6a48fd136aef",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_subtype_universe.py",
+      "source_sha256": "0d076f77f0db4136cec6364eba53a24071efba5d40669c3c262c5c5446872a24",
+      "target_sha256": "0d076f77f0db4136cec6364eba53a24071efba5d40669c3c262c5c5446872a24",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/test_ring_frozen.py",
+      "source_sha256": "0550932154669ee69c25b29e08cc644a53ba0f4dfeccd650fa704cca309553fe",
+      "target_sha256": "0550932154669ee69c25b29e08cc644a53ba0f4dfeccd650fa704cca309553fe",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/skeleton/model.orm.yaml",
+      "source_sha256": "5865807314537b1241f86adfaf04b6129cccb8d0cc880a362450a2fc83df06b3",
+      "target_sha256": "5865807314537b1241f86adfaf04b6129cccb8d0cc880a362450a2fc83df06b3",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/skeleton/population.good.yaml",
+      "source_sha256": "c54c41028dacf4e4af42fb35cc588fee08ad60575d367edb0a43996302654fe2",
+      "target_sha256": "c54c41028dacf4e4af42fb35cc588fee08ad60575d367edb0a43996302654fe2",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/skeleton/population.good.json",
+      "source_sha256": "5cd81ba87e5a749ee7936016b58eae88a898ba3eb639c723715ac6e11597c8b5",
+      "target_sha256": "5cd81ba87e5a749ee7936016b58eae88a898ba3eb639c723715ac6e11597c8b5",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    },
+    {
+      "target": "tests/fixtures/adversarial/models/float_range.orm.yaml",
+      "source_sha256": "16590aa6dede7c2e71438c4055a1e92333cfa1f2a3ffbf916305ee8011b1fb68",
+      "target_sha256": "16590aa6dede7c2e71438c4055a1e92333cfa1f2a3ffbf916305ee8011b1fb68",
+      "adaptation": "none",
+      "review": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance."
+    }
+  ],
+  "definitions": 51,
+  "privacy_limit": "Exact synthetic closure only; original assertion predicates retained private source-only.",
+  "parameter_expansion": "Exact selected public pytest node IDs; collection only.",
+  "case_map_file_sha256": "f26052a6d02760b885b64e337f02f0a4abe16f00c6e4327d635c5abd03c9ee78"
+}

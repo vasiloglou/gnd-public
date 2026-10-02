@@ -1,0 +1,623 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "A-C1",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-c1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "alethic|comparison|holds"
+      ],
+      "sibling": "cases/a-c2.yaml"
+    },
+    {
+      "id": "A-C2",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-c2.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1",
+          "$a": 2500
+        }
+      ],
+      "binding_count": 2,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "alethic|comparison|violated"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "A-A1",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-a1.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "alethic|atom|holds"
+      ],
+      "sibling": "cases/a-a2.yaml"
+    },
+    {
+      "id": "A-A2",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-a2.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "alethic|atom|violated"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "A-B1",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-b1.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "alethic|absence|holds"
+      ],
+      "sibling": "cases/a-b2.yaml"
+    },
+    {
+      "id": "A-B2",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-b2.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "alethic|absence|violated"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "D-C1",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/d-c1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "deontic|comparison|holds"
+      ],
+      "sibling": "cases/d-c1-sibling.yaml"
+    },
+    {
+      "id": "D-C2",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/d-c2.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "warning",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1",
+          "$a": 2500
+        }
+      ],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "deontic|comparison|violated"
+      ],
+      "sibling": "cases/d-c2-sibling.yaml"
+    },
+    {
+      "id": "D-A1",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/d-a1.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "deontic|atom|holds"
+      ],
+      "sibling": "cases/d-a1-sibling.yaml"
+    },
+    {
+      "id": "D-A2",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/d-a2.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "warning",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "deontic|atom|violated"
+      ],
+      "sibling": "cases/d-a2-sibling.yaml"
+    },
+    {
+      "id": "D-B1",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/d-b1.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "deontic|absence|holds"
+      ],
+      "sibling": "cases/d-b1-sibling.yaml"
+    },
+    {
+      "id": "D-B2",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/d-b2.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "warning",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "deontic|absence|violated"
+      ],
+      "sibling": "cases/d-b2-sibling.yaml"
+    },
+    {
+      "id": "V-1",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/v-1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "vacuous",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": null,
+      "band": 2,
+      "exit": 2,
+      "branches": [
+        "vacuous|alethic|any-empty"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "V-2",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/v-2.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "vacuous",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": null,
+      "band": 2,
+      "exit": 2,
+      "branches": [
+        "vacuous|deontic|any-empty"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "V-3",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/v-3.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "vacuous",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": null,
+      "band": 2,
+      "exit": 2,
+      "branches": [
+        "vacuous|mixed-empty|any-not-all"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "Z-1",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/z-1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 0,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "zero-bindings|alethic"
+      ],
+      "sibling": "cases/z-1-sibling.yaml"
+    },
+    {
+      "id": "Z-2",
+      "model": "models/deontic.orm.yaml",
+      "population": "cases/z-2.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 0,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "zero-bindings|deontic"
+      ],
+      "sibling": "cases/z-2-sibling.yaml"
+    },
+    {
+      "id": "U-G1",
+      "model": "models/undecidable.orm.yaml",
+      "population": "cases/u-g1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "unchecked",
+      "reason_code": "values-not-comparable",
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 4,
+      "exit": 4,
+      "branches": [
+        "unchecked|alethic|values-not-comparable"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "U-G2",
+      "model": "models/undecidable.orm.yaml",
+      "population": "cases/u-g2.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "unchecked",
+      "reason_code": "values-not-comparable",
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "unchecked|deontic|values-not-comparable"
+      ],
+      "sibling": "cases/u-g2-sibling.yaml"
+    },
+    {
+      "id": "U-G3",
+      "model": "models/undecidable.orm.yaml",
+      "population": "cases/u-g3.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "unchecked",
+      "reason_code": "values-not-comparable",
+      "offending_facts": [],
+      "binding_count": 2,
+      "band": 4,
+      "exit": 4,
+      "branches": [
+        "unchecked|precedence-over-offending"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "U-G4",
+      "model": "models/undecidable.orm.yaml",
+      "population": "cases/u-g4.yaml",
+      "constraint_ref": "constraints[3]",
+      "verdict": "unchecked",
+      "reason_code": "literal-type-ambiguous",
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 4,
+      "exit": 4,
+      "branches": [
+        "unchecked|alethic|literal-type-ambiguous"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "U-G5",
+      "model": "models/undecidable.orm.yaml",
+      "population": "cases/u-g5.yaml",
+      "constraint_ref": "constraints[4]",
+      "verdict": "unchecked",
+      "reason_code": "literal-type-ambiguous",
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "unchecked|deontic|literal-type-ambiguous"
+      ],
+      "sibling": "cases/u-g5-sibling.yaml"
+    },
+    {
+      "id": "J-1",
+      "model": "models/join.orm.yaml",
+      "population": "cases/j-1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$x": "a",
+          "$y": 5,
+          "$z": 1
+        }
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "join|three-atom|violated"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "J-2",
+      "model": "models/join.orm.yaml",
+      "population": "cases/j-2.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$x": "b",
+          "$y": 100,
+          "$z": 1
+        }
+      ],
+      "binding_count": 2,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "join|shared-variable|exact-offending"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "J-3",
+      "model": "models/join.orm.yaml",
+      "population": "cases/j-3.yaml",
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "join|repeated-variable|holds"
+      ],
+      "sibling": "cases/j-3-sibling.yaml"
+    },
+    {
+      "id": "X-D1",
+      "model": "models/disconnected.orm.yaml",
+      "population": "cases/x-d1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "unchecked",
+      "reason_code": "join-disconnected",
+      "offending_facts": [],
+      "binding_count": null,
+      "band": 4,
+      "exit": 4,
+      "branches": [
+        "unchecked|alethic|join-disconnected"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "X-L1",
+      "model": "models/join.orm.yaml",
+      "population": "cases/x-l1.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {}
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "literal-literal|violated"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "X-L2",
+      "model": "models/join.orm.yaml",
+      "population": "cases/x-l2.yaml",
+      "constraint_ref": "constraints[3]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "literal-literal|holds"
+      ],
+      "sibling": "cases/x-l2-sibling.yaml"
+    },
+    {
+      "id": "X-B1",
+      "model": "models/join.orm.yaml",
+      "population": "cases/x-b1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$x": "a",
+          "$y": 5,
+          "$z": 1
+        }
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "band|fail-over-vacuous"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "A-B3",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-b3.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "absence|consequent-populated-nonmatching|holds"
+      ],
+      "sibling": "cases/a-b3-sibling.yaml"
+    },
+    {
+      "id": "A-B4",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-b4.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "absence|other-subject-not-credited|holds"
+      ],
+      "sibling": "cases/a-b4-sibling.yaml"
+    },
+    {
+      "id": "A-B5",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-b5.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "absence|consequent-populated-multi|violated"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "A-B6",
+      "model": "models/alethic.orm.yaml",
+      "population": "cases/a-b6.yaml",
+      "constraint_ref": "constraints[2]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 2,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "absence|exact-offending-binding"
+      ],
+      "sibling": null
+    },
+    {
+      "id": "S-1",
+      "model": "models/submission.orm.yaml",
+      "population": "cases/s-1.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "reason_code": null,
+      "offending_facts": [],
+      "binding_count": 1,
+      "band": 0,
+      "exit": 0,
+      "branches": [
+        "absence|unary-consequent|holds"
+      ],
+      "sibling": "cases/s-2.yaml"
+    },
+    {
+      "id": "S-2",
+      "model": "models/submission.orm.yaml",
+      "population": "cases/s-2.yaml",
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "reason_code": null,
+      "offending_facts": [
+        {
+          "$e": "e1"
+        }
+      ],
+      "binding_count": 1,
+      "band": 1,
+      "exit": 1,
+      "branches": [
+        "absence|unary-consequent|violated"
+      ],
+      "sibling": null
+    }
+  ]
+}

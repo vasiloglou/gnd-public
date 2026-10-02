@@ -1,0 +1,110 @@
+version: 1
+
+model_id: urn:gnd-fixture:derivation@1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: employee
+    name: Employee
+    kind: entity
+    subtype_of: [person]
+    inherits_reference: true
+  - id: book
+    name: Book
+    kind: entity
+    reference: { mode: popular, value_type: book_id }
+  - id: book_id
+    name: BookId
+    kind: value
+    primitive: Integer
+  - id: genre
+    name: Genre
+    kind: value
+    primitive: String
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+  - id: org
+    name: Org
+    kind: entity
+    reference: { mode: popular, value_type: org_id }
+  - id: org_id
+    name: OrgId
+    kind: value
+    primitive: Integer
+
+fact_types:
+  - id: person_likes_genre
+    reading: "{Person} likes {Genre}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: genre, role_name: genre }
+  - id: book_has_genre
+    reading: "{Book} has {Genre}"
+    roles:
+      - { object_type: book, role_name: book }
+      - { object_type: genre, role_name: genre }
+  - id: book_flagged
+    reading: "{Book} is flagged"
+    roles:
+      - { object_type: book, role_name: book }
+  - id: person_minor
+    reading: "{Person} is a minor"
+    roles:
+      - { object_type: person, role_name: person }
+  - id: person_in_org
+    reading: "{Person} belongs to {Org}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: org, role_name: org }
+  - id: employee_of
+    reading: "{Employee} works for {Org}"
+    roles:
+      - { object_type: employee, role_name: employee }
+      - { object_type: org, role_name: org }
+  - id: book_costs
+    reading: "{Book} costs {Amount}"
+    roles:
+      - { object_type: book, role_name: book }
+      - { object_type: amount, role_name: amount }
+  - id: person_owes
+    reading: "{Person} owes {Amount}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: amount, role_name: amount }
+  - id: legacy_derived
+    reading: "{Book} is legacy-eligible for {Person}"
+    roles:
+      - { object_type: book, role_name: book }
+      - { object_type: person, role_name: person }
+    derivation: derived
+    derivation_rule: "Each legacy-eligible pair is one a human decides."
+  - id: eligible
+    reading: "{Book} is eligible for {Person}"
+    roles:
+      - { object_type: book, role_name: book }
+      - { object_type: person, role_name: person }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: person_likes_genre, bind: { person: "$p", genre: "$g" } }
+        - { fact_type: book_has_genre, bind: { book: "$b", genre: "$g" } }
+      head: { book: "$b", person: "$p" }
+      or: something
+
+constraints: []
+
+rejected_proposals: []

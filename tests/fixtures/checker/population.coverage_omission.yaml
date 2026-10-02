@@ -1,0 +1,49 @@
+population:
+  model: setfam.orm.yaml
+  source: fixture
+  covers:
+    - booking_of_room
+    - person_teaches_course
+    - person_takes_course
+    - person_leads_course
+    - person_is_registered
+    - person_is_enrolled
+    - person_is_active
+    - person_is_suspended
+    - person_is_student
+    - person_is_staff
+    - room_has_seats
+instances:
+  person: [1, 2, 3]
+facts:
+  booking_by_person:
+    - { booking: "b1", person: 1 }
+    - { booking: "b2", person: 2 }
+  booking_of_room:
+    - { booking: "b1", room: "R1" }
+    - { booking: "b2", room: "R2" }
+  person_teaches_course:
+    - { person: 1, course: "C1" }
+  person_takes_course:
+    - { person: 2, course: "C1" }
+    - { person: 3, course: "C2" }
+  person_leads_course:
+    - { person: 2, course: "C1" }
+  person_is_registered:
+    - { person: 1 }
+    - { person: 2 }
+  person_is_enrolled:
+    - { person: 1 }
+    - { person: 2 }
+  person_is_active:
+    - { person: 1 }
+  person_is_suspended:
+    - { person: 2 }
+  person_is_student:
+    - { person: 1 }
+    - { person: 2 }
+  person_is_staff:
+    - { person: 3 }
+  room_has_seats:
+    - { room: "R1", seats: 20 }
+    - { room: "R2", seats: 120 }

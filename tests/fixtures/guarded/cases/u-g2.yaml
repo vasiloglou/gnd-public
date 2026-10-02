@@ -1,0 +1,4 @@
+population: { model: undecidable.orm.yaml, model_id: "urn:gnd-fixture:guarded-corpus-undecidable@1", source: fixture, label: boundary, covers: [observed_pair] }
+instances: {}
+facts:
+  observed_pair: [{ mode: incomparable-d, left: heavy, right: 1 }]

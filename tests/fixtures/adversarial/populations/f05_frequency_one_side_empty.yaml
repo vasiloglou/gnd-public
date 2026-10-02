@@ -1,0 +1,12 @@
+population:
+  model: f05_frequency_external.orm.yaml
+  source: fixture
+  label: violating
+  covers:
+    - person_has_fname
+    - person_has_lname
+facts:
+  person_has_fname:
+    - { person: 1, fname: "Ann" }
+    - { person: 2, fname: "Bea" }
+  person_has_lname: []

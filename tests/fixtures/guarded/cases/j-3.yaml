@@ -1,0 +1,8 @@
+population: { model: join.orm.yaml, model_id: "urn:gnd-fixture:guarded-corpus-join@1", source: fixture, label: boundary, covers: [p, q, tagged, repeated, literal_trigger] }
+instances: {}
+facts:
+  p: [{ x: a, y: 5 }]
+  q: [{ x: b, z: 10 }]
+  tagged: [{ x: c }]
+  repeated: [{ m: 5, n: 5 }, { m: 99, n: 1 }]
+  literal_trigger: [{ mode: neutral }]

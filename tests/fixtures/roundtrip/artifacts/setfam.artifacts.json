@@ -1,0 +1,36 @@
+{
+  "artifacts": {
+    "setfam.applicable.json": {
+      "sha256": "f25f0f5391073065917fd5c170868d1b8e29619bb5ac97a4e266cc13e1b446ee"
+    },
+    "setfam.projection.schema.json": {
+      "sha256": "3779a17296d4fe17c9d52ef5a5621d98967a92cd29f18301371ac2e6d76967e9"
+    },
+    "setfam.verbalization.txt": {
+      "sha256": "9cdf8a0ab9bb6723b9b2630acccc9160ced7bedf2a64ae63ef39f6481eb15f9e"
+    }
+  },
+  "gnd_version": "0.1.0",
+  "header_template": {
+    "covers": [
+      "booking_by_person",
+      "booking_of_room",
+      "person_is_active",
+      "person_is_enrolled",
+      "person_is_registered",
+      "person_is_staff",
+      "person_is_student",
+      "person_is_suspended",
+      "person_leads_course",
+      "person_takes_course",
+      "person_teaches_course",
+      "room_has_seats"
+    ],
+    "model": "tests/fixtures/checker/setfam.orm.yaml",
+    "source": "agent-output"
+  },
+  "model": {
+    "path": "tests/fixtures/checker/setfam.orm.yaml",
+    "sha256": "36e0b7de814162e137c9ae29871d1ac35327629cba3318c1465f212d545e44c9"
+  }
+}

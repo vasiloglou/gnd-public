@@ -11,7 +11,7 @@ from pathlib import Path, PurePosixPath
 
 ROW_KEYS = frozenset({"source_node", "source_sha256", "disposition", "claim", "target_nodes", "changed_boundary", "archive_limit", "selection"})
 PACKET_KEYS = frozenset({"originals", "collected", "rows", "expected_surfaces", "surfaces", "private_dependencies", "source_delta_accounted", "acceptance_passed", "handoff_requested"})
-DISPOSITIONS = frozenset({"current", "successor", "consolidated", "historical", "fixture-only"})
+DISPOSITIONS = frozenset({"current", "successor", "consolidated", "historical", "fixture-only", "retained-private"})
 SELECTIONS = frozenset({"default", "distribution", "optional-unverified", "unselected"})
 HEX = re.compile(r"[0-9a-f]{64}\Z")
 
@@ -96,11 +96,14 @@ def load_case_map(path: Path, *, max_bytes: int = 8_388_608) -> tuple[dict, ...]
         raise MigrationRefusal("unreadable-map") from error
 
 
-def validate_case_map(rows: tuple[dict, ...], *, originals: dict[str, str], collected: set[str]) -> None:
+def validate_case_map(rows: tuple[dict, ...], *, originals: dict[str, str], collected: set[str], retained_private: dict[str, str] | None = None) -> None:
     _require(isinstance(originals, dict) and len(originals) <= 10_000, "invalid-originals")
     _require(all(_node(k) and isinstance(v, str) and HEX.fullmatch(v) for k, v in originals.items()), "invalid-originals")
     _require(isinstance(collected, set) and len(collected) <= 50_000 and all(_node(x) for x in collected), "invalid-collection")
     _require(isinstance(rows, tuple) and len(rows) <= 10_000, "invalid-rows")
+    private = {} if retained_private is None else retained_private
+    _require(isinstance(private, dict) and len(private) <= 10_000, "invalid-private-policy")
+    _require(all(_node(k) and isinstance(v, str) and HEX.fullmatch(v) for k, v in private.items()), "invalid-private-policy")
     seen = set()
     for row in rows:
         _require(isinstance(row, dict) and set(row) == ROW_KEYS, "invalid-row-shape")
@@ -117,7 +120,12 @@ def validate_case_map(rows: tuple[dict, ...], *, originals: dict[str, str], coll
         _require(_text(row["claim"]) and _text(row["changed_boundary"]), "missing-claim")
         targets = row["target_nodes"]
         _require(_strings(targets, nodes=True), "invalid-targets")
-        if kind == "historical":
+        if kind == "retained-private":
+            _require(source in private and private[source] == originals[source], "unapproved-private-original")
+            _require(selection == "unselected" and not targets, "private-selected")
+            _require(_text(row["archive_limit"]), "missing-private-limit")
+            _require(row["changed_boundary"] != "none", "missing-private-boundary")
+        elif kind == "historical":
             _require(_text(row["archive_limit"]), "missing-archive-limit")
             _require(selection == "unselected", "historical-selected")
         else:
@@ -133,6 +141,21 @@ def validate_case_map(rows: tuple[dict, ...], *, originals: dict[str, str], coll
                 _require(row["changed_boundary"] != "none", "unsupported-consolidation")
         _require(set(targets) <= collected, "missing-target")
     _require(seen == set(originals), "missing-original")
+
+
+def validate_progress_counts(progress: dict, rows: tuple[dict, ...], *, original_count: int) -> None:
+    """Private retention satisfies accounting only, never public coverage."""
+    expected = {
+        "original_definitions": original_count,
+        "reviewed_dispositions": len(rows),
+        "unresolved_definitions": original_count - len(rows),
+        "current_or_successor_definitions": sum(row["disposition"] in {"current", "successor", "consolidated"} for row in rows),
+        "historical_definitions": sum(row["disposition"] == "historical" for row in rows),
+        "retained_private_definitions": sum(row["disposition"] == "retained-private" for row in rows),
+        "fixture_only_definitions": sum(row["disposition"] == "fixture-only" for row in rows),
+    }
+    _require(isinstance(progress, dict), "invalid-progress")
+    _require(all(type(progress.get(key)) is int and progress[key] == value for key, value in expected.items()), "incorrect-coverage-counts")
 
 
 def validate_surface_map(document: dict, *, surfaces: set[str], collected: set[str]) -> None:
@@ -157,7 +180,7 @@ def validate_surface_map(document: dict, *, surfaces: set[str], collected: set[s
     _require(seen == surfaces, "missing-surface")
 
 
-def validate_acceptance_packet(packet: dict) -> None:
+def validate_acceptance_packet(packet: dict, *, retained_private: dict[str, str] | None = None) -> None:
     _require(isinstance(packet, dict) and set(packet) == PACKET_KEYS, "invalid-packet-shape")
     _require(isinstance(packet["rows"], list), "invalid-rows")
     _require(_strings(packet["collected"], nodes=True), "invalid-collection")
@@ -166,7 +189,7 @@ def validate_acceptance_packet(packet: dict) -> None:
     for name in ("source_delta_accounted", "acceptance_passed", "handoff_requested"):
         _require(type(packet[name]) is bool, "invalid-handoff-shape")
     collected = set(packet["collected"])
-    validate_case_map(tuple(packet["rows"]), originals=packet["originals"], collected=collected)
+    validate_case_map(tuple(packet["rows"]), originals=packet["originals"], collected=collected, retained_private=retained_private)
     _require(not packet["private_dependencies"], "private-dependency")
     validate_surface_map({"surfaces": packet["surfaces"]}, surfaces=set(packet["expected_surfaces"]), collected=collected)
     if packet["handoff_requested"]:

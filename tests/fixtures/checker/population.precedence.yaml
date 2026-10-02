@@ -1,0 +1,33 @@
+population:
+  model: setfam.orm.yaml
+  source: fixture
+  label: violating
+  covers:
+    - booking_by_person
+    - booking_of_room
+    - person_teaches_course
+    - person_takes_course
+    - person_leads_course
+    - person_is_registered
+    - person_is_enrolled
+    - person_is_active
+    - person_is_suspended
+    - person_is_student
+    - person_is_staff
+    - room_has_seats
+instances: {}
+facts:
+  booking_by_person:
+    - { booking: "b1", person: 1 }
+    - { booking: "b1", person: 2 }
+  booking_of_room: []
+  person_teaches_course: []
+  person_takes_course: []
+  person_leads_course: []
+  person_is_registered: []
+  person_is_enrolled: []
+  person_is_active: []
+  person_is_suspended: []
+  person_is_student: []
+  person_is_staff: []
+  room_has_seats: []

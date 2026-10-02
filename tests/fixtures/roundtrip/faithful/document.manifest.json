@@ -1,0 +1,32 @@
+{
+  "applicable_sha256": "f25f0f5391073065917fd5c170868d1b8e29619bb5ac97a4e266cc13e1b446ee",
+  "distractors": [
+    {
+      "kind": "out-of-model",
+      "text": "The building fire drill is scheduled for Tuesday."
+    },
+    {
+      "kind": "near-miss-entity",
+      "text": "Room R2"
+    },
+    {
+      "fact_type": "person_teaches_course",
+      "kind": "absent-fact",
+      "roles": {
+        "course": "C1",
+        "person": 2
+      },
+      "text": "Person 2 does not teach course C1."
+    }
+  ],
+  "document": "document.md",
+  "document_sha256": "df357a7a7910ee8e8ad33591b2ea72456f3c1171e93540508efb11aa10f66cc2",
+  "executing_model": "hand-authored-fixture",
+  "model": "setfam.orm.yaml",
+  "model_sha256": "36e0b7de814162e137c9ae29871d1ac35327629cba3318c1465f212d545e44c9",
+  "renderer_skill": "gnd-render-doc",
+  "renderer_skill_version": "0.1.0",
+  "schema_version": 1,
+  "source_population": "source.population.json",
+  "source_population_sha256": "3084fd225caff108951d92cab93a673b69e57e330f58f6bb4e126127ae0971dc"
+}

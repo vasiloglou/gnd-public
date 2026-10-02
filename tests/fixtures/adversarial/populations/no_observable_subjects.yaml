@@ -1,0 +1,9 @@
+population:
+  model: no_observable_subjects.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - person_has_score
+facts:
+  person_has_score:
+    - { person: 1, score: 10 }

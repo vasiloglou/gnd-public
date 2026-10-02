@@ -1,0 +1,45 @@
+{
+  "facts": {
+    "booking_by_person": [
+      {
+        "booking": "bk-7",
+        "person": 1
+      }
+    ],
+    "booking_of_room": [
+      {
+        "booking": "bk-7",
+        "room": "R1"
+      }
+    ],
+    "person_takes_course": [
+      {
+        "course": "C1",
+        "person": 2
+      }
+    ],
+    "person_teaches_course": [
+      {
+        "course": "C1",
+        "person": 1
+      }
+    ],
+    "room_has_seats": [
+      {
+        "room": "R1",
+        "seats": 20
+      }
+    ]
+  },
+  "population": {
+    "covers": [
+      "booking_by_person",
+      "booking_of_room",
+      "person_takes_course",
+      "person_teaches_course",
+      "room_has_seats"
+    ],
+    "model": "setfam.orm.yaml",
+    "source": "agent-output"
+  }
+}

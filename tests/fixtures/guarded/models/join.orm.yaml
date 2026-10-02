@@ -1,0 +1,79 @@
+version: 1
+model_id: urn:gnd-fixture:guarded-corpus-join@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: key, name: Key, kind: value, primitive: String }
+  - { id: number, name: Number, kind: value, primitive: Integer }
+  - { id: mode, name: Mode, kind: value, primitive: String }
+
+fact_types:
+  - id: p
+    reading: "{Key} has left number {Number}"
+    roles:
+      - { object_type: key, role_name: x }
+      - { object_type: number, role_name: y }
+  - id: q
+    reading: "{Key} has right number {Number}"
+    roles:
+      - { object_type: key, role_name: x }
+      - { object_type: number, role_name: z }
+  - id: tagged
+    reading: "{Key} is selected"
+    roles:
+      - { object_type: key, role_name: x }
+  - id: repeated
+    reading: "{Number} is paired with {Number}"
+    roles:
+      - { object_type: number, role_name: m }
+      - { object_type: number, role_name: n }
+  - id: literal_trigger
+    reading: "literal case {Mode} is active"
+    roles:
+      - { object_type: mode, role_name: mode }
+
+constraints:
+  - id: guarded_three_atom_join
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: p, bind: { x: "$x", y: "$y" } }
+      - { fact_type: q, bind: { x: "$x", z: "$z" } }
+      - { fact_type: tagged, bind: { x: "$x" } }
+    consequent:
+      comparison: { operator: "<=", left: "$y", right: "$z" }
+    provenance: { user_quote: "A selected key's left number is at most its right number." }
+  - id: guarded_repeated_variable
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: repeated, bind: { m: "$v", n: "$v" } }
+    consequent:
+      comparison: { operator: "<=", left: "$v", right: 10 }
+    provenance: { user_quote: "A repeated number is at most 10." }
+  - id: guarded_literal_false
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: literal_trigger, bind: { mode: false-case } }
+    consequent:
+      comparison: { operator: "<=", left: 2, right: 1 }
+    provenance: { user_quote: "The false literal case deliberately violates its consequent." }
+  - id: guarded_literal_true
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: literal_trigger, bind: { mode: true-case } }
+    consequent:
+      comparison: { operator: "<=", left: 1, right: 2 }
+    provenance: { user_quote: "The true literal case satisfies its consequent." }
+
+rejected_proposals: []

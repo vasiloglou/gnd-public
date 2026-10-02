@@ -1,0 +1,12 @@
+population:
+  model: subtype_mandatory.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - car_has_colour
+    - vehicle_has_plate
+facts:
+  car_has_colour:
+    - { car: "C1", colour: "red" }
+  vehicle_has_plate:
+    - { vehicle: "V1", plate: "AAA-111" }

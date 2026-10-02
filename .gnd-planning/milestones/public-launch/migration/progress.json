@@ -1,11 +1,13 @@
 {
   "status": "incomplete",
   "original_definitions": 5331,
-  "reviewed_dispositions": 1599,
-  "unresolved_definitions": 3732,
-  "current_or_successor_definitions": 1597,
+  "reviewed_dispositions": 2050,
+  "unresolved_definitions": 3281,
+  "current_or_successor_definitions": 1891,
   "historical_definitions": 2,
   "handoff_authorized": false,
   "original_identities_sha256": "1deccce9d4db4c32b7160c59a2699ca03de214ecd54765cbc3d112ff7931ea4f",
-  "limit": "Static definitions, not expanded pytest collection or execution. Only reviewed slices have dispositions. No public launch or ownership transfer."
+  "limit": "Static definitions, not expanded pytest collection or execution. Only reviewed slices have dispositions. No public launch or ownership transfer.",
+  "retained_private_definitions": 157,
+  "fixture_only_definitions": 0
 }

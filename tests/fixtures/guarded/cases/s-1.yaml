@@ -1,0 +1,6 @@
+population: { model: submission.orm.yaml, model_id: "urn:gnd-fixture:guarded-corpus-submission@1", source: fixture, label: boundary, covers: [expense_has_status, expense_is_submitted, expense_submitted_to_system] }
+instances: {}
+facts:
+  expense_has_status: [{ expense: e1, status: draft }, { expense: e2, status: approved }]
+  expense_is_submitted: [{ expense: e2 }]
+  expense_submitted_to_system: [{ expense: e2, system_id: TEST-9 }]

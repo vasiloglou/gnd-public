@@ -1,0 +1,6 @@
+population: { model: alethic.orm.yaml, model_id: "urn:gnd-fixture:guarded-corpus-alethic@1", source: fixture, label: boundary, covers: [expense_in_category, expense_has_amount, expense_has_status] }
+instances: {}
+facts:
+  expense_in_category: [{ expense: e1, category: travelling }]
+  expense_has_amount: [{ expense: e1, amount: 2500 }]
+  expense_has_status: []

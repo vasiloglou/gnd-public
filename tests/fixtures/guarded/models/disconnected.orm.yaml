@@ -1,0 +1,31 @@
+version: 1
+model_id: urn:gnd-fixture:guarded-corpus-disconnected@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: key, name: Key, kind: value, primitive: String }
+  - { id: number, name: Number, kind: value, primitive: Integer }
+fact_types:
+  - id: p
+    reading: "{Key} has {Number}"
+    roles:
+      - { object_type: key, role_name: x }
+      - { object_type: number, role_name: y }
+  - id: unrelated
+    reading: "{Key} independently has {Number}"
+    roles:
+      - { object_type: key, role_name: u }
+      - { object_type: number, role_name: v }
+constraints:
+  - id: guarded_disconnected
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: p, bind: { x: "$x", y: "$y" } }
+      - { fact_type: unrelated, bind: { u: "$u", v: "$v" } }
+    consequent:
+      comparison: { operator: "<=", left: "$y", right: "$v" }
+    provenance: { user_quote: "This disconnected rule is deliberately not evaluable." }
+rejected_proposals: []

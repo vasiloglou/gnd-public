@@ -1,0 +1,40 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: thing
+    name: Thing
+    kind: entity
+    reference: { mode: popular, value_type: thing_id }
+
+  - id: thing_id
+    name: ThingId
+    kind: value
+    primitive: String
+
+  - id: qty
+    name: Qty
+    kind: value
+    primitive: Integer
+
+fact_types:
+  - id: thing_has_qty
+    reading: "{Thing} has quantity {Qty}"
+    roles:
+      - { object_type: thing, role_name: thing }
+      - { object_type: qty, role_name: qty }
+
+constraints:
+  - type: value
+    object_type: qty
+    range: { min: 1, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "A quantity is a whole number between 1 and 100."

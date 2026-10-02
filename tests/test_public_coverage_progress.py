@@ -6,15 +6,25 @@ import json
 from pathlib import Path
 
 import pytest
-from support.public_migration import MigrationRefusal, load_case_map, strict_json, validate_case_map
+from support.public_migration import (
+    MigrationRefusal,
+    load_case_map,
+    strict_json,
+    validate_case_map,
+    validate_progress_counts,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = ROOT / ".gnd-planning/milestones/public-launch/migration"
 
 
 def reviewed_rows():
-    return tuple(row for name in ('b3-extra', 'b3-initial', 'b3-reviewed', 'b4-artifacts', 'b4-core', 'b4-population', 'b4-synth', 'b4-transition', 'b5-codegen', 'b5-install-conformance', 'b5-terms', 'b6-doctor', 'b6-recovery', 'b6-reports', 'b6-sessions')
+    return tuple(row for name in ('b3-extra', 'b3-initial', 'b3-reviewed', 'b4-artifacts', 'b4-core', 'b4-population', 'b4-synth', 'b4-transition', 'b5-codegen', 'b5-install-conformance', 'b5-terms', 'b6-doctor', 'b6-recovery', 'b6-reports', 'b6-sessions', 'b7-private', 'b7-reference', 'b8-direct', 'b8-expanded', 'b9-fixes', 'b9-portable', 'b9-updater')
                  for row in load_case_map(MIGRATION / f"{name}-case-map.jsonl.gz"))
+
+
+def private_policy():
+    return strict_json((MIGRATION / "retained-private-policy.json").read_text())["originals"]
 
 
 def original_identities():
@@ -32,17 +42,18 @@ def test_partial_slices_refuse_complete_original_accounting():
     originals = original_identities()
     selected = {node for row in rows for node in row["target_nodes"]}
     with pytest.raises(MigrationRefusal, match="missing-original"):
-        validate_case_map(rows, originals=originals, collected=selected)
+        validate_case_map(rows, originals=originals, collected=selected, retained_private=private_policy())
 
 
 def test_progress_retains_unresolved_cases_and_refuses_handoff():
     rows = reviewed_rows()
     originals = original_identities()
     progress = json.loads((MIGRATION / "progress.json").read_text())
-    assert len(rows) == len({row["source_node"] for row in rows}) == 1599
+    assert len(rows) == len({row["source_node"] for row in rows}) == 2050
     assert {row["source_node"] for row in rows} <= set(originals)
+    validate_progress_counts(progress, rows, original_count=len(originals))
     assert progress["reviewed_dispositions"] == len(rows)
-    assert progress["unresolved_definitions"] == len(originals) - len(rows) == 3732
+    assert progress["unresolved_definitions"] == len(originals) - len(rows) == 3281
     assert progress["status"] == "incomplete"
     assert progress["handoff_authorized"] is False
     collection = json.loads((MIGRATION / "collection.json").read_text())
@@ -51,7 +62,7 @@ def test_progress_retains_unresolved_cases_and_refuses_handoff():
     assert all(set(row["target_nodes"]) <= selected for row in rows
                if row["selection"] == "default")
     validate_case_map(rows, originals={row["source_node"]: originals[row["source_node"]]
-                                     for row in rows}, collected=observed)
+                                     for row in rows}, collected=observed, retained_private=private_policy())
 
 
 def test_static_target_selectors_resolve_to_actual_test_definitions():

@@ -1,0 +1,121 @@
+{
+  "fact_types": [
+    {
+      "applicable": true,
+      "id": "booking_by_person",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "booking_of_room",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_is_active",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_is_enrolled",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_is_registered",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_is_staff",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_is_student",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_is_suspended",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_leads_course",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_takes_course",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "person_teaches_course",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "room_has_seats",
+      "reason": null
+    }
+  ],
+  "object_types": [
+    {
+      "id": "booking",
+      "path": "composite",
+      "role_refs": [
+        {
+          "fact_type": "booking_by_person",
+          "object_type": "person",
+          "path": "direct",
+          "role": "person",
+          "value_type": "person_id"
+        },
+        {
+          "fact_type": "booking_of_room",
+          "object_type": "room",
+          "path": "direct",
+          "role": "room",
+          "value_type": "room_code"
+        }
+      ]
+    },
+    {
+      "id": "course",
+      "path": "direct",
+      "value_type": "course_code"
+    },
+    {
+      "id": "course_code",
+      "path": "direct",
+      "value_type": "course_code"
+    },
+    {
+      "id": "person",
+      "path": "direct",
+      "value_type": "person_id"
+    },
+    {
+      "id": "person_id",
+      "path": "direct",
+      "value_type": "person_id"
+    },
+    {
+      "id": "room",
+      "path": "direct",
+      "value_type": "room_code"
+    },
+    {
+      "id": "room_code",
+      "path": "direct",
+      "value_type": "room_code"
+    },
+    {
+      "id": "seats",
+      "path": "direct",
+      "value_type": "seats"
+    }
+  ]
+}

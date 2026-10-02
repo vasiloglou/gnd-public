@@ -1,0 +1,45 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+
+  - id: score
+    name: Score
+    kind: value
+    primitive: Integer
+
+  - id: colour
+    name: Colour
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: person_has_score
+    reading: "{Person} has score {Score}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: score, role_name: score }
+
+constraints:
+  - type: value
+    object_type: colour
+    allowed: ["red", "green"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "Colours are red or green."

@@ -1,0 +1,13 @@
+population:
+  model: textual_alethic.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - task_reviewed_by
+instances:
+  task: [1, 2]
+facts:
+  task_reviewed_by:
+    - { task: 1, reviewer: "ada" }
+    - { task: 1, reviewer: "grace" }
+    - { task: 2, reviewer: "alan" }

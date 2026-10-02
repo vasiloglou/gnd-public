@@ -1,0 +1,53 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+
+  - id: fname
+    name: FirstName
+    kind: value
+    primitive: String
+
+  - id: lname
+    name: LastName
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: person_has_fname
+    reading: "{Person} has first name {FirstName}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: fname, role_name: fname }
+
+  - id: person_has_lname
+    reading: "{Person} has last name {LastName}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: lname, role_name: lname }
+
+constraints:
+  - type: uniqueness
+    scope: external
+    role_refs:
+      - { fact_type: person_has_fname, role: fname }
+      - { fact_type: person_has_lname, role: lname }
+    preferred: true
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "A person's first and last name together are unique." }

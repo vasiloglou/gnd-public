@@ -1,0 +1,13 @@
+{
+  "document": "document.md",
+  "document_sha256": "df357a7a7910ee8e8ad33591b2ea72456f3c1171e93540508efb11aa10f66cc2",
+  "executing_model": "hand-authored-fixture",
+  "model": "setfam.orm.yaml",
+  "model_sha256": "36e0b7de814162e137c9ae29871d1ac35327629cba3318c1465f212d545e44c9",
+  "population": "extracted.population.json",
+  "population_sha256": "23cbc9f8a5279438a25572e132017c32f1b9bde5b41bf9029d944bf4df76e284",
+  "projection_sha256": "3779a17296d4fe17c9d52ef5a5621d98967a92cd29f18301371ac2e6d76967e9",
+  "schema_version": 1,
+  "skill": "gnd-extract",
+  "skill_version": "0.1.0"
+}

@@ -1,0 +1,40 @@
+version: 1
+model_id: urn:gnd-fixture:guarded-corpus-submission@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+
+object_types:
+  - { id: expense, name: Expense, kind: entity, reference: { mode: popular, value_type: expense_id } }
+  - { id: expense_id, name: ExpenseId, kind: value, primitive: String }
+  - { id: status, name: Status, kind: value, primitive: String }
+  - { id: system_id, name: SystemId, kind: value, primitive: String }
+
+fact_types:
+  - id: expense_has_status
+    reading: "{Expense} has {Status}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: status, role_name: status }
+  - id: expense_is_submitted
+    reading: "{Expense} is submitted"
+    roles:
+      - { object_type: expense, role_name: expense }
+  - id: expense_submitted_to_system
+    reading: "{Expense} was submitted as {SystemId}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: system_id, role_name: system_id }
+
+constraints:
+  - id: guarded_draft_not_already_submitted
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: expense_has_status, bind: { expense: "$e", status: draft } }
+    consequent:
+      absence: { fact_type: expense_is_submitted, bind: { expense: "$e" } }
+    provenance: { user_quote: "A draft expense must not already be submitted." }
+
+rejected_proposals: []

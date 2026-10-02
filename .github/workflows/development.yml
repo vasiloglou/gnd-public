@@ -6,11 +6,11 @@ jobs:
   phase2:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e
         with:
           version: '0.10.10'
       - run: uv sync --locked --group dev
@@ -24,6 +24,7 @@ jobs:
           uv run pytest -q
           tests/test_address.py
           tests/test_adopt_migration.py
+          tests/test_agent_cli.py
           tests/test_archsmoke.py
           tests/test_artifacts.py
           tests/test_atom_bind.py
@@ -36,10 +37,14 @@ jobs:
           tests/test_conformance_payload.py
           tests/test_conformance_structural.py
           tests/test_coverage_payload.py
+          tests/test_coverage_scaling.py
+          tests/test_derivation_rule.py
           tests/test_digest_helpers.py
           tests/test_doccheck.py
           tests/test_doctor_uninstall.py
           tests/test_evolution_conformance.py
+          tests/test_exp_asymmetry.py
+          tests/test_exp_author_expectation.py
           tests/test_exp_bands.py
           tests/test_exp_close.py
           tests/test_exp_close_codegen_gate.py
@@ -49,17 +54,28 @@ jobs:
           tests/test_exp_session_contract.py
           tests/test_exp_session_e2e.py
           tests/test_exp_session_eval.py
+          tests/test_exp_session_evidence_compat.py
+          tests/test_exp_session_rank.py
+          tests/test_exp_session_recurrence.py
           tests/test_exp_session_store.py
           tests/test_exp_spec.py
+          tests/test_extract_applicable.py
           tests/test_extract_cli.py
           tests/test_extract_manifest.py
+          tests/test_extract_projection.py
+          tests/test_extract_vocabulary.py
+          tests/test_fidelity_match.py
           tests/test_fidelity_payload.py
+          tests/test_fidelity_stub_gate.py
+          tests/test_guarded_corpus.py
           tests/test_install.py
           tests/test_junit_reader.py
+          tests/test_measure_derivation.py
           tests/test_measure_negative_control.py
           tests/test_measure_offline.py
           tests/test_measure_score.py
           tests/test_model_evolution.py
+          tests/test_model_guarded.py
           tests/test_model_identity.py
           tests/test_model_validation.py
           tests/test_model_verbalization.py
@@ -74,9 +90,14 @@ jobs:
           tests/test_recovery_adversarial.py
           tests/test_recovery_inventory.py
           tests/test_recovery_report.py
+          tests/test_reference_universe.py
           tests/test_report_json.py
+          tests/test_review_by_reference.py
+          tests/test_review_fixes.py
           tests/test_review_report.py
           tests/test_review_request.py
+          tests/test_review_runner.py
+          tests/test_review_salvage.py
           tests/test_ring_frozen.py
           tests/test_schema_sync.py
           tests/test_skeleton_e2e.py
@@ -91,6 +112,7 @@ jobs:
           tests/test_synth_oracle_value_range.py
           tests/test_synth_tagged_comparison.py
           tests/test_synth_values.py
+          tests/test_update_review_harnesses.py
           tests/test_v62_phase2_intermediate.py
           tests/test_v62_phase3_terms.py
           tests/test_v62_phase5_terms.py
@@ -98,5 +120,7 @@ jobs:
           tests/test_v70_phase4_runtime.py
           tests/test_v70_phase4_transition.py
           tests/test_v71_phase1_dates.py
+          tests/test_vacuity.py
           tests/test_verify_cli.py
+          tests/test_zero_row_join.py
           --tb=short

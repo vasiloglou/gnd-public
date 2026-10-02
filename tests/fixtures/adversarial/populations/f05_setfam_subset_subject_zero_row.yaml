@@ -1,0 +1,20 @@
+population:
+  model: f05_setfam_join.orm.yaml
+  source: fixture
+  label: conforming
+  covers:
+    [s_sub_p, s_sub_q, s_sup_p, s_sup_q, q_a_p, q_a_q, q_b_p, q_b_q, x_a_p, x_a_q, x_b, vc_a, vc_b]
+facts:
+  s_sub_p: [{ e: 5, v: 10 }]
+  s_sub_q: [{ e: 6, v: 20 }]
+  s_sup_p: [{ e: 1, v: 10 }]
+  s_sup_q: [{ e: 1, v: 20 }]
+  q_a_p: [{ e: 2, v: 30 }]
+  q_a_q: [{ e: 2, v: 40 }]
+  q_b_p: [{ e: 2, v: 30 }]
+  q_b_q: [{ e: 2, v: 40 }]
+  x_a_p: [{ e: 3, v: 50 }]
+  x_a_q: [{ e: 3, v: 60 }]
+  x_b: [{ e: 3, vp: 51, vq: 61 }]
+  vc_a: [{ e: 4, v: 70 }]
+  vc_b: [{ e: 4, v: 70 }]

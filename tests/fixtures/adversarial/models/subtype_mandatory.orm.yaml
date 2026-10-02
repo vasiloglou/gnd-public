@@ -1,0 +1,55 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: vehicle
+    name: Vehicle
+    kind: entity
+    reference: { mode: popular, value_type: vehicle_id }
+
+  - id: vehicle_id
+    name: VehicleId
+    kind: value
+    primitive: String
+
+  - id: plate
+    name: Plate
+    kind: value
+    primitive: String
+
+  - id: colour
+    name: Colour
+    kind: value
+    primitive: String
+
+  - id: car
+    name: Car
+    kind: entity
+    subtype_of: [vehicle]
+    inherits_reference: true
+    derivation: asserted
+
+fact_types:
+  - id: car_has_colour
+    reading: "{Car} has colour {Colour}"
+    roles:
+      - { object_type: car, role_name: car }
+      - { object_type: colour, role_name: colour }
+
+  - id: vehicle_has_plate
+    reading: "{Vehicle} has plate {Plate}"
+    roles:
+      - { object_type: vehicle, role_name: vehicle }
+      - { object_type: plate, role_name: plate }
+    constraints:
+      - type: mandatory
+        role: vehicle
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Every vehicle has a plate." }

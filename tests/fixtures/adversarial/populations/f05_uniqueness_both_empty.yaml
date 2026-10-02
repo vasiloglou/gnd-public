@@ -1,0 +1,10 @@
+population:
+  model: f05_uniqueness_external.orm.yaml
+  source: fixture
+  label: boundary
+  covers:
+    - person_has_fname
+    - person_has_lname
+facts:
+  person_has_fname: []
+  person_has_lname: []

@@ -1,0 +1,41 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: task
+    name: Task
+    kind: entity
+    reference: { mode: popular, value_type: task_id }
+
+  - id: task_id
+    name: TaskId
+    kind: value
+    primitive: Integer
+
+  - id: reviewer
+    name: Reviewer
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: task_reviewed_by
+    reading: "{Task} reviewed by {Reviewer}"
+    roles:
+      - { object_type: task, role_name: task }
+      - { object_type: reviewer, role_name: reviewer }
+
+constraints:
+  - type: textual
+    expression: "Each Task is reviewed by at most one Reviewer."
+    formal_language: natural
+    formal_expression: null
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_note: "Stated by the domain expert during the review session."

@@ -1,0 +1,145 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: e
+    name: E
+    kind: entity
+    reference: { mode: popular, value_type: e_id }
+
+  - id: e_id
+    name: EId
+    kind: value
+    primitive: Integer
+
+  - id: vp
+    name: VP
+    kind: value
+    primitive: Integer
+
+  - id: vq
+    name: VQ
+    kind: value
+    primitive: Integer
+
+fact_types:
+  - id: s_sub_p
+    reading: "{E} sub-p {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+  - id: s_sub_q
+    reading: "{E} sub-q {VQ}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vq, role_name: v }
+  - id: s_sup_p
+    reading: "{E} sup-p {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+  - id: s_sup_q
+    reading: "{E} sup-q {VQ}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vq, role_name: v }
+
+  - id: q_a_p
+    reading: "{E} eqa-p {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+  - id: q_a_q
+    reading: "{E} eqa-q {VQ}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vq, role_name: v }
+  - id: q_b_p
+    reading: "{E} eqb-p {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+  - id: q_b_q
+    reading: "{E} eqb-q {VQ}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vq, role_name: v }
+
+  - id: x_a_p
+    reading: "{E} exa-p {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+  - id: x_a_q
+    reading: "{E} exa-q {VQ}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vq, role_name: v }
+  - id: x_b
+    reading: "{E} exb {VP} {VQ}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: vp }
+      - { object_type: vq, role_name: vq }
+
+  - id: vc_a
+    reading: "{E} vca {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+  - id: vc_b
+    reading: "{E} vcb {VP}"
+    roles:
+      - { object_type: e, role_name: e }
+      - { object_type: vp, role_name: v }
+
+constraints:
+  - type: subset
+    subset_role_seq:
+      - { fact_type: s_sub_p, role: v }
+      - { fact_type: s_sub_q, role: v }
+    superset_role_seq:
+      - { fact_type: s_sup_p, role: v }
+      - { fact_type: s_sup_q, role: v }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Every sub (p,q) pair is also a sup (p,q) pair." }
+
+  - type: equality
+    role_seq_a:
+      - { fact_type: q_a_p, role: v }
+      - { fact_type: q_a_q, role: v }
+    role_seq_b:
+      - { fact_type: q_b_p, role: v }
+      - { fact_type: q_b_q, role: v }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "The two (p,q) projections are equal." }
+
+  - type: exclusion
+    role_seq_a:
+      - { fact_type: x_a_p, role: v }
+      - { fact_type: x_a_q, role: v }
+    role_seq_b:
+      - { fact_type: x_b, role: vp }
+      - { fact_type: x_b, role: vq }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "No (p,q) pair is in both the join and the ternary." }
+
+  - type: value-comparison
+    operator: ">="
+    role_a: { fact_type: vc_a, role: v }
+    role_b: { fact_type: vc_b, role: v }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Each E's vca value is at least its vcb value." }

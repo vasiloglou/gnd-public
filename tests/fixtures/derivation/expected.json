@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "matrix_floor": 60,
+  "cases": [
+    {
+      "id": "A-01",
+      "path": "cases/a01-string-arm.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "load:string-arm"
+      ],
+      "mutation": "M-03"
+    },
+    {
+      "id": "A-02",
+      "path": "cases/a02-object-arm.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "load:object-arm"
+      ],
+      "mutation": "M-02"
+    },
+    {
+      "id": "A-03",
+      "path": "cases/a03-absent.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "load:absent"
+      ],
+      "mutation": "M-08"
+    },
+    {
+      "id": "A-04",
+      "path": "cases/a04-compatible-subtype.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "type:compatible-subtype"
+      ],
+      "mutation": "M-09"
+    },
+    {
+      "id": "A-05",
+      "path": "cases/a05-compatible-numeric.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "type:compatible-numeric"
+      ],
+      "mutation": "M-05"
+    },
+    {
+      "id": "A-06",
+      "path": "cases/a06-dag-depth-3.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "graph:dag-depth-3",
+        "order:topological-stable",
+        "order:edge-direction-proven"
+      ],
+      "mutation": "M-07"
+    },
+    {
+      "id": "A-07",
+      "path": "cases/a07-component-product.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "order:partition-stable"
+      ],
+      "mutation": "M-04"
+    },
+    {
+      "id": "A-08",
+      "path": "cases/a08-semiderived.orm.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "branches": [
+        "load:object-arm"
+      ],
+      "mutation": "M-06"
+    },
+    {
+      "id": "R-01",
+      "path": "cases/r01-fact-type-undeclared.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "ref:fact-type-undeclared"
+      ],
+      "path_contains": ".body[0]"
+    },
+    {
+      "id": "R-02",
+      "path": "cases/r02-role-undeclared.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "ref:role-undeclared"
+      ],
+      "path_contains": ".bind[nope]"
+    },
+    {
+      "id": "R-03",
+      "path": "cases/r03-head-role-undeclared.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "ref:head-role-undeclared"
+      ],
+      "path_contains": ".head[nope]"
+    },
+    {
+      "id": "R-04",
+      "path": "cases/r04-negate-fact-type-undeclared.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "ref:negate-fact-type-undeclared"
+      ],
+      "path_contains": ".negate[0]"
+    },
+    {
+      "id": "R-05",
+      "path": "cases/r05-rule-not-mapping.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:rule-not-mapping"
+      ],
+      "path_contains": "derivation_rule"
+    },
+    {
+      "id": "R-06",
+      "path": "cases/r06-rule-extra-key.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:rule-extra-key"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-07",
+      "path": "cases/r07-body-missing.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:body-missing"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-08",
+      "path": "cases/r08-body-not-array.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:body-not-array"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-09",
+      "path": "cases/r09-body-empty.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:body-empty"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-10",
+      "path": "cases/r10-atom-not-mapping.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:atom-not-mapping"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-11",
+      "path": "cases/r11-negate-not-array.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:negate-not-array"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-12",
+      "path": "cases/r12-head-not-mapping.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:head-not-mapping"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-13",
+      "path": "cases/r13-head-empty.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "shape:head-empty"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-14",
+      "path": "cases/r14-atom-role-missing.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-role-claim",
+      "branches": [
+        "claim:atom-role-missing"
+      ],
+      "path_contains": ".body[0]"
+    },
+    {
+      "id": "R-15",
+      "path": "cases/r15-atom-role-extra.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "claim:atom-role-extra"
+      ],
+      "path_contains": ".bind[person]"
+    },
+    {
+      "id": "R-16",
+      "path": "cases/r16-head-role-missing.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-head-role-claim",
+      "branches": [
+        "claim:head-role-missing"
+      ],
+      "path_contains": ".head"
+    },
+    {
+      "id": "R-17",
+      "path": "cases/r17-head-role-extra.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "claim:head-role-extra"
+      ],
+      "path_contains": ".head[genre]"
+    },
+    {
+      "id": "R-18",
+      "path": "cases/r18-head-unbound.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-head-unbound",
+      "branches": [
+        "bind:head-unbound"
+      ],
+      "path_contains": ".head["
+    },
+    {
+      "id": "R-19",
+      "path": "cases/r19-negate-unbound.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-negate-unbound",
+      "branches": [
+        "bind:negate-unbound"
+      ],
+      "path_contains": ".bind[person]"
+    },
+    {
+      "id": "R-20",
+      "path": "cases/r20-component-unused.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-body-component-unused",
+      "branches": [
+        "bind:component-unused"
+      ],
+      "path_contains": ".body"
+    },
+    {
+      "id": "R-21",
+      "path": "cases/r21-head-literal-string.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "head:literal-string"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-22",
+      "path": "cases/r22-head-literal-number.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "head:literal-number"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-23",
+      "path": "cases/r23-head-literal-boolean.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "head:literal-boolean"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-24",
+      "path": "cases/r24-head-malformed-variable.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "head:malformed-variable"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-25",
+      "path": "cases/r25-type-repeated-within-atom.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-type",
+      "branches": [
+        "type:repeated-within-atom"
+      ],
+      "path_contains": ".bind[genre]"
+    },
+    {
+      "id": "R-26",
+      "path": "cases/r26-type-across-positive-atoms.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-type",
+      "branches": [
+        "type:across-positive-atoms"
+      ],
+      "path_contains": ".bind[book]"
+    },
+    {
+      "id": "R-27",
+      "path": "cases/r27-type-positive-vs-negated.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-type",
+      "branches": [
+        "type:positive-vs-negated"
+      ],
+      "path_contains": ".bind[person]"
+    },
+    {
+      "id": "R-28",
+      "path": "cases/r28-type-body-vs-head.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-type",
+      "branches": [
+        "type:body-vs-head"
+      ],
+      "path_contains": ".head[book]"
+    },
+    {
+      "id": "R-29",
+      "path": "cases/r29-self-loop.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-recursive",
+      "branches": [
+        "graph:self-loop"
+      ],
+      "path_contains": "id=eligible"
+    },
+    {
+      "id": "R-30",
+      "path": "cases/r30-cycle-2.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-recursive",
+      "branches": [
+        "graph:cycle-2"
+      ],
+      "path_contains": "id="
+    },
+    {
+      "id": "R-31",
+      "path": "cases/r31-cycle-3.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-recursive",
+      "branches": [
+        "graph:cycle-3"
+      ],
+      "path_contains": "id="
+    },
+    {
+      "id": "R-32",
+      "path": "cases/r32-opaque-dependency-positive.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-opaque-dependency",
+      "branches": [
+        "graph:opaque-dependency-positive"
+      ],
+      "path_contains": ".body[0]"
+    },
+    {
+      "id": "R-33",
+      "path": "cases/r33-opaque-dependency-negated.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-opaque-dependency",
+      "branches": [
+        "graph:opaque-dependency-negated"
+      ],
+      "path_contains": ".negate[0]"
+    },
+    {
+      "id": "R-34",
+      "path": "cases/r34-rule-on-asserted.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-rule-shape",
+      "branches": [
+        "decl:rule-on-asserted"
+      ],
+      "path_contains": ".derivation"
+    },
+    {
+      "id": "R-35",
+      "path": "cases/r35-storage-contradiction.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-rule-shape",
+      "branches": [
+        "decl:storage-contradiction"
+      ],
+      "path_contains": ".storage"
+    },
+    {
+      "id": "R-36",
+      "path": "cases/r36-structured-on-object-type.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-structured-on-object-type",
+      "branches": [
+        "decl:structured-on-object-type"
+      ],
+      "path_contains": "$.object_types["
+    },
+    {
+      "id": "R-37",
+      "path": "cases/r37-operations-plus-derivation.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-dynamic-operations-unsupported",
+      "branches": [
+        "decl:operations-plus-derivation"
+      ],
+      "path_contains": ".derivation_rule"
+    },
+    {
+      "id": "R-38",
+      "path": "cases/r38-aggregate-key.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "grammar:aggregate-key"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-39",
+      "path": "cases/r39-sum-key.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "grammar:sum-key"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-40",
+      "path": "cases/r40-disjunction-key.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "grammar:disjunction-key"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-41",
+      "path": "cases/r41-arithmetic-key.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:oneOf",
+      "branches": [
+        "grammar:arithmetic-key"
+      ],
+      "path_contains": "derivation_rule",
+      "refused_at": "layer-1 (published schema)"
+    },
+    {
+      "id": "R-42",
+      "path": "cases/r42-precedence-ref-before-shape.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "order:precedence-reference-before-shape"
+      ],
+      "path_contains": ".body[0]",
+      "refused_at": "layer-2 (reference before shape)"
+    },
+    {
+      "id": "R-43",
+      "path": "cases/r43-precedence-shape-before-graph.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-rule-shape",
+      "branches": [
+        "order:precedence-shape-before-graph"
+      ],
+      "path_contains": ".derivation",
+      "refused_at": "layer-2 (shape before graph)"
+    },
+    {
+      "id": "M-01",
+      "path": "cases/m01-token-fact-type.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-ref",
+      "branches": [
+        "mutation:one-token-fact-type"
+      ],
+      "mutation_of": "A-02",
+      "path_contains": ".body[0]"
+    },
+    {
+      "id": "M-02",
+      "path": "cases/m02-token-head-variable.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-head-unbound",
+      "branches": [
+        "mutation:one-token-head-variable"
+      ],
+      "mutation_of": "A-02",
+      "path_contains": ".head[book]"
+    },
+    {
+      "id": "M-03",
+      "path": "cases/m03-token-derivation-mode.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:enum",
+      "branches": [
+        "mutation:one-token-derivation-mode"
+      ],
+      "mutation_of": "A-01",
+      "path_contains": "derivation"
+    },
+    {
+      "id": "M-04",
+      "path": "cases/m04-token-negate-variable.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-body-component-unused",
+      "branches": [
+        "mutation:one-token-orphan-component"
+      ],
+      "mutation_of": "A-07",
+      "path_contains": ".body"
+    },
+    {
+      "id": "M-05",
+      "path": "cases/m05-token-storage.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-rule-shape",
+      "branches": [
+        "mutation:one-token-storage"
+      ],
+      "mutation_of": "A-05",
+      "path_contains": ".storage"
+    },
+    {
+      "id": "M-06",
+      "path": "cases/m06-token-semiderived-mode.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-rule-shape",
+      "branches": [
+        "mutation:one-token-asserted"
+      ],
+      "mutation_of": "A-08",
+      "path_contains": ".derivation"
+    },
+    {
+      "id": "M-07",
+      "path": "cases/m07-token-dag-to-cycle.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-recursive",
+      "branches": [
+        "mutation:one-token-cycle"
+      ],
+      "mutation_of": "A-06",
+      "path_contains": "id="
+    },
+    {
+      "id": "M-08",
+      "path": "cases/m08-token-absent-to-ruleless.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "jsonschema:enum",
+      "branches": [
+        "mutation:one-token-derivation-enum"
+      ],
+      "mutation_of": "A-03",
+      "path_contains": "derivation"
+    },
+    {
+      "id": "M-09",
+      "path": "cases/m09-token-type-clash.orm.yaml",
+      "outcome": "refuse",
+      "rule_id": "semantic:derivation-term-type",
+      "branches": [
+        "mutation:one-token-type-clash"
+      ],
+      "mutation_of": "A-04",
+      "path_contains": ".bind["
+    }
+  ],
+  "direct_branches": {
+    "decl:no-roles": "layer 1 refuses roles:[] at jsonschema:minItems; tested directly",
+    "decl:rule-not-string-or-object": "layer 1 refuses via oneOf; tested directly",
+    "shape:rule-extra-key-layer2": "closed schema refuses first; layer-2 rule kept as defense in depth, tested directly",
+    "shape:head-term-layer2": "closed schema refuses a non-$variable head; layer-2 rule tested directly"
+  }
+}

@@ -143,3 +143,96 @@ def test_approval_instrument_rejects_constant_accept_and_constant_refuse():
     assert len(accepted) == 4 and len(refused) == 15
     assert all((0, None) != (row["exit"], row["reason"]) for row in refused)
     assert all((1, "always-refuse") != (row["exit"], row["reason"]) for row in accepted)
+
+
+def private_row():
+    return {
+        "source_node": "source-case-00000", "source_sha256": "a" * 64,
+        "disposition": "retained-private", "claim": "Private subject accounting only",
+        "target_nodes": [], "changed_boundary": "Private subject excluded from public execution",
+        "archive_limit": "Source-owned private subject remains retained and current", "selection": "unselected",
+    }
+
+
+def validate_private(row, policy):
+    from support.public_migration import validate_case_map
+    validate_case_map((row,), originals={"source-case-00000": "a" * 64},
+                      collected={"tests/current.py::test_current"}, retained_private=policy)
+
+
+def test_PR00_reviewed_private_original_is_accounting_only():
+    validate_private(private_row(), {"source-case-00000": "a" * 64})
+
+
+def test_PR01_private_original_requires_caller_policy():
+    from support.public_migration import MigrationRefusal
+    with pytest.raises(MigrationRefusal, match="unapproved-private-original"):
+        validate_private(private_row(), None)
+
+
+@pytest.mark.parametrize("selection,targets", [
+    ("default", []), ("optional-unverified", []), ("distribution", []),
+    ("unselected", ["tests/current.py::test_current"]),
+])
+def test_PR02_private_row_cannot_claim_execution(selection, targets):
+    from support.public_migration import MigrationRefusal
+    row = private_row()
+    row.update(selection=selection, target_nodes=targets)
+    with pytest.raises(MigrationRefusal, match="private-selected"):
+        validate_private(row, {"source-case-00000": "a" * 64})
+
+
+def test_PR03_current_public_original_cannot_use_unrelated_private_policy():
+    from support.public_migration import MigrationRefusal
+    with pytest.raises(MigrationRefusal, match="unapproved-private-original"):
+        validate_private(private_row(), {"source-case-00001": "a" * 64})
+
+
+def test_PR04_changed_original_digest_refuses():
+    from support.public_migration import MigrationRefusal
+    row = private_row()
+    row["source_sha256"] = "b" * 64
+    with pytest.raises(MigrationRefusal, match="source-digest-mismatch"):
+        validate_private(row, {"source-case-00000": "a" * 64})
+
+
+def test_PR05_private_retention_cannot_inflate_public_coverage():
+    from support.public_migration import MigrationRefusal, validate_progress_counts
+    progress = {"original_definitions": 1, "reviewed_dispositions": 1,
+                "unresolved_definitions": 0, "current_or_successor_definitions": 0,
+                "historical_definitions": 0, "retained_private_definitions": 1,
+                "fixture_only_definitions": 0}
+    validate_progress_counts(progress, (private_row(),), original_count=1)
+    progress["current_or_successor_definitions"] = 1
+    with pytest.raises(MigrationRefusal, match="incorrect-coverage-counts"):
+        validate_progress_counts(progress, (private_row(),), original_count=1)
+
+
+@pytest.mark.parametrize("policy", [[], True, {"../escape": "a" * 64}, {"source-case-00000": []}, {"source-case-00000": "invalid"}])
+def test_private_policy_shapes_refuse(policy):
+    from support.public_migration import MigrationRefusal
+    with pytest.raises(MigrationRefusal, match="invalid-private-policy"):
+        validate_private(private_row(), policy)
+
+
+@pytest.mark.parametrize("field,value,reason", [
+    ("archive_limit", None, "missing-private-limit"),
+    ("archive_limit", "", "missing-private-limit"),
+    ("changed_boundary", "none", "missing-private-boundary"),
+])
+def test_private_limits_are_mandatory(field, value, reason):
+    from support.public_migration import MigrationRefusal
+    row = private_row()
+    row[field] = value
+    with pytest.raises(MigrationRefusal, match=reason):
+        validate_private(row, {"source-case-00000": "a" * 64})
+
+
+def test_private_policy_cannot_be_authorized_by_packet_payload():
+    import copy
+
+    from support.public_migration import MigrationRefusal, validate_acceptance_packet
+    packet = copy.deepcopy(CASES[0]["packet"])
+    packet["retained_private"] = {"source-case-00000": "a" * 64}
+    with pytest.raises(MigrationRefusal, match="invalid-packet-shape"):
+        validate_acceptance_packet(packet)

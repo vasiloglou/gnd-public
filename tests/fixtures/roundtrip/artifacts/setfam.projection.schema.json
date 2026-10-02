@@ -1,0 +1,326 @@
+{
+  "$defs": {
+    "scalar": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "facts": {
+      "additionalProperties": false,
+      "properties": {
+        "booking_by_person": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "booking": {
+                "$ref": "#/$defs/scalar"
+              },
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "booking",
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "booking_of_room": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "booking": {
+                "$ref": "#/$defs/scalar"
+              },
+              "room": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "booking",
+              "room"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_is_active": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_is_enrolled": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_is_registered": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_is_staff": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_is_student": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_is_suspended": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_leads_course": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "course": {
+                "$ref": "#/$defs/scalar"
+              },
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person",
+              "course"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_takes_course": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "course": {
+                "$ref": "#/$defs/scalar"
+              },
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person",
+              "course"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "person_teaches_course": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "course": {
+                "$ref": "#/$defs/scalar"
+              },
+              "person": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "person",
+              "course"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "room_has_seats": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "room": {
+                "$ref": "#/$defs/scalar"
+              },
+              "seats": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "room",
+              "seats"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "instances": {
+      "additionalProperties": false,
+      "properties": {
+        "booking": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "course": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "course_code": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "person": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "person_id": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "room": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "room_code": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "seats": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "population": {
+      "additionalProperties": false,
+      "properties": {
+        "covers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "label": {
+          "enum": [
+            "conforming",
+            "boundary",
+            "violating"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "agent-output",
+            "synthetic",
+            "fixture"
+          ]
+        }
+      },
+      "required": [
+        "model",
+        "source"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "population",
+    "facts"
+  ],
+  "type": "object"
+}

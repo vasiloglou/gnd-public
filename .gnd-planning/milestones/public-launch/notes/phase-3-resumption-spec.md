@@ -6,13 +6,15 @@ waits for this revised gate. Historical delegated continuations are not reused.
 
 ## 1. Provenance
 
-This is the current extension to [phase-3-spec.md](phase-3-spec.md), preserving
-its historical specification and checkpoints. Governing inputs: public-launch
+This is an adapted target copy of the source resumption specification. The
+source notes/phase-3-spec.md retains historical specifications and checkpoints;
+it is not a contributor prerequisite. Absolute operator paths are normalized. Governing inputs: public-launch
 r1 §§0–10, approved r2 A1–A10, and
 [the r3 amendment](public-launch-plan-r3-amendments.md), later wins.
 R3 SHA-256: `ece90d1461a320730b524f80e72c0430082e0a1aa1cc46e90664855de6de6514`.
-[Phase 4 preparation](../006-phase-4-preparation.md) is complete, SHA-256
-`02f7d87ab1b6ff4584e2e00a173525d8dac798001b989ca0b1557cfbb1d48d9e`.
+[Phase 4 preparation successor](../003-phase-4-preparation.md) is complete. Source original SHA-256:
+`02f7d87ab1b6ff4584e2e00a173525d8dac798001b989ca0b1557cfbb1d48d9e`;
+the linked target record is an adapted successor, not those same bytes.
 Read alongside prior records 003-phase-0, 004-phase-1 and 005-phase-2.
 No panel has reviewed this extension; no implementation approval is claimed.
 

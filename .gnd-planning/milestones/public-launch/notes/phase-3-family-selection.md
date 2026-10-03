@@ -65,3 +65,26 @@ Initial discovery: 11,187 selected / 221 excluded, collection only. Following
 historical policy separation, focused collection/origin/skill/credential controls:
 37 passed, 1 deselected in 9.26s. Full current execution and clean candidate checks
 remain pending. No source suite, native/provider matrix or certification selected.
+
+
+## Implementation findings
+
+The initial default diagnostic run was interrupted after its first two failures:
+2 failed, 2,134 passed, 387 deselected in 254.45s (exit 2). One was the old CI
+job-location assumption; the profile guard now checks all three real job types.
+The other was the target adaptation of this source-owned spec linking to two
+source-only record names; links are replaced by a source-origin explanation and
+the actual public preparation successor. Product expectations were unchanged.
+A mistaken source-root invocation was refused by its lane collector (exit 4,
+no tests ran); it supplies no source-suite result.
+
+Candidate preparation initially included uv's generated .gitignore files in the
+local artifact roster. The identity control refused before installation. Removed
+only that generated build-directory metadata and recomputed the three-file list;
+wheel/sdist bytes were neither changed nor rebuilt. These are development checks,
+not reviewed final candidate attempts. Final CI freezes its own build-once files.
+
+The staged inheritance includes 186 whitespace findings in 93 pre-existing
+fixture/example files. Their bytes are retained; no evidence fixture is reformatted
+for cosmetic consistency. Authored current changes pass scoped diff/ruff checks.
+The indexed tree measures 16,365,652 bytes, largest ordinary blob 584,130 bytes.

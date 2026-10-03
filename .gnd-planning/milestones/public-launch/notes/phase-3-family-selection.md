@@ -110,3 +110,12 @@ case/answer corpus. Installed selection now includes actual reference runtime,
 judgment/session branches and generated/solve workflows, not only corpus integrity.
 
 Reference corpus gate: `uv run pytest -q tests/test_reference_population_corpus.py --tb=short` exits 0: 261 passed, 3 deselected in 42.41s. The three excluded cases are explicitly historical registration checks. Twenty of 23 source function ASTs are unchanged; the three adaptations are enumerated above.
+
+
+Clean hosted collection exposed an introduced ignore-rule defect: candidate/
+matched nested test fixtures and left public-walk-floor/session/candidate/steps.json
+untracked. The new test_candidate_ignore control failed before the fix (exit 1),
+then passed after anchoring /candidate/ to the repository root (exit 0). The exact
+existing fixture is now tracked. No test expectation or fixture content changed.
+The pull-request workflow now handles topic changes once; pushes trigger it only
+on main, avoiding duplicate candidate builds for a PR head.

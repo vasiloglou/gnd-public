@@ -1,0 +1,10 @@
+{
+  "steps_schema": 1,
+  "model": "../model.orm.yaml",
+  "model_digest": "sha256:d4f31d0a684ae9171a24504e10109a4fac28c536d4f5ee17c0d8b1cb678ba57c",
+  "operations_digest": "sha256:d8fa5a8b3249392efafd934d6f035fe51b525a703233ee1ccc10f2960f7d5b7b",
+  "steps": [
+    {"op": "approve_expense", "bindings": {"expense": 41, "approver": "P5_SECRET_APPROVER_271828"}},
+    {"op": "submit_expense_to_workday", "bindings": {"expense": 41, "submission": "WD-9001"}}
+  ]
+}

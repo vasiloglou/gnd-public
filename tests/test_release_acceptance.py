@@ -19,7 +19,10 @@ FAMILIES = [
     'test_synth_conforming.py', 'test_extract_cli.py', 'test_doccheck.py',
     'test_codegen_emit.py', 'test_conformance_structural.py',
     'test_model_evolution.py', 'test_recovery_inventory.py',
-    'test_exp_session_e2e.py', 'test_public_v71_reference_integrity.py',
+    'test_exp_session_e2e.py', 'test_v71_phase2_successors.py',
+    'test_reference_population_corpus.py',
+    'test_v71_phase4_successors.py', 'test_public_v71_full_judgments.py',
+    'test_public_generated_examples.py', 'test_solve_successors.py',
     'test_public_v71_witness_corpus.py', 'test_public_lean_export_successors.py',
     'test_review_request.py', 'test_release_examples.py',
 ]

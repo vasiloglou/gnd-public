@@ -88,3 +88,25 @@ The staged inheritance includes 186 whitespace findings in 93 pre-existing
 fixture/example files. Their bytes are retained; no evidence fixture is reformatted
 for cosmetic consistency. Authored current changes pass scoped diff/ruff checks.
 The indexed tree measures 16,365,652 bytes, largest ordinary blob 584,130 bytes.
+
+
+## Coverage gap found by family review
+
+Reference-population corpus integrity was carried, but its runtime case runner
+was absent. Import the source's 258-story reference corpus and runner as
+`tests/test_reference_population_corpus.py`, with original expected answers.
+The only function adaptations are the source-independent legacy fixture path,
+parameter marking of B24's old whole-repository census registration as evidence,
+and its corresponding registration-dirty control's evidence marker. Model and
+reference refusal/check/transition/diff behavior keeps the source predicates.
+Source schema identity and keyword signatures retain current standalone guards.
+This is imported regression code, measured separately from newly authored helpers;
+it adds no product feature or preservation machinery. Its execution is pending.
+
+Mixed source families were also spot-checked against target successors: v7.2
+semantic-owner calculator/lineage/mutant/import-boundary controls remain current;
+v7.1 judgments retain the full branch driver, and witness tests execute their
+case/answer corpus. Installed selection now includes actual reference runtime,
+judgment/session branches and generated/solve workflows, not only corpus integrity.
+
+Reference corpus gate: `uv run pytest -q tests/test_reference_population_corpus.py --tb=short` exits 0: 261 passed, 3 deselected in 42.41s. The three excluded cases are explicitly historical registration checks. Twenty of 23 source function ASTs are unchanged; the three adaptations are enumerated above.

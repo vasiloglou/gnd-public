@@ -1,0 +1,26 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "model_id": "urn:gnd-fixture:v71-release-references@1",
+    "covers": [
+      "release_subject_service",
+      "release_subject_environment"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "release_subject_service": [
+      {
+        "release": "REL-4",
+        "service": "API"
+      }
+    ],
+    "release_subject_environment": [
+      {
+        "release": "REL-4",
+        "environment": "PROD"
+      }
+    ]
+  }
+}

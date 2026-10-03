@@ -1,0 +1,2188 @@
+{
+  "schema_version": 1,
+  "source": "v7.1 Phase 2 owner-approved design, corpus bytes pending",
+  "domains": {
+    "dispatch": {
+      "subject": "shipment",
+      "left": "warehouse",
+      "right": "product",
+      "a": "dispatch_subject_warehouse",
+      "b": "dispatch_subject_product",
+      "catalog": "dispatch_catalog_allows",
+      "extra": "dispatch_catalog_label",
+      "rule": "dispatch_catalog_membership",
+      "object_subject": "dispatch_shipment",
+      "object_left": "dispatch_warehouse",
+      "object_right": "dispatch_product",
+      "left_value": "WH-A",
+      "right_value": "GEAR-2",
+      "subject_value": "SHIP-17"
+    },
+    "release": {
+      "subject": "release",
+      "left": "service",
+      "right": "environment",
+      "a": "release_subject_service",
+      "b": "release_subject_environment",
+      "catalog": "release_catalog_allows",
+      "extra": "release_catalog_label",
+      "rule": "release_catalog_membership",
+      "object_subject": "release_release",
+      "object_left": "release_service",
+      "object_right": "release_environment",
+      "left_value": "API",
+      "right_value": "PROD",
+      "subject_value": "REL-4"
+    }
+  },
+  "cases": [
+    {
+      "id": "B01-dispatch-catalog-join",
+      "branch": "B01",
+      "domain": "dispatch",
+      "scenario": "catalog-join",
+      "story": "A candidate requests the one approved catalog pair; the catalog is a separate immutable file.",
+      "parameters": {}
+    },
+    {
+      "id": "B01-release-catalog-join",
+      "branch": "B01",
+      "domain": "release",
+      "scenario": "catalog-join",
+      "story": "A candidate requests the one approved catalog pair; the catalog is a separate immutable file.",
+      "parameters": {}
+    },
+    {
+      "id": "B02-dispatch-missing-item-alethic",
+      "branch": "B02",
+      "domain": "dispatch",
+      "scenario": "missing-item-alethic",
+      "story": "Candidate requests a different product/service-side partner absent from the catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B02-release-missing-item-alethic",
+      "branch": "B02",
+      "domain": "release",
+      "scenario": "missing-item-alethic",
+      "story": "Candidate requests a different product/service-side partner absent from the catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B02-dispatch-missing-item-deontic",
+      "branch": "B02",
+      "domain": "dispatch",
+      "scenario": "missing-item-deontic",
+      "story": "The same missing tuple under a deontic rule produces a warning, not an alethic failure.",
+      "parameters": {}
+    },
+    {
+      "id": "B02-release-missing-item-deontic",
+      "branch": "B02",
+      "domain": "release",
+      "scenario": "missing-item-deontic",
+      "story": "The same missing tuple under a deontic rule produces a warning, not an alethic failure.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-dispatch-candidate-owned",
+      "branch": "B03",
+      "domain": "dispatch",
+      "scenario": "candidate-owned",
+      "story": "Candidate asserts the fixed fact type.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-release-candidate-owned",
+      "branch": "B03",
+      "domain": "release",
+      "scenario": "candidate-owned",
+      "story": "Candidate asserts the fixed fact type.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-dispatch-candidate-owned-empty",
+      "branch": "B03",
+      "domain": "dispatch",
+      "scenario": "candidate-owned-empty",
+      "story": "Candidate mentions a fixed fact type with an empty list.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-release-candidate-owned-empty",
+      "branch": "B03",
+      "domain": "release",
+      "scenario": "candidate-owned-empty",
+      "story": "Candidate mentions a fixed fact type with an empty list.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-dispatch-candidate-owned-mutated",
+      "branch": "B03",
+      "domain": "dispatch",
+      "scenario": "candidate-owned-mutated",
+      "story": "A loaded candidate is mutated to assert a fixed fact type.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-release-candidate-owned-mutated",
+      "branch": "B03",
+      "domain": "release",
+      "scenario": "candidate-owned-mutated",
+      "story": "A loaded candidate is mutated to assert a fixed fact type.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-dispatch-candidate-owned-constructed",
+      "branch": "B03",
+      "domain": "dispatch",
+      "scenario": "candidate-owned-constructed",
+      "story": "A constructed in-memory candidate asserts fixed facts.",
+      "parameters": {}
+    },
+    {
+      "id": "B03-release-candidate-owned-constructed",
+      "branch": "B03",
+      "domain": "release",
+      "scenario": "candidate-owned-constructed",
+      "story": "A constructed in-memory candidate asserts fixed facts.",
+      "parameters": {}
+    },
+    {
+      "id": "B04-dispatch-operation-assert",
+      "branch": "B04",
+      "domain": "dispatch",
+      "scenario": "operation-assert",
+      "story": "An operation declaration writes the fixed catalog through assert.",
+      "parameters": {}
+    },
+    {
+      "id": "B04-release-operation-assert",
+      "branch": "B04",
+      "domain": "release",
+      "scenario": "operation-assert",
+      "story": "An operation declaration writes the fixed catalog through assert.",
+      "parameters": {}
+    },
+    {
+      "id": "B04-dispatch-operation-retract",
+      "branch": "B04",
+      "domain": "dispatch",
+      "scenario": "operation-retract",
+      "story": "An operation declaration writes the fixed catalog through retract.",
+      "parameters": {}
+    },
+    {
+      "id": "B04-release-operation-retract",
+      "branch": "B04",
+      "domain": "release",
+      "scenario": "operation-retract",
+      "story": "An operation declaration writes the fixed catalog through retract.",
+      "parameters": {}
+    },
+    {
+      "id": "B04-dispatch-operation-read",
+      "branch": "B04",
+      "domain": "dispatch",
+      "scenario": "operation-read",
+      "story": "An operation reads a fixed catalog precondition while writing candidate facts only.",
+      "parameters": {}
+    },
+    {
+      "id": "B04-release-operation-read",
+      "branch": "B04",
+      "domain": "release",
+      "scenario": "operation-read",
+      "story": "An operation reads a fixed catalog precondition while writing candidate facts only.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-duplicate-id",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "duplicate-id",
+      "story": "Reference declaration isolates duplicate-id; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-duplicate-id",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "duplicate-id",
+      "story": "Reference declaration isolates duplicate-id; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-duplicate-owner",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "duplicate-owner",
+      "story": "Reference declaration isolates duplicate-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-duplicate-owner",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "duplicate-owner",
+      "story": "Reference declaration isolates duplicate-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-overlapping-owners",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "overlapping-owners",
+      "story": "Reference declaration isolates overlapping-owners; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-overlapping-owners",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "overlapping-owners",
+      "story": "Reference declaration isolates overlapping-owners; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-unknown-owner",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "unknown-owner",
+      "story": "Reference declaration isolates unknown-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-unknown-owner",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "unknown-owner",
+      "story": "Reference declaration isolates unknown-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-derived-owner",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "derived-owner",
+      "story": "Reference declaration isolates derived-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-derived-owner",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "derived-owner",
+      "story": "Reference declaration isolates derived-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-semiderived-owner",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "semiderived-owner",
+      "story": "Reference declaration isolates semiderived-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-semiderived-owner",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "semiderived-owner",
+      "story": "Reference declaration isolates semiderived-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-missing-id",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "missing-id",
+      "story": "Reference declaration isolates missing-id; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-missing-id",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "missing-id",
+      "story": "Reference declaration isolates missing-id; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-missing-path",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "missing-path",
+      "story": "Reference declaration isolates missing-path; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-missing-path",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "missing-path",
+      "story": "Reference declaration isolates missing-path; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-missing-sha256",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "missing-sha256",
+      "story": "Reference declaration isolates missing-sha256; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-missing-sha256",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "missing-sha256",
+      "story": "Reference declaration isolates missing-sha256; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-missing-fact_types",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "missing-fact_types",
+      "story": "Reference declaration isolates missing-fact_types; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-missing-fact_types",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "missing-fact_types",
+      "story": "Reference declaration isolates missing-fact_types; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-extra-field",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "extra-field",
+      "story": "Reference declaration isolates extra-field; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-extra-field",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "extra-field",
+      "story": "Reference declaration isolates extra-field; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-old-version",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "old-version",
+      "story": "Reference declaration isolates old-version; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-old-version",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "old-version",
+      "story": "Reference declaration isolates old-version; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-hash-short",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "hash-short",
+      "story": "Reference declaration isolates hash-short; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-hash-short",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "hash-short",
+      "story": "Reference declaration isolates hash-short; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-hash-uppercase",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "hash-uppercase",
+      "story": "Reference declaration isolates hash-uppercase; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-hash-uppercase",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "hash-uppercase",
+      "story": "Reference declaration isolates hash-uppercase; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-hash-nonhex",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "hash-nonhex",
+      "story": "Reference declaration isolates hash-nonhex; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-hash-nonhex",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "hash-nonhex",
+      "story": "Reference declaration isolates hash-nonhex; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-empty-owner",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "empty-owner",
+      "story": "Reference declaration isolates empty-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-empty-owner",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "empty-owner",
+      "story": "Reference declaration isolates empty-owner; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-dispatch-id-over-limit",
+      "branch": "B05",
+      "domain": "dispatch",
+      "scenario": "id-over-limit",
+      "story": "Reference declaration isolates id-over-limit; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B05-release-id-over-limit",
+      "branch": "B05",
+      "domain": "release",
+      "scenario": "id-over-limit",
+      "story": "Reference declaration isolates id-over-limit; the valid unmodified control is accepted first.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-missing-file",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "missing-file",
+      "story": "Reference file isolates missing-file after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-missing-file",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "missing-file",
+      "story": "Reference file isolates missing-file after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-stale-hash",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "stale-hash",
+      "story": "Reference file isolates stale-hash after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-stale-hash",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "stale-hash",
+      "story": "Reference file isolates stale-hash after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-malformed-json",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "malformed-json",
+      "story": "Reference file isolates malformed-json after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-malformed-json",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "malformed-json",
+      "story": "Reference file isolates malformed-json after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-malformed-yaml",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "malformed-yaml",
+      "story": "Reference file isolates malformed-yaml after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-malformed-yaml",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "malformed-yaml",
+      "story": "Reference file isolates malformed-yaml after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-wrong-role",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "wrong-role",
+      "story": "Reference file isolates wrong-role after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-wrong-role",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "wrong-role",
+      "story": "Reference file isolates wrong-role after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-wrong-type",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "wrong-type",
+      "story": "Reference file isolates wrong-type after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-wrong-type",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "wrong-type",
+      "story": "Reference file isolates wrong-type after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-wrong-header",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "wrong-header",
+      "story": "Reference file isolates wrong-header after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-wrong-header",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "wrong-header",
+      "story": "Reference file isolates wrong-header after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-undeclared-type",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "undeclared-type",
+      "story": "Reference file isolates undeclared-type after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-undeclared-type",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "undeclared-type",
+      "story": "Reference file isolates undeclared-type after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-undeclared-empty-type",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "undeclared-empty-type",
+      "story": "Reference file isolates undeclared-empty-type after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-undeclared-empty-type",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "undeclared-empty-type",
+      "story": "Reference file isolates undeclared-empty-type after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-transitive-include",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "transitive-include",
+      "story": "Reference file isolates transitive-include after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-transitive-include",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "transitive-include",
+      "story": "Reference file isolates transitive-include after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-duplicate-key",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "duplicate-key",
+      "story": "Reference file isolates duplicate-key after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-duplicate-key",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "duplicate-key",
+      "story": "Reference file isolates duplicate-key after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-nan",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "nan",
+      "story": "Reference file isolates nan after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-nan",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "nan",
+      "story": "Reference file isolates nan after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-giant-integer",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "giant-integer",
+      "story": "Reference file isolates giant-integer after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-giant-integer",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "giant-integer",
+      "story": "Reference file isolates giant-integer after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-dispatch-alias-cycle",
+      "branch": "B06",
+      "domain": "dispatch",
+      "scenario": "alias-cycle",
+      "story": "Reference file isolates alias-cycle after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B06-release-alias-cycle",
+      "branch": "B06",
+      "domain": "release",
+      "scenario": "alias-cycle",
+      "story": "Reference file isolates alias-cycle after the unmodified control; updated hashes isolate parse/type refusals.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-absolute",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-absolute",
+      "story": "Unsafe coordinate path-absolute refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-absolute",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-absolute",
+      "story": "Unsafe coordinate path-absolute refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-unc",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-unc",
+      "story": "Unsafe coordinate path-unc refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-unc",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-unc",
+      "story": "Unsafe coordinate path-unc refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-drive",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-drive",
+      "story": "Unsafe coordinate path-drive refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-drive",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-drive",
+      "story": "Unsafe coordinate path-drive refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-backslash",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-backslash",
+      "story": "Unsafe coordinate path-backslash refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-backslash",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-backslash",
+      "story": "Unsafe coordinate path-backslash refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-dot",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-dot",
+      "story": "Unsafe coordinate path-dot refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-dot",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-dot",
+      "story": "Unsafe coordinate path-dot refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-parent",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-parent",
+      "story": "Unsafe coordinate path-parent refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-parent",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-parent",
+      "story": "Unsafe coordinate path-parent refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-empty-component",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-empty-component",
+      "story": "Unsafe coordinate path-empty-component refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-empty-component",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-empty-component",
+      "story": "Unsafe coordinate path-empty-component refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-nul",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-nul",
+      "story": "Unsafe coordinate path-nul refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-nul",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-nul",
+      "story": "Unsafe coordinate path-nul refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-depth-over",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-depth-over",
+      "story": "Unsafe coordinate path-depth-over refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-depth-over",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-depth-over",
+      "story": "Unsafe coordinate path-depth-over refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-path-length-over",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "path-length-over",
+      "story": "Unsafe coordinate path-length-over refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-path-length-over",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "path-length-over",
+      "story": "Unsafe coordinate path-length-over refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-symlink-root",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "symlink-root",
+      "story": "Unsafe coordinate symlink-root refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-symlink-root",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "symlink-root",
+      "story": "Unsafe coordinate symlink-root refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-symlink-ancestor",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "symlink-ancestor",
+      "story": "Unsafe coordinate symlink-ancestor refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-symlink-ancestor",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "symlink-ancestor",
+      "story": "Unsafe coordinate symlink-ancestor refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-symlink-leaf",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "symlink-leaf",
+      "story": "Unsafe coordinate symlink-leaf refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-symlink-leaf",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "symlink-leaf",
+      "story": "Unsafe coordinate symlink-leaf refuses before any domain evaluation.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-dispatch-nested-path",
+      "branch": "B07",
+      "domain": "dispatch",
+      "scenario": "nested-path",
+      "story": "A regular reference file under nested real directories is accepted.",
+      "parameters": {}
+    },
+    {
+      "id": "B07-release-nested-path",
+      "branch": "B07",
+      "domain": "release",
+      "scenario": "nested-path",
+      "story": "A regular reference file under nested real directories is accepted.",
+      "parameters": {}
+    },
+    {
+      "id": "B08-dispatch-refusal-before-evaluation",
+      "branch": "B08",
+      "domain": "dispatch",
+      "scenario": "refusal-before-evaluation",
+      "story": "Both candidate ownership and a domain failure occur; input refusal wins and evaluator is not called.",
+      "parameters": {}
+    },
+    {
+      "id": "B08-release-refusal-before-evaluation",
+      "branch": "B08",
+      "domain": "release",
+      "scenario": "refusal-before-evaluation",
+      "story": "Both candidate ownership and a domain failure occur; input refusal wins and evaluator is not called.",
+      "parameters": {}
+    },
+    {
+      "id": "B08-dispatch-declaration-before-file",
+      "branch": "B08",
+      "domain": "dispatch",
+      "scenario": "declaration-before-file",
+      "story": "Overlapping owners and missing file coexist; overlap must be detected before reference file consumption.",
+      "parameters": {}
+    },
+    {
+      "id": "B08-release-declaration-before-file",
+      "branch": "B08",
+      "domain": "release",
+      "scenario": "declaration-before-file",
+      "story": "Overlapping owners and missing file coexist; overlap must be detected before reference file consumption.",
+      "parameters": {}
+    },
+    {
+      "id": "B08-dispatch-reference-before-candidate",
+      "branch": "B08",
+      "domain": "dispatch",
+      "scenario": "reference-before-candidate",
+      "story": "A stale reference hash and forbidden candidate assertion coexist; reference hash is checked before candidate intake.",
+      "parameters": {}
+    },
+    {
+      "id": "B08-release-reference-before-candidate",
+      "branch": "B08",
+      "domain": "release",
+      "scenario": "reference-before-candidate",
+      "story": "A stale reference hash and forbidden candidate assertion coexist; reference hash is checked before candidate intake.",
+      "parameters": {}
+    },
+    {
+      "id": "B09-dispatch-empty-candidate",
+      "branch": "B09",
+      "domain": "dispatch",
+      "scenario": "empty-candidate",
+      "story": "Empty candidate with fixed catalog has no antecedent subject; guarded rule is vacuous.",
+      "parameters": {}
+    },
+    {
+      "id": "B09-release-empty-candidate",
+      "branch": "B09",
+      "domain": "release",
+      "scenario": "empty-candidate",
+      "story": "Empty candidate with fixed catalog has no antecedent subject; guarded rule is vacuous.",
+      "parameters": {}
+    },
+    {
+      "id": "B09-dispatch-empty-catalog",
+      "branch": "B09",
+      "domain": "dispatch",
+      "scenario": "empty-catalog",
+      "story": "Nonempty candidate with an empty fixed catalog violates membership.",
+      "parameters": {}
+    },
+    {
+      "id": "B09-release-empty-catalog",
+      "branch": "B09",
+      "domain": "release",
+      "scenario": "empty-catalog",
+      "story": "Nonempty candidate with an empty fixed catalog violates membership.",
+      "parameters": {}
+    },
+    {
+      "id": "B09-dispatch-reference-nonvacuous",
+      "branch": "B09",
+      "domain": "dispatch",
+      "scenario": "reference-nonvacuous",
+      "story": "With only a fixed-catalog uniqueness rule, context alone is nonvacuous and mechanically passes; candidate production credit remains zero.",
+      "parameters": {}
+    },
+    {
+      "id": "B09-release-reference-nonvacuous",
+      "branch": "B09",
+      "domain": "release",
+      "scenario": "reference-nonvacuous",
+      "story": "With only a fixed-catalog uniqueness rule, context alone is nonvacuous and mechanically passes; candidate production credit remains zero.",
+      "parameters": {}
+    },
+    {
+      "id": "B10-dispatch-reference-inflation",
+      "branch": "B10",
+      "domain": "dispatch",
+      "scenario": "reference-inflation",
+      "story": "Appending fixed rows, instances and repeated rows does not change candidate count or candidate-only admission.",
+      "parameters": {}
+    },
+    {
+      "id": "B10-release-reference-inflation",
+      "branch": "B10",
+      "domain": "release",
+      "scenario": "reference-inflation",
+      "story": "Appending fixed rows, instances and repeated rows does not change candidate count or candidate-only admission.",
+      "parameters": {}
+    },
+    {
+      "id": "B10-dispatch-zero-candidate-floor",
+      "branch": "B10",
+      "domain": "dispatch",
+      "scenario": "zero-candidate-floor",
+      "story": "With only the fixed-catalog uniqueness rule, mechanical pass is possible, but candidate_fact_count is zero and cannot satisfy floor 1.",
+      "parameters": {}
+    },
+    {
+      "id": "B10-release-zero-candidate-floor",
+      "branch": "B10",
+      "domain": "release",
+      "scenario": "zero-candidate-floor",
+      "story": "With only the fixed-catalog uniqueness rule, mechanical pass is possible, but candidate_fact_count is zero and cannot satisfy floor 1.",
+      "parameters": {}
+    },
+    {
+      "id": "B11-dispatch-model-swap",
+      "branch": "B11",
+      "domain": "dispatch",
+      "scenario": "model-swap",
+      "story": "Replace the model path after its bytes reach the parser: consume the approved descriptor snapshot or refuse 3, never accept substituted bytes.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B11-release-model-swap",
+      "branch": "B11",
+      "domain": "release",
+      "scenario": "model-swap",
+      "story": "Replace the model path after its bytes reach the parser: consume the approved descriptor snapshot or refuse 3, never accept substituted bytes.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B11-dispatch-model-parent-swap",
+      "branch": "B11",
+      "domain": "dispatch",
+      "scenario": "model-parent-swap",
+      "story": "Replace the model path after its bytes reach the parser: consume the approved descriptor snapshot or refuse 3, never accept substituted bytes.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B11-release-model-parent-swap",
+      "branch": "B11",
+      "domain": "release",
+      "scenario": "model-parent-swap",
+      "story": "Replace the model path after its bytes reach the parser: consume the approved descriptor snapshot or refuse 3, never accept substituted bytes.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-dispatch-reference-swap",
+      "branch": "B12",
+      "domain": "dispatch",
+      "scenario": "reference-swap",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-release-reference-swap",
+      "branch": "B12",
+      "domain": "release",
+      "scenario": "reference-swap",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-dispatch-reference-root-swap",
+      "branch": "B12",
+      "domain": "dispatch",
+      "scenario": "reference-root-swap",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-release-reference-root-swap",
+      "branch": "B12",
+      "domain": "release",
+      "scenario": "reference-root-swap",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-dispatch-reference-parent-swap",
+      "branch": "B12",
+      "domain": "dispatch",
+      "scenario": "reference-parent-swap",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-release-reference-parent-swap",
+      "branch": "B12",
+      "domain": "release",
+      "scenario": "reference-parent-swap",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-dispatch-reference-inplace-write",
+      "branch": "B12",
+      "domain": "dispatch",
+      "scenario": "reference-inplace-write",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-release-reference-inplace-write",
+      "branch": "B12",
+      "domain": "release",
+      "scenario": "reference-inplace-write",
+      "story": "Replace/mutate the path after bound bytes are read: consume the same approved bytes or refuse 3, never unchecked replacement success.",
+      "parameters": {
+        "allowed_exits": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "id": "B12-dispatch-fd-cleanup",
+      "branch": "B12",
+      "domain": "dispatch",
+      "scenario": "fd-cleanup",
+      "story": "Repeated successful and failed reference loads leave no tracked file descriptors open.",
+      "parameters": {}
+    },
+    {
+      "id": "B12-release-fd-cleanup",
+      "branch": "B12",
+      "domain": "release",
+      "scenario": "fd-cleanup",
+      "story": "Repeated successful and failed reference loads leave no tracked file descriptors open.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-dispatch-identity-updated-bytes",
+      "branch": "B13",
+      "domain": "dispatch",
+      "scenario": "identity-updated-bytes",
+      "story": "Compare canonical reference identities under identity-updated-bytes; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-release-identity-updated-bytes",
+      "branch": "B13",
+      "domain": "release",
+      "scenario": "identity-updated-bytes",
+      "story": "Compare canonical reference identities under identity-updated-bytes; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-dispatch-identity-order",
+      "branch": "B13",
+      "domain": "dispatch",
+      "scenario": "identity-order",
+      "story": "Compare canonical reference identities under identity-order; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-release-identity-order",
+      "branch": "B13",
+      "domain": "release",
+      "scenario": "identity-order",
+      "story": "Compare canonical reference identities under identity-order; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-dispatch-identity-path",
+      "branch": "B13",
+      "domain": "dispatch",
+      "scenario": "identity-path",
+      "story": "Compare canonical reference identities under identity-path; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-release-identity-path",
+      "branch": "B13",
+      "domain": "release",
+      "scenario": "identity-path",
+      "story": "Compare canonical reference identities under identity-path; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-dispatch-identity-id",
+      "branch": "B13",
+      "domain": "dispatch",
+      "scenario": "identity-id",
+      "story": "Compare canonical reference identities under identity-id; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-release-identity-id",
+      "branch": "B13",
+      "domain": "release",
+      "scenario": "identity-id",
+      "story": "Compare canonical reference identities under identity-id; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-dispatch-identity-owner",
+      "branch": "B13",
+      "domain": "dispatch",
+      "scenario": "identity-owner",
+      "story": "Compare canonical reference identities under identity-owner; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-release-identity-owner",
+      "branch": "B13",
+      "domain": "release",
+      "scenario": "identity-owner",
+      "story": "Compare canonical reference identities under identity-owner; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-dispatch-legacy-digest",
+      "branch": "B13",
+      "domain": "dispatch",
+      "scenario": "legacy-digest",
+      "story": "Compare canonical reference identities under legacy-digest; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B13-release-legacy-digest",
+      "branch": "B13",
+      "domain": "release",
+      "scenario": "legacy-digest",
+      "story": "Compare canonical reference identities under legacy-digest; stale raw bytes never authenticate a new successful identity.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-api-check",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "api-check",
+      "story": "Exercise api-check through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-api-check",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "api-check",
+      "story": "Exercise api-check through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-api-validate",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "api-validate",
+      "story": "Exercise api-validate through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-api-validate",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "api-validate",
+      "story": "Exercise api-validate through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-api-bound-context",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "api-bound-context",
+      "story": "Exercise api-bound-context through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-api-bound-context",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "api-bound-context",
+      "story": "Exercise api-bound-context through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-api-missing-context",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "api-missing-context",
+      "story": "Exercise api-missing-context through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-api-missing-context",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "api-missing-context",
+      "story": "Exercise api-missing-context through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-api-cwd",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "api-cwd",
+      "story": "Exercise api-cwd through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-api-cwd",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "api-cwd",
+      "story": "Exercise api-cwd through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-batch",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "batch",
+      "story": "Exercise batch through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-batch",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "batch",
+      "story": "Exercise batch through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-diff",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "diff",
+      "story": "Exercise diff through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-diff",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "diff",
+      "story": "Exercise diff through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-dispatch-transition",
+      "branch": "B14",
+      "domain": "dispatch",
+      "scenario": "transition",
+      "story": "Exercise transition through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B14-release-transition",
+      "branch": "B14",
+      "domain": "release",
+      "scenario": "transition",
+      "story": "Exercise transition through the public input boundary using the same immutable catalog.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-dispatch-context-wrong-model",
+      "branch": "B15",
+      "domain": "dispatch",
+      "scenario": "context-wrong-model",
+      "story": "New in-memory reference input context-wrong-model refuses, without granting a bypass to unvalidated content.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-release-context-wrong-model",
+      "branch": "B15",
+      "domain": "release",
+      "scenario": "context-wrong-model",
+      "story": "New in-memory reference input context-wrong-model refuses, without granting a bypass to unvalidated content.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-dispatch-context-forged",
+      "branch": "B15",
+      "domain": "dispatch",
+      "scenario": "context-forged",
+      "story": "New in-memory reference input context-forged refuses, without granting a bypass to unvalidated content.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-release-context-forged",
+      "branch": "B15",
+      "domain": "release",
+      "scenario": "context-forged",
+      "story": "New in-memory reference input context-forged refuses, without granting a bypass to unvalidated content.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-dispatch-context-model-mutation",
+      "branch": "B15",
+      "domain": "dispatch",
+      "scenario": "context-model-mutation",
+      "story": "New in-memory reference input context-model-mutation refuses, without granting a bypass to unvalidated content.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-release-context-model-mutation",
+      "branch": "B15",
+      "domain": "release",
+      "scenario": "context-model-mutation",
+      "story": "New in-memory reference input context-model-mutation refuses, without granting a bypass to unvalidated content.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-dispatch-context-snapshot-immutable",
+      "branch": "B15",
+      "domain": "dispatch",
+      "scenario": "context-snapshot-immutable",
+      "story": "Replacing the source file cannot mutate an already bound immutable snapshot; a fresh invocation refuses its stale hash.",
+      "parameters": {}
+    },
+    {
+      "id": "B15-release-context-snapshot-immutable",
+      "branch": "B15",
+      "domain": "release",
+      "scenario": "context-snapshot-immutable",
+      "story": "Replacing the source file cannot mutate an already bound immutable snapshot; a fresh invocation refuses its stale hash.",
+      "parameters": {}
+    },
+    {
+      "id": "B16-dispatch-report-wrapper",
+      "branch": "B16",
+      "domain": "dispatch",
+      "scenario": "report-wrapper",
+      "story": "Successful check emits closed v12 with matching embedded mechanical result and exact origin roster.",
+      "parameters": {}
+    },
+    {
+      "id": "B16-release-report-wrapper",
+      "branch": "B16",
+      "domain": "release",
+      "scenario": "report-wrapper",
+      "story": "Successful check emits closed v12 with matching embedded mechanical result and exact origin roster.",
+      "parameters": {}
+    },
+    {
+      "id": "B16-dispatch-report-dirty-control",
+      "branch": "B16",
+      "domain": "dispatch",
+      "scenario": "report-dirty-control",
+      "story": "Corpus observation instrument rejects added wrapper key, mismatched exit and duplicate origin.",
+      "parameters": {}
+    },
+    {
+      "id": "B16-release-report-dirty-control",
+      "branch": "B16",
+      "domain": "release",
+      "scenario": "report-dirty-control",
+      "story": "Corpus observation instrument rejects added wrapper key, mismatched exit and duplicate origin.",
+      "parameters": {}
+    },
+    {
+      "id": "B16-dispatch-legacy-wire",
+      "branch": "B16",
+      "domain": "dispatch",
+      "scenario": "legacy-wire",
+      "story": "Reference-free model result retains the baseline payload and digest; v4 feature-free follows that shape.",
+      "parameters": {}
+    },
+    {
+      "id": "B16-release-legacy-wire",
+      "branch": "B16",
+      "domain": "release",
+      "scenario": "legacy-wire",
+      "story": "Reference-free model result retains the baseline payload and digest; v4 feature-free follows that shape.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-dispatch-multiple-origins",
+      "branch": "B17",
+      "domain": "dispatch",
+      "scenario": "multiple-origins",
+      "story": "Two fixed files and the candidate each have local index zero, distinct through declared origin.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-release-multiple-origins",
+      "branch": "B17",
+      "domain": "release",
+      "scenario": "multiple-origins",
+      "story": "Two fixed files and the candidate each have local index zero, distinct through declared origin.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-dispatch-duplicate-origins",
+      "branch": "B17",
+      "domain": "dispatch",
+      "scenario": "duplicate-origins",
+      "story": "Duplicate fixed rows retain separate local occurrence addresses.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-release-duplicate-origins",
+      "branch": "B17",
+      "domain": "release",
+      "scenario": "duplicate-origins",
+      "story": "Duplicate fixed rows retain separate local occurrence addresses.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-dispatch-candidate-admission",
+      "branch": "B17",
+      "domain": "dispatch",
+      "scenario": "candidate-admission",
+      "story": "Admission partition exhausts only candidate assertions; fixed blockers still withhold/contest the relevant candidate.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-release-candidate-admission",
+      "branch": "B17",
+      "domain": "release",
+      "scenario": "candidate-admission",
+      "story": "Admission partition exhausts only candidate assertions; fixed blockers still withhold/contest the relevant candidate.",
+      "parameters": {}
+    },
+    {
+      "id": "B18-dispatch-model-bytes-near",
+      "branch": "B18",
+      "domain": "dispatch",
+      "scenario": "model-bytes-near",
+      "story": "A whitespace-padded valid file exactly reaches the 10 MiB byte cap.",
+      "parameters": {
+        "target": "model"
+      }
+    },
+    {
+      "id": "B18-release-model-bytes-near",
+      "branch": "B18",
+      "domain": "release",
+      "scenario": "model-bytes-near",
+      "story": "A whitespace-padded valid file exactly reaches the 10 MiB byte cap.",
+      "parameters": {
+        "target": "model"
+      }
+    },
+    {
+      "id": "B18-dispatch-model-bytes-over",
+      "branch": "B18",
+      "domain": "dispatch",
+      "scenario": "model-bytes-over",
+      "story": "A whitespace-padded valid file reaches cap+1 bytes and refuses before allocation/parse.",
+      "parameters": {
+        "target": "model"
+      }
+    },
+    {
+      "id": "B18-release-model-bytes-over",
+      "branch": "B18",
+      "domain": "release",
+      "scenario": "model-bytes-over",
+      "story": "A whitespace-padded valid file reaches cap+1 bytes and refuses before allocation/parse.",
+      "parameters": {
+        "target": "model"
+      }
+    },
+    {
+      "id": "B18-dispatch-reference-bytes-near",
+      "branch": "B18",
+      "domain": "dispatch",
+      "scenario": "reference-bytes-near",
+      "story": "A whitespace-padded valid file exactly reaches the 10 MiB byte cap.",
+      "parameters": {
+        "target": "reference"
+      }
+    },
+    {
+      "id": "B18-release-reference-bytes-near",
+      "branch": "B18",
+      "domain": "release",
+      "scenario": "reference-bytes-near",
+      "story": "A whitespace-padded valid file exactly reaches the 10 MiB byte cap.",
+      "parameters": {
+        "target": "reference"
+      }
+    },
+    {
+      "id": "B18-dispatch-reference-bytes-over",
+      "branch": "B18",
+      "domain": "dispatch",
+      "scenario": "reference-bytes-over",
+      "story": "A whitespace-padded valid file reaches cap+1 bytes and refuses before allocation/parse.",
+      "parameters": {
+        "target": "reference"
+      }
+    },
+    {
+      "id": "B18-release-reference-bytes-over",
+      "branch": "B18",
+      "domain": "release",
+      "scenario": "reference-bytes-over",
+      "story": "A whitespace-padded valid file reaches cap+1 bytes and refuses before allocation/parse.",
+      "parameters": {
+        "target": "reference"
+      }
+    },
+    {
+      "id": "B18-dispatch-candidate-bytes-near",
+      "branch": "B18",
+      "domain": "dispatch",
+      "scenario": "candidate-bytes-near",
+      "story": "A whitespace-padded valid file exactly reaches the 10 MiB byte cap.",
+      "parameters": {
+        "target": "candidate"
+      }
+    },
+    {
+      "id": "B18-release-candidate-bytes-near",
+      "branch": "B18",
+      "domain": "release",
+      "scenario": "candidate-bytes-near",
+      "story": "A whitespace-padded valid file exactly reaches the 10 MiB byte cap.",
+      "parameters": {
+        "target": "candidate"
+      }
+    },
+    {
+      "id": "B18-dispatch-candidate-bytes-over",
+      "branch": "B18",
+      "domain": "dispatch",
+      "scenario": "candidate-bytes-over",
+      "story": "A whitespace-padded valid file reaches cap+1 bytes and refuses before allocation/parse.",
+      "parameters": {
+        "target": "candidate"
+      }
+    },
+    {
+      "id": "B18-release-candidate-bytes-over",
+      "branch": "B18",
+      "domain": "release",
+      "scenario": "candidate-bytes-over",
+      "story": "A whitespace-padded valid file reaches cap+1 bytes and refuses before allocation/parse.",
+      "parameters": {
+        "target": "candidate"
+      }
+    },
+    {
+      "id": "B19-dispatch-file-count-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "file-count-near",
+      "story": "Reference boundary file-count-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-file-count-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "file-count-near",
+      "story": "Reference boundary file-count-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-file-count-over",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "file-count-over",
+      "story": "Reference boundary file-count-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-file-count-over",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "file-count-over",
+      "story": "Reference boundary file-count-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-set-bytes-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "set-bytes-near",
+      "story": "Reference boundary set-bytes-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-set-bytes-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "set-bytes-near",
+      "story": "Reference boundary set-bytes-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-set-bytes-over",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "set-bytes-over",
+      "story": "Reference boundary set-bytes-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-set-bytes-over",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "set-bytes-over",
+      "story": "Reference boundary set-bytes-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-row-count-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "row-count-near",
+      "story": "Reference boundary row-count-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-row-count-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "row-count-near",
+      "story": "Reference boundary row-count-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-row-count-over",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "row-count-over",
+      "story": "Reference boundary row-count-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-row-count-over",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "row-count-over",
+      "story": "Reference boundary row-count-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-instance-count-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "instance-count-near",
+      "story": "Reference boundary instance-count-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-instance-count-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "instance-count-near",
+      "story": "Reference boundary instance-count-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-instance-count-over",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "instance-count-over",
+      "story": "Reference boundary instance-count-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-instance-count-over",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "instance-count-over",
+      "story": "Reference boundary instance-count-over is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-container-depth-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "container-depth-near",
+      "story": "Direct reference-structure guard checks 64-level admission; typed population schema is checked separately. Root container counts as level one.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-container-depth-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "container-depth-near",
+      "story": "Direct reference-structure guard checks 64-level admission; typed population schema is checked separately. Root container counts as level one.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-container-depth-over",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "container-depth-over",
+      "story": "Direct reference-structure guard checks 65-level refusal; typed population schema is checked separately. Root container counts as level one.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-container-depth-over",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "container-depth-over",
+      "story": "Direct reference-structure guard checks 65-level refusal; typed population schema is checked separately. Root container counts as level one.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-id-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "id-near",
+      "story": "Reference boundary id-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-id-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "id-near",
+      "story": "Reference boundary id-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-dispatch-path-depth-near",
+      "branch": "B19",
+      "domain": "dispatch",
+      "scenario": "path-depth-near",
+      "story": "Reference boundary path-depth-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B19-release-path-depth-near",
+      "branch": "B19",
+      "domain": "release",
+      "scenario": "path-depth-near",
+      "story": "Reference boundary path-depth-near is exercised with valid lower-layer structure, not a competing earlier refusal.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-dispatch-join-near",
+      "branch": "B20",
+      "domain": "dispatch",
+      "scenario": "join-near",
+      "story": "A true consequent over 300x300 reached bindings decides under the 100,000 work budget.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-release-join-near",
+      "branch": "B20",
+      "domain": "release",
+      "scenario": "join-near",
+      "story": "A true consequent over 300x300 reached bindings decides under the 100,000 work budget.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-dispatch-join-over",
+      "branch": "B20",
+      "domain": "dispatch",
+      "scenario": "join-over",
+      "story": "A true consequent over 317x317 attempted bindings exceeds the work budget: unknown, not a fabricated violation.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-release-join-over",
+      "branch": "B20",
+      "domain": "release",
+      "scenario": "join-over",
+      "story": "A true consequent over 317x317 attempted bindings exceeds the work budget: unknown, not a fabricated violation.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-dispatch-join-over-with-failure",
+      "branch": "B20",
+      "domain": "dispatch",
+      "scenario": "join-over-with-failure",
+      "story": "An independent alethic contradiction beats the work-limited unknown.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-release-join-over-with-failure",
+      "branch": "B20",
+      "domain": "release",
+      "scenario": "join-over-with-failure",
+      "story": "An independent alethic contradiction beats the work-limited unknown.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-dispatch-join-over-deontic",
+      "branch": "B20",
+      "domain": "dispatch",
+      "scenario": "join-over-deontic",
+      "story": "Unknown due to incomplete reached work remains unknown even when the affected rule is deontic.",
+      "parameters": {}
+    },
+    {
+      "id": "B20-release-join-over-deontic",
+      "branch": "B20",
+      "domain": "release",
+      "scenario": "join-over-deontic",
+      "story": "Unknown due to incomplete reached work remains unknown even when the affected rule is deontic.",
+      "parameters": {}
+    },
+    {
+      "id": "B21-dispatch-missing-safe-capability",
+      "branch": "B21",
+      "domain": "dispatch",
+      "scenario": "missing-safe-capability",
+      "story": "No-follow descriptor traversal unavailable: fixed-data input refuses locally, legacy input still works.",
+      "parameters": {}
+    },
+    {
+      "id": "B21-release-missing-safe-capability",
+      "branch": "B21",
+      "domain": "release",
+      "scenario": "missing-safe-capability",
+      "story": "No-follow descriptor traversal unavailable: fixed-data input refuses locally, legacy input still works.",
+      "parameters": {}
+    },
+    {
+      "id": "B22-dispatch-reader-counter-control",
+      "branch": "B22",
+      "domain": "dispatch",
+      "scenario": "reader-counter-control",
+      "story": "The read observer rejects an injected unbounded read and accepts cap+1 bounded reads.",
+      "parameters": {}
+    },
+    {
+      "id": "B22-release-reader-counter-control",
+      "branch": "B22",
+      "domain": "release",
+      "scenario": "reader-counter-control",
+      "story": "The read observer rejects an injected unbounded read and accepts cap+1 bounded reads.",
+      "parameters": {}
+    },
+    {
+      "id": "B22-dispatch-join-counter-control",
+      "branch": "B22",
+      "domain": "dispatch",
+      "scenario": "join-counter-control",
+      "story": "A missing work charge is killed by the exceeded-budget fixture, never skipped to green.",
+      "parameters": {}
+    },
+    {
+      "id": "B22-release-join-counter-control",
+      "branch": "B22",
+      "domain": "release",
+      "scenario": "join-counter-control",
+      "story": "A missing work charge is killed by the exceeded-budget fixture, never skipped to green.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-synth-refusal",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "synth-refusal",
+      "story": "Selected consumer synth-refusal accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-synth-refusal",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "synth-refusal",
+      "story": "Selected consumer synth-refusal accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-codegen-refusal",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "codegen-refusal",
+      "story": "Selected consumer codegen-refusal accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-codegen-refusal",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "codegen-refusal",
+      "story": "Selected consumer codegen-refusal accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-session-refusal",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "session-refusal",
+      "story": "Selected consumer session-refusal accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-session-refusal",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "session-refusal",
+      "story": "Selected consumer session-refusal accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-conformance-drift",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "conformance-drift",
+      "story": "Selected consumer conformance-drift accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-conformance-drift",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "conformance-drift",
+      "story": "Selected consumer conformance-drift accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-extract-owned-projection",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "extract-owned-projection",
+      "story": "Selected consumer extract-owned-projection accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-extract-owned-projection",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "extract-owned-projection",
+      "story": "Selected consumer extract-owned-projection accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-verbalize-ownership",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "verbalize-ownership",
+      "story": "Selected consumer verbalize-ownership accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-verbalize-ownership",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "verbalize-ownership",
+      "story": "Selected consumer verbalize-ownership accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-dispatch-diagnostic-redaction",
+      "branch": "B23",
+      "domain": "dispatch",
+      "scenario": "diagnostic-redaction",
+      "story": "Selected consumer diagnostic-redaction accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B23-release-diagnostic-redaction",
+      "branch": "B23",
+      "domain": "release",
+      "scenario": "diagnostic-redaction",
+      "story": "Selected consumer diagnostic-redaction accounts for fixed context, never silently publishes missing context.",
+      "parameters": {}
+    },
+    {
+      "id": "B24-dispatch-delivery-current",
+      "branch": "B24",
+      "domain": "dispatch",
+      "scenario": "delivery-current",
+      "story": "Current canonical schema/prose and registered corpus agree on owned types and new wire.",
+      "parameters": {}
+    },
+    {
+      "id": "B24-release-delivery-current",
+      "branch": "B24",
+      "domain": "release",
+      "scenario": "delivery-current",
+      "story": "Current canonical schema/prose and registered corpus agree on owned types and new wire.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-dispatch-derivation-origins",
+      "branch": "B17",
+      "domain": "dispatch",
+      "scenario": "derivation-origins",
+      "story": "A positive derived candidate extension comes from fixed base facts; asserted candidate and fixed local addresses stay distinct.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-dispatch-anchored-origins",
+      "branch": "B17",
+      "domain": "dispatch",
+      "scenario": "anchored-origins",
+      "story": "A candidate anchored rule lacks its source sidecar and remains unchecked while the fixed catalog and candidate origins remain distinct.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-release-derivation-origins",
+      "branch": "B17",
+      "domain": "release",
+      "scenario": "derivation-origins",
+      "story": "A positive derived candidate extension comes from fixed base facts; asserted candidate and fixed local addresses stay distinct.",
+      "parameters": {}
+    },
+    {
+      "id": "B17-release-anchored-origins",
+      "branch": "B17",
+      "domain": "release",
+      "scenario": "anchored-origins",
+      "story": "A candidate anchored rule lacks its source sidecar and remains unchecked while the fixed catalog and candidate origins remain distinct.",
+      "parameters": {}
+    }
+  ]
+}

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import json
 import math
-import statistics
 import signal
+import statistics
 import subprocess
 import sys
 import time
@@ -458,7 +458,8 @@ def test_guarded_measurement_pairs_and_checks_every_report(monkeypatch):
     for bad_call in (0, 2, 19):
         for bad_verdict, bad_count in [('fail', False), ('pass', True)]:
             call_index = iter(range(20))
-            def faulty(model, population):
+            def faulty(model, population, *, call_index=call_index, bad_call=bad_call,
+                       bad_verdict=bad_verdict, bad_count=bad_count):
                 broken = next(call_index) == bad_call
                 return SimpleNamespace(verdicts=[SimpleNamespace(
                     constraint_ref='constraints[0]',

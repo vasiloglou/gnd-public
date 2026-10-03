@@ -133,11 +133,21 @@ def _best_check_time(total_facts: int) -> float:
     return min(durations)
 
 def test_connected_three_atom_join_meets_the_declared_bound() -> None:
-    t10k = _best_check_time(10000)
-    t20k = _best_check_time(20000)
-    assert t10k < 2.0
-    assert t20k < 2.0
-    assert t20k <= max(2 * t10k, 0.2)
+    # Keep pytest's retained collection/fixture heap outside this benchmark.
+    # The measured checker still runs with normal garbage collection enabled.
+    program = """import sys
+sys.path.insert(0, 'tests')
+from test_guarded_corpus import _best_check_time
+t10k = _best_check_time(10000)
+t20k = _best_check_time(20000)
+print({'t10k': t10k, 't20k': t20k, 'limit': max(2*t10k, 0.2)}, flush=True)
+assert t10k < 2.0
+assert t20k < 2.0
+assert t20k <= max(2 * t10k, 0.2)
+"""
+    result = subprocess.run([sys.executable, '-c', program], cwd=REPO_ROOT,
+                            capture_output=True, text=True, timeout=30, check=False)
+    assert result.returncode == 0, result.stdout + result.stderr
 
 def test_zero_bindings_precede_consequent_literal_interpretation() -> None:
     model = load_model(CORPUS / 'models' / 'undecidable.orm.yaml')
@@ -335,3 +345,10 @@ def test_r_empty_was_already_killed_outside_the_corpus_but_r_blind_was_not(tmp_p
     monkeypatch.setattr(semantic_spec, 'guarded_atom_state', real)
     monkeypatch.setattr(semantic_spec, 'guarded_atom_state', _mutated_guarded_atom_state('subject-blind'))
     assert _absence_verdict() == ('pass', 0), 'Assertion did not hold.'
+
+
+def test_guarded_benchmark_propagates_isolated_failure(monkeypatch):
+    monkeypatch.setattr(subprocess, 'run', lambda *args, **kwargs:
+                        subprocess.CompletedProcess(args[0], 1, 'benchmark rejected', ''))
+    with pytest.raises(AssertionError, match='benchmark rejected'):
+        test_connected_three_atom_join_meets_the_declared_bound()

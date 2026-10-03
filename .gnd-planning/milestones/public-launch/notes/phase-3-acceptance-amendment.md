@@ -73,3 +73,11 @@ repairs within A2's attempt budget. Retain every failure.
 The remaining phase, PR-only, source ownership, publication, certification and
 candidate sign-off boundaries stay unchanged. No phase-completion record is due
 while any required gate fails or is pending.
+
+## Owner approval — 2026-10-03
+
+The owner said “go with your recommendations” after the business explanation.
+A1 and A2 are approved, including two legitimate cleanup failure labels and
+four total final validation attempts. Performance thresholds and runtime
+semantics remain unchanged. Approval binds proposal SHA-256
+`ff1555916b3846de54d8f18eb79a51f03d1cd57e192b7ec3beda2344763974ca`. No further reviewer is authorized.

@@ -1,6 +1,6 @@
 # Phase 3 regression selection — approved r3 policy
 
-Status: execution selection, results pending. The source-owned resumption spec
+Status: acceptance incomplete; owner-approved repairs ready for attempt 3. The source-owned resumption spec
 and owner approval govern this target copy. All changes land through a PR.
 
 Keep the current target behavioral suite and its exact fixtures/helpers. Existing
@@ -59,104 +59,57 @@ coverage evidence. Review the advertised CLI/API/skill branches against these
 families and investigate concrete uncovered branches before final acceptance.
 Old per-definition mappings remain navigational evidence, not percentage completion.
 
-## Results
+## Results and retained findings
 
-Initial discovery: 11,187 selected / 221 excluded, collection only. Following
-historical policy separation, focused collection/origin/skill/credential controls:
-37 passed, 1 deselected in 9.26s. Full current execution and clean candidate checks
-remain pending. No source suite, native/provider matrix or certification selected.
+Final attempt 2 at d7f3acb completed. Installed acceptance exited 0 on both
+profiles: 1,780 behavior cases and 85 contributor cases per wheel; three historic
+registration cases were deselected. The macOS outer gate passed 10 in 942.28s;
+Ubuntu passed 10 in 1738.27s. Exact candidate wheel and sdist identities are held
+in run 37142968600 and the retained local candidate directory.
 
+Full macOS: 3 failed, 11301 passed, 400 deselected, 1 warning in 1609.04s.
+Full Ubuntu: 1 failed, 11302 passed, 1 skipped, 400 deselected, 1 warning in
+3380.65s. The Linux skip is the case-alias identity case on a case-sensitive
+filesystem; the corresponding macOS case executes. The serializer warning is
+from the deliberately malformed-feedback control. These are not blanket skips.
 
-## Implementation findings
+The owner approved A1/A2 in phase-3-acceptance-amendment.md on 2026-10-03:
+accept either legitimate orphan-pipe failure label while retaining cleanup,
+termination and no-late-write checks, and allow four total final attempts.
+The controlled delayed-spawn case failed the prior timed-out-only expectation.
+All 86 lifecycle, fake-tool and guarded neighbors pass under Python 3.13 with a
+clean PATH. Runtime code and performance thresholds remain unchanged.
 
-The initial default diagnostic run was interrupted after its first two failures:
-2 failed, 2,134 passed, 387 deselected in 254.45s (exit 2). One was the old CI
-job-location assumption; the profile guard now checks all three real job types.
-The other was the target adaptation of this source-owned spec linking to two
-source-only record names; links are replaced by a source-origin explanation and
-the actual public preparation successor. Product expectations were unchanged.
-A mistaken source-root invocation was refused by its lane collector (exit 4,
-no tests ran); it supplies no source-suite result.
+The offline proof-depth test had mocked output while relying on an ambient
+executable. Its existing fake tool now supplies that prerequisite explicitly;
+all ten neighboring cases pass without Souffle on PATH. The guarded benchmark
+failed twice in full hosted macOS runs, while isolated local measurements pass.
+The repaired instrument puts the original workload, normal GC, three samples,
+and exact bounds in a fresh process, removing retained pytest heap state. This
+is a diagnosis-backed isolation change, not yet a hosted performance pass.
+Its failure-propagation control failed pre-fix and passes with the new wrapper.
 
-Candidate preparation initially included uv's generated .gitignore files in the
-local artifact roster. The identity control refused before installation. Removed
-only that generated build-directory metadata and recomputed the three-file list;
-wheel/sdist bytes were neither changed nor rebuilt. These are development checks,
-not reviewed final candidate attempts. Final CI freezes its own build-once files.
+Earlier failures remain in ordinary Git history and source evidence: the first
+local diagnostic stopped at two document/profile failures; the next completed
+with six omitted README limitations. The seven related reference/README failures
+were repaired without weakening assertions. The approved R3 amendment was
+committed unchanged after a Git-snapshot check exposed its missing reference.
+An introduced candidate ignore rule was narrowed to /candidate/ after its control
+failed; the exact omitted nested fixture was tracked. Imported fixture whitespace
+was retained. A mistaken source-root command refused collection; no source suite
+ran. First local artifact identity checks refused uv's generated .gitignore files;
+only that metadata was removed and the three artifact hashes were recomputed.
 
-The staged inheritance includes 186 whitespace findings in 93 pre-existing
-fixture/example files. Their bytes are retained; no evidence fixture is reformatted
-for cosmetic consistency. Authored current changes pass scoped diff/ruff checks.
-The indexed tree measures 16,365,652 bytes, largest ordinary blob 584,130 bytes.
+Family review restored the 258-story reference runtime driver and ten fixtures,
+with source expected answers intact: 261 passed, three historical registration
+cases deselected. Twenty of 23 source function ASTs are unchanged; changes route
+legacy fixtures locally and mark historical registration controls as evidence.
+Installed selection covers actual reference, judgment, session, generated-example
+and solve behavior. Prior mapping files remain discovery aids, not a denominator.
 
-
-## Coverage gap found by family review
-
-Reference-population corpus integrity was carried, but its runtime case runner
-was absent. Import the source's 258-story reference corpus and runner as
-`tests/test_reference_population_corpus.py`, with original expected answers.
-The only function adaptations are the source-independent legacy fixture path,
-parameter marking of B24's old whole-repository census registration as evidence,
-and its corresponding registration-dirty control's evidence marker. Model and
-reference refusal/check/transition/diff behavior keeps the source predicates.
-Source schema identity and keyword signatures retain current standalone guards.
-This is imported regression code, measured separately from newly authored helpers;
-it adds no product feature or preservation machinery. Its execution is pending.
-
-Mixed source families were also spot-checked against target successors: v7.2
-semantic-owner calculator/lineage/mutant/import-boundary controls remain current;
-v7.1 judgments retain the full branch driver, and witness tests execute their
-case/answer corpus. Installed selection now includes actual reference runtime,
-judgment/session branches and generated/solve workflows, not only corpus integrity.
-
-Reference corpus gate: `uv run pytest -q tests/test_reference_population_corpus.py --tb=short` exits 0: 261 passed, 3 deselected in 42.41s. The three excluded cases are explicitly historical registration checks. Twenty of 23 source function ASTs are unchanged; the three adaptations are enumerated above.
-
-
-Clean hosted collection exposed an introduced ignore-rule defect: candidate/
-matched nested test fixtures and left public-walk-floor/session/candidate/steps.json
-untracked. The new test_candidate_ignore control failed before the fix (exit 1),
-then passed after anchoring /candidate/ to the repository root (exit 0). The exact
-existing fixture is now tracked. No test expectation or fixture content changed.
-The pull-request workflow now handles topic changes once; pushes trigger it only
-on main, avoiding duplicate candidate builds for a PR head.
-
-
-A committed-only documentation audit during final attempt 1 reproduced a missing
-R3 amendment: both the inherited Phase 4 spec and the Phase 3 spec linked to an
-untracked file. The existing reference-closure assertion failed against HEAD.
-The approved amendment (SHA-256 ece90d1461a320730b524f80e72c0430082e0a1aa1cc46e90664855de6de6514)
-is staged unchanged; the same control passes against the staged Git snapshot.
-No link assertion was removed. This is inherited document closure, not a plan
-amendment. Final attempt 1 remains an unsuccessful candidate qualification;
-the second attempt follows collection of all outstanding CI results.
-
-The completed local diagnostic suite returned 6 failed, 11,033 passed, 397
-deselected, 1 warning in 1199.38s (exit 1). All six failures require the README to
-state the bundled fallback validator's six existing limitations. The short
-preparation README omitted that explanation. Restore the accurate limitation
-paragraph; preserve all six assertions and the script. The initial claim that
-README changes distribution metadata was refuted by actual artifact comparison:
-this package does not include repository README metadata. The second attempt
-built all three retained artifacts byte-identical to attempt 1.
-The warning comes from the deliberate malformed-feedback serialization control;
-it is not a skipped case or a positive assurance result.
-
-Hosted Ubuntu installed qualification returned 2 failed, 8 passed in 1211.88s:
-both complete behavior selections reached the runner's 600-second timeout.
-The same 1,780-case selection completed on macOS in 437.23s and 419.51s.
-Increase the acceptance subprocess waiting limit to 1,200 seconds per wheel
-and its two-origin CI job ceiling from 30 to 45 minutes (2 × 20 plus 5 setup).
-These are harness scheduling limits, not product verdict/timing assertions;
-all selected tests and their own numerical bounds remain intact. The approved
-two final attempts and one-review-plus-one-follow-up limits do not change.
-Ubuntu remains unaccepted until the bounded rerun exits 0.
-
-
-The earlier complete macOS hosted diagnostic ended with 10 failed, 11291 passed,
-400 deselected, 1 warning in 1675.32s. Besides the seven repaired documentation
-failures, it exposed a missing fake-tool executable, an orphan-pipe result-label
-race, and a guarded-join timing failure. The fake-tool test failed under a clean
-PATH before its two-line fixture repair; ten neighboring cases then passed.
-The other two issues remain unresolved acceptance findings. The source-owned
-phase-3-acceptance-amendment.md proposes a bounded owner decision; it is pending.
-No new expected result or numerical threshold has been applied.
+One reviewer and one follow-up found three acceptance-instrument gaps, each with
+reproduced controls and repaired neighbor checks; see phase-3-review-disposition.md.
+That review budget is exhausted. Artifact comparison refuted an initial README
+metadata assumption: all three candidate artifacts are byte-identical across the
+first two attempts. Final attempt 3 will validate the repaired test instruments;
+no completion claim or additional reviewer follows from these local passes.

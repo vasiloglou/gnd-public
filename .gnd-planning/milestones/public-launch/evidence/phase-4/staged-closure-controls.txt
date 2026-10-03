@@ -1,0 +1,5 @@
+Index snapshot of explicit package + focused consumer/fixture closure; no untracked working-tree helpers.
+.............................................                            [100%]
+45 passed in 3.41s
+
+EXIT 0

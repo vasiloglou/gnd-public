@@ -1,5 +1,4 @@
 """Bounded controls for the P1 fixed scaffold, not a public evidence validator."""
-from pathlib import Path
 import collections
 import hashlib
 import json
@@ -7,6 +6,7 @@ import os
 import re
 import shutil
 import stat
+from pathlib import Path
 
 import pytest
 
@@ -30,8 +30,8 @@ def check_references(root):
                 continue
             assert (path.parent / href.split('#')[0]).exists(), (path, href)
     boot = (root / 'docs/development/bootstrap.md').read_text()
-    assert 'ac4be67afdddde0b2b2095a6cd383bc13852758c' in boot
-    assert 'conditional' in boot and 'private' in boot and 'P4-C5' in boot
+    assert 'No source-checkout bootstrap is required' in boot
+    assert 'historical' in boot and 'Phase 3' in boot
 
 
 def check_twins(root):
@@ -167,7 +167,8 @@ QUESTION_PIN = "87a273c136ecd36e17a82e68a03babc096d6f46b03a09423ef26b3090125f447
 
 def test_readme_reflects_current_runtime_stage():
     text = (ROOT / 'README.md').read_text()
-    assert 'P2' in text and 'P3' in text and 'private runtime staging' in text
+    assert 'Phase 3' in text and 'candidate sign-off remain pending' in text
+    assert 'docs/quickstart.md' in text
     assert 'runtime migration follows' not in text
 
 

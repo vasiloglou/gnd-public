@@ -1,0 +1,15 @@
+{
+  "ruling": "delegated approval (auto=true)",
+  "date": "2026-10-03",
+  "authorization": "process-phase 4 auto; continue",
+  "source_spec_sha256": "669edfc95b3bfd1421c5ed01275bc3e21c85827672cc39f59a5c4de49da75607",
+  "target_successor_spec_sha256": "c714cfb4954c8ec421243818236456e4f9ac78338b92b8ad578396e19741581d",
+  "repairs": [
+    "F1 import namespace",
+    "F2 exact fixture closure",
+    "F3 skill reference guard",
+    "F4 workflow destinations"
+  ],
+  "review_budget": "two CLI readings total; second limited to repairs and neighbors",
+  "compatibility": "No expected corpus answer or runtime contract change; source citation digests kept as origin identities"
+}

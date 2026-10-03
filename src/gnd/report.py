@@ -38,9 +38,12 @@ bound every untrusted-input-proportional resource.
 from __future__ import annotations
 
 import json
+import math
 from collections.abc import Mapping
 from importlib.resources import files
 from typing import Any, Literal
+
+from pydantic import TypeAdapter
 
 from gnd import transition_kernel
 from gnd.assurance import AssuranceBlockV1, semantic_decision_for_band
@@ -403,6 +406,79 @@ def build_verify_payload(
     return payload
 
 
+def _serializable_transition_document(report: Any) -> dict[str, Any]:
+    """Normalize only witness containers before the existing JSON-mode dump."""
+    def verdicts(rows):
+        return [
+            row.model_copy(update={"offending_facts": _plain_containers(row.offending_facts)})
+            for row in rows
+        ]
+
+    def snapshot(value):
+        return value.model_copy(update={"verdicts": verdicts(value.verdicts)})
+
+    copied = report.model_copy(update={
+        "pre_snapshot": snapshot(report.pre_snapshot),
+        "pre_snapshot_verdicts": verdicts(report.pre_snapshot_verdicts),
+        "steps": [
+            step.model_copy(update={
+                "verdicts": verdicts(step.verdicts),
+                "intermediate": snapshot(step.intermediate),
+            })
+            for step in report.steps
+        ],
+        "frame_verdicts": verdicts(report.frame_verdicts),
+        "post_snapshot": snapshot(report.post_snapshot),
+    })
+    dumped = copied.model_dump(mode="json")
+
+    def has_nonfinite(value):
+        if isinstance(value, Mapping):
+            return any(has_nonfinite(item) for item in value.values())
+        if isinstance(value, (list, tuple)):
+            return any(has_nonfinite(item) for item in value)
+        return isinstance(value, float) and not math.isfinite(value)
+
+    def preserve_nonfinite(original, serialized):
+        if not has_nonfinite(original):
+            return serialized
+        if isinstance(original, Mapping):
+            # Use the existing JSON-mode key policy, including collisions;
+            # witness keys need not be strings in a directly built report.
+            adapter = TypeAdapter(Any)
+            original_by_key = {
+                next(iter(adapter.dump_python({key: None}, mode="json"))): value
+                for key, value in original.items()
+            }
+            return {
+                key: preserve_nonfinite(original_by_key[key], value)
+                for key, value in serialized.items()
+            }
+        if isinstance(original, (list, tuple)):
+            return [
+                preserve_nonfinite(value, item)
+                for value, item in zip(original, serialized, strict=True)
+            ]
+        if isinstance(original, float) and not math.isfinite(original):
+            return original
+        return serialized
+
+    def retain(rows, documents):
+        for row, document in zip(rows, documents, strict=True):
+            document["offending_facts"] = preserve_nonfinite(
+                row.offending_facts, document["offending_facts"]
+            )
+
+    retain(report.pre_snapshot.verdicts, dumped["pre_snapshot"]["verdicts"])
+    retain(report.pre_snapshot_verdicts, dumped["pre_snapshot_verdicts"])
+    retain(report.frame_verdicts, dumped["frame_verdicts"])
+    retain(report.post_snapshot.verdicts, dumped["post_snapshot"]["verdicts"])
+    for step, document in zip(report.steps, dumped["steps"], strict=True):
+        retain(step.verdicts, document["verdicts"])
+        retain(step.intermediate.verdicts, document["intermediate"]["verdicts"])
+    return dumped
+
+
 def build_transition_payload(
     exit_code: int,
     model_path: str,
@@ -474,7 +550,7 @@ def build_transition_payload(
         projected_evaluated, transition_report is not None
     )
     if has_families:
-        dumped = transition_report.model_dump(mode="json")
+        dumped = _serializable_transition_document(transition_report)
         record_branch("report:transition:n-a:families")
         block.update(
             {

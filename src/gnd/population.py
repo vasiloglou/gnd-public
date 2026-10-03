@@ -49,6 +49,7 @@ from ruamel.yaml import YAML
 
 from gnd.model import MAX_YAML_EVENTS, Model, ValidationIssue
 from gnd.popvalidate import population_validate
+from gnd.yaml_comments import configure_comment_scanner
 
 MAX_POPULATION_BYTES = 10 * 1024 * 1024  # 10 MB
 
@@ -393,7 +394,7 @@ def _parse_document_bytes(data: bytes, *, suffix: str, source: str) -> Any:
     # pre-scan the event stream and reject aliases before any node is built.
     from ruamel.yaml.events import AliasEvent
 
-    yaml = YAML(typ="safe")
+    yaml = configure_comment_scanner(YAML(typ="safe"))
     for count, event in enumerate(yaml.parse(text), start=1):
         if count > MAX_YAML_EVENTS:
             raise PopulationLoadError(

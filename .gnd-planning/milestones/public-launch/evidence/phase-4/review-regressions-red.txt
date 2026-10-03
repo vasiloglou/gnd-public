@@ -1,0 +1,14 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_contributor_controls_reject[skill_reference] _______________
+tests/test_contributor_preparation.py:62: in test_contributor_controls_reject
+    with pytest.raises(AssertionError):
+E   Failed: DID NOT RAISE AssertionError
+_____________ test_workflow_control_rejects_overwriting_comparison _____________
+tests/test_release_preparation.py:111: in test_workflow_control_rejects_overwriting_comparison
+    with pytest.raises(AssertionError):
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_contributor_preparation.py::test_contributor_controls_reject[skill_reference]
+FAILED tests/test_release_preparation.py::test_workflow_control_rejects_overwriting_comparison
+2 failed in 0.09s

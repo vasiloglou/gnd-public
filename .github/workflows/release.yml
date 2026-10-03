@@ -1,0 +1,41 @@
+name: Prepare release artifacts (no publication)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e
+        with:
+          version: '0.10.10'
+      - run: uv build --out-dir candidate/release
+      - name: Rebuild comparison wheel separately
+        run: |
+          mkdir -p candidate/source
+          tar -xzf candidate/release/*.tar.gz -C candidate/source
+          uv build --wheel candidate/source/* --out-dir "$PWD/candidate/comparison"
+      - name: Record identities
+        run: |
+          git rev-parse HEAD > candidate/SOURCE_COMMIT
+          python --version > candidate/BUILD_PROFILE
+          uv --version >> candidate/BUILD_PROFILE
+          cd candidate
+          sha256sum release/* comparison/* > SHA256SUMS
+          sha256sum -c SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: preparation-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            candidate/release/
+            candidate/comparison/
+            candidate/SHA256SUMS
+            candidate/SOURCE_COMMIT
+            candidate/BUILD_PROFILE
+          if-no-files-found: error
+          retention-days: 30

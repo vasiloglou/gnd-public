@@ -1,0 +1,30 @@
+{
+  "index_files": 936,
+  "index_bytes": 11595847,
+  "largest_blob": 584130,
+  "new_example_files": 8,
+  "new_example_bytes": 12461,
+  "machine": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "uv": "uv 0.10.10 (Homebrew 2026-03-13)",
+  "roots": {
+    ".codex": {
+      "managed_links": 16,
+      "real_directories": 2
+    },
+    ".claude": {
+      "managed_links": 16,
+      "real_directories": 2
+    }
+  },
+  "measurement_interpreter": "3.14.4",
+  "test_interpreter": "3.11.15",
+  "planning_markdown_and_json_bytes": 2324423,
+  "authored_planning_prose_and_notes_bytes": 176941,
+  "planning_count_boundary": "Authored prose/notes separately from existing generated migration manifests and retained raw evidence; total .md/.json is also reported.",
+  "cumulative_phase_paths_before_record": 65,
+  "changed_runtime_lines_including_existing_adaptations": 280,
+  "new_runtime_beyond_existing_adaptations": 0,
+  "test_helper_added_lines_including_existing_selected_tests": 813,
+  "docs_planning_added_lines_before_record": 884
+}

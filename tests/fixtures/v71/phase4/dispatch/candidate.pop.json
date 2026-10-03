@@ -1,0 +1,23 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v71-dispatch-sessions@1",
+    "source": "fixture",
+    "covers": [
+      "dispatch_work"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_work": [
+      {
+        "shipment_code": "A",
+        "units": 1
+      },
+      {
+        "shipment_code": "B",
+        "units": 2
+      }
+    ]
+  }
+}

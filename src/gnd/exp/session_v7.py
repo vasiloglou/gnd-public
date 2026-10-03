@@ -918,7 +918,7 @@ async def run(
                 result = SessionResult(
                     schema_version=7 if contract.schema_version == 8 else 6,
                     judgment_admission=None
-                    if best is None
+                    if contract.schema_version != 8 or best is None
                     else {
                         r.case_id: bool(
                             r._judgment_report

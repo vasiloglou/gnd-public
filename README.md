@@ -1,17 +1,17 @@
 # GND
 
-GND is a conceptual-model-driven development framework. This repository is
-**private runtime staging**: P2 provides the coherent package and bounded
-installed-wheel checks. P3 behavior/workflow acceptance and P4 release readiness
-remain pending. This is not a public release or a certified runtime matrix.
+GND checks facts against a conceptual model: declare the rules, inspect a failed
+check, repair the facts and check again. Use the CLI or Python API. Generic
+modeling and checking are included; application-specific products and hosted
+commercial services are not implied.
 
-Start with [CONTRIBUTING](CONTRIBUTING.md), [agent guidance](AGENTS.md) and the
-[effective launch plan](.gnd-planning/milestones/public-launch/notes/public-launch-manifesto-and-plan.md).
-Selected ordinary checks use this target package, without a private source
-checkout. See [bootstrap limits](docs/development/bootstrap.md) for the remaining
-P4-C5 contributor exercise and optional live-review prerequisites.
+Start with the [no-key dispatch tutorial](docs/quickstart.md), then its software
+release example. All inputs ship in the package. See [contributing](CONTRIBUTING.md),
+[support](docs/support.md), [compatibility](docs/compatibility.md) and
+[advanced workflows](docs/advanced.md).
 
-Names remain GND / get-nick-done / gnd. Owned selected content is Apache-2.0
-licensed. Private application data and the original historical assurance bundle
-are absent; missing or stale assurance is reported unavailable. Units remain
-source-owned until an accepted handoff, and no target publisher is enabled.
+**Release preparation, not an accepted public release.** Phase 3 regression
+acceptance and Phase 4 candidate sign-off remain pending. A passing mechanical
+check does not certify source truth, completeness or universal correctness.
+Missing/stale assurance remains unavailable. Names remain get-nick-done / gnd;
+owned code is Apache-2.0, with third-party attribution in NOTICE.

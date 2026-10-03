@@ -27,6 +27,7 @@ from gnd.artifacts import (
     read_regular_bounded,
 )
 from gnd.model import MAX_MODEL_BYTES, MAX_YAML_EVENTS, ModelValidationError, load_model
+from gnd.yaml_comments import configure_comment_scanner
 
 MAX_RAI_MODEL_BYTES = MAX_MODEL_BYTES
 RAI_ALIAS_SCHEMA_VERSION = 1
@@ -108,7 +109,7 @@ def parse_rai_model_bytes(data: bytes, *, source: str) -> MutableMapping[str, An
 
     try:
         text = data.decode("utf-8")
-        yaml = YAML(typ="rt")
+        yaml = configure_comment_scanner(YAML(typ="rt"))
         yaml.preserve_quotes = True
         documents = 0
         for count, event in enumerate(yaml.parse(text), start=1):

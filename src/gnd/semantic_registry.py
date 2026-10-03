@@ -282,7 +282,7 @@ def _snapshot_rows() -> Iterator[Branch]:
             ("vacuous", "vacuous", None, "any"),
         ):
             yield _row("snapshot", "anchored", variant, event, outcome,
-                       owner="gnd.checker._anchored_verdict", modality=modality,
+                       owner="gnd.checker._anchored_verdicts", modality=modality,
                        reason=reason, inputs=("identity", "role-order", "covers"))
         yield _row("snapshot", "anchored", variant, "unchecked-derived-unknown", "unchecked",
                    owner="gnd.checker._partial_constraint_report", reason="derived-unknown",

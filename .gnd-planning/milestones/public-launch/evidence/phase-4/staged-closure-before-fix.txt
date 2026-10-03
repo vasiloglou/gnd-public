@@ -1,0 +1,38 @@
+Evidence edited only to replace machine paths and strip trailing whitespace.
+Index snapshot of explicit package + focused consumer/fixture closure; no untracked working-tree helpers.
+............................................F                            [100%]
+=================================== FAILURES ===================================
+_ test_owned_import_rewrites_all_four_classes_in_order_and_identity_stays_exact _
+<INDEX-SNAPSHOT>/src/gnd/artifacts.py:488: in _open_root
+    info = root.lstat()
+           ^^^^^^^^^^^^
+<HOME>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1163: in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<HOME>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1013: in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/private<INDEX-SNAPSHOT>/tests/fixtures/v61-phase1/import'
+
+The above exception was the direct cause of the following exception:
+<INDEX-SNAPSHOT>/src/gnd/rai_import.py:387: in plan_rai_import
+    data, _snapshot = read_regular_bounded(
+<INDEX-SNAPSHOT>/src/gnd/artifacts.py:895: in read_regular_bounded
+    root_fd = _open_root(root_path, expected_identity=expected_root)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<INDEX-SNAPSHOT>/src/gnd/artifacts.py:490: in _open_root
+    raise ArtifactError(f"artifact root {root} could not be inspected: {error}") from error
+E   gnd.artifacts.ArtifactError: artifact root /private<INDEX-SNAPSHOT>/tests/fixtures/v61-phase1/import could not be inspected: [Errno 2] No such file or directory: '/private<INDEX-SNAPSHOT>/tests/fixtures/v61-phase1/import'
+
+The above exception was the direct cause of the following exception:
+tests/test_public_alias_schema_guards.py:75: in test_owned_import_rewrites_all_four_classes_in_order_and_identity_stays_exact
+    unchanged = plan_rai_import(RaiImportRequest(identity, tmp_path / 'identity-out', 'public/identity.orm.yaml', None))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<INDEX-SNAPSHOT>/src/gnd/rai_import.py:394: in plan_rai_import
+    raise RaiImportMissing("rai-import:missing", "$", str(error)) from error
+E   gnd.rai_import.RaiImportMissing: rai-import:missing at $: artifact root /private<INDEX-SNAPSHOT>/tests/fixtures/v61-phase1/import could not be inspected: [Errno 2] No such file or directory: '/private<INDEX-SNAPSHOT>/tests/fixtures/v61-phase1/import'
+=========================== short test summary info ============================
+FAILED tests/test_public_alias_schema_guards.py::test_owned_import_rewrites_all_four_classes_in_order_and_identity_stays_exact
+1 failed, 44 passed in 4.02s
+
+EXIT 1

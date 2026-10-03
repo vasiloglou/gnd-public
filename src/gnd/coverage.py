@@ -501,17 +501,26 @@ def _declared_arm_errors(
     another and the caller falls back to the whole error set.
     """
 
-    arms = schema.get("oneOf", ())
+    arms = error.schema.get("oneOf", ())
     declared = document.get("schema_version")
     selected: list[Any] = []
     for sub in error.context or ():
-        index = next((step for step in sub.absolute_schema_path if isinstance(step, int)), None)
+        index = next((step for step in sub.relative_schema_path if isinstance(step, int)), None)
         if index is None or index >= len(arms):
             continue
-        tag = arms[index].get("properties", {}).get("schema_version", {})
+        arm = arms[index]
+        reference = arm.get("$ref", "")
+        if reference.startswith("#/$defs/"):
+            arm = schema.get("$defs", {}).get(reference.removeprefix("#/$defs/"), arm)
+        tag = arm.get("properties", {}).get("schema_version", {})
         allowed = [tag["const"]] if "const" in tag else tag.get("enum", ())
         if declared in allowed:
-            selected.append(sub)
+            nested = (
+                _declared_arm_errors(sub, schema, sub.instance)
+                if sub.validator == "oneOf" and isinstance(sub.instance, Mapping)
+                else []
+            )
+            selected.extend(nested or [sub])
     return selected
 
 

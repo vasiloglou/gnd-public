@@ -1,0 +1,119 @@
+{
+  "version": 4,
+  "model_id": "urn:gnd-fixture:v71-dispatch-sessions@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "dispatch_shipment",
+      "name": "Shipment",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "dispatch_count",
+      "name": "Units",
+      "kind": "value",
+      "primitive": "Integer"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "dispatch_work",
+      "reading": "{Shipment} relates {Units}",
+      "roles": [
+        {
+          "role_name": "shipment_code",
+          "object_type": "dispatch_shipment"
+        },
+        {
+          "role_name": "units",
+          "object_type": "dispatch_count"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_approved",
+      "reading": "{Shipment}",
+      "roles": [
+        {
+          "role_name": "shipment_code",
+          "object_type": "dispatch_shipment"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "id": "dispatch_positive",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "dispatch_work",
+          "bind": {
+            "shipment_code": "$k",
+            "units": "$q"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "left": "$q",
+          "operator": ">=",
+          "right": 1
+        }
+      },
+      "source": "user-supplied",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Each submitted item needs at least one unit of declared work."
+      }
+    },
+    {
+      "id": "dispatch_approved_work",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "dispatch_work",
+          "bind": {
+            "shipment_code": "$k",
+            "units": "$q"
+          }
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "fact_type": "dispatch_approved",
+              "bind": {
+                "shipment_code": "$k"
+              }
+            }
+          ]
+        }
+      },
+      "source": "user-supplied",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Submitted work must occur in the fixed approval roster."
+      }
+    }
+  ],
+  "rejected_proposals": [],
+  "reference_populations": [
+    {
+      "id": "catalog",
+      "path": "references/catalog.pop.json",
+      "sha256": "0a0a16cffc89b1300965c44dbeaaa95f529716f6589c4a40550e94d91b309691",
+      "fact_types": [
+        "dispatch_approved"
+      ]
+    }
+  ]
+}

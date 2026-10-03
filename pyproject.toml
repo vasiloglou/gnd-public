@@ -9,6 +9,8 @@ authors = [
     { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
 ]
 requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 # D-18: the base install stays these three. Phase 2's synthetic-data stack
 # (polyfactory / faker / hypothesis) lands behind an optional extra when there is
 # something to put in it — do NOT scaffold an empty extra now. A fourth entry
@@ -31,6 +33,10 @@ dependencies = [
 # [project.dependencies], fails tests/test_packaged_skills.py.
 [project.optional-dependencies]
 synth = ["faker==40.36.0"]
+
+[project.urls]
+Repository = "https://github.com/vasiloglou/gnd-public"
+Issues = "https://github.com/vasiloglou/gnd-public/issues"
 
 [project.scripts]
 # PKG-01. The generated wrapper wraps the call in `sys.exit()`, so `main`'s

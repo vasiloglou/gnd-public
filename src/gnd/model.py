@@ -49,6 +49,7 @@ from gnd.terms import (
     is_function_term,
     term_variables,
 )
+from gnd.yaml_comments import configure_comment_scanner
 
 #: Fixed pattern counting {Type} / {Type:role} placeholders in readings.
 _PLACEHOLDER = re.compile(r"\{[^{}]+\}")
@@ -3502,7 +3503,9 @@ def _derivation_dependency_closures(
     for component in derivation_strata(doc):
         members = set(component)
         leaves: set[str] = set()
-        complete = True
+        complete = all(
+            isinstance(fact_types[current].get("id"), str) for current in component
+        )
         reason: str | None = None
         for current in component:
             _DERIVATION_CLASSIFICATION_WORK += 1
@@ -4884,10 +4887,10 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
         except PopulationLoadError:
             pass  # A YAML flow mapping may start with an unquoted key.
     if doc is None:
-        for count, event in enumerate(YAML(typ="safe").parse(text), 1):
+        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
             if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
                 raise ModelLoadError("model YAML alias/event guard refused input")
-        doc = YAML(typ="rt").load(text)
+        doc = configure_comment_scanner(YAML(typ="rt")).load(text)
     issues = _layer1_structural(doc)
     if issues:
         raise ModelValidationError(issues)

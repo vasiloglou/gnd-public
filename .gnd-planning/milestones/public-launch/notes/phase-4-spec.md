@@ -16,12 +16,12 @@ Effective sources, in precedence order:
 | [r3 amendment](public-launch-plan-r3-amendments.md) | `ece90d1461a320730b524f80e72c0430082e0a1aa1cc46e90664855de6de6514` |
 | [r2 amendments](public-launch-plan-r2-amendments.md) | `05d539e9fc72378678a75e71dc110e6993d279e864b5804cee836974d4d3e0ba` |
 | [r1 plan](public-launch-manifesto-and-plan.md) | `ee92ef92097edaf9cbb02b27425b4d12102dcf069dc36e7da8560389cc62edb3` |
-| [completed P1](../004-phase-1.md) | `07494dde06fa625b9281338ef6f7433b2e1106bedfe0cb4e4abf000874b0d655` |
-| [completed P2](../005-phase-2.md) | `8df94b9c1ff2e70ed2060b24fb4b885487ea9765d1300974a2c1f9b335e847c6` |
+| [completed P1 target successor](../001-phase-1.md) | `07494dde06fa625b9281338ef6f7433b2e1106bedfe0cb4e4abf000874b0d655` |
+| [completed P2 target successor](../002-phase-2.md) | `8df94b9c1ff2e70ed2060b24fb4b885487ea9765d1300974a2c1f9b335e847c6` |
 
-Also read: [decision register](../migration/decisions.md),
-[P3 pause](phase-3-continuation-status.md), and the
-[gap review](phase-4-gap-review.md). Its G1–G12 observations are the work inventory,
+Also read: [owner rulings](owner-rulings.md),
+the source P3 pause note (source-only origin citation), and the
+the source Phase 4 gap review (source-only origin citation). Its G1–G12 observations are the work inventory,
 not acceptance findings. Source HEAD is `3131a974e5e58b4f6d7766ec4ddf82b5df6dbd6a`;
 target HEAD is `40bd8958d1df24c0751051e2412535cec53746ce`. Both have existing
 uncommitted work; pin the reviewed implementation diff at execution. No panel
@@ -379,3 +379,83 @@ implementability sweep stands; budgets/compatibility remain §§5/10. Optional
 spec panel omitted; required independent diff review retained. Phase 3 stays
 paused and final candidate sign-off remains pending. Approved pre-append spec
 SHA-256: `3a8dcb88bfd33d78ef066e7d7cecb6198509e3ed0283f589ff967e331d3f2708`.
+
+## Implementation findings and bounded execution amendments — 2026-10-03
+
+- I1: current report wires use `constraints[1]` rather than model IDs for
+  deadline failures. The test resolves the approved deadline ID in model data
+  and requires exactly one matching guarded failure in both CLI/API. The expected
+  0/1/0/3 answers and underlying rules are unchanged. Initial harness failure
+  was corrected; it did not justify changing domain inputs.
+- I2: the first build smoke reused `release` for its venv and artifact directory.
+  It failed before install; venv names now have a venv- prefix. Both artifact
+  origins remain separate, even though their measured hashes happen to agree.
+- I3: the measured preparation host is macOS arm64/Python 3.11.15/uv 0.10.10.
+  This is additional preparation observation, not acceptance of the proposed
+  macOS 3.13 or Ubuntu 3.11 support profile; final profiles remain P3 work.
+- I4: direct T2b successors cover nested/ref/unknown tagged unions, malformed
+  derivation IDs, successful v7 field absence and real registry owner resolution
+  in test_runtime_preparation.py. Existing v8 reconstruction/source-binding
+  controls ran separately (14 selected tests with T2b before its scanner additions).
+  They remain P3 pending-test evidence, not a broad archive transfer. The v7
+  helper's small local fixture closure is explicitly carried with the new tests.
+- I5: T5 successor checks replace only obsolete current bootstrap/README pins in
+  test_development_scaffold.py; historical ledger/census gates are not selected.
+- I6: changed-reference refusal is a separately identified successor case (exit 3),
+  adding protection to the approved missing-reference story without changing its
+  answer. Scanner StringIO/string and safe/round-trip parity cases complement
+  retained short-comment copying bounds; MIT attribution is retained in source
+  and NOTICE.
+
+Each amendment above is **delegated approval (auto=true)** under the user's
+Phase 4 scope. D1–D7 instrument, compatibility and §10 budgets stand. The approved
+corpus answer meanings remain unchanged; no new format/API or semantic rule lands.
+T2b uses the direct successor file rather than committing an unrelated registry
+module or compressed judgment test closure. T3 identity validation executes the
+documented SHA-256 primitive offline over both wheel/sdist; future service
+transport is unimplemented and remains a publication prerequisite. The release
+workflow prepares and retains artifacts only. Final clean-install/CI acceptance
+and candidate sign-off remain deferred per r3.
+
+Verification refinement: include only
+test_development_scaffold.py::test_readme_reflects_current_runtime_stage in the
+ordinary gate; current contributor link/twin closure lives in T5. Changed skill
+counts were measured at 16 managed links and two real directories per root.
+No discovery bytes changed. Added tests preserve default lane exclusions; T4
+remains the single explicitly selected distribution node.
+
+### Independent review disposition and target adaptation — 2026-10-03
+
+F1/F2 reproduced and triaged blocking before repair: import namespace depended
+on unstaged conftest; identity fixture absent from index. Switch to existing
+`support` namespace and carry the exact 512-byte identity fixture; expectations
+unchanged. F3/F4 reproduced and triaged hardening of this phase's own guards:
+matching broken skill references and comparison overwrite both passed. Added
+regressions each failed against pre-fix guards (two pytest failures), then
+repaired reference closure and actual workflow command parsing.
+The reviewer retained four findings; its executable and sandbox limits stand.
+
+Target successor adaptation: links above now resolve to accepted target P1/P2
+records and owner rulings. The listed hashes remain explicitly SOURCE record
+identities, not hashes of the differently numbered target successors. Source-only
+pause/gap artifacts are origin citations, never runtime prerequisites. Source
+spec remains canonical design; this target copy declares these adaptations.
+
+All repairs/adaptations have **delegated approval (auto=true)** under `4 auto`.
+Corpus expected outcomes, §10 budgets and runtime contracts are unchanged.
+Bounded focused independent follow-up: one additional CLI reading, then stop;
+maximum two reviews total. Round 1: four findings, two blocking/two hardening,
+zero from a previous review repair. Round 2 checks only repairs and neighbors;
+no optional spec panel or broad suite selected.
+
+### Preparation gate outcome — 2026-10-03
+
+Selected focused gate: 98 passed, 1 deselected, exit 0. Explicit single-node
+two-wheel smoke: 1 passed, exit 0. Index-only package/test/fixture closure:
+45 passed, exit 0, with repository root excluded from console-style imports.
+The follow-up CLI did not return a review: it started orchestrating another
+reviewer and was stopped before nested execution (exit 1). No second opinion
+or convergence is claimed; one complete adversarial reviewer is one reviewer.
+Both original review hardening regressions were proven red before fixing.
+Preparation is complete once its record lands; P3 stays paused and Phase 4
+candidate sign-off pending. No additional review retry or external action.

@@ -4,3 +4,7 @@ Copyright 2026 Nikolaos Vasiloglou
 Owned selected GND content is distributed under Apache License 2.0.
 Original private consumer fixtures and historical upstream panel implementation
 are not included. This notice grants no rights in excluded third-party material.
+
+The comment scanner in gnd/yaml_comments.py adapts ruamel.yaml 0.19.1
+by Anthon van der Neut, Ruamel bvba, under the MIT license. Its copyright
+and complete license text are retained in that shipped source file.

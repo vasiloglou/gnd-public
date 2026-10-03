@@ -1,0 +1,188 @@
+Evidence edited only to replace machine paths and strip trailing whitespace.
+Pre-fix modules from 40bd8958d1df24c0751051e2412535cec53746ce; current focused test/fixture boundary and other package modules.
+Temporary package takes precedence over editable install (asserted before pytest).
+.F.F..F.FFFF....FFFFFFFFFFFFF.F                                          [100%]
+=================================== FAILURES ===================================
+___________ test_tagged_union_errors_select_only_claimed_arm[1-True] ___________
+tests/test_runtime_preparation.py:27: in test_tagged_union_errors_select_only_claimed_arm
+    assert len(selected) == 1
+E   assert 0 == 1
+E    +  where 0 = len([])
+___________ test_tagged_union_errors_select_only_claimed_arm[2-True] ___________
+tests/test_runtime_preparation.py:27: in test_tagged_union_errors_select_only_claimed_arm
+    assert len(selected) == 1
+E   assert 0 == 1
+E    +  where 0 = len([])
+_____________ test_nested_union_uses_inner_schema_and_relative_arm _____________
+tests/test_runtime_preparation.py:45: in test_nested_union_uses_inner_schema_and_relative_arm
+    assert selected[0].validator == 'required'
+E   AssertionError: assert 'oneOf' == 'required'
+E
+E     - required
+E     + oneOf
+_______ test_derivation_closure_cannot_call_malformed_id_complete[None] ________
+tests/test_runtime_preparation.py:63: in test_derivation_closure_cannot_call_malformed_id_complete
+    assert complete == isinstance(identifier, str)
+E   assert True == False
+E    +  where False = isinstance(None, str)
+________ test_derivation_closure_cannot_call_malformed_id_complete[17] _________
+tests/test_runtime_preparation.py:63: in test_derivation_closure_cannot_call_malformed_id_complete
+    assert complete == isinstance(identifier, str)
+E   assert True == False
+E    +  where False = isinstance(17, str)
+_____________ test_successful_v7_session_has_no_v8_judgment_field ______________
+tests/test_runtime_preparation.py:70: in test_successful_v7_session_has_no_v8_judgment_field
+    assert result['exit_code'] == 0
+E   assert 70 == 0
+----------------------------- Captured stdout call -----------------------------
+CREATED <TMP-PATH>
+  declares Q1: Does the declared candidate meet the frozen relation?
+INTERNAL ERROR: persisted session result disagrees with controller result
+________________ test_registry_owners_resolve_to_real_callables ________________
+tests/test_runtime_preparation.py:81: in test_registry_owners_resolve_to_real_callables
+    assert callable(getattr(importlib.import_module(module_name), attribute))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_anchored_verdict'
+_ test_mapping_backed_transition_witness_reaches_json[pre_snapshot-transition:compiled-subset:n-a:violated:alethic-compiled-subset-extra0] _
+tests/test_transition_mapping_totality.py:20: in test_mapping_backed_transition_witness_reaches_json
+    payload = build_transition_payload(1,'model.orm.yaml',evaluated=True,transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+_ test_mapping_backed_transition_witness_reaches_json[frame-transition:frame-delta:undeclared-assert:violated:alethic-frame-delta-extra1] _
+tests/test_transition_mapping_totality.py:20: in test_mapping_backed_transition_witness_reaches_json
+    payload = build_transition_payload(1,'model.orm.yaml',evaluated=True,transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+__ test_nested_transition_locations_normalize_without_mutating[pre_snapshot] ___
+tests/test_transition_mapping_totality.py:50: in test_nested_transition_locations_normalize_without_mutating
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+__ test_nested_transition_locations_normalize_without_mutating[post_snapshot] __
+tests/test_transition_mapping_totality.py:50: in test_nested_transition_locations_normalize_without_mutating
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+__ test_nested_transition_locations_normalize_without_mutating[intermediate] ___
+tests/test_transition_mapping_totality.py:50: in test_nested_transition_locations_normalize_without_mutating
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+______ test_nested_transition_locations_normalize_without_mutating[step] _______
+tests/test_transition_mapping_totality.py:50: in test_nested_transition_locations_normalize_without_mutating
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+________ test_mapping_transition_witness_retains_nonfinite_refusal[nan] ________
+tests/test_transition_mapping_totality.py:63: in test_mapping_transition_witness_retains_nonfinite_refusal
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+________ test_mapping_transition_witness_retains_nonfinite_refusal[inf] ________
+tests/test_transition_mapping_totality.py:63: in test_mapping_transition_witness_retains_nonfinite_refusal
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+_______ test_mapping_transition_witness_retains_nonfinite_refusal[-inf] ________
+tests/test_transition_mapping_totality.py:63: in test_mapping_transition_witness_retains_nonfinite_refusal
+    payload = build_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+_________ test_computed_post_builder_inherits_mapping_witness_totality _________
+tests/test_transition_mapping_totality.py:72: in test_computed_post_builder_inherits_mapping_witness_totality
+    payload = build_plan_transition_payload(1, 'model.orm.yaml', evaluated=True, transition_report=report)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<BEFORE>/src/gnd/report.py:523: in build_plan_transition_payload
+    payload = build_transition_payload(
+<BEFORE>/src/gnd/report.py:477: in build_transition_payload
+    dumped = transition_report.model_dump(mode="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.11/site-packages/pydantic/main.py:475: in model_dump
+    return self.__pydantic_serializer__.to_python(
+E   pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: <class 'mappingproxy'>
+_ test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness0-expected_keys0-True] _
+tests/test_transition_mapping_totality.py:94: in test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy
+    with pytest.raises(NonJsonValueError):
+E   Failed: DID NOT RAISE NonJsonValueError
+_ test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness1-expected_keys1-True] _
+tests/test_transition_mapping_totality.py:94: in test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy
+    with pytest.raises(NonJsonValueError):
+E   Failed: DID NOT RAISE NonJsonValueError
+_ test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness2-expected_keys2-True] _
+tests/test_transition_mapping_totality.py:94: in test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy
+    with pytest.raises(NonJsonValueError):
+E   Failed: DID NOT RAISE NonJsonValueError
+_ test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness4-expected_keys4-True] _
+tests/test_transition_mapping_totality.py:94: in test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy
+    with pytest.raises(NonJsonValueError):
+E   Failed: DID NOT RAISE NonJsonValueError
+=========================== short test summary info ============================
+FAILED tests/test_runtime_preparation.py::test_tagged_union_errors_select_only_claimed_arm[1-True]
+FAILED tests/test_runtime_preparation.py::test_tagged_union_errors_select_only_claimed_arm[2-True]
+FAILED tests/test_runtime_preparation.py::test_nested_union_uses_inner_schema_and_relative_arm
+FAILED tests/test_runtime_preparation.py::test_derivation_closure_cannot_call_malformed_id_complete[None]
+FAILED tests/test_runtime_preparation.py::test_derivation_closure_cannot_call_malformed_id_complete[17]
+FAILED tests/test_runtime_preparation.py::test_successful_v7_session_has_no_v8_judgment_field
+FAILED tests/test_runtime_preparation.py::test_registry_owners_resolve_to_real_callables
+FAILED tests/test_transition_mapping_totality.py::test_mapping_backed_transition_witness_reaches_json[pre_snapshot-transition:compiled-subset:n-a:violated:alethic-compiled-subset-extra0]
+FAILED tests/test_transition_mapping_totality.py::test_mapping_backed_transition_witness_reaches_json[frame-transition:frame-delta:undeclared-assert:violated:alethic-frame-delta-extra1]
+FAILED tests/test_transition_mapping_totality.py::test_nested_transition_locations_normalize_without_mutating[pre_snapshot]
+FAILED tests/test_transition_mapping_totality.py::test_nested_transition_locations_normalize_without_mutating[post_snapshot]
+FAILED tests/test_transition_mapping_totality.py::test_nested_transition_locations_normalize_without_mutating[intermediate]
+FAILED tests/test_transition_mapping_totality.py::test_nested_transition_locations_normalize_without_mutating[step]
+FAILED tests/test_transition_mapping_totality.py::test_mapping_transition_witness_retains_nonfinite_refusal[nan]
+FAILED tests/test_transition_mapping_totality.py::test_mapping_transition_witness_retains_nonfinite_refusal[inf]
+FAILED tests/test_transition_mapping_totality.py::test_mapping_transition_witness_retains_nonfinite_refusal[-inf]
+FAILED tests/test_transition_mapping_totality.py::test_computed_post_builder_inherits_mapping_witness_totality
+FAILED tests/test_transition_mapping_totality.py::test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness0-expected_keys0-True]
+FAILED tests/test_transition_mapping_totality.py::test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness1-expected_keys1-True]
+FAILED tests/test_transition_mapping_totality.py::test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness2-expected_keys2-True]
+FAILED tests/test_transition_mapping_totality.py::test_nonstring_witness_keys_keep_json_mode_order_and_collision_policy[witness4-expected_keys4-True]
+21 failed, 10 passed in 0.96s
+
+EXIT 1

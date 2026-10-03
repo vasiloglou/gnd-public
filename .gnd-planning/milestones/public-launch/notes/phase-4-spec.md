@@ -459,3 +459,13 @@ or convergence is claimed; one complete adversarial reviewer is one reviewer.
 Both original review hardening regressions were proven red before fixing.
 Preparation is complete once its record lands; P3 stays paused and Phase 4
 candidate sign-off pending. No additional review retry or external action.
+
+### Completion record budget amendment — delegated approval, 2026-10-03
+
+Retain the original 1,200-line documentation/planning ceiling. Before authoring
+the evidence-bound completion record, increase it to 1,400 lines under the
+existing Phase 4 auto delegation: 884 measured authored lines plus about 250
+record/digest-binding lines, status updates and final measurements leave too
+little room at 1,200. The added 200 lines are a calibrated allowance for
+proportionate closure evidence, not product scope. All other budgets and
+compatibility decisions stand; no archival campaign or tests are dropped.

@@ -1,13 +1,14 @@
 # Phase 4 — independent Codex CLI review
 
 2026-10-03; gpt-6-astra, xhigh, ephemeral read-only harness; prompt on stdin.
-Retained response below is verbatim except absolute target paths are replaced
-with <TARGET>, and Markdown trailing spaces were stripped. One reviewer is one reviewer. This is not a panel or acceptance.
+Retained response below is verbatim except absolute target file links were
+converted to plain repository citations, other absolute target paths replaced
+with <TARGET>, and Markdown trailing spaces stripped. One reviewer is one reviewer. This is not a panel or acceptance.
 
 Found **two blocking test-closure defects and two hardening gaps**. Scope was exactly the staged diff plus `4529d58`, against baseline `40bd8958`. One reviewer is one reviewer, not a panel.
 
 1. **Blocking — the session test depends on unstaged P3 import setup.**
-   [tests/test_runtime_preparation.py:67](<TARGET>/tests/test_runtime_preparation.py:67) imports `tests.support.v71_session_cases`. The committed conftest does not add the repository root to `sys.path`; that addition exists only in the unstaged P3 conftest. Consequently, the documented `uv run pytest` console entry cannot resolve this import from the proposed committed tree.
+   `tests/test_runtime_preparation.py:67` imports `tests.support.v71_session_cases`. The committed conftest does not add the repository root to `sys.path`; that addition exists only in the unstaged P3 conftest. Consequently, the documented `uv run pytest` console entry cannot resolve this import from the proposed committed tree.
 
    Read-only reproducer:
    ```sh
@@ -18,7 +19,7 @@ Found **two blocking test-closure defects and two hardening gaps**. Scope was ex
    **Repair:** use the existing `support.v71_session_cases` namespace, or explicitly include the minimal required bootstrap dependency.
 
 2. **Blocking — the alias test requires an untracked fixture.**
-   [tests/test_public_alias_schema_guards.py:74](<TARGET>/tests/test_public_alias_schema_guards.py:74) reads `tests/fixtures/v61-phase1/import/identity.source.orm.yaml`, which is absent from the index and corpus commit.
+   `tests/test_public_alias_schema_guards.py:74` reads `tests/fixtures/v61-phase1/import/identity.source.orm.yaml`, which is absent from the index and corpus commit.
 
    Reproducer:
    ```sh
@@ -29,14 +30,14 @@ Found **two blocking test-closure defects and two hardening gaps**. Scope was ex
    **Repair:** include that specific fixture in the reviewed closure or make this small input self-contained.
 
 3. **Hardening — the contributor checker does not validate skill references.**
-   [tests/test_contributor_preparation.py:27](<TARGET>/tests/test_contributor_preparation.py:27) checks links only in CONTRIBUTING and sample documents. Skill files receive byte/mode comparisons, without reference validation.
+   `tests/test_contributor_preparation.py:27` checks links only in CONTRIBUTING and sample documents. Skill files receive byte/mode comparisons, without reference validation.
 
    **Reproducer:** append an identical `[Required reference](definitely-missing-phase4-reference.md)` to both process-phase twins, then call `check_current(root)`. I reproduced this through in-memory file-read overrides: **the checker accepts it**. The existing `broken_reference` mutation targets CONTRIBUTING, so it does not exercise the approved broken-*skill*-reference story.
 
    **Repair:** check the bounded skill-reference closure and add a mutation that preserves twin equality while breaking a required reference.
 
 4. **Hardening — the workflow test accepts an overwriting comparison build.**
-   [tests/test_release_preparation.py:23](<TARGET>/tests/test_release_preparation.py:23) merely requires both directory names somewhere in the YAML.
+   `tests/test_release_preparation.py:23` merely requires both directory names somewhere in the YAML.
 
    **Reproducer:** replace the comparison command’s `--out-dir "$PWD/candidate/comparison"` with `--out-dir "$PWD/candidate/release"`, then call `test_workflow_never_publishes_and_keeps_origins_separate()`. Reproduced in memory: **it passes**, because the artifact-upload list still mentions `candidate/comparison`.
 

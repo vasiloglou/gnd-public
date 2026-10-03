@@ -24,3 +24,14 @@ measured support matrix; no-key examples; target-only contributor exercise with
 module/tool/both-root resolved paths; source commit and three artifact hashes;
 full payload/history/service surface disclosure check; version and release
 identity decisions. Publication is a later separately authorized step.
+
+## Prepared input handoff — 2026-10-03
+
+Prepared product commit: `5059dba` (full identity in the preparation record).
+Focused gate: 98 passed, 1 deselected; both preparation wheel origins install
+and run examples; staged package/fixture closure: 45 passed. These are preparation
+results. The recorded artifact hashes are provisional smoke identities, not
+accepted candidate files. Artifacts were temporary and are not retained for
+promotion; the final candidate must be built once before resumed Phase 3 validates its
+exact artifacts. Candidate sign-off follows those checks.
+Phase 3 remains paused and requires its own resume instruction.

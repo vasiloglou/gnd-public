@@ -1,3 +1,5 @@
+Preparation wheel payload: release 5594547 bytes
+Preparation wheel payload: sdist-wheel 5594547 bytes
 Preparation artifact identities: [('release', 'b5b7e67dbabe957db7a8cbc2aee992c203457fd2c161e0aaaff00bd3354e3072'), ('sdist-wheel', 'b5b7e67dbabe957db7a8cbc2aee992c203457fd2c161e0aaaff00bd3354e3072'), ('sdist', '323825b0544b9389e083b2b55405afb84b57ceb59920de35d6a667ddd480651d')]
 .
-1 passed in 3.93s
+1 passed in 3.97s

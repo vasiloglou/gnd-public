@@ -69,6 +69,10 @@ def test_retained_candidate_identity(candidate):
             assert len(names) == len(set(names))
             assert sum(p.file_size for p in archive.infolist()) <= 12 * 1024 * 1024
             assert 'gnd/yaml_comments.py' in names
+            from test_packaged_skills import EXPECTED_SKILL_FILES
+            skill_names = {n.removeprefix('gnd/skills/') for n in names
+                           if n.startswith('gnd/skills/') and not n.endswith('/')}
+            assert skill_names == EXPECTED_SKILL_FILES
             assert sum(n.endswith('/SKILL.md') for n in names) == 16
             assert any(n.endswith('/LICENSE') for n in names)
             assert any(n.endswith('/NOTICE') for n in names)
@@ -179,6 +183,8 @@ assert Path(gnd.__file__).resolve().is_relative_to(Path(sys.prefix).resolve())
 assert Path(importlib.metadata.distribution('get-nick-done').locate_file('')).resolve().is_relative_to(Path(sys.prefix).resolve())
 class Gate:
  def __init__(self): self.skips=[];self.passed=0
+ def pytest_collectreport(self,report):
+  if report.skipped:self.skips.append(report.nodeid)
  def pytest_runtest_logreport(self,report):
   if report.skipped:self.skips.append(report.nodeid)
   if report.when=='call' and report.passed:self.passed+=1
@@ -197,6 +203,7 @@ def test_installed_behavior_families(installed):
 def test_target_only_contributor_lifecycle(installed):
     installed_pytest(installed, [
         'test_public_installer.py', 'test_contributor_preparation.py',
+        'test_packaged_skills.py',
         'test_development_scaffold.py::test_twins_modes_and_generated_links',
         'test_development_scaffold.py::test_non_authoritative_spec_record_exercise',
         'test_review_credential_launcher.py',

@@ -1,10 +1,9 @@
 # Phase 3 regression selection — approved r3 policy
 
-Acceptance remains incomplete. Attempts 1–4 are retained failures/cancellations.
-The owner approved phase-3-benchmark-amendment.md after the 0.42% scaling miss:
-nine alternating sample pairs, medians, an explicit 10% scaling tolerance, a
-variability refusal and unchanged two-second/correctness limits. The reproduced scalar-identity regression requires one bounded replacement
-hosted run after attempt 5. Changes continue through PR 1.
+Acceptance passed for candidate c63b90c in run 37158889273.
+Attempts 1–5 remain retained failures/cancellations. The owner-approved benchmark
+amendment and occurrence-identity restoration are qualified. Changes continue
+through PR 1; this record does not merge or publish the candidate.
 Keep current product assertions, fixtures, helpers and default marker exclusions.
 Prior migration maps and source filenames are discovery aids, not coverage counts.
 
@@ -71,3 +70,8 @@ reproduced locally. The adapter is restored to its pre-optimization bytes; the
 existing end-to-end assertions remain, and distinct scalar occurrence identity
 has a pre-fix failing control. This corrects the earlier equality-only reasoning.
 The relevant admission module now joins preflight; no further runtime tuning.
+
+Attempt 6 passed all required jobs. Full default: macOS 11356 passed; Ubuntu
+result and skip reason are retained in 004-phase-3.md and the qualified logs.
+Both installed profiles passed 1803 behavior and 85 contributor cases per origin.
+The adapter matches source; only correspondence join allocation remains changed.

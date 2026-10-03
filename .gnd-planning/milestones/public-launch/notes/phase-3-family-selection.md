@@ -134,8 +134,10 @@ The completed local diagnostic suite returned 6 failed, 11,033 passed, 397
 deselected, 1 warning in 1199.38s (exit 1). All six failures require the README to
 state the bundled fallback validator's six existing limitations. The short
 preparation README omitted that explanation. Restore the accurate limitation
-paragraph; preserve all six assertions and the script. This changes distribution
-metadata through README, so the second final attempt must build a new candidate.
+paragraph; preserve all six assertions and the script. The initial claim that
+README changes distribution metadata was refuted by actual artifact comparison:
+this package does not include repository README metadata. The second attempt
+built all three retained artifacts byte-identical to attempt 1.
 The warning comes from the deliberate malformed-feedback serialization control;
 it is not a skipped case or a positive assurance result.
 
@@ -148,3 +150,13 @@ These are harness scheduling limits, not product verdict/timing assertions;
 all selected tests and their own numerical bounds remain intact. The approved
 two final attempts and one-review-plus-one-follow-up limits do not change.
 Ubuntu remains unaccepted until the bounded rerun exits 0.
+
+
+The earlier complete macOS hosted diagnostic ended with 10 failed, 11291 passed,
+400 deselected, 1 warning in 1675.32s. Besides the seven repaired documentation
+failures, it exposed a missing fake-tool executable, an orphan-pipe result-label
+race, and a guarded-join timing failure. The fake-tool test failed under a clean
+PATH before its two-line fixture repair; ten neighboring cases then passed.
+The other two issues remain unresolved acceptance findings. The source-owned
+phase-3-acceptance-amendment.md proposes a bounded owner decision; it is pending.
+No new expected result or numerical threshold has been applied.

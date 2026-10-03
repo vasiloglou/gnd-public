@@ -147,7 +147,7 @@ def test_verifier_honors_lower_shape_limits():
         assert (result.exit_code, result.reason) == (3, "input-invalid"), key
 
 
-def test_every_native_proof_document_is_depth_checked(monkeypatch):
+def test_every_native_proof_document_is_depth_checked(tmp_path, monkeypatch):
     import copy
     import json
 
@@ -161,7 +161,7 @@ def test_every_native_proof_document_is_depth_checked(monkeypatch):
     monkeypatch.setattr(runtime, "invoke", lambda *a, **k: ({}, stdout, {}, 0))
     targets = load(Path("tests/fixtures/v71/phase6/dispatch/targets.json"))
     targets["targets"] += copy.deepcopy(targets["targets"])
-    result = runtime.native_witness(bundle, targets)
+    result = runtime.native_witness(bundle, targets, executable=fake_tool(tmp_path, "dispatch"))
     assert (result.exit_code, result.reason) == (3, "input-invalid")
 
 

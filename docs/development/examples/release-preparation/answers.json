@@ -1,0 +1,29 @@
+{
+  "examples": {
+    "dispatch": {
+      "validate": 0,
+      "seed": 1,
+      "cause": "dispatch_deadline",
+      "repaired": 0,
+      "missing_reference": 3
+    },
+    "release": {
+      "validate": 0,
+      "seed": 1,
+      "cause": "release_deadline",
+      "repaired": 0,
+      "missing_reference": 3
+    }
+  },
+  "promotion": {
+    "exact": "accept",
+    "missing": "refuse",
+    "changed": "refuse"
+  },
+  "contributor": {
+    "intact": "accept",
+    "broken_reference": "refuse",
+    "changed_twin": "refuse",
+    "unlabeled_sample": "refuse"
+  }
+}

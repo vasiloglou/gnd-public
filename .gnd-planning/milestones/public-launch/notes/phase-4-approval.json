@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-03",
+  "ruling": "delegated approval (auto=true)",
+  "authorization": "process-phase 4 auto",
+  "decisions": "D1-D7 recommended choices",
+  "spec_sha256": "abd0ada73c137c59f2e0108940a127538fbd34a40b818ea9924fa9e522def886",
+  "corpus": {
+    "README.md": "681903e26bb8be28eb4f44646dc91750a90bb2ae33ebbba4f34d5bcede261ff1",
+    "answers.json": "c9ce25264d9b914beda7ccfc9b1f4fa1071d0b6018ad99bf2aaf5e45bdcb0eb5"
+  },
+  "scope": "Preparation only; P3 paused; candidate sign-off pending"
+}

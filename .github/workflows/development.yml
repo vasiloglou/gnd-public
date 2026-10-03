@@ -67,7 +67,7 @@ jobs:
       - run: uv run gnd doctor --project
       - run: uv run pytest --collect-only -q
       - name: Check repaired platform-sensitive cases
-        run: uv run pytest -q -ra tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py --tb=short
+        run: uv run pytest -q -raP tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py --tb=short
       - run: uv run pytest -q -ra --tb=short
   installed:
     needs: candidate

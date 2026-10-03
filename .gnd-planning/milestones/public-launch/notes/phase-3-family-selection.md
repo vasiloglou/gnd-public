@@ -1,8 +1,10 @@
 # Phase 3 regression selection — approved r3 policy
 
-Acceptance remains incomplete. Four final attempts are authorized; attempt 3
-failed preflight and was canceled. One attempt remains. Changes use PR 1.
-The source-owned approved spec and A1/A2 amendment govern this selection.
+Acceptance remains incomplete. Attempts 1–4 are retained failures/cancellations.
+The owner approved phase-3-benchmark-amendment.md after the 0.42% scaling miss:
+nine alternating sample pairs, medians, an explicit 10% scaling tolerance, a
+variability refusal and unchanged two-second/correctness limits. One additional
+hosted attempt is authorized. Changes continue through PR 1.
 Keep current product assertions, fixtures, helpers and default marker exclusions.
 Prior migration maps and source filenames are discovery aids, not coverage counts.
 
@@ -57,3 +59,8 @@ phase-3-review-disposition.md. The two-call budget is exhausted; subsequent
 repairs carry focused evidence, not another independent opinion. Artifact checks
 refuted the initial README-metadata assumption: prior candidate bytes matched.
 The runtime repair changes package bytes; attempt 4 must rebuild and qualify them.
+
+Benchmark amendment controls: 137 focused cases passed on local Python 3.13;
+101 guarded cases passed on Python 3.11. The 13 new controls failed before the
+new instrument existed. No runtime code changes in this amendment; older results
+and their then-current contracts remain historical evidence above.

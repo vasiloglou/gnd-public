@@ -1,0 +1,32 @@
+{
+  "facts": {
+    "expense_amount": [
+      {
+        "amount": 101,
+        "expense": "e1"
+      },
+      {
+        "amount": 50,
+        "expense": "e2"
+      }
+    ],
+    "receipt": [
+      {
+        "expense": "e1"
+      },
+      {
+        "expense": "e2"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "expense_amount",
+      "receipt"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v6-assurance:expense@1",
+    "source": "fixture"
+  }
+}

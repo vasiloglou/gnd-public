@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "kind": "derivation-witness",
+  "binding": {
+    "model_digest": "sha256:1f55a47443d4a18137234913fd24dd676b7b59996dad626875540f88d1b9c299",
+    "candidate_digest": "sha256:a81821ce912a4ad9f208c7da1a3b2e8a219b35620801164d9509547007efe22f",
+    "references": [
+      {
+        "id": "links",
+        "raw_sha256": "b725da445dbf93befd7a465eb047ae4b5268fe4dcbf658069a07f2c3ea55a8e9"
+      }
+    ]
+  },
+  "results": [
+    {
+      "request_index": 0,
+      "target": {
+        "fact_type": "dispatch_reachable",
+        "tuple": [
+          {
+            "primitive": "String",
+            "value": "WH-A"
+          },
+          {
+            "primitive": "String",
+            "value": "DEST-D"
+          }
+        ]
+      },
+      "status": "proved",
+      "reason": null,
+      "root": 5
+    }
+  ],
+  "nodes": [
+    {
+      "id": 0,
+      "kind": "base",
+      "fact_type": "dispatch_leg",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "WH-A"
+        },
+        {
+          "primitive": "String",
+          "value": "HUB-B"
+        }
+      ],
+      "origin": {
+        "kind": "reference",
+        "reference_id": "links",
+        "fact_index": 0
+      }
+    },
+    {
+      "id": 1,
+      "kind": "base",
+      "fact_type": "dispatch_leg",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "HUB-B"
+        },
+        {
+          "primitive": "String",
+          "value": "PORT-C"
+        }
+      ],
+      "origin": {
+        "kind": "reference",
+        "reference_id": "links",
+        "fact_index": 1
+      }
+    },
+    {
+      "id": 2,
+      "kind": "base",
+      "fact_type": "dispatch_leg",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "PORT-C"
+        },
+        {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      ],
+      "origin": {
+        "kind": "reference",
+        "reference_id": "links",
+        "fact_index": 2
+      }
+    },
+    {
+      "id": 3,
+      "kind": "rule",
+      "fact_type": "dispatch_reachable",
+      "clause_index": 0,
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "PORT-C"
+        },
+        {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      ],
+      "bindings": {
+        "x": {
+          "primitive": "String",
+          "value": "PORT-C"
+        },
+        "y": {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      },
+      "premises": [
+        2
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "rule",
+      "fact_type": "dispatch_reachable",
+      "clause_index": 1,
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "HUB-B"
+        },
+        {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      ],
+      "bindings": {
+        "x": {
+          "primitive": "String",
+          "value": "HUB-B"
+        },
+        "middle": {
+          "primitive": "String",
+          "value": "PORT-C"
+        },
+        "y": {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      },
+      "premises": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "kind": "rule",
+      "fact_type": "dispatch_reachable",
+      "clause_index": 1,
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "WH-A"
+        },
+        {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      ],
+      "bindings": {
+        "x": {
+          "primitive": "String",
+          "value": "WH-A"
+        },
+        "middle": {
+          "primitive": "String",
+          "value": "HUB-B"
+        },
+        "y": {
+          "primitive": "String",
+          "value": "DEST-D"
+        }
+      },
+      "premises": [
+        0,
+        4
+      ]
+    }
+  ]
+}

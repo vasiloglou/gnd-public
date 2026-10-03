@@ -1,0 +1,92 @@
+{
+  "contract_version": 1,
+  "modules": [
+    {
+      "path": "bookrec/cli.py",
+      "symbols": [
+        {
+          "name": "main",
+          "parameters": [
+            "argv"
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [],
+  "entry_points": [
+    {
+      "module": "bookrec.cli",
+      "subcommands": [
+        "recommend"
+      ],
+      "flags": [
+        "--model",
+        "--input",
+        "--output",
+        "--user",
+        "--limit"
+      ],
+      "consumes": [
+        "user_rated_book",
+        "book_has_title",
+        "recommendation"
+      ],
+      "produces": [
+        "recommendation"
+      ],
+      "exits": [
+        {
+          "code": 0,
+          "meaning": "conformant output written"
+        },
+        {
+          "code": 2,
+          "meaning": "argument refusal"
+        },
+        {
+          "code": 3,
+          "meaning": "unknown user"
+        }
+      ]
+    }
+  ],
+  "smoke": [
+    {
+      "id": "known-user-recommend",
+      "entry_point": "bookrec.cli",
+      "argv": [
+        "recommend",
+        "--model",
+        "model.orm.yaml",
+        "--input",
+        "seed.population.json",
+        "--output",
+        "{tmp}/recommendations.json",
+        "--user",
+        "reader-1",
+        "--limit",
+        "2"
+      ],
+      "expect_exit": 0
+    },
+    {
+      "id": "unknown-user-refused",
+      "entry_point": "bookrec.cli",
+      "argv": [
+        "recommend",
+        "--model",
+        "model.orm.yaml",
+        "--input",
+        "seed.population.json",
+        "--output",
+        "{tmp}/recommendations.json",
+        "--user",
+        "ghost",
+        "--limit",
+        "3"
+      ],
+      "expect_exit": 3
+    }
+  ]
+}

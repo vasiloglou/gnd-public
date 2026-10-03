@@ -1,0 +1,38 @@
+# The SAME declared model version as nonstructured.orm.yaml with different
+# content. Its digest differs even though `version` and the report family do
+# not, which is the case a version-only comparison would wave through.
+version: 1
+model_id: urn:gnd-fixture:v51-evidence-binding:nonstructured@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+
+object_types:
+  - {id: item, name: Item, kind: entity, reference: {mode: popular, value_type: item_id}}
+  - {id: item_id, name: ItemId, kind: value, primitive: Integer}
+  - {id: tag, name: Tag, kind: value, primitive: String}
+
+fact_types:
+  - id: item_has_tag
+    reading: "{Item} carries {Tag}"
+    roles:
+      - {object_type: item, role_name: item}
+      - {object_type: tag, role_name: tag}
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "An item carries one tag."}
+  - id: item_listed
+    reading: "{Item} is listed"
+    roles: [{object_type: item, role_name: item}]
+  - id: item_blocked
+    reading: "{Item} is blocked"
+    roles: [{object_type: item, role_name: item}]
+  - id: item_archived
+    reading: "{Item} is archived"
+    roles: [{object_type: item, role_name: item}]
+
+constraints: []
+rejected_proposals: []

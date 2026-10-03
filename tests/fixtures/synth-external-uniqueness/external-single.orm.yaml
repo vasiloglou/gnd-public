@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "group_key",
+      "name": "GroupKey",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "slot_key",
+      "name": "SlotKey",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "link_key",
+      "name": "LinkKey",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "group",
+      "name": "Group",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "group_key"
+      }
+    },
+    {
+      "id": "slot",
+      "name": "Slot",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "slot_key"
+      }
+    },
+    {
+      "id": "link",
+      "name": "Link",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "link_key"
+      }
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "link_for_group",
+      "reading": "{Link} relates to {Group}",
+      "roles": [
+        {
+          "object_type": "link",
+          "role_name": "link"
+        },
+        {
+          "object_type": "group",
+          "role_name": "group"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "link"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        },
+        {
+          "type": "mandatory",
+          "role": "link",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        }
+      ]
+    },
+    {
+      "id": "link_of_slot",
+      "reading": "{Link} relates to {Slot}",
+      "roles": [
+        {
+          "object_type": "link",
+          "role_name": "link"
+        },
+        {
+          "object_type": "slot",
+          "role_name": "slot"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "link"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        },
+        {
+          "type": "mandatory",
+          "role": "link",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "uniqueness",
+      "scope": "external",
+      "role_refs": [
+        {
+          "fact_type": "link_for_group",
+          "role": "group"
+        },
+        {
+          "fact_type": "link_of_slot",
+          "role": "slot"
+        }
+      ],
+      "preferred": true,
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Synthetic constraint authored for the public algorithm example."
+      }
+    }
+  ],
+  "rejected_proposals": [],
+  "deontic_notes": []
+}

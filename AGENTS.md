@@ -45,3 +45,13 @@ stated scope; handoffs between skills require an explicit user selection.
 | gnd-review-panel-light | [gnd-review-panel-light](src/gnd/skills/gnd-review-panel-light/SKILL.md) |
 | gnd-solve | [gnd-solve](src/gnd/skills/gnd-solve/SKILL.md) |
 | gnd-update-review-panel | [gnd-update-review-panel](src/gnd/skills/gnd-update-review-panel/SKILL.md) |
+
+## Pull requests are required
+
+All contributors, including coding agents and administrators, work in a fork or
+topic branch and submit a pull request. Never push directly to main, force-push
+main, or delete it. GitHub protection requires a PR and successful required CI;
+resolve review conversations before merging. Web edits also use a branch and PR.
+No standing contributor bypass is allowed. Approval to perform phase work does
+not waive this rule. Repository owners can change settings, so configuration
+must be checked before claiming enforcement.

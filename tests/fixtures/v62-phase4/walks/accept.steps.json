@@ -1,0 +1,7 @@
+{
+  "steps_schema": 1,
+  "model": "../models/aggregates.orm.yaml",
+  "model_digest": "sha256:897ecb1a52876a2de7112cb86cf436e8bc35fcd1bb0ed3cd288d7d07e271b2cf",
+  "operations_digest": "sha256:29d21519c8e4da9c4cab290f05a32b310010c85d6f79c266c5cddbbfdf552d83",
+  "steps": [{"op": "accept", "bindings": {"scenario": "north"}}]
+}

@@ -1,0 +1,27 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "synthetic",
+    "label": "conforming",
+    "covers": [
+      "movie_has_title"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "movie_has_title": [
+      {
+        "movie": 1,
+        "title": "North"
+      },
+      {
+        "movie": 2,
+        "title": "North"
+      },
+      {
+        "movie": 3,
+        "title": "South"
+      }
+    ]
+  }
+}

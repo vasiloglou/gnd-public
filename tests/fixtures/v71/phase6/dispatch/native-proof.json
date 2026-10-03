@@ -1,0 +1,61 @@
+{
+  "proof": {
+    "premises": "r2(\"s:57482d41\", \"s:444553542d44\")",
+    "rule-number": "(R2)",
+    "children": [
+      {
+        "premises": "r0(\"s:57482d41\", \"s:4855422d42\")",
+        "rule-number": "(R1)",
+        "children": [
+          {
+            "axiom": "i0(\"s:57482d41\", \"s:4855422d42\", 0)"
+          }
+        ]
+      },
+      {
+        "premises": "r2(\"s:4855422d42\", \"s:444553542d44\")",
+        "rule-number": "(R2)",
+        "children": [
+          {
+            "premises": "r0(\"s:4855422d42\", \"s:504f52542d43\")",
+            "rule-number": "(R1)",
+            "children": [
+              {
+                "axiom": "i0(\"s:4855422d42\", \"s:504f52542d43\", 1)"
+              }
+            ]
+          },
+          {
+            "premises": "r2(\"s:504f52542d43\", \"s:444553542d44\")",
+            "rule-number": "(R1)",
+            "children": [
+              {
+                "premises": "r0(\"s:504f52542d43\", \"s:444553542d44\")",
+                "rule-number": "(R1)",
+                "children": [
+                  {
+                    "axiom": "i0(\"s:504f52542d43\", \"s:444553542d44\", 2)"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "rules": [
+    {
+      "rule-number": "(R1)",
+      "rule": "r0(C0,C1) :- \n   i0(C0,C1,+underscore_3)."
+    },
+    {
+      "rule-number": "(R1)",
+      "rule": "r2(V0,V1) :- \n   r0(V0,V1)."
+    },
+    {
+      "rule-number": "(R2)",
+      "rule": "r2(V0,V2) :- \n   r0(V0,V1),\n   r2(V1,V2)."
+    }
+  ]
+}

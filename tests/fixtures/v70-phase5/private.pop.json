@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "private.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase5-private@1",
+    "source": "fixture",
+    "label": "conforming",
+    "covers": ["a_notice", "b_secret"]
+  },
+  "instances": {},
+  "facts": {
+    "a_notice": [{"record": "R1", "token": "public"}],
+    "b_secret": [
+      {"record": "R1", "token": {"$opaque": "SECRET-OPAQUE-CANARY"}},
+      {"record": "R2", "token": "SECRET-ROLE-CANARY"}
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+contract_version: 1
+modules:
+  - path: /absolute/module.py
+    symbols: []
+artifacts: []
+entry_points: []
+smoke: []

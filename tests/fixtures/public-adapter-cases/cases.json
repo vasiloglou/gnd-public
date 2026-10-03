@@ -1,0 +1,17 @@
+{
+  "P2-004": {
+    "id": "P2-004",
+    "model": "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml",
+    "population": "tests/fixtures/public-adapter-cases/shapes/fail.yaml"
+  },
+  "P2-035": {
+    "id": "P2-035",
+    "model": "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml",
+    "population": "tests/fixtures/public-adapter-cases/shapes/pass.yaml"
+  },
+  "P2-161": {
+    "id": "P2-161",
+    "model": "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml",
+    "population": "tests/fixtures/public-adapter-cases/untyped/population.yaml"
+  }
+}

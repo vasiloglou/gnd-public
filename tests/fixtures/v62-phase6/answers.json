@@ -1,0 +1,330 @@
+{
+  "answers": {
+    "E01": {
+      "exit": 0,
+      "verdict": "pass",
+      "bindings": 1
+    },
+    "E02": {
+      "exit": 1,
+      "verdict": "fail",
+      "offending_bindings": 1,
+      "witness_scope": "antecedent-only"
+    },
+    "E03": {
+      "exit": 0,
+      "verdict": "warning",
+      "offending_bindings": 1,
+      "witness_scope": "antecedent-only"
+    },
+    "E04": {
+      "exit": 0,
+      "verdict": "pass",
+      "bindings": 0,
+      "coverage_checked": false,
+      "where_evaluated": false
+    },
+    "E05": {
+      "exit": 2,
+      "verdict": "vacuous"
+    },
+    "E06": {
+      "exit": 1,
+      "verdict": "fail",
+      "bindings": 3,
+      "offending_samples": [
+        "alpha-2",
+        "alpha-3"
+      ],
+      "witness_scope": "antecedent-only"
+    },
+    "E07": {
+      "exit": 0,
+      "verdict": "pass"
+    },
+    "E08": {
+      "exit": 1,
+      "verdict": "fail"
+    },
+    "E09": {
+      "exit": 0,
+      "validation": "accepted"
+    },
+    "E11": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "guarded-exists-coverage-missing",
+      "defined_coverage_checker_exit": 4,
+      "defined_coverage_reason": "guarded-exists-coverage-missing",
+      "defined_coverage_oracle_claim": true,
+      "defined_coverage_expected_state_claim": null
+    },
+    "E12": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "term:mod-zero",
+      "binding_present": true,
+      "binding_keys": [
+        "$monitor",
+        "$pci",
+        "$sample",
+        "$token",
+        "$neighbor",
+        "$modulus",
+        "$neighbor_pci"
+      ],
+      "partial_pass_suppressed": true
+    },
+    "E13": {
+      "exit": 1,
+      "verdict": "fail",
+      "where_count": 2,
+      "disjoint_join_verdict": "fail"
+    },
+    "E14": {
+      "exit": 3,
+      "validation": "named-refusal",
+      "uncaught_exception": false,
+      "malformed_where_refused": true
+    },
+    "E15": {
+      "exit": 0,
+      "addresses": [
+        "constraint:neighbor_residue"
+      ],
+      "exists_subaddresses": 0
+    },
+    "E16": {
+      "exit": 0,
+      "mutated_verdict": "fail",
+      "seed": 2718
+    },
+    "E17": {
+      "exit": 0,
+      "supported_mutations": 1,
+      "denominator": 1,
+      "unsupported_named": true
+    },
+    "E18": {
+      "exit": 0,
+      "secret_absent": true,
+      "unrelated_public_value_visible": true,
+      "transition_exit": 4,
+      "transition_secret_absent": true,
+      "transition_candidate_value_absent": true,
+      "transition_public_value_visible": true
+    },
+    "E21": {
+      "exit": 0,
+      "input_rows": 20000,
+      "candidate_rows": 40000,
+      "index_probes": 40000,
+      "merged_bindings": 40000,
+      "term_nodes": 0,
+      "term_operations": 0,
+      "maximum_value_bits": 0,
+      "total_work": 120000,
+      "work": "within-budget",
+      "elapsed_seconds_max": 2.0,
+      "term_work_control": {
+        "verdict": "unchecked",
+        "reason": "guarded-exists-work-limit",
+        "term_nodes_positive": true,
+        "term_operations_positive": true,
+        "maximum_value_bits_positive": true,
+        "total_work": 200002,
+        "partial_witness_suppressed": true
+      }
+    },
+    "E24": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "guarded-exists-work-limit",
+      "candidate_rows": 1000,
+      "index_probes": 398,
+      "merged_bindings": 198603,
+      "total_work": 200001,
+      "partial_witness_suppressed": true
+    },
+    "E25": {
+      "exit": 0,
+      "check_exit": 1,
+      "verdict_bytes": "identical-after-input-order-swap",
+      "offending_binding_count": 2
+    },
+    "E26": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "term:mod-zero",
+      "message_is_not_existential": true
+    },
+    "E27": {
+      "exit": 0,
+      "mutation_stood_down": true,
+      "source_derivation": "structured"
+    },
+    "E28": {
+      "exit": 0,
+      "mutation_stood_down": true,
+      "derived_consumer_named": true
+    },
+    "E29": {
+      "exit": 0,
+      "mutation_stood_down": true,
+      "source_derivation": "opaque"
+    },
+    "E30": {
+      "exit": 0,
+      "mutation_stood_down": true,
+      "opaque_consumer_stood_down": true
+    },
+    "E31": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "term:mod-zero",
+      "uncovered_reason": "guarded-exists-coverage-missing",
+      "expected_state_claim": null,
+      "boundary_claimed_constraint": false,
+      "derived_antecedent_exit": 4,
+      "derived_antecedent_reason": "term:mod-zero",
+      "derived_antecedent_expected_state_claim": null,
+      "derived_antecedent_boundary_claimed": false
+    },
+    "E32": {
+      "exit": 0,
+      "mutation_stood_down": true,
+      "literal_binding_named": true
+    },
+    "E33": {
+      "exit": 4,
+      "uncovered_other_source_reason": "guarded-exists-coverage-missing",
+      "zero_binding_verdict": "pass",
+      "zero_binding_reason": null,
+      "empty_source_unavailable": true,
+      "empty_antecedent_check_exit": 4,
+      "empty_antecedent_verdict": "vacuous",
+      "empty_antecedent_reason": null
+    },
+    "E34": {
+      "exit": 4,
+      "api_secret_absent": true,
+      "text_secret_absent": true,
+      "transition_secret_absent": true,
+      "dependency_reason_visible": true
+    },
+    "E35": {
+      "exit": 0,
+      "checker_literal_antecedent_passes": true,
+      "antecedent_oracle_claim": null,
+      "antecedent_expected_state_claim": null,
+      "exists_atom_model_validated": true,
+      "exists_atom_oracle_claim": null,
+      "exists_atom_expected_state_claim": null,
+      "exists_atom_mutation_plan_rejected": true,
+      "numeric_literal_checker_verdict": "fail",
+      "numeric_literal_expected_state_claim": null,
+      "numeric_literal_boundary_claimed": false
+    },
+    "E36": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "join-disconnected",
+      "ordinary_checker_exit": 4,
+      "ordinary_checker_reason": "join-disconnected",
+      "oracle_claim": null,
+      "expected_state_claim": null
+    },
+    "E37": {
+      "exit": 4,
+      "verdict": "unchecked",
+      "reason": "term:exact-value-too-wide",
+      "undefined_candidate_bindings": 2,
+      "binding_keys": [
+        "$modulus",
+        "$monitor",
+        "$neighbor",
+        "$neighbor_pci",
+        "$pci",
+        "$sample",
+        "$token"
+      ],
+      "partial_pass_suppressed": true
+    },
+    "E38": {
+      "exit": 0,
+      "checker_exit": 4,
+      "checker_reason": "term:mod-zero",
+      "oracle_claim": null,
+      "expected_state_claim": null,
+      "mutation_plan_supported": false
+    },
+    "E39": {
+      "exit": 4,
+      "checker_reason": "term:exact-value-too-wide",
+      "oracle_claim": null,
+      "expected_state_claim": null
+    },
+    "E40": {
+      "exit": 4,
+      "checker_reason": "guarded-exists-work-limit",
+      "oracle_claim": null,
+      "expected_state_claim": null,
+      "existential_product_rows": 198800
+    },
+    "E41": {
+      "exit": 0,
+      "verdict": "unchecked",
+      "reason": "malformed-constraint",
+      "malformed_binding_indices": [
+        1,
+        1
+      ],
+      "malformed_binding_kinds": [
+        "wrong-length",
+        "non-scalar-cell"
+      ],
+      "uncaught_exception": false
+    },
+    "E42": {
+      "exit": 0,
+      "reason": "term:mod-zero",
+      "term_nodes": 7,
+      "term_operations": 2,
+      "maximum_value_bits_positive": true,
+      "later_sibling_work_accounted": true
+    },
+    "E43": {
+      "exit": 0,
+      "reason": "term:mod-zero",
+      "term_nodes": 6,
+      "term_operations": 2,
+      "maximum_value_bits": 7,
+      "left_term_work_accounted": true
+    },
+    "E44": {
+      "exit": 4,
+      "checker_reason": "guarded-exists-work-limit",
+      "oracle_claim": null,
+      "expected_state_claim": null,
+      "existential_source_rows": 200000,
+      "empty_first_relation": true
+    },
+    "E45": {
+      "exit": 0,
+      "checker_verdict": "pass",
+      "oracle_claim": true,
+      "mutation_offered": false,
+      "stand_down_operator": "remove-exists-witness-for-antecedent-binding",
+      "stand_down_mechanism": "baseline has zero antecedent bindings; no witness can be selected for removal",
+      "antecedent_binding_count": 0
+    },
+    "E10A": {
+      "exit": 3,
+      "rule_id": "semantic:guarded-exists-range"
+    },
+    "E10B": {
+      "exit": 3,
+      "rule_id": "semantic:guarded-exists-where-bound"
+    }
+  }
+}

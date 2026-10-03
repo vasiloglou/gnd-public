@@ -1,0 +1,56 @@
+version: 2
+model_id: urn:gnd-fixture:v62-phase6-existential-guard@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: sample, name: Radio Sample, kind: value, primitive: String }
+  - { id: monitor, name: Monitor, kind: value, primitive: String }
+  - { id: cell, name: Neighbor Cell, kind: value, primitive: String }
+  - { id: integer, name: Integer, kind: value, primitive: Integer }
+  - { id: token, name: Token, kind: value, primitive: String }
+
+fact_types:
+  - id: radio_sample
+    reading: "{Sample} at {Monitor} uses PCI {Integer} and token {Token}"
+    roles:
+      - { object_type: sample, role_name: sample }
+      - { object_type: monitor, role_name: monitor }
+      - { object_type: integer, role_name: pci, redact: true }
+      - { object_type: token, role_name: token, redact: true }
+  - id: neighbor_seen
+    reading: "{Sample} observes neighbor {Cell}"
+    roles:
+      - { object_type: sample, role_name: sample }
+      - { object_type: cell, role_name: neighbor }
+  - id: neighbor_cell
+    reading: "{Cell} has PCI {Integer} under modulus {Integer}"
+    roles:
+      - { object_type: cell, role_name: cell }
+      - { object_type: integer, role_name: pci, redact: true }
+      - { object_type: integer, role_name: modulus }
+
+operations: []
+
+constraints:
+  - id: neighbor_residue
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - fact_type: radio_sample
+        bind: { sample: "$sample", monitor: "$monitor", pci: "$pci", token: "$token" }
+    consequent:
+      exists:
+        atoms:
+          - fact_type: neighbor_seen
+            bind: { sample: "$sample", neighbor: "$neighbor" }
+          - fact_type: neighbor_cell
+            bind: { cell: "$neighbor", pci: "$neighbor_pci", modulus: "$modulus" }
+        where:
+          - operator: "="
+            left: { fn: mod, args: ["$pci", 30] }
+            right: { fn: mod, args: ["$neighbor_pci", "$modulus"] }
+    provenance: { user_quote: "Every radio sample has a co-observed neighbor with equal PCI residue." }
+
+rejected_proposals: []

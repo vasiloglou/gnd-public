@@ -1,0 +1,65 @@
+[
+  {
+    "id": "P2-006",
+    "branch": "wire:v4-check-internal",
+    "path": "cases/wire-v4-check-internal",
+    "profile": "structured",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-018",
+    "branch": "obligation:derived-exact",
+    "path": "cases/obligation-derived-exact",
+    "profile": "structured",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-019",
+    "branch": "obligation:derived-missing",
+    "path": "cases/obligation-derived-missing",
+    "profile": "structured",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-020",
+    "branch": "obligation:derived-surplus",
+    "path": "cases/obligation-derived-surplus",
+    "profile": "structured",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-034",
+    "branch": "eval:disconnected-product",
+    "path": "cases/eval-disconnected-product",
+    "profile": "disconnected",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-055",
+    "branch": "constraint:one-final-walk",
+    "path": "cases/constraint-one-final-walk",
+    "profile": "guarded",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-068",
+    "branch": "witness:missing-canonical",
+    "path": "cases/witness-missing-canonical",
+    "profile": "structured",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-071",
+    "branch": "cost:chain-counted",
+    "path": "cases/cost-chain-counted",
+    "profile": "chain",
+    "status": "red-missing-lane"
+  },
+  {
+    "id": "P2-072",
+    "branch": "cost:disconnected-counted",
+    "path": "cases/cost-disconnected-counted",
+    "profile": "disconnected",
+    "status": "red-missing-lane"
+  }
+]

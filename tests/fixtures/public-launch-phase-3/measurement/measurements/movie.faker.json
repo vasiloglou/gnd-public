@@ -1,0 +1,250 @@
+{
+  "checker_defects": [],
+  "command": "measure",
+  "corpus": [
+    {
+      "path": "conforming/model.orm.conforming.seed1.json",
+      "sha256": "fb630286c6dcc08eb404dccd223266148817a3d2d5542f6520819de025429ae9",
+      "sidecar_path": "conforming/model.orm.conforming.seed1.meta.json",
+      "sidecar_sha256": "cb6a4e5a36d10a40ab12cd966b281f6f82890ec2dd1077a8a400fe9817fc64f2"
+    }
+  ],
+  "coverage_summary": {
+    "applicability_matrix": [
+      {
+        "case_kind": "conforming",
+        "count": 1,
+        "family": "uniqueness",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "applicable but absent: no boundary case was emitted for 'uniqueness' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "applicable but absent: no violating case was emitted for 'uniqueness' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'uniqueness' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "the model declares no `uniqueness` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `uniqueness` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 1,
+        "family": "value",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "value",
+        "reason": "applicable but absent: no boundary case was emitted for 'value' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "value",
+        "reason": "applicable but absent: no violating case was emitted for 'value' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "value",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'value' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "value",
+        "reason": "the model declares no `value` constraint whose shape reaches any of its own band-4 routes (bound-type-mismatch, derived-unknown): every one of them resolves cleanly, so this model has no undecidable `value` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      }
+    ],
+    "applicable_cells": 8,
+    "band4_reason_codes": [
+      "bound-type-mismatch",
+      "derived-unknown",
+      "family-unimplemented",
+      "join-anchor-ambiguous",
+      "join-disconnected",
+      "literal-type-ambiguous",
+      "no-reference-clock",
+      "partition-asserts-nothing",
+      "reference-join-work-limit",
+      "ring-not-binary",
+      "role-unresolved",
+      "subject-type-ambiguous",
+      "subtype-derivation-only",
+      "textual-not-mechanical",
+      "values-not-comparable",
+      "xor-disjunctive-undefined"
+    ],
+    "band4_reason_codes_exercised": [],
+    "boundary_cases_derived": 0,
+    "boundary_not_derivable": 0,
+    "case_kinds": [
+      "conforming",
+      "boundary",
+      "violating",
+      "no-subjects",
+      "unchecked"
+    ],
+    "case_kinds_present": [
+      "conforming"
+    ],
+    "constraint_count": 2,
+    "coverage_fraction": 0.25,
+    "covered_applicable_cells": 2,
+    "decided_observations": 2,
+    "families_covered": [
+      "uniqueness",
+      "value"
+    ],
+    "families_in_model": [
+      "uniqueness",
+      "value"
+    ],
+    "isolating_cases": 0,
+    "missing_cells": 6,
+    "not_applicable_cells": 2,
+    "observation_count": 2,
+    "operators_exercised": [],
+    "population_count": 1,
+    "set_attributed_cases": 0,
+    "wrong_attribution": 0
+  },
+  "generator_version": "gnd-synth/1",
+  "gnd_version": "0.1.0",
+  "lanes": {
+    "deterministic": "run",
+    "llm": "not-applicable-phase-2"
+  },
+  "manifest": {
+    "path": "index.json",
+    "sha256": "508a7a00e0e43c067c60736ec96bde64dec3fbc4e63011092b7cb9a844d9c1fb"
+  },
+  "model": "tests/fixtures/public-launch-phase-2/model.orm.yaml",
+  "model_digest": "5ef3d6b128d00b8d346fad3b606b56f7fdbaf6f2cb18f19375026bcff830cc48",
+  "model_id": null,
+  "per_constraint": [
+    {
+      "cells": {
+        "correct": 1,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "value",
+      "coverage": 1.0,
+      "decided": 1,
+      "evidence": {
+        "population": "conforming/model.orm.conforming.seed1.json",
+        "verdict": {
+          "constraint_ref": "constraints[0]",
+          "message": "Each title value must be one of ['North', 'South'] — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 1,
+      "satisfied": 1,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 1,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[movie_has_title].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 1,
+      "evidence": {
+        "population": "conforming/model.orm.conforming.seed1.json",
+        "verdict": {
+          "constraint_ref": "fact_types[movie_has_title].constraints[0]",
+          "message": "Each movie plays 'movie_has_title' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 1,
+      "satisfied": 1,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    }
+  ],
+  "pool_source": "faker",
+  "pools": [
+    {
+      "sha256": "4872b1e3a6f05b4927b9d91e2825eb73dc6584b5c700c567ed791239d6c159a5",
+      "source": "faker"
+    }
+  ],
+  "population_count": 1,
+  "schema_version": 2,
+  "seeds": [
+    1
+  ],
+  "tool": "gnd"
+}

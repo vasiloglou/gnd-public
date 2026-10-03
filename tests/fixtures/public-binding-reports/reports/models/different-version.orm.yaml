@@ -1,0 +1,35 @@
+# The same non-structured shape at a DIFFERENT declared model version. A report
+# bound to this model carries a well-formed digest that is not the census
+# model's, even though both models declare the same non-structured family.
+version: 2
+model_id: urn:gnd-fixture:v51-evidence-binding:different-version@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+
+object_types:
+  - {id: item, name: Item, kind: entity, reference: {mode: popular, value_type: item_id}}
+  - {id: item_id, name: ItemId, kind: value, primitive: Integer}
+  - {id: tag, name: Tag, kind: value, primitive: String}
+
+fact_types:
+  - id: item_has_tag
+    reading: "{Item} carries {Tag}"
+    roles:
+      - {object_type: item, role_name: item}
+      - {object_type: tag, role_name: tag}
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "An item carries one tag."}
+  - id: item_listed
+    reading: "{Item} is listed"
+    roles: [{object_type: item, role_name: item}]
+  - id: item_blocked
+    reading: "{Item} is blocked"
+    roles: [{object_type: item, role_name: item}]
+
+constraints: []
+rejected_proposals: []

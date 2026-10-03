@@ -1,0 +1,31 @@
+population:
+  model: ../../v2_expense.orm.yaml
+  model_id: urn:gnd-fixture:transition-expense@2
+  source: fixture
+  covers: [expense_has_status, expense_approved_by, expense_submitted_to_workday, chain_has_threshold, expense_is_urgent, expense_has_tag, expense_reimbursed]
+
+facts:
+  expense_has_status:
+    - { expense: 41, status: "submitted" }
+    - { expense: 42, status: "submitted" }
+    - { expense: 43, status: "submitted" }
+    - { expense: 44, status: "draft" }
+    - { expense: 45, status: "submitted" }
+  expense_approved_by:
+    - { expense: 42, approver: "bob" }
+    - { expense: 43, approver: "carol" }
+    - { expense: 41, approver: "alice" }
+  expense_submitted_to_workday:
+    - { expense: 42, submission: "WD-8000" }
+    - { expense: 43, submission: "WD-8003" }
+    - { expense: 41, submission: "WD-9001" }
+  chain_has_threshold:
+    - { chain: "c-1", threshold: 500 }
+  expense_is_urgent:
+    - { expense: 42 }
+  expense_has_tag:
+    - { expense: 41, tag: "new" }
+    - { expense: 42, tag: "travel" }
+    - { expense: 42, tag: "urgent" }
+  expense_reimbursed:
+    - { expense: 42, amount: 900, paid_on: "2026-07-30" }

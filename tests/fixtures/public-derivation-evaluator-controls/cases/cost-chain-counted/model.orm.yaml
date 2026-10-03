@@ -1,0 +1,34 @@
+version: 1
+model_id: urn:gnd-fixture:derivation-evaluation:cost-chain-counted@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+fact_types:
+  - id: seed
+    reading: "{Item} is seeded"
+    roles: [{ object_type: item, role_name: item }]
+  - id: low
+    reading: "{Item} is low"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: seed, bind: { item: "$i" } }]
+      head: { item: "$i" }
+  - id: middle
+    reading: "{Item} is middle"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: low, bind: { item: "$i" } }]
+      head: { item: "$i" }
+  - id: top
+    reading: "{Item} is top"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: middle, bind: { item: "$i" } }]
+      head: { item: "$i" }
+
+constraints: []
+rejected_proposals: []

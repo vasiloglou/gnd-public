@@ -1,0 +1,11 @@
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers:
+    - panel_includes_expert
+facts:
+  panel_includes_expert:
+    - { panel: "p1", expert: "e1" }
+    - { panel: "p2", expert: "e1" }
+    - { panel: "p2", expert: "e2" }
+    - { panel: "p2", expert: "e2" }

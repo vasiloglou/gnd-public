@@ -1,0 +1,12 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:cost-disconnected-counted@1
+  source: fixture
+  label: boundary
+  covers: [book_rated_adult, user_is_minor, blocked_pair, result]
+instances: {}
+facts:
+  book_rated_adult: [{ book: b1 }, { book: b2 }]
+  user_is_minor: [{ user: 1 }, { user: 2 }]
+  blocked_pair: []
+  result: [{ book: b1, user: 1 }, { book: b1, user: 2 }, { book: b2, user: 1 }, { book: b2, user: 2 }]

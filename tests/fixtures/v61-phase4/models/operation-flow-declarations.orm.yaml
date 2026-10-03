@@ -1,0 +1,64 @@
+version: 2
+model_id: urn:gnd-fixture:v61-phase4-operation-flows@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+  - { id: code, name: Code, kind: value, primitive: String }
+  - { id: rank, name: Rank, kind: value, primitive: Integer }
+fact_types:
+  - id: authorized_code
+    reading: "{Code} is authorized"
+    roles: [{ object_type: code, role_name: code, redact: true }]
+  - id: optional_code
+    reading: "{Item} has code {Code}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: code, role_name: code, redact: true }
+  - id: item_has_rank
+    reading: "{Item} has rank {Rank}"
+    roles:
+      - { object_type: item, role_name: item, redact: true }
+      - { object_type: rank, role_name: rank }
+    constraints:
+      - type: uniqueness
+        scope: internal
+        roles: [item]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An item has one current rank." }
+operations:
+  - id: apply_authorized_code
+    reading: "{Item} receives an authorized code and rank"
+    parameters:
+      - { name: item, object_type: item }
+      - { name: authorized_code, object_type: code }
+      - { name: emitted_code, object_type: code }
+      - { name: new_rank, object_type: rank }
+    preconditions:
+      - id: pre_authorized
+        require:
+          - { fact_type: authorized_code, bind: { code: "$authorized_code" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Only an authorized code may be applied." }
+    effects:
+      - assert: { fact_type: optional_code, bind: { item: "$item", code: "$emitted_code" } }
+      - retract: { fact_type: item_has_rank, bind: { item: "$item" } }
+      - assert: { fact_type: item_has_rank, bind: { item: "$item", rank: "$new_rank" } }
+    dynamic_rules:
+      - id: rank_must_increase
+        subject: { fact_type: item_has_rank, value_role: rank, bind: { item: "$item" } }
+        op: ">"
+        modality: deontic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Applying a code must increase the item's rank." }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { user_quote: "The authorized-code operation owns these writes." }
+constraints: []
+rejected_proposals: []

@@ -1,0 +1,144 @@
+version: 1
+model_id: urn:gnd-v6-phase2:shapes@1
+source: { kind: text-conversation, confidence: standard, mode: guided }
+object_types:
+  - { id: item, name: Item, kind: entity, reference: { mode: popular, value_type: item_code } }
+  - { id: item_code, name: ItemCode, kind: value, primitive: String }
+  - { id: grade, name: Grade, kind: value, primitive: String }
+  - { id: score, name: Score, kind: value, primitive: Float }
+  - { id: year, name: Year, kind: value, primitive: Integer }
+  - { id: moment, name: Moment, kind: value, primitive: DateTime }
+  - { id: flag, name: Flag, kind: value, primitive: Boolean }
+  - { id: mass, name: Mass, kind: entity, reference: { mode: unit-based, unit: kilogram, measure_type: mass } }
+fact_types:
+  - id: item_has_grade
+    reading: "{Item} has grade {Grade}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: grade, role_name: grade }
+  - id: item_in_year
+    reading: "{Item} dates from {Year}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: year, role_name: year }
+  - id: item_has_score
+    reading: "{Item} scores {Score}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: score, role_name: score }
+    constraints:
+      - type: value-comparison
+        operator: "<="
+        role_a: { role: score }
+        role_b: { literal: "ten" }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 1, user_quote: "A score is at most ten." }
+      - type: value-comparison
+        operator: ">="
+        role_a: { role: score }
+        role_b: { literal: 0 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 2, user_quote: "A score is never negative." }
+  - id: item_scores
+    reading: "{Item} is scored {Score}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: score, role_name: score }
+    constraints:
+      - type: uniqueness
+        roles: [score]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 3, user_quote: "No two items share a score." }
+  - id: item_window
+    reading: "{Item} is open from {Moment:opened} to {Moment:closed}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: moment, role_name: opened }
+      - { object_type: moment, role_name: closed }
+    constraints:
+      - type: value-comparison
+        operator: "<="
+        role_a: { role: opened }
+        role_b: { role: closed }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 4, user_quote: "A window opens before it closes." }
+  - id: item_has_mass
+    reading: "{Item} weighs {Mass}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: mass, role_name: mass }
+  - id: item_flag
+    reading: "{Item} is flagged {Flag}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: flag, role_name: flag }
+constraints:
+  - type: value
+    object_type: grade
+    role_ref: { fact_type: item_has_grade, role: grade }
+    allowed: ["A", "B"]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 5, user_quote: "Grades are A or B." }
+  - type: value
+    object_type: year
+    ranges:
+      - { min: 1450, max: 1799 }
+      - { min: 1800, max: 2030 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 6, user_quote: "Items date from 1450 to 2030." }
+  - type: value
+    object_type: score
+    role_ref: { fact_type: item_has_score, role: score }
+    ranges:
+      - { min: 0, max: 10 }
+      - { min: 90, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 7, user_quote: "Scores are low or high, never middling." }
+  - type: value
+    object_type: mass
+    ranges:
+      - { min: 1, max: 10 }
+      - { min: 90, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 8, user_quote: "Masses are light or heavy." }
+  - type: value
+    object_type: mass
+    role_ref: { fact_type: item_has_mass, role: mass }
+    ranges:
+      - { min: 1, max: 10 }
+      - { min: 90, max: 100 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 9, user_quote: "Weighed masses are light or heavy." }
+  - type: value-comparison
+    operator: "<="
+    role_a: { fact_type: item_window, role: opened }
+    role_b: { fact_type: item_window, role: closed }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 10, user_quote: "Opening never follows closing." }
+  - type: value
+    object_type: flag
+    allowed: [true]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, dialogue_turn: 11, user_quote: "Every flag is raised." }

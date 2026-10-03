@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "id": "SRC-01",
+      "kind": "temporal",
+      "clauses": [
+        "NS-ORDER-2"
+      ],
+      "left": "2026-01-01T07:00:00-05:00",
+      "right": "2026-01-01T12:00:00Z"
+    },
+    {
+      "id": "SRC-02",
+      "kind": "temporal",
+      "clauses": [
+        "NS-ORDER-2"
+      ],
+      "left": "2026-01-01T08:00:00-05:00",
+      "right": "2026-01-01T12:00:00Z"
+    },
+    {
+      "id": "SRC-03",
+      "kind": "canonical",
+      "clauses": [
+        "NS-CANON-2"
+      ],
+      "values": [
+        2,
+        10
+      ]
+    }
+  ],
+  "answers": {
+    "SRC-01": {
+      "instant_comparison": 0,
+      "lexical_comparison": -1,
+      "identity_equal": false
+    },
+    "SRC-02": {
+      "instant_comparison": 1,
+      "lexical_comparison": -1,
+      "identity_equal": false
+    },
+    "SRC-03": {
+      "snapshot_order": [
+        2,
+        10
+      ],
+      "derivation_codec_order": [
+        10,
+        2
+      ]
+    }
+  }
+}

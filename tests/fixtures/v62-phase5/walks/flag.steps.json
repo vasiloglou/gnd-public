@@ -1,0 +1,7 @@
+{
+  "steps_schema": 1,
+  "model": "../models/floats.orm.yaml",
+  "model_digest": "sha256:8f90d387e7499aa33d463ba753fcdc26e087de0818dee57fde7c0438b0065b01",
+  "operations_digest": "sha256:44ee6883cae6a94464ef9784f53a63aa7f7f288738ea8999f4dfeaf30db8353d",
+  "steps": [{"op": "flag_close_handover", "bindings": {"ue": "ue1"}}]
+}

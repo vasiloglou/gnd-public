@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-41-entry-flag-missing",
+  "story": "A declared flag absent from all whole-AST strings reports one finding.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "COMMAND = \"run\"\n"
+    }
+  ]
+}

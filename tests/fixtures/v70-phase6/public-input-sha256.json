@@ -1,0 +1,12 @@
+{
+  "cases.json": "d93d7373977bb2806a50d42b058f99a03190baeb38b228043bb68bbe0cc754f6",
+  "negation-a.orm.yaml": "4aea59e5f5f95636d452833e8be2ecc29295e0000131f0e9299ac87ec46bcef8",
+  "negation-b.orm.yaml": "9f1325aec19dd198bd76d1cf9ca5beebc5a4cc61ae6028a435acda6d490a2961",
+  "negation-blocked.pop.json": "be8d8de1a402a643e1c8260432744ac2b1ac2a42da83745c2b0ea355807e8e7c",
+  "negation-opaque.pop.json": "0a468366173259353cba1766176d4d5f299f1e4dcebca0a2b1f9942f7ca2140b",
+  "negation-waived.pop.json": "ffb1d4a65dc30f302c6b5752b3807741db6a56c92d69dc22465dae2365030a12",
+  "range-a.orm.yaml": "c4a67492ded4f6c470de7942fa4cc524f4c16cf6590d73af36fe07e136deee82",
+  "range-a.pop.json": "0b114ccdabf64e190cb47c97d459ad06d5b306c2c15cce0e0b7700bd4f7bad78",
+  "range-b-boundary.pop.json": "c0664615f4a89650ce2409fef7e9109ff041a1bccef82ea5ddc8aedf769bbb62",
+  "range-b.orm.yaml": "e12482537dc6467de80d60b5caea1f05b76932e7fdcb84a812c9f3eb0d1b2549"
+}

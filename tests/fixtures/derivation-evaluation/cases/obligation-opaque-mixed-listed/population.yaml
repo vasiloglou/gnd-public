@@ -1,0 +1,11 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:obligation-opaque-mixed-listed@1
+  source: fixture
+  label: boundary
+  covers: [seed, result, legacy_result]
+instances: {}
+facts:
+  seed: [{ item: alpha }]
+  result: [{ item: alpha }]
+  legacy_result: []

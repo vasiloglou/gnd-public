@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "C-12-module-directory",
+  "story": "A directory occupying a modules-only source path is non-regular.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "directory"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "encoding": "souffle-token-v1",
+  "relations": [
+    {
+      "fact_type": "dispatch_leg",
+      "symbol": "r0",
+      "input": "i0",
+      "roles": [
+        {
+          "name": "source",
+          "object_type": "dispatch_node",
+          "primitive": "String"
+        },
+        {
+          "name": "target",
+          "object_type": "dispatch_node",
+          "primitive": "String"
+        }
+      ],
+      "derived": false
+    },
+    {
+      "fact_type": "dispatch_request",
+      "symbol": "r1",
+      "input": "i1",
+      "roles": [
+        {
+          "name": "source",
+          "object_type": "dispatch_node",
+          "primitive": "String"
+        },
+        {
+          "name": "target",
+          "object_type": "dispatch_node",
+          "primitive": "String"
+        }
+      ],
+      "derived": false
+    },
+    {
+      "fact_type": "dispatch_reachable",
+      "symbol": "r2",
+      "input": null,
+      "roles": [
+        {
+          "name": "source",
+          "object_type": "dispatch_node",
+          "primitive": "String"
+        },
+        {
+          "name": "target",
+          "object_type": "dispatch_node",
+          "primitive": "String"
+        }
+      ],
+      "derived": true
+    }
+  ],
+  "rules": [
+    {
+      "symbol": "r0",
+      "native_rule": 1,
+      "kind": "input",
+      "fact_type": "dispatch_leg",
+      "clause_index": null
+    },
+    {
+      "symbol": "r1",
+      "native_rule": 1,
+      "kind": "input",
+      "fact_type": "dispatch_request",
+      "clause_index": null
+    },
+    {
+      "symbol": "r2",
+      "native_rule": 1,
+      "kind": "derivation",
+      "fact_type": "dispatch_reachable",
+      "clause_index": 0
+    },
+    {
+      "symbol": "r2",
+      "native_rule": 2,
+      "kind": "derivation",
+      "fact_type": "dispatch_reachable",
+      "clause_index": 1
+    }
+  ]
+}

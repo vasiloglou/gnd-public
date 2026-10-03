@@ -1,0 +1,15 @@
+population:
+  model: partition_exclusive.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - student_takes_course
+    - staff_performs_duty
+    - person_has_id_card
+facts:
+  student_takes_course:
+    - { student: "P_BOTH", course: "ORM 101" }
+  staff_performs_duty:
+    - { staff: "P_BOTH", duty: "marking" }
+  person_has_id_card:
+    - { person: "P_LONELY", card: "CARD-1" }

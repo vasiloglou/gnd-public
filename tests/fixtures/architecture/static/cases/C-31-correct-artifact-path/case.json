@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "C-31-correct-artifact-path",
+  "story": "A recognized path equal to the declaration is a clean control.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": []
+}

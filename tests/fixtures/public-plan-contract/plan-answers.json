@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "empty_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "before_partial_triples": [
+    {"coordinates": ["pre"], "exit": 64, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 302, "stderr_sha256": "42fb06edf746241a0a65f6aa14ce72496ab90aa5b3d2f85304bc640c2fcd9879"},
+    {"coordinates": ["steps"], "exit": 64, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 300, "stderr_sha256": "56049da91e38143213f1f3def17c6b97582b7f401bd29734ae507dcbe5ce6ee1"},
+    {"coordinates": ["post"], "exit": 64, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 301, "stderr_sha256": "dcc84eb72d20ad9538a3ae603cd017cb62025ee50094dc893ed25e62377cb67a"},
+    {"coordinates": ["pre", "post"], "exit": 64, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 294, "stderr_sha256": "c58d8653a96a564e385eaa046f811521a9c9b96a9d162bcb4f8b30b46a8ff72f"},
+    {"coordinates": ["steps", "post"], "exit": 64, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 292, "stderr_sha256": "37b20516bde63e25e45073451407a562bff954f304795587a69d24fee6083ccf"},
+    {"coordinates": ["pre", "steps"], "exit": 64, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 293, "stderr_sha256": "94e8c4b9f9b99b031c2ae64e8205d574099c8dbb922b533b83f99a020808782a"}
+  ],
+  "plan_report": {
+    "schema_version": 8,
+    "root_post": "computed",
+    "root_required_keys": ["schema_version", "tool", "command", "outcome", "exit_code", "acceptance_ready", "model", "model_digest", "population", "post", "counts", "verdicts", "derivations", "coverage", "extraction", "issues", "issues_total", "issues_truncated", "warnings", "error", "transition", "assurance"],
+    "transition_required_keys": ["evaluated", "model_digest", "operations_digest", "pre_digest", "pre_snapshot", "pre_snapshot_verdicts", "steps", "frame_grading", "frame_status", "frame_verdicts", "computed_post", "post_snapshot"],
+    "evaluated_frame_status": "not-applicable",
+    "refused_frame_status": "not-evaluated",
+    "frame_verdicts": null,
+    "text_marker": "FRAME COMPARISON: not applicable -- post is computed",
+    "assurance_level": "none",
+    "evidence_not_current": "applicability:refusal:n-a:evidence-not-current"
+  },
+  "computed_post_clean": {
+    "population": {
+      "model": "../../v2_expense.orm.yaml",
+      "model_id": "urn:gnd-fixture:transition-expense@2",
+      "source": "synthetic",
+      "covers": ["expense_has_status", "expense_approved_by", "expense_submitted_to_workday", "chain_has_threshold", "expense_is_urgent", "expense_has_tag", "expense_reimbursed"]
+    },
+    "facts": {
+      "expense_has_status": [{"expense": 41, "status": "submitted"}, {"expense": 42, "status": "submitted"}, {"expense": 43, "status": "submitted"}, {"expense": 44, "status": "draft"}, {"expense": 45, "status": "submitted"}],
+      "expense_approved_by": [{"expense": 42, "approver": "bob"}, {"expense": 43, "approver": "carol"}, {"expense": 41, "approver": "alice"}],
+      "expense_submitted_to_workday": [{"expense": 42, "submission": "WD-8000"}, {"expense": 43, "submission": "WD-8003"}, {"expense": 41, "submission": "WD-9001"}],
+      "chain_has_threshold": [{"chain": "c-1", "threshold": 500}],
+      "expense_is_urgent": [{"expense": 42}],
+      "expense_has_tag": [{"expense": 41, "tag": "new"}, {"expense": 42, "tag": "travel"}, {"expense": 42, "tag": "urgent"}],
+      "expense_reimbursed": [{"expense": 42, "amount": 900, "paid_on": "2026-07-30"}]
+    }
+  },
+  "bands": {"P-01": 0, "P-02": 1, "P-03": 2, "P-04": 3, "P-05": 4, "P-06": 70},
+  "unchanged_report_versions": [3, 4, 5, 6, 7]
+}

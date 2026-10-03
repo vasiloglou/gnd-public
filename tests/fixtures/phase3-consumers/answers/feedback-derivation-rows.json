@@ -1,0 +1,15 @@
+{
+  "exact": [],
+  "incomplete": [
+    {
+      "derivation_ref": "derivation:book_is_eligible",
+      "kind": "derived-extension-incomplete",
+      "message": "The derived extension of 'book_is_eligible' is incomplete — missing {\"book\":\"alpha\"}.",
+      "reason_code": null,
+      "witness": {
+        "book": "alpha"
+      }
+    }
+  ],
+  "schema_version": 3
+}

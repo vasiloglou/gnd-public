@@ -1,0 +1,26 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - { id: reviewer, name: Reviewer, kind: value, primitive: String }
+  - { id: report, name: Report, kind: value, primitive: String }
+
+fact_types:
+  - id: reviewer_signs_report
+    reading: "{Reviewer} signs {Report}"
+    roles:
+      - { object_type: reviewer, role_name: reviewer }
+      - { object_type: report, role_name: report }
+    constraints:
+      - type: mandatory
+        role: reviewer
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Every reviewer signs at least one report."

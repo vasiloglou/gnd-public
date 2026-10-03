@@ -1,0 +1,8 @@
+{
+  "model": "model.orm.yaml",
+  "steps": [
+    {"op": "add_edge", "bindings": {"source": "C", "target": "D"}},
+    {"op": "visit", "bindings": {"source": "A", "target": "D"}},
+    {"op": "remove_edge", "bindings": {"source": "B", "target": "C"}}
+  ]
+}

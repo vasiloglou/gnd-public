@@ -1,0 +1,11 @@
+population:
+  model: eligibility.orm.yaml
+  model_id: urn:gnd-fixture:phase3-consumers:eligibility@1
+  source: fixture
+  label: conforming
+  covers: [book_listed, book_blocked, book_is_eligible]
+instances: {}
+facts:
+  book_listed: [{ book: alpha }, { book: beta }]
+  book_blocked: [{ book: beta }]
+  book_is_eligible: [{ book: alpha }]

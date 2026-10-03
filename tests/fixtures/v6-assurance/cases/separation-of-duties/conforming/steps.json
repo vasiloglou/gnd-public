@@ -1,0 +1,14 @@
+{
+  "model": "model.orm.yaml",
+  "model_digest": "sha256:4377fe1919af0817401465b5a39667ceeee91b325313ee3be9b906ab8f25f46e",
+  "operations_digest": "sha256:a04046b90fb56e9ac13ad1073f27b919430e743e71919fde5c761c7d29529483",
+  "steps": [
+    {
+      "bindings": {
+        "actor": "carol"
+      },
+      "op": "approve"
+    }
+  ],
+  "steps_schema": 1
+}

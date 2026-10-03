@@ -1,0 +1,10 @@
+{
+  "steps_schema": 1,
+  "model": "../models/exact-terms.orm.yaml",
+  "model_digest": "sha256:71765bf3d470706584cdfc9b827930ba58d6790f48071c2ff3d4761aadcd12df",
+  "operations_digest": "sha256:c1c6c5ba38d49167be91366aa3cab84ec14dd21dc0e96dee99398b852012cc7d",
+  "steps": [
+    {"op": "approve", "bindings": {"ticket": "negative"}},
+    {"op": "approve", "bindings": {"ticket": "zero"}}
+  ]
+}

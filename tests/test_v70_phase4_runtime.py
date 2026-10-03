@@ -119,3 +119,9 @@ def test_walk_case_matches_owner_answer(case_id: str, tmp_path: Path) -> None:
         assert _canonical_payload(payload, {"model": model, "population": population, "steps": steps}) == (
             FIXTURE / "legacy-v8.json"
         ).read_text(), case_id
+
+
+@pytest.mark.parametrize("stem", ["positive", "negation", "recursive"])
+def test_scalar_base_is_loader_valid_and_clean(stem: str) -> None:
+    payload = api.check(FIXTURE / f"{stem}.orm.yaml", FIXTURE / f"{stem}.pop.json")
+    assert payload["exit_code"] == 0, payload

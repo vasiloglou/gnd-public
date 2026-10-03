@@ -1,0 +1,25 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase6-negation@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: record, name: Record, kind: value, primitive: String}
+fact_types:
+  - id: candidate
+    reading: "{Record} is a candidate"
+    roles: [{object_type: record, role_name: record}]
+  - id: blocked
+    reading: "{Record} is blocked"
+    roles: [{object_type: record, role_name: record}]
+  - id: waived
+    reading: "{Record} is waived"
+    roles: [{object_type: record, role_name: record}]
+  - id: permitted
+    reading: "{Record} is permitted"
+    roles: [{object_type: record, role_name: record}]
+    derivation: derived
+    derivation_rule:
+      body: [{fact_type: candidate, bind: {record: "$r"}}]
+      negate: [{fact_type: waived, bind: {record: "$r"}}]
+      head: {record: "$r"}
+constraints: []
+rejected_proposals: []

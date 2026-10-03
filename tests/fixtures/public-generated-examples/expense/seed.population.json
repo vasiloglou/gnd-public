@@ -1,0 +1,29 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-public-example:expense@1",
+    "source": "fixture",
+    "covers": [
+      "expense_submitted_by_employee",
+      "expense_has_amount",
+      "expense_is_approved",
+      "expense_approved_by_chain"
+    ]
+  },
+  "facts": {
+    "expense_submitted_by_employee": [
+      {
+        "expense": 1,
+        "employee": "employee-1"
+      }
+    ],
+    "expense_has_amount": [
+      {
+        "expense": 1,
+        "amount": 25
+      }
+    ],
+    "expense_is_approved": [],
+    "expense_approved_by_chain": []
+  }
+}

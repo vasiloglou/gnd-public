@@ -1,0 +1,43 @@
+version: 1
+model_id: urn:gnd-fixture:derivation-evaluation:constraint-one-final-walk@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+  - { id: flag_value, name: FlagValue, kind: value, primitive: Boolean }
+fact_types:
+  - id: seed
+    reading: "{Item} is seeded"
+    roles: [{ object_type: item, role_name: item }]
+  - id: flagged
+    reading: "{Item} has {FlagValue}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: flag_value, role_name: flag }
+  - id: result
+    reading: "{Item} is derived"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: seed, bind: { item: "$i" } }]
+      head: { item: "$i" }
+  - id: semi_result
+    reading: "{Item} is partly derived"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: semiderived
+    derivation_rule:
+      body: [{ fact_type: seed, bind: { item: "$i" } }]
+      head: { item: "$i" }
+
+constraints:
+  - id: derived_rows_require_flag
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent: [{ fact_type: semi_result, bind: { item: "$i" } }]
+    consequent:
+      atom: { fact_type: flagged, bind: { item: "$i", flag: true } }
+    provenance: { user_quote: "Every partly derived item is flagged." }
+
+rejected_proposals: []

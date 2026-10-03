@@ -1,0 +1,7 @@
+contract_version: 1
+modules: []
+artifacts:
+  - path: artifacts/result.json
+    required_by: ["bad\0path.py"]
+entry_points: []
+smoke: []

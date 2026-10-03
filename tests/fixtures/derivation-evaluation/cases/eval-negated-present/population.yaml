@@ -1,0 +1,11 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:eval-negated-present@1
+  source: fixture
+  label: boundary
+  covers: [seed, blocked, result]
+instances: {}
+facts:
+  seed: [{ item: alpha }]
+  blocked: [{ item: alpha }]
+  result: []

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "policy_id": "local-openai",
+  "kind": "openai-compatible",
+  "base_url": "http://127.0.0.1:8765/v1",
+  "credential_env": "PHASE6_API_KEY"
+}
+

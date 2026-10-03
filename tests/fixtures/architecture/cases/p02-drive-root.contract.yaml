@@ -1,0 +1,7 @@
+contract_version: 1
+modules: []
+artifacts:
+  - path: 'C:/project/artifact.json'
+    required_by: []
+entry_points: []
+smoke: []

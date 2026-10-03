@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "C-24-symbol-parameter-order-mismatch",
+  "story": "Declared positional parameter order is compared exactly.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules/0/symbols/0/parameters",
+        "value": [
+          "argv",
+          "context"
+        ]
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "def main(context, argv):\n    return 0\n"
+    }
+  ]
+}

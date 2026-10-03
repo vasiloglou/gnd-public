@@ -1,0 +1,35 @@
+version: 1
+model_id: urn:gnd-fixture:derivation-evaluation:eval-disconnected-product@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: book, name: Book, kind: value, primitive: String }
+  - { id: user, name: User, kind: value, primitive: Integer }
+fact_types:
+  - id: book_rated_adult
+    reading: "{Book} is adult-rated"
+    roles: [{ object_type: book, role_name: book }]
+  - id: user_is_minor
+    reading: "{User} is a minor"
+    roles: [{ object_type: user, role_name: user }]
+  - id: blocked_pair
+    reading: "{Book} is blocked for {User}"
+    roles:
+      - { object_type: book, role_name: book }
+      - { object_type: user, role_name: user }
+  - id: result
+    reading: "{Book} is restricted for {User}"
+    roles:
+      - { object_type: book, role_name: book }
+      - { object_type: user, role_name: user }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: book_rated_adult, bind: { book: "$b" } }
+        - { fact_type: user_is_minor, bind: { user: "$u" } }
+      negate:
+        - { fact_type: blocked_pair, bind: { book: "$b", user: "$u" } }
+      head: { book: "$b", user: "$u" }
+
+constraints: []
+rejected_proposals: []

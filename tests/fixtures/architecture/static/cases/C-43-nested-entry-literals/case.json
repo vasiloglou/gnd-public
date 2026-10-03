@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-43-nested-entry-literals",
+  "story": "Nested whole-AST string constants satisfy the deliberately weak entry checks.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "def configure():\n    command = \"run\"\n    flag = \"--input\"\n"
+    }
+  ]
+}

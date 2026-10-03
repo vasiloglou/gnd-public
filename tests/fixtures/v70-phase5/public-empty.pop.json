@@ -1,0 +1,24 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "public.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase5-public@1",
+    "source": "fixture",
+    "label": "conforming",
+    "covers": [
+      "a_note",
+      "b_pair",
+      "c_amount",
+      "d_token",
+      "e_transfer"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "a_note": [],
+    "b_pair": [],
+    "c_amount": [],
+    "d_token": [],
+    "e_transfer": []
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "answers": {
+    "SRC-01": {
+      "instant_comparison": 0,
+      "lexical_comparison": -1,
+      "identity_equal": false
+    },
+    "SRC-02": {
+      "instant_comparison": 1,
+      "lexical_comparison": -1,
+      "identity_equal": false
+    },
+    "SRC-03": {
+      "snapshot_order": [
+        2,
+        10
+      ],
+      "derivation_codec_order": [
+        10,
+        2
+      ]
+    },
+    "SRC-04": {
+      "admission": "refused",
+      "defensive_reason": "join-anchor-ambiguous"
+    },
+    "SRC-05": {
+      "assurance": "none"
+    },
+    "SRC-06": {
+      "assurance": "proof-backed"
+    },
+    "SRC-07": {
+      "admission": "refused",
+      "defensive_reason": "family-unimplemented"
+    },
+    "SRC-08": {
+      "verdict": "vacuous",
+      "reason_code": null,
+      "public_witness": []
+    },
+    "SRC-09": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "first_component_only": [
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    "SRC-10": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [],
+      "aggregate_witness": [
+        []
+      ]
+    },
+    "SRC-11": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        [
+          1
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "aggregate_witness": [
+        [
+          1,
+          5,
+          6
+        ]
+      ]
+    },
+    "SRC-12": {
+      "verdict": "unchecked",
+      "reason_code": "subtype-derivation-only",
+      "public_witness": [],
+      "production_observation": {
+        "verdict": "fail",
+        "reason_code": null,
+        "public_witness": [
+          [
+            7
+          ]
+        ]
+      }
+    },
+    "SRC-13": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        {
+          "booking": "b1",
+          "person": 1
+        },
+        {
+          "booking": "b1",
+          "person": 2
+        }
+      ]
+    },
+    "SRC-14": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        [
+          50
+        ],
+        [
+          -1
+        ]
+      ]
+    },
+    "SRC-15": {
+      "verdict": "unchecked",
+      "reason_code": "textual-not-mechanical",
+      "public_witness": [],
+      "band": 1
+    }
+  }
+}

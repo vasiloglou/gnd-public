@@ -1,0 +1,49 @@
+{
+  "backend": "duckdb-local",
+  "mode": "select",
+  "model": "MODEL",
+  "oracle": "pyrel",
+  "package": {
+    "name": "relationalai",
+    "version": "1.30.1"
+  },
+  "population": "POPULATION",
+  "schema_version": 1,
+  "verdicts": [
+    {
+      "constraint_ref": "fact_types[student_has_nickname].constraints[0]",
+      "constraint_type": "uniqueness",
+      "status": "satisfied"
+    },
+    {
+      "constraint_ref": "fact_types[student_has_nickname].constraints[1]",
+      "constraint_type": "mandatory",
+      "status": "satisfied"
+    },
+    {
+      "constraint_ref": "fact_types[student_has_grade].constraints[0]",
+      "constraint_type": "uniqueness",
+      "status": "satisfied"
+    },
+    {
+      "constraint_ref": "fact_types[student_likes_color].constraints[0]",
+      "constraint_type": "frequency",
+      "status": "satisfied"
+    },
+    {
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "value",
+      "status": "satisfied"
+    },
+    {
+      "constraint_ref": "constraints[1]",
+      "constraint_type": "value",
+      "status": "satisfied"
+    },
+    {
+      "constraint_ref": "constraints[2]",
+      "constraint_type": "value",
+      "status": "satisfied"
+    }
+  ]
+}

@@ -23,7 +23,7 @@ def test_nested_composites_are_declared_unmatchable_until_consumers_support_them
     kind, reason = reference_identity('outer', model)
     assert kind == 'unmatchable'
     assert 'nested composite joins are not supported' in reason
-    fact_row = next((row for row in applicable_set(model)['fact_types'] if row['id'] == 'outer_has_inner'))
+    fact_row = next(row for row in applicable_set(model)['fact_types'] if row['id'] == 'outer_has_inner')
     assert fact_row['applicable'] is False
 
 def test_applicable_set_full_vocabulary() -> None:
@@ -75,19 +75,19 @@ def test_applicable_set_dispatch() -> None:
 def test_applicable_set_setfam() -> None:
     model = load_model(str(SETFAM))
     result = applicable_set(model)
-    booking = next((r for r in result['object_types'] if r['id'] == 'booking'))
+    booking = next(r for r in result['object_types'] if r['id'] == 'booking')
     assert booking['path'] == 'composite'
     pairs = [(ref['fact_type'], ref['role']) for ref in booking['role_refs']]
     assert pairs == [('booking_by_person', 'person'), ('booking_of_room', 'room')]
     fact_rows = result['fact_types']
     assert len(fact_rows) == 12
-    assert all((row['applicable'] for row in fact_rows)), f"every setfam fact type is applicable once booking resolves composite; inapplicable: {[r['id'] for r in fact_rows if not r['applicable']]}"
+    assert all(row['applicable'] for row in fact_rows), f"every setfam fact type is applicable once booking resolves composite; inapplicable: {[r['id'] for r in fact_rows if not r['applicable']]}"
 
 def test_applicable_set_ring() -> None:
     model = load_model(str(RING))
     result = applicable_set(model)
     unmatchable = [r for r in result['object_types'] if r['path'] == 'unmatchable']
     assert unmatchable == [], f'ring has no unresolvable entity: {unmatchable}'
-    assert all((row['applicable'] for row in result['fact_types']))
+    assert all(row['applicable'] for row in result['fact_types'])
     kind, payload = reference_identity('node', model)
     assert (kind, payload) == ('direct', 'node_id')

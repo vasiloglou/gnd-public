@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-35-artifact-reference-basename-absent",
+  "story": "A readable required_by source without the literal basename reports reference-unfound.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "VALUE = \"nothing-here\"\n"
+    }
+  ]
+}

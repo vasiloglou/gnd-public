@@ -1,0 +1,12 @@
+{
+  "steps_schema": 1,
+  "model": "../models/static.orm.yaml",
+  "model_digest": "sha256:fcd4f5bf776054268ad04dc3403725ba36e3d04fefa8386b60f344b806b5eac5",
+  "operations_digest": "sha256:9d731b6b3bf03da3b48334d27463ec3739eb4e31a54e9733244c328a18cf3820",
+  "steps": [
+    {
+      "op": "activate",
+      "bindings": { "item": "SECRET-ITEM-314159" }
+    }
+  ]
+}

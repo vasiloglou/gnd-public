@@ -1,0 +1,11 @@
+population:
+  model: reference_cardinality.orm.yaml
+  source: agent-output
+  label: conforming
+  covers:
+    - movie_has_title
+facts:
+  movie_has_title:
+    - { movie: 1, title: "Alpha" }
+    - { movie: 1, title: "Alpha (rerelease)" }
+    - { movie: 2, title: "Beta" }

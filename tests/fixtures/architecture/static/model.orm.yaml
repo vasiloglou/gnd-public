@@ -1,0 +1,44 @@
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: {mode: popular, value_type: person_id}
+    provenance: {origin: fixture, user_quote: "Each person has a numeric id."}
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: name
+    name: Name
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: person_has_name
+    reading: "{Person} has name {Name}"
+    roles:
+      - {object_type: person, role_name: person}
+      - {object_type: name, role_name: name}
+    sample_population:
+      - {person: 1, name: "Ada"}
+    provenance: {origin: fixture}
+    constraints:
+      - type: uniqueness
+        roles: [person]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "Each person has one name."}
+      - type: mandatory
+        role: person
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "Every person has a name."}

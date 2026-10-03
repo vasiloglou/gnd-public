@@ -1,126 +1,112 @@
-name: Bounded development and package
+name: Development and candidate acceptance
 on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  phase2:
+  candidate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e
         with:
           version: '0.10.10'
+      - name: Build retained candidate once
+        run: |
+          uv build --out-dir candidate/release
+          mkdir -p candidate/source
+          tar -xzf candidate/release/*.tar.gz -C candidate/source
+          uv build --wheel candidate/source/* --out-dir "$PWD/candidate/comparison"
+          git rev-parse HEAD > candidate/SOURCE_COMMIT
+          python --version > candidate/BUILD_PROFILE
+          uv --version >> candidate/BUILD_PROFILE
+          cd candidate
+          sha256sum release/* comparison/* > SHA256SUMS
+          sha256sum -c SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: candidate-${{ github.run_id }}
+          path: |
+            candidate/release/
+            candidate/comparison/
+            candidate/SOURCE_COMMIT
+            candidate/BUILD_PROFILE
+            candidate/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 30
+  regression:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.11'
+          - os: macos-latest
+            python: '3.13'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e
+        with:
+          version: '0.10.10'
       - run: uv sync --locked --group dev
       - run: uv run gnd install --symlink --project --force
       - run: uv run gnd doctor --project
-      - run: uv run pytest -q tests/test_development_scaffold.py tests/test_review_credential_launcher.py
-      - name: Explicit bounded P2 distribution selection
-        run: uv run pytest -q -o addopts='' tests/test_public_runtime.py tests/test_public_distribution.py
-      - name: Reviewed P3 subset; full phase acceptance remains pending
-        run: >-
-          uv run pytest -q
-          tests/test_address.py
-          tests/test_adopt_migration.py
-          tests/test_agent_cli.py
-          tests/test_archsmoke.py
-          tests/test_artifacts.py
-          tests/test_atom_bind.py
-          tests/test_checker_families.py
-          tests/test_codegen_architecture.py
-          tests/test_codegen_emit.py
-          tests/test_codegen_force.py
-          tests/test_codegen_manifest.py
-          tests/test_conformance_drift.py
-          tests/test_conformance_payload.py
-          tests/test_conformance_structural.py
-          tests/test_coverage_payload.py
-          tests/test_coverage_scaling.py
-          tests/test_derivation_rule.py
-          tests/test_digest_helpers.py
-          tests/test_doccheck.py
-          tests/test_doctor_uninstall.py
-          tests/test_evolution_conformance.py
-          tests/test_exp_asymmetry.py
-          tests/test_exp_author_expectation.py
-          tests/test_exp_bands.py
-          tests/test_exp_close.py
-          tests/test_exp_close_codegen_gate.py
-          tests/test_exp_close_work_gate.py
-          tests/test_exp_frontmatter.py
-          tests/test_exp_paths.py
-          tests/test_exp_session_contract.py
-          tests/test_exp_session_e2e.py
-          tests/test_exp_session_eval.py
-          tests/test_exp_session_evidence_compat.py
-          tests/test_exp_session_rank.py
-          tests/test_exp_session_recurrence.py
-          tests/test_exp_session_store.py
-          tests/test_exp_spec.py
-          tests/test_extract_applicable.py
-          tests/test_extract_cli.py
-          tests/test_extract_manifest.py
-          tests/test_extract_projection.py
-          tests/test_extract_vocabulary.py
-          tests/test_fidelity_match.py
-          tests/test_fidelity_payload.py
-          tests/test_fidelity_stub_gate.py
-          tests/test_guarded_corpus.py
-          tests/test_install.py
-          tests/test_junit_reader.py
-          tests/test_measure_derivation.py
-          tests/test_measure_negative_control.py
-          tests/test_measure_offline.py
-          tests/test_measure_score.py
-          tests/test_model_evolution.py
-          tests/test_model_guarded.py
-          tests/test_model_identity.py
-          tests/test_model_validation.py
-          tests/test_model_verbalization.py
-          tests/test_poolfile.py
-          tests/test_population_load.py
-          tests/test_popvalidate.py
-          tests/test_public_api.py
-          tests/test_public_coverage_progress.py
-          tests/test_public_installer.py
-          tests/test_public_migration.py
-          tests/test_pyrel_export_boundaries.py
-          tests/test_recovery_adversarial.py
-          tests/test_recovery_inventory.py
-          tests/test_recovery_report.py
-          tests/test_reference_universe.py
-          tests/test_report_json.py
-          tests/test_review_by_reference.py
-          tests/test_review_fixes.py
-          tests/test_review_report.py
-          tests/test_review_request.py
-          tests/test_review_runner.py
-          tests/test_review_salvage.py
-          tests/test_ring_frozen.py
-          tests/test_schema_sync.py
-          tests/test_skeleton_e2e.py
-          tests/test_subtype_universe.py
-          tests/test_synth_boundary.py
-          tests/test_synth_conforming.py
-          tests/test_synth_derivation_refusal.py
-          tests/test_synth_expectation_independence.py
-          tests/test_synth_false_pass_quarantine.py
-          tests/test_synth_mutate.py
-          tests/test_synth_mutate_derivation.py
-          tests/test_synth_oracle_value_range.py
-          tests/test_synth_tagged_comparison.py
-          tests/test_synth_values.py
-          tests/test_update_review_harnesses.py
-          tests/test_v62_phase2_intermediate.py
-          tests/test_v62_phase3_terms.py
-          tests/test_v62_phase5_terms.py
-          tests/test_v70_phase3_opaque.py
-          tests/test_v70_phase4_runtime.py
-          tests/test_v70_phase4_transition.py
-          tests/test_v71_phase1_dates.py
-          tests/test_vacuity.py
-          tests/test_verify_cli.py
-          tests/test_zero_row_join.py
-          --tb=short
+      - run: uv run pytest --collect-only -q
+      - run: uv run pytest -q --tb=short
+  installed:
+    needs: candidate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.11'
+          - os: macos-latest
+            python: '3.13'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e
+        with:
+          version: '0.10.10'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: candidate-${{ github.run_id }}
+          path: candidate
+      - run: test "$(cat candidate/SOURCE_COMMIT)" = "$(git rev-parse HEAD)"
+      - run: uv sync --locked --group dev
+      - name: Validate retained artifacts without rebuilding
+        run: GND_CANDIDATE_DIR="$PWD/candidate" uv run pytest -q -o addopts='' tests/test_release_acceptance.py -s --tb=short
+  phase2:
+    name: phase2
+    needs: [candidate, regression, installed]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every acceptance job
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python - <<'PY'
+          import json, os
+          results = json.loads(os.environ['RESULTS'])
+          assert set(results) == {'candidate', 'regression', 'installed'}
+          assert all(value['result'] == 'success' for value in results.values()), results
+          PY

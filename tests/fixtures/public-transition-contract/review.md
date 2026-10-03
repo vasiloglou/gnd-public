@@ -1,0 +1,1 @@
+This synthetic transition fixture retains the original operations and constraints. Its imported provenance is reviewed here for public fixture use. This note makes no historical certification or source-truth claim.

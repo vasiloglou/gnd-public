@@ -1,5 +1,7 @@
 """Current P2 fixture registration only; no historical session/collection hooks."""
 
+import sys
+from pathlib import Path
 from typing import Any
 
 from test_public_distribution import (
@@ -26,3 +28,8 @@ def make_population(model: Model, /, **kwargs: Any) -> Population:
     population = Population(**kwargs)
     _stamp_validated_against(population, model)
     return population
+
+
+# Exact original tests import local helpers through the tests namespace.
+# Include only this public checkout/sandbox root; installed gnd stays separately resolved.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))

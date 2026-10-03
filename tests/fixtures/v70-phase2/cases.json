@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "C01",
+      "lane": "check",
+      "variant": "legacy_sugar",
+      "population": "legacy_direct"
+    },
+    {
+      "id": "C02-root",
+      "lane": "check",
+      "variant": "root_head",
+      "population": "base"
+    },
+    {
+      "id": "C02-local",
+      "lane": "check",
+      "variant": "base",
+      "population": "base"
+    },
+    {
+      "id": "C03",
+      "lane": "validate",
+      "variant": "empty_clauses"
+    },
+    {
+      "id": "C04",
+      "lane": "validate",
+      "variant": "mixed_head"
+    },
+    {
+      "id": "C05",
+      "lane": "validate",
+      "variant": "unknown_clause_key"
+    },
+    {
+      "id": "C06",
+      "lane": "validate",
+      "variant": "unsafe_second_head"
+    },
+    {
+      "id": "C07",
+      "lane": "check",
+      "variant": "duplicate_clause",
+      "population": "base"
+    },
+    {
+      "id": "G01",
+      "lane": "check",
+      "variant": "base",
+      "population": "base"
+    },
+    {
+      "id": "G02",
+      "lane": "check",
+      "variant": "mutual_positive",
+      "population": "mutual"
+    },
+    {
+      "id": "G03",
+      "lane": "check",
+      "variant": "base",
+      "population": "base"
+    },
+    {
+      "id": "G04",
+      "lane": "validate",
+      "variant": "negative_self"
+    },
+    {
+      "id": "G05",
+      "lane": "validate",
+      "variant": "negative_mutual"
+    },
+    {
+      "id": "G06",
+      "lane": "validate",
+      "variant": "aggregate_self"
+    },
+    {
+      "id": "G07",
+      "lane": "validate",
+      "variant": "negative_mutual"
+    },
+    {
+      "id": "G08",
+      "lane": "validate",
+      "variant": "value_invention"
+    },
+    {
+      "id": "F01",
+      "lane": "check",
+      "variant": "base",
+      "population": "base"
+    },
+    {
+      "id": "F02",
+      "lane": "check",
+      "variant": "base",
+      "population": "missing_transitive"
+    },
+    {
+      "id": "F03",
+      "lane": "check",
+      "variant": "base",
+      "population": "extra_claim"
+    },
+    {
+      "id": "F04",
+      "lane": "check",
+      "variant": "semiderived_surplus",
+      "population": "semiderived_surplus"
+    },
+    {
+      "id": "F05",
+      "lane": "check",
+      "variant": "base",
+      "population": "uncovered_reaches"
+    },
+    {
+      "id": "F06",
+      "lane": "check",
+      "variant": "base",
+      "population": "unblocked"
+    },
+    {
+      "id": "W01",
+      "lane": "walk",
+      "variant": "base",
+      "walk": "clean"
+    },
+    {
+      "id": "W02",
+      "lane": "walk",
+      "variant": "base",
+      "walk": "early_visit"
+    },
+    {
+      "id": "W03",
+      "lane": "walk",
+      "variant": "base",
+      "walk": "missing_coverage"
+    },
+    {
+      "id": "W04",
+      "lane": "walk",
+      "variant": "base",
+      "walk": "retract_only"
+    },
+    {
+      "id": "W05",
+      "lane": "walk",
+      "variant": "base",
+      "walk": "no_touch"
+    },
+    {
+      "id": "C08",
+      "lane": "check",
+      "variant": "root_one_clause",
+      "population": "legacy_direct"
+    },
+    {
+      "id": "C09",
+      "lane": "check",
+      "variant": "no_seed_clause",
+      "population": "base"
+    },
+    {
+      "id": "C10",
+      "lane": "validate",
+      "variant": "mixed_body"
+    },
+    {
+      "id": "C11",
+      "lane": "validate",
+      "variant": "malformed_second_body"
+    },
+    {
+      "id": "C12",
+      "lane": "validate",
+      "variant": "unsafe_second_negate"
+    },
+    {
+      "id": "G09",
+      "lane": "validate",
+      "variant": "aggregate_lower"
+    },
+    {
+      "id": "G10",
+      "lane": "validate",
+      "variant": "mixed_polarity"
+    },
+    {
+      "id": "G11",
+      "lane": "validate",
+      "variant": "mutual_positive"
+    },
+    {
+      "id": "C13",
+      "lane": "check",
+      "variant": "root_aggregate",
+      "population": "branch_one"
+    },
+    {
+      "id": "C14",
+      "lane": "check",
+      "variant": "root_aggregate",
+      "population": "branch_two"
+    },
+    {
+      "id": "C15",
+      "lane": "check",
+      "variant": "root_aggregate_where",
+      "population": "branch_one"
+    },
+    {
+      "id": "C16",
+      "lane": "check",
+      "variant": "root_aggregate_where",
+      "population": "branch_two"
+    },
+    {
+      "id": "F07",
+      "lane": "check",
+      "variant": "exact_recursive",
+      "population": "base"
+    },
+    {
+      "id": "F08",
+      "lane": "check",
+      "variant": "exact_recursive_false",
+      "population": "legacy_direct"
+    },
+    {
+      "id": "F09",
+      "lane": "check",
+      "variant": "exact_undefined",
+      "population": "base"
+    },
+    {
+      "id": "F10",
+      "lane": "check",
+      "variant": "semiderived_surplus",
+      "population": "upper_surplus_claim"
+    },
+    {
+      "id": "W06",
+      "lane": "walk",
+      "variant": "base",
+      "walk": "retract_then_visit"
+    },
+    {
+      "id": "W07",
+      "lane": "walk",
+      "variant": "mutual_positive",
+      "population": "mutual",
+      "walk": "mutual_refresh"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# tests/fixtures/v51-generated-project/alpha/model.orm.yaml
+#
+# Corpus input model, one of the two-model collision pair (T1.3a). Both pair
+# members are deliberately named `model.orm.yaml` (O1) so today's basename rule
+# emits the SAME smoke module name for each; post-phase, the slugged model_id
+# discriminates them (D-P1.8). Minimal by design: the corpus exercises the
+# generator's naming and dependency contract, not constraint semantics.
+version: 1
+model_id: urn:gnd-fixture:v51-alpha@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: widget, name: Widget, kind: value, primitive: String }
+
+fact_types:
+  - id: widget_listed
+    reading: "{Widget} is listed"
+    roles: [{ object_type: widget, role_name: widget }]
+
+constraints: []
+rejected_proposals: []

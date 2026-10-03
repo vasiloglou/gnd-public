@@ -1,0 +1,27 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "model_id": "urn:gnd-fixture:v71-dispatch-witness@1",
+    "covers": [
+      "dispatch_leg"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_leg": [
+      {
+        "source": "WH-A",
+        "target": "HUB-B"
+      },
+      {
+        "source": "HUB-B",
+        "target": "PORT-C"
+      },
+      {
+        "source": "PORT-C",
+        "target": "DEST-D"
+      }
+    ]
+  }
+}

@@ -1,0 +1,126 @@
+version: 2
+model_id: urn:gnd-fixture:v62-phase4-aggregates@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: scenario, name: Scenario, kind: value, primitive: String }
+  - { id: sample, name: Sample, kind: value, primitive: String }
+  - { id: integer, name: Integer, kind: value, primitive: Integer }
+
+fact_types:
+  - id: observation
+    reading: "{Scenario} has sample {Sample} with resource blocks {Integer}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: sample, role_name: sample }
+      - { object_type: integer, role_name: rb, redact: true }
+  - id: scenario_count
+    reading: "{Scenario} has count {Integer}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: integer, role_name: count }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: observation, bind: { scenario: "$scenario", sample: "$sample", rb: "$rb" } }
+      aggregate: { fn: count, of: "$sample", over: ["$sample"], as: "$count" }
+      head: { scenario: "$scenario", count: "$count" }
+  - id: scenario_sum
+    reading: "{Scenario} has resource-block sum {Integer}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: integer, role_name: sum }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: observation, bind: { scenario: "$scenario", sample: "$sample", rb: "$rb" } }
+      aggregate: { fn: sum, of: "$rb", over: ["$sample"], as: "$sum" }
+      head: { scenario: "$scenario", sum: "$sum" }
+  - id: scenario_min
+    reading: "{Scenario} has minimum resource blocks {Integer}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: integer, role_name: min }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: observation, bind: { scenario: "$scenario", sample: "$sample", rb: "$rb" } }
+      aggregate: { fn: min, of: "$rb", over: ["$sample"], as: "$min" }
+      head: { scenario: "$scenario", min: "$min" }
+  - id: scenario_max
+    reading: "{Scenario} has maximum resource blocks {Integer}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: integer, role_name: max }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: observation, bind: { scenario: "$scenario", sample: "$sample", rb: "$rb" } }
+      aggregate: { fn: max, of: "$rb", over: ["$sample"], as: "$max" }
+      head: { scenario: "$scenario", max: "$max" }
+  - id: scenario_mean_ok
+    reading: "{Scenario} has mean resource blocks below threshold"
+    roles: [{ object_type: scenario, role_name: scenario }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: observation, bind: { scenario: "$scenario", sample: "$sample", rb: "$rb" } }
+      aggregate: { fn: avg, of: "$rb", over: ["$sample"], as: "$mean" }
+      where: [{ operator: "<", left: "$mean", right: 160 }]
+      head: { scenario: "$scenario" }
+  - id: zero_sample_scenario
+    reading: "{Scenario} has zero samples"
+    roles: [{ object_type: scenario, role_name: scenario }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: scenario_catalog, bind: { scenario: "$scenario" } }
+      negate:
+        - { fact_type: scenario_has_sample, bind: { scenario: "$scenario" } }
+      head: { scenario: "$scenario" }
+  - id: scenario_has_sample
+    reading: "{Scenario} has at least one sample"
+    roles: [{ object_type: scenario, role_name: scenario }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: observation, bind: { scenario: "$scenario", sample: "$sample", rb: "$rb" } }
+      head: { scenario: "$scenario" }
+  - id: scenario_catalog
+    reading: "{Scenario} is catalogued"
+    roles: [{ object_type: scenario, role_name: scenario }]
+  - id: scenario_acceptance
+    reading: "{Scenario} has been accepted"
+    roles: [{ object_type: scenario, role_name: scenario }]
+
+operations:
+  - id: accept
+    reading: "{Scenario} is accepted"
+    parameters: [{ name: scenario, object_type: scenario }]
+    preconditions:
+      - id: mean_is_acceptable
+        require: [{ fact_type: scenario_mean_ok, bind: { scenario: "$scenario" } }]
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Only scenarios with an acceptable mean may be accepted." }
+    effects:
+      - { assert: { fact_type: scenario_acceptance, bind: { scenario: "$scenario" } } }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Acceptance records the accepted scenario." }
+
+constraints:
+  - id: count_is_positive
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: scenario_count, bind: { scenario: "$scenario", count: "$count" } }
+    consequent:
+      comparison: { operator: ">", left: "$count", right: 0 }
+    provenance: { user_quote: "Every materialized aggregate count is positive." }
+
+rejected_proposals: []

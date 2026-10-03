@@ -1,0 +1,20 @@
+version: 1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: node, name: Node, kind: value, primitive: String }
+fact_types:
+  - id: node_precedes_node
+    reading: "{Node:left} precedes {Node:right}"
+    roles:
+      - { object_type: node, role_name: left }
+      - { object_type: node, role_name: right }
+    constraints: []
+constraints:
+  - type: ring
+    variant: acyclic
+    fact_type: node_precedes_node
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: Precedence is acyclic. }
+rejected_proposals: []

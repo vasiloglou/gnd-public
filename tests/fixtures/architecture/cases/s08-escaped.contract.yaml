@@ -1,0 +1,17 @@
+contract_version: 1
+modules: []
+artifacts: []
+entry_points:
+  - module: package.cli
+    subcommands: [run]
+    flags: [--output]
+    consumes: []
+    produces: [output]
+    exits:
+      - code: 0
+        meaning: success
+smoke:
+  - id: escaped-brace
+    entry_point: package.cli
+    argv: [run, --output, "{{tmp}}/out.json"]
+    expect_exit: 0

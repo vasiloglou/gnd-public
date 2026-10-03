@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "C-16-source-syntax-error",
+  "story": "Bytes obtained from a syntactically invalid source are scanned and dependent checks suppress.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "def broken(:\n"
+    }
+  ]
+}

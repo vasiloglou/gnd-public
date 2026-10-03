@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "population_sha256": "abbfd2c452f64b97853580be3358c7bbb0228d5a464258c757a7859eebf8e812",
+  "vocabulary_digest": "00a43ded0af403a2d74a942443df09ffd908bf1ea733f6b7199162ddacc5f6ee",
+  "document_sha256": "641533eae54fb791597b7a2d4b0453ab7c3574d5af426d2fc3b1e201273a5b4a",
+  "anchors": [
+    {
+      "fact_key": {
+        "fact_type": "a_notice",
+        "roles": {
+          "record": "R1",
+          "token": "public"
+        }
+      },
+      "role": "record",
+      "span": {
+        "start": 0,
+        "end": 21
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "9357a00c090218efb9de2d4c73ca14239b0879016f815f3fe261965727261b09"
+    }
+  ]
+}

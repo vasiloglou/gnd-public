@@ -1,0 +1,10 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:obligation-unlisted-derived-empty-computed@1
+  source: fixture
+  label: boundary
+  covers: [seed]
+instances: {}
+facts:
+  seed: []
+  result: []

@@ -1,0 +1,46 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "model_id": "urn:gnd-fixture:v71-dispatch-witness@1",
+    "covers": [
+      "dispatch_request",
+      "dispatch_reachable"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_request": [
+      {
+        "source": "WH-A",
+        "target": "DEST-D"
+      }
+    ],
+    "dispatch_reachable": [
+      {
+        "source": "WH-A",
+        "target": "HUB-B"
+      },
+      {
+        "source": "WH-A",
+        "target": "PORT-C"
+      },
+      {
+        "source": "WH-A",
+        "target": "DEST-D"
+      },
+      {
+        "source": "HUB-B",
+        "target": "PORT-C"
+      },
+      {
+        "source": "HUB-B",
+        "target": "DEST-D"
+      },
+      {
+        "source": "PORT-C",
+        "target": "DEST-D"
+      }
+    ]
+  }
+}

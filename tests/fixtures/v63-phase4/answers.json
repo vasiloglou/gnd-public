@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "cases": {
+    "H01": {
+      "exit": 0,
+      "stdout_hex": "cea10d0a",
+      "stderr_hex": "ff0a"
+    },
+    "H02": {
+      "exit": 7,
+      "stdout_hex": "7061727469616c0a",
+      "stderr_hex": "70726f626c656d0a"
+    },
+    "H03": {
+      "env_name": "GND_PHASE4_SENTINEL",
+      "env_value": "phase4",
+      "stdin_hex": "7068617365340a"
+    },
+    "H04": {
+      "exception": "TimeoutExpired",
+      "outer_timeout_seconds": 2
+    },
+    "H05": {
+      "exception": "OSError"
+    },
+    "H06": {
+      "exit": 0,
+      "stdout_hex": "6f6b0a",
+      "stderr_hex": "6e6f74650a"
+    },
+    "H07": {
+      "exit": 64,
+      "stderr_hex": "75736167650a"
+    },
+    "H08": {
+      "exception": "RuntimeError"
+    },
+    "H11": {
+      "model_name": "model.orm.yaml",
+      "model_hex": "6dc3b864656c0a",
+      "population_name": "population.json",
+      "population_hex": "00ff0a",
+      "missing_parent_exception": "FileNotFoundError"
+    },
+    "H12": {
+      "alternate_blob_hex": "616c7465726e6174650a"
+    },
+    "H14": {
+      "changed_fields": [
+        "duration_bucket",
+        "exception_type"
+      ]
+    }
+  }
+}

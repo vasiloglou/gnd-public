@@ -1,0 +1,91 @@
+{
+  "constraints": [
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "amount": "$a",
+            "expense": "$e"
+          },
+          "fact_type": "expense_amount"
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "left": "$a",
+          "operator": "<=",
+          "right": 100
+        }
+      },
+      "id": "limit",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "This fixture states its own policy; it claims no external policy truth."
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "guarded"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "expense_amount",
+      "reading": "{Expense} {Amount}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "amount",
+          "role_name": "amount"
+        }
+      ]
+    },
+    {
+      "constraints": [
+        {
+          "id": "receipt_required",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "This fixture states its own policy; it claims no external policy truth."
+          },
+          "role": "expense",
+          "source": "explicit",
+          "status": "confirmed",
+          "type": "mandatory"
+        }
+      ],
+      "id": "receipt",
+      "reading": "{Expense}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-fixture:v6-assurance:expense@1",
+  "object_types": [
+    {
+      "id": "expense",
+      "kind": "value",
+      "name": "Expense",
+      "primitive": "String"
+    },
+    {
+      "id": "amount",
+      "kind": "value",
+      "name": "Amount",
+      "primitive": "Integer"
+    }
+  ],
+  "rejected_proposals": [],
+  "source": {
+    "confidence": "standard",
+    "kind": "text-conversation",
+    "mode": "one-shot"
+  },
+  "version": 1
+}

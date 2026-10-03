@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "C-28-artifact-absent-with-wrong-path",
+  "story": "Artifact existence and readable-source path mismatch are independent findings.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "artifacts/data.json",
+      "kind": "absent"
+    },
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "from pathlib import Path\nARTIFACT_PATH = Path(__file__).parent / \"wrong\" / \"data.json\"\n"
+    }
+  ]
+}

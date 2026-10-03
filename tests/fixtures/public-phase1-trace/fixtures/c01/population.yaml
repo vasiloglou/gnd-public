@@ -1,0 +1,12 @@
+# C01 -- every universe member plays the mandatory role.
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers:
+    - reviewer_signs_report
+instances:
+  reviewer: ["r1", "r2"]
+facts:
+  reviewer_signs_report:
+    - { reviewer: "r1", report: "rep1" }
+    - { reviewer: "r2", report: "rep2" }

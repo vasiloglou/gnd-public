@@ -1,0 +1,9 @@
+population:
+  model: ../models/role-declaration.orm.yaml
+  model_id: urn:gnd-fixture:v61-phase4-role@1
+  source: fixture
+  label: boundary
+  covers: [seed, optional_code]
+facts:
+  seed: [{ item: P4_PUBLIC_ITEM_00 }]
+  optional_code: [{ item: P4_PUBLIC_ITEM_00, code: P4_SECRET_CODE_00 }]

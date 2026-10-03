@@ -1,0 +1,9 @@
+contract_version: 1
+modules: []
+artifacts: []
+entry_points: []
+smoke:
+  - id: missing-entry-point
+    entry_point: missing.cli
+    argv: []
+    expect_exit: 0

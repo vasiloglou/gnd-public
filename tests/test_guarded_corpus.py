@@ -37,7 +37,7 @@ def _target(case: dict[str, Any]):
     model = load_model(_case_path(case, 'model'))
     population = load_population(_case_path(case, 'population'), model=model)
     report = check(model, population)
-    verdict = next((item for item in report.verdicts if item.constraint_ref == case['constraint_ref']))
+    verdict = next(item for item in report.verdicts if item.constraint_ref == case['constraint_ref'])
     return (model, population, report, verdict)
 
 def _run_cli(case: dict[str, Any]) -> subprocess.CompletedProcess[str]:
@@ -55,7 +55,7 @@ def test_guarded_corpus_case(case: dict[str, Any]) -> None:
     completed = _run_cli(case)
     assert completed.returncode == case['exit'], 'Assertion did not hold.'
     payload = json.loads(completed.stdout)
-    cli_verdict = next((item for item in payload['verdicts'] if item['constraint_ref'] == case['constraint_ref']))
+    cli_verdict = next(item for item in payload['verdicts'] if item['constraint_ref'] == case['constraint_ref'])
     assert cli_verdict['verdict'] == case['verdict']
     assert cli_verdict['reason_code'] == case['reason_code']
     assert cli_verdict['offending_facts'] == case['offending_facts']
@@ -127,7 +127,7 @@ def _best_check_time(total_facts: int) -> float:
             started = time.perf_counter()
             report = check(model, population)
             durations.append(time.perf_counter() - started)
-    verdict = next((item for item in report.verdicts if item.constraint_ref == 'constraints[0]'))
+    verdict = next(item for item in report.verdicts if item.constraint_ref == 'constraints[0]')
     assert verdict.verdict == 'pass'
     assert f'bindings={expected_bindings}' in verdict.message
     return min(durations)
@@ -214,8 +214,8 @@ def _subject_blind_rows(positions: tuple[int, ...]) -> type[set]:
 
         def __contains__(self, item: object) -> bool:
             row = tuple(item)
-            key = tuple((row[index] for index in positions))
-            return any((tuple((other[index] for index in positions)) == key for other in set.__iter__(self)))
+            key = tuple(row[index] for index in positions)
+            return any(tuple(other[index] for index in positions) == key for other in set.__iter__(self))
     return _Rows
 
 def _committed_absence_outcomes() -> dict[str, tuple[str, list[Any]]]:
@@ -326,7 +326,7 @@ def test_r_empty_was_already_killed_outside_the_corpus_but_r_blind_was_not(tmp_p
 
     def _absence_verdict() -> tuple[str, int]:
         report = check(model, population)
-        verdict = next((item for item in report.verdicts if item.constraint_ref == 'constraints[2]'))
+        verdict = next(item for item in report.verdicts if item.constraint_ref == 'constraints[2]')
         return (verdict.verdict, band(report))
     real = semantic_spec.guarded_atom_state
     assert _absence_verdict() == ('pass', 0)

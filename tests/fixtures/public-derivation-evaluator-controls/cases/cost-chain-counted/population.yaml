@@ -1,0 +1,12 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:cost-chain-counted@1
+  source: fixture
+  label: boundary
+  covers: [seed, low, middle, top]
+instances: {}
+facts:
+  seed: [{ item: alpha }]
+  low: [{ item: poison }]
+  middle: [{ item: alpha }]
+  top: [{ item: alpha }]

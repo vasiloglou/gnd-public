@@ -1,0 +1,64 @@
+version: 4
+model_id: urn:gnd-fixture:v71-dispatch-witness@1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+object_types:
+- id: dispatch_node
+  name: Warehouse
+  kind: value
+  primitive: String
+fact_types:
+- id: dispatch_leg
+  reading: '{Warehouse} links to {Warehouse}'
+  roles:
+  - object_type: dispatch_node
+    role_name: source
+  - object_type: dispatch_node
+    role_name: target
+- id: dispatch_request
+  reading: '{Warehouse} requests {Warehouse}'
+  roles:
+  - object_type: dispatch_node
+    role_name: source
+  - object_type: dispatch_node
+    role_name: target
+- id: dispatch_reachable
+  reading: '{Warehouse} reaches {Warehouse}'
+  roles:
+  - object_type: dispatch_node
+    role_name: source
+  - object_type: dispatch_node
+    role_name: target
+  derivation: derived
+  derivation_rule:
+    clauses:
+    - body:
+      - fact_type: dispatch_leg
+        bind:
+          source: $x
+          target: $y
+      head:
+        source: $x
+        target: $y
+    - body:
+      - fact_type: dispatch_leg
+        bind:
+          source: $x
+          target: $middle
+      - fact_type: dispatch_reachable
+        bind:
+          source: $middle
+          target: $y
+      head:
+        source: $x
+        target: $y
+constraints: []
+rejected_proposals: []
+reference_populations:
+- id: links
+  path: references/links.pop.json
+  sha256: b725da445dbf93befd7a465eb047ae4b5268fe4dcbf658069a07f2c3ea55a8e9
+  fact_types:
+  - dispatch_leg

@@ -373,21 +373,13 @@ def test_guarded_benchmark_propagates_isolated_failure(monkeypatch):
         test_connected_three_atom_join_meets_the_declared_bound()
 
 
-def test_snapshot_reuses_equal_scalars_without_merging_origins(monkeypatch):
-    from gnd import semantic_adapter as adapter
+def test_snapshot_preserves_equal_value_occurrence_identity():
     model, population, _ = _performance_population(30)
-    expected = adapter.adapt_snapshot_observed(model, population)
-    original = adapter.canonical_scalar
-    calls = []
-    def counted(value, primitive):
-        if value == 'k0':
-            calls.append(primitive)
-        return original(value, primitive)
-    monkeypatch.setattr(adapter, 'canonical_scalar', counted)
-    observed = adapter.adapt_snapshot_observed(model, population)
-    assert observed == expected
-    assert calls == ['String']
-    assert len([x for x in observed.observation.origins if x.admitted_value == 'k0']) == 3
+    observed = adapt_snapshot_observed(model, population)
+    origins = [origin for origin in observed.observation.origins
+               if origin.admitted_value == 'k0']
+    assert len({origin.path for origin in origins}) == 3
+    assert len({id(origin.scalar) for origin in origins}) == 3
 
 
 @pytest.mark.parametrize('case', CASES, ids=[case['id'] for case in CASES])

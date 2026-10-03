@@ -32,3 +32,27 @@ lines plus this approval/evidence, focused verification on local Python 3.11 and
 independent reviewer. Existing workflow job ceilings and PR-only policy stand.
 Source runtime and target runtime remain unchanged. Phase closure still requires
 both full regression profiles and both installed candidate profiles to pass.
+
+## Reproduced regression in an earlier optimization
+
+The amended benchmark passes hosted preflight. The full macOS run exposed two
+existing v70_phase3_successors admission/provenance failures (11354 other checks
+passed). Both reproduce locally. Scalar object identity is an occurrence token
+for provenance consumers; sharing equal frozen scalars changed that identity
+contract even though snapshot equality and origin counts remained unchanged.
+Restore semantic_adapter.py exactly to its pre-optimization bytes. Replace the
+new one-conversion control with a distinct-occurrence identity control, and keep
+both original failing end-to-end assertions unchanged. This removes a regression
+introduced during this phase; no new runtime optimization is proposed. The join
+allocation optimization remains subject to the same downstream tests.
+
+Execution correction: the initial one-run allocation was an agent-selected bound
+within this repair request. One bounded replacement run is necessary to verify
+removal of the regression introduced by this agent (two runs for this amendment,
+six total retained attempts). This is a correction under the existing repair
+authorization, not a new owner reading or approval of this note. Preserve the
+failed fifth attempt and require the unchanged acceptance gates on the replacement.
+
+The v70 admission/provenance module also enters installed-family acceptance, so
+both wheel origins exercise these consumers. Its existing slow near-cap case
+remains excluded by the unchanged default marker policy (not an execution skip).

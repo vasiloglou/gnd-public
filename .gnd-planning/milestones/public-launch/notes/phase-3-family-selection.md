@@ -3,8 +3,8 @@
 Acceptance remains incomplete. Attempts 1–4 are retained failures/cancellations.
 The owner approved phase-3-benchmark-amendment.md after the 0.42% scaling miss:
 nine alternating sample pairs, medians, an explicit 10% scaling tolerance, a
-variability refusal and unchanged two-second/correctness limits. One additional
-hosted attempt is authorized. Changes continue through PR 1.
+variability refusal and unchanged two-second/correctness limits. The reproduced scalar-identity regression requires one bounded replacement
+hosted run after attempt 5. Changes continue through PR 1.
 Keep current product assertions, fixtures, helpers and default marker exclusions.
 Prior migration maps and source filenames are discovery aids, not coverage counts.
 
@@ -64,3 +64,10 @@ Benchmark amendment controls: 137 focused cases passed on local Python 3.13;
 101 guarded cases passed on Python 3.11. The 13 new controls failed before the
 new instrument existed. No runtime code changes in this amendment; older results
 and their then-current contracts remain historical evidence above.
+
+Attempt 5: benchmark preflight passed both profiles; full macOS returned two
+provenance/admission failures and 11354 passes. Scalar sharing was the cause,
+reproduced locally. The adapter is restored to its pre-optimization bytes; the
+existing end-to-end assertions remain, and distinct scalar occurrence identity
+has a pre-fix failing control. This corrects the earlier equality-only reasoning.
+The relevant admission module now joins preflight; no further runtime tuning.

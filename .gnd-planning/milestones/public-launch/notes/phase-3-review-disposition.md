@@ -23,3 +23,26 @@ is selected after the focused gate; no approval is claimed until it returns.
 Refactoring: reuse the existing pinned skill inventory instead of introducing a
 second inventory; retain the installed gate in one program with a direct hook
 control. No unrelated structural rewrite or hidden deferred refactor is selected.
+
+## Bounded follow-up and final repair
+
+Round 1: two reproduced findings (one blocking, one hardening), both in the new
+acceptance instrument. Both repaired, with 58 focused neighbor checks passing.
+Round 2: one reproduced blocking, medium finding, introduced by the Round 1
+selection expansion. The installed console-script check inherited ambient PATH.
+The real installed gate failed for both wheels with 84 passed and one skip each;
+a focused control failed against the prior environment constructor (exit 1).
+The constructor now prepends the selected installed environment's executable
+directory. All three adversarial controls pass; the actual resource/contributor
+rerun passed 85 tests per wheel and six outer tests (four deselected), exit 0.
+
+Convergence ledger: Round 2's sole finding is self-inflicted (1/1). The configured
+stop condition applies, and the approved one-review-plus-one-follow-up budget is
+exhausted. No third review is selected. The PATH repair carries reproduced
+red/green and installed-neighbor evidence, not an independent opinion on its
+final bytes. No runtime behavior or approved expected answer changed.
+
+Refactoring review: the selected environment and its PATH are constructed in one
+place, and both wheel origins consume that same function. The pinned inventory
+remains the existing single inventory; collection and execution skip reports feed
+one gate. No additional refactoring is necessary for this bounded repair.

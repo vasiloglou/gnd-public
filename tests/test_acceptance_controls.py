@@ -46,3 +46,17 @@ def test_installed_gate_observes_collection_skip():
         keywords={}, outcome='passed', longrepr=None, when='call'))
     assert plugin.passed == 1
     assert plugin.skips == ['test_optional.py']
+
+
+def test_installed_console_script_is_on_the_selected_environment_path(tmp_path):
+    import os
+    import shutil
+    bin_dir = tmp_path / 'dev/bin'
+    bin_dir.mkdir(parents=True)
+    executable = bin_dir / 'gnd'
+    executable.write_text('#!/bin/sh\nexit 0\n')
+    executable.chmod(0o755)
+    _checkout, python, env, _prefix = acceptance.dev_environment(
+        (tmp_path, tmp_path / 'checkout', None, None, {'PATH': '/usr/bin'}, []))
+    assert shutil.which('gnd', path=env['PATH']) == str(executable)
+    assert env['PATH'].split(os.pathsep)[0] == str(python.parent)

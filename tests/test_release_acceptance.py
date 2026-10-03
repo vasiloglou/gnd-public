@@ -172,6 +172,7 @@ def dev_environment(installed):
         run(['uv', 'venv', '--python', sys.executable, venv], outside, env)
         run(['uv', 'pip', 'install', '--python', venv / 'bin/python', str(wheel) + '[synth]',
              'pytest==9.1.1', 'duckdb==1.5.5'], outside, env)
+    env = {**env, 'PATH': str(venv / 'bin') + os.pathsep + env.get('PATH', '')}
     return checkout, venv / 'bin/python', env, prefix
 
 

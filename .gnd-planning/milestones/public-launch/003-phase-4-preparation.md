@@ -39,7 +39,7 @@ evidence:
   - path: .gnd-planning/milestones/public-launch/notes/phase-4-approval.json
     sha256: 9791e41e3c5a709403891df887e58be33b84f835b02a8775c549a2b5f0c6d257
   - path: .gnd-planning/milestones/public-launch/notes/phase-4-codex-review.md
-    sha256: b951785773bce174b3c9ec64e00341b2004f6f7ea2905dc12d391a2ef5ace3d8
+    sha256: 519457f63967932744bbadc0565cea83b3b2f9ae27b02fb6a4dd87ee8a406e80
   - path: .gnd-planning/milestones/public-launch/notes/phase-4-execution-amendment.json
     sha256: d15548d018ed5c5fc42debd48bc5f4a3ed58e77f246cef3e5ce15c74c15ad43d
   - path: .gnd-planning/milestones/public-launch/notes/phase-4-review-amendment.json

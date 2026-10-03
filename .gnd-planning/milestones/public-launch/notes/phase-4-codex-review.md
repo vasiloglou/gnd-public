@@ -3,7 +3,7 @@
 2026-10-03; gpt-6-astra, xhigh, ephemeral read-only harness; prompt on stdin.
 Retained response below is verbatim except absolute target file links were
 converted to plain repository citations, other absolute target paths replaced
-with <TARGET>, and Markdown trailing spaces stripped. One reviewer is one reviewer. This is not a panel or acceptance.
+with <TARGET>, Markdown trailing spaces stripped, and the intentional broken-link reproducer rendered as plain text. One reviewer is one reviewer. This is not a panel or acceptance.
 
 Found **two blocking test-closure defects and two hardening gaps**. Scope was exactly the staged diff plus `4529d58`, against baseline `40bd8958`. One reviewer is one reviewer, not a panel.
 
@@ -32,7 +32,7 @@ Found **two blocking test-closure defects and two hardening gaps**. Scope was ex
 3. **Hardening — the contributor checker does not validate skill references.**
    `tests/test_contributor_preparation.py:27` checks links only in CONTRIBUTING and sample documents. Skill files receive byte/mode comparisons, without reference validation.
 
-   **Reproducer:** append an identical `[Required reference](definitely-missing-phase4-reference.md)` to both process-phase twins, then call `check_current(root)`. I reproduced this through in-memory file-read overrides: **the checker accepts it**. The existing `broken_reference` mutation targets CONTRIBUTING, so it does not exercise the approved broken-*skill*-reference story.
+   **Reproducer:** append an identical `Required reference -> definitely-missing-phase4-reference.md` to both process-phase twins, then call `check_current(root)`. I reproduced this through in-memory file-read overrides: **the checker accepts it**. The existing `broken_reference` mutation targets CONTRIBUTING, so it does not exercise the approved broken-*skill*-reference story.
 
    **Repair:** check the bounded skill-reference closure and add a mutation that preserves twin equality while breaking a required reference.
 

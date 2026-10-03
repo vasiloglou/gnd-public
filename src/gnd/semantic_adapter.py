@@ -612,24 +612,26 @@ def adapt_constraint(
     return replace(base, refused=refusal.reason)
 
 
-def _roster(object_type_id: str, values, model: Model, location: str) -> IRRoster:
+def _roster(object_type_id: str, values, model: Model, location: str, *, canonicalize=None) -> IRRoster:
     primitive = resolve_primitive(object_type_id, model)
     members, refusals = [], []
+    convert = canonical_scalar if canonicalize is None else canonicalize
     for index, value in enumerate(values):
-        scalar = canonical_scalar(value, primitive)
+        scalar = convert(value, primitive)
         members.append(None if isinstance(scalar, Opaque) else scalar)
         if scalar is None or isinstance(scalar, Opaque):
             refusals.append(_refusal(f"{location}[{index}]", _reason(value, primitive)))
     return IRRoster(object_type_id, tuple(members), tuple(refusals))
 
 
-def universe_of(object_type_id: str, model: Model, population: Any) -> IRRoster:
+def universe_of(object_type_id: str, model: Model, population: Any, *, canonicalize=None) -> IRRoster:
     """The production universe walk, retaining every occurrence and its order."""
     return _roster(
         object_type_id,
         checker._instance_values_of(object_type_id, model, population),
         model,
         f"universe[{object_type_id}]",
+        canonicalize=canonicalize,
     )
 
 
@@ -749,6 +751,16 @@ def adapt_snapshot(
 ) -> SnapshotIR:
     if not population.matches_validation_marker(model):
         raise UnvalidatedPopulationError(population, model)
+    scalar_cache: dict[tuple[type, object, str | None], Scalar | Opaque | None] = {}
+
+    def convert(value, primitive):
+        if type(value) not in (bool, int, float, str, type(None)):
+            return canonical_scalar(value, primitive)
+        key = (type(value), value, primitive)
+        if key not in scalar_cache:
+            scalar_cache[key] = canonical_scalar(value, primitive)
+        return scalar_cache[key]
+
     fact_source = population.facts if effective_facts is None else effective_facts
     effective_population = _ObservedPopulation(
         covers=population.covers,
@@ -816,7 +828,7 @@ def adapt_snapshot(
                     missing_role = True
                     continue
                 value = fact[role.name]
-                scalar = canonical_scalar(value, role.primitive or None)
+                scalar = convert(value, role.primitive or None)
                 if isinstance(scalar, Opaque):
                     scalar = None
                 converted.append(scalar)
@@ -855,10 +867,10 @@ def adapt_snapshot(
         adapt_constraint(constraint, None, positional_constraint_ref(None, index), model)
         for index, constraint in enumerate(model.constraints)
     )
-    rosters = tuple(universe_of(source.id, model, effective_population) for source in object_types)
+    rosters = tuple(universe_of(source.id, model, effective_population, canonicalize=convert) for source in object_types)
     constraints = _input_refusals(constraints, object_types, fact_types, relations, rosters)
     explicit = tuple(
-        _roster(identity, values, model, f"instances[{identity}]")
+        _roster(identity, values, model, f"instances[{identity}]", canonicalize=convert)
         for identity, values in population.instances.items()
     )
     refusals = tuple(item for owner in (*relations, *rosters, *explicit) for item in owner.refusals)

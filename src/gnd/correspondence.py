@@ -411,7 +411,7 @@ def _indexed_guarded_bindings(
     bindings: list[tuple[Scalar | None, ...]] = [tuple(None for _name in names)]
     bound_positions: set[int] = set()
 
-    for atom in constraint.antecedent:
+    for atom_index, atom in enumerate(constraint.antecedent):
         fact_position = semantic_spec.snapshot_fact_index(snapshot, atom.fact_type)
         relation_position = semantic_spec.snapshot_relation_index(snapshot, atom.fact_type)
         if fact_position < 0 or relation_position < 0:
@@ -440,7 +440,7 @@ def _indexed_guarded_bindings(
         for row in relation.rows:
             if len(row) != len(fact.roles) or any(value is None for value in row):
                 return False, names, ()
-            candidate: list[Scalar | None] = [None for _name in names]
+            candidate: list[Scalar | None] = [None] * len(names)
             matches = True
             for column, term in terms:
                 value = row[column]
@@ -459,6 +459,15 @@ def _indexed_guarded_bindings(
             if matches:
                 candidates.append(tuple(candidate))
 
+        if atom_index == 0:
+            # The seed has no values: candidates already are its merge result.
+            if work is not None:
+                for _candidate in candidates:
+                    work.charge()
+            bindings = candidates
+            bound_positions = candidate_positions
+            continue
+
         shared = tuple(sorted(bound_positions & candidate_positions))
         index: dict[tuple[tuple[str, str], ...], list[tuple[Scalar | None, ...]]] = {}
         for candidate in candidates:
@@ -469,6 +478,7 @@ def _indexed_guarded_bindings(
             )
             index.setdefault(key, []).append(candidate)
 
+        added = candidate_positions - bound_positions
         joined: list[tuple[Scalar | None, ...]] = []
         for binding in bindings:
             key = tuple(
@@ -479,15 +489,13 @@ def _indexed_guarded_bindings(
             for candidate in index.get(key, ()):
                 if work is not None:
                     work.charge()
+                # The index already established identity at shared positions.
+                if not added:
+                    joined.append(binding)
+                    continue
                 merged = list(binding)
-                for position in candidate_positions:
-                    value = candidate[position]
-                    if value is None:
-                        return False, names, ()
-                    if merged[position] is None:
-                        merged[position] = value
-                    elif not semantic_spec.scalar_identical(merged[position], value):
-                        return False, names, ()
+                for position in added:
+                    merged[position] = candidate[position]
                 joined.append(tuple(merged))
         bindings = joined
         bound_positions |= candidate_positions

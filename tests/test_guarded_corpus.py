@@ -352,3 +352,46 @@ def test_guarded_benchmark_propagates_isolated_failure(monkeypatch):
                         subprocess.CompletedProcess(args[0], 1, 'benchmark rejected', ''))
     with pytest.raises(AssertionError, match='benchmark rejected'):
         test_connected_three_atom_join_meets_the_declared_bound()
+
+
+def test_snapshot_reuses_equal_scalars_without_merging_origins(monkeypatch):
+    from gnd import semantic_adapter as adapter
+    model, population, _ = _performance_population(30)
+    expected = adapter.adapt_snapshot_observed(model, population)
+    original = adapter.canonical_scalar
+    calls = []
+    def counted(value, primitive):
+        if value == 'k0':
+            calls.append(primitive)
+        return original(value, primitive)
+    monkeypatch.setattr(adapter, 'canonical_scalar', counted)
+    observed = adapter.adapt_snapshot_observed(model, population)
+    assert observed == expected
+    assert calls == ['String']
+    assert len([x for x in observed.observation.origins if x.admitted_value == 'k0']) == 3
+
+
+@pytest.mark.parametrize('case', CASES, ids=[case['id'] for case in CASES])
+def test_indexed_guarded_join_preserves_reference_bindings(case):
+    from gnd.correspondence import _indexed_guarded_bindings
+    model = load_model(_case_path(case, 'model'))
+    population = load_population(_case_path(case, 'population'), model=model)
+    snapshot = adapt_snapshot_observed(model, population).snapshot
+    constraint = next(row for row in snapshot.constraints if row.ref == case['constraint_ref'])
+    expected = semantic_spec.guarded_bindings(constraint, snapshot)
+    actual = _indexed_guarded_bindings(constraint, snapshot)
+    assert actual == (expected[0], expected[1], tuple(expected[2]))
+
+
+def test_indexed_guarded_join_keeps_exact_work_boundary():
+    from gnd.correspondence import ReferenceJoinLimit, ReferenceJoinWork, _indexed_guarded_bindings
+    model, population, _ = _performance_population(30)
+    snapshot = adapt_snapshot_observed(model, population).snapshot
+    constraint = snapshot.constraints[0]
+    work = ReferenceJoinWork(attempted=99_970)
+    assert _indexed_guarded_bindings(constraint, snapshot, work)[0]
+    assert work.attempted == 100_000
+    work = ReferenceJoinWork(attempted=99_971)
+    with pytest.raises(ReferenceJoinLimit):
+        _indexed_guarded_bindings(constraint, snapshot, work)
+    assert work.attempted == 100_001

@@ -81,3 +81,48 @@ A1 and A2 are approved, including two legitimate cleanup failure labels and
 four total final validation attempts. Performance thresholds and runtime
 semantics remain unchanged. Approval binds proposal SHA-256
 `ff1555916b3846de54d8f18eb79a51f03d1cd57e192b7ec3beda2344763974ca`. No further reviewer is authorized.
+
+## A2 implementation finding — first join stage, 2026-10-03
+
+Attempt 3 preflight returned one timing failure and 86 passes on each platform.
+macOS measured 0.103165792s / 0.216924292s against 0.206331584s; Ubuntu measured
+0.166367904s / 0.349950274s against 0.332735808s. Isolation did not suffice.
+No threshold or expected verdict changes. Attempt 3 is canceled after these
+conclusive failures; one approved final attempt remains.
+
+Concrete behavior-preserving repair under A2's diagnosis/repair authorization:
+keep _indexed_guarded_bindings(constraint, snapshot, work=None) unchanged at its
+interface. After validating and constructing first-atom candidates, use them
+directly as the initial bindings rather than indexing an empty shared key and
+merging each with an all-None seed. Charge work once per candidate exactly as
+the existing merge does. Preserve candidate multiplicity, order, literal and
+repeated-variable checks, malformed-input refusals, later joins and final
+canonicalization. No new cache, scalar ordering, public output or semantic rule.
+This is a reproduced runtime performance repair to the original zero-runtime
+estimate, within the approved requirement to preserve runtime semantics.
+
+Focused parity against the unchanged semantic oracle must cover first-atom
+variables/literals/repetition/empty matches, subsequent joins, and exact work
+limits. Keep the original timing test as the pre-fix red. Check downstream
+correspondence/witness/reference consumers and retain candidate rebuilds and
+source-delta disposition. No further reviewer or candidate attempt is implied.
+
+The first-stage change alone improved local time only slightly. A bounded probe
+found repeated canonical scalar construction (one repeated string converted six
+times) and measured about 20% lower time with invocation-local reuse. Extend the
+behavior-preserving repair to adapt_snapshot: cache only exact builtin scalar
+inputs by (Python type, value, primitive), share frozen Scalar values across
+relations/rosters, and discard the cache on return. Opaque/hostile non-builtins
+use the original conversion path. Preserve every occurrence, origin path and
+raw admitted value; no global state or cross-invocation cache. _roster/universe_of
+receive an optional internal converter, defaulting to their original behavior.
+A pre-fix control observes six conversions; exact snapshot/observation equality
+and three distinct origins must survive one conversion after repair.
+
+The remaining join repair reuses a binding when an indexed match introduces no
+new variable, and copies only newly introduced positions otherwise. Shared-key
+identity already equals scalar_identical; all candidate cells were validated
+before indexing. Preserve one output occurrence and one work charge per match,
+including duplicate candidates. This reduces allocation without changing keys,
+join order, canonicalization or malformed-input checks. Parity against the
+unchanged reference evaluator and exact 100000-work boundary cover this path.

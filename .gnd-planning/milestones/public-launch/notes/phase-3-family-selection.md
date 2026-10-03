@@ -119,3 +119,32 @@ then passed after anchoring /candidate/ to the repository root (exit 0). The exa
 existing fixture is now tracked. No test expectation or fixture content changed.
 The pull-request workflow now handles topic changes once; pushes trigger it only
 on main, avoiding duplicate candidate builds for a PR head.
+
+
+A committed-only documentation audit during final attempt 1 reproduced a missing
+R3 amendment: both the inherited Phase 4 spec and the Phase 3 spec linked to an
+untracked file. The existing reference-closure assertion failed against HEAD.
+The approved amendment (SHA-256 ece90d1461a320730b524f80e72c0430082e0a1aa1cc46e90664855de6de6514)
+is staged unchanged; the same control passes against the staged Git snapshot.
+No link assertion was removed. This is inherited document closure, not a plan
+amendment. Final attempt 1 remains an unsuccessful candidate qualification;
+the second attempt follows collection of all outstanding CI results.
+
+The completed local diagnostic suite returned 6 failed, 11,033 passed, 397
+deselected, 1 warning in 1199.38s (exit 1). All six failures require the README to
+state the bundled fallback validator's six existing limitations. The short
+preparation README omitted that explanation. Restore the accurate limitation
+paragraph; preserve all six assertions and the script. This changes distribution
+metadata through README, so the second final attempt must build a new candidate.
+The warning comes from the deliberate malformed-feedback serialization control;
+it is not a skipped case or a positive assurance result.
+
+Hosted Ubuntu installed qualification returned 2 failed, 8 passed in 1211.88s:
+both complete behavior selections reached the runner's 600-second timeout.
+The same 1,780-case selection completed on macOS in 437.23s and 419.51s.
+Increase the acceptance subprocess waiting limit to 1,200 seconds per wheel
+and its two-origin CI job ceiling from 30 to 45 minutes (2 × 20 plus 5 setup).
+These are harness scheduling limits, not product verdict/timing assertions;
+all selected tests and their own numerical bounds remain intact. The approved
+two final attempts and one-review-plus-one-follow-up limits do not change.
+Ubuntu remains unaccepted until the bounded rerun exits 0.

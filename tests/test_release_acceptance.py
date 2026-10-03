@@ -194,7 +194,7 @@ code=pytest.main(['-q','--tb=short',*sys.argv[1:]],plugins=[p])
 assert code==0 and p.passed>0 and not p.skips,(code,p.passed,p.skips)
 '''
     print(run([*prefix, python, '-I', '-c', program,
-               *['tests/' + n for n in modules]], checkout, env, timeout=600))
+               *['tests/' + n for n in modules]], checkout, env, timeout=1200))
 
 
 def test_installed_behavior_families(installed):

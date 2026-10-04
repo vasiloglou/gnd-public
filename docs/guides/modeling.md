@@ -86,4 +86,4 @@ the model and the application, rather than being discovered at deployment.
 For exact syntax, examples, and family-specific limits, use the
 [constraint reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md)
 and [provenance and modality policy](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md).
-For agent assistance, follow [explicit skill handoffs](agent-skills.md).
+For agent assistance, follow [explicit skill handoffs](../agents/index.md).

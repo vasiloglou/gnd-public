@@ -1,0 +1,38 @@
+<svg aria-labelledby="gnd-orm-d2-title gnd-orm-d2-desc" class="gnd-figure" id="gnd-orm-d2" role="img" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg">
+  <title id="gnd-orm-d2-title">An exclusion constraint in ORM 2 notation</title>
+  <desc id="gnd-orm-d2-desc">User and Book are joined by two fact types, 'is recommended' and 'rated'. A circled cross connected to both role pairs says no pair may appear in both.</desc>
+  <style>:where(#gnd-orm-d2){--gf-bg:#f1f4ef;--gf-card:#ffffff;--gf-line:#b7cec5;--gf-ink:#183936;--gf-muted:#5b6f6b;--gf-primary:#164f4b;--gf-accent:#b34e26;--gf-ok:#1f7a4d;--gf-ok-bg:#dcece3;--gf-fail:#b3261e;--gf-fail-bg:#f7dcd6;--gf-warn:#8a5e00;--gf-warn-bg:#fbecc2;--gf-bubble:#164f4b;--gf-bubble-ink:#ffffff;--gf-code:#f6f8f5;--gf-alethic:#6b3fa0;--gf-deontic:#1f5fa8}@media (prefers-color-scheme: dark){:where(#gnd-orm-d2){--gf-bg:#1b2b28;--gf-card:#0f1917;--gf-line:#2d4440;--gf-ink:#e6efec;--gf-muted:#9fb3ae;--gf-primary:#7bd4c6;--gf-accent:#ffb38b;--gf-ok:#6fd39a;--gf-ok-bg:#163b2b;--gf-fail:#ff8f85;--gf-fail-bg:#4a1f1b;--gf-warn:#f2c14e;--gf-warn-bg:#4a3a10;--gf-bubble:#123d39;--gf-bubble-ink:#e6efec;--gf-code:#142320;--gf-alethic:#c3a6ff;--gf-deontic:#8ab8ff}}#gnd-orm-d2 .f-bg{fill:var(--gf-bg)}#gnd-orm-d2 .f-card{fill:var(--gf-card)}#gnd-orm-d2 .f-line{fill:var(--gf-line)}#gnd-orm-d2 .f-ink{fill:var(--gf-ink)}#gnd-orm-d2 .f-muted{fill:var(--gf-muted)}#gnd-orm-d2 .f-primary{fill:var(--gf-primary)}#gnd-orm-d2 .f-accent{fill:var(--gf-accent)}#gnd-orm-d2 .f-ok{fill:var(--gf-ok)}#gnd-orm-d2 .f-ok-bg{fill:var(--gf-ok-bg)}#gnd-orm-d2 .f-fail{fill:var(--gf-fail)}#gnd-orm-d2 .f-fail-bg{fill:var(--gf-fail-bg)}#gnd-orm-d2 .f-warn{fill:var(--gf-warn)}#gnd-orm-d2 .f-warn-bg{fill:var(--gf-warn-bg)}#gnd-orm-d2 .f-bubble{fill:var(--gf-bubble)}#gnd-orm-d2 .f-bubble-ink{fill:var(--gf-bubble-ink)}#gnd-orm-d2 .f-code{fill:var(--gf-code)}#gnd-orm-d2 .f-alethic{fill:var(--gf-alethic)}#gnd-orm-d2 .f-deontic{fill:var(--gf-deontic)}#gnd-orm-d2 .s-bg{stroke:var(--gf-bg)}#gnd-orm-d2 .s-card{stroke:var(--gf-card)}#gnd-orm-d2 .s-line{stroke:var(--gf-line)}#gnd-orm-d2 .s-ink{stroke:var(--gf-ink)}#gnd-orm-d2 .s-muted{stroke:var(--gf-muted)}#gnd-orm-d2 .s-primary{stroke:var(--gf-primary)}#gnd-orm-d2 .s-accent{stroke:var(--gf-accent)}#gnd-orm-d2 .s-ok{stroke:var(--gf-ok)}#gnd-orm-d2 .s-ok-bg{stroke:var(--gf-ok-bg)}#gnd-orm-d2 .s-fail{stroke:var(--gf-fail)}#gnd-orm-d2 .s-fail-bg{stroke:var(--gf-fail-bg)}#gnd-orm-d2 .s-warn{stroke:var(--gf-warn)}#gnd-orm-d2 .s-warn-bg{stroke:var(--gf-warn-bg)}#gnd-orm-d2 .s-bubble{stroke:var(--gf-bubble)}#gnd-orm-d2 .s-bubble-ink{stroke:var(--gf-bubble-ink)}#gnd-orm-d2 .s-code{stroke:var(--gf-code)}#gnd-orm-d2 .s-alethic{stroke:var(--gf-alethic)}#gnd-orm-d2 .s-deontic{stroke:var(--gf-deontic)}#gnd-orm-d2 .sans{font-family:ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif}#gnd-orm-d2 .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;white-space:pre}#gnd-orm-d2 .nofill{fill:none}</style>
+  <rect class="f-bg" height="320" rx="16" width="720" x="0" y="0"/>
+  <text class="sans f-muted" font-size="12" font-weight="600" letter-spacing="2" x="24" y="32">ORM 2 · EXCLUSION</text>
+  <g>
+    <rect class="f-card s-primary" height="52" rx="12" stroke-width="2" width="130" x="40" y="124"/>
+    <text class="sans f-ink" font-size="16" font-weight="600" text-anchor="middle" x="105" y="147">User</text>
+    <text class="sans f-muted" font-size="12" text-anchor="middle" x="105" y="165">(.id)</text>
+  </g>
+  <g>
+    <rect class="f-card s-primary" height="52" rx="12" stroke-width="2" width="130" x="550" y="124"/>
+    <text class="sans f-ink" font-size="16" font-weight="600" text-anchor="middle" x="615" y="147">Book</text>
+    <text class="sans f-muted" font-size="12" text-anchor="middle" x="615" y="165">(.id)</text>
+  </g>
+  <line class="s-ink" stroke-width="1.6" x1="170" x2="324" y1="150" y2="70"/>
+  <line class="s-ink" stroke-width="1.6" x1="396" x2="550" y1="70" y2="150"/>
+  <line class="s-ink" stroke-width="1.6" x1="170" x2="324" y1="150" y2="230"/>
+  <line class="s-ink" stroke-width="1.6" x1="396" x2="550" y1="230" y2="150"/>
+  <g>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="324" y="59"/>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="360" y="59"/>
+  </g>
+  <g>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="324" y="219"/>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="360" y="219"/>
+  </g>
+  <text class="sans f-ink" font-size="15" font-style="italic" text-anchor="middle" x="360" y="48">… is recommended …</text>
+  <text class="sans f-ink" font-size="15" font-style="italic" text-anchor="middle" x="360" y="266">… rated …</text>
+  <line class="s-alethic" stroke-dasharray="4 3" stroke-width="1.8" x1="360" x2="360" y1="81" y2="139"/>
+  <line class="s-alethic" stroke-dasharray="4 3" stroke-width="1.8" x1="360" x2="360" y1="161" y2="219"/>
+  <g>
+    <circle class="f-card s-alethic" cx="360" cy="150" r="11" stroke-width="2"/>
+    <path class="s-alethic nofill" d="M353.95 143.95L366.05 156.05M366.05 143.95L353.95 156.05" stroke-width="2"/>
+  </g>
+  <text class="sans f-muted" font-size="13" x="40" y="300">The circled cross: no (user, book) pair may be both recommended and rated.</text>
+</svg>

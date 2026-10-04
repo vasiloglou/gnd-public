@@ -237,5 +237,5 @@ must hold, and place the check before publishing its result.
 Read [evolution and recovery](../guides/evolution-and-recovery.md) for model change
 and brownfield workflows, or [data and transitions](../guides/data-and-transitions.md)
 for operation checks that audit how a state changes. The
-[agent skill guide](../guides/agent-skills.md) explains explicit handoffs between
+[agent skill guide](../agents/index.md) explains explicit handoffs between
 these workflows.

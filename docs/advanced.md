@@ -14,7 +14,7 @@ specific artifact or result that you can inspect.
 | How do I check facts extracted from a report? | [Documents](guides/documents.md) |
 | How do I run a bounded agent experiment? | [Experiments](guides/experiments.md) |
 | How do I explain a derived tuple or use a native export? | [Exports and witnesses](guides/exports.md) |
-| How do I ask an agent to use these workflows? | [Agent skills](guides/agent-skills.md) |
+| How do I ask an agent to use these workflows? | [Agent skills](agents/index.md) |
 
 For a continuous learning path, build [BookRec](bookrec/01-model.md), then try
 the [expense application](expense/01-model.md). The

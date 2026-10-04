@@ -37,6 +37,22 @@ Repository access is required while staging remains private. After activating,
 create a separate empty working directory for a tutorial. Its inputs are copied
 from package resources, so it does not depend on repository fixtures.
 
+## Install the skills into your agent
+
+GND is skills plus Python code. The package you just installed also carries the agent
+skills. Place them in the project where your coding agent works:
+
+```sh
+gnd install --project
+gnd doctor --project
+```
+
+By default this targets both Claude Code (`.claude/skills/`) and Codex (`.codex/skills/`);
+`--claude` or `--codex` selects one, and `--global` installs at user level. `doctor`
+reports what is placed and flags stale, modified or colliding copies. See
+[Install the skills](agents/install.md) for the details, and
+[Work with an agent](agents/index.md) for what each skill produces.
+
 ## Optional tools
 
 The base checker needs no provider key, native compiler or database. Synthetic

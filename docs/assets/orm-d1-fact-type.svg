@@ -1,0 +1,26 @@
+<svg aria-labelledby="gnd-orm-d1-title gnd-orm-d1-desc" class="gnd-figure" id="gnd-orm-d1" role="img" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+  <title id="gnd-orm-d1-title">User rated Book in ORM 2 notation</title>
+  <desc id="gnd-orm-d1-desc">Two entity types, User and Book, identified by id, joined by the binary fact type 'User rated Book'. A uniqueness bar spans both roles.</desc>
+  <style>:where(#gnd-orm-d1){--gf-bg:#f1f4ef;--gf-card:#ffffff;--gf-line:#b7cec5;--gf-ink:#183936;--gf-muted:#5b6f6b;--gf-primary:#164f4b;--gf-accent:#b34e26;--gf-ok:#1f7a4d;--gf-ok-bg:#dcece3;--gf-fail:#b3261e;--gf-fail-bg:#f7dcd6;--gf-warn:#8a5e00;--gf-warn-bg:#fbecc2;--gf-bubble:#164f4b;--gf-bubble-ink:#ffffff;--gf-code:#f6f8f5;--gf-alethic:#6b3fa0;--gf-deontic:#1f5fa8}@media (prefers-color-scheme: dark){:where(#gnd-orm-d1){--gf-bg:#1b2b28;--gf-card:#0f1917;--gf-line:#2d4440;--gf-ink:#e6efec;--gf-muted:#9fb3ae;--gf-primary:#7bd4c6;--gf-accent:#ffb38b;--gf-ok:#6fd39a;--gf-ok-bg:#163b2b;--gf-fail:#ff8f85;--gf-fail-bg:#4a1f1b;--gf-warn:#f2c14e;--gf-warn-bg:#4a3a10;--gf-bubble:#123d39;--gf-bubble-ink:#e6efec;--gf-code:#142320;--gf-alethic:#c3a6ff;--gf-deontic:#8ab8ff}}#gnd-orm-d1 .f-bg{fill:var(--gf-bg)}#gnd-orm-d1 .f-card{fill:var(--gf-card)}#gnd-orm-d1 .f-line{fill:var(--gf-line)}#gnd-orm-d1 .f-ink{fill:var(--gf-ink)}#gnd-orm-d1 .f-muted{fill:var(--gf-muted)}#gnd-orm-d1 .f-primary{fill:var(--gf-primary)}#gnd-orm-d1 .f-accent{fill:var(--gf-accent)}#gnd-orm-d1 .f-ok{fill:var(--gf-ok)}#gnd-orm-d1 .f-ok-bg{fill:var(--gf-ok-bg)}#gnd-orm-d1 .f-fail{fill:var(--gf-fail)}#gnd-orm-d1 .f-fail-bg{fill:var(--gf-fail-bg)}#gnd-orm-d1 .f-warn{fill:var(--gf-warn)}#gnd-orm-d1 .f-warn-bg{fill:var(--gf-warn-bg)}#gnd-orm-d1 .f-bubble{fill:var(--gf-bubble)}#gnd-orm-d1 .f-bubble-ink{fill:var(--gf-bubble-ink)}#gnd-orm-d1 .f-code{fill:var(--gf-code)}#gnd-orm-d1 .f-alethic{fill:var(--gf-alethic)}#gnd-orm-d1 .f-deontic{fill:var(--gf-deontic)}#gnd-orm-d1 .s-bg{stroke:var(--gf-bg)}#gnd-orm-d1 .s-card{stroke:var(--gf-card)}#gnd-orm-d1 .s-line{stroke:var(--gf-line)}#gnd-orm-d1 .s-ink{stroke:var(--gf-ink)}#gnd-orm-d1 .s-muted{stroke:var(--gf-muted)}#gnd-orm-d1 .s-primary{stroke:var(--gf-primary)}#gnd-orm-d1 .s-accent{stroke:var(--gf-accent)}#gnd-orm-d1 .s-ok{stroke:var(--gf-ok)}#gnd-orm-d1 .s-ok-bg{stroke:var(--gf-ok-bg)}#gnd-orm-d1 .s-fail{stroke:var(--gf-fail)}#gnd-orm-d1 .s-fail-bg{stroke:var(--gf-fail-bg)}#gnd-orm-d1 .s-warn{stroke:var(--gf-warn)}#gnd-orm-d1 .s-warn-bg{stroke:var(--gf-warn-bg)}#gnd-orm-d1 .s-bubble{stroke:var(--gf-bubble)}#gnd-orm-d1 .s-bubble-ink{stroke:var(--gf-bubble-ink)}#gnd-orm-d1 .s-code{stroke:var(--gf-code)}#gnd-orm-d1 .s-alethic{stroke:var(--gf-alethic)}#gnd-orm-d1 .s-deontic{stroke:var(--gf-deontic)}#gnd-orm-d1 .sans{font-family:ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif}#gnd-orm-d1 .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;white-space:pre}#gnd-orm-d1 .nofill{fill:none}</style>
+  <rect class="f-bg" height="240" rx="16" width="720" x="0" y="0"/>
+  <text class="sans f-muted" font-size="12" font-weight="600" letter-spacing="2" x="24" y="32">ORM 2 · OBJECT TYPES AND A FACT TYPE</text>
+  <g>
+    <rect class="f-card s-primary" height="52" rx="12" stroke-width="2" width="130" x="60" y="94"/>
+    <text class="sans f-ink" font-size="16" font-weight="600" text-anchor="middle" x="125" y="117">User</text>
+    <text class="sans f-muted" font-size="12" text-anchor="middle" x="125" y="135">(.id)</text>
+  </g>
+  <g>
+    <rect class="f-card s-primary" height="52" rx="12" stroke-width="2" width="130" x="530" y="94"/>
+    <text class="sans f-ink" font-size="16" font-weight="600" text-anchor="middle" x="595" y="117">Book</text>
+    <text class="sans f-muted" font-size="12" text-anchor="middle" x="595" y="135">(.id)</text>
+  </g>
+  <line class="s-ink" stroke-width="1.6" x1="190" x2="324" y1="120" y2="120"/>
+  <line class="s-ink" stroke-width="1.6" x1="396" x2="530" y1="120" y2="120"/>
+  <g>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="324" y="109"/>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="360" y="109"/>
+  </g>
+  <line class="s-alethic" stroke-linecap="round" stroke-width="2.6" x1="327" x2="393" y1="103" y2="103"/>
+  <text class="sans f-ink" font-size="15" font-style="italic" text-anchor="middle" x="360" y="154">… rated …</text>
+  <text class="sans f-muted" font-size="13" x="60" y="208">One role box per participant. The bar across both roles: each (user, book) pair is stated once.</text>
+</svg>

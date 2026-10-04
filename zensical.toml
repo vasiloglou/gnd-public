@@ -1,6 +1,6 @@
 [project]
 site_name = "GND"
-site_description = "Build applications around explicit domain rules."
+site_description = "Build agentic data apps that check themselves. Inspired by GSD: an executable ORM ontology verified by GND, Soufflé, Lean or PyRel."
 site_url = "https://vasiloglou.github.io/gnd-public/"
 repo_url = "https://github.com/vasiloglou/gnd-public"
 repo_name = "gnd-public"
@@ -8,14 +8,17 @@ docs_dir = "docs"
 site_dir = "site"
 extra_css = ["assets/styles.css"]
 nav = [
-  { "Overview" = [{ "What is GND?" = "index.md" }, { "Core concepts" = "concepts.md" }, { "Application gallery" = "applications.md" }] },
-  { "Get started" = [{ "Install GND" = "installation.md" }, { "Check and repair" = "quickstart.md" }, { "Release dependencies" = "release-example.md" }] },
-  { "Build BookRec" = [{ "1. Model the problem" = "bookrec/01-model.md" }, { "2. Facts and rules" = "bookrec/02-facts.md" }, { "3. Generate a project" = "bookrec/03-project.md" }, { "4. Build the application" = "bookrec/04-application.md" }, { "5. Diagnose and repair" = "bookrec/05-repair.md" }, { "6. Evolve the rules" = "bookrec/06-evolution.md" }] },
-  { "Expense approvals" = [{ "1. Model the workflow" = "expense/01-model.md" }, { "2. Build and check" = "expense/02-application.md" }, { "3. Add currencies" = "expense/03-evolution.md" }] },
-  { "External runtimes" = [{ "Release governance and setup" = "runtimes/scenario.md" }, { "PyRel: approval audits" = "runtimes/pyrel.md" }, { "Soufflé: dependency impact" = "runtimes/souffle.md" }, { "Lean: policy proofs" = "runtimes/lean.md" }, { "Interpret the evidence" = "runtimes/decision.md" }] },
-  { "Guides" = [{ "Models and constraints" = "guides/modeling.md" }, { "Data and transitions" = "guides/data-and-transitions.md" }, { "Synthetic data" = "guides/synthetic-data.md" }, { "Generated projects" = "guides/generated-projects.md" }, { "Evolution and recovery" = "guides/evolution-and-recovery.md" }, { "Documents and extraction" = "guides/documents.md" }, { "Experiment sessions" = "guides/experiments.md" }, { "Exports and witnesses" = "guides/exports.md" }, { "Coding-agent workflows" = "guides/agent-skills.md" }] },
-  { "Reference" = [{ "Supported capabilities" = "reference/capabilities.md" }, { "CLI task index" = "reference/cli.md" }, { "Python API" = "reference/python-api.md" }, { "Formats and errors" = "reference/formats.md" }, { "Compatibility" = "compatibility.md" }, { "Support" = "support.md" }] },
-  { "Contributing" = [{ "Develop GND" = "development/index.md" }, { "Write documentation" = "development/documentation.md" }, { "Tested candidate" = "development/candidate.md" }, { "Release process" = "releasing.md" }, { "Release notes" = "release-notes.md" }] }
+  { "Overview" = [{ "What is GND?" = "index.md" }, { "ORM: the executable ontology" = "concepts.md" }, { "Capabilities tour" = "tour.md" }, { "Application gallery" = "applications.md" }] },
+  { "Get started" = [{ "Install GND and the skills" = "installation.md" }, { "Run a check in 60 seconds" = "quickstart.md" }, { "Release dependencies" = "release-example.md" }] },
+  { "Work with an agent" = [{ "Skills + Python: who does what" = "agents/index.md" }, { "Install the skills" = "agents/install.md" }, { "Check an agent's plan" = "agents/plans.md" }, { "Model a domain by dialogue" = "agents/model-from-text.md" }, { "Drive an agent against the verifier" = "agents/dev-session.md" }, { "Generate a project and keep it aligned" = "agents/codegen-conformance.md" }, { "Change the rules safely" = "agents/evolve.md" }, { "Documents in, documents out" = "agents/documents.md" }, { "Exports and a second opinion" = "agents/export-and-review.md" }, { "The station walk" = "walkthrough.md" }] },
+  { "Tutorials" = [
+    { "Build BookRec" = [{ "1. Model the problem" = "bookrec/01-model.md" }, { "2. Facts and rules" = "bookrec/02-facts.md" }, { "3. Generate a project" = "bookrec/03-project.md" }, { "4. Build the application" = "bookrec/04-application.md" }, { "5. Diagnose and repair" = "bookrec/05-repair.md" }, { "6. Evolve the rules" = "bookrec/06-evolution.md" }] },
+    { "Expense approvals" = [{ "1. Model the workflow" = "expense/01-model.md" }, { "2. Build and check" = "expense/02-application.md" }, { "3. Add currencies" = "expense/03-evolution.md" }] }
+  ] },
+  { "Verify at scale" = [{ "Release governance across runtimes" = "runtimes/scenario.md" }, { "PyRel: approval audits" = "runtimes/pyrel.md" }, { "Soufflé: dependency impact" = "runtimes/souffle.md" }, { "Lean: policy proofs" = "runtimes/lean.md" }, { "Interpret the evidence" = "runtimes/decision.md" }] },
+  { "Guides (CLI and Python)" = [{ "Models and constraints" = "guides/modeling.md" }, { "Data and transitions" = "guides/data-and-transitions.md" }, { "Synthetic data" = "guides/synthetic-data.md" }, { "Generated projects" = "guides/generated-projects.md" }, { "Evolution and recovery" = "guides/evolution-and-recovery.md" }, { "Documents and extraction" = "guides/documents.md" }, { "Experiment sessions" = "guides/experiments.md" }, { "Exports and witnesses" = "guides/exports.md" }] },
+  { "Reference" = [{ "Supported capabilities" = "reference/capabilities.md" }, { "CLI task index" = "reference/cli.md" }, { "Python API" = "reference/python-api.md" }, { "Formats and errors" = "reference/formats.md" }, { "Support" = "support.md" }] },
+  { "Project" = [{ "Release notes and milestones" = "release-notes.md" }, { "Compatibility" = "compatibility.md" }, { "Release process" = "releasing.md" }, { "Develop GND" = "development/index.md" }, { "Write documentation" = "development/documentation.md" }, { "Tested candidate" = "development/candidate.md" }] }
 ]
 
 [project.theme]

@@ -313,4 +313,4 @@ You have now built a checked application, repaired facts, observed file drift,
 published an explicit rule change, and checked complete derived output. Continue
 with [expense approvals](../expense/01-model.md), explore the
 [capability map](../reference/capabilities.md), or read the
-[agent skill handoffs](../guides/agent-skills.md).
+[agent skill handoffs](../agents/index.md).

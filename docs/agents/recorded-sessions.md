@@ -12,13 +12,22 @@ attempts**. Every agent saw the same inputs: the task, the model, the current st
 and the two digests a plan must carry. The sessions are committed under
 `approvals/recordings`, so every number below can be checked from this page.
 
-!!! note "What this is, and is not"
+!!! success "What a session guarantees"
+
+    GND does not promise that an agent solves the task. It promises that **you know the
+    final state**. Every session below ended in exactly one recorded outcome: the plan
+    was *accepted*, or the session failed with a name (`stagnation`, `oscillation` or
+    `budget-exhausted`). Every attempt was kept as evidence. Both outcomes are the system
+    working. A plan that was accepted is confirmed correct against your rules, and a
+    session that did not converge is confirmed to have failed, instead of leaving you to
+    guess whether a model's answer can be trusted.
+
+!!! note "Scope"
 
     One small task. Claude Code and Codex ran once each; every hosted model ran three
-    times, because sampling varies. These are recordings, not a benchmark: they show
-    what the checker did with each output, and they do not rank the models.
-    Agent text is shown as recorded and was never edited. No provider is called when
-    you run this page; the commands replay the committed bytes.
+    times, because sampling varies. These are recordings, not a benchmark, so they do not
+    rank the models. Agent text is shown as recorded and was never edited. No provider is
+    called when you run this page; the commands replay the committed bytes.
 
 ## What happened
 
@@ -32,18 +41,22 @@ and the two digests a plan must carry. The sessions are committed under
 | Gemma 3 4B | 3 | 2 | 0 | **2** | 1 (budget exhausted) |
 | Llama 3.2 3B | 3 | 0 | 0 | 0 | 3 (stagnation, budget ×2) |
 
-Two things stand out.
+Three things stand out.
 
 **The checker is the same for every agent.** Claude Code's plan, a 14B model's plan and
 a 4B model's plan were each accepted or rejected by the same deterministic rules. A
 plan from a cheap model is never trusted; it is checked, and a rejected plan is retried.
 
-**The retry loop earned its keep on the models that stumbled.** Take the four models
-that did not always succeed on the first try (12 sessions). Only 2 sessions were
-accepted on attempt 1. With up to three attempts, 7 were. Gemma 3 4B never succeeded on
-its first try and was still accepted in two of three sessions. Llama 3.2 3B did not
-converge at all, and the checker reported that too, with an explicit `stagnation` or
-`budget-exhausted`, instead of passing a bad plan.
+**It helped small models be correct.** Take the four models that did not always succeed
+on the first try (12 sessions). Only 2 sessions were accepted on attempt 1. With up to
+three attempts, 7 were. Gemma 3 4B never succeeded on its first try and was still
+accepted in two of three sessions, and every one of those acceptances is a confirmed
+pass, not a hopeful answer.
+
+**When a model could not do it, we know.** Llama 3.2 3B did not converge in any of its
+three sessions. The checker said so with `stagnation` or `budget-exhausted`, and no bad
+plan was passed on. That confirmed failure is as useful as a pass: you know to escalate
+to a stronger model, rather than shipping an unchecked answer.
 
 ## What the checker caught
 

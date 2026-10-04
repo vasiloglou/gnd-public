@@ -1,0 +1,45 @@
+{
+  "implementation_commit": "2400396ff966a41163484f32aad3756b40811d8c",
+  "date": "2026-10-04",
+  "documentation": {
+    "run": 37176913983,
+    "job": 111361339947,
+    "status": "completed",
+    "conclusion": "failure",
+    "steps_executed": 0
+  },
+  "candidate": {
+    "run": 37176913989,
+    "job": 111361339962,
+    "status": "completed",
+    "conclusion": "failure",
+    "steps_executed": 0,
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/vasiloglou/gnd-public/blob/2400396ff966a41163484f32aad3756b40811d8c/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/vasiloglou/gnd-public/blob/2400396ff966a41163484f32aad3756b40811d8c/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "notice",
+        "title": "",
+        "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+        "raw_details": ""
+      }
+    ]
+  },
+  "interpretation": "GitHub refused job startup because recent account payments failed or spending limits need adjustment. This is unavailable cloud evidence, not a tested-code failure or a pass. Final Phase 4 sign-off remains pending. No unchanged job was rerun; publication remains Phase 5. Record-only successor commits do not change the tested wheel bytes."
+}

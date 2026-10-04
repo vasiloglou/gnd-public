@@ -37,6 +37,18 @@ The parser consumes the comments for tests; the site renders ordinary
 code fences normally. Unmarked snippets are illustrative or setup instructions; label
 placeholders and optional provider/native prerequisites in adjacent prose.
 
+Use `<!-- gnd-run expect=0 lane=souffle -->` (or `pyrel` / `lean`) for a native
+step. The default lane is offline; a selected native lane runs its offline
+prerequisites and refuses absent or wrong-version tools. PyRel uses a separate
+locked interpreter through `GND_TUTORIAL_PYREL_PYTHON` because its Pydantic pin
+conflicts with GND. See [runtime setup](../runtimes/scenario.md). Never count
+skipped native steps as successful execution.
+
+Full native source is rendered with `pymdownx.snippets` from the packaged file;
+documented commands execute that same file. The site rejects missing includes
+and leaked include directives. Packaged runtime-environment files are byte-pinned
+copies of the separate locked tutorial project, not an independently maintained lock.
+
 ```sh
 uv run pytest -q tests/test_documentation_tutorials.py tests/test_release_docs.py --tb=short
 ```

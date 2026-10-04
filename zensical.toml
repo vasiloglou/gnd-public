@@ -12,6 +12,7 @@ nav = [
   { "Get started" = [{ "Install GND" = "installation.md" }, { "Check and repair" = "quickstart.md" }, { "Release dependencies" = "release-example.md" }] },
   { "Build BookRec" = [{ "1. Model the problem" = "bookrec/01-model.md" }, { "2. Facts and rules" = "bookrec/02-facts.md" }, { "3. Generate a project" = "bookrec/03-project.md" }, { "4. Build the application" = "bookrec/04-application.md" }, { "5. Diagnose and repair" = "bookrec/05-repair.md" }, { "6. Evolve the rules" = "bookrec/06-evolution.md" }] },
   { "Expense approvals" = [{ "1. Model the workflow" = "expense/01-model.md" }, { "2. Build and check" = "expense/02-application.md" }, { "3. Add currencies" = "expense/03-evolution.md" }] },
+  { "External runtimes" = [{ "Release governance and setup" = "runtimes/scenario.md" }, { "PyRel: approval audits" = "runtimes/pyrel.md" }, { "Soufflé: dependency impact" = "runtimes/souffle.md" }, { "Lean: policy proofs" = "runtimes/lean.md" }, { "Interpret the evidence" = "runtimes/decision.md" }] },
   { "Guides" = [{ "Models and constraints" = "guides/modeling.md" }, { "Data and transitions" = "guides/data-and-transitions.md" }, { "Synthetic data" = "guides/synthetic-data.md" }, { "Generated projects" = "guides/generated-projects.md" }, { "Evolution and recovery" = "guides/evolution-and-recovery.md" }, { "Documents and extraction" = "guides/documents.md" }, { "Experiment sessions" = "guides/experiments.md" }, { "Exports and witnesses" = "guides/exports.md" }, { "Coding-agent workflows" = "guides/agent-skills.md" }] },
   { "Reference" = [{ "Supported capabilities" = "reference/capabilities.md" }, { "CLI task index" = "reference/cli.md" }, { "Python API" = "reference/python-api.md" }, { "Formats and errors" = "reference/formats.md" }, { "Compatibility" = "compatibility.md" }, { "Support" = "support.md" }] },
   { "Contributing" = [{ "Develop GND" = "development/index.md" }, { "Write documentation" = "development/documentation.md" }, { "Tested candidate" = "development/candidate.md" }, { "Release process" = "releasing.md" }, { "Release notes" = "release-notes.md" }] }
@@ -45,6 +46,7 @@ md_in_html = {}
 "pymdownx.highlight" = { anchor_linenums = true }
 "pymdownx.superfences" = {}
 "pymdownx.tabbed" = { alternate_style = true }
+"pymdownx.snippets" = { check_paths = true, restrict_base_path = true }
 
 [project.validation.links]
 not_found = "warn"

@@ -21,6 +21,8 @@ these conditions inspectable and executable.
   and CLI with hard rules, advisory warnings and checked output publication.
 - **[Build expense approvals](docs/expense/01-model.md):** implement a small
   workflow, reject an invalid state and add currencies through model evolution.
+- **[Use PyRel, Soufflé and Lean](docs/runtimes/scenario.md):** audit releases,
+  trace vulnerable dependencies and complete finite approval-policy proofs.
 
 [Install GND](docs/installation.md), then follow a tutorial. After the tutorial
 copies its supplied inputs, a Python integration can check both candidates:

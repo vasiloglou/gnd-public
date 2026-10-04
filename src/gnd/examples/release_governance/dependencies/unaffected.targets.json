@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "fact_type": "unaffected",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "inventory"
+        }
+      ]
+    }
+  ]
+}

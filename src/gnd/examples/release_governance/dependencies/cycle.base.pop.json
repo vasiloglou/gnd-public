@@ -1,0 +1,113 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd:tutorial:release-governance:dependencies@1",
+    "source": "synthetic",
+    "covers": [
+      "dependency",
+      "deployable",
+      "vulnerable",
+      "request"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dependency": [
+      {
+        "service": "checkout",
+        "dependency": "payments"
+      },
+      {
+        "service": "checkout",
+        "dependency": "inventory"
+      },
+      {
+        "service": "checkout",
+        "dependency": "identity"
+      },
+      {
+        "service": "payments",
+        "dependency": "ledger"
+      },
+      {
+        "service": "payments",
+        "dependency": "serialization"
+      },
+      {
+        "service": "identity",
+        "dependency": "serialization"
+      },
+      {
+        "service": "inventory",
+        "dependency": "stock-db"
+      },
+      {
+        "service": "ledger",
+        "dependency": "ledger-db"
+      },
+      {
+        "service": "reporting",
+        "dependency": "analytics-db"
+      },
+      {
+        "service": "checkout",
+        "dependency": "payments"
+      },
+      {
+        "service": "ledger",
+        "dependency": "payments"
+      }
+    ],
+    "deployable": [
+      {
+        "service": "checkout"
+      },
+      {
+        "service": "payments"
+      },
+      {
+        "service": "inventory"
+      },
+      {
+        "service": "identity"
+      },
+      {
+        "service": "ledger"
+      },
+      {
+        "service": "reporting"
+      }
+    ],
+    "vulnerable": [
+      {
+        "component": "serialization"
+      },
+      {
+        "component": "ledger-db"
+      }
+    ],
+    "request": [
+      {
+        "release": "REL-101",
+        "service": "checkout"
+      },
+      {
+        "release": "REL-102",
+        "service": "inventory"
+      },
+      {
+        "release": "REL-103",
+        "service": "reporting"
+      },
+      {
+        "release": "REL-104",
+        "service": "payments"
+      },
+      {
+        "release": "REL-105",
+        "service": "ledger"
+      }
+    ]
+  }
+}

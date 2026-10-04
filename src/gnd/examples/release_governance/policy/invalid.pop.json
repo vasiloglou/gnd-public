@@ -1,0 +1,81 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd:tutorial:release-governance:policy@1",
+    "source": "synthetic",
+    "covers": [
+      "request",
+      "approval",
+      "authorized"
+    ]
+  },
+  "instances": {
+    "release": [
+      "REL-101",
+      "REL-102",
+      "REL-103",
+      "REL-104",
+      "REL-105"
+    ]
+  },
+  "facts": {
+    "request": [
+      {
+        "release": "REL-101",
+        "service": "checkout",
+        "requester": "Alice"
+      },
+      {
+        "release": "REL-102",
+        "service": "inventory",
+        "requester": "Ben"
+      },
+      {
+        "release": "REL-103",
+        "service": "reporting",
+        "requester": "Cara"
+      },
+      {
+        "release": "REL-104",
+        "service": "payments",
+        "requester": "Dana"
+      },
+      {
+        "release": "REL-105",
+        "service": "ledger",
+        "requester": "Evan"
+      }
+    ],
+    "approval": [
+      {
+        "release": "REL-101",
+        "reviewer": "Alice"
+      },
+      {
+        "release": "REL-102",
+        "reviewer": "Maya"
+      },
+      {
+        "release": "REL-104",
+        "reviewer": "Maya"
+      },
+      {
+        "release": "REL-104",
+        "reviewer": "Noah"
+      },
+      {
+        "release": "REL-105",
+        "reviewer": "Zoe"
+      }
+    ],
+    "authorized": [
+      {
+        "reviewer": "Maya"
+      },
+      {
+        "reviewer": "Noah"
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "joined_approvals": [
+    [
+      "REL-101",
+      "checkout",
+      "Alice",
+      "Noah",
+      "Alice"
+    ],
+    [
+      "REL-102",
+      "inventory",
+      "Ben",
+      "Maya",
+      "Ben"
+    ],
+    [
+      "REL-103",
+      "reporting",
+      "Cara",
+      "Maya",
+      "Cara"
+    ],
+    [
+      "REL-104",
+      "payments",
+      "Dana",
+      "Maya",
+      "Dana"
+    ],
+    [
+      "REL-105",
+      "ledger",
+      "Evan",
+      "Noah",
+      "Evan"
+    ]
+  ],
+  "self_approval": [],
+  "conflicting_releases": [],
+  "unauthorized": [],
+  "reviewer_workload": [
+    [
+      "Maya",
+      3
+    ],
+    [
+      "Noah",
+      2
+    ]
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "version": 4,
+  "model_id": "urn:gnd:tutorial:release-governance:approval-proof@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "release",
+      "name": "Release",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "requested",
+      "reading": "{Release}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        }
+      ]
+    },
+    {
+      "id": "reviewed",
+      "reading": "{Release}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        }
+      ]
+    },
+    {
+      "id": "approved",
+      "reading": "{Release}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "subset",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Synthetic release governance policy supplied by the tutorial."
+      },
+      "id": "approved_reviewed",
+      "subset_role_seq": [
+        {
+          "fact_type": "approved",
+          "role": "release"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "reviewed",
+          "role": "release"
+        }
+      ]
+    },
+    {
+      "type": "subset",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Synthetic release governance policy supplied by the tutorial."
+      },
+      "id": "reviewed_requested",
+      "subset_role_seq": [
+        {
+          "fact_type": "reviewed",
+          "role": "release"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "requested",
+          "role": "release"
+        }
+      ]
+    },
+    {
+      "type": "subset",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Synthetic release governance policy supplied by the tutorial."
+      },
+      "id": "approved_requested",
+      "subset_role_seq": [
+        {
+          "fact_type": "approved",
+          "role": "release"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "requested",
+          "role": "release"
+        }
+      ]
+    }
+  ],
+  "rejected_proposals": []
+}

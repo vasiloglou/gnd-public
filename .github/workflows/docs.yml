@@ -1,7 +1,7 @@
 name: Documentation
 on:
   pull_request:
-    paths: ['docs/**', 'overrides/**', 'README.md', 'zensical.toml', 'pyproject.toml', 'uv.lock', 'src/gnd/examples/**', 'tools/*docs*', 'tools/run_tutorials.py', 'tests/test_documentation_tutorials.py', '.github/workflows/docs.yml']
+    paths: ['docs/**', 'overrides/**', 'README.md', 'zensical.toml', 'pyproject.toml', 'uv.lock', 'tutorials/**', 'src/gnd/examples/**', 'tools/*docs*', 'tools/run_tutorials.py', 'tests/test_documentation_tutorials.py', 'tests/test_external_runtime_tutorials.py', '.github/workflows/docs.yml']
   workflow_dispatch:
     inputs:
       publish:

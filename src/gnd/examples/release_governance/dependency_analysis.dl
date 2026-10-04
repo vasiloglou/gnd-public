@@ -1,0 +1,33 @@
+// Developer-owned source. Never inserted into a verified GND bundle.
+.comp DependencyAnalysis {
+    .decl Edge(service:symbol, dependency:symbol)
+    .decl Deployable(service:symbol)
+    .decl Vulnerable(component:symbol)
+    .decl Request(release:symbol, service:symbol)
+    .input Edge
+    .input Deployable
+    .input Vulnerable
+    .input Request
+
+    .decl Reachable(service:symbol, dependency:symbol)
+    Reachable(s,d) :- Edge(s,d).
+    Reachable(s,d) :- Edge(s,m), Reachable(m,d).
+
+    .decl Exposure(service:symbol, component:symbol)
+    Exposure(s,d) :- Deployable(s), Reachable(s,d), Vulnerable(d).
+    .decl Affected(service:symbol)
+    Affected(s) :- Exposure(s,_).
+    .decl Unaffected(service:symbol)
+    Unaffected(s) :- Deployable(s), !Affected(s).
+    .decl VulnerabilityCount(service:symbol, total:number)
+    VulnerabilityCount(s,n) :- Affected(s), n = count : { Exposure(s,_) }.
+    .decl Blocked(release:symbol, service:symbol)
+    Blocked(r,s) :- Request(r,s), Affected(s).
+    .output Reachable
+    .output Exposure
+    .output Affected
+    .output Unaffected
+    .output VulnerabilityCount
+    .output Blocked
+}
+.init impact = DependencyAnalysis

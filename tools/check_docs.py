@@ -26,7 +26,7 @@ class Page(HTMLParser):
     def handle_data(self, data):
         # Runnable metadata belongs in HTML comments; a visible fence means the
         # Markdown renderer treated executable instructions as ordinary text.
-        if '```' in data:
+        if '```' in data or '--8<--' in data:
             self.leaked_fences = True
 
 

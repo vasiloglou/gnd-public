@@ -1,0 +1,3 @@
+FalseClaim.lean:8:65: error: Tactic `decide` proved that the proposition
+  (pending.r1.all fun r => pending.r2.contains r) = true
+is false

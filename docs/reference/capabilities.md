@@ -33,7 +33,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Run a bounded agent experiment | `exp` commands and selected adapter/policy | Requires authored contract; live adapter prerequisites are separate | [Experiments](../guides/experiments.md) |
 | Evaluate saved external opinions | `judgments check`; explicit session judgment gate | Consumes receipts; does not obtain opinions or calibrate providers | [Experiments](../guides/experiments.md) |
 | Explain a finite derived tuple | `witness`, `replay`, `witness-view`; API witness/replay | Selected positive proof fragment, not extension completeness | [Exports](../guides/exports.md) |
-| Export to external runtimes | Bounded Souffle/Lean/PyRel profiles | Export, native execution, compilation and proof are distinct | [Exports](../guides/exports.md) |
+| Export to external runtimes | Bounded Souffle/Lean/PyRel profiles | Export, native execution, compilation and proof are distinct | [Exports](../guides/exports.md), [worked native guides](../runtimes/scenario.md) |
 | Review a plan or result | Explicit advisory review-panel skill and CLI | Live tools/credentials; reviewer findings do not apply fixes | [Agent skills](../guides/agent-skills.md) |
 
 ## Constraint coverage

@@ -54,6 +54,9 @@ does not.
 
 ## Choose an export by the question it can answer
 
+For complete inputs, real native execution, developer-owned source and explained
+failures, follow [release governance across PyRel, Soufflé and Lean](../runtimes/scenario.md).
+
 | Export | Intended artifact | Separate next step |
 |---|---|---|
 | Souffle | A bounded standalone derivation program and fixed facts | Verify bundle, then explicitly select native execution |

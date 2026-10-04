@@ -1,0 +1,47 @@
+{
+  "backend": "duckdb-local",
+  "mode": "select",
+  "model": "policy/model.orm.json",
+  "oracle": "pyrel",
+  "package": {
+    "name": "relationalai",
+    "version": "1.30.1"
+  },
+  "population": "policy/invalid.pop.json",
+  "schema_version": 1,
+  "verdicts": [
+    {
+      "constraint_ref": "fact_types[approval].constraints[0]",
+      "constraint_type": "mandatory",
+      "status": "violated",
+      "witnesses": [
+        [
+          "REL-103"
+        ]
+      ]
+    },
+    {
+      "constraint_ref": "fact_types[approval].constraints[1]",
+      "constraint_type": "uniqueness",
+      "status": "violated",
+      "witnesses": [
+        [
+          "REL-104"
+        ]
+      ]
+    },
+    {
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "subset",
+      "status": "violated",
+      "witnesses": [
+        [
+          "Alice"
+        ],
+        [
+          "Zoe"
+        ]
+      ]
+    }
+  ]
+}

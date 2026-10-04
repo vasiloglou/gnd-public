@@ -1,0 +1,78 @@
+{
+  "joined_approvals": [
+    [
+      "REL-101",
+      "checkout",
+      "Alice",
+      "Alice",
+      "Alice"
+    ],
+    [
+      "REL-102",
+      "inventory",
+      "Ben",
+      "Maya",
+      "Ben"
+    ],
+    [
+      "REL-104",
+      "payments",
+      "Dana",
+      "Maya",
+      "Dana"
+    ],
+    [
+      "REL-104",
+      "payments",
+      "Dana",
+      "Noah",
+      "Dana"
+    ],
+    [
+      "REL-105",
+      "ledger",
+      "Evan",
+      "Zoe",
+      "Evan"
+    ]
+  ],
+  "self_approval": [
+    [
+      "REL-101",
+      "Alice"
+    ]
+  ],
+  "conflicting_releases": [
+    [
+      "REL-104"
+    ]
+  ],
+  "unauthorized": [
+    [
+      "REL-101",
+      "Alice"
+    ],
+    [
+      "REL-105",
+      "Zoe"
+    ]
+  ],
+  "reviewer_workload": [
+    [
+      "Alice",
+      1
+    ],
+    [
+      "Maya",
+      2
+    ],
+    [
+      "Noah",
+      1
+    ],
+    [
+      "Zoe",
+      1
+    ]
+  ]
+}

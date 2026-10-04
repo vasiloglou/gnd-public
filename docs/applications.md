@@ -9,6 +9,7 @@ applications with synthetic data, designed for inspection and modification.
 | [Expense approvals](expense/01-model.md) | Approval and reporting CLI | Policy constraints, candidate states, explicit validation, currency evolution |
 | [Warehouse dispatch](quickstart.md) | Shipping request against a fixed route catalogue | Deadlines, reference data, meaningful failure and repair |
 | [Release readiness](release-example.md) | Release request against dependency facts | Applying the same checking approach to another domain |
+| [Release governance](runtimes/scenario.md) | PyRel approval report, Soufflé dependency analysis, Lean policy proofs | Native queries, recursive impact, finite proofs and separate evidence claims |
 
 ## Built from earlier GND work
 

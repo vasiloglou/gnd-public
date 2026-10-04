@@ -1,0 +1,22 @@
+.......................................................F................ [ 50%]
+......................................................................   [100%]
+=================================== FAILURES ===================================
+_________________ test_documented_learning_path[runtime-pyrel] _________________
+tests/test_documentation_tutorials.py:101: in test_documented_learning_path
+    assert runner.run_pages(pages, tmp_path, python) > 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/run_tutorials.py:88: in run_pages
+    raise AssertionError(
+E   AssertionError: pyrel.md block 7: expected 0, got 64
+E   gnd check release-governance/policy/model.orm.json authorized-self.pop.json --json
+E   stdout:
+E   
+E   stderr:
+E   usage: gnd [-h] [--version]
+E              {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...
+E   gnd: error: unrecognized arguments: --json
+----------------------------- Captured stdout call -----------------------------
+scenario.md: selected executable blocks passed
+=========================== short test summary info ============================
+FAILED tests/test_documentation_tutorials.py::test_documented_learning_path[runtime-pyrel]
+1 failed, 141 passed in 38.75s

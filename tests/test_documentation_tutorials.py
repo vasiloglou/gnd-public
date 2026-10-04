@@ -1,8 +1,14 @@
 """Tutorial commands are the test input, including expected deliberate failures."""
 import importlib.util
 import os
+import re
+import shlex
+import subprocess
 import sys
+import tarfile
+import zipfile
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -19,6 +25,62 @@ def load_tool(name):
 runner = load_tool('run_tutorials')
 links = load_tool('check_docs')
 installed_docs = load_tool('check_installed_docs')
+
+
+@pytest.mark.parametrize('command', [
+    command
+    for line in (ROOT / 'docs/reference/cli.md').read_text().splitlines()
+    if line.startswith('| `gnd ')
+    for command in re.findall(r'`(gnd [^`]+)`', line)
+])
+def test_reference_command_routes_exist(command):
+    argv = shlex.split(command)[1:]
+    argv = argv[:argv.index('...')] if '...' in argv else argv
+    result = subprocess.run([sys.executable, '-m', 'gnd', *argv, '--help'],
+                            capture_output=True, text=True, timeout=30, check=False)
+    assert result.returncode == 0, result.stderr
+    assert 'usage:' in result.stdout.lower()
+
+
+@pytest.mark.parametrize('same_bytes', [True, False])
+def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, same_bytes):
+    root = tmp_path / 'checkout'
+    for directory in ('docs', 'tools'):
+        (root / directory).mkdir(parents=True)
+    (root / 'README.md').write_text('test fixture')
+    monkeypatch.setattr(installed_docs, '__file__', str(root / 'tools/check_installed_docs.py'))
+    out = tmp_path / 'candidate'
+
+    def fake_run(argv, **kwargs):
+        stdout = ''
+        if argv[:2] == ['uv', 'build']:
+            target = Path(argv[argv.index('--out-dir') + 1])
+            target.mkdir()
+            with zipfile.ZipFile(target / 'example.whl', 'w') as wheel:
+                for domain in ('bookrec', 'expense', 'dispatch', 'release'):
+                    info = zipfile.ZipInfo(f'gnd/examples/{domain}/README.md')
+                    content = 'same' if same_bytes or target.name == 'release' else 'changed'
+                    wheel.writestr(info, content)
+            if target.name == 'release':
+                with tarfile.open(target / 'example.tar.gz', 'w:gz') as archive:
+                    info = tarfile.TarInfo('example')
+                    info.type = tarfile.DIRTYPE
+                    archive.addfile(info)
+        elif '-c' in argv:
+            stdout = str(Path(argv[0]).parent.parent / 'lib/gnd/__init__.py') + '\n'
+        elif any(str(arg).endswith('run_tutorials.py') for arg in argv):
+            stdout = '1 tutorial blocks passed\n'
+        return SimpleNamespace(returncode=0, stdout=stdout, stderr='')
+
+    monkeypatch.setattr(installed_docs.subprocess, 'run', fake_run)
+    monkeypatch.setattr(sys, 'argv', ['check_installed_docs.py', '--out', str(out)])
+    if same_bytes:
+        installed_docs.main()
+        assert (out / 'results.json').is_file()
+    else:
+        with pytest.raises(AssertionError, match='wheel origins differ'):
+            installed_docs.main()
+        assert not (out / 'results.json').exists()
 
 
 def test_installed_origin_uses_path_components(tmp_path):

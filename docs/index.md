@@ -17,8 +17,8 @@ hide:
 
 ## The gap between “it runs” and “it follows the rules”
 
-A recommender returns a book someone already read. An expense is approved before
-it was submitted. A shipment takes longer than its deadline. The program ran,
+A recommender returns a book someone already read. An expense is approved without
+a recorded submission. A shipment takes longer than its deadline. The program ran,
 but its output broke a rule you care about.
 
 GND lets you state those rules in a **conceptual model** and check a

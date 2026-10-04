@@ -8,7 +8,7 @@ line, or through Python to catch rule violations, inspect warnings and evolve
 an application as its requirements change.
 
 A recommender should never suggest an already-read book. An expense should not
-be approved before submission. A shipment should meet its deadline. GND makes
+be approved without a recorded submission. A shipment should meet its deadline. GND makes
 these conditions inspectable and executable.
 
 ![A model and candidate facts feed GND; findings guide an explicit repair.](docs/assets/check-loop.svg)

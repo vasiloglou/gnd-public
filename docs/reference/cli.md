@@ -36,7 +36,7 @@ does not add trace fields.
 | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR` | Completion of an interrupted published evolution |
 | `gnd recovery inventory ROOT --source SRC --tests TESTS --out INVENTORY` | Bounded static census of explicitly selected roots |
 | `gnd recovery verify ROOT REPORT` | Recheck a recovered-model bundle and source evidence |
-| `gnd import rai MODEL --out DIR` | Import of the supported RAI ORM input profile and evidence |
+| `gnd import rai-orm RAI_MODEL --out DIR` | Import of the supported RAI ORM input profile and evidence |
 
 Model authoring and recovery interpretation are agent/human workflows, not
 automatic side effects of validation. See [evolution and recovery](../guides/evolution-and-recovery.md).

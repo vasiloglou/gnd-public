@@ -1,0 +1,1 @@
+Retained test/probe output has only local target and temporary paths replaced by <TARGET>/<TMP> and pytest username replaced by <USER>. Assertion and exit text is unchanged. The reviewer note separately declares its header/path edits.

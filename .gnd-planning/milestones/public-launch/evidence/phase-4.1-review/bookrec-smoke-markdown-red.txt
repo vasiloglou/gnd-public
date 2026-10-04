@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________ test_documented_learning_path[bookrec] ____________________
+tests/test_documentation_tutorials.py:39: in test_documented_learning_path
+    assert runner.run_pages(pages, tmp_path, python) > 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/run_tutorials.py:43: in run_pages
+    raise AssertionError(
+E   AssertionError: 06-evolution.md block 15: expected 0, got 1
+E   from pathlib import Path
+E   import tempfile
+E   from gnd.archsmoke import run_row, smoke_rows
+E   
+E   project = Path("bookrec-project").resolve()
+E   rows = smoke_rows(project)
+E   assert rows
+E   for row in rows:
+E       with tempfile.TemporaryDirectory() as scratch:
+E           outcome = run_row(row, project_root=project, tmp=Path(scratch), timeout=30)
+E           assert outcome.passed, outcome.message
+E           print(outcome.message)
+E   stdout:
+E   
+E   stderr:
+E   Traceback (most recent call last):
+E     File "<string>", line 11, in <module>
+E       assert outcome.passed, outcome.message
+E              ^^^^^^^^^^^^^^
+E   AssertionError: smoke row 'recommend-known-user' (bookrec.cli recommend --model model.orm.yaml --input seed.population.json --output <TMP>/tmpse50u7bj/recommendations.json --user ada --limit 2): band mismatch: declared exit 0, observed exit 1
+E     stdout: '{\n  "schema_version": 7,\n  "tool": "gnd",\n  "command": "check",\n  "outcome": "violated",\n  "exit_code": 1,\n  "acceptance_ready": false,\n  "model": "model.orm.yaml",\n  "model_digest": "sha256:aab82b2e067f1c0b6041ee1f20c707a4b98e95d914703c64d5417efa7a0c2d80",\n  "population": "<TMP>/tmpse50u7bj/.bookrec-tnzq334i.json",\n  "counts": {\n    "pass": 4,\n    "fail": 1,\n    "warning": 0,\n    "unchecked": 0,\n    "vacuous": 0\n  },\n  "verdicts": [\n    {\n      "constraint_ref": "fact_types[book_has_genre].constraints[0]",\n      "constraint_type": "uniqueness",\n      "modality": "alethic",\n      "source": "explicit",\n      "status": "confirmed",\n      "verdict": "pass",\n      "message": "Each book plays \'book_has_genre\' with at most one combination of the other roles \\u2014 satisfied.",\n      "offending_facts": [],\n      "reason_code": null\n    },\n    {\n      "constraint_ref": "fact_types[book_has_genre].constraints[1]",\n      "constraint_type": "mandatory",\n      "modality": "alethic",\n      "source": "explicit",\n      "status": "confirmed",\n      "verdict": "pass",\n      "message": "Each book must play the \'book\' role in \'book_has_genre\' \\u2014 satisfied.",\n      "offending_facts": [],\n      "reason_code": null\n    },\n    {\n      "constraint_ref": "constraints[0]",\n      "constraint_type": "guarded",\n      "modality": "alethic",\n      "source": "explicit",\n      "status": "confirmed",\n      "verdict": "pass",\n      "message": "Guarded absence consequent evaluated over bindings=3 \\u2014 satisfied.",\n      "offending_facts": [],\n      "reason_code": null\n    },\n    {\n      "constraint_ref": "constraints[1]",\n      "constraint_type": "guarded",\n      "modality": "alethic",\n      "source": "explicit",\n      "status": "confirmed",\n      "verdict": "pass",\n      "message": "Guarded absence consequent evaluated over bindings=2 \\u2014 satisfied.",\n      "offending_facts": [],\n      "reason_code": null\n    },\n    {\n      "constraint_ref": "constr'
+E     stderr: ''
+----------------------------- Captured stdout call -----------------------------
+01-model.md: executable blocks passed
+02-facts.md: executable blocks passed
+03-project.md: executable blocks passed
+04-application.md: executable blocks passed
+05-repair.md: executable blocks passed
+=========================== short test summary info ============================
+FAILED tests/test_documentation_tutorials.py::test_documented_learning_path[bookrec]
+1 failed in 4.97s

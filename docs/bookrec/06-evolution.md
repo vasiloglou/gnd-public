@@ -163,6 +163,52 @@ output = json.loads(Path("bookrec-project/strict-accepted.json").read_text())
 assert [r["book"] for r in output["facts"]["recommendation"] if r["user"] == "ada"] == ["map", "river"]
 ```
 
+The project's developer-owned architecture contract still declares a successful
+example using the old selection policy. Update that example to use the same
+preferred-genre option; regeneration preserves this file and cannot decide its
+new behavior for you. Keep the unknown-user refusal unchanged.
+
+<!-- gnd-run expect=0 -->
+```python
+import json
+from pathlib import Path
+
+path = Path("bookrec-project/architecture.contract.yaml")
+contract = json.loads(path.read_text())  # This supplied YAML checkpoint uses JSON syntax.
+success = next(row for row in contract["smoke"] if row["id"] == "recommend-known-user")
+assert success["expect_exit"] == 0
+success["argv"].append("--preferred-only")
+path.write_text(json.dumps(contract, indent=2) + "\n")
+```
+
+Static conformance does not run the project's declared smoke examples. Execute
+them against the evolved model as well. This uses the same versioned testing
+support as the generated pytest module, without requiring pytest; it is separate
+from the seven stable application API functions.
+
+<!-- gnd-run expect=0 -->
+```python
+from pathlib import Path
+import tempfile
+from gnd.archsmoke import run_row, smoke_rows
+
+project = Path("bookrec-project").resolve()
+rows = smoke_rows(project)
+assert rows
+for row in rows:
+    with tempfile.TemporaryDirectory() as scratch:
+        outcome = run_row(row, project_root=project, tmp=Path(scratch), timeout=30)
+        assert outcome.passed, outcome.message
+        print(outcome.message)
+```
+
+Recheck static conformance after changing the authored contract:
+
+<!-- gnd-run expect=0 -->
+```sh
+gnd conformance bookrec-project/model.orm.yaml bookrec-project --format json
+```
+
 ## Derive eligibility and require every eligible pair
 
 The separate `complete.orm.yaml` checkpoint adds two derived relationships and

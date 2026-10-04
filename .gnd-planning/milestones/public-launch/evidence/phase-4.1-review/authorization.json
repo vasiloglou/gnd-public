@@ -1,0 +1,14 @@
+{
+  "authority": "Owner explicitly answered yes to the request to send this phase private repository files to the configured OpenAI Codex service for the required read-only terminal review",
+  "model": "gpt-6-sol",
+  "effort": "xhigh",
+  "provider": "openai",
+  "sandbox": "read-only",
+  "transport": "stdin",
+  "initial_review_completed": true,
+  "followup_reviews": 0,
+  "raw_transcript_sha256": "92699f70d265dc9717c656e98bf61ef28d41921081eab865bda52b2bb6765324",
+  "review_base": "e88d477d32b46c63c367719e3abe8e74adabc96a",
+  "committed_head": "2320b00",
+  "note": "Primary agent added a failing smoke regression during the end of review; fixes landed afterward. No required CI pass is inferred."
+}

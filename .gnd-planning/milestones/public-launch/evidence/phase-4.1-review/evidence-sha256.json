@@ -1,0 +1,16 @@
+{
+  "evidence/phase-4.1-review/authorization.json": "d5f7a6f11c91d38dad8695abb47a8f2670b5811829f0896d7d7d40d3700f66e8",
+  "evidence/phase-4.1-review/bookrec-smoke-markdown-red.txt": "9f7b12a0338fe15b42c876e875ba8a705fb3688eb6ad5e22f6b02cb98c633523",
+  "evidence/phase-4.1-review/candidate.json": "12650d69eda76267c3dd28348f0bc9cfad2c6c66b66636098b3269efcd456612",
+  "evidence/phase-4.1-review/command-wheel-regressions-red.txt": "9742d9d6be33b9d19395fec9c9febe360f4a9da035d1b743f3552cf72dfb1f82",
+  "evidence/phase-4.1-review/disposition.md": "e12807b4d83f74a6c61e1cdc5d6f45f1983c9a3105ae4712ab6e4d28381c28e1",
+  "evidence/phase-4.1-review/expense-scope-probe.txt": "0c5362ebb726f662909721d7f7646d6e3f7b07ffc844beaa44b664aab79e24fe",
+  "evidence/phase-4.1-review/focused.txt": "55c54eedcf44c64a9cc7a2049249cd8c34fe48385bbc4d4054312548393bccc6",
+  "evidence/phase-4.1-review/implementation-sha256.json": "6fdf0b1e4ca9e077c572e1437f6cc0060e478d2f4f93b99f68fecfda027255df",
+  "evidence/phase-4.1-review/installed.txt": "1d72380e42626f4dd2a1f7189e59a382efa97319c6473b661696ae5d1069ab04",
+  "evidence/phase-4.1-review/lint.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+  "evidence/phase-4.1-review/log-editing.md": "465a1afe18df3ce90dcb9f54fc9b1b80565a6d9fccf065e0c3200d076e46aa1b",
+  "evidence/phase-4.1-review/prompt.txt": "eb423e9e8e4bc6f64d1f637bb51668b91cd7a3e5b1b5f2477f83eab870d17d41",
+  "evidence/phase-4.1-review/site-build.txt": "ee0672e4eddcb0568664422e220f4a4fc3a53bc763331dd542b9c199e73d70de",
+  "evidence/phase-4.1-review/site-links.txt": "46b8c98df70bac54ba2677b35d79eafce9fb6e7d5240824854a9c37f6cfdb4c5"
+}

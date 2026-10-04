@@ -69,6 +69,7 @@ def main():
         results.append({'origin': origin, 'artifact': str(wheel.relative_to(out)),
                         'sha256': hashlib.sha256(wheel.read_bytes()).hexdigest(),
                         'payload_bytes': payload, 'result': output.splitlines()[-1]})
+    assert results[0]['sha256'] == results[1]['sha256'], 'wheel origins differ'
     results.append({'origin': 'sdist', 'artifact': str(sdist.relative_to(out)),
                     'sha256': hashlib.sha256(sdist.read_bytes()).hexdigest()})
     (out / 'results.json').write_text(json.dumps(results, indent=2) + '\n')

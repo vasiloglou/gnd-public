@@ -1,0 +1,33 @@
+<CANDIDATE>/venv-release/lib/python3.13/site-packages/gnd/__init__.py
+quickstart.md: executable blocks passed
+README.md: executable blocks passed
+release-example.md: executable blocks passed
+01-model.md: executable blocks passed
+02-facts.md: executable blocks passed
+03-project.md: executable blocks passed
+04-application.md: executable blocks passed
+05-repair.md: executable blocks passed
+06-evolution.md: executable blocks passed
+01-model.md: executable blocks passed
+02-application.md: executable blocks passed
+03-evolution.md: executable blocks passed
+python-api.md: executable blocks passed
+walkthrough.md: executable blocks passed
+97 tutorial blocks passed
+<CANDIDATE>/venv-comparison/lib/python3.13/site-packages/gnd/__init__.py
+quickstart.md: executable blocks passed
+README.md: executable blocks passed
+release-example.md: executable blocks passed
+01-model.md: executable blocks passed
+02-facts.md: executable blocks passed
+03-project.md: executable blocks passed
+04-application.md: executable blocks passed
+05-repair.md: executable blocks passed
+06-evolution.md: executable blocks passed
+01-model.md: executable blocks passed
+02-application.md: executable blocks passed
+03-evolution.md: executable blocks passed
+python-api.md: executable blocks passed
+walkthrough.md: executable blocks passed
+97 tutorial blocks passed
+Both installed wheel origins passed the documented learning paths.

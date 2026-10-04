@@ -1,0 +1,16 @@
+{
+  "base": "e88d477d32b46c63c367719e3abe8e74adabc96a",
+  "python": "3.13.12",
+  "host": "macOS arm64",
+  "docs_config_files": 44,
+  "docs_config_lines": 3755,
+  "python_files": 15,
+  "python_lines": 1172,
+  "model_checkpoint_files": 20,
+  "model_checkpoint_lines": 3326,
+  "runtime_core_changed": false,
+  "preexisting_locked_packages_changed": [],
+  "tutorial_blocks_per_origin": 97,
+  "focused_tests": 66,
+  "wheel_payload_limit_bytes": 12582912
+}

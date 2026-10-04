@@ -1,0 +1,104 @@
+{
+  "schema_version": 3,
+  "proposal_id": "prefer-genre",
+  "expected_model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+  "candidate_model": {
+    "media_type": "application/yaml",
+    "encoding": "utf-8",
+    "text": "{\n  \"version\": 1,\n  \"model_id\": \"urn:gnd-tutorial:bookrec\",\n  \"source\": {\n    \"kind\": \"text-conversation\",\n    \"confidence\": \"standard\",\n    \"mode\": \"one-shot\"\n  },\n  \"object_types\": [\n    {\n      \"id\": \"user\",\n      \"name\": \"User\",\n      \"kind\": \"entity\",\n      \"reference\": {\n        \"mode\": \"popular\",\n        \"value_type\": \"user_id\"\n      }\n    },\n    {\n      \"id\": \"user_id\",\n      \"name\": \"UserId\",\n      \"kind\": \"value\",\n      \"primitive\": \"String\"\n    },\n    {\n      \"id\": \"book\",\n      \"name\": \"Book\",\n      \"kind\": \"entity\",\n      \"reference\": {\n        \"mode\": \"popular\",\n        \"value_type\": \"book_id\"\n      }\n    },\n    {\n      \"id\": \"book_id\",\n      \"name\": \"BookId\",\n      \"kind\": \"value\",\n      \"primitive\": \"String\"\n    },\n    {\n      \"id\": \"genre\",\n      \"name\": \"Genre\",\n      \"kind\": \"value\",\n      \"primitive\": \"String\"\n    }\n  ],\n  \"fact_types\": [\n    {\n      \"id\": \"recommendation\",\n      \"reading\": \"{User} is recommended {Book}\",\n      \"roles\": [\n        {\n          \"object_type\": \"user\",\n          \"role_name\": \"user\"\n        },\n        {\n          \"object_type\": \"book\",\n          \"role_name\": \"book\"\n        }\n      ]\n    },\n    {\n      \"id\": \"user_rated_book\",\n      \"reading\": \"{User} rated {Book}\",\n      \"roles\": [\n        {\n          \"object_type\": \"user\",\n          \"role_name\": \"user\"\n        },\n        {\n          \"object_type\": \"book\",\n          \"role_name\": \"book\"\n        }\n      ]\n    },\n    {\n      \"id\": \"user_is_minor\",\n      \"reading\": \"{User} is a minor\",\n      \"roles\": [\n        {\n          \"object_type\": \"user\",\n          \"role_name\": \"user\"\n        }\n      ]\n    },\n    {\n      \"id\": \"book_rated_adult\",\n      \"reading\": \"{Book} is adult-rated\",\n      \"roles\": [\n        {\n          \"object_type\": \"book\",\n          \"role_name\": \"book\"\n        }\n      ]\n    },\n    {\n      \"id\": \"book_has_genre\",\n      \"reading\": \"{Book} has primary genre {Genre}\",\n      \"roles\": [\n        {\n          \"object_type\": \"book\",\n          \"role_name\": \"book\"\n        },\n        {\n          \"object_type\": \"genre\",\n          \"role_name\": \"genre\"\n        }\n      ],\n      \"constraints\": [\n        {\n          \"type\": \"uniqueness\",\n          \"source\": \"explicit\",\n          \"status\": \"confirmed\",\n          \"modality\": \"alethic\",\n          \"provenance\": {\n            \"user_quote\": \"Each book has exactly one primary genre.\"\n          },\n          \"roles\": [\n            \"book\"\n          ]\n        },\n        {\n          \"type\": \"mandatory\",\n          \"source\": \"explicit\",\n          \"status\": \"confirmed\",\n          \"modality\": \"alethic\",\n          \"provenance\": {\n            \"user_quote\": \"Each book has exactly one primary genre.\"\n          },\n          \"role\": \"book\"\n        }\n      ]\n    },\n    {\n      \"id\": \"user_prefers_genre\",\n      \"reading\": \"{User} prefers {Genre}\",\n      \"roles\": [\n        {\n          \"object_type\": \"user\",\n          \"role_name\": \"user\"\n        },\n        {\n          \"object_type\": \"genre\",\n          \"role_name\": \"genre\"\n        }\n      ]\n    }\n  ],\n  \"constraints\": [\n    {\n      \"type\": \"guarded\",\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"Never recommend a book the user has already rated.\"\n      },\n      \"id\": \"unread_only\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"recommendation\",\n          \"bind\": {\n            \"user\": \"$u\",\n            \"book\": \"$b\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"absence\": {\n          \"fact_type\": \"user_rated_book\",\n          \"bind\": {\n            \"user\": \"$u\",\n            \"book\": \"$b\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"guarded\",\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"Never recommend an adult-rated book to a minor.\"\n      },\n      \"id\": \"age_appropriate\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"recommendation\",\n          \"bind\": {\n            \"user\": \"$u\",\n            \"book\": \"$b\"\n          }\n        },\n        {\n          \"fact_type\": \"user_is_minor\",\n          \"bind\": {\n            \"user\": \"$u\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"absence\": {\n          \"fact_type\": \"book_rated_adult\",\n          \"bind\": {\n            \"book\": \"$b\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"guarded\",\n      \"source\": \"user-supplied\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_note\": \"The tutorial change request makes genre fit mandatory.\"\n      },\n      \"id\": \"preferred_genre\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"recommendation\",\n          \"bind\": {\n            \"user\": \"$u\",\n            \"book\": \"$b\"\n          }\n        },\n        {\n          \"fact_type\": \"book_has_genre\",\n          \"bind\": {\n            \"book\": \"$b\",\n            \"genre\": \"$g\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"atom\": {\n          \"fact_type\": \"user_prefers_genre\",\n          \"bind\": {\n            \"user\": \"$u\",\n            \"genre\": \"$g\"\n          }\n        }\n      },\n      \"rationale\": \"The second release requires preferred genres.\"\n    }\n  ]\n}\n",
+    "sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67"
+  },
+  "operations": [
+    {
+      "operation_id": "require-genre",
+      "kind": "modify",
+      "locator": {
+        "locator_kind": "constraint",
+        "host": "model",
+        "family": "guarded",
+        "canonical_before_sha256": "e59f06a1810aa081cf9339e673635cf775e04b555e58e7b134ffe46ab897b38b",
+        "duplicate_occurrence": 0
+      },
+      "before": {
+        "type": "guarded",
+        "source": "explicit",
+        "status": "confirmed",
+        "modality": "deontic",
+        "provenance": {
+          "user_quote": "A recommendation should match a preferred genre."
+        },
+        "id": "preferred_genre",
+        "antecedent": [
+          {
+            "fact_type": "recommendation",
+            "bind": {
+              "user": "$u",
+              "book": "$b"
+            }
+          },
+          {
+            "fact_type": "book_has_genre",
+            "bind": {
+              "book": "$b",
+              "genre": "$g"
+            }
+          }
+        ],
+        "consequent": {
+          "atom": {
+            "fact_type": "user_prefers_genre",
+            "bind": {
+              "user": "$u",
+              "genre": "$g"
+            }
+          }
+        },
+        "rationale": "The tutorial brief explicitly says should; genre fit is advisory in the first release."
+      },
+      "after": {
+        "type": "guarded",
+        "source": "user-supplied",
+        "status": "confirmed",
+        "modality": "alethic",
+        "provenance": {
+          "user_note": "The tutorial change request makes genre fit mandatory."
+        },
+        "id": "preferred_genre",
+        "antecedent": [
+          {
+            "fact_type": "recommendation",
+            "bind": {
+              "user": "$u",
+              "book": "$b"
+            }
+          },
+          {
+            "fact_type": "book_has_genre",
+            "bind": {
+              "book": "$b",
+              "genre": "$g"
+            }
+          }
+        ],
+        "consequent": {
+          "atom": {
+            "fact_type": "user_prefers_genre",
+            "bind": {
+              "user": "$u",
+              "genre": "$g"
+            }
+          }
+        },
+        "rationale": "The second release requires preferred genres."
+      }
+    }
+  ],
+  "rationale": "The tutorial second release requires preferred genres rather than warning.",
+  "audit": {
+    "actor_id": "tutorial-reader",
+    "origin": "bookrec-tutorial",
+    "requested_at": "2026-10-03T00:00:00Z"
+  },
+  "linked_projects": [],
+  "artifacts": []
+}

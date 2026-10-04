@@ -1,0 +1,99 @@
+{
+  "contract_version": 1,
+  "modules": [
+    {
+      "path": "bookrec/cli.py",
+      "symbols": [
+        {
+          "name": "main",
+          "parameters": [
+            "argv"
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [],
+  "entry_points": [
+    {
+      "module": "bookrec.cli",
+      "subcommands": [
+        "recommend",
+        "complete"
+      ],
+      "flags": [
+        "--model",
+        "--input",
+        "--output",
+        "--user",
+        "--limit",
+        "--preferred-only"
+      ],
+      "consumes": [
+        "recommendation",
+        "user_rated_book",
+        "user_is_minor",
+        "book_rated_adult",
+        "book_has_genre",
+        "user_prefers_genre"
+      ],
+      "produces": [
+        "recommendation"
+      ],
+      "exits": [
+        {
+          "code": 0,
+          "meaning": "checked candidate published"
+        },
+        {
+          "code": 1,
+          "meaning": "hard constraint rejected output"
+        },
+        {
+          "code": 2,
+          "meaning": "inadequate output or argument refusal"
+        },
+        {
+          "code": 3,
+          "meaning": "invalid input or unknown user"
+        }
+      ]
+    }
+  ],
+  "smoke": [
+    {
+      "id": "recommend-known-user",
+      "entry_point": "bookrec.cli",
+      "argv": [
+        "recommend",
+        "--model",
+        "model.orm.yaml",
+        "--input",
+        "seed.population.json",
+        "--output",
+        "{tmp}/recommendations.json",
+        "--user",
+        "ada",
+        "--limit",
+        "2"
+      ],
+      "expect_exit": 0
+    },
+    {
+      "id": "unknown-user",
+      "entry_point": "bookrec.cli",
+      "argv": [
+        "recommend",
+        "--model",
+        "model.orm.yaml",
+        "--input",
+        "seed.population.json",
+        "--output",
+        "{tmp}/recommendations.json",
+        "--user",
+        "ghost"
+      ],
+      "expect_exit": 3
+    }
+  ]
+}

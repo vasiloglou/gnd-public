@@ -1,0 +1,16 @@
+{
+  "evidence/phase-4.1/candidate.json": "131263e81bdc76dd2bc01fee0206f61e209923ab48960f79d90eac606c1a27d6",
+  "evidence/phase-4.1/desktop.png": "740086ee305b1300a8dbdc243522a8a08835c6fd77177f96487a2e1b9cd87d5a",
+  "evidence/phase-4.1/focused.txt": "4849e50d4dc34dc69258e1ab3658d30c1b0adf5816f1569451cc88f7bd7aae5d",
+  "evidence/phase-4.1/implementation-sha256.json": "bfb2280ac35df47e6ea7e1652b2d0035ee764b9cf4e5943b4149e7d7d6ec8263",
+  "evidence/phase-4.1/independent-reader.md": "5f4588f0725b4a67c6cb258acdbdcabf128701b5f85b3e38736e4c54eed7e9a3",
+  "evidence/phase-4.1/installed.txt": "8a5aecc3eb92a7b6ffd76d54bec33a310b2b965e816972c7ac835661efd7b52a",
+  "evidence/phase-4.1/lint.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+  "evidence/phase-4.1/measurements.json": "de1b8578168197f5db0bd16903185bee8fd13fa7b5c31ecdaa0224686458c3f5",
+  "evidence/phase-4.1/pre-implementation-spec.md": "6df2a22469f82a29d93eb480d72ffccfe706166910fe1bab3fe3ca2994c65f5a",
+  "evidence/phase-4.1/render-red.txt": "70a7eb4b549c84077ba878bfa8694fdbc63dea94d929f815928c54101c77792b",
+  "evidence/phase-4.1/rendered-review.md": "9d17636f2daad9fd91086b51908f67a9d79646b5d485ac8aea064a4a7deef106",
+  "evidence/phase-4.1/review-attempt.txt": "5cb0fbd5635c1c7744e59b319ee2df76a272e5d256762829134490215e2ce834",
+  "evidence/phase-4.1/site-build.txt": "6723f778dd62ad09477e69c8f8b16d6783c40bf44b9416325ceaa1920a22d5a9",
+  "evidence/phase-4.1/site-links.txt": "b71de2726ca130261df8e2d3e45a701239cf30a2101cd61df7582e87f4c0c14c"
+}

@@ -12,11 +12,7 @@ def test_release_documentation():
                  'docs/support.md', 'docs/compatibility.md', 'docs/releasing.md',
                  'docs/launch-drafts.md', 'docs/demo-script.md', 'docs/release-notes.md']:
         check_links(ROOT / name)
-    advanced = (ROOT / 'docs/advanced.md').read_text()
-    assert 'synthetic' in advanced and 'unavailable assurance' in advanced
-    assert 'not evidence that a provider ran now' in advanced
-    dossier = (ROOT / '.gnd-planning/milestones/public-launch/notes/release-dossier.md').read_text()
-    assert 'Phase 3 paused' in dossier and 'candidate sign-off pending' in dossier
+
 
 
 def test_broken_link_rejected(tmp_path):

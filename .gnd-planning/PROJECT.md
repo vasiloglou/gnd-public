@@ -19,3 +19,11 @@ returned four reproduced/fixed findings; the stopped follow-up has no opinion.
 Phase 3 separately for final behavior-family/candidate/clean-install/CI acceptance,
 then sign off those exact retained artifacts. No publication or certification
 occurred; source ownership and unrelated pending work remain in place.
+
+## Current direction — Phase 4.1, 2026-10-03
+
+The owner approved [r4](milestones/public-launch/notes/public-launch-plan-r4-amendments.md)
+and its documentation/application implementation. Phase 3 acceptance is recorded
+in [004](milestones/public-launch/004-phase-3.md); earlier paused statements
+above describe the preparation checkpoint. Current order: Phase 4.1, affected
+candidate validation, Phase 4 sign-off, then Phase 5 publication.

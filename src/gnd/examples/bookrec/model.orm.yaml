@@ -1,0 +1,248 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-tutorial:bookrec",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "user",
+      "name": "User",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "user_id"
+      }
+    },
+    {
+      "id": "user_id",
+      "name": "UserId",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "book",
+      "name": "Book",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "book_id"
+      }
+    },
+    {
+      "id": "book_id",
+      "name": "BookId",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "genre",
+      "name": "Genre",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "recommendation",
+      "reading": "{User} is recommended {Book}",
+      "roles": [
+        {
+          "object_type": "user",
+          "role_name": "user"
+        },
+        {
+          "object_type": "book",
+          "role_name": "book"
+        }
+      ]
+    },
+    {
+      "id": "user_rated_book",
+      "reading": "{User} rated {Book}",
+      "roles": [
+        {
+          "object_type": "user",
+          "role_name": "user"
+        },
+        {
+          "object_type": "book",
+          "role_name": "book"
+        }
+      ]
+    },
+    {
+      "id": "user_is_minor",
+      "reading": "{User} is a minor",
+      "roles": [
+        {
+          "object_type": "user",
+          "role_name": "user"
+        }
+      ]
+    },
+    {
+      "id": "book_rated_adult",
+      "reading": "{Book} is adult-rated",
+      "roles": [
+        {
+          "object_type": "book",
+          "role_name": "book"
+        }
+      ]
+    },
+    {
+      "id": "book_has_genre",
+      "reading": "{Book} has primary genre {Genre}",
+      "roles": [
+        {
+          "object_type": "book",
+          "role_name": "book"
+        },
+        {
+          "object_type": "genre",
+          "role_name": "genre"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each book has exactly one primary genre."
+          },
+          "roles": [
+            "book"
+          ]
+        },
+        {
+          "type": "mandatory",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each book has exactly one primary genre."
+          },
+          "role": "book"
+        }
+      ]
+    },
+    {
+      "id": "user_prefers_genre",
+      "reading": "{User} prefers {Genre}",
+      "roles": [
+        {
+          "object_type": "user",
+          "role_name": "user"
+        },
+        {
+          "object_type": "genre",
+          "role_name": "genre"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "guarded",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Never recommend a book the user has already rated."
+      },
+      "id": "unread_only",
+      "antecedent": [
+        {
+          "fact_type": "recommendation",
+          "bind": {
+            "user": "$u",
+            "book": "$b"
+          }
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "fact_type": "user_rated_book",
+          "bind": {
+            "user": "$u",
+            "book": "$b"
+          }
+        }
+      }
+    },
+    {
+      "type": "guarded",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Never recommend an adult-rated book to a minor."
+      },
+      "id": "age_appropriate",
+      "antecedent": [
+        {
+          "fact_type": "recommendation",
+          "bind": {
+            "user": "$u",
+            "book": "$b"
+          }
+        },
+        {
+          "fact_type": "user_is_minor",
+          "bind": {
+            "user": "$u"
+          }
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "fact_type": "book_rated_adult",
+          "bind": {
+            "book": "$b"
+          }
+        }
+      }
+    },
+    {
+      "type": "guarded",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "deontic",
+      "provenance": {
+        "user_quote": "A recommendation should match a preferred genre."
+      },
+      "id": "preferred_genre",
+      "antecedent": [
+        {
+          "fact_type": "recommendation",
+          "bind": {
+            "user": "$u",
+            "book": "$b"
+          }
+        },
+        {
+          "fact_type": "book_has_genre",
+          "bind": {
+            "book": "$b",
+            "genre": "$g"
+          }
+        }
+      ],
+      "consequent": {
+        "atom": {
+          "fact_type": "user_prefers_genre",
+          "bind": {
+            "user": "$u",
+            "genre": "$g"
+          }
+        }
+      },
+      "rationale": "The tutorial brief explicitly says should; genre fit is advisory in the first release."
+    }
+  ]
+}

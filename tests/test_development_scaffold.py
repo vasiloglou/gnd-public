@@ -166,11 +166,10 @@ def test_controls_reject_isolated_mutations(tmp_path, mutation):
 QUESTION_PIN = "87a273c136ecd36e17a82e68a03babc096d6f46b03a09423ef26b3090125f447"
 
 
-def test_readme_reflects_current_runtime_stage():
-    text = (ROOT / 'README.md').read_text()
-    assert 'Phase 3' in text and 'candidate sign-off remain pending' in text
-    assert 'docs/quickstart.md' in text
-    assert 'runtime migration follows' not in text
+def test_readme_links_to_executable_getting_started():
+    from test_contributor_preparation import check_links
+    check_links(ROOT / 'README.md')
+    assert (ROOT / 'docs/quickstart.md').is_file()
 
 
 def test_ci_uses_verified_p2_build_profile():

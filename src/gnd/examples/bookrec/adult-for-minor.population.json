@@ -1,0 +1,79 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-tutorial:bookrec",
+    "source": "synthetic",
+    "covers": [
+      "recommendation",
+      "user_rated_book",
+      "user_is_minor",
+      "book_rated_adult",
+      "book_has_genre",
+      "user_prefers_genre"
+    ]
+  },
+  "facts": {
+    "recommendation": [
+      {
+        "user": "ada",
+        "book": "night"
+      },
+      {
+        "user": "ben",
+        "book": "night"
+      }
+    ],
+    "user_rated_book": [
+      {
+        "user": "ada",
+        "book": "read"
+      },
+      {
+        "user": "ben",
+        "book": "read"
+      }
+    ],
+    "user_is_minor": [
+      {
+        "user": "ada"
+      }
+    ],
+    "book_rated_adult": [
+      {
+        "book": "night"
+      }
+    ],
+    "book_has_genre": [
+      {
+        "book": "cosmos",
+        "genre": "science"
+      },
+      {
+        "book": "map",
+        "genre": "fantasy"
+      },
+      {
+        "book": "night",
+        "genre": "fantasy"
+      },
+      {
+        "book": "read",
+        "genre": "fantasy"
+      },
+      {
+        "book": "river",
+        "genre": "fantasy"
+      }
+    ],
+    "user_prefers_genre": [
+      {
+        "user": "ada",
+        "genre": "fantasy"
+      },
+      {
+        "user": "ben",
+        "genre": "fantasy"
+      }
+    ]
+  }
+}

@@ -52,7 +52,8 @@ Because the checker is deterministic, **a cheaper model is safe to try**: a wron
 is rejected and retried inside a bounded session, never trusted. In our
 [recorded sessions](agents/recorded-sessions.md) on one task, a 4B model that never
 succeeded on its first try was still accepted in two of three bounded sessions, and the
-checker reported plainly when a 3B model did not converge. Claude Code, Codex, any
+checker confirmed the failure when a 3B model did not converge, so you know the final
+state either way. Claude Code, Codex, any
 declared command or any OpenAI-compatible endpoint can be the agent
 ([sessions](agents/dev-session.md)).
 

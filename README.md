@@ -23,7 +23,8 @@ Because the checker is deterministic, a cheaper model is safe to try: a wrong pl
 rejected and retried inside a bounded session, never trusted. In our
 [recorded sessions](docs/agents/recorded-sessions.md) on one task, a 4B model that
 never succeeded on its first try was still accepted in two of three bounded sessions,
-and the checker reported plainly when a 3B model did not converge.
+and the checker confirmed the failure when a 3B model did not converge, so you know the
+final state either way.
 
 > **Coming from GSD?** GND keeps GSD's discipline (plan, execute, verify, record)
 > and its skills-in-your-agent packaging. It replaces the requirements document with an

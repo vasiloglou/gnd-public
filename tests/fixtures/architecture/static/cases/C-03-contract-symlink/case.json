@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "id": "C-03-contract-symlink",
+  "story": "A contract leaf symlink is never followed.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "symlink"
+  },
+  "project": []
+}

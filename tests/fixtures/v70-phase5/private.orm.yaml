@@ -1,0 +1,15 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase5-private@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: record, name: Record, kind: value, primitive: String}
+  - {id: token, name: Token, kind: value, primitive: String}
+fact_types:
+  - id: a_notice
+    reading: "{Record} is mentioned with {Token}"
+    roles: [{object_type: record, role_name: record}, {object_type: token, role_name: token}]
+  - id: b_secret
+    reading: "{Record} has secret {Token}"
+    roles: [{object_type: record, role_name: record}, {object_type: token, role_name: token, redact: true}]
+constraints: []
+rejected_proposals: []

@@ -1,0 +1,6 @@
+{
+  "format_version": 2,
+  "population": {"model": "range-a.orm.yaml", "model_id": "urn:gnd-fixture:v70-phase6-range@1", "source": "fixture", "label": "conforming", "covers": ["invoice_amount"]},
+  "instances": {},
+  "facts": {"invoice_amount": [{"invoice": "I1", "amount": 15}]}
+}

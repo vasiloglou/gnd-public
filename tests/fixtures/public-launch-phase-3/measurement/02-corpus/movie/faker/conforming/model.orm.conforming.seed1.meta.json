@@ -1,0 +1,43 @@
+{
+  "baseline_seed": null,
+  "boundary_side": null,
+  "case_kind": "conforming",
+  "class": "conforming",
+  "epsilon": null,
+  "expectations": {
+    "constraints[0]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    },
+    "fact_types[movie_has_title].constraints[0]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    }
+  },
+  "generator_version": "gnd-synth/1",
+  "gnd_version": "0.1.0",
+  "isolating": null,
+  "isolation_verified": null,
+  "model": "model.orm.yaml",
+  "model_digest": "5ef3d6b128d00b8d346fad3b606b56f7fdbaf6f2cb18f19375026bcff830cc48",
+  "model_id": null,
+  "not_derivable": null,
+  "operator": null,
+  "pool_path": "conforming/pool.4872b1e3a6f05b49.pool.json",
+  "pool_sha256": "4872b1e3a6f05b4927b9d91e2825eb73dc6584b5c700c567ed791239d6c159a5",
+  "pool_size": 8,
+  "pool_source": "faker",
+  "population": "model.orm.conforming.seed1.json",
+  "population_sha256": "fb630286c6dcc08eb404dccd223266148817a3d2d5542f6520819de025429ae9",
+  "predicted_verdict": null,
+  "prompt_version": null,
+  "proposer_model": null,
+  "schema_version": "gnd-sidecar/5",
+  "seed": 1,
+  "target": null,
+  "unmutated_derivations": [],
+  "violates": null,
+  "violates_target": null
+}

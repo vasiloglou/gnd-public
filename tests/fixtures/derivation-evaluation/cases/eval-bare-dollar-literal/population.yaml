@@ -1,0 +1,10 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:eval-bare-dollar-literal@1
+  source: fixture
+  label: boundary
+  covers: [item_has_tag, result]
+instances: {}
+facts:
+  item_has_tag: [{ item: alpha, tag: "$" }, { item: beta, tag: ordinary }]
+  result: [{ item: alpha }]

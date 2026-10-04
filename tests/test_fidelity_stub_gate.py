@@ -34,7 +34,7 @@ def test_the_committed_artifact_bundle_is_not_stale(tmp_path: Path) -> None:
     fresh = tmp_path / 'fresh'
     model_arg = MODEL.relative_to(REPO_ROOT).as_posix()
     assert main(['extract', model_arg, '--out', str(fresh)]) == 0
-    committed = sorted((path.name for path in ARTIFACTS.iterdir()))
+    committed = sorted(path.name for path in ARTIFACTS.iterdir())
     assert committed == [f'{STEM}.applicable.json', f'{STEM}.artifacts.json', f'{STEM}.projection.schema.json']
     for rel in committed:
         assert (ARTIFACTS / rel).read_bytes() == (fresh / rel).read_bytes(), f'tests/fixtures/roundtrip/artifacts/{rel} is stale — regenerate with: uv run python tests/fixtures/roundtrip/build_fixtures.py'

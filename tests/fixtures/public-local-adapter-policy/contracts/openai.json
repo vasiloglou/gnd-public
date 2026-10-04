@@ -1,0 +1,16 @@
+{
+  "schema_version": 6,
+  "experiment_id": "EXP-061-open-http",
+  "max_attempts": 1,
+  "wall_seconds": 30.0,
+  "adapter": {"policy_id": "local-openai", "parameters": {"model": "stub-model-1"}},
+  "cases": [
+    {
+      "case_id": "expense-walk",
+      "role": "required",
+      "inputs": [{"path": "input/pre.pop.yaml", "media_type": "application/yaml", "encoding": "utf-8", "sha256": "721b02fc5a6e047d1da2c0a9f4b116398a217213b9b90ccc4c1d0dd2c14974dc", "size_bytes": 224}],
+      "acceptance": {"mode": "transition", "walk": null},
+      "verify": {"command": "transition", "model": {"path": "model.orm.yaml", "media_type": "application/yaml", "encoding": "utf-8", "sha256": "0f63a6d97778d55322a303977494e3f999d86ac69cb1d85dd9f93a63f7e29f5c", "size_bytes": 2174}, "pre": "input/pre.pop.yaml", "steps": "steps.json", "post": null}
+    }
+  ]
+}

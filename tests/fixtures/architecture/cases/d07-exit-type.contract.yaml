@@ -1,0 +1,11 @@
+contract_version: 1
+modules: []
+artifacts: []
+entry_points:
+  - module: package.cli
+    subcommands: []
+    flags: []
+    consumes: []
+    produces: []
+    exits: [7]
+smoke: []

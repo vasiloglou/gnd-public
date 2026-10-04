@@ -1,0 +1,171 @@
+version: 2
+model_id: urn:gnd-fixture:v62-phase5-floats@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: scenario, name: Scenario, kind: value, primitive: String }
+  - { id: ue, name: Ue, kind: value, primitive: String }
+  - { id: rb, name: ResourceBlocks, kind: value, primitive: Integer }
+  - { id: seconds, name: Seconds, kind: value, primitive: Float }
+  - { id: margin_v, name: MarginValue, kind: value, primitive: Float }
+  - { id: coordinate, name: Coordinate, kind: value, primitive: Float }
+  - { id: measure, name: Measure, kind: value, primitive: Float }
+
+fact_types:
+  - id: rb_sample
+    reading: "{Scenario} has UE {Ue} with resource blocks {ResourceBlocks}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: ue, role_name: ue }
+      - { object_type: rb, role_name: rb }
+  - id: duration_sample
+    reading: "UE {Ue} has observation duration {Seconds}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: seconds, role_name: duration }
+  - id: margin_sample
+    reading: "UE {Ue} has signal margin {MarginValue}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: margin_v, role_name: margin, redact: true }
+  - id: handover_sample
+    reading: "UE {Ue} handed over from ({Coordinate},{Coordinate}) to ({Coordinate},{Coordinate})"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: coordinate, role_name: serving_lat }
+      - { object_type: coordinate, role_name: serving_lon }
+      - { object_type: coordinate, role_name: neighbor_lat }
+      - { object_type: coordinate, role_name: neighbor_lon }
+  - id: handover_flag
+    reading: "UE {Ue} has been flagged for a close handover"
+    roles: [{ object_type: ue, role_name: ue }]
+  - id: sample_rate_kbps
+    reading: "UE {Ue} has rate {Measure}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: measure, role_name: rate }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: rb_sample, bind: { scenario: "$scenario", ue: "$ue", rb: "$rb" } }
+        - { fact_type: duration_sample, bind: { ue: "$ue", duration: "$duration" } }
+      head: { ue: "$ue", rate: { fn: round, args: [{ fn: div, args: ["$rb", "$duration"] }, 2] } }
+  - id: sample_rate_floor
+    reading: "UE {Ue} has floor rate {ResourceBlocks}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: rb, role_name: rate_floor }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: rb_sample, bind: { scenario: "$scenario", ue: "$ue", rb: "$rb" } }
+        - { fact_type: duration_sample, bind: { ue: "$ue", duration: "$duration" } }
+      head: { ue: "$ue", rate_floor: { fn: floor, args: [{ fn: div, args: ["$rb", "$duration"] }] } }
+  - id: sample_rate_ceil
+    reading: "UE {Ue} has ceiling rate {ResourceBlocks}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: rb, role_name: rate_ceil }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: rb_sample, bind: { scenario: "$scenario", ue: "$ue", rb: "$rb" } }
+        - { fact_type: duration_sample, bind: { ue: "$ue", duration: "$duration" } }
+      head: { ue: "$ue", rate_ceil: { fn: ceil, args: [{ fn: div, args: ["$rb", "$duration"] }] } }
+  - id: sample_margin_sqrt
+    reading: "UE {Ue} has margin square root {Measure}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: measure, role_name: margin_sqrt }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: margin_sample, bind: { ue: "$ue", margin: "$margin" } }
+      head: { ue: "$ue", margin_sqrt: { fn: round, args: [{ fn: sqrt, args: ["$margin"] }, 4] } }
+  - id: sample_margin_sqrt_doubled
+    reading: "UE {Ue} has doubled margin square root {Measure}"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: measure, role_name: margin_sqrt_doubled }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: sample_margin_sqrt, bind: { ue: "$ue", margin_sqrt: "$margin_sqrt" } }
+      head:
+        ue: "$ue"
+        margin_sqrt_doubled: { fn: round, args: [{ fn: mul, args: ["$margin_sqrt", 2] }, 4] }
+  - id: sample_serving_distance_km
+    reading: "UE {Ue} handover distance is {Measure} kilometres"
+    roles:
+      - { object_type: ue, role_name: ue }
+      - { object_type: measure, role_name: distance_km }
+    derivation: derived
+    derivation_rule:
+      body:
+        - fact_type: handover_sample
+          bind:
+            ue: "$ue"
+            serving_lat: "$serving_lat"
+            serving_lon: "$serving_lon"
+            neighbor_lat: "$neighbor_lat"
+            neighbor_lon: "$neighbor_lon"
+      head:
+        ue: "$ue"
+        distance_km:
+          fn: round
+          args:
+            - { fn: haversine, args: ["$serving_lat", "$serving_lon", "$neighbor_lat", "$neighbor_lon"] }
+            - 3
+  - id: sample_handover_close
+    reading: "UE {Ue} had a close handover"
+    roles: [{ object_type: ue, role_name: ue }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: sample_serving_distance_km, bind: { ue: "$ue", distance_km: "$distance_km" } }
+      where: [{ operator: "<", left: "$distance_km", right: 1.0 }]
+      head: { ue: "$ue" }
+  - id: scenario_avg_rb
+    reading: "{Scenario} has mean resource blocks {Measure}"
+    roles:
+      - { object_type: scenario, role_name: scenario }
+      - { object_type: measure, role_name: mean_rb }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: rb_sample, bind: { scenario: "$scenario", ue: "$ue", rb: "$rb" } }
+      aggregate: { fn: avg, of: "$rb", over: ["$ue"], as: "$mean" }
+      head: { scenario: "$scenario", mean_rb: { fn: round, args: ["$mean", 1] } }
+
+operations:
+  - id: flag_close_handover
+    reading: "UE {Ue} is flagged for a close handover"
+    parameters: [{ name: ue, object_type: ue }]
+    preconditions:
+      - id: handover_is_close
+        require: [{ fact_type: sample_handover_close, bind: { ue: "$ue" } }]
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Only a close handover may be flagged." }
+    effects:
+      - { assert: { fact_type: handover_flag, bind: { ue: "$ue" } } }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Flagging records the flagged UE." }
+
+constraints:
+  - id: rate_within_budget
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: rb_sample, bind: { scenario: "$scenario", ue: "$ue", rb: "$rb" } }
+      - { fact_type: duration_sample, bind: { ue: "$ue", duration: "$duration" } }
+    consequent:
+      comparison: { operator: "<", left: { fn: div, args: ["$rb", "$duration"] }, right: 200.0 }
+    provenance: { user_quote: "Every UE's rate stays under the radio budget." }
+
+rejected_proposals: []

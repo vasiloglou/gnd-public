@@ -1,0 +1,615 @@
+{
+  "report_cases": [
+    {
+      "case_id": "legacy-v3-check",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "binding": "legacy-unbound",
+        "element_count": 4,
+        "evidence_rows": 4,
+        "exit": 0,
+        "output_schema_version": 3,
+        "unbound": [
+          {
+            "kind": "check",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v3.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 3
+          }
+        ]
+      },
+      "pre_phase": {
+        "element_count": 4,
+        "evidence_rows": 4,
+        "exit": 0,
+        "output_schema_version": 1
+      },
+      "report_schema_version": 3,
+      "sources": [
+        "reports/legacy-v3.json"
+      ],
+      "story": "A frozen version 3 check report indexed exactly as before, now disclosed as unbound."
+    },
+    {
+      "case_id": "legacy-v3-verify",
+      "flag": "--verify",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "binding": "legacy-unbound",
+        "element_count": 4,
+        "evidence_rows": 4,
+        "exit": 0,
+        "output_schema_version": 3,
+        "unbound": [
+          {
+            "kind": "verify",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v3-verify.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 3
+          }
+        ]
+      },
+      "pre_phase": {
+        "element_count": 4,
+        "evidence_rows": 4,
+        "exit": 0,
+        "output_schema_version": 1
+      },
+      "report_schema_version": 3,
+      "sources": [
+        "reports/legacy-v3-verify.json"
+      ],
+      "story": "The same frozen version on the verify arm, so the disclosure is per evidence kind."
+    },
+    {
+      "case_id": "legacy-v4-check",
+      "flag": "--check",
+      "model": "reports/models/structured.orm.yaml",
+      "post_phase": {
+        "binding": "legacy-unbound",
+        "element_count": 6,
+        "evidence_rows": 6,
+        "exit": 0,
+        "output_schema_version": 4,
+        "unbound": [
+          {
+            "kind": "check",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v4.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 4
+          }
+        ]
+      },
+      "pre_phase": {
+        "element_count": 6,
+        "evidence_rows": 6,
+        "exit": 0,
+        "output_schema_version": 2
+      },
+      "report_schema_version": 4,
+      "sources": [
+        "reports/legacy-v4.json"
+      ],
+      "story": "A frozen version 4 structured report: derivations still indexed, still unbound."
+    },
+    {
+      "case_id": "legacy-v4-verify",
+      "flag": "--verify",
+      "model": "reports/models/structured.orm.yaml",
+      "post_phase": {
+        "binding": "legacy-unbound",
+        "element_count": 6,
+        "evidence_rows": 6,
+        "exit": 0,
+        "output_schema_version": 4,
+        "unbound": [
+          {
+            "kind": "verify",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v4-verify.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 4
+          }
+        ]
+      },
+      "pre_phase": {
+        "element_count": 6,
+        "evidence_rows": 6,
+        "exit": 0,
+        "output_schema_version": 2
+      },
+      "report_schema_version": 4,
+      "sources": [
+        "reports/legacy-v4-verify.json"
+      ],
+      "story": "The structured legacy arm under verify."
+    },
+    {
+      "case_id": "legacy-duplicate-basename",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "binding": "legacy-unbound",
+        "element_count": 4,
+        "evidence_rows": 8,
+        "exit": 0,
+        "output_schema_version": 3,
+        "unbound": [
+          {
+            "kind": "check",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v3.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 3
+          },
+          {
+            "kind": "check",
+            "path": "tests/fixtures/public-binding-reports/reports/nested/legacy-v3.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 3
+          }
+        ]
+      },
+      "pre_phase": {
+        "element_count": 4,
+        "evidence_rows": 8,
+        "exit": 0,
+        "output_schema_version": 1
+      },
+      "report_schema_version": 3,
+      "sources": [
+        "reports/legacy-v3.json",
+        "reports/nested/legacy-v3.json"
+      ],
+      "story": "Two byte-identical legacy sources at two paths sharing one basename: two rows, no dedupe."
+    },
+    {
+      "case_id": "legacy-both-arms",
+      "flag": "--check-and-verify",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "binding": "legacy-unbound",
+        "element_count": 4,
+        "evidence_rows": 8,
+        "exit": 0,
+        "output_schema_version": 3,
+        "unbound": [
+          {
+            "kind": "check",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v3.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 3
+          },
+          {
+            "kind": "verify",
+            "path": "tests/fixtures/public-binding-reports/reports/legacy-v3-verify.json",
+            "reason": "legacy-report-without-model-digest",
+            "schema_version": 3
+          }
+        ]
+      },
+      "pre_phase": {
+        "element_count": 4,
+        "evidence_rows": 8,
+        "exit": 0,
+        "output_schema_version": 1
+      },
+      "report_schema_version": 3,
+      "sources": [
+        "reports/legacy-v3.json",
+        "reports/legacy-v3-verify.json"
+      ],
+      "story": "Both legacy arms in one run; the rows are sorted by kind then path."
+    },
+    {
+      "case_id": "current-v5-valid",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "binding": "model-bound",
+        "element_count": 4,
+        "evidence_rows": 4,
+        "exit": 0,
+        "output_schema_version": 3,
+        "unbound": []
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 5; check evidence requires 3"
+        ]
+      },
+      "report_schema_version": 5,
+      "sources": [
+        "reports/current-v5-valid.json"
+      ],
+      "story": "A current report whose digest is this exact model's: it indexes and discloses nothing."
+    },
+    {
+      "case_id": "current-v5-missing-digest",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "exit": 3,
+        "message_contains": [
+          "invalid report shape",
+          "model_digest"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "report-schema-shape"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 5; check evidence requires 3"
+        ]
+      },
+      "report_schema_version": 5,
+      "sources": [
+        "reports/current-v5-missing-digest.json"
+      ],
+      "story": "A current report with no model identity fails its schema, before any comparison."
+    },
+    {
+      "case_id": "current-v5-malformed-digest",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "exit": 3,
+        "message_contains": [
+          "invalid report shape",
+          "model_digest"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "report-schema-shape"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 5; check evidence requires 3"
+        ]
+      },
+      "report_schema_version": 5,
+      "sources": [
+        "reports/current-v5-malformed-digest.json"
+      ],
+      "story": "A malformed digest never reaches string comparison; the schema pattern refuses it."
+    },
+    {
+      "case_id": "current-v5-wrong-model",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "carried_model_digest": "sha256:98ce184f74ea9ce2b751f59011f855754c00b53c54e01c570b9624742a562ca2",
+        "census_model_digest": "sha256:e4a5c453f40d3181146cfd1195beca4ec23b211c96287442b9646a6276bf6633",
+        "exit": 3,
+        "message_contains": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "model-digest-mismatch"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 5; check evidence requires 3"
+        ]
+      },
+      "report_schema_version": 5,
+      "sources": [
+        "reports/current-v5-wrong-model.json"
+      ],
+      "story": "The carried digest belongs to a model whose DECLARED numeric version differs."
+    },
+    {
+      "case_id": "current-v5-same-version-different-model",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "carried_model_digest": "sha256:fa7ab9c68f3b22f1966ad6acc7514b6a0db386a6864dcff4a6a537d4303f41cb",
+        "census_model_digest": "sha256:e4a5c453f40d3181146cfd1195beca4ec23b211c96287442b9646a6276bf6633",
+        "exit": 3,
+        "message_contains": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "model-digest-mismatch"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 5; check evidence requires 3"
+        ]
+      },
+      "report_schema_version": 5,
+      "sources": [
+        "reports/current-v5-same-version-different-model.json"
+      ],
+      "story": "Same declared version, different content: only the digest separates them."
+    },
+    {
+      "case_id": "current-v6-valid",
+      "flag": "--check",
+      "model": "reports/models/structured.orm.yaml",
+      "post_phase": {
+        "binding": "model-bound",
+        "element_count": 6,
+        "evidence_rows": 6,
+        "exit": 0,
+        "output_schema_version": 4,
+        "unbound": []
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 6; check evidence requires 4"
+        ]
+      },
+      "report_schema_version": 6,
+      "sources": [
+        "reports/current-v6-valid.json"
+      ],
+      "story": "The structured current arm indexes its derivation rows and discloses nothing."
+    },
+    {
+      "case_id": "family-mismatch-v6-against-nonstructured",
+      "flag": "--check",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "exit": 3,
+        "message_contains": [
+          "schema_version"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "report-version-family"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 6; check evidence requires 3"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ]
+      },
+      "report_schema_version": 6,
+      "sources": [
+        "reports/current-v6-valid.json"
+      ],
+      "story": "A structured report offered for a non-structured census fails on family, never on digest."
+    },
+    {
+      "case_id": "family-mismatch-v5-against-structured",
+      "flag": "--check",
+      "model": "reports/models/structured.orm.yaml",
+      "post_phase": {
+        "exit": 3,
+        "message_contains": [
+          "schema_version"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "report-version-family"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "has schema_version 5; check evidence requires 4"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ]
+      },
+      "report_schema_version": 5,
+      "sources": [
+        "reports/current-v5-valid.json"
+      ],
+      "story": "The mirror direction of the same family rule."
+    },
+    {
+      "case_id": "command-kind-mismatch",
+      "flag": "--verify",
+      "model": "reports/models/nonstructured.orm.yaml",
+      "post_phase": {
+        "exit": 3,
+        "message_contains": [
+          "is not verify snapshot evidence as its flag declared"
+        ],
+        "message_excludes": [
+          "coverage:model-digest-mismatch"
+        ],
+        "refusal": "command-kind"
+      },
+      "pre_phase": {
+        "exit": 3,
+        "message_contains": [
+          "is not verify snapshot evidence as its flag declared"
+        ]
+      },
+      "report_schema_version": 3,
+      "sources": [
+        "reports/legacy-v3.json"
+      ],
+      "story": "The declared flag is checked before any evidence is indexed, at both gates."
+    }
+  ],
+  "report_wire": {
+    "accepted_versions": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "arms": {
+      "3": {
+        "derivations": "forbidden",
+        "model_digest": "forbidden",
+        "use": "frozen non-structured and pre-model-load errors"
+      },
+      "4": {
+        "derivations": "required",
+        "model_digest": "forbidden",
+        "use": "frozen structured evidence"
+      },
+      "5": {
+        "derivations": "forbidden",
+        "model_digest": "required",
+        "use": "current non-structured check and verify"
+      },
+      "6": {
+        "derivations": "required",
+        "model_digest": "required",
+        "use": "current structured check and verify"
+      }
+    },
+    "constants": {
+      "BASE_PAYLOAD_SCHEMA_VERSION": 3,
+      "DERIVATION_PAYLOAD_SCHEMA_VERSION": 4,
+      "MODEL_BOUND_BASE_PAYLOAD_SCHEMA_VERSION": 5,
+      "MODEL_BOUND_DERIVATION_PAYLOAD_SCHEMA_VERSION": 6
+    },
+    "digest_producer": {
+      "function": "model_digest",
+      "module": "gnd.transition"
+    },
+    "legacy_selector": {
+      "function": "payload_schema_version",
+      "module": "gnd.report"
+    },
+    "migrated_commands": [
+      "check",
+      "verify"
+    ],
+    "model_digest_emitted_after": "model",
+    "model_digest_key": "model_digest",
+    "model_digest_pattern": "^sha256:[0-9a-f]{64}$",
+    "model_digests": {
+      "different-version": "sha256:98ce184f74ea9ce2b751f59011f855754c00b53c54e01c570b9624742a562ca2",
+      "nonstructured": "sha256:e4a5c453f40d3181146cfd1195beca4ec23b211c96287442b9646a6276bf6633",
+      "same-version-different-model": "sha256:fa7ab9c68f3b22f1966ad6acc7514b6a0db386a6864dcff4a6a537d4303f41cb",
+      "structured": "sha256:62dea881186772028e7144eea1fc8a0c0c6c4bbe0b4640eedb45d4416cb31677"
+    },
+    "pre_model_load_version": 3,
+    "rebaseline": {
+      "expected_new_schema_version_for_runnable_nonstructured": 5,
+      "invariant": [
+        "exit_code",
+        "stdout_text_bytes",
+        "stderr_bytes"
+      ],
+      "removed_keys": [
+        "model_digest",
+        "schema_version"
+      ]
+    },
+    "selector": {
+      "function": "model_bound_payload_schema_version",
+      "module": "gnd.report",
+      "nonstructured": 5,
+      "structured": 6
+    },
+    "session_consumer": {
+      "function": "case_payload_versions",
+      "module": "gnd.exp.session",
+      "nonstructured": 5,
+      "structured": 6
+    },
+    "unchanged_commands": [
+      "gnd-transition",
+      "gnd-validate"
+    ],
+    "unchanged_commands_note": "Spelled with the gnd- prefix because tests/test_skill_prose_sync.py's T-27 completeness scan treats a bare station literal under tests/ as a routing candidate needing deliberate classification, and this corpus adds no entry to that classification list."
+  },
+  "coverage": {
+    "accepted_pairs": {
+      "nonstructured_census_model": [
+        3,
+        5
+      ],
+      "structured_census_model": [
+        4,
+        6
+      ]
+    },
+    "binding_values": [
+      "legacy-unbound",
+      "model-bound"
+    ],
+    "gap_row_keys": [
+      "kind",
+      "path",
+      "reason",
+      "schema_version"
+    ],
+    "gap_row_order": [
+      "kind",
+      "path"
+    ],
+    "golden_delta": {
+      "invariant_keys": [
+        "census",
+        "elements",
+        "model",
+        "sources",
+        "tool",
+        "command"
+      ],
+      "removed_output_keys": [
+        "schema_version"
+      ],
+      "removed_source_keys": [
+        "unbound"
+      ]
+    },
+    "legacy_gap_reason": "legacy-report-without-model-digest",
+    "mismatch_rule_name": "coverage:model-digest-mismatch",
+    "output_versions": {
+      "current_with_derivation_class": 4,
+      "current_without_derivation_class": 3,
+      "frozen": [
+        1,
+        2
+      ]
+    },
+    "refusal_exit": 3,
+    "unbound_always_present": true,
+    "unbound_key_path": [
+      "sources",
+      "unbound"
+    ],
+    "validation_order": [
+      "capped-no-follow-read",
+      "json-object-and-version-family",
+      "report-schema",
+      "command-kind",
+      "model-digest-comparison-or-legacy-gap",
+      "evidence-indexing"
+    ]
+  },
+  "census_models": {
+    "nonstructured": {
+      "derivation_class_present": false,
+      "elements": [
+        "fact_type:item_has_tag",
+        "fact_types[item_has_tag].constraints[0]",
+        "fact_type:item_listed",
+        "fact_type:item_blocked"
+      ]
+    },
+    "structured": {
+      "derivation_class_present": true,
+      "elements": [
+        "fact_type:item_has_tag",
+        "fact_types[item_has_tag].constraints[0]",
+        "fact_type:item_listed",
+        "fact_type:item_blocked",
+        "fact_type:item_is_active",
+        "derivation:item_is_active"
+      ]
+    }
+  }
+}

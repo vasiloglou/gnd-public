@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {"id": "R01-range-provided", "model_a": "range-a.orm.yaml", "model_b": "range-b.orm.yaml", "populations": ["range-a.pop.json", "range-b-boundary.pop.json"], "synthesize": false},
+    {"id": "N01-negation-provided", "model_a": "negation-a.orm.yaml", "model_b": "negation-b.orm.yaml", "populations": ["negation-blocked.pop.json", "negation-opaque.pop.json", "negation-waived.pop.json"], "synthesize": false},
+    {"id": "V01-vocabulary-refused", "model_a": "range-a.orm.yaml", "model_b": "negation-a.orm.yaml", "populations": [], "synthesize": false},
+    {"id": "S01-other-model-boundary", "model_a": "range-a.orm.yaml", "model_b": "range-b.orm.yaml", "populations": [], "synthesize": true},
+    {"id": "S02-structured-synth-refused", "model_a": "negation-a.orm.yaml", "model_b": "negation-b.orm.yaml", "populations": [], "synthesize": true}
+  ]
+}

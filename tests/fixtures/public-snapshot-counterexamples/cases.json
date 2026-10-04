@@ -1,0 +1,352 @@
+{
+  "cases": [
+    {
+      "id": "SRC-04",
+      "kind": "snapshot",
+      "clauses": [
+        "NS-JOIN-2"
+      ],
+      "base": "P2-188",
+      "load_refused": true
+    },
+    {
+      "id": "SRC-07",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-GUARDED-4"
+      ],
+      "base": "P2-163",
+      "load_refused": true
+    },
+    {
+      "id": "SRC-08",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-PARTITION-4"
+      ],
+      "base": "P2-172"
+    },
+    {
+      "id": "SRC-09",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-RING-SHAPE-2"
+      ],
+      "base": "P2-069",
+      "population_patch": [
+        {
+          "path": "facts.rel_symmetric_irreflexive",
+          "value": [
+            {
+              "a": 1,
+              "b": 1
+            },
+            {
+              "a": 2,
+              "b": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SRC-10",
+      "kind": "snapshot",
+      "clauses": [
+        "NS-WITNESS-2",
+        "NF-CARD-OBJECT-2"
+      ],
+      "base": "P2-171",
+      "model_patch": [
+        {
+          "path": "constraints[7].bound",
+          "value": {
+            "min": 1,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRC-11",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-CARD-ROLE-2"
+      ],
+      "base": "P2-135"
+    },
+    {
+      "id": "SRC-12",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-PARTITION-5"
+      ],
+      "base": "P2-150",
+      "model_patch": [
+        {
+          "path": "object_types[widget].derivation",
+          "value": "semiderived"
+        }
+      ]
+    },
+    {
+      "id": "SRC-13",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-UC-INTERNAL-2"
+      ],
+      "base": "P2-002"
+    },
+    {
+      "id": "SRC-14",
+      "kind": "snapshot",
+      "clauses": [
+        "NS-CANON-2"
+      ],
+      "base": "P2-036"
+    },
+    {
+      "id": "SRC-15",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-TEXTUAL-2"
+      ],
+      "base": "P2-164"
+    }
+  ],
+  "answers": {
+    "SRC-04": {
+      "admission": "refused",
+      "defensive_reason": "join-anchor-ambiguous"
+    },
+    "SRC-07": {
+      "admission": "refused",
+      "defensive_reason": "family-unimplemented"
+    },
+    "SRC-08": {
+      "verdict": "vacuous",
+      "reason_code": null,
+      "public_witness": []
+    },
+    "SRC-09": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "first_component_only": [
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    "SRC-10": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [],
+      "aggregate_witness": [
+        []
+      ]
+    },
+    "SRC-11": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        [
+          1
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ]
+      ],
+      "aggregate_witness": [
+        [
+          1,
+          5,
+          6
+        ]
+      ]
+    },
+    "SRC-12": {
+      "verdict": "unchecked",
+      "reason_code": "subtype-derivation-only",
+      "public_witness": [],
+      "production_observation": {
+        "verdict": "fail",
+        "reason_code": null,
+        "public_witness": [
+          [
+            7
+          ]
+        ]
+      }
+    },
+    "SRC-13": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        {
+          "booking": "b1",
+          "person": 1
+        },
+        {
+          "booking": "b1",
+          "person": 2
+        }
+      ]
+    },
+    "SRC-14": {
+      "verdict": "fail",
+      "reason_code": null,
+      "public_witness": [
+        [
+          50
+        ],
+        [
+          -1
+        ]
+      ]
+    },
+    "SRC-15": {
+      "verdict": "unchecked",
+      "reason_code": "textual-not-mechanical",
+      "public_witness": [],
+      "band": 1
+    }
+  },
+  "bases": {
+    "P2-002": {
+      "id": "P2-002",
+      "scope_id": "snapshot:uniqueness:inline:violated:alethic",
+      "model": "tests/fixtures/checker/setfam.orm.yaml",
+      "population": "tests/fixtures/checker/population.precedence.yaml",
+      "ref": "fact_types[booking_by_person].constraints[0]",
+      "sibling_of": "P2-001"
+    },
+    "P2-036": {
+      "id": "P2-036",
+      "scope_id": "snapshot:value:ranges-role:violated:alethic",
+      "model": "tests/fixtures/public-semantic-shapes/model.orm.yaml",
+      "population": "tests/fixtures/public-semantic-shapes/fail.yaml",
+      "ref": "constraints[2]",
+      "sibling_of": "P2-035"
+    },
+    "P2-069": {
+      "id": "P2-069",
+      "scope_id": "snapshot:ring:symmetric-irreflexive:clean",
+      "model": "tests/fixtures/checker/ring.orm.yaml",
+      "population": "tests/fixtures/checker/population.ring_pass.yaml",
+      "ref": "fact_types[rel_symmetric_irreflexive].constraints[0]"
+    },
+    "P2-135": {
+      "id": "P2-135",
+      "scope_id": "snapshot:cardinality:role:violated:alethic",
+      "model": "tests/fixtures/checker/setfam.orm.yaml",
+      "population": "tests/fixtures/checker/population.setfam_fail.yaml",
+      "ref": "constraints[8]",
+      "sibling_of": "P2-134"
+    },
+    "P2-150": {
+      "id": "P2-150",
+      "scope_id": "snapshot:subtype-partition:n-a:unchecked-subtype-derivation-only",
+      "model": "tests/fixtures/checker/misc.orm.yaml",
+      "population": "tests/fixtures/checker/population.misc_fail.yaml",
+      "ref": "constraints[2]"
+    },
+    "P2-163": {
+      "id": "P2-163",
+      "scope_id": "snapshot:guarded:n-a:unchecked-family-unimplemented",
+      "model": "tests/fixtures/guarded/models/alethic.orm.yaml",
+      "population": "tests/fixtures/guarded/cases/a-c1.yaml",
+      "ref": "constraints[0]",
+      "model_patch": [
+        {
+          "path": "constraints[0].consequent",
+          "value": {
+            "comparison": {
+              "operator": "<=",
+              "left": "$a",
+              "right": 2000
+            },
+            "atom": {
+              "fact_type": "expense_has_status",
+              "bind": {
+                "expense": "$e",
+                "status": "review"
+              }
+            }
+          }
+        }
+      ],
+      "admission": "unvalidated"
+    },
+    "P2-164": {
+      "id": "P2-164",
+      "scope_id": "snapshot:textual:n-a:unchecked-textual-not-mechanical",
+      "model": "tests/fixtures/checker/misc.orm.yaml",
+      "population": "tests/fixtures/checker/population.misc_fail.yaml",
+      "ref": "constraints[3]"
+    },
+    "P2-171": {
+      "id": "P2-171",
+      "scope_id": "applicability:vacuity:cardinality-object:no-observable-subjects",
+      "model": "tests/fixtures/checker/setfam.orm.yaml",
+      "population": "tests/fixtures/checker/population.covers_none.yaml",
+      "ref": "constraints[7]"
+    },
+    "P2-172": {
+      "id": "P2-172",
+      "scope_id": "applicability:vacuity:subtype-partition:no-observable-subjects",
+      "model": "tests/fixtures/public-semantic-partition/model.orm.yaml",
+      "population": "tests/fixtures/public-snapshot-counterexamples/partition-empty.yaml",
+      "ref": "constraints[0]"
+    },
+    "P2-188": {
+      "id": "P2-188",
+      "scope_id": "applicability:join:n-a:anchor-ambiguous",
+      "model": "tests/fixtures/public-snapshot-counterexamples/joins-model.orm.yaml",
+      "population": "tests/fixtures/public-snapshot-counterexamples/joins-pop.yaml",
+      "ref": "constraints[7]",
+      "model_patch": [
+        {
+          "path": "constraints",
+          "append": {
+            "type": "uniqueness",
+            "scope": "external",
+            "role_refs": [
+              {
+                "fact_type": "c",
+                "role": "v"
+              },
+              {
+                "fact_type": "d",
+                "role": "w"
+              }
+            ],
+            "preferred": false,
+            "source": "explicit",
+            "status": "confirmed",
+            "modality": "alethic",
+            "provenance": {
+              "csdp_step": 4,
+              "dialogue_turn": 8
+            }
+          }
+        }
+      ],
+      "admission": "unvalidated",
+      "note": "rejected at load by semantic:join-anchor-ambiguous; reached in-process"
+    }
+  }
+}

@@ -30,3 +30,13 @@ repository .env files; optional live review needs trusted credentials and explic
 selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
 the old original-definition accounting runner is not release acceptance under r3.
 See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
+
+## Pull requests are required
+
+All contributors, including coding agents and administrators, work in a fork or
+topic branch and submit a pull request. Never push directly to main, force-push
+main, or delete it. GitHub protection requires a PR and successful required CI;
+resolve review conversations before merging. Web edits also use a branch and PR.
+No standing contributor bypass is allowed. Approval to perform phase work does
+not waive this rule. Repository owners can change settings, so configuration
+must be checked before claiming enforcement.

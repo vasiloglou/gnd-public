@@ -1,0 +1,78 @@
+version: 4
+model_id: urn:gnd-fixture:v71-dispatch-references@1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+object_types:
+- id: dispatch_shipment
+  name: Shipment
+  kind: value
+  primitive: String
+- id: dispatch_warehouse
+  name: Warehouse
+  kind: value
+  primitive: String
+- id: dispatch_product
+  name: Product
+  kind: value
+  primitive: String
+fact_types:
+- id: dispatch_subject_warehouse
+  reading: '{shipment} {warehouse}'
+  roles:
+  - role_name: shipment
+    object_type: dispatch_shipment
+  - role_name: warehouse
+    object_type: dispatch_warehouse
+- id: dispatch_subject_product
+  reading: '{shipment} {product}'
+  roles:
+  - role_name: shipment
+    object_type: dispatch_shipment
+  - role_name: product
+    object_type: dispatch_product
+- id: dispatch_catalog_allows
+  reading: '{warehouse} {product}'
+  roles:
+  - role_name: warehouse
+    object_type: dispatch_warehouse
+  - role_name: product
+    object_type: dispatch_product
+- id: dispatch_catalog_label
+  reading: '{warehouse}'
+  roles:
+  - role_name: warehouse
+    object_type: dispatch_warehouse
+constraints:
+- id: dispatch_catalog_membership
+  type: guarded
+  antecedent:
+  - fact_type: dispatch_subject_warehouse
+    bind:
+      shipment: $s
+      warehouse: $l
+  - fact_type: dispatch_subject_product
+    bind:
+      shipment: $s
+      product: $r
+  consequent:
+    exists:
+      atoms:
+      - fact_type: dispatch_catalog_allows
+        bind:
+          warehouse: $l
+          product: $r
+  source: user-supplied
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Every requested warehouse/product pair must occur in the fixed
+      approval catalog.
+rejected_proposals: []
+reference_populations:
+- id: catalog
+  path: references/catalog.pop.json
+  sha256: f0bb10d4f6769540041e01c2de21bd3cb3aa8958d06cead9050019bfdd94d214
+  fact_types:
+  - dispatch_catalog_allows

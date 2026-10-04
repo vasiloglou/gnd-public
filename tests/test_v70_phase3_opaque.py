@@ -94,3 +94,26 @@ OPAQUE_CASES = [
 @pytest.mark.parametrize("case_id", OPAQUE_CASES)
 def test_opaque_and_format_cases_match_author_answer(case_id: str, tmp_path: Path) -> None:
     run_case(case_id, tmp_path)
+
+
+def test_base_fixture_is_loader_valid_without_only_phase3_keys(tmp_path: Path) -> None:
+    from gnd.checker import band, check
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    model = YAML(typ="safe").load((FIXTURE / "model.orm.yaml").read_text())
+    for fact_type in model["fact_types"]:
+        fact_type.pop("depends_on", None)
+    population = json.loads((FIXTURE / "population.pop.json").read_text())
+    population.pop("format_version")
+    model_path = tmp_path / "model.orm.yaml"
+    with model_path.open("w") as stream:
+        YAML().dump(model, stream)
+    population_path = tmp_path / "population.pop.json"
+    population_path.write_text(json.dumps(population))
+    admitted_model = load_model(model_path)
+    admitted_population = load_population(population_path, model=admitted_model)
+    assert band(check(admitted_model, admitted_population)) == 0
+    join_model = load_model(FIXTURE / "join-model.orm.yaml")
+    join_population = load_population(FIXTURE / "join-control.pop.json", model=join_model)
+    assert band(check(join_model, join_population)) == 0

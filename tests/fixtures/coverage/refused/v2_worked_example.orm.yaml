@@ -1,25 +1,3 @@
-# tests/fixtures/models/v2_worked_example.orm.yaml
-#
-# The ORM+ v2 worked example, pinned (A7).
-#
-# The `operations:` section below is the SAME BYTES as the worked example in
-# `representation-format.md`, and `tests/test_model_v2.py` compares the two.
-# It exists because the v2.0 review panel found two defects in the specification's
-# example that the specification's own language did not have: a dynamic rule bound
-# `$chain`, which was never declared as a parameter, and the effects retracted
-# `expense_has_status` with no compensating assert, leaving a mandatory role
-# unfilled. Both were example defects, not language defects — a step's effects
-# apply as a SET and the invariant is checked afterwards, so `retract` plus
-# `assert` on one fact type within one step already IS a replace. Pinning the
-# corrected bytes is what stops the specification's example from drifting away
-# from the implemented language a third time.
-#
-# The surrounding model is the smallest one that makes the example resolvable:
-# the three fact types it touches, the object types those need, and the internal
-# uniqueness constraint over `chain_has_threshold` that makes the dynamic rule's
-# subject provably functional (without it the example would load with a
-# `semantic:op-dynamic-functional` warning, and a warning-free exit-0 fixture is
-# the stronger pin).
 
 version: 2
 
@@ -166,9 +144,6 @@ operations:
         status: confirmed
         provenance: { added_at_step: 7d }
     frame: { modality: deontic }        # REQUIRED, never defaulted. Grading is per FACT
-                                        # TYPE: this operation's deontic frame makes the
-                                        # fact types IT touches deontic, and never
-                                        # downgrades another operation's alethic ones.
     source: explicit
     status: confirmed
     provenance: { csdp_step: 7, dialogue_turn: 44 }

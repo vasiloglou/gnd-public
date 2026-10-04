@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "cases": {
+    "C01": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "C02-root": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "C02-local": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "C03": {
+      "exit": 3,
+      "rule": "jsonschema:oneOf",
+      "site": "reaches.derivation_rule.clauses"
+    },
+    "C04": {
+      "exit": 3,
+      "rule": "jsonschema:oneOf",
+      "site": "reaches.derivation_rule"
+    },
+    "C05": {
+      "exit": 3,
+      "rule": "jsonschema:oneOf",
+      "site": "reaches.derivation_rule.clauses[1]"
+    },
+    "C06": {
+      "exit": 3,
+      "rule": "semantic:derivation-head-unbound",
+      "site": "reaches.derivation_rule.clauses[1].head"
+    },
+    "C07": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "G01": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "G02": {
+      "exit": 0,
+      "head": "same_reach",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "G03": {
+      "exit": 0,
+      "head": "open_reach",
+      "rows": [
+        [
+          "A",
+          "B"
+        ]
+      ]
+    },
+    "G04": {
+      "exit": 3,
+      "rule": "semantic:derivation-unstratified",
+      "cycle": [
+        "open_reach"
+      ],
+      "edge": "negative"
+    },
+    "G05": {
+      "exit": 3,
+      "rule": "semantic:derivation-unstratified",
+      "cycle": [
+        "open_reach",
+        "reaches"
+      ],
+      "edge": "negative"
+    },
+    "G06": {
+      "exit": 3,
+      "rule": "semantic:derivation-unstratified",
+      "cycle": [
+        "reach_count"
+      ],
+      "edge": "aggregate"
+    },
+    "G07": {
+      "exit": 3,
+      "rule": "semantic:derivation-unstratified",
+      "cycle": [
+        "open_reach",
+        "reaches"
+      ],
+      "not_cycle_member": "reach_notice"
+    },
+    "G08": {
+      "exit": 3,
+      "rule": "semantic:derivation-recursive-value-invention",
+      "site": "closure_n.derivation_rule.clauses[1].head"
+    },
+    "F01": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "F02": {
+      "exit": 1,
+      "head": "reaches",
+      "finding": "derived-extension-incomplete",
+      "witness": [
+        "A",
+        "C"
+      ]
+    },
+    "F03": {
+      "exit": 1,
+      "head": "reaches",
+      "finding": "derived-extension-unsound",
+      "witness": [
+        "X",
+        "Y"
+      ]
+    },
+    "F04": {
+      "exit": 0,
+      "head": "open_reach",
+      "rows": [
+        [
+          "A",
+          "B"
+        ]
+      ],
+      "excluded_surplus": [
+        "X",
+        "Y"
+      ]
+    },
+    "F05": {
+      "exit": 4,
+      "head": "reaches",
+      "reason": "derivation-not-covered"
+    },
+    "F06": {
+      "exit": 0,
+      "head": "open_reach",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "W01": {
+      "exit": 0,
+      "step_1_added": [
+        [
+          "A",
+          "D"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "C",
+          "D"
+        ]
+      ],
+      "step_3_removed": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ]
+      ]
+    },
+    "W02": {
+      "exit": 1,
+      "step": 1,
+      "kind": "precondition",
+      "verdict": "fail"
+    },
+    "W03": {
+      "exit": 3,
+      "rule": "transition:dynamic-derivation-coverage",
+      "before_effects": true
+    },
+    "W04": {
+      "exit": 0,
+      "head": "reaches",
+      "rows_after_retract": [
+        [
+          "A",
+          "B"
+        ]
+      ]
+    },
+    "W05": {
+      "exit": 0,
+      "derived_changes": []
+    },
+    "C08": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "C09": {
+      "exit": 1,
+      "head": "reaches",
+      "finding": "derived-extension-unsound",
+      "witness": [
+        "A",
+        "B"
+      ]
+    },
+    "C10": {
+      "exit": 3,
+      "rule": "jsonschema:oneOf",
+      "site": "reaches.derivation_rule"
+    },
+    "C11": {
+      "exit": 3,
+      "rule": "jsonschema:oneOf",
+      "site": "reaches.derivation_rule.clauses[1]"
+    },
+    "C12": {
+      "exit": 3,
+      "rule": "semantic:derivation-negate-unbound",
+      "site": "reaches.derivation_rule.clauses[1].negate"
+    },
+    "G09": {
+      "exit": 0
+    },
+    "G10": {
+      "exit": 3,
+      "rule": "semantic:derivation-unstratified",
+      "cycle": [
+        "open_reach",
+        "reaches"
+      ],
+      "edge": "negative"
+    },
+    "G11": {
+      "exit": 0
+    },
+    "C13": {
+      "exit": 0,
+      "head": "branch_count",
+      "roles": [
+        "label",
+        "count"
+      ],
+      "rows": [
+        [
+          "branch",
+          1
+        ]
+      ]
+    },
+    "C14": {
+      "exit": 1,
+      "head": "branch_count",
+      "roles": [
+        "label",
+        "count"
+      ],
+      "rows": [
+        [
+          "branch",
+          1
+        ]
+      ],
+      "finding": "derived-extension-unsound",
+      "witness": [
+        "branch",
+        2
+      ]
+    },
+    "C15": {
+      "exit": 0,
+      "head": "branch_count",
+      "roles": [
+        "label",
+        "count"
+      ],
+      "rows": [
+        [
+          "branch",
+          1
+        ]
+      ]
+    },
+    "C16": {
+      "exit": 1,
+      "head": "branch_count",
+      "roles": [
+        "label",
+        "count"
+      ],
+      "rows": [
+        [
+          "branch",
+          1
+        ]
+      ],
+      "finding": "derived-extension-unsound",
+      "witness": [
+        "branch",
+        2
+      ]
+    },
+    "P01": {
+      "exit": 0,
+      "groups": 18000,
+      "rows": 108000,
+      "min_bytes": 9961472,
+      "max_bytes": 10485760,
+      "max_fixpoint_seconds": 60
+    },
+    "F07": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "F08": {
+      "exit": 0,
+      "head": "reaches",
+      "rows": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "F09": {
+      "exit": 4,
+      "head": "reaches",
+      "reason": "term:mod-zero"
+    },
+    "F10": {
+      "exit": 1,
+      "head": "open_reach",
+      "finding": "derived-extension-unsound",
+      "witness": [
+        "X",
+        "Y"
+      ]
+    },
+    "W06": {
+      "exit": 1,
+      "step": 2,
+      "kind": "precondition",
+      "verdict": "fail"
+    },
+    "W07": {
+      "exit": 0,
+      "component": [
+        "reaches",
+        "same_reach"
+      ]
+    }
+  }
+}

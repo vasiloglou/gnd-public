@@ -1,0 +1,6 @@
+{
+  "format_version": 2,
+  "population": {"model": "negation-a.orm.yaml", "model_id": "urn:gnd-fixture:v70-phase6-negation@1", "source": "fixture", "label": "boundary", "covers": ["candidate", "blocked", "waived", "permitted"]},
+  "instances": {},
+  "facts": {"candidate": [{"record": "R1"}], "blocked": [{"record": {"$opaque": "SECRET-OPAQUE-CANARY"}}], "waived": [], "permitted": [{"record": "R1"}]}
+}

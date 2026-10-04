@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-11-module-symlink",
+  "story": "A modules-only source symlink is refused without following it.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "symlink",
+      "target": "artifacts/data.json"
+    }
+  ]
+}

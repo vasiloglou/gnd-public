@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-03",
+  "authorization": "approved",
+  "instrument": "prose",
+  "spec_sha256": "322cf504923be4be841f515bba733e10a1f5228f664f1081de93e3cfe2455800",
+  "decisions": {
+    "D1": "owner approved as recommended",
+    "D2": "owner approved as recommended",
+    "D3": "owner approved as recommended",
+    "D4": "owner approved as recommended",
+    "D5": "owner approved as recommended",
+    "D6": "owner approved as recommended"
+  },
+  "pr_only": "owner-approved mandatory PRs; no direct default-branch pushes",
+  "scope": "Phase 3 resumption including target default suite, bounded installed/profile CI, private topic-branch pushes and PR, one independent diff reviewer and at most one follow-up",
+  "limits": "No publication, visibility change, certification, source retirement or authority transfer"
+}

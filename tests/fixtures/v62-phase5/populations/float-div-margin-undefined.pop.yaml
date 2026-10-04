@@ -1,0 +1,22 @@
+population:
+  model: ../models/floats.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase5-floats@1
+  source: fixture
+  covers:
+    [
+      rb_sample,
+      duration_sample,
+      margin_sample,
+      sample_rate_kbps,
+      sample_rate_floor,
+      sample_rate_ceil,
+      sample_margin_sqrt,
+      sample_margin_sqrt_doubled,
+    ]
+facts:
+  rb_sample:
+    - { scenario: east, ue: ue3, rb: 500 }
+  duration_sample:
+    - { ue: ue3, duration: 0.0 }
+  margin_sample:
+    - { ue: SECRET-FLOAT-141421, margin: -6.25 }

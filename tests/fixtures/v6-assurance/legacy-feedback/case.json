@@ -1,0 +1,38 @@
+{
+  "acceptance": {
+    "expected_outputs": [
+      {
+        "candidate_path": "decision.txt",
+        "comparison": "exact-bytes",
+        "encoding": "utf-8",
+        "media_type": "text/plain",
+        "output_id": "decision",
+        "sha256": "7f8518f7db5e9a55049f49c4ea6d6e8f509695231e60cbd607bcb36c88a75a14"
+      }
+    ],
+    "mode": "exact-bytes"
+  },
+  "case_id": "legacy-control",
+  "expected_outputs": [
+    {
+      "candidate_path": "decision.txt",
+      "comparison": "exact-bytes",
+      "encoding": "utf-8",
+      "media_type": "text/plain",
+      "output_id": "decision",
+      "sha256": "7f8518f7db5e9a55049f49c4ea6d6e8f509695231e60cbd607bcb36c88a75a14"
+    }
+  ],
+  "role": "required",
+  "verify": {
+    "command": "check",
+    "model": {
+      "encoding": "utf-8",
+      "media_type": "application/yaml",
+      "path": "tests/fixtures/v6-assurance/cases/expense-approval/conforming/model.orm.yaml",
+      "sha256": "9ae72fd803e8536bc4e1b11866de9dfd5c54763e096db80c34a0d901a03d4c43",
+      "size_bytes": 1939
+    },
+    "subject": "population.json"
+  }
+}

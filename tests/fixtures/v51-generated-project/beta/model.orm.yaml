@@ -1,0 +1,19 @@
+# tests/fixtures/v51-generated-project/beta/model.orm.yaml
+#
+# The second member of the collision pair (T1.3a); see alpha/model.orm.yaml.
+# Same file name, different model_id -- post-phase the two projects must emit
+# non-colliding smoke basenames from exactly this difference.
+version: 1
+model_id: urn:gnd-fixture:v51-beta@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: gadget, name: Gadget, kind: value, primitive: String }
+
+fact_types:
+  - id: gadget_listed
+    reading: "{Gadget} is listed"
+    roles: [{ object_type: gadget, role_name: gadget }]
+
+constraints: []
+rejected_proposals: []

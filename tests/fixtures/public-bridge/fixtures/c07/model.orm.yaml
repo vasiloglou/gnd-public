@@ -1,0 +1,28 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - { id: panel, name: Panel, kind: value, primitive: String }
+  - { id: expert, name: Expert, kind: value, primitive: String }
+
+fact_types:
+  - id: panel_includes_expert
+    reading: "{Panel} includes {Expert}"
+    roles:
+      - { object_type: panel, role_name: panel }
+      - { object_type: expert, role_name: expert }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [panel]
+        bound: { min: 2, max: 3 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: "Each panel that includes an expert includes at least 2 and at most 3."

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "contract_schema_version": 4,
+  "feedback_schema_version": 6,
+  "attempt_schema_version": 6,
+  "result_schema_version": 4,
+  "case_ids": ["snapshot-secret", "transition-secret"],
+  "declarations": [
+    {"case_id": "snapshot-secret", "source": "role", "fact_type": "optional_code", "roles": ["code"]},
+    {"case_id": "transition-secret", "source": "role", "fact_type": "optional_code", "roles": ["code"]}
+  ],
+  "forbidden_contract_fields": ["unredacted", "redaction_mode"],
+  "forbidden_feedback_tokens": ["P4_SECRET_CODE_01", "P4_SECRET_BINDING_ONLY", "bindings", "witnesses", "offending_facts"],
+  "successor_shapes": {
+    "feedback": {"schema_version": 6, "redaction_mode": "applied"},
+    "attempt": {"schema_version": 6, "feedback_schema_version": 6, "redaction_mode": "applied"},
+    "result": {"schema_version": 4, "acceptance_modes": ["constraint-satisfaction", "transition"], "redaction_mode": "applied"}
+  },
+  "cross_version_relabels_refuse": [[6, 5], [5, 6], [4, 3]]
+}

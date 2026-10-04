@@ -1,0 +1,89 @@
+{
+  "applied_redaction": {
+    "mode": "applied",
+    "declarations": [
+      {
+        "case_id": null,
+        "source": "role",
+        "fact_type": "optional_code",
+        "roles": [
+          "code"
+        ]
+      }
+    ]
+  },
+  "canaries": {
+    "selected": [
+      "P4_SECRET_CODE_00",
+      "P4_SECRET_CODE_01",
+      "P4_SECRET_CODE_02",
+      "P4_SECRET_CODE_04",
+      "P4_SECRET_ILLFORMED_POP",
+      "P4_SECRET_BINDING_ONLY",
+      "P4_SECRET_ILLFORMED_STEP",
+      "P4_SECRET_OVER_CAP_03",
+      "P4_SECRET_CYCLE_A",
+      "P4_SECRET_CYCLE_B",
+      "P4_SECRET_DERIVATION_EXTRA",
+      "P4_SECRET_PRECONDITION_CODE",
+      "P4_SECRET_EFFECT_CODE",
+      "P4_SECRET_DYNAMIC_ITEM",
+      "P4_SECRET_BATCH_00",
+      "P4_SECRET_BATCH_DUPLICATE",
+      "P4_SECRET_BATCH_ILL_FORMED",
+      "P4_SECRET_BATCH_04",
+      "P4_SECRET_MEASURE_OK",
+      "P4_SECRET_MEASURE_DUPLICATE",
+      "P4_SECRET_MEASURE_SPARE_A",
+      "P4_SECRET_MEASURE_SPARE_B"
+    ],
+    "public_controls": [
+      "P4_PUBLIC_ITEM_00",
+      "P4_PUBLIC_ITEM_01_A",
+      "P4_PUBLIC_ITEM_01_B",
+      "P4_PUBLIC_ITEM_02",
+      "P4_PUBLIC_ITEM_03",
+      "P4_PUBLIC_ITEM_04",
+      "P4_PUBLIC_TRANSITION_ITEM",
+      "P4_PUBLIC_DERIVATION_NODE",
+      "P4_PUBLIC_DYNAMIC_RANK",
+      "P4_PUBLIC_BATCH_00",
+      "P4_PUBLIC_BATCH_01",
+      "P4_PUBLIC_BATCH_01_A",
+      "P4_PUBLIC_BATCH_01_B",
+      "P4_PUBLIC_BATCH_02",
+      "P4_PUBLIC_BATCH_03",
+      "P4_PUBLIC_BATCH_04",
+      "P4_PUBLIC_MEASURE_OK",
+      "P4_PUBLIC_MEASURE_DUPLICATE_A",
+      "P4_PUBLIC_MEASURE_DUPLICATE_B",
+      "P4_PUBLIC_MEASURE_SPARE"
+    ]
+  },
+  "identity_fields": [
+    "exit_code",
+    "outcome",
+    "acceptance_ready",
+    "counts",
+    "constraint_ref",
+    "constraint_type",
+    "modality",
+    "verdict",
+    "reason_code"
+  ],
+  "instance_text_marker": "[REDACTED INSTANCE DETAIL]",
+  "marker_text": "[REDACTED optional_code.code]",
+  "unredacted_redaction": {
+    "mode": "unredacted",
+    "declarations": [
+      {
+        "case_id": null,
+        "source": "role",
+        "fact_type": "optional_code",
+        "roles": [
+          "code"
+        ]
+      }
+    ]
+  }
+}

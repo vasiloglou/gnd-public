@@ -1,0 +1,413 @@
+{
+  "schema_version": 1,
+  "cases": {
+    "P01-public": {
+      "exit": 0,
+      "rows": [
+        {
+          "fact_ref": {
+            "fact_type": "a_note",
+            "index": 0
+          },
+          "sentence": "'<b>{Person}</b> \\'quote\\' \\\\ path\\u2028next' is filed }."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 1
+          },
+          "sentence": "'Ada' meets 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 1
+          },
+          "sentence": "'Zoe' is met by 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 2
+          },
+          "sentence": "'Ada' meets 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 2
+          },
+          "sentence": "'Zoe' is met by 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 0
+          },
+          "sentence": "'Zoe' meets 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 0
+          },
+          "sentence": "'Ada' is met by 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "c_amount",
+            "index": 0
+          },
+          "sentence": "'R1' has amount '1.0'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "c_amount",
+            "index": 1
+          },
+          "sentence": "'R1' has amount '1'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 1
+          },
+          "sentence": "'R0' has token 'visible'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 2
+          },
+          "sentence": "'R1' has token '[opaque: a-unreadable]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 0
+          },
+          "sentence": "'R1' has token '[opaque: z-unreadable]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "e_transfer",
+            "index": 0
+          },
+          "sentence": "'Ada' sends 'Book' to 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "e_transfer",
+            "index": 0
+          },
+          "sentence": "'Zoe' receives 'Book' from 'Ada'."
+        }
+      ],
+      "text": "FACT a_note[0]: '<b>{Person}</b> \\'quote\\' \\\\ path\\u2028next' is filed }.\nFACT b_pair[1]: 'Ada' meets 'Zoe'.\nFACT b_pair[1]: 'Zoe' is met by 'Ada'.\nFACT b_pair[2]: 'Ada' meets 'Zoe'.\nFACT b_pair[2]: 'Zoe' is met by 'Ada'.\nFACT b_pair[0]: 'Zoe' meets 'Ada'.\nFACT b_pair[0]: 'Ada' is met by 'Zoe'.\nFACT c_amount[0]: 'R1' has amount '1.0'.\nFACT c_amount[1]: 'R1' has amount '1'.\nFACT d_token[1]: 'R0' has token 'visible'.\nFACT d_token[2]: 'R1' has token '[opaque: a-unreadable]'.\nFACT d_token[0]: 'R1' has token '[opaque: z-unreadable]'.\nFACT e_transfer[0]: 'Ada' sends 'Book' to 'Zoe'.\nFACT e_transfer[0]: 'Zoe' receives 'Book' from 'Ada'.\n",
+      "jsonl": "{\"fact_ref\":{\"fact_type\":\"a_note\",\"index\":0},\"sentence\":\"'<b>{Person}</b> \\\\'quote\\\\' \\\\\\\\ path\\\\u2028next' is filed }.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":1},\"sentence\":\"'Ada' meets 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":1},\"sentence\":\"'Zoe' is met by 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":2},\"sentence\":\"'Ada' meets 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":2},\"sentence\":\"'Zoe' is met by 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":0},\"sentence\":\"'Zoe' meets 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":0},\"sentence\":\"'Ada' is met by 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"c_amount\",\"index\":0},\"sentence\":\"'R1' has amount '1.0'.\"}\n{\"fact_ref\":{\"fact_type\":\"c_amount\",\"index\":1},\"sentence\":\"'R1' has amount '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":1},\"sentence\":\"'R0' has token 'visible'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":2},\"sentence\":\"'R1' has token '[opaque: a-unreadable]'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":0},\"sentence\":\"'R1' has token '[opaque: z-unreadable]'.\"}\n{\"fact_ref\":{\"fact_type\":\"e_transfer\",\"index\":0},\"sentence\":\"'Ada' sends 'Book' to 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"e_transfer\",\"index\":0},\"sentence\":\"'Zoe' receives 'Book' from 'Ada'.\"}\n"
+    },
+    "P02-public-anchored": {
+      "exit": 0,
+      "rows": [
+        {
+          "fact_ref": {
+            "fact_type": "a_note",
+            "index": 0
+          },
+          "sentence": "'<b>{Person}</b> \\'quote\\' \\\\ path\\u2028next' is filed }."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 1
+          },
+          "sentence": "'Ada' meets 'Zoe'.",
+          "excerpt": "left: 'Ada'; right: 'Zoe'"
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 1
+          },
+          "sentence": "'Zoe' is met by 'Ada'.",
+          "excerpt": "left: 'Ada'; right: 'Zoe'"
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 2
+          },
+          "sentence": "'Ada' meets 'Zoe'.",
+          "excerpt": "left: 'Ada'; right: 'Zoe'"
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 2
+          },
+          "sentence": "'Zoe' is met by 'Ada'.",
+          "excerpt": "left: 'Ada'; right: 'Zoe'"
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 0
+          },
+          "sentence": "'Zoe' meets 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 0
+          },
+          "sentence": "'Ada' is met by 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "c_amount",
+            "index": 0
+          },
+          "sentence": "'R1' has amount '1.0'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "c_amount",
+            "index": 1
+          },
+          "sentence": "'R1' has amount '1'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 1
+          },
+          "sentence": "'R0' has token 'visible'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 2
+          },
+          "sentence": "'R1' has token '[opaque: a-unreadable]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 0
+          },
+          "sentence": "'R1' has token '[opaque: z-unreadable]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "e_transfer",
+            "index": 0
+          },
+          "sentence": "'Ada' sends 'Book' to 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "e_transfer",
+            "index": 0
+          },
+          "sentence": "'Zoe' receives 'Book' from 'Ada'."
+        }
+      ],
+      "text": "FACT a_note[0]: '<b>{Person}</b> \\'quote\\' \\\\ path\\u2028next' is filed }.\nFACT b_pair[1]: 'Ada' meets 'Zoe'. | excerpt: left: 'Ada'; right: 'Zoe'\nFACT b_pair[1]: 'Zoe' is met by 'Ada'. | excerpt: left: 'Ada'; right: 'Zoe'\nFACT b_pair[2]: 'Ada' meets 'Zoe'. | excerpt: left: 'Ada'; right: 'Zoe'\nFACT b_pair[2]: 'Zoe' is met by 'Ada'. | excerpt: left: 'Ada'; right: 'Zoe'\nFACT b_pair[0]: 'Zoe' meets 'Ada'.\nFACT b_pair[0]: 'Ada' is met by 'Zoe'.\nFACT c_amount[0]: 'R1' has amount '1.0'.\nFACT c_amount[1]: 'R1' has amount '1'.\nFACT d_token[1]: 'R0' has token 'visible'.\nFACT d_token[2]: 'R1' has token '[opaque: a-unreadable]'.\nFACT d_token[0]: 'R1' has token '[opaque: z-unreadable]'.\nFACT e_transfer[0]: 'Ada' sends 'Book' to 'Zoe'.\nFACT e_transfer[0]: 'Zoe' receives 'Book' from 'Ada'.\n",
+      "jsonl": "{\"fact_ref\":{\"fact_type\":\"a_note\",\"index\":0},\"sentence\":\"'<b>{Person}</b> \\\\'quote\\\\' \\\\\\\\ path\\\\u2028next' is filed }.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":1},\"sentence\":\"'Ada' meets 'Zoe'.\",\"excerpt\":\"left: 'Ada'; right: 'Zoe'\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":1},\"sentence\":\"'Zoe' is met by 'Ada'.\",\"excerpt\":\"left: 'Ada'; right: 'Zoe'\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":2},\"sentence\":\"'Ada' meets 'Zoe'.\",\"excerpt\":\"left: 'Ada'; right: 'Zoe'\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":2},\"sentence\":\"'Zoe' is met by 'Ada'.\",\"excerpt\":\"left: 'Ada'; right: 'Zoe'\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":0},\"sentence\":\"'Zoe' meets 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":0},\"sentence\":\"'Ada' is met by 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"c_amount\",\"index\":0},\"sentence\":\"'R1' has amount '1.0'.\"}\n{\"fact_ref\":{\"fact_type\":\"c_amount\",\"index\":1},\"sentence\":\"'R1' has amount '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":1},\"sentence\":\"'R0' has token 'visible'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":2},\"sentence\":\"'R1' has token '[opaque: a-unreadable]'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":0},\"sentence\":\"'R1' has token '[opaque: z-unreadable]'.\"}\n{\"fact_ref\":{\"fact_type\":\"e_transfer\",\"index\":0},\"sentence\":\"'Ada' sends 'Book' to 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"e_transfer\",\"index\":0},\"sentence\":\"'Zoe' receives 'Book' from 'Ada'.\"}\n"
+    },
+    "O01-shuffled": {
+      "exit": 0,
+      "rows": [
+        {
+          "fact_ref": {
+            "fact_type": "a_note",
+            "index": 0
+          },
+          "sentence": "'<b>{Person}</b> \\'quote\\' \\\\ path\\u2028next' is filed }."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 0
+          },
+          "sentence": "'Ada' meets 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 0
+          },
+          "sentence": "'Zoe' is met by 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 1
+          },
+          "sentence": "'Ada' meets 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 1
+          },
+          "sentence": "'Zoe' is met by 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 2
+          },
+          "sentence": "'Zoe' meets 'Ada'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_pair",
+            "index": 2
+          },
+          "sentence": "'Ada' is met by 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "c_amount",
+            "index": 0
+          },
+          "sentence": "'R1' has amount '1.0'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "c_amount",
+            "index": 1
+          },
+          "sentence": "'R1' has amount '1'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 1
+          },
+          "sentence": "'R0' has token 'visible'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 0
+          },
+          "sentence": "'R1' has token '[opaque: a-unreadable]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "d_token",
+            "index": 2
+          },
+          "sentence": "'R1' has token '[opaque: z-unreadable]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "e_transfer",
+            "index": 0
+          },
+          "sentence": "'Ada' sends 'Book' to 'Zoe'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "e_transfer",
+            "index": 0
+          },
+          "sentence": "'Zoe' receives 'Book' from 'Ada'."
+        }
+      ],
+      "text": "FACT a_note[0]: '<b>{Person}</b> \\'quote\\' \\\\ path\\u2028next' is filed }.\nFACT b_pair[0]: 'Ada' meets 'Zoe'.\nFACT b_pair[0]: 'Zoe' is met by 'Ada'.\nFACT b_pair[1]: 'Ada' meets 'Zoe'.\nFACT b_pair[1]: 'Zoe' is met by 'Ada'.\nFACT b_pair[2]: 'Zoe' meets 'Ada'.\nFACT b_pair[2]: 'Ada' is met by 'Zoe'.\nFACT c_amount[0]: 'R1' has amount '1.0'.\nFACT c_amount[1]: 'R1' has amount '1'.\nFACT d_token[1]: 'R0' has token 'visible'.\nFACT d_token[0]: 'R1' has token '[opaque: a-unreadable]'.\nFACT d_token[2]: 'R1' has token '[opaque: z-unreadable]'.\nFACT e_transfer[0]: 'Ada' sends 'Book' to 'Zoe'.\nFACT e_transfer[0]: 'Zoe' receives 'Book' from 'Ada'.\n",
+      "jsonl": "{\"fact_ref\":{\"fact_type\":\"a_note\",\"index\":0},\"sentence\":\"'<b>{Person}</b> \\\\'quote\\\\' \\\\\\\\ path\\\\u2028next' is filed }.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":0},\"sentence\":\"'Ada' meets 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":0},\"sentence\":\"'Zoe' is met by 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":1},\"sentence\":\"'Ada' meets 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":1},\"sentence\":\"'Zoe' is met by 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":2},\"sentence\":\"'Zoe' meets 'Ada'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_pair\",\"index\":2},\"sentence\":\"'Ada' is met by 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"c_amount\",\"index\":0},\"sentence\":\"'R1' has amount '1.0'.\"}\n{\"fact_ref\":{\"fact_type\":\"c_amount\",\"index\":1},\"sentence\":\"'R1' has amount '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":1},\"sentence\":\"'R0' has token 'visible'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":0},\"sentence\":\"'R1' has token '[opaque: a-unreadable]'.\"}\n{\"fact_ref\":{\"fact_type\":\"d_token\",\"index\":2},\"sentence\":\"'R1' has token '[opaque: z-unreadable]'.\"}\n{\"fact_ref\":{\"fact_type\":\"e_transfer\",\"index\":0},\"sentence\":\"'Ada' sends 'Book' to 'Zoe'.\"}\n{\"fact_ref\":{\"fact_type\":\"e_transfer\",\"index\":0},\"sentence\":\"'Zoe' receives 'Book' from 'Ada'.\"}\n"
+    },
+    "Z01-empty": {
+      "exit": 0,
+      "rows": [],
+      "text": "",
+      "jsonl": ""
+    },
+    "R01-private-applied": {
+      "exit": 0,
+      "rows": [
+        {
+          "fact_ref": {
+            "fact_type": "a_notice",
+            "index": 0
+          },
+          "sentence": "'R1' is mentioned with 'public'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_secret",
+            "index": 0
+          },
+          "sentence": "'R1' has secret '[REDACTED INSTANCE DETAIL]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_secret",
+            "index": 1
+          },
+          "sentence": "'R2' has secret '[REDACTED INSTANCE DETAIL]'."
+        }
+      ],
+      "text": "FACT a_notice[0]: 'R1' is mentioned with 'public'.\nFACT b_secret[0]: 'R1' has secret '[REDACTED INSTANCE DETAIL]'.\nFACT b_secret[1]: 'R2' has secret '[REDACTED INSTANCE DETAIL]'.\n",
+      "jsonl": "{\"fact_ref\":{\"fact_type\":\"a_notice\",\"index\":0},\"sentence\":\"'R1' is mentioned with 'public'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_secret\",\"index\":0},\"sentence\":\"'R1' has secret '[REDACTED INSTANCE DETAIL]'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_secret\",\"index\":1},\"sentence\":\"'R2' has secret '[REDACTED INSTANCE DETAIL]'.\"}\n"
+    },
+    "R02-private-unredacted": {
+      "exit": 0,
+      "rows": [
+        {
+          "fact_ref": {
+            "fact_type": "a_notice",
+            "index": 0
+          },
+          "sentence": "'R1' is mentioned with 'public'.",
+          "excerpt": "record: 'R1 SECRET-ROLE-CANARY'"
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_secret",
+            "index": 0
+          },
+          "sentence": "'R1' has secret '[opaque: SECRET-OPAQUE-CANARY]'."
+        },
+        {
+          "fact_ref": {
+            "fact_type": "b_secret",
+            "index": 1
+          },
+          "sentence": "'R2' has secret 'SECRET-ROLE-CANARY'."
+        }
+      ],
+      "text": "FACT a_notice[0]: 'R1' is mentioned with 'public'. | excerpt: record: 'R1 SECRET-ROLE-CANARY'\nFACT b_secret[0]: 'R1' has secret '[opaque: SECRET-OPAQUE-CANARY]'.\nFACT b_secret[1]: 'R2' has secret 'SECRET-ROLE-CANARY'.\n",
+      "jsonl": "{\"fact_ref\":{\"fact_type\":\"a_notice\",\"index\":0},\"sentence\":\"'R1' is mentioned with 'public'.\",\"excerpt\":\"record: 'R1 SECRET-ROLE-CANARY'\"}\n{\"fact_ref\":{\"fact_type\":\"b_secret\",\"index\":0},\"sentence\":\"'R1' has secret '[opaque: SECRET-OPAQUE-CANARY]'.\"}\n{\"fact_ref\":{\"fact_type\":\"b_secret\",\"index\":1},\"sentence\":\"'R2' has secret 'SECRET-ROLE-CANARY'.\"}\n"
+    },
+    "I01-bare-ternary-inverse": {
+      "exit": 3,
+      "rows": [],
+      "text": "",
+      "jsonl": ""
+    },
+    "A01-mutated-document": {
+      "exit": 3,
+      "rows": [],
+      "text": "",
+      "jsonl": ""
+    },
+    "U01-unpaired-anchors": {
+      "exit": 64,
+      "rows": [],
+      "text": "",
+      "jsonl": ""
+    }
+  },
+  "witnesses": {
+    "W01-complete": {
+      "sentence": "'Ada' meets 'Zoe'."
+    },
+    "W02-partial": {
+      "error": "incomplete binding"
+    }
+  }
+}

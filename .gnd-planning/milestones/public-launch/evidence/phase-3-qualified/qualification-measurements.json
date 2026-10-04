@@ -1,0 +1,27 @@
+{
+  "tested_commit": "c63b90cc3b26c89487e72d7f054a30b387824442",
+  "common_package_files": 231,
+  "identical_package_files": 230,
+  "target_differences": [
+    "src/gnd/correspondence.py"
+  ],
+  "source_only_package_files": 4001,
+  "target_only_package_files": 8,
+  "tracked_bytes_before_record": 16579248,
+  "largest_blob": [
+    584130,
+    ".gnd-planning/milestones/public-launch/migration/collection.json"
+  ],
+  "planning_markdown_bytes_before_record": 258728,
+  "packaged_skills": 16,
+  "discovery_roots": {
+    ".claude/skills": {
+      "links": 16,
+      "real_directories": 2
+    },
+    ".codex/skills": {
+      "links": 16,
+      "real_directories": 2
+    }
+  }
+}

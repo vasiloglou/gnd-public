@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-public-example:bookrec@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "user",
+      "name": "User",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "user_id"
+      }
+    },
+    {
+      "id": "user_id",
+      "name": "UserId",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "book",
+      "name": "Book",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "book_id"
+      }
+    },
+    {
+      "id": "book_id",
+      "name": "BookId",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "title",
+      "name": "Title",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "user_rated_book",
+      "reading": "{User} rated {Book}",
+      "roles": [
+        {
+          "object_type": "user",
+          "role_name": "user"
+        },
+        {
+          "object_type": "book",
+          "role_name": "book"
+        }
+      ]
+    },
+    {
+      "id": "book_has_title",
+      "reading": "{Book} has {Title}",
+      "roles": [
+        {
+          "object_type": "book",
+          "role_name": "book"
+        },
+        {
+          "object_type": "title",
+          "role_name": "title"
+        }
+      ]
+    },
+    {
+      "id": "recommendation",
+      "reading": "{Book} is recommended to {User}",
+      "roles": [
+        {
+          "object_type": "book",
+          "role_name": "book"
+        },
+        {
+          "object_type": "user",
+          "role_name": "user"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "recommendation",
+          "role": "user"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "user_rated_book",
+          "role": "user"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The produced role stays inside the admitted input role."
+      }
+    },
+    {
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "recommendation",
+          "role": "book"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "book_has_title",
+          "role": "book"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The produced role stays inside the admitted input role."
+      }
+    }
+  ]
+}

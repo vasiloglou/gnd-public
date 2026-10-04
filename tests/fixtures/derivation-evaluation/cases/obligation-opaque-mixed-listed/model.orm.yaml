@@ -1,0 +1,25 @@
+version: 1
+model_id: urn:gnd-fixture:derivation-evaluation:obligation-opaque-mixed-listed@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+fact_types:
+  - id: seed
+    reading: "{Item} is seeded"
+    roles: [{ object_type: item, role_name: item }]
+  - id: result
+    reading: "{Item} is derived"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: seed, bind: { item: "$i" } }]
+      head: { item: "$i" }
+  - id: legacy_result
+    reading: "{Item} is legacy-derived"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule: "A human-owned legacy rule."
+
+constraints: []
+rejected_proposals: []

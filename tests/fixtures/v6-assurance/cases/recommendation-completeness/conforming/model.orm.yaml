@@ -1,0 +1,73 @@
+{
+  "constraints": [],
+  "fact_types": [
+    {
+      "id": "catalog",
+      "reading": "{Item}",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ]
+    },
+    {
+      "id": "blocked",
+      "reading": "{Item}",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "item": "$i"
+            },
+            "fact_type": "catalog"
+          }
+        ],
+        "head": {
+          "item": "$i"
+        },
+        "negate": [
+          {
+            "bind": {
+              "item": "$i"
+            },
+            "fact_type": "blocked"
+          }
+        ]
+      },
+      "id": "recommended",
+      "reading": "{Item}",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-fixture:v6-assurance:recommendation@1",
+  "object_types": [
+    {
+      "id": "item",
+      "kind": "value",
+      "name": "Item",
+      "primitive": "String"
+    }
+  ],
+  "rejected_proposals": [],
+  "source": {
+    "confidence": "standard",
+    "kind": "text-conversation",
+    "mode": "one-shot"
+  },
+  "version": 1
+}

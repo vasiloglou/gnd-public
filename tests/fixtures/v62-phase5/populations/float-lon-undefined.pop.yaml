@@ -1,0 +1,8 @@
+population:
+  model: ../models/floats.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase5-floats@1
+  source: fixture
+  covers: [handover_sample, sample_serving_distance_km, sample_handover_close]
+facts:
+  handover_sample:
+    - { ue: ue5, serving_lat: 48.8584, serving_lon: 2.2945, neighbor_lat: 48.8738, neighbor_lon: 200.0 }

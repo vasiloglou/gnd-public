@@ -1,0 +1,81 @@
+{
+  "contract_version": 1,
+  "modules": [
+    {
+      "path": "cli/expense_cli.py",
+      "symbols": [
+        {
+          "name": "main",
+          "parameters": [
+            "argv"
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [],
+  "entry_points": [
+    {
+      "module": "cli.expense_cli",
+      "subcommands": [
+        "approve",
+        "report"
+      ],
+      "flags": [
+        "--population",
+        "--expense",
+        "--chain"
+      ],
+      "consumes": [
+        "expense_submitted_by_employee",
+        "expense_has_amount",
+        "expense_is_approved",
+        "expense_approved_by_chain"
+      ],
+      "produces": [
+        "expense_is_approved",
+        "expense_approved_by_chain"
+      ],
+      "exits": [
+        {
+          "code": 0,
+          "meaning": "command completed"
+        },
+        {
+          "code": 1,
+          "meaning": "domain refusal"
+        },
+        {
+          "code": 2,
+          "meaning": "argument refusal"
+        }
+      ]
+    }
+  ],
+  "smoke": [
+    {
+      "id": "report-smoke",
+      "entry_point": "cli.expense_cli",
+      "argv": [
+        "report",
+        "--population",
+        "seed.population.json"
+      ],
+      "expect_exit": 0
+    },
+    {
+      "id": "unknown-expense-refused",
+      "entry_point": "cli.expense_cli",
+      "argv": [
+        "approve",
+        "--population",
+        "seed.population.json",
+        "--expense",
+        "999999",
+        "--chain",
+        "CH-MISSING"
+      ],
+      "expect_exit": 1
+    }
+  ]
+}

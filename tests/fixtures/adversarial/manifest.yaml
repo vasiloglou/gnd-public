@@ -1,0 +1,441 @@
+cases:
+- id: textual-alethic-is-indeterminate
+  command: check
+  model: models/textual_alethic.orm.yaml
+  population: populations/textual_alethic.violating.yaml
+  expected_exit: 4
+  why: textual alethic is indeterminate. This owned toy case must exit 4; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes:
+  - textual-not-mechanical
+- id: hostile-values-do-not-break-the-payload
+  command: check
+  model: models/hostile_values.orm.yaml
+  population: populations/hostile_values.yaml
+  expected_exit: 1
+  why: hostile values do not break the payload. This owned toy case must exit 1;
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: omission-missing-mandatory-role
+  command: check
+  model: models/omission.orm.yaml
+  population: populations/omission.missing_role.yaml
+  expected_exit: 3
+  why: omission missing mandatory role. This owned toy case must exit 3; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:missing-role
+  expect_reason_codes: []
+- id: omission-extra-role
+  command: check
+  model: models/omission.orm.yaml
+  population: populations/omission.extra_role.yaml
+  expected_exit: 3
+  why: omission extra role. This owned toy case must exit 3; declared rule and 
+    reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:extra-role
+  expect_reason_codes: []
+- id: omission-unknown-fact-type
+  command: check
+  model: models/omission.orm.yaml
+  population: populations/omission.unknown_fact_type.yaml
+  expected_exit: 3
+  why: omission unknown fact type. This owned toy case must exit 3; declared 
+    rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:unknown-fact-type
+  expect_reason_codes: []
+- id: typed-range-string-value
+  command: check
+  model: models/typed_range.orm.yaml
+  population: populations/typed_range.string_value.yaml
+  expected_exit: 3
+  why: typed range string value. This owned toy case must exit 3; declared rule 
+    and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:type-mismatch
+  expect_reason_codes: []
+- id: typed-range-bool-for-integer
+  command: check
+  model: models/typed_range.orm.yaml
+  population: populations/typed_range.bool_for_integer.yaml
+  expected_exit: 3
+  why: typed range bool for integer. This owned toy case must exit 3; declared 
+    rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:type-mismatch
+  expect_reason_codes: []
+- id: model-id-mismatch
+  command: check
+  model: models/model_id_a.orm.yaml
+  population: populations/model_id_b.yaml
+  expected_exit: 3
+  why: model id mismatch. This owned toy case must exit 3; declared rule and 
+    reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:model-id-mismatch
+  expect_reason_codes: []
+- id: model-id-absent-is-warning-not-error
+  command: check
+  model: models/model_id_a.orm.yaml
+  population: populations/model_id_absent.yaml
+  expected_exit: 0
+  why: model id absent is warning not error. This owned toy case must exit 0; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: subtype-instance-missing-mandatory-role
+  command: check
+  model: models/subtype_mandatory.orm.yaml
+  population: populations/subtype_mandatory.no_plate.yaml
+  expected_exit: 1
+  why: subtype instance missing mandatory role. This owned toy case must exit 1;
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: ordering-on-uncomparable-operands
+  command: check
+  model: models/uncomparable_literal.orm.yaml
+  population: populations/uncomparable_literal.yaml
+  expected_exit: 4
+  why: ordering on uncomparable operands. This owned toy case must exit 4; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes:
+  - values-not-comparable
+- id: range-bound-type-mismatch
+  command: check
+  model: models/unresolvable_bound.orm.yaml
+  population: populations/unresolvable_bound.yaml
+  expected_exit: 4
+  why: range bound type mismatch. This owned toy case must exit 4; declared rule
+    and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes:
+  - bound-type-mismatch
+- id: xor-multirole-neither-is-indeterminate
+  command: check
+  model: models/xor_multirole.orm.yaml
+  population: populations/xor_multirole.neither.yaml
+  expected_exit: 4
+  why: xor multirole neither is indeterminate. This owned toy case must exit 4; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes:
+  - xor-disjunctive-undefined
+- id: xor-multirole-overlap-still-fails
+  command: check
+  model: models/xor_multirole.orm.yaml
+  population: populations/xor_multirole.overlap.yaml
+  expected_exit: 1
+  why: xor multirole overlap still fails. This owned toy case must exit 1; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: model-id-warning-survives-an-error-in-the-same-pass
+  command: check
+  model: models/model_id_a.orm.yaml
+  population: populations/model_id_absent_and_malformed.yaml
+  expected_exit: 3
+  why: model id warning survives an error in the same pass. This owned toy case 
+    must exit 3; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids:
+  - population:unknown-fact-type
+  - population:missing-role
+  expect_reason_codes: []
+- id: nonstring-role-key-still-produces-structured-issues
+  command: check
+  model: models/omission.orm.yaml
+  population: populations/omission.nonstring_role_key.yaml
+  expected_exit: 3
+  why: nonstring role key still produces structured issues. This owned toy case 
+    must exit 3; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids:
+  - population:extra-role
+  expect_reason_codes: []
+- id: line-forgery-in-a-fact-type-key
+  command: check
+  model: models/omission.orm.yaml
+  population: populations/line_forgery.json
+  expected_exit: 3
+  why: line forgery in a fact type key. This owned toy case must exit 3; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:unknown-fact-type
+  expect_reason_codes: []
+- id: nan-in-a-float-role-is-ill-formed
+  command: check
+  model: models/float_range.orm.yaml
+  population: populations/float_range.nan.yaml
+  expected_exit: 3
+  why: nan in a float role is ill formed. This owned toy case must exit 3; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - population:type-mismatch
+  expect_reason_codes: []
+- id: nan-literal-in-json-is-rejected-at-the-front-end
+  command: check
+  model: models/float_range.orm.yaml
+  population: populations/float_range.nan.json
+  expected_exit: 3
+  why: nan literal in json is rejected at the front end. This owned toy case 
+    must exit 3; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: duplicate-role-names-across-object-types-rejected-at-validate
+  command: validate
+  model: ../models/invalid/duplicate_role_names_cross_type.orm.yaml
+  expected_exit: 3
+  why: duplicate role names across object types rejected at validate. This owned
+    toy case must exit 3; declared rule and reason identifiers are checked where
+    supplied.
+  expect_rule_ids:
+  - semantic:role-names-distinct
+  expect_reason_codes: []
+- id: partition-asserts-nothing-rejected-at-validate
+  command: validate
+  model: models/partition_flagless.orm.yaml
+  expected_exit: 3
+  why: partition asserts nothing rejected at validate. This owned toy case must 
+    exit 3; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - semantic:partition-asserts-nothing
+  expect_reason_codes: []
+- id: partition-exclusive-still-fails
+  command: check
+  model: models/partition_exclusive.orm.yaml
+  population: populations/partition_both_and_neither.yaml
+  expected_exit: 1
+  why: partition exclusive still fails. This owned toy case must exit 1; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: role-seq-arity-rejected-at-validate
+  command: validate
+  model: ../models/invalid/role_seq_arity.orm.yaml
+  expected_exit: 3
+  why: role seq arity rejected at validate. This owned toy case must exit 3; 
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - semantic:role-seq-arity
+  expect_reason_codes: []
+- id: role-seq-type-compat-rejected-at-validate
+  command: validate
+  model: ../models/invalid/role_seq_type_compat.orm.yaml
+  expected_exit: 3
+  why: role seq type compat rejected at validate. This owned toy case must exit 
+    3; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids:
+  - semantic:role-seq-type-compat
+  expect_reason_codes: []
+- id: value-range-on-reference-value-type-fails
+  command: check
+  model: models/reference_value_type.orm.yaml
+  population: populations/reference_value_type.out_of_range.yaml
+  expected_exit: 1
+  why: value range on reference value type fails. This owned toy case must exit 
+    1; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: value-enum-on-reference-value-type-fails
+  command: check
+  model: models/reference_value_type.orm.yaml
+  population: populations/reference_value_type.unknown_director.yaml
+  expected_exit: 1
+  why: value enum on reference value type fails. This owned toy case must exit 
+    1; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: conforming-reference-values-still-accepted
+  command: check
+  model: models/reference_value_type.orm.yaml
+  population: populations/reference_value_type.conforming.yaml
+  expected_exit: 0
+  why: conforming reference values still accepted. This owned toy case must exit
+    0; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: cardinality-on-reference-value-type-fails
+  command: check
+  model: models/reference_cardinality.orm.yaml
+  population: populations/reference_cardinality.over_bound.yaml
+  expected_exit: 1
+  why: cardinality on reference value type fails. This owned toy case must exit 
+    1; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: cardinality-within-bound-still-accepted
+  command: check
+  model: models/reference_cardinality.orm.yaml
+  population: populations/reference_cardinality.within_bound.yaml
+  expected_exit: 0
+  why: cardinality within bound still accepted. This owned toy case must exit 0;
+    declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: no-observable-subjects-is-vacuous-not-pass
+  command: check
+  model: models/no_observable_subjects.orm.yaml
+  population: populations/no_observable_subjects.yaml
+  expected_exit: 2
+  why: no observable subjects is vacuous not pass. This owned toy case must exit
+    2; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-instances-roster-still-supplies-subjects
+  command: check
+  model: models/no_observable_subjects.orm.yaml
+  population: populations/no_observable_subjects.roster.yaml
+  expected_exit: 1
+  why: an instances roster still supplies subjects. This owned toy case must 
+    exit 1; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-unmet-lower-bound-over-nothing-is-still-a-failure
+  command: check
+  model: models/no_subjects_cardinality_min.orm.yaml
+  population: populations/no_subjects_cardinality_min.yaml
+  expected_exit: 1
+  why: an unmet lower bound over nothing is still a failure. This owned toy case
+    must exit 1; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-external-uniqueness-over-a-zero-row-join-is-vacuous
+  command: check
+  model: models/f05_uniqueness_external.orm.yaml
+  population: populations/f05_uniqueness_one_side_empty.yaml
+  expected_exit: 2
+  why: an external uniqueness over a zero row join is vacuous. This owned toy 
+    case must exit 2; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: disjoint-anchors-are-not-a-populated-join
+  command: check
+  model: models/f05_uniqueness_external.orm.yaml
+  population: populations/f05_uniqueness_anchors_disjoint.yaml
+  expected_exit: 2
+  why: disjoint anchors are not a populated join. This owned toy case must exit 
+    2; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-external-frequency-over-a-zero-row-join-is-vacuous
+  command: check
+  model: models/f05_frequency_external.orm.yaml
+  population: populations/f05_frequency_one_side_empty.yaml
+  expected_exit: 2
+  why: an external frequency over a zero row join is vacuous. This owned toy 
+    case must exit 2; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: a-cross-fact-value-comparison-over-a-zero-row-join-is-vacuous
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_value_comparison_disjoint_anchors.yaml
+  expected_exit: 2
+  why: a cross fact value comparison over a zero row join is vacuous. This owned
+    toy case must exit 2; declared rule and reason identifiers are checked where
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: a-zero-row-superset-does-not-excuse-a-subset-member
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_subset_superset_zero_row.yaml
+  expected_exit: 1
+  why: a zero row superset does not excuse a subset member. This owned toy case 
+    must exit 1; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: a-real-join-with-a-duplicate-still-fails
+  command: check
+  model: models/f05_uniqueness_external.orm.yaml
+  population: populations/f05_uniqueness_join_rows_duplicate.yaml
+  expected_exit: 1
+  why: a real join with a duplicate still fails. This owned toy case must exit 
+    1; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: a-real-join-without-a-duplicate-still-passes
+  command: check
+  model: models/f05_uniqueness_external.orm.yaml
+  population: populations/f05_uniqueness_join_rows_clean.yaml
+  expected_exit: 0
+  why: a real join without a duplicate still passes. This owned toy case must 
+    exit 0; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: one-empty-exclusion-side-is-still-a-real-decision
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_exclusion_one_side_zero_row.yaml
+  expected_exit: 0
+  why: one empty exclusion side is still a real decision. This owned toy case 
+    must exit 0; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: a-real-value-comparison-join-still-decides
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_value_comparison_join_rows_clean.yaml
+  expected_exit: 0
+  why: a real value comparison join still decides. This owned toy case must exit
+    0; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-empty-subset-subject-is-a-real-containment
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_subset_subject_zero_row.yaml
+  expected_exit: 0
+  why: an empty subset subject is a real containment. This owned toy case must 
+    exit 0; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: both-empty-fact-types-are-clause-1-vacuous
+  command: check
+  model: models/f05_uniqueness_external.orm.yaml
+  population: populations/f05_uniqueness_both_empty.yaml
+  expected_exit: 2
+  why: both empty fact types are clause 1 vacuous. This owned toy case must exit
+    2; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-external-frequency-over-a-real-join-still-passes
+  command: check
+  model: models/f05_frequency_external.orm.yaml
+  population: populations/f05_frequency_join_rows_clean.yaml
+  expected_exit: 0
+  why: an external frequency over a real join still passes. This owned toy case 
+    must exit 0; declared rule and reason identifiers are checked where 
+    supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: an-equality-over-two-zero-row-joins-is-vacuous
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_equality_both_zero_row.yaml
+  expected_exit: 2
+  why: an equality over two zero row joins is vacuous. This owned toy case must 
+    exit 2; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []
+- id: every-family-over-a-zero-row-join-is-vacuous
+  command: check
+  model: models/f05_setfam_join.orm.yaml
+  population: populations/f05_setfam_all_zero_row.yaml
+  expected_exit: 2
+  why: every family over a zero row join is vacuous. This owned toy case must 
+    exit 2; declared rule and reason identifiers are checked where supplied.
+  expect_rule_ids: []
+  expect_reason_codes: []

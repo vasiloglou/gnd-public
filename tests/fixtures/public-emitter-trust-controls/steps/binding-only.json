@@ -1,0 +1,7 @@
+{
+  "steps_schema": 1,
+  "model": "../models/role-declaration.orm.yaml",
+  "model_digest": "sha256:879da100361203e11517bf34cc626d7a90f579ea4e3a73f365bbb0156ba85d79",
+  "operations_digest": "sha256:a7e5a79023e860b9aacb670abeb5e5fb1e0bbf7b156eabd72a1060a5082da0f3",
+  "steps": [{"op": "set_optional_code", "bindings": {"item": "P4_PUBLIC_TRANSITION_ITEM", "code": "P4_SECRET_BINDING_ONLY"}}]
+}

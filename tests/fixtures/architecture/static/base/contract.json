@@ -1,0 +1,48 @@
+{
+  "artifacts": [
+    {
+      "path": "artifacts/data.json",
+      "required_by": [
+        "app.py"
+      ]
+    }
+  ],
+  "contract_version": 1,
+  "entry_points": [
+    {
+      "consumes": [
+        "person_has_name"
+      ],
+      "exits": [
+        {
+          "code": 0,
+          "meaning": "ok"
+        }
+      ],
+      "flags": [
+        "--input"
+      ],
+      "module": "app",
+      "produces": [
+        "person_has_name"
+      ],
+      "subcommands": [
+        "run"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "path": "app.py",
+      "symbols": [
+        {
+          "name": "main",
+          "parameters": [
+            "argv"
+          ]
+        }
+      ]
+    }
+  ],
+  "smoke": []
+}

@@ -1,0 +1,20 @@
+{
+  "default_branch": "main",
+  "observed": "2026-10-03",
+  "enforce_admins": true,
+  "required_pull_request": true,
+  "required_checks": [
+    "phase2"
+  ],
+  "strict": true,
+  "force_pushes": false,
+  "deletions": false,
+  "contributor_bypasses": [],
+  "collaborators": [
+    {
+      "login": "vasiloglou",
+      "role_name": "admin"
+    }
+  ],
+  "limit": "Repository owner can change settings; no destructive push probe performed."
+}

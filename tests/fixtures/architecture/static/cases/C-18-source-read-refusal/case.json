@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "C-18-source-read-refusal",
+  "story": "A deterministic read refusal yields one unparseable-source and suppresses only that source.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": [],
+  "seam": "source-read-refusal:app.py"
+}

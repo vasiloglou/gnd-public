@@ -1,0 +1,28 @@
+{
+  "run_id": 37158889273,
+  "commit": "c63b90cc3b26c89487e72d7f054a30b387824442",
+  "build_profile": [
+    "Python 3.11.16",
+    "uv 0.10.10"
+  ],
+  "artifacts": [
+    {
+      "path": "release/get_nick_done-0.1.0-py3-none-any.whl",
+      "sha256": "21287a865e2487db98684097e44ff7f15d9dbc9b0657fc955bf43ab52a97c870",
+      "bytes": 1514709,
+      "payload_bytes": 5594803
+    },
+    {
+      "path": "release/get_nick_done-0.1.0.tar.gz",
+      "sha256": "a0698f1eb0dd5134f1cac005488efe2ea8fe036f07c4d82410eb7a0d8876ff67",
+      "bytes": 1362559
+    },
+    {
+      "path": "comparison/get_nick_done-0.1.0-py3-none-any.whl",
+      "sha256": "21287a865e2487db98684097e44ff7f15d9dbc9b0657fc955bf43ab52a97c870",
+      "bytes": 1514709,
+      "payload_bytes": 5594803
+    }
+  ],
+  "status": "accepted: all six qualification jobs succeeded"
+}

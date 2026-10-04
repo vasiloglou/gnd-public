@@ -1,0 +1,29 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "public.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase5-public@1",
+    "source": "fixture",
+    "label": "conforming",
+    "covers": ["a_note", "b_pair", "c_amount", "d_token", "e_transfer"]
+  },
+  "instances": {},
+  "facts": {
+    "a_note": [{"note": "<b>{Person}</b> 'quote' \\ path\u2028next"}],
+    "b_pair": [
+      {"left": "Zoe", "right": "Ada"},
+      {"left": "Ada", "right": "Zoe"},
+      {"left": "Ada", "right": "Zoe"}
+    ],
+    "c_amount": [
+      {"record": "R1", "amount": 1.0},
+      {"record": "R1", "amount": 1}
+    ],
+    "d_token": [
+      {"record": "R1", "token": {"$opaque": "z-unreadable"}},
+      {"record": "R0", "token": "visible"},
+      {"record": "R1", "token": {"$opaque": "a-unreadable"}}
+    ],
+    "e_transfer": [{"sender": "Ada", "item": "Book", "receiver": "Zoe"}]
+  }
+}

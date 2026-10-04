@@ -1,0 +1,190 @@
+{
+  "constraints": [
+    {
+      "id": "separate",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "This fixture states its own policy; it claims no external policy truth."
+      },
+      "role_seq_a": [
+        {
+          "fact_type": "requester",
+          "role": "actor"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "approver",
+          "role": "actor"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "exclusion"
+    },
+    {
+      "id": "recorded",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "This fixture states its own policy; it claims no external policy truth."
+      },
+      "role_seq_a": [
+        {
+          "fact_type": "approver",
+          "role": "actor"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "audit",
+          "role": "actor"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "equality"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "requester",
+      "reading": "{Actor}",
+      "roles": [
+        {
+          "object_type": "actor",
+          "role_name": "actor"
+        }
+      ]
+    },
+    {
+      "id": "approver",
+      "reading": "{Actor}",
+      "roles": [
+        {
+          "object_type": "actor",
+          "role_name": "actor"
+        }
+      ]
+    },
+    {
+      "id": "audit",
+      "reading": "{Actor}",
+      "roles": [
+        {
+          "object_type": "actor",
+          "role_name": "actor"
+        }
+      ]
+    },
+    {
+      "id": "authorized",
+      "reading": "{Actor}",
+      "roles": [
+        {
+          "object_type": "actor",
+          "role_name": "actor"
+        }
+      ]
+    },
+    {
+      "constraints": [
+        {
+          "id": "no_cycles",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "This fixture states its own policy; it claims no external policy truth."
+          },
+          "source": "explicit",
+          "status": "confirmed",
+          "type": "ring",
+          "variant": "acyclic"
+        }
+      ],
+      "id": "delegates",
+      "reading": "{Actor} {Actor}",
+      "roles": [
+        {
+          "object_type": "actor",
+          "role_name": "junior"
+        },
+        {
+          "object_type": "actor",
+          "role_name": "senior"
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-fixture:v6-assurance:duties@1",
+  "object_types": [
+    {
+      "id": "actor",
+      "kind": "value",
+      "name": "Actor",
+      "primitive": "String"
+    }
+  ],
+  "operations": [
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "actor": "$actor"
+            },
+            "fact_type": "approver"
+          }
+        },
+        {
+          "assert": {
+            "bind": {
+              "actor": "$actor"
+            },
+            "fact_type": "audit"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "approve",
+      "parameters": [
+        {
+          "name": "actor",
+          "object_type": "actor"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "authorized",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "This fixture states its own policy; it claims no external policy truth."
+          },
+          "require": [
+            {
+              "bind": {
+                "actor": "$actor"
+              },
+              "fact_type": "authorized"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "user_quote": "This fixture states its own policy; it claims no external policy truth."
+      },
+      "reading": "approve",
+      "source": "explicit",
+      "status": "confirmed"
+    }
+  ],
+  "rejected_proposals": [],
+  "source": {
+    "confidence": "standard",
+    "kind": "text-conversation",
+    "mode": "one-shot"
+  },
+  "version": 2
+}

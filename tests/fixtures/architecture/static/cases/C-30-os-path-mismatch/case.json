@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-30-os-path-mismatch",
+  "story": "The closed os.path family resolves a wrong artifact path.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "import os\nARTIFACT_PATH = os.path.join(os.path.dirname(__file__), \"wrong\", \"data.json\")\n"
+    }
+  ]
+}

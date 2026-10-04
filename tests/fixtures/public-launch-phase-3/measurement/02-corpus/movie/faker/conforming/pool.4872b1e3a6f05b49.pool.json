@@ -1,0 +1,40 @@
+{
+  "object_types": {
+    "movie": [
+      670487,
+      116739,
+      26225,
+      777572,
+      288389,
+      256787,
+      234053,
+      146316
+    ]
+  },
+  "provenance": {
+    "rng_seed": 42,
+    "source": "faker"
+  },
+  "value_types": {
+    "movie_id": [
+      772246,
+      107473,
+      709570,
+      776646,
+      935518,
+      571858,
+      91161,
+      619176
+    ],
+    "title": [
+      "South",
+      "North",
+      "North",
+      "North",
+      "North",
+      "North",
+      "North",
+      "North"
+    ]
+  }
+}

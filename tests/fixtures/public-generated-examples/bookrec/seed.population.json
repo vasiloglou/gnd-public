@@ -1,0 +1,31 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-public-example:bookrec@1",
+    "source": "fixture",
+    "covers": [
+      "user_rated_book",
+      "book_has_title",
+      "recommendation"
+    ]
+  },
+  "facts": {
+    "user_rated_book": [
+      {
+        "user": "reader-1",
+        "book": "book-1"
+      }
+    ],
+    "book_has_title": [
+      {
+        "book": "book-1",
+        "title": "First book"
+      },
+      {
+        "book": "book-2",
+        "title": "Second book"
+      }
+    ],
+    "recommendation": []
+  }
+}

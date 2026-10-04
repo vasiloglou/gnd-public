@@ -1,0 +1,12 @@
+.decl r0(c0:symbol, c1:symbol)
+.decl i0(c0:symbol, c1:symbol, source_ordinal:unsigned)
+.input i0(IO=file, filename="i0.facts")
+r0(C0, C1) :- i0(C0, C1, _).
+.decl r1(c0:symbol, c1:symbol)
+.decl i1(c0:symbol, c1:symbol, source_ordinal:unsigned)
+.input i1(IO=file, filename="i1.facts")
+r1(C0, C1) :- i1(C0, C1, _).
+.decl r2(c0:symbol, c1:symbol)
+r2(V0, V1) :- r0(V0, V1).
+r2(V0, V2) :- r0(V0, V1), r2(V1, V2).
+.output r2(IO=file, filename="r2.csv")

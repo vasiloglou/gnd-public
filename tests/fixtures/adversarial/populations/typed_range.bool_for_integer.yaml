@@ -1,0 +1,9 @@
+population:
+  model: typed_range.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - thing_has_qty
+facts:
+  thing_has_qty:
+    - { thing: "T1", qty: true }

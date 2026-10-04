@@ -1,0 +1,25 @@
+{
+  "cases": [
+    {"case_id":"absolute-posix","roster":{"paths":["/etc/passwd"],"schema_version":1}},
+    {"case_id":"parent-traversal","roster":{"paths":["../outside.txt"],"schema_version":1}},
+    {"case_id":"interior-parent","roster":{"paths":["nested/../../outside.txt"],"schema_version":1}},
+    {"case_id":"dot-component","roster":{"paths":["./README.md"],"schema_version":1}},
+    {"case_id":"bare-dot","roster":{"paths":["."],"schema_version":1}},
+    {"case_id":"empty-path","roster":{"paths":[""],"schema_version":1}},
+    {"case_id":"nul-byte","roster":{"paths":["README.md\u0000"],"schema_version":1}},
+    {"case_id":"backslash","roster":{"paths":["nested\\data.json"],"schema_version":1}},
+    {"case_id":"windows-drive","roster":{"paths":["C:README.md"],"schema_version":1}},
+    {"case_id":"double-separator","roster":{"paths":["nested//data.json"],"schema_version":1}},
+    {"case_id":"trailing-separator","roster":{"paths":["nested/"],"schema_version":1}},
+    {"case_id":"duplicate-path","roster":{"paths":["README.md","README.md"],"schema_version":1}},
+    {"case_id":"unsorted-paths","roster":{"paths":["run.sh","README.md"],"schema_version":1}},
+    {"case_id":"leading-whitespace","roster":{"paths":[" README.md"],"schema_version":1}},
+    {"case_id":"non-string-path","roster":{"paths":[7],"schema_version":1}},
+    {"case_id":"paths-not-a-list","roster":{"paths":"README.md","schema_version":1}},
+    {"case_id":"unknown-roster-version","roster":{"paths":["README.md"],"schema_version":2}},
+    {"case_id":"extra-roster-key","roster":{"paths":["README.md"],"root":"linked-project","schema_version":1}},
+    {"case_id":"directory-entry","roster":{"paths":["nested"],"schema_version":1}},
+    {"case_id":"missing-leaf","roster":{"paths":["README.md","absent.txt"],"schema_version":1}}
+  ],
+  "note": "One refusal case per entry. Every case is a roster document a caller could hand to gnd. The expected refusal stage and reason for each case id is answer data in ../../answers/expected.json, never here."
+}

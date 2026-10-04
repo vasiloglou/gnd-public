@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "cases": {
+    "R01-range-provided": {
+      "exit": 0,
+      "report": {
+        "schema_version": "gnd-diff/1",
+        "command": "diff",
+        "model_a_digest": "sha256:f0655e57b9b151c203a63a80a01d3f0c709158fb9831a7830bc938af28306066",
+        "model_b_digest": "sha256:189a534044683d882a558b1224e34776dcfdab73d74f9fb1f39d5f55b85529c6",
+        "vocabulary_digest": "6c7ff45e94e35bc07e12fb628569e5006cae20694d74941c3e9732b23540d36a",
+        "seed": 0,
+        "assurance": "none",
+        "entailment": [
+          {
+            "from_model": "a",
+            "to_model": "b",
+            "left_ref": "fact_types[invoice_amount].constraints[0]",
+            "right_ref": "fact_types[invoice_amount].constraints[0]",
+            "family": "uniqueness",
+            "result": "implies",
+            "reason": null
+          },
+          {
+            "from_model": "b",
+            "to_model": "a",
+            "left_ref": "fact_types[invoice_amount].constraints[0]",
+            "right_ref": "fact_types[invoice_amount].constraints[0]",
+            "family": "uniqueness",
+            "result": "undecided",
+            "reason": "no-catalogue-rule"
+          },
+          {
+            "from_model": "a",
+            "to_model": "b",
+            "left_ref": "fact_types[invoice_amount].constraints[1]",
+            "right_ref": "fact_types[invoice_amount].constraints[1]",
+            "family": "value",
+            "result": "implies",
+            "reason": null
+          },
+          {
+            "from_model": "b",
+            "to_model": "a",
+            "left_ref": "fact_types[invoice_amount].constraints[1]",
+            "right_ref": "fact_types[invoice_amount].constraints[1]",
+            "family": "value",
+            "result": "undecided",
+            "reason": "no-catalogue-rule"
+          }
+        ],
+        "populations": [
+          {
+            "population_ref": "range-a.pop.json",
+            "population_sha256": "0b114ccdabf64e190cb47c97d459ad06d5b306c2c15cce0e0b7700bd4f7bad78",
+            "origin": "provided",
+            "a": {
+              "state": "checked",
+              "band": 0,
+              "has_vacuous": false,
+              "verdicts": [
+                {
+                  "ref": "fact_types[invoice_amount].constraints[0]",
+                  "verdict": "pass"
+                },
+                {
+                  "ref": "fact_types[invoice_amount].constraints[1]",
+                  "verdict": "pass"
+                }
+              ],
+              "derivation_verdicts": []
+            },
+            "b": {
+              "state": "checked",
+              "band": 0,
+              "has_vacuous": false,
+              "verdicts": [
+                {
+                  "ref": "fact_types[invoice_amount].constraints[0]",
+                  "verdict": "pass"
+                },
+                {
+                  "ref": "fact_types[invoice_amount].constraints[1]",
+                  "verdict": "pass"
+                }
+              ],
+              "derivation_verdicts": []
+            },
+            "a_to_b": [],
+            "b_to_a": [],
+            "derivations": []
+          },
+          {
+            "population_ref": "range-b-boundary.pop.json",
+            "population_sha256": "c0664615f4a89650ce2409fef7e9109ff041a1bccef82ea5ddc8aedf769bbb62",
+            "origin": "provided",
+            "a": {
+              "state": "checked",
+              "band": 1,
+              "has_vacuous": false,
+              "verdicts": [
+                {
+                  "ref": "fact_types[invoice_amount].constraints[0]",
+                  "verdict": "pass"
+                },
+                {
+                  "ref": "fact_types[invoice_amount].constraints[1]",
+                  "verdict": "fail"
+                }
+              ],
+              "derivation_verdicts": []
+            },
+            "b": {
+              "state": "checked",
+              "band": 0,
+              "has_vacuous": false,
+              "verdicts": [
+                {
+                  "ref": "fact_types[invoice_amount].constraints[0]",
+                  "verdict": "pass"
+                },
+                {
+                  "ref": "fact_types[invoice_amount].constraints[1]",
+                  "verdict": "pass"
+                }
+              ],
+              "derivation_verdicts": []
+            },
+            "a_to_b": [],
+            "b_to_a": [
+              {
+                "target_ref": "fact_types[invoice_amount].constraints[1]",
+                "verdict": "fail",
+                "offending_facts": [
+                  21
+                ],
+                "witness_sentence": null
+              }
+            ],
+            "derivations": []
+          }
+        ],
+        "not_derivable": []
+      },
+      "report_sha256": "0730212ad2841faa22cfb26db3f14de6355c41738ec59c668cbf4a86227bea5d"
+    },
+    "N01-negation-provided": {
+      "exit": 0,
+      "report": {
+        "schema_version": "gnd-diff/1",
+        "command": "diff",
+        "model_a_digest": "sha256:cf85e86721ae6922fdf164cd28e8ddeaef7ce0a4dd15ec835f1301c0fd800af8",
+        "model_b_digest": "sha256:c2b0b03bfdd028cb5dff2533bc0b9680af6d5ab5596deb72b6d0daaecc9272df",
+        "vocabulary_digest": "b83a7edbabb1e78c16446dee73b3194c0e7673cc6f99e56769878a5f5790e6fb",
+        "seed": 0,
+        "assurance": "none",
+        "entailment": [],
+        "populations": [
+          {
+            "population_ref": "negation-blocked.pop.json",
+            "population_sha256": "be8d8de1a402a643e1c8260432744ac2b1ac2a42da83745c2b0ea355807e8e7c",
+            "origin": "provided",
+            "a": {
+              "state": "checked",
+              "band": 1,
+              "has_vacuous": false,
+              "verdicts": [],
+              "derivation_verdicts": [
+                {
+                  "ref": "derivation:permitted",
+                  "verdict": "fail"
+                }
+              ]
+            },
+            "b": {
+              "state": "checked",
+              "band": 0,
+              "has_vacuous": false,
+              "verdicts": [],
+              "derivation_verdicts": [
+                {
+                  "ref": "derivation:permitted",
+                  "verdict": "pass"
+                }
+              ]
+            },
+            "a_to_b": [],
+            "b_to_a": [
+              {
+                "target_ref": "derivation:permitted",
+                "verdict": "fail",
+                "offending_facts": [
+                  {
+                    "record": "R1"
+                  }
+                ],
+                "witness_sentence": "'R1' is permitted."
+              }
+            ],
+            "derivations": [
+              {
+                "fact_type": "permitted",
+                "tuple": {
+                  "record": "R1"
+                },
+                "a_status": "out",
+                "b_status": "in",
+                "outcome": "unsound",
+                "offending_facts": [
+                  {
+                    "record": "R1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "population_ref": "negation-opaque.pop.json",
+            "population_sha256": "0a468366173259353cba1766176d4d5f299f1e4dcebca0a2b1f9942f7ca2140b",
+            "origin": "provided",
+            "a": {
+              "state": "checked",
+              "band": 4,
+              "has_vacuous": false,
+              "verdicts": [],
+              "derivation_verdicts": [
+                {
+                  "ref": "derivation:permitted",
+                  "verdict": "unchecked"
+                }
+              ]
+            },
+            "b": {
+              "state": "checked",
+              "band": 0,
+              "has_vacuous": false,
+              "verdicts": [],
+              "derivation_verdicts": [
+                {
+                  "ref": "derivation:permitted",
+                  "verdict": "pass"
+                }
+              ]
+            },
+            "a_to_b": [],
+            "b_to_a": [
+              {
+                "target_ref": "derivation:permitted",
+                "verdict": "unchecked",
+                "offending_facts": [
+                  {
+                    "record": "R1"
+                  }
+                ],
+                "witness_sentence": "'R1' is permitted."
+              }
+            ],
+            "derivations": [
+              {
+                "fact_type": "permitted",
+                "tuple": {
+                  "record": "R1"
+                },
+                "a_status": "unknown",
+                "b_status": "in",
+                "outcome": "unresolved",
+                "offending_facts": [
+                  {
+                    "record": "R1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "population_ref": "negation-waived.pop.json",
+            "population_sha256": "ffb1d4a65dc30f302c6b5752b3807741db6a56c92d69dc22465dae2365030a12",
+            "origin": "provided",
+            "a": {
+              "state": "checked",
+              "band": 0,
+              "has_vacuous": false,
+              "verdicts": [],
+              "derivation_verdicts": [
+                {
+                  "ref": "derivation:permitted",
+                  "verdict": "pass"
+                }
+              ]
+            },
+            "b": {
+              "state": "checked",
+              "band": 1,
+              "has_vacuous": false,
+              "verdicts": [],
+              "derivation_verdicts": [
+                {
+                  "ref": "derivation:permitted",
+                  "verdict": "fail"
+                }
+              ]
+            },
+            "a_to_b": [
+              {
+                "target_ref": "derivation:permitted",
+                "verdict": "fail",
+                "offending_facts": [
+                  {
+                    "record": "R1"
+                  }
+                ],
+                "witness_sentence": "'R1' is permitted."
+              }
+            ],
+            "b_to_a": [],
+            "derivations": [
+              {
+                "fact_type": "permitted",
+                "tuple": {
+                  "record": "R1"
+                },
+                "a_status": "in",
+                "b_status": "out",
+                "outcome": "unsound",
+                "offending_facts": [
+                  {
+                    "record": "R1"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "not_derivable": []
+      },
+      "report_sha256": "3b09cf1e8cfa1a7a6254237b61628f05aac96bc331fdf597bc1af2adff891c74"
+    },
+    "V01-vocabulary-refused": {
+      "exit": 3,
+      "error_rule": "diff:vocabulary-mismatch",
+      "before_synthesis": true
+    },
+    "S01-other-model-boundary": {
+      "exit": 0,
+      "required_origin": "other-model-boundary",
+      "source_model": "b",
+      "target_model": "a",
+      "target_ref": "fact_types[invoice_amount].constraints[1]",
+      "source_band": 0,
+      "target_band": 1
+    },
+    "S02-structured-synth-refused": {
+      "exit": 0,
+      "not_derivable_sources": [
+        "a",
+        "b"
+      ],
+      "reason_contains": "structured derivation"
+    }
+  }
+}

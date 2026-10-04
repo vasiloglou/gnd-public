@@ -25,7 +25,7 @@ def test_projection_allowlist_fails_closed_on_unlisted_keyword(keyword: str, mut
     schema = project(model)
     mutate(schema)
     violations = audit_allowlist(schema)
-    assert any((v[1] == keyword for v in violations)), 'Assertion did not hold.'
+    assert any(v[1] == keyword for v in violations), 'Assertion did not hold.'
     monkeypatch.setattr(projection_module, '_build_projection', lambda _model: schema)
     with pytest.raises(ProjectionGateError, match=keyword.replace('$', '\\$')):
         project(model)
@@ -36,7 +36,7 @@ def test_projection_required_is_role_arity_only() -> None:
     assert audit_allowlist(schema) == []
     subset = copy.deepcopy(schema)
     _fact_items(subset)['required'] = ['employee']
-    assert any((v[1] == 'required' for v in audit_allowlist(subset))), 'Assertion did not hold.'
+    assert any(v[1] == 'required' for v in audit_allowlist(subset)), 'Assertion did not hold.'
     superset = copy.deepcopy(schema)
     _fact_items(superset)['required'] = ['employee', 'name', 'phantom']
-    assert any((v[1] == 'required' for v in audit_allowlist(superset))), 'Assertion did not hold.'
+    assert any(v[1] == 'required' for v in audit_allowlist(superset)), 'Assertion did not hold.'

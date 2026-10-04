@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {"id": "P01-public", "model": "public.orm.yaml", "population": "public.pop.json"},
+    {"id": "P02-public-anchored", "model": "public.orm.yaml", "population": "public.pop.json", "anchors": "public.pop.json.anchors.json", "document": "public-source.txt"},
+    {"id": "O01-shuffled", "model": "public.orm.yaml", "population": "public-shuffled.pop.json"},
+    {"id": "Z01-empty", "model": "public.orm.yaml", "population": "public-empty.pop.json"},
+    {"id": "R01-private-applied", "model": "private.orm.yaml", "population": "private.pop.json", "anchors": "private.pop.json.anchors.json", "document": "private-source.txt"},
+    {"id": "R02-private-unredacted", "model": "private.orm.yaml", "population": "private.pop.json", "anchors": "private.pop.json.anchors.json", "document": "private-source.txt", "unredacted": true},
+    {"id": "I01-bare-ternary-inverse", "model": "bad-inverse.orm.yaml", "population": "public.pop.json"},
+    {"id": "A01-mutated-document", "model": "public.orm.yaml", "population": "public.pop.json", "anchors": "public.pop.json.anchors.json", "document": "public-source-mutated.txt"},
+    {"id": "U01-unpaired-anchors", "model": "public.orm.yaml", "population": "public.pop.json", "anchors": "public.pop.json.anchors.json"}
+  ],
+  "witnesses": [
+    {"id": "W01-complete", "model": "public.orm.yaml", "fact_type": "b_pair", "binding": {"left": "Ada", "right": "Zoe"}},
+    {"id": "W02-partial", "model": "public.orm.yaml", "fact_type": "b_pair", "binding": {"left": "Ada"}}
+  ]
+}

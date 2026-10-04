@@ -110,6 +110,7 @@ def test_source_owned_units_and_preserved_question_states():
     check_ledger(ROOT)
 
 
+@pytest.mark.evidence
 def test_manifest_bytes_modes_and_sizes():
     # B1 is immutable historical selection; The current batch attributes changed bytes.
     from test_public_distribution import audit_tree, manifest
@@ -175,6 +176,8 @@ def test_readme_reflects_current_runtime_stage():
 def test_ci_uses_verified_p2_build_profile():
     from ruamel.yaml import YAML
     workflow = YAML(typ='safe').load((ROOT / '.github/workflows/development.yml').read_text())
-    pins = [step.get('with', {}).get('version') for step in workflow['jobs']['phase2']['steps']
-            if step.get('uses') == 'astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e']
-    assert pins == ['0.10.10']
+    for job in ['candidate', 'regression', 'installed']:
+        pins = [step.get('with', {}).get('version') for step in workflow['jobs'][job]['steps']
+                if step.get('uses') == 'astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e']
+        assert pins == ['0.10.10']
+    assert set(workflow['jobs']['phase2']['needs']) == {'candidate', 'regression', 'installed'}

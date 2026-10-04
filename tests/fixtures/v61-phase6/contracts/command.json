@@ -1,0 +1,44 @@
+{
+  "schema_version": 6,
+  "experiment_id": "PUBLIC-COMMAND-CONTROL",
+  "max_attempts": 2,
+  "wall_seconds": 30.0,
+  "adapter": {
+    "policy_id": "local-command",
+    "parameters": {
+      "model": null
+    }
+  },
+  "cases": [
+    {
+      "case_id": "generic-command",
+      "role": "required",
+      "inputs": [
+        {
+          "path": "input/pre.pop.yaml",
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "size_bytes": 1
+        }
+      ],
+      "acceptance": {
+        "mode": "transition",
+        "walk": null
+      },
+      "verify": {
+        "command": "transition",
+        "model": {
+          "path": "model.orm.yaml",
+          "media_type": "application/yaml",
+          "encoding": "utf-8",
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "size_bytes": 1
+        },
+        "pre": "input/pre.pop.yaml",
+        "steps": "steps.json",
+        "post": null
+      }
+    }
+  ]
+}

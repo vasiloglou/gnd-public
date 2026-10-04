@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "policy_id": "local-command",
+  "kind": "command",
+  "executable": "python3",
+  "argv": ["agent.py", "{prompt}"],
+  "version_argv": ["--version"],
+  "prompt_transport": "argv",
+  "environment_allowlist": ["PATH", "HOME", "TMPDIR", "LANG", "LC_ALL"]
+}
+

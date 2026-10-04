@@ -1,0 +1,9 @@
+{
+  "model": "models/floats.orm.yaml",
+  "populations": {
+    "clean": "populations/float-clean.pop.yaml",
+    "div_margin_undefined": "populations/float-div-margin-undefined.pop.yaml",
+    "lat_undefined": "populations/float-lat-undefined.pop.yaml",
+    "lon_undefined": "populations/float-lon-undefined.pop.yaml"
+  }
+}

@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_snapshot_preserves_equal_value_occurrence_identity ____________
+tests/test_guarded_corpus.py:382: in test_snapshot_preserves_equal_value_occurrence_identity
+    assert len({id(origin.scalar) for origin in origins}) == 3
+E   assert 1 == 3
+E    +  where 1 = len({4426001168})
+=========================== short test summary info ============================
+FAILED tests/test_guarded_corpus.py::test_snapshot_preserves_equal_value_occurrence_identity
+1 failed in 0.14s

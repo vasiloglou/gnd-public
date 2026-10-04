@@ -1,0 +1,13 @@
+{
+  "population": {"model": "model.orm.yaml", "model_id": "urn:gnd-fixture:v70-phase1-anchors@1", "label": "conforming", "source": "fixture", "covers": ["record_has_label", "invoice_has_quantity", "price_has_value", "rate_has_value", "date_has_value", "notice_to_party", "pair_has_names"]},
+  "instances": {},
+  "facts": {
+    "record_has_label": [{"record": "R-1", "label": "Café Alpha"}],
+    "invoice_has_quantity": [{"invoice": "I-7", "quantity": 1234}],
+    "price_has_value": [{"price": "P-8", "value": -12.5}],
+    "rate_has_value": [{"rate": "D-9", "value": 12.5}],
+    "date_has_value": [{"date_id": "E-1", "date": "2024-02-29"}],
+    "notice_to_party": [{"notice": "N-1", "party": "Holder"}],
+    "pair_has_names": [{"left": "Left", "right": "Right"}]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "tracked_worktree_bytes_with_completion": 16497009,
+  "largest_ordinary_blob": [
+    999261,
+    ".gnd-planning/milestones/public-launch/migration/b3-files.json"
+  ],
+  "planning_markdown_bytes_with_completion": 274527,
+  "candidate_payload_bytes": 5594803,
+  "authored_lines": 946,
+  "limits_pass": true
+}

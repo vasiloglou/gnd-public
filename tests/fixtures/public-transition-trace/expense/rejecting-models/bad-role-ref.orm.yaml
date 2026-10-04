@@ -1,0 +1,61 @@
+# A v2 model that passes layer 1 and is REFUSED by layer 2, for exactly one
+# reason: a precondition atom binds a role its fact type does not declare.
+#
+# It exists because trace-expected.json's `trace-over-invalid-model` case named
+# this path and nothing was ever authored at it. The case then "passed" because
+# the file was missing -- exit 3 for a reason that has nothing to do with what
+# the case claims to pin, which is that --trace never reaches compilation when
+# layer 2 rejects the model. Reporting compiled obligations for a model that
+# does not load would be reporting on nothing.
+#
+# Deliberately minimal: one fact type, one operation, one defect.
+version: 2
+model_id: "urn:gnd-fixture:transition-bad-role-ref@1"
+source:
+  kind: explicit
+  confidence: high
+
+object_types:
+  - id: expense
+    name: Expense
+    kind: entity
+    reference: { mode: popular, value_type: expense_id }
+  - id: expense_id
+    name: ExpenseId
+    kind: value
+    primitive: Integer
+  - id: status
+    name: Status
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: expense_has_status
+    reading: "{Expense} has status {Status}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: status, role_name: status }
+
+operations:
+  - id: approve_expense
+    reading: "{Expense} is approved"
+    parameters:
+      - { name: expense, object_type: expense }
+    preconditions:
+      - id: pre_draft
+        require:
+          # `state` is not a role of expense_has_status -- the role is `status`.
+          - { fact_type: expense_has_status,
+              bind: { expense: "$expense", state: "draft" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { csdp_step: 7, dialogue_turn: 1 }
+    effects:
+      - retract: { fact_type: expense_has_status, bind: { expense: "$expense" } }
+      - assert: { fact_type: expense_has_status,
+                  bind: { expense: "$expense", status: "approved" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 7, dialogue_turn: 1 }

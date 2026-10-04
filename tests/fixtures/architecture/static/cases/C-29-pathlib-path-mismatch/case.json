@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-29-pathlib-path-mismatch",
+  "story": "The closed pathlib family resolves a wrong artifact path.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "from pathlib import Path\nARTIFACT_PATH = Path(__file__).parent / \"wrong\" / \"data.json\"\n"
+    }
+  ]
+}

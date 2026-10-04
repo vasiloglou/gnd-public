@@ -1,0 +1,118 @@
+{
+  "evolution": {
+    "constants": {
+      "EVOLUTION_SCHEMA_VERSION": 3,
+      "LEGACY_EVOLUTION_SCHEMA_VERSION": 1,
+      "LOCATOR_EVOLUTION_SCHEMA_VERSION": 2
+    },
+    "identity_moves": {
+      "add-unlisted-directory": "unchanged",
+      "add-unlisted-regular": "unchanged",
+      "add-unlisted-symlink": "unchanged",
+      "chmod-listed-executable-bit": "changed",
+      "delete-listed-leaf": "refused",
+      "edit-listed-content": "changed",
+      "retarget-listed-symlink": "changed",
+      "type-change-listed-leaf": "refused"
+    },
+    "roster": {
+      "empty_digest": "7a0b7943ccd293821e69c3413abdfebf3d74e3d9a2a92c2f362a7fcbab72f8b3",
+      "linked_project_digest": "97fe7f94edd0cb3c26b0b93605bab720a6352eaa88abc88fc1f9e7b1cafcd108",
+      "linked_project_entries": [
+        {
+          "executable": false,
+          "file_type": "regular",
+          "path": "README.md",
+          "sha256": "bef3e40e654aa2f119193b24b04861679e678f29c381f30a57445bf9b68e3f96",
+          "size_bytes": 464
+        },
+        {
+          "executable": false,
+          "file_type": "regular",
+          "path": "nested/data.json",
+          "sha256": "b0f2984419adb824fceaa99019c789f4c4352eb65624163048500e1e847eab98",
+          "size_bytes": 132
+        },
+        {
+          "executable": true,
+          "file_type": "regular",
+          "path": "run.sh",
+          "sha256": "75a434e4496a2636cef6587e120f1a503316a5f349606ed8628f10295ae23410",
+          "size_bytes": 126
+        },
+        {
+          "file_type": "symlink",
+          "path": "symlink-to-readme.md",
+          "target": "README.md"
+        }
+      ],
+      "model": {
+        "module": "gnd.evolve.models",
+        "name": "TrackedRoster"
+      },
+      "refusals": {
+        "absolute-posix": "schema",
+        "backslash": "schema",
+        "bare-dot": "schema",
+        "directory-entry": "snapshot",
+        "dot-component": "schema",
+        "double-separator": "schema",
+        "duplicate-path": "schema",
+        "empty-path": "schema",
+        "extra-roster-key": "schema",
+        "interior-parent": "schema",
+        "leading-whitespace": "schema",
+        "missing-leaf": "snapshot",
+        "non-string-path": "schema",
+        "nul-byte": "schema",
+        "parent-traversal": "schema",
+        "paths-not-a-list": "schema",
+        "trailing-separator": "schema",
+        "unknown-roster-version": "schema",
+        "unsorted-paths": "schema",
+        "windows-drive": "schema"
+      },
+      "snapshot": {
+        "digest_document_key": "entries",
+        "entry_kinds": [
+          "regular",
+          "symlink"
+        ],
+        "function": "snapshot_tracked_roster",
+        "max_entries": 10000,
+        "max_file_bytes": 10485760,
+        "max_total_bytes": 104857600,
+        "module": "gnd.artifacts",
+        "regular_keys": [
+          "executable",
+          "file_type",
+          "path",
+          "sha256",
+          "size_bytes"
+        ],
+        "symlink_keys": [
+          "file_type",
+          "path",
+          "target"
+        ]
+      },
+      "unlisted_leaf": "unlisted.txt",
+      "wire": {
+        "keys": [
+          "paths",
+          "schema_version"
+        ],
+        "schema_version": 1
+      }
+    }
+  },
+  "scaling": {
+    "growth_factor": 4,
+    "max_median_growth": 6.0,
+    "max_seconds_for_larger_run": 5.0,
+    "timed_surfaces": [
+      "report-indexing",
+      "roster-snapshot"
+    ]
+  }
+}

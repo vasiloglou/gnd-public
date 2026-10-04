@@ -1,0 +1,5 @@
+{
+  "model": "models/aggregates.orm.yaml",
+  "population": "populations/aggregate-input.pop.yaml",
+  "steps": "walks/accept.steps.json"
+}

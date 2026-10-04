@@ -1,0 +1,17 @@
+contract_version: 1
+modules: []
+artifacts: []
+entry_points:
+  - module: package.cli
+    subcommands: []
+    flags: []
+    consumes: []
+    produces: []
+    exits:
+      - code: 0
+        meaning: success
+smoke:
+  - id: boolean-exit
+    entry_point: package.cli
+    argv: []
+    expect_exit: true

@@ -1,0 +1,39 @@
+{
+  "facts": {
+    "blocked": [
+      {
+        "item": "gamma"
+      }
+    ],
+    "catalog": [
+      {
+        "item": "alpha"
+      },
+      {
+        "item": "beta"
+      },
+      {
+        "item": "gamma"
+      }
+    ],
+    "recommended": [
+      {
+        "item": "alpha"
+      },
+      {
+        "item": "beta"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "catalog",
+      "blocked",
+      "recommended"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v6-assurance:recommendation@1",
+    "source": "fixture"
+  }
+}

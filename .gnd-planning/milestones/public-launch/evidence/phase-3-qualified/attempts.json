@@ -1,0 +1,61 @@
+{
+  "phase_status": "phase 3 candidate acceptance passed",
+  "development_runs": [
+    {
+      "run_id": 37141618473,
+      "commit": "bb14d1877d6bc2ec4b81c6303640dd1bb0ea2cfc",
+      "status": "diagnostic; installed macOS passed, installed Ubuntu timed out; full regression pending"
+    }
+  ],
+  "final_attempts": [
+    {
+      "attempt": 1,
+      "run_id": 37142360850,
+      "commit": "041a44381670be2edce3ea9300e8f70ec8eb7bdb",
+      "status": "canceled after reproduced checkout/documentation failures",
+      "retained_candidate": "candidate-37142360850.json"
+    },
+    {
+      "attempt": 2,
+      "run_id": 37142968600,
+      "commit": "d7f3acb22f6daf58995330b7a8ac4f9f06d94e15",
+      "status": "failed: macOS 3 failed/11301 passed; Ubuntu 1 failed/11302 passed/1 case-sensitive-filesystem skip; both installed profiles passed"
+    },
+    {
+      "attempt": 3,
+      "run_id": 37150862042,
+      "commit": "e7818e0165fb79904761a80b0003d27b7233ea8b",
+      "status": "failed preflight: 1 scaling failure and 86 passes on each profile; workflow canceled after known failures"
+    },
+    {
+      "attempt": 4,
+      "commit": "d2521fe72424dc6cc986d7426941bb6567bc2ff1",
+      "status": "failed Ubuntu preflight: 1 failed/123 passed; macOS preflight 124 passed; remaining regression/installed jobs canceled; required phase2 failed; workflow completed/cancelled",
+      "run_id": 37151696124,
+      "retained_candidate": "candidate-37151696124.json"
+    },
+    {
+      "attempt": 5,
+      "commit": "3b4b35e55422d136890d744585efba68d6fae3be",
+      "status": "failed: full macOS 2 provenance failures/11354 passed; both benchmark preflights and macOS installed passed; remaining work canceled",
+      "contract": "phase-3-benchmark-amendment.md",
+      "run_id": 37157040725
+    },
+    {
+      "attempt": 6,
+      "commit": "c63b90cc3b26c89487e72d7f054a30b387824442",
+      "status": "success: candidate, both regression profiles, both installed profiles and phase2 aggregate",
+      "contract": "phase-3-benchmark-amendment.md; occurrence restoration",
+      "run_id": 37158889273
+    }
+  ],
+  "budget": {
+    "final_attempts": 6,
+    "review_calls_used": 2,
+    "review_calls_limit": 2,
+    "amendment_authorization": "go with your recommendations, 2026-10-03",
+    "benchmark_amendment_authorization": "ok do that, after recommendation to improve sample count, variability assessment and predefined tolerance",
+    "execution_correction": "One bounded replacement to remove the agent-introduced scalar identity regression; initial one-run allocation was agent-selected, not a new human reading of the recorded plan."
+  },
+  "no_completion_claim": false
+}

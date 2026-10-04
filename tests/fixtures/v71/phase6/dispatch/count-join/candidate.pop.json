@@ -1,0 +1,19 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "model_id": "urn:gnd-fixture:v71-dispatch-witness@1",
+    "covers": [
+      "dispatch_request"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_request": [
+      {
+        "source": "WH-A",
+        "target": "DEST-D"
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+# The structured census model: one derived fact type with a STRUCTURED
+# derivation rule, so a check or verify report over it selects the
+# derivation-carrying report arm.
+version: 1
+model_id: urn:gnd-fixture:v51-evidence-binding:structured@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+
+object_types:
+  - {id: item, name: Item, kind: entity, reference: {mode: popular, value_type: item_id}}
+  - {id: item_id, name: ItemId, kind: value, primitive: Integer}
+  - {id: tag, name: Tag, kind: value, primitive: String}
+
+fact_types:
+  - id: item_has_tag
+    reading: "{Item} carries {Tag}"
+    roles:
+      - {object_type: item, role_name: item}
+      - {object_type: tag, role_name: tag}
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        preferred: false
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "An item carries one tag."}
+  - id: item_listed
+    reading: "{Item} is listed"
+    roles: [{object_type: item, role_name: item}]
+  - id: item_blocked
+    reading: "{Item} is blocked"
+    roles: [{object_type: item, role_name: item}]
+  - id: item_is_active
+    reading: "{Item} is active"
+    roles: [{object_type: item, role_name: item}]
+    derivation: derived
+    derivation_rule:
+      body: [{fact_type: item_listed, bind: {item: "$i"}}]
+      negate: [{fact_type: item_blocked, bind: {item: "$i"}}]
+      head: {item: "$i"}
+
+constraints: []
+rejected_proposals: []

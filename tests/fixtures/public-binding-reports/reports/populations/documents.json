@@ -1,0 +1,8 @@
+{
+  "documents": {
+    "nonstructured.population.json": {"facts":{"item_blocked":[{"item":2}],"item_has_tag":[{"item":1,"tag":"alpha"},{"item":2,"tag":"beta"}],"item_listed":[{"item":1},{"item":2}]},"population":{"covers":["item_has_tag","item_listed","item_blocked"],"model":"nonstructured.orm.yaml","model_id":"urn:gnd-fixture:v51-evidence-binding:nonstructured@1","source":"fixture"}},
+    "structured.population.json": {"facts":{"item_blocked":[{"item":2}],"item_has_tag":[{"item":1,"tag":"alpha"},{"item":2,"tag":"beta"}],"item_is_active":[{"item":1}],"item_listed":[{"item":1},{"item":2}]},"population":{"covers":["item_has_tag","item_listed","item_blocked","item_is_active"],"model":"structured.orm.yaml","model_id":"urn:gnd-fixture:v51-evidence-binding:structured@1","source":"fixture"}}
+  },
+  "note": "Population documents held INSIDE a wrapper so this corpus adds no tracked population candidate to the repository census. The harness writes each value to a scratch directory beside a copy of its model and runs the command there, so every emitted report fixture carries relative paths only.",
+  "schema_version": 1
+}

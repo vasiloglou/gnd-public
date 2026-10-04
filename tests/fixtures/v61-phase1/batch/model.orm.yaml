@@ -1,0 +1,45 @@
+version: 1
+model_id: urn:gnd-fixture:v61-phase1-batch@1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: item
+    name: Item
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: seed
+    reading: "{Item} is seeded"
+    roles:
+      - { object_type: item, role_name: item }
+
+  - id: result
+    reading: "{Item} is derived"
+    roles:
+      - { object_type: item, role_name: item }
+    derivation: derived
+    derivation_rule:
+      body:
+        - fact_type: seed
+          bind: { item: "$i" }
+      head: { item: "$i" }
+
+  - id: optional_code
+    reading: "{Item} has optional code"
+    roles:
+      - { object_type: item, role_name: item }
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          user_quote: Each item occurs at most once.
+
+constraints: []
+rejected_proposals: []

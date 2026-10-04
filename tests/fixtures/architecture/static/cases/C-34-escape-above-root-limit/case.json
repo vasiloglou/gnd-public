@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-34-escape-above-root-limit",
+  "story": "A recognized family that escapes above root is ignored rather than guessed.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "from pathlib import Path\nARTIFACT_PATH = Path(__file__).parent.parent / \"data.json\"\n"
+    }
+  ]
+}

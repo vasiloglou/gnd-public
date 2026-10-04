@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "C-39-entry-module-directory",
+  "story": "A directory occupying an entry module leaf is non-regular.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "directory"
+    }
+  ]
+}

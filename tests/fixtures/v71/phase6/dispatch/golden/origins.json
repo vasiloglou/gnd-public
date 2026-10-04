@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "rows": [
+    {
+      "input": "i0",
+      "source_ordinal": 0,
+      "fact_type": "dispatch_leg",
+      "origin": {
+        "kind": "reference",
+        "reference_id": "links",
+        "fact_index": 0
+      }
+    },
+    {
+      "input": "i0",
+      "source_ordinal": 1,
+      "fact_type": "dispatch_leg",
+      "origin": {
+        "kind": "reference",
+        "reference_id": "links",
+        "fact_index": 1
+      }
+    },
+    {
+      "input": "i0",
+      "source_ordinal": 2,
+      "fact_type": "dispatch_leg",
+      "origin": {
+        "kind": "reference",
+        "reference_id": "links",
+        "fact_index": 2
+      }
+    },
+    {
+      "input": "i1",
+      "source_ordinal": 0,
+      "fact_type": "dispatch_request",
+      "origin": {
+        "kind": "candidate",
+        "reference_id": null,
+        "fact_index": 0
+      }
+    }
+  ]
+}

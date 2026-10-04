@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "C-13-required-by-only-absent",
+  "story": "A required_by-only path is a declared source and must exist.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts/0/required_by",
+        "value": [
+          "dependency.py"
+        ]
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": []
+}

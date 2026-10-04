@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "id": "M-00",
+      "path": "models/no-declaration.orm.yaml",
+      "declarations": [],
+      "effective_roles": []
+    },
+    {
+      "id": "M-01",
+      "path": "models/role-declaration.orm.yaml",
+      "declarations": [
+        "optional_code.code"
+      ],
+      "effective_roles": [
+        "optional_code.code"
+      ]
+    },
+    {
+      "id": "M-02",
+      "path": "models/fact-type-declaration.orm.yaml",
+      "declarations": [
+        "optional_code.*"
+      ],
+      "effective_roles": [
+        "optional_code.code",
+        "optional_code.item"
+      ]
+    },
+    {
+      "id": "M-03",
+      "path": "models/redundant-declarations.orm.yaml",
+      "declarations": [
+        "optional_code.*",
+        "optional_code.code"
+      ],
+      "effective_roles": [
+        "optional_code.code",
+        "optional_code.item"
+      ]
+    },
+    {
+      "id": "M-01U",
+      "path": "models/role-declaration-unchecked.orm.yaml",
+      "declarations": [
+        "optional_code.code"
+      ],
+      "effective_roles": [
+        "optional_code.code"
+      ]
+    },
+    {
+      "id": "P-03W",
+      "path": "models/witness-declarations.orm.yaml",
+      "declarations": [
+        "node_links_to.to",
+        "derived_secret.node"
+      ],
+      "effective_roles": [
+        "derived_secret.node",
+        "node_links_to.to"
+      ]
+    },
+    {
+      "id": "P-02O",
+      "path": "models/operation-flow-declarations.orm.yaml",
+      "declarations": [
+        "authorized_code.code",
+        "optional_code.code",
+        "item_has_rank.item"
+      ],
+      "effective_roles": [
+        "authorized_code.code",
+        "item_has_rank.item",
+        "optional_code.code"
+      ]
+    }
+  ],
+  "model_mutations": [
+    {
+      "id": "M-04A",
+      "base": "M-01",
+      "pointer": "/fact_types/1/roles/1/redact",
+      "replacement": "yes",
+      "expected_exit": 3
+    },
+    {
+      "id": "M-04B",
+      "base": "M-01",
+      "pointer": "/fact_types/1/roles/1/redact",
+      "replacement": {
+        "mode": true
+      },
+      "expected_exit": 3
+    }
+  ],
+  "snapshot_cases": [
+    {
+      "id": "SN-00",
+      "model": "M-01",
+      "population": "populations/00-clean.yaml",
+      "expected_exit": 0
+    },
+    {
+      "id": "SN-01",
+      "model": "M-01",
+      "population": "populations/01-violating.yaml",
+      "expected_exit": 1
+    },
+    {
+      "id": "SN-02",
+      "model": "M-01",
+      "population": "populations/02-vacuous.yaml",
+      "expected_exit": 2
+    },
+    {
+      "id": "SN-03",
+      "model": "M-01",
+      "population": "populations/03-ill-formed.yaml",
+      "expected_exit": 3
+    },
+    {
+      "id": "SN-04",
+      "model": "M-01U",
+      "population": "populations/04-unchecked.yaml",
+      "expected_exit": 4
+    },
+    {
+      "id": "SN-70",
+      "model": "M-01",
+      "population": "populations/00-clean.yaml",
+      "injection": "projection-error",
+      "expected_exit": 70
+    }
+  ],
+  "transition_cases": [
+    {
+      "id": "B-01",
+      "model": "M-01",
+      "pre": "populations/transition-pre.yaml",
+      "steps": "steps/binding-only.json",
+      "post": "populations/transition-post.yaml",
+      "expected_exit": 0,
+      "only_secret_echo": "step-binding"
+    },
+    {
+      "id": "I-02",
+      "model": "M-01",
+      "pre": "populations/transition-pre.yaml",
+      "steps": "steps/ill-formed.json",
+      "post": null,
+      "expected_exit": 3
+    },
+    {
+      "id": "P-02A",
+      "model": "P-02O",
+      "pre": "populations/operation-flow-pre.yaml",
+      "steps": "steps/operation-flows.json",
+      "post": "populations/operation-flow-post.yaml",
+      "selected_origin": "precondition",
+      "parameter": "authorized_code"
+    },
+    {
+      "id": "P-02B",
+      "model": "P-02O",
+      "pre": "populations/operation-flow-pre.yaml",
+      "steps": "steps/operation-flows.json",
+      "post": "populations/operation-flow-post.yaml",
+      "selected_origin": "effect",
+      "parameter": "emitted_code"
+    },
+    {
+      "id": "P-02C",
+      "model": "P-02O",
+      "pre": "populations/operation-flow-pre.yaml",
+      "steps": "steps/operation-flows.json",
+      "post": "populations/operation-flow-post.yaml",
+      "selected_origin": "dynamic-subject",
+      "parameter": "item"
+    }
+  ],
+  "witness_cases": [
+    {
+      "id": "P-03A",
+      "model": "P-03W",
+      "population": "populations/witness-cycle-and-derivation.yaml",
+      "witness": "ring-cycle",
+      "selected_role": "node_links_to.to"
+    },
+    {
+      "id": "P-03B",
+      "model": "P-03W",
+      "population": "populations/witness-cycle-and-derivation.yaml",
+      "witness": "derivation-extension",
+      "selected_role": "derived_secret.node"
+    }
+  ],
+  "branch_ids": [
+    "M-01",
+    "M-02",
+    "M-03",
+    "M-04",
+    "M-05",
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05",
+    "P-06",
+    "R-01",
+    "R-02",
+    "R-03",
+    "N-01",
+    "I-01",
+    "I-02",
+    "I-03",
+    "B-01",
+    "B-02",
+    "B-03",
+    "E-01",
+    "E-02",
+    "L-01",
+    "L-02",
+    "C-01",
+    "S-01",
+    "S-02",
+    "S-03",
+    "S-04",
+    "U-01",
+    "T-01",
+    "K-01",
+    "K-02",
+    "K-03",
+    "A-01"
+  ],
+  "session": {
+    "contract": "session/contract-v4.json",
+    "answers": "session/answers.json"
+  }
+}

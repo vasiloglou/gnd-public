@@ -1,0 +1,67 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd-fixture:v71-dispatch-lean@1",
+    "source": "fixture",
+    "covers": [
+      "dispatch_request",
+      "dispatch_due",
+      "dispatch_start",
+      "dispatch_window",
+      "dispatch_metric",
+      "dispatch_flag"
+    ]
+  },
+  "instances": {
+    "dispatch_type_job": [
+      "SHIP-0"
+    ]
+  },
+  "facts": {
+    "dispatch_request": [
+      {
+        "job": "SHIP-0",
+        "node": "WH-A"
+      }
+    ],
+    "dispatch_due": [
+      {
+        "job": "SHIP-0",
+        "day": "2026-01-04"
+      }
+    ],
+    "dispatch_start": [
+      {
+        "job": "SHIP-0",
+        "day": "2026-01-01"
+      }
+    ],
+    "dispatch_window": [
+      {
+        "job": "SHIP-0",
+        "days": 3
+      }
+    ],
+    "dispatch_metric": [
+      {
+        "job": "SHIP-0",
+        "value": -1
+      },
+      {
+        "job": "SHIP-0",
+        "value": 2
+      }
+    ],
+    "dispatch_flag": [
+      {
+        "job": "SHIP-0",
+        "value": false
+      },
+      {
+        "job": "SHIP-0",
+        "value": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-v6-phase2:shapes@1
+  source: fixture
+  label: violating
+  covers: [item_has_grade, item_in_year, item_has_score, item_scores, item_window, item_has_mass, item_flag]
+facts:
+  item_has_grade:
+    - { item: i1, grade: "C" }
+  item_in_year:
+    - { item: i1, year: 1400 }
+    - { item: i2, year: 1999 }
+  item_has_score:
+    - { item: i1, score: 50 }
+    - { item: i2, score: -1 }
+  item_scores:
+    - { item: i1, score: 1 }
+    - { item: i2, score: 1.0 }
+  item_window:
+    - { item: i1, opened: "2026-01-01T12:00:00Z", closed: "2026-01-01T10:00:00Z" }
+  item_has_mass:
+    - { item: i1, mass: heavy }
+  item_flag:
+    - { item: i1, flag: false }

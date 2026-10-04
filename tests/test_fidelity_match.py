@@ -102,12 +102,12 @@ def test_matcher_identity_is_independent_of_the_checker() -> None:
     imported: set[str] = set()
     for node in ast.walk(ast.parse(source)):
         if isinstance(node, ast.Import):
-            imported.update((alias.name for alias in node.names))
+            imported.update(alias.name for alias in node.names)
         elif isinstance(node, ast.ImportFrom) and node.module:
             imported.add(node.module)
     assert 'gnd.extract.identity' in imported, 'the ONE matcher-side identity'
     for forbidden in ('gnd.checker', 'gnd.synth.identity'):
-        assert not any((name == forbidden or name.startswith(forbidden + '.') for name in imported)), f'the matcher must not import {forbidden} (C1 independence)'
+        assert not any(name == forbidden or name.startswith(forbidden + '.') for name in imported), f'the matcher must not import {forbidden} (C1 independence)'
 
 def test_inapplicable_fact_types_leave_the_denominator_with_a_mechanism(setfam: Any, applicable: dict[str, Any]) -> None:
     matched = rows({}, {}, setfam, applicable)

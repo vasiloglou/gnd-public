@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "C-27-artifact-directory",
+  "story": "A directory occupying a declared artifact path reports missing/non-regular.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts/0/required_by",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "artifacts/data.json",
+      "kind": "directory"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+contract_version: 1
+modules:
+  - path: package/module.py
+    symbols: [7]
+artifacts: []
+entry_points: []
+smoke: []

@@ -1,0 +1,30 @@
+{
+  "acceptance_ready": true,
+  "alethic_failure_count": 0,
+  "alethic_indeterminate_count": 0,
+  "candidate_sha256": "7f8518f7db5e9a55049f49c4ea6d6e8f509695231e60cbd607bcb36c88a75a14",
+  "case_id": "legacy-control",
+  "contract_sha256": "ced976bfbde0439ebb63914733ecb72de2f915ca0ee19f95d507f7d8c20cd86d",
+  "counts": {
+    "fail": 0,
+    "pass": 0,
+    "unchecked": 0,
+    "vacuous": 0,
+    "warning": 0
+  },
+  "coverage": {},
+  "expected_outputs": [
+    {
+      "expected_sha256": "7f8518f7db5e9a55049f49c4ea6d6e8f509695231e60cbd607bcb36c88a75a14",
+      "observed_sha256": "7f8518f7db5e9a55049f49c4ea6d6e8f509695231e60cbd607bcb36c88a75a14",
+      "output_id": "decision",
+      "state": "matched"
+    }
+  ],
+  "outcome": "accepted",
+  "payload_exit": 0,
+  "payload_valid": true,
+  "process_exit": 0,
+  "raw_payload_sha256": "7f8518f7db5e9a55049f49c4ea6d6e8f509695231e60cbd607bcb36c88a75a14",
+  "role": "required"
+}

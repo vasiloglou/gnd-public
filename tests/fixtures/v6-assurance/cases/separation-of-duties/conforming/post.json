@@ -1,0 +1,55 @@
+{
+  "facts": {
+    "approver": [
+      {
+        "actor": "bob"
+      },
+      {
+        "actor": "carol"
+      }
+    ],
+    "audit": [
+      {
+        "actor": "bob"
+      },
+      {
+        "actor": "carol"
+      }
+    ],
+    "authorized": [
+      {
+        "actor": "alice"
+      },
+      {
+        "actor": "bob"
+      },
+      {
+        "actor": "carol"
+      }
+    ],
+    "delegates": [
+      {
+        "junior": "alice",
+        "senior": "bob"
+      }
+    ],
+    "requester": [
+      {
+        "actor": "alice"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "requester",
+      "approver",
+      "audit",
+      "authorized",
+      "delegates"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v6-assurance:duties@1",
+    "source": "fixture"
+  }
+}

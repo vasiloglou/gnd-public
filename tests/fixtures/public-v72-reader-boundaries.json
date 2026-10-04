@@ -1,0 +1,53 @@
+{
+  "scope": "exact unchanged reader/decision bodies before producer extraction; inference independence is P6",
+  "functions": [
+    {
+      "path": "src/gnd/exp/session_store.py",
+      "function": "_load_launch_intent",
+      "sha256": "1701b9c2fe549d5720a33d8c40a5d3359658b8209b094de67dfbcb89347b5866",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_store.py",
+      "function": "_load_attempt_from_fd",
+      "sha256": "fd4c5108fc77a179f75e751145f8cbe9bc441c60eed9f38c40886b82f7056811",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_store.py",
+      "function": "_read_resume_state_bound",
+      "sha256": "dc9e4da226014601ee43de1cafee24a4e84f7ccc6aeb2fb512c7619de76d7007",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_v7.py",
+      "function": "reconstruct",
+      "sha256": "a624f4b9fbc4d50a4b4fa8a1fd149abebff9d90e582c87e6089f9e15cd8786ea",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_judgments.py",
+      "function": "replay",
+      "sha256": "a0822894f367576cbc0ab31a75d596639657ce0a95a366876376e2794c9f622a",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_eval.py",
+      "function": "case_decision",
+      "sha256": "5277699ea7463b3044274515832186dc134a0bf9fc6e6ddc49f7a192559c5463",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_eval.py",
+      "function": "contract_accepts",
+      "sha256": "b45d2f29a8254f232c505af09f51bd62a4f45e6bbe73eca9f0f81b144614ed6f",
+      "calls_entry_helper": false
+    },
+    {
+      "path": "src/gnd/exp/session_eval.py",
+      "function": "best_key",
+      "sha256": "b6c451146d9ec85617fe8d2ed9ad50c4ac9ac0caab97bcd95896ac59c48a2799",
+      "calls_entry_helper": false
+    }
+  ]
+}

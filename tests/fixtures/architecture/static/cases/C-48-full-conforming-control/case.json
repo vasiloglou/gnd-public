@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "C-48-full-conforming-control",
+  "story": "The full non-empty declaration is a clean control.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": []
+}

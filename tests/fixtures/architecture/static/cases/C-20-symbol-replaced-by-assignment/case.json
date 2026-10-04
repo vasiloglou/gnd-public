@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-20-symbol-replaced-by-assignment",
+  "story": "A later module-level assignment replaces an earlier function binding.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "def main(argv):\n    return 0\nmain = 1\n"
+    }
+  ]
+}

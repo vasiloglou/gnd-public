@@ -1,0 +1,661 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_bytes",
+        "bundle_bytes",
+        "container_depth",
+        "fact_types",
+        "roles",
+        "clauses",
+        "atom_sites",
+        "input_rows",
+        "encoded_cells",
+        "scalar_bytes",
+        "numeric_digits",
+        "emission_visits",
+        "native_output_bytes",
+        "native_rows",
+        "native_seconds"
+      ],
+      "properties": {
+        "document_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "bundle_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 41943040
+        },
+        "container_depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "fact_types": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "roles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "clauses": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "atom_sites": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "input_rows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "encoded_cells": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 400000
+        },
+        "scalar_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "numeric_digits": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 128
+        },
+        "emission_visits": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "native_output_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "native_rows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "native_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_digest",
+        "candidate_digest",
+        "model_raw_sha256",
+        "candidate_raw_sha256",
+        "references"
+      ],
+      "properties": {
+        "model_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "candidate_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "model_raw_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "candidate_raw_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "raw_sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "raw_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "kind",
+        "support_profile",
+        "encoding",
+        "assurance",
+        "binding",
+        "input_formats",
+        "excluded",
+        "files",
+        "limits"
+      ],
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "kind": {
+          "const": "souffle-derivation-program"
+        },
+        "support_profile": {
+          "const": "souffle-relational-v1"
+        },
+        "encoding": {
+          "const": "souffle-token-v1"
+        },
+        "assurance": {
+          "const": "none"
+        },
+        "binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "input_formats": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "model",
+            "candidate"
+          ],
+          "properties": {
+            "model": {
+              "enum": [
+                "json",
+                "yaml"
+              ]
+            },
+            "candidate": {
+              "enum": [
+                "json",
+                "yaml"
+              ]
+            }
+          }
+        },
+        "excluded": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "constraint_evaluation",
+            "constraint_ids",
+            "operations"
+          ],
+          "properties": {
+            "constraint_evaluation": {
+              "const": "all"
+            },
+            "constraint_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "operations": {
+              "const": "all"
+            }
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "bytes",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "limits": {
+          "$ref": "#/$defs/limits"
+        }
+      }
+    },
+    "symbols": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "encoding",
+        "relations",
+        "rules"
+      ],
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "encoding": {
+          "const": "souffle-token-v1"
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fact_type",
+              "symbol",
+              "input",
+              "roles",
+              "derived"
+            ],
+            "properties": {
+              "fact_type": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "input": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "name",
+                    "object_type",
+                    "primitive"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "object_type": {
+                      "type": "string"
+                    },
+                    "primitive": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "derived": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "symbol",
+              "native_rule",
+              "kind",
+              "fact_type",
+              "clause_index"
+            ],
+            "properties": {
+              "symbol": {
+                "type": "string"
+              },
+              "native_rule": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "enum": [
+                  "input",
+                  "derivation",
+                  "count-contribution",
+                  "count-aggregate",
+                  "count-result"
+                ]
+              },
+              "fact_type": {
+                "type": "string"
+              },
+              "clause_index": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "origins": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "rows"
+      ],
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "input",
+              "source_ordinal",
+              "fact_type",
+              "origin"
+            ],
+            "properties": {
+              "input": {
+                "type": "string"
+              },
+              "source_ordinal": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "fact_type": {
+                "type": "string"
+              },
+              "origin": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "reference_id",
+                  "fact_index"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "candidate",
+                      "reference"
+                    ]
+                  },
+                  "reference_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "fact_index": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_types",
+        "clauses",
+        "input_rows",
+        "encoded_cells",
+        "emission_visits"
+      ],
+      "properties": {
+        "fact_types": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clauses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "input_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "encoded_cells": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "emission_visits": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "export_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "kind",
+        "exit_code",
+        "status",
+        "reason",
+        "assurance",
+        "counts"
+      ],
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "kind": {
+          "const": "souffle-export-result"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        "status": {
+          "enum": [
+            "exported",
+            "verified",
+            "unsupported",
+            "input-refused",
+            "resource-refused"
+          ]
+        },
+        "reason": {
+          "enum": [
+            null,
+            "fragment-unsupported",
+            "input-invalid",
+            "work-limit",
+            "write-failed",
+            "tool-absent",
+            "tool-version-unsupported",
+            "tool-platform-unsupported",
+            "tool-timeout",
+            "tool-error",
+            "output-partial",
+            "output-invalid",
+            "output-limit"
+          ]
+        },
+        "assurance": {
+          "const": "none"
+        },
+        "counts": {
+          "$ref": "#/$defs/counts"
+        }
+      }
+    },
+    "run_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "kind",
+        "exit_code",
+        "status",
+        "reason",
+        "assurance",
+        "counts",
+        "tool",
+        "elapsed_seconds",
+        "extensions"
+      ],
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "kind": {
+          "const": "souffle-run-result"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed"
+          ]
+        },
+        "reason": {
+          "enum": [
+            null,
+            "fragment-unsupported",
+            "input-invalid",
+            "work-limit",
+            "write-failed",
+            "tool-absent",
+            "tool-version-unsupported",
+            "tool-platform-unsupported",
+            "tool-timeout",
+            "tool-error",
+            "output-partial",
+            "output-invalid",
+            "output-limit"
+          ]
+        },
+        "assurance": {
+          "const": "none"
+        },
+        "counts": {
+          "$ref": "#/$defs/counts"
+        },
+        "tool": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256",
+                "version",
+                "word_size",
+                "native_exit"
+              ],
+              "properties": {
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "version": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "word_size": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "native_exit": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "elapsed_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "extensions": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "$ref": "#/$defs/manifest"
+}

@@ -1,0 +1,34 @@
+population:
+  model: ../models/aggregates.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase4-aggregates@1
+  source: fixture
+  covers: [observation, scenario_count, scenario_sum, scenario_min, scenario_max, scenario_mean_ok, zero_sample_scenario, scenario_has_sample, scenario_catalog, scenario_acceptance]
+facts:
+  observation:
+    - { scenario: north, sample: north-1, rb: 100 }
+    - { scenario: north, sample: north-2, rb: 100 }
+    - { scenario: north, sample: SECRET-AGGREGATE-271828, rb: 120 }
+    - { scenario: south, sample: south-1, rb: 180 }
+  scenario_count:
+    - { scenario: north, count: 3 }
+    - { scenario: south, count: 1 }
+  scenario_sum:
+    - { scenario: north, sum: 320 }
+    - { scenario: south, sum: 180 }
+  scenario_min:
+    - { scenario: north, min: 100 }
+    - { scenario: south, min: 180 }
+  scenario_max:
+    - { scenario: north, max: 120 }
+    - { scenario: south, max: 180 }
+  scenario_mean_ok:
+    - { scenario: north }
+  zero_sample_scenario:
+    - { scenario: empty }
+  scenario_has_sample:
+    - { scenario: north }
+    - { scenario: south }
+  scenario_catalog:
+    - { scenario: north }
+    - { scenario: south }
+    - { scenario: empty }

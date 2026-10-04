@@ -75,7 +75,7 @@ def test_refusal_points_at_the_declared_location(case: dict[str, Any]):
     assert matching, 'Assertion did not hold.'
     fragment = case.get('path_contains')
     assert fragment, 'Assertion did not hold.'
-    assert any((fragment in issue.path for issue in matching)), 'Assertion did not hold.'
+    assert any(fragment in issue.path for issue in matching), 'Assertion did not hold.'
     for issue in matching:
         assert issue.message.strip()
 
@@ -142,7 +142,7 @@ def test_component_partition_and_strata_are_functions_of_the_bytes():
     half = len(partitions) // 2
     assert partitions[:half] == partitions[half:]
     disconnected = _read_doc(_case_path(CASES_BY_ID['A-07']))
-    eligible = next((f for f in disconnected['fact_types'] if f['id'] == 'eligible'))
+    eligible = next(f for f in disconnected['fact_types'] if f['id'] == 'eligible')
     assert len(body_components(eligible['derivation_rule'])) == 2, 'Assertion did not hold.'
 
 def test_dependency_order_is_dependency_first_and_reversal_would_fail():
@@ -187,14 +187,14 @@ def test_derivation_graph_work_is_bounded_by_counted_operations():
 def test_legacy_string_rule_still_loads_and_is_never_interpreted():
     model, error = _load(CASES_BY_ID['A-01'])
     assert error is None
-    fact_type = next((f for f in model.fact_types if str(f.get('id')) == 'eligible'))
+    fact_type = next(f for f in model.fact_types if str(f.get('id')) == 'eligible')
     assert isinstance(fact_type.get('derivation_rule'), str)
     assert fact_type['derivation_rule'] == 'Each eligible pair is one a human decides.'
 
 def test_derived_subtype_still_routes_to_the_out_of_scope_verdict():
     from gnd.model import load_model as _load_model
     model = _load_model(REPO_ROOT / 'tests' / 'fixtures' / 'models' / 'library.orm.yaml')
-    reference_copy = next((ot for ot in model.object_types if str(ot.get('id')) == 'reference_copy'))
+    reference_copy = next(ot for ot in model.object_types if str(ot.get('id')) == 'reference_copy')
     assert reference_copy.get('derivation') == 'derived'
     assert isinstance(reference_copy.get('derivation_rule'), str)
 
@@ -208,7 +208,7 @@ def test_a_rule_that_is_neither_string_nor_object_is_refused_at_layer_two():
     from gnd.model import semantic_validate
     for value in ([1, 2, 3], 7, True):
         issues = semantic_validate({'fact_types': [{'id': 'x', 'roles': [{'object_type': 'o', 'role_name': 'r'}], 'derivation': 'derived', 'derivation_rule': value}]})
-        assert any((issue.rule_id == 'semantic:derivation-rule-shape' and 'opaque string or a structured' in issue.message for issue in issues)), 'Assertion did not hold.'
+        assert any(issue.rule_id == 'semantic:derivation-rule-shape' and 'opaque string or a structured' in issue.message for issue in issues), 'Assertion did not hold.'
 
 def test_shape_rules_survive_as_defense_in_depth_behind_the_closed_schema():
     from gnd.model import semantic_validate
@@ -216,9 +216,9 @@ def test_shape_rules_survive_as_defense_in_depth_behind_the_closed_schema():
     def rule_issues(rule: Any) -> list[str]:
         return [issue.message for issue in semantic_validate({'fact_types': [{'id': 'x', 'roles': [{'object_type': 'o', 'role_name': 'r'}], 'derivation': 'derived', 'derivation_rule': rule}]}) if issue.rule_id == 'semantic:derivation-rule-shape']
     good_body = [{'fact_type': 'x', 'bind': {'r': '$v'}}]
-    assert any(("'or'" in message for message in rule_issues({'body': good_body, 'head': {'r': '$v'}, 'or': []})))
-    assert any(('declares no body' in message for message in rule_issues({'head': {'r': '$v'}})))
-    assert any(('head binds no role' in message for message in rule_issues({'body': good_body, 'head': {}})))
+    assert any("'or'" in message for message in rule_issues({'body': good_body, 'head': {'r': '$v'}, 'or': []}))
+    assert any('declares no body' in message for message in rule_issues({'head': {'r': '$v'}}))
+    assert any('head binds no role' in message for message in rule_issues({'body': good_body, 'head': {}}))
 
 def test_the_published_schema_refuses_what_the_product_refuses():
     import json as _json
@@ -243,4 +243,4 @@ def test_grammar_refusal_names_the_construct(case_id: str, construct: str):
     _, error = _load(CASES_BY_ID[case_id])
     assert error is not None
     messages = [issue.message for issue in error.issues if issue.rule_id == 'jsonschema:oneOf']
-    assert any((f"'{construct}'" in message for message in messages)), 'Assertion did not hold.'
+    assert any(f"'{construct}'" in message for message in messages), 'Assertion did not hold.'

@@ -1,0 +1,4 @@
+{
+  "model": "models/existential-guard.orm.yaml",
+  "population": "populations/radio-input.pop.yaml"
+}

@@ -1,0 +1,17 @@
+version: 1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+fact_types:
+  - id: item_seen
+    reading: "{Item} is seen"
+    roles: [{ object_type: item, role_name: item }]
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: Each item is seen once. }
+constraints: []
+rejected_proposals: []

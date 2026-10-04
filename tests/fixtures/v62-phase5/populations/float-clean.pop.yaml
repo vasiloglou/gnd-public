@@ -1,0 +1,54 @@
+population:
+  model: ../models/floats.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase5-floats@1
+  source: fixture
+  covers:
+    [
+      rb_sample,
+      duration_sample,
+      margin_sample,
+      handover_sample,
+      handover_flag,
+      sample_rate_kbps,
+      sample_rate_floor,
+      sample_rate_ceil,
+      sample_margin_sqrt,
+      sample_margin_sqrt_doubled,
+      sample_serving_distance_km,
+      sample_handover_close,
+      scenario_avg_rb,
+    ]
+facts:
+  rb_sample:
+    - { scenario: north, ue: ue1, rb: 1250 }
+    - { scenario: north, ue: SECRET-FLOAT-141421, rb: 1200 }
+    - { scenario: south, ue: ue6, rb: 900 }
+  duration_sample:
+    - { ue: ue1, duration: 400.0 }
+    - { ue: SECRET-FLOAT-141421, duration: 300.0 }
+  margin_sample:
+    - { ue: ue1, margin: 6.25 }
+  handover_sample:
+    - { ue: ue1, serving_lat: 48.8584, serving_lon: 2.2945, neighbor_lat: 48.8606, neighbor_lon: 2.3010 }
+    - { ue: SECRET-FLOAT-141421, serving_lat: 48.8584, serving_lon: 2.2945, neighbor_lat: 48.8738, neighbor_lon: 2.3950 }
+  sample_rate_kbps:
+    - { ue: ue1, rate: 3.12 }
+    - { ue: SECRET-FLOAT-141421, rate: 4.0 }
+  sample_rate_floor:
+    - { ue: ue1, rate_floor: 3 }
+    - { ue: SECRET-FLOAT-141421, rate_floor: 4 }
+  sample_rate_ceil:
+    - { ue: ue1, rate_ceil: 4 }
+    - { ue: SECRET-FLOAT-141421, rate_ceil: 4 }
+  sample_margin_sqrt:
+    - { ue: ue1, margin_sqrt: 2.5 }
+  sample_margin_sqrt_doubled:
+    - { ue: ue1, margin_sqrt_doubled: 5.0 }
+  sample_serving_distance_km:
+    - { ue: ue1, distance_km: 0.535 }
+    - { ue: SECRET-FLOAT-141421, distance_km: 7.548 }
+  sample_handover_close:
+    - { ue: ue1 }
+  scenario_avg_rb:
+    - { scenario: north, mean_rb: 1225.0 }
+    - { scenario: south, mean_rb: 900.0 }

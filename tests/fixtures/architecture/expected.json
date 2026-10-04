@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "matrix_floor": 36,
+  "cases": [
+    {
+      "id": "C-01",
+      "path": "cases/c01-empty.contract.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "mutation": "C-01m",
+      "branches": ["load:explicit-empty"]
+    },
+    {
+      "id": "C-01m",
+      "path": "cases/c01m-version.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "mutation_of": "C-01",
+      "branches": ["shape:contract-version"]
+    },
+    {
+      "id": "C-02",
+      "path": "cases/c02-full.contract.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "mutation": "C-02m",
+      "branches": ["load:full"]
+    },
+    {
+      "id": "C-02m",
+      "path": "cases/c02m-undeclared-exit.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-exit-undeclared",
+      "mutation_of": "C-02",
+      "branches": ["semantic:smoke-exit-undeclared"]
+    },
+    {
+      "id": "D-02",
+      "path": "cases/d02-malformed-yaml.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:yaml",
+      "branches": ["document:malformed-yaml"]
+    },
+    {
+      "id": "D-03",
+      "path": "cases/d03-multiple-documents.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:yaml-document-count",
+      "branches": ["document:multiple-documents"]
+    },
+    {
+      "id": "D-04",
+      "path": "cases/d04-alias.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:yaml-alias",
+      "branches": ["document:alias"]
+    },
+    {
+      "id": "D-05",
+      "path": "cases/d05-nonmapping-root.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:nonmapping-root"]
+    },
+    {
+      "id": "D-06-root",
+      "path": "cases/d06-extra-root.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:extra-root-key"]
+    },
+    {
+      "id": "D-06-nested",
+      "path": "cases/d06-extra-nested.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:extra-nested-key"]
+    },
+    {
+      "id": "D-07-module",
+      "path": "cases/d07-module-type.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:module-type"]
+    },
+    {
+      "id": "D-07-symbol",
+      "path": "cases/d07-symbol-type.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:symbol-type"]
+    },
+    {
+      "id": "D-07-artifact",
+      "path": "cases/d07-artifact-type.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:artifact-type"]
+    },
+    {
+      "id": "D-07-entry-point",
+      "path": "cases/d07-entry-point-type.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:entry-point-type"]
+    },
+    {
+      "id": "D-07-exit",
+      "path": "cases/d07-exit-type.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:exit-type"]
+    },
+    {
+      "id": "D-07-smoke",
+      "path": "cases/d07-smoke-type.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:smoke-type"]
+    },
+    {
+      "id": "P-01",
+      "path": "cases/p01-posix-absolute.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:posix-absolute", "path-field:module"]
+    },
+    {
+      "id": "P-02",
+      "path": "cases/p02-drive-root.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:drive-root", "path-field:artifact"]
+    },
+    {
+      "id": "P-03",
+      "path": "cases/p03-unc.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:unc-root", "path-field:required-by"]
+    },
+    {
+      "id": "P-04",
+      "path": "cases/p04-parent.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:parent", "path-field:required-by"]
+    },
+    {
+      "id": "P-05",
+      "path": "cases/p05-backslash.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:backslash", "path-field:module"]
+    },
+    {
+      "id": "P-06",
+      "path": "cases/p06-doubled-separator.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:doubled-separator", "path-field:artifact"]
+    },
+    {
+      "id": "P-07",
+      "path": "cases/p07-dot-component.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:dot-component", "path-field:module"]
+    },
+    {
+      "id": "P-08",
+      "path": "cases/p08-nul.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:path-invalid",
+      "branches": ["path:nul", "path-field:required-by"]
+    },
+    {
+      "id": "S-01",
+      "path": "cases/s01-duplicate-entry-point.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:entry-point-duplicate",
+      "branches": ["semantic:entry-point-duplicate"]
+    },
+    {
+      "id": "S-02",
+      "path": "cases/s02-duplicate-smoke-id.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-id-duplicate",
+      "branches": ["semantic:smoke-id-duplicate"]
+    },
+    {
+      "id": "S-03",
+      "path": "cases/s03-unknown-entry-point.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-entry-point-unknown",
+      "branches": ["semantic:smoke-entry-point-unknown"]
+    },
+    {
+      "id": "S-04",
+      "path": "cases/s04-negative-exit.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:exit-below-band"]
+    },
+    {
+      "id": "S-05",
+      "path": "cases/s05-high-exit.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:exit-above-band"]
+    },
+    {
+      "id": "S-06",
+      "path": "cases/s06-boolean-exit.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:shape",
+      "branches": ["shape:exit-boolean"]
+    },
+    {
+      "id": "S-08",
+      "path": "cases/s08-tmp.contract.yaml",
+      "outcome": "load",
+      "rule_id": null,
+      "mutation": "S-08m",
+      "branches": ["substitution:tmp"]
+    },
+    {
+      "id": "S-08m",
+      "path": "cases/s08m-other-name.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-substitution",
+      "mutation_of": "S-08",
+      "branches": ["substitution:other-name"]
+    },
+    {
+      "id": "S-08-conversion",
+      "path": "cases/s08-conversion.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-substitution",
+      "branches": ["substitution:conversion"]
+    },
+    {
+      "id": "S-08-format",
+      "path": "cases/s08-format.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-substitution",
+      "branches": ["substitution:format-specifier"]
+    },
+    {
+      "id": "S-08-escaped",
+      "path": "cases/s08-escaped.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-substitution",
+      "branches": ["substitution:escaped-brace"]
+    },
+    {
+      "id": "S-08-unmatched",
+      "path": "cases/s08-unmatched.contract.yaml",
+      "outcome": "refuse",
+      "rule_id": "architecture:smoke-substitution",
+      "branches": ["substitution:unmatched-brace"]
+    }
+  ]
+}

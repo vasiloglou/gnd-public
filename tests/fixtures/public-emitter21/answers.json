@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "wire_versions": {"report": 9, "batch": 2, "measurement": 3, "feedback": 6, "attempt": 6, "result": 4, "contract": 4},
+  "predecessor_versions": {"report": [3, 4, 5, 6, 7, 8], "batch": [1], "measurement": [2], "feedback": [1, 2, 3, 4, 5], "attempt": [1, 2, 3, 4, 5], "result": [1, 2, 3], "contract": [1, 2, 3, 4]},
+  "marker": {"redacted": true, "roles": ["optional_code.code"]},
+  "marker_text": "[REDACTED optional_code.code]",
+  "instance_text_marker": "[REDACTED INSTANCE DETAIL]",
+  "structural_issues": {
+    "I-01": {"path": "$.facts.optional_code[0].code", "rule_id": "jsonschema:type", "severity": "error", "message": "[REDACTED INSTANCE DETAIL]"},
+    "I-02": {"path": "$.steps[0].bindings.code", "rule_id": "transition:steps-shape", "severity": "error", "message": "[REDACTED INSTANCE DETAIL]"}
+  },
+  "applied_redaction": {"mode": "applied", "declarations": [{"case_id": null, "source": "role", "fact_type": "optional_code", "roles": ["code"]}]},
+  "unredacted_redaction": {"mode": "unredacted", "declarations": [{"case_id": null, "source": "role", "fact_type": "optional_code", "roles": ["code"]}]},
+  "report_v9": {
+    "root_required_keys": ["schema_version", "tool", "command", "outcome", "exit_code", "acceptance_ready", "model", "model_digest", "population", "post", "counts", "verdicts", "derivations", "coverage", "extraction", "issues", "issues_total", "issues_truncated", "warnings", "error", "transition", "assurance", "redaction"],
+    "post_values": [null, "declared", "computed"],
+    "transition_required_keys": ["evaluated", "model_digest", "operations_digest", "pre_digest", "pre_snapshot", "pre_snapshot_verdicts", "steps", "frame_grading", "frame_status", "frame_verdicts", "computed_post", "post_snapshot"]
+  },
+  "successor_required_keys": {
+    "batch_v2": ["schema_version", "tool", "command", "model", "rows", "summary", "redaction"],
+    "measurement_v3": ["schema_version", "model_digest", "pool_source", "pool_sha256", "constraints", "promotion", "redaction"],
+    "feedback_v6": ["schema_version", "run_id", "contract_id", "contract_sha256", "source_attempt_index", "candidate_sha256", "case_payload_sha256s", "normalized_verifier_signature", "process_exit", "payload_exit", "acceptance_ready", "required", "diagnostic", "disposition", "redaction"],
+    "attempt_v6": ["schema_version", "feedback_schema_version", "redaction"],
+    "result_v4": ["schema_version", "run_id", "disposition", "terminal_reason", "attempt_count", "best_attempt", "best_attempt_manifest_sha256", "best_candidate_sha256", "referenced_evidence_digests", "acceptance_modes", "redaction"]
+  },
+  "canaries": {
+    "selected": ["P4_SECRET_CODE_00", "P4_SECRET_CODE_01", "P4_SECRET_CODE_02", "P4_SECRET_CODE_04", "P4_SECRET_ILLFORMED_POP", "P4_SECRET_BINDING_ONLY", "P4_SECRET_ILLFORMED_STEP", "P4_SECRET_OVER_CAP_03", "P4_SECRET_CYCLE_A", "P4_SECRET_CYCLE_B", "P4_SECRET_DERIVATION_EXTRA", "P4_SECRET_PRECONDITION_CODE", "P4_SECRET_EFFECT_CODE", "P4_SECRET_DYNAMIC_ITEM", "P4_SECRET_BATCH_00", "P4_SECRET_BATCH_DUPLICATE", "P4_SECRET_BATCH_ILL_FORMED", "P4_SECRET_BATCH_04", "P4_SECRET_MEASURE_OK", "P4_SECRET_MEASURE_DUPLICATE", "P4_SECRET_MEASURE_SPARE_A", "P4_SECRET_MEASURE_SPARE_B"],
+    "public_controls": ["P4_PUBLIC_ITEM_00", "P4_PUBLIC_ITEM_01_A", "P4_PUBLIC_ITEM_01_B", "P4_PUBLIC_ITEM_02", "P4_PUBLIC_ITEM_03", "P4_PUBLIC_ITEM_04", "P4_PUBLIC_TRANSITION_ITEM", "P4_PUBLIC_DERIVATION_NODE", "P4_PUBLIC_DYNAMIC_RANK", "P4_PUBLIC_BATCH_00", "P4_PUBLIC_BATCH_01", "P4_PUBLIC_BATCH_01_A", "P4_PUBLIC_BATCH_01_B", "P4_PUBLIC_BATCH_02", "P4_PUBLIC_BATCH_03", "P4_PUBLIC_BATCH_04", "P4_PUBLIC_MEASURE_OK", "P4_PUBLIC_MEASURE_DUPLICATE_A", "P4_PUBLIC_MEASURE_DUPLICATE_B", "P4_PUBLIC_MEASURE_SPARE"]
+  },
+  "identity_fields": ["exit_code", "outcome", "acceptance_ready", "counts", "constraint_ref", "constraint_type", "modality", "verdict", "reason_code"],
+  "expected_bands": {"SN-00": 0, "SN-01": 1, "SN-02": 2, "SN-03": 3, "SN-04": 4, "SN-70": 70, "B-01": 0, "I-02": 3},
+  "batch_v2": {"row_bands": [0, 1, 2, 3, 4], "aggregate_exit": 3},
+  "measurement_v3": {"exit": 0, "corpus_rows": 2, "pool_source": "faker", "selected_evidence_canaries": ["P4_SECRET_MEASURE_DUPLICATE"]},
+  "exact_text_prefixes": {"applied": "REDACTION applied: optional_code.code\n", "unredacted": "REDACTION unredacted: optional_code.code\n"},
+  "no_declaration_control": {
+    "command": ["check", "tests/fixtures/skeleton/model.orm.yaml", "tests/fixtures/skeleton/population.good.yaml", "--format", "json"],
+    "exit": 0,
+    "stdout_bytes": 3162,
+    "stdout_sha256": "161e7f3853b9009d97c1d135e563f3d2abc10535944125474e19ea2f59ee5d54",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "dirty_controls": {
+    "marker": {"redacted": true, "roles": []},
+    "leaked_selected_canary": "P4_SECRET_CODE_00",
+    "wrong_coordinate": "optional_code.item",
+    "changed_exit": 1,
+    "missing_emitter": "cli-check-json"
+  },
+  "projection_time_ceiling_seconds": 5.0,
+  "assurance_level": "none",
+  "evidence_not_current": "applicability:refusal:n-a:evidence-not-current"
+}

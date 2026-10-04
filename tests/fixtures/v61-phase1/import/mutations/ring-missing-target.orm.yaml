@@ -1,0 +1,14 @@
+version: 1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: node, name: Node, kind: value, primitive: String }
+fact_types: []
+constraints:
+  - type: ring
+    variant: acyclic
+    fact_type: absent_relation
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: Precedence is acyclic. }
+rejected_proposals: []

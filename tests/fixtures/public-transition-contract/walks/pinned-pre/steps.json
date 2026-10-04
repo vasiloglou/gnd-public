@@ -1,0 +1,16 @@
+{
+  "steps_schema": 1,
+  "model": "../../v2_expense.orm.yaml",
+  "model_digest": "sha256:f15fd343eaece326f69edb9a1627811cb0911e239e1605b579b6957a88615c9b",
+  "operations_digest": "sha256:5e03c615a61b08d89abeaf6ed2e918dadf96e2f07198d48c0380df1fb38c8009",
+  "pre_digest": "sha256:7188dbb065dc7a33e6c8ef779b7e63baaff471fc510279684416913d8cc4812d",
+  "steps": [
+    {
+      "op": "approve_expense",
+      "bindings": {
+        "expense": 41,
+        "approver": "alice"
+      }
+    }
+  ]
+}

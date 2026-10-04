@@ -1,0 +1,5 @@
+{"steps_schema": 1,
+ "model": "../model.orm.yaml",
+ "model_digest": "sha256:278b20b244428f78a095c7824b12b6ae9c120ce70a16a485f612f878a077588f",
+ "operations_digest": "sha256:cafc5788f0badcc78a9a10e4facd83a4f6b67d3208a749f78e32c6b9d9f20a25",
+ "steps": [{"op": "reimburse_expense", "bindings": {"expense": "41", "submission": "WD-8041", "approver": "alice", "amount": "90", "on_date": "2026-10-05"}}]}

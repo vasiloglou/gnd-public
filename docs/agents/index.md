@@ -50,12 +50,17 @@ Each skill's `SKILL.md` is in the
 
 ## Why this works with smaller models
 
-A deterministic checker turns "is this right?" from a judgment into a lookup. When
-an attempt fails, the feedback names the violated constraint, the operation or fact
-type, and the binding that broke it. It never contains the expected answer. A model
-that would not get a task right in one shot can still converge: it repairs exactly
-what failed and resubmits, within a budget you set. That is often cheaper than
-sending the same task, unchecked, to a frontier model.
+A deterministic checker turns "is this right?" from a judgment into a lookup. A cheap
+model's plan is checked exactly like a frontier model's: a wrong one is rejected and
+retried within a budget you set, and never trusted. A rule-level failure comes back
+with the operation, the step and the outcome; it never contains the expected answer.
+
+We recorded this. On one task, Claude Code, Codex and five hosted models of 8B to 24B were accepted
+on their first attempt. Of the four models that did not always succeed first time, only
+2 of 12 sessions were accepted on attempt 1 but 7 of 12 within three attempts, and a 3B
+model never converged, which the checker reported as `stagnation` and `budget-exhausted`
+instead of passing a bad plan. See [recorded agent sessions](recorded-sessions.md) for
+the evidence and its limits. Cost is a separate question that we did not measure.
 
 A [development session](dev-session.md) runs that loop with explicit limits and
 explicit outcomes. The agent can be Claude Code, Codex, any command you declare, or any

@@ -8,7 +8,7 @@ separate release decision.
 The documentation is reorganized around agents: GND as skills plus Python, an executable
 ORM ontology with ORM 2 diagrams, a "Work with an agent" section covering every skill,
 a capabilities tour, a runnable plan-checking example (`approvals`) and an offline,
-runnable development-session loop. GND's lineage from GSD is documented, with a guide
+runnable development-session loop, plus recorded Claude Code, Codex and hosted-model sessions on one task. GND's lineage from GSD is documented, with a guide
 for adopting a GSD project.
 
 ## Phase 4.1 documentation and applications

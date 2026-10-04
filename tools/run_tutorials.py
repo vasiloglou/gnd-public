@@ -109,6 +109,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'agent-plans': [root / 'docs/agents/plans.md'],
         'agent-model': [root / 'docs/agents/model-from-text.md'],
         'agent-session': [root / 'docs/agents/dev-session.md'],
+        'agent-recorded': [root / 'docs/agents/recorded-sessions.md'],
         'runtime-pyrel': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/pyrel.md'],
         'runtime-souffle': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/souffle.md'],
         'runtime-lean': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/lean.md'],

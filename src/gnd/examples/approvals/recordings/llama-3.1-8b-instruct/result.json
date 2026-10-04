@@ -1,0 +1,6 @@
+{
+  "disposition": "oscillation",
+  "attempt_count": 3,
+  "best_attempt": 2,
+  "terminal_reason": "exact candidate/signature pair first seen at attempt 1"
+}

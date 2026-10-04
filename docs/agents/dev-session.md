@@ -6,9 +6,10 @@ and closed feedback goes back for the next attempt. The loop stops at an explici
 outcome. Every attempt is kept as evidence.
 
 This is where a deterministic checker pays for itself. The agent does not have to be
-right the first time; it has to *converge*. Because the feedback is exact and never
-contains the expected answer, a smaller and cheaper model can often finish a task by
-repairing what failed, where a single unchecked prompt would need a frontier model.
+right the first time; it only has to *converge* within a budget. A wrong plan from a
+cheap model is rejected and retried, never trusted, and the feedback never contains the
+expected answer. [Recorded sessions](recorded-sessions.md) show how this played out for
+real models on one task.
 
 The `gnd-dev-session` skill guides your agent through authoring the contract, running
 the session and closing the experiment. Below, the same steps run by hand. A scripted
@@ -227,10 +228,14 @@ local model, replace the stand-in with one of these:
   given the prompt and feedback it receives on stdin, and writes the file. This route
   suits small models best, because your script controls the output format.
 - **An OpenAI-compatible endpoint.** The policy declares `kind: openai-compatible`, an
-  HTTPS `base_url` (for example a hosted router or a local server) and the *name* of
-  the environment variable that holds the key. The contract names the model in
-  `adapter.parameters.model`. The model must reply with one JSON file bundle; GND
-  sends one request per attempt, follows no redirects and rejects tool calls.
+  HTTPS `base_url` (or an IP-literal loopback address) and the *name* of the environment
+  variable that holds the key. The contract names the model in `adapter.parameters.model`.
+  The model must reply with one JSON file bundle; GND sends one request per attempt,
+  follows no redirects and rejects tool calls. The request carries only a prompt that
+  names the contract, so a model without file tools cannot read your task. Put a small
+  gateway in front of it that supplies the context. The example ships one
+  (`approvals/openrouter_gateway.py`), and the
+  [recorded sessions](recorded-sessions.md) used it with nine hosted models.
 
 ```json
 {"schema_version": 1, "policy_id": "small-model", "kind": "openai-compatible",
@@ -238,8 +243,10 @@ local model, replace the stand-in with one of these:
 ```
 
 Keep everything else the same: the contract, the checker and the budget. Compare the
-dispositions and attempt counts across models on *your* task; GND records them, but
-it does not promise that any particular model converges.
+dispositions and attempt counts across models on *your* task. GND records them, but it
+does not promise that any particular model converges. In the
+[recorded sessions](recorded-sessions.md), five of nine hosted models were accepted on
+the first attempt every time, three needed retries, and one never converged.
 
 ## Ask your agent to do it
 

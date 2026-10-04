@@ -91,7 +91,7 @@ def test_installed_origin_uses_path_components(tmp_path):
         installed_docs.check_origin(str(root / 'src/gnd/__init__.py'), venv, root)
 
 
-@pytest.mark.parametrize('group', ['quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision'])
+@pytest.mark.parametrize('group', ['quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision'])
 def test_documented_learning_path(group, tmp_path):
     pages = runner.groups(ROOT)[group]
     assert pages

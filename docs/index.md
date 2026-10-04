@@ -48,11 +48,13 @@ no answer key leaks.
 </div>
 </div>
 
-Because the checker is deterministic and its feedback names the exact rule and
-binding that failed, a failed attempt is not the end of the task. The agent repairs
-and retries inside a bounded session, so **smaller, cheaper models can finish work**
-that a single unchecked prompt would hand to a frontier model. Any OpenAI-compatible
-endpoint or local command can be the agent ([sessions](agents/dev-session.md)).
+Because the checker is deterministic, **a cheaper model is safe to try**: a wrong plan
+is rejected and retried inside a bounded session, never trusted. In our
+[recorded sessions](agents/recorded-sessions.md) on one task, a 4B model that never
+succeeded on its first try was still accepted in two of three bounded sessions, and the
+checker reported plainly when a 3B model did not converge. Claude Code, Codex, any
+declared command or any OpenAI-compatible endpoint can be the agent
+([sessions](agents/dev-session.md)).
 
 ## One model in the middle
 

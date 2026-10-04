@@ -75,9 +75,10 @@ recorded dispositions. *Example:* attempt 1 is rejected at `reimburse_expense`, 
 attempt 2 is accepted at band 0. → [Drive an agent against the verifier](agents/dev-session.md)
 
 **Small models, any agent.** Claude Code, Codex, any declared command or any
-OpenAI-compatible endpoint can be the agent. A deterministic checker with exact
-feedback lets a cheaper model converge by repairing what failed.
-→ [Use a small model](agents/dev-session.md#use-a-small-model)
+OpenAI-compatible endpoint can be the agent. Every plan is checked the same way, so a
+cheaper model is safe to try: a wrong plan is rejected and retried, never trusted.
+*Recorded:* a 4B model that never succeeded on its first try was accepted in two of
+three bounded sessions. → [Recorded agent sessions](agents/recorded-sessions.md)
 
 **Answer keys never touch the disk.** `gnd exp author-expectation` hashes an exact
 expected answer and removes the source, so an agent cannot read the answer from the

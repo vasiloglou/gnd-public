@@ -19,10 +19,11 @@ enterprise systems. **GND is agent skills plus Python code.**
 
 ![Animated: an agent proposes a payment plan, GND names the failed precondition, the agent adds the missing steps, and the revised plan is accepted.](docs/assets/hero.svg)
 
-Because the checker is deterministic and its feedback names the exact rule and
-binding that failed, a failed attempt is not the end. The agent repairs and retries
-inside a bounded session, so smaller, cheaper models can finish work that a single
-unchecked prompt would hand to a frontier model.
+Because the checker is deterministic, a cheaper model is safe to try: a wrong plan is
+rejected and retried inside a bounded session, never trusted. In our
+[recorded sessions](docs/agents/recorded-sessions.md) on one task, a 4B model that
+never succeeded on its first try was still accepted in two of three bounded sessions,
+and the checker reported plainly when a 3B model did not converge.
 
 > **Coming from GSD?** GND keeps GSD's discipline (plan, execute, verify, record)
 > and its skills-in-your-agent packaging. It replaces the requirements document with an

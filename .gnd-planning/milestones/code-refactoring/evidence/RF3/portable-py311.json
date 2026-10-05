@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/private/tmp/rf2-py311/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf1_cli_pins.py",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_rf1_semantic_pins.py",
+    "tests/test_rf1_agent_cli_pins.py",
+    "tests/test_rf1_session_pins.py",
+    "tests/test_rf1_pin_harness.py",
+    "tests/test_rf2_instrument.py",
+    "tests/test_rf2_digest_predicate.py",
+    "tests/test_rf2_helpers.py",
+    "tests/test_rf2_pre_move_pins.py",
+    "tests/test_rf2_review_regressions.py",
+    "tests/test_rf3_core.py",
+    "tests/test_rf3_moves.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 71.2430408000946
+}

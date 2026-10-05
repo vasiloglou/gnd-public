@@ -271,3 +271,26 @@ def test_validation_resets_shared_context_after_a_rule_raises(monkeypatch):
         assert cache.get() is prior
     finally:
         cache.reset(token)
+
+
+@pytest.mark.parametrize('variant', ['truthy', 'strict'])
+@pytest.mark.parametrize('mode', ['popular', 'general', 'unit', 'external'])
+def test_resolver_reference_modes(variant, mode):
+    by_id = {'e': {'id': 'e', 'kind': 'entity',
+                   'reference': {'mode': mode, 'value_type': 'v'}},
+             'v': {'id': 'v', 'kind': 'value', 'primitive': 'String'}}
+    expected = 'String' if mode in ('popular', 'general') else None
+    assert universe.primitive_for('e', by_id, variant=variant) == expected
+    del by_id['v']
+    assert universe.primitive_for('e', by_id, variant=variant) is None
+
+
+def test_plain_view_preserves_population_identity():
+    from test_public_applicability_obligations import _mandatory_inputs
+    m, pops = _mandatory_inputs()
+    assert not any(isinstance(f.get('derivation_rule'), dict) for f in m.fact_types)
+    assert checker.effective_view(m, pops[0]) is pops[0]
+
+
+def test_analysis_reaches_the_shared_validation_cache():
+    assert extensions.analyze_declared_aggregate.__globals__['_DERIVATION_TERM_CACHE'] is universe.DERIVATION_TERM_CACHE

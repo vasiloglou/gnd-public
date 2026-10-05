@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "C-36-two-source-suppression",
+  "story": "One unreadable required_by source does not suppress a mismatch from a readable sibling.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts/0/required_by",
+        "value": [
+          "bad.py",
+          "good.py"
+        ]
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "bad.py",
+      "kind": "text",
+      "text": "def broken(:\n"
+    },
+    {
+      "path": "good.py",
+      "kind": "text",
+      "text": "from pathlib import Path\nPATH = Path(__file__).parent / \"wrong\" / \"data.json\"\n"
+    }
+  ]
+}

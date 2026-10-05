@@ -1,0 +1,11 @@
+population:
+  model: omission.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - movie_has_title
+instances:
+  movie: [1]
+facts:
+  movie_has_title:
+    - { movie: 1, title: "The Departed", rating: "R" }

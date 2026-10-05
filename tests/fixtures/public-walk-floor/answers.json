@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "versions": {"contract": 5, "feedback": 7, "attempt": 7, "result": 5, "report": 9},
+  "parent_exits": {"accepted": 0, "contract_refused": 3, "floor_rejected": 15, "close_refused": 14},
+  "gap_kinds": ["forbidden-op-present", "required-op-missing"],
+  "canary": "P5_SECRET_APPROVER_271828",
+  "cases": {
+    "E01": {"gaps": []},
+    "E02": {"gaps": [{"kind": "required-op-missing", "operation_id": "approve_expense"}]},
+    "E03": {"gaps": [{"kind": "required-op-missing", "operation_id": "approve_expense"}]},
+    "E04": {"gaps": []},
+    "E05": {"gaps": [{"kind": "required-op-missing", "operation_id": "approve_expense"}]},
+    "E06": {"gaps": []},
+    "E07": {"expected_parent_exit": 15, "floor_evaluated": false},
+    "E08": {"expected_parent_exit": 15, "floor_evaluated": false},
+    "E09": {"expected_parent_exit": 15, "gaps": [{"kind": "forbidden-op-present", "operation_id": "pay_without_approval"}]},
+    "E10": {"expected_parent_exit": 0, "gaps": []},
+    "E11": {"expected_parent_exit": 0, "canary_emitted": false},
+    "E12": {"required_acceptance": true, "diagnostic_gap_count": 1}
+  },
+  "close": {
+    "accepted": {"exit": 0, "findings": []},
+    "nonaccepted": {"exit": 14, "finding": "unaccepted-session"},
+    "digest_changed": {"exit": 14, "finding": "unaccepted-session"},
+    "missing_row": {"exit": 14, "finding": "unaccepted-session"},
+    "extra_row": {"exit": 14, "finding": "unaccepted-session"},
+    "wrong_count": {"exit": 14, "finding": "unaccepted-session"},
+    "unreadable_contract": {"exit": 14, "finding": "unaccepted-session"},
+    "required_false": {"exit": 14, "finding": "unaccepted-session"}
+  }
+}
+

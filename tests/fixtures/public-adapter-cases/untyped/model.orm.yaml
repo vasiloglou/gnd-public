@@ -1,0 +1,66 @@
+version: 1
+model_id: urn:gnd-fixture:guarded-corpus-undecidable@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: mode, name: Mode, kind: value, primitive: String }
+  - { id: opaque, name: Opaque, kind: entity, reference: { mode: unit-based, unit: token, measure_type: opaque } }
+fact_types:
+  - id: observed_pair
+    reading: "in {Mode}, {Opaque} is compared with {Opaque}"
+    roles:
+      - { object_type: mode, role_name: mode }
+      - { object_type: opaque, role_name: left }
+      - { object_type: opaque, role_name: right }
+constraints:
+  - id: guarded_incomparable_alethic
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: observed_pair, bind: { mode: incomparable-a, left: "$left", right: "$right" } }
+    consequent:
+      comparison: { operator: "<", left: "$left", right: "$right" }
+    provenance: { user_quote: "The alethic incomparable pair must be declined." }
+  - id: guarded_incomparable_deontic
+    type: guarded
+    modality: deontic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: observed_pair, bind: { mode: incomparable-d, left: "$left", right: "$right" } }
+    consequent:
+      comparison: { operator: "<", left: "$left", right: "$right" }
+    provenance: { user_quote: "The deontic incomparable pair must be declined without blocking." }
+  - id: guarded_mixed_precedence
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: observed_pair, bind: { mode: mixed, left: "$left", right: "$right" } }
+    consequent:
+      comparison: { operator: "<", left: "$left", right: "$right" }
+    provenance: { user_quote: "An undecidable binding outranks an offending binding." }
+  - id: guarded_literal_ambiguous_alethic
+    type: guarded
+    modality: alethic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: observed_pair, bind: { mode: literal-a, left: "$value", right: "$ignored" } }
+    consequent:
+      comparison: { operator: "<", left: "$value", right: 10 }
+    provenance: { user_quote: "An untyped borrowed literal must be declined." }
+  - id: guarded_literal_ambiguous_deontic
+    type: guarded
+    modality: deontic
+    source: explicit
+    status: confirmed
+    antecedent:
+      - { fact_type: observed_pair, bind: { mode: literal-d, left: "$value", right: "$ignored" } }
+    consequent:
+      comparison: { operator: "<", left: "$value", right: 10 }
+    provenance: { user_quote: "A deontic untyped borrowed literal is non-blocking." }
+rejected_proposals: []

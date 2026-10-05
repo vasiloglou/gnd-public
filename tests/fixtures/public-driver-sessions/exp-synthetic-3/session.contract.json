@@ -1,0 +1,21 @@
+{
+  "cases": [
+    {
+      "acceptance": {
+        "mode": "tests",
+        "protected": [],
+        "required_tests": [
+          "t.py::test_one"
+        ],
+        "results_format": "junit-xml",
+        "results_path": "results/junit.xml",
+        "test_argv_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "case_id": "c",
+      "role": "required"
+    }
+  ],
+  "experiment_id": "exp-synthetic-3",
+  "max_attempts": 1,
+  "schema_version": 3
+}

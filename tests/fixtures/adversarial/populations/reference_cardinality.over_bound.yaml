@@ -1,0 +1,12 @@
+population:
+  model: reference_cardinality.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - movie_has_title
+facts:
+  movie_has_title:
+    - { movie: 1, title: "Alpha" }
+    - { movie: 2, title: "Beta" }
+    - { movie: 3, title: "Gamma" }
+    - { movie: 4, title: "Delta" }

@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-03",
+  "authority": "source-owned public-launch amendment",
+  "target_base": "e88d477d32b46c63c367719e3abe8e74adabc96a",
+  "authorization": "Owner: PLEASE IMPLEMENT THIS PLAN, followed by complete Phase 4.1 plan",
+  "adaptations": "None; source and public planning copies identical",
+  "documents": {
+    "public-launch-plan-r4-amendments.md": "3cd39b5150c064bd3077701ae90d6ec227359ed2d41c0e6c9868d866caf01e73",
+    "phase-4.1-spec.md": "6df2a22469f82a29d93eb480d72ffccfe706166910fe1bab3fe3ca2994c65f5a"
+  }
+}

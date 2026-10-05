@@ -1,0 +1,24 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-fixture:v70-phase2-reach@1",
+    "source": "fixture",
+    "label": "conforming",
+    "covers": ["edge", "blocked", "reaches", "open_reach", "visited"]
+  },
+  "instances": {},
+  "facts": {
+    "edge": [
+      {"source": "A", "target": "B"},
+      {"source": "B", "target": "C"}
+    ],
+    "blocked": [{"target": "C"}],
+    "reaches": [
+      {"source": "A", "target": "B"},
+      {"source": "A", "target": "C"},
+      {"source": "B", "target": "C"}
+    ],
+    "open_reach": [{"source": "A", "target": "B"}],
+    "visited": []
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "version": 1,
+  "kind": "souffle-run-result",
+  "exit_code": 0,
+  "status": "completed",
+  "reason": null,
+  "assurance": "none",
+  "counts": {
+    "fact_types": 10,
+    "clauses": 7,
+    "input_rows": 22,
+    "encoded_cells": 36,
+    "emission_visits": 115
+  },
+  "tool": {
+    "path": "<SOUFFLE_2_5>",
+    "sha256": "0933066a5a05c5260c154e88c629ccb3f9c7b42737f786b99f73d528b7ba810c",
+    "version": "2.5",
+    "word_size": 64,
+    "native_exit": 0
+  },
+  "elapsed_seconds": 0.03909816697705537,
+  "extensions": {
+    "reachable": [
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "payments"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "inventory"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "identity"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "serialization"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "stock-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        },
+        {
+          "primitive": "String",
+          "value": "serialization"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "inventory"
+        },
+        {
+          "primitive": "String",
+          "value": "stock-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "identity"
+        },
+        {
+          "primitive": "String",
+          "value": "serialization"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "ledger"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "reporting"
+        },
+        {
+          "primitive": "String",
+          "value": "analytics-db"
+        }
+      ]
+    ],
+    "exposure": [
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "serialization"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        },
+        {
+          "primitive": "String",
+          "value": "serialization"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "identity"
+        },
+        {
+          "primitive": "String",
+          "value": "serialization"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "ledger"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ]
+    ],
+    "affected": [
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "identity"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "ledger"
+        }
+      ]
+    ],
+    "unaffected": [
+      [
+        {
+          "primitive": "String",
+          "value": "inventory"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "reporting"
+        }
+      ]
+    ],
+    "vulnerability_count": [
+      [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "Integer",
+          "value": 2
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "payments"
+        },
+        {
+          "primitive": "Integer",
+          "value": 2
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "identity"
+        },
+        {
+          "primitive": "Integer",
+          "value": 1
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "ledger"
+        },
+        {
+          "primitive": "Integer",
+          "value": 1
+        }
+      ]
+    ],
+    "blocked": [
+      [
+        {
+          "primitive": "String",
+          "value": "REL-101"
+        },
+        {
+          "primitive": "String",
+          "value": "checkout"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "REL-104"
+        },
+        {
+          "primitive": "String",
+          "value": "payments"
+        }
+      ],
+      [
+        {
+          "primitive": "String",
+          "value": "REL-105"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger"
+        }
+      ]
+    ]
+  }
+}

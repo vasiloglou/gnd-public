@@ -1,0 +1,1396 @@
+{
+  "schema_version": 1,
+  "source": "independently authored contract outcomes; not evaluator output",
+  "cases": [
+    {
+      "id": "B01-dispatch-catalog-join",
+      "exit_code": 0,
+      "observation": "catalog-join"
+    },
+    {
+      "id": "B01-release-catalog-join",
+      "exit_code": 0,
+      "observation": "catalog-join"
+    },
+    {
+      "id": "B02-dispatch-missing-item-alethic",
+      "exit_code": 1,
+      "observation": "missing-item-alethic"
+    },
+    {
+      "id": "B02-release-missing-item-alethic",
+      "exit_code": 1,
+      "observation": "missing-item-alethic"
+    },
+    {
+      "id": "B02-dispatch-missing-item-deontic",
+      "exit_code": 0,
+      "observation": "missing-item-deontic"
+    },
+    {
+      "id": "B02-release-missing-item-deontic",
+      "exit_code": 0,
+      "observation": "missing-item-deontic"
+    },
+    {
+      "id": "B03-dispatch-candidate-owned",
+      "exit_code": 3,
+      "observation": "candidate-owned"
+    },
+    {
+      "id": "B03-release-candidate-owned",
+      "exit_code": 3,
+      "observation": "candidate-owned"
+    },
+    {
+      "id": "B03-dispatch-candidate-owned-empty",
+      "exit_code": 3,
+      "observation": "candidate-owned-empty"
+    },
+    {
+      "id": "B03-release-candidate-owned-empty",
+      "exit_code": 3,
+      "observation": "candidate-owned-empty"
+    },
+    {
+      "id": "B03-dispatch-candidate-owned-mutated",
+      "exit_code": 3,
+      "observation": "candidate-owned-mutated"
+    },
+    {
+      "id": "B03-release-candidate-owned-mutated",
+      "exit_code": 3,
+      "observation": "candidate-owned-mutated"
+    },
+    {
+      "id": "B03-dispatch-candidate-owned-constructed",
+      "exit_code": 3,
+      "observation": "candidate-owned-constructed"
+    },
+    {
+      "id": "B03-release-candidate-owned-constructed",
+      "exit_code": 3,
+      "observation": "candidate-owned-constructed"
+    },
+    {
+      "id": "B04-dispatch-operation-assert",
+      "exit_code": 3,
+      "observation": "operation-assert"
+    },
+    {
+      "id": "B04-release-operation-assert",
+      "exit_code": 3,
+      "observation": "operation-assert"
+    },
+    {
+      "id": "B04-dispatch-operation-retract",
+      "exit_code": 3,
+      "observation": "operation-retract"
+    },
+    {
+      "id": "B04-release-operation-retract",
+      "exit_code": 3,
+      "observation": "operation-retract"
+    },
+    {
+      "id": "B04-dispatch-operation-read",
+      "exit_code": 0,
+      "observation": "operation-read"
+    },
+    {
+      "id": "B04-release-operation-read",
+      "exit_code": 0,
+      "observation": "operation-read"
+    },
+    {
+      "id": "B05-dispatch-duplicate-id",
+      "exit_code": 3,
+      "observation": "duplicate-id"
+    },
+    {
+      "id": "B05-release-duplicate-id",
+      "exit_code": 3,
+      "observation": "duplicate-id"
+    },
+    {
+      "id": "B05-dispatch-duplicate-owner",
+      "exit_code": 3,
+      "observation": "duplicate-owner"
+    },
+    {
+      "id": "B05-release-duplicate-owner",
+      "exit_code": 3,
+      "observation": "duplicate-owner"
+    },
+    {
+      "id": "B05-dispatch-overlapping-owners",
+      "exit_code": 3,
+      "observation": "overlapping-owners"
+    },
+    {
+      "id": "B05-release-overlapping-owners",
+      "exit_code": 3,
+      "observation": "overlapping-owners"
+    },
+    {
+      "id": "B05-dispatch-unknown-owner",
+      "exit_code": 3,
+      "observation": "unknown-owner"
+    },
+    {
+      "id": "B05-release-unknown-owner",
+      "exit_code": 3,
+      "observation": "unknown-owner"
+    },
+    {
+      "id": "B05-dispatch-derived-owner",
+      "exit_code": 3,
+      "observation": "derived-owner"
+    },
+    {
+      "id": "B05-release-derived-owner",
+      "exit_code": 3,
+      "observation": "derived-owner"
+    },
+    {
+      "id": "B05-dispatch-semiderived-owner",
+      "exit_code": 3,
+      "observation": "semiderived-owner"
+    },
+    {
+      "id": "B05-release-semiderived-owner",
+      "exit_code": 3,
+      "observation": "semiderived-owner"
+    },
+    {
+      "id": "B05-dispatch-missing-id",
+      "exit_code": 3,
+      "observation": "missing-id"
+    },
+    {
+      "id": "B05-release-missing-id",
+      "exit_code": 3,
+      "observation": "missing-id"
+    },
+    {
+      "id": "B05-dispatch-missing-path",
+      "exit_code": 3,
+      "observation": "missing-path"
+    },
+    {
+      "id": "B05-release-missing-path",
+      "exit_code": 3,
+      "observation": "missing-path"
+    },
+    {
+      "id": "B05-dispatch-missing-sha256",
+      "exit_code": 3,
+      "observation": "missing-sha256"
+    },
+    {
+      "id": "B05-release-missing-sha256",
+      "exit_code": 3,
+      "observation": "missing-sha256"
+    },
+    {
+      "id": "B05-dispatch-missing-fact_types",
+      "exit_code": 3,
+      "observation": "missing-fact_types"
+    },
+    {
+      "id": "B05-release-missing-fact_types",
+      "exit_code": 3,
+      "observation": "missing-fact_types"
+    },
+    {
+      "id": "B05-dispatch-extra-field",
+      "exit_code": 3,
+      "observation": "extra-field"
+    },
+    {
+      "id": "B05-release-extra-field",
+      "exit_code": 3,
+      "observation": "extra-field"
+    },
+    {
+      "id": "B05-dispatch-old-version",
+      "exit_code": 3,
+      "observation": "old-version"
+    },
+    {
+      "id": "B05-release-old-version",
+      "exit_code": 3,
+      "observation": "old-version"
+    },
+    {
+      "id": "B05-dispatch-hash-short",
+      "exit_code": 3,
+      "observation": "hash-short"
+    },
+    {
+      "id": "B05-release-hash-short",
+      "exit_code": 3,
+      "observation": "hash-short"
+    },
+    {
+      "id": "B05-dispatch-hash-uppercase",
+      "exit_code": 3,
+      "observation": "hash-uppercase"
+    },
+    {
+      "id": "B05-release-hash-uppercase",
+      "exit_code": 3,
+      "observation": "hash-uppercase"
+    },
+    {
+      "id": "B05-dispatch-hash-nonhex",
+      "exit_code": 3,
+      "observation": "hash-nonhex"
+    },
+    {
+      "id": "B05-release-hash-nonhex",
+      "exit_code": 3,
+      "observation": "hash-nonhex"
+    },
+    {
+      "id": "B05-dispatch-empty-owner",
+      "exit_code": 3,
+      "observation": "empty-owner"
+    },
+    {
+      "id": "B05-release-empty-owner",
+      "exit_code": 3,
+      "observation": "empty-owner"
+    },
+    {
+      "id": "B05-dispatch-id-over-limit",
+      "exit_code": 3,
+      "observation": "id-over-limit"
+    },
+    {
+      "id": "B05-release-id-over-limit",
+      "exit_code": 3,
+      "observation": "id-over-limit"
+    },
+    {
+      "id": "B06-dispatch-missing-file",
+      "exit_code": 3,
+      "observation": "missing-file"
+    },
+    {
+      "id": "B06-release-missing-file",
+      "exit_code": 3,
+      "observation": "missing-file"
+    },
+    {
+      "id": "B06-dispatch-stale-hash",
+      "exit_code": 3,
+      "observation": "stale-hash"
+    },
+    {
+      "id": "B06-release-stale-hash",
+      "exit_code": 3,
+      "observation": "stale-hash"
+    },
+    {
+      "id": "B06-dispatch-malformed-json",
+      "exit_code": 3,
+      "observation": "malformed-json"
+    },
+    {
+      "id": "B06-release-malformed-json",
+      "exit_code": 3,
+      "observation": "malformed-json"
+    },
+    {
+      "id": "B06-dispatch-malformed-yaml",
+      "exit_code": 3,
+      "observation": "malformed-yaml"
+    },
+    {
+      "id": "B06-release-malformed-yaml",
+      "exit_code": 3,
+      "observation": "malformed-yaml"
+    },
+    {
+      "id": "B06-dispatch-wrong-role",
+      "exit_code": 3,
+      "observation": "wrong-role"
+    },
+    {
+      "id": "B06-release-wrong-role",
+      "exit_code": 3,
+      "observation": "wrong-role"
+    },
+    {
+      "id": "B06-dispatch-wrong-type",
+      "exit_code": 3,
+      "observation": "wrong-type"
+    },
+    {
+      "id": "B06-release-wrong-type",
+      "exit_code": 3,
+      "observation": "wrong-type"
+    },
+    {
+      "id": "B06-dispatch-wrong-header",
+      "exit_code": 3,
+      "observation": "wrong-header"
+    },
+    {
+      "id": "B06-release-wrong-header",
+      "exit_code": 3,
+      "observation": "wrong-header"
+    },
+    {
+      "id": "B06-dispatch-undeclared-type",
+      "exit_code": 3,
+      "observation": "undeclared-type"
+    },
+    {
+      "id": "B06-release-undeclared-type",
+      "exit_code": 3,
+      "observation": "undeclared-type"
+    },
+    {
+      "id": "B06-dispatch-undeclared-empty-type",
+      "exit_code": 3,
+      "observation": "undeclared-empty-type"
+    },
+    {
+      "id": "B06-release-undeclared-empty-type",
+      "exit_code": 3,
+      "observation": "undeclared-empty-type"
+    },
+    {
+      "id": "B06-dispatch-transitive-include",
+      "exit_code": 3,
+      "observation": "transitive-include"
+    },
+    {
+      "id": "B06-release-transitive-include",
+      "exit_code": 3,
+      "observation": "transitive-include"
+    },
+    {
+      "id": "B06-dispatch-duplicate-key",
+      "exit_code": 3,
+      "observation": "duplicate-key"
+    },
+    {
+      "id": "B06-release-duplicate-key",
+      "exit_code": 3,
+      "observation": "duplicate-key"
+    },
+    {
+      "id": "B06-dispatch-nan",
+      "exit_code": 3,
+      "observation": "nan"
+    },
+    {
+      "id": "B06-release-nan",
+      "exit_code": 3,
+      "observation": "nan"
+    },
+    {
+      "id": "B06-dispatch-giant-integer",
+      "exit_code": 3,
+      "observation": "giant-integer"
+    },
+    {
+      "id": "B06-release-giant-integer",
+      "exit_code": 3,
+      "observation": "giant-integer"
+    },
+    {
+      "id": "B06-dispatch-alias-cycle",
+      "exit_code": 3,
+      "observation": "alias-cycle"
+    },
+    {
+      "id": "B06-release-alias-cycle",
+      "exit_code": 3,
+      "observation": "alias-cycle"
+    },
+    {
+      "id": "B07-dispatch-path-absolute",
+      "exit_code": 3,
+      "observation": "path-absolute"
+    },
+    {
+      "id": "B07-release-path-absolute",
+      "exit_code": 3,
+      "observation": "path-absolute"
+    },
+    {
+      "id": "B07-dispatch-path-unc",
+      "exit_code": 3,
+      "observation": "path-unc"
+    },
+    {
+      "id": "B07-release-path-unc",
+      "exit_code": 3,
+      "observation": "path-unc"
+    },
+    {
+      "id": "B07-dispatch-path-drive",
+      "exit_code": 3,
+      "observation": "path-drive"
+    },
+    {
+      "id": "B07-release-path-drive",
+      "exit_code": 3,
+      "observation": "path-drive"
+    },
+    {
+      "id": "B07-dispatch-path-backslash",
+      "exit_code": 3,
+      "observation": "path-backslash"
+    },
+    {
+      "id": "B07-release-path-backslash",
+      "exit_code": 3,
+      "observation": "path-backslash"
+    },
+    {
+      "id": "B07-dispatch-path-dot",
+      "exit_code": 3,
+      "observation": "path-dot"
+    },
+    {
+      "id": "B07-release-path-dot",
+      "exit_code": 3,
+      "observation": "path-dot"
+    },
+    {
+      "id": "B07-dispatch-path-parent",
+      "exit_code": 3,
+      "observation": "path-parent"
+    },
+    {
+      "id": "B07-release-path-parent",
+      "exit_code": 3,
+      "observation": "path-parent"
+    },
+    {
+      "id": "B07-dispatch-path-empty-component",
+      "exit_code": 3,
+      "observation": "path-empty-component"
+    },
+    {
+      "id": "B07-release-path-empty-component",
+      "exit_code": 3,
+      "observation": "path-empty-component"
+    },
+    {
+      "id": "B07-dispatch-path-nul",
+      "exit_code": 3,
+      "observation": "path-nul"
+    },
+    {
+      "id": "B07-release-path-nul",
+      "exit_code": 3,
+      "observation": "path-nul"
+    },
+    {
+      "id": "B07-dispatch-path-depth-over",
+      "exit_code": 3,
+      "observation": "path-depth-over"
+    },
+    {
+      "id": "B07-release-path-depth-over",
+      "exit_code": 3,
+      "observation": "path-depth-over"
+    },
+    {
+      "id": "B07-dispatch-path-length-over",
+      "exit_code": 3,
+      "observation": "path-length-over"
+    },
+    {
+      "id": "B07-release-path-length-over",
+      "exit_code": 3,
+      "observation": "path-length-over"
+    },
+    {
+      "id": "B07-dispatch-symlink-root",
+      "exit_code": 3,
+      "observation": "symlink-root"
+    },
+    {
+      "id": "B07-release-symlink-root",
+      "exit_code": 3,
+      "observation": "symlink-root"
+    },
+    {
+      "id": "B07-dispatch-symlink-ancestor",
+      "exit_code": 3,
+      "observation": "symlink-ancestor"
+    },
+    {
+      "id": "B07-release-symlink-ancestor",
+      "exit_code": 3,
+      "observation": "symlink-ancestor"
+    },
+    {
+      "id": "B07-dispatch-symlink-leaf",
+      "exit_code": 3,
+      "observation": "symlink-leaf"
+    },
+    {
+      "id": "B07-release-symlink-leaf",
+      "exit_code": 3,
+      "observation": "symlink-leaf"
+    },
+    {
+      "id": "B07-dispatch-nested-path",
+      "exit_code": 0,
+      "observation": "nested-path"
+    },
+    {
+      "id": "B07-release-nested-path",
+      "exit_code": 0,
+      "observation": "nested-path"
+    },
+    {
+      "id": "B08-dispatch-refusal-before-evaluation",
+      "exit_code": 3,
+      "observation": "refusal-before-evaluation"
+    },
+    {
+      "id": "B08-release-refusal-before-evaluation",
+      "exit_code": 3,
+      "observation": "refusal-before-evaluation"
+    },
+    {
+      "id": "B08-dispatch-declaration-before-file",
+      "exit_code": 3,
+      "observation": "declaration-before-file"
+    },
+    {
+      "id": "B08-release-declaration-before-file",
+      "exit_code": 3,
+      "observation": "declaration-before-file"
+    },
+    {
+      "id": "B08-dispatch-reference-before-candidate",
+      "exit_code": 3,
+      "observation": "reference-before-candidate"
+    },
+    {
+      "id": "B08-release-reference-before-candidate",
+      "exit_code": 3,
+      "observation": "reference-before-candidate"
+    },
+    {
+      "id": "B09-dispatch-empty-candidate",
+      "exit_code": 2,
+      "observation": "empty-candidate"
+    },
+    {
+      "id": "B09-release-empty-candidate",
+      "exit_code": 2,
+      "observation": "empty-candidate"
+    },
+    {
+      "id": "B09-dispatch-empty-catalog",
+      "exit_code": 1,
+      "observation": "empty-catalog"
+    },
+    {
+      "id": "B09-release-empty-catalog",
+      "exit_code": 1,
+      "observation": "empty-catalog"
+    },
+    {
+      "id": "B09-dispatch-reference-nonvacuous",
+      "exit_code": 0,
+      "observation": "reference-nonvacuous"
+    },
+    {
+      "id": "B09-release-reference-nonvacuous",
+      "exit_code": 0,
+      "observation": "reference-nonvacuous"
+    },
+    {
+      "id": "B10-dispatch-reference-inflation",
+      "exit_code": 0,
+      "observation": "reference-inflation"
+    },
+    {
+      "id": "B10-release-reference-inflation",
+      "exit_code": 0,
+      "observation": "reference-inflation"
+    },
+    {
+      "id": "B10-dispatch-zero-candidate-floor",
+      "exit_code": 0,
+      "observation": "zero-candidate-floor"
+    },
+    {
+      "id": "B10-release-zero-candidate-floor",
+      "exit_code": 0,
+      "observation": "zero-candidate-floor"
+    },
+    {
+      "id": "B11-dispatch-model-swap",
+      "exit_code": null,
+      "observation": "model-swap"
+    },
+    {
+      "id": "B11-release-model-swap",
+      "exit_code": null,
+      "observation": "model-swap"
+    },
+    {
+      "id": "B11-dispatch-model-parent-swap",
+      "exit_code": null,
+      "observation": "model-parent-swap"
+    },
+    {
+      "id": "B11-release-model-parent-swap",
+      "exit_code": null,
+      "observation": "model-parent-swap"
+    },
+    {
+      "id": "B12-dispatch-reference-swap",
+      "exit_code": null,
+      "observation": "reference-swap"
+    },
+    {
+      "id": "B12-release-reference-swap",
+      "exit_code": null,
+      "observation": "reference-swap"
+    },
+    {
+      "id": "B12-dispatch-reference-root-swap",
+      "exit_code": null,
+      "observation": "reference-root-swap"
+    },
+    {
+      "id": "B12-release-reference-root-swap",
+      "exit_code": null,
+      "observation": "reference-root-swap"
+    },
+    {
+      "id": "B12-dispatch-reference-parent-swap",
+      "exit_code": null,
+      "observation": "reference-parent-swap"
+    },
+    {
+      "id": "B12-release-reference-parent-swap",
+      "exit_code": null,
+      "observation": "reference-parent-swap"
+    },
+    {
+      "id": "B12-dispatch-reference-inplace-write",
+      "exit_code": null,
+      "observation": "reference-inplace-write"
+    },
+    {
+      "id": "B12-release-reference-inplace-write",
+      "exit_code": null,
+      "observation": "reference-inplace-write"
+    },
+    {
+      "id": "B12-dispatch-fd-cleanup",
+      "exit_code": 0,
+      "observation": "fd-cleanup"
+    },
+    {
+      "id": "B12-release-fd-cleanup",
+      "exit_code": 0,
+      "observation": "fd-cleanup"
+    },
+    {
+      "id": "B13-dispatch-identity-updated-bytes",
+      "exit_code": 0,
+      "observation": "identity-updated-bytes"
+    },
+    {
+      "id": "B13-release-identity-updated-bytes",
+      "exit_code": 0,
+      "observation": "identity-updated-bytes"
+    },
+    {
+      "id": "B13-dispatch-identity-order",
+      "exit_code": 0,
+      "observation": "identity-order"
+    },
+    {
+      "id": "B13-release-identity-order",
+      "exit_code": 0,
+      "observation": "identity-order"
+    },
+    {
+      "id": "B13-dispatch-identity-path",
+      "exit_code": 0,
+      "observation": "identity-path"
+    },
+    {
+      "id": "B13-release-identity-path",
+      "exit_code": 0,
+      "observation": "identity-path"
+    },
+    {
+      "id": "B13-dispatch-identity-id",
+      "exit_code": 0,
+      "observation": "identity-id"
+    },
+    {
+      "id": "B13-release-identity-id",
+      "exit_code": 0,
+      "observation": "identity-id"
+    },
+    {
+      "id": "B13-dispatch-identity-owner",
+      "exit_code": 0,
+      "observation": "identity-owner"
+    },
+    {
+      "id": "B13-release-identity-owner",
+      "exit_code": 0,
+      "observation": "identity-owner"
+    },
+    {
+      "id": "B13-dispatch-legacy-digest",
+      "exit_code": 0,
+      "observation": "legacy-digest",
+      "legacy_model_digest": "sha256:89a4af55457a1e76940ed71077e83cb00ab0b3485232a712155eb0cee34f1e70",
+      "baseline_source": "31abfdd3b0187291cc8a66eb0a5d88e2e61294ca"
+    },
+    {
+      "id": "B13-release-legacy-digest",
+      "exit_code": 0,
+      "observation": "legacy-digest",
+      "legacy_model_digest": "sha256:5d7178462afdb7b243d15efc10ef2a956b53d320656bd1a5655c3b074f453e53",
+      "baseline_source": "31abfdd3b0187291cc8a66eb0a5d88e2e61294ca"
+    },
+    {
+      "id": "B14-dispatch-api-check",
+      "exit_code": 0,
+      "observation": "api-check"
+    },
+    {
+      "id": "B14-release-api-check",
+      "exit_code": 0,
+      "observation": "api-check"
+    },
+    {
+      "id": "B14-dispatch-api-validate",
+      "exit_code": 0,
+      "observation": "api-validate"
+    },
+    {
+      "id": "B14-release-api-validate",
+      "exit_code": 0,
+      "observation": "api-validate"
+    },
+    {
+      "id": "B14-dispatch-api-bound-context",
+      "exit_code": 0,
+      "observation": "api-bound-context"
+    },
+    {
+      "id": "B14-release-api-bound-context",
+      "exit_code": 0,
+      "observation": "api-bound-context"
+    },
+    {
+      "id": "B14-dispatch-api-missing-context",
+      "exit_code": 3,
+      "observation": "api-missing-context"
+    },
+    {
+      "id": "B14-release-api-missing-context",
+      "exit_code": 3,
+      "observation": "api-missing-context"
+    },
+    {
+      "id": "B14-dispatch-api-cwd",
+      "exit_code": 0,
+      "observation": "api-cwd"
+    },
+    {
+      "id": "B14-release-api-cwd",
+      "exit_code": 0,
+      "observation": "api-cwd"
+    },
+    {
+      "id": "B14-dispatch-batch",
+      "exit_code": 0,
+      "observation": "batch"
+    },
+    {
+      "id": "B14-release-batch",
+      "exit_code": 0,
+      "observation": "batch"
+    },
+    {
+      "id": "B14-dispatch-diff",
+      "exit_code": 0,
+      "observation": "diff"
+    },
+    {
+      "id": "B14-release-diff",
+      "exit_code": 0,
+      "observation": "diff"
+    },
+    {
+      "id": "B14-dispatch-transition",
+      "exit_code": 0,
+      "observation": "transition"
+    },
+    {
+      "id": "B14-release-transition",
+      "exit_code": 0,
+      "observation": "transition"
+    },
+    {
+      "id": "B15-dispatch-context-wrong-model",
+      "exit_code": 3,
+      "observation": "context-wrong-model"
+    },
+    {
+      "id": "B15-release-context-wrong-model",
+      "exit_code": 3,
+      "observation": "context-wrong-model"
+    },
+    {
+      "id": "B15-dispatch-context-forged",
+      "exit_code": 3,
+      "observation": "context-forged"
+    },
+    {
+      "id": "B15-release-context-forged",
+      "exit_code": 3,
+      "observation": "context-forged"
+    },
+    {
+      "id": "B15-dispatch-context-model-mutation",
+      "exit_code": 3,
+      "observation": "context-model-mutation"
+    },
+    {
+      "id": "B15-release-context-model-mutation",
+      "exit_code": 3,
+      "observation": "context-model-mutation"
+    },
+    {
+      "id": "B15-dispatch-context-snapshot-immutable",
+      "exit_code": 0,
+      "observation": "context-snapshot-immutable"
+    },
+    {
+      "id": "B15-release-context-snapshot-immutable",
+      "exit_code": 0,
+      "observation": "context-snapshot-immutable"
+    },
+    {
+      "id": "B16-dispatch-report-wrapper",
+      "exit_code": 0,
+      "observation": "report-wrapper"
+    },
+    {
+      "id": "B16-release-report-wrapper",
+      "exit_code": 0,
+      "observation": "report-wrapper"
+    },
+    {
+      "id": "B16-dispatch-report-dirty-control",
+      "exit_code": 0,
+      "observation": "report-dirty-control"
+    },
+    {
+      "id": "B16-release-report-dirty-control",
+      "exit_code": 0,
+      "observation": "report-dirty-control"
+    },
+    {
+      "id": "B16-dispatch-legacy-wire",
+      "exit_code": 0,
+      "observation": "legacy-wire",
+      "legacy_keyset": [
+        "acceptance_ready",
+        "assurance",
+        "command",
+        "counts",
+        "coverage",
+        "derivations",
+        "error",
+        "exit_code",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "model",
+        "model_digest",
+        "outcome",
+        "population",
+        "schema_version",
+        "tool",
+        "transition",
+        "verdicts",
+        "warnings"
+      ],
+      "legacy_projection": {
+        "schema_version": 7,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "warning": 0,
+          "unchecked": 0,
+          "vacuous": 0
+        },
+        "verdicts": [
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "modality": "alethic",
+            "source": "user-supplied",
+            "status": "confirmed",
+            "verdict": "pass",
+            "message": "Guarded exists consequent evaluated over bindings=1 \u2014 satisfied.",
+            "offending_facts": [],
+            "reason_code": null
+          }
+        ],
+        "outcome": "accepted",
+        "exit_code": 0
+      }
+    },
+    {
+      "id": "B16-release-legacy-wire",
+      "exit_code": 0,
+      "observation": "legacy-wire",
+      "legacy_keyset": [
+        "acceptance_ready",
+        "assurance",
+        "command",
+        "counts",
+        "coverage",
+        "derivations",
+        "error",
+        "exit_code",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "model",
+        "model_digest",
+        "outcome",
+        "population",
+        "schema_version",
+        "tool",
+        "transition",
+        "verdicts",
+        "warnings"
+      ],
+      "legacy_projection": {
+        "schema_version": 7,
+        "counts": {
+          "pass": 1,
+          "fail": 0,
+          "warning": 0,
+          "unchecked": 0,
+          "vacuous": 0
+        },
+        "verdicts": [
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "modality": "alethic",
+            "source": "user-supplied",
+            "status": "confirmed",
+            "verdict": "pass",
+            "message": "Guarded exists consequent evaluated over bindings=1 \u2014 satisfied.",
+            "offending_facts": [],
+            "reason_code": null
+          }
+        ],
+        "outcome": "accepted",
+        "exit_code": 0
+      }
+    },
+    {
+      "id": "B17-dispatch-multiple-origins",
+      "exit_code": 0,
+      "observation": "multiple-origins"
+    },
+    {
+      "id": "B17-release-multiple-origins",
+      "exit_code": 0,
+      "observation": "multiple-origins"
+    },
+    {
+      "id": "B17-dispatch-duplicate-origins",
+      "exit_code": 0,
+      "observation": "duplicate-origins"
+    },
+    {
+      "id": "B17-release-duplicate-origins",
+      "exit_code": 0,
+      "observation": "duplicate-origins"
+    },
+    {
+      "id": "B17-dispatch-candidate-admission",
+      "exit_code": 0,
+      "observation": "candidate-admission"
+    },
+    {
+      "id": "B17-release-candidate-admission",
+      "exit_code": 0,
+      "observation": "candidate-admission"
+    },
+    {
+      "id": "B18-dispatch-model-bytes-near",
+      "exit_code": 0,
+      "observation": "model-bytes-near"
+    },
+    {
+      "id": "B18-release-model-bytes-near",
+      "exit_code": 0,
+      "observation": "model-bytes-near"
+    },
+    {
+      "id": "B18-dispatch-model-bytes-over",
+      "exit_code": 3,
+      "observation": "model-bytes-over"
+    },
+    {
+      "id": "B18-release-model-bytes-over",
+      "exit_code": 3,
+      "observation": "model-bytes-over"
+    },
+    {
+      "id": "B18-dispatch-reference-bytes-near",
+      "exit_code": 0,
+      "observation": "reference-bytes-near"
+    },
+    {
+      "id": "B18-release-reference-bytes-near",
+      "exit_code": 0,
+      "observation": "reference-bytes-near"
+    },
+    {
+      "id": "B18-dispatch-reference-bytes-over",
+      "exit_code": 3,
+      "observation": "reference-bytes-over"
+    },
+    {
+      "id": "B18-release-reference-bytes-over",
+      "exit_code": 3,
+      "observation": "reference-bytes-over"
+    },
+    {
+      "id": "B18-dispatch-candidate-bytes-near",
+      "exit_code": 0,
+      "observation": "candidate-bytes-near"
+    },
+    {
+      "id": "B18-release-candidate-bytes-near",
+      "exit_code": 0,
+      "observation": "candidate-bytes-near"
+    },
+    {
+      "id": "B18-dispatch-candidate-bytes-over",
+      "exit_code": 3,
+      "observation": "candidate-bytes-over"
+    },
+    {
+      "id": "B18-release-candidate-bytes-over",
+      "exit_code": 3,
+      "observation": "candidate-bytes-over"
+    },
+    {
+      "id": "B19-dispatch-file-count-near",
+      "exit_code": 0,
+      "observation": "file-count-near"
+    },
+    {
+      "id": "B19-release-file-count-near",
+      "exit_code": 0,
+      "observation": "file-count-near"
+    },
+    {
+      "id": "B19-dispatch-file-count-over",
+      "exit_code": 3,
+      "observation": "file-count-over"
+    },
+    {
+      "id": "B19-release-file-count-over",
+      "exit_code": 3,
+      "observation": "file-count-over"
+    },
+    {
+      "id": "B19-dispatch-set-bytes-near",
+      "exit_code": 0,
+      "observation": "set-bytes-near"
+    },
+    {
+      "id": "B19-release-set-bytes-near",
+      "exit_code": 0,
+      "observation": "set-bytes-near"
+    },
+    {
+      "id": "B19-dispatch-set-bytes-over",
+      "exit_code": 3,
+      "observation": "set-bytes-over"
+    },
+    {
+      "id": "B19-release-set-bytes-over",
+      "exit_code": 3,
+      "observation": "set-bytes-over"
+    },
+    {
+      "id": "B19-dispatch-row-count-near",
+      "exit_code": 0,
+      "observation": "row-count-near"
+    },
+    {
+      "id": "B19-release-row-count-near",
+      "exit_code": 0,
+      "observation": "row-count-near"
+    },
+    {
+      "id": "B19-dispatch-row-count-over",
+      "exit_code": 3,
+      "observation": "row-count-over"
+    },
+    {
+      "id": "B19-release-row-count-over",
+      "exit_code": 3,
+      "observation": "row-count-over"
+    },
+    {
+      "id": "B19-dispatch-instance-count-near",
+      "exit_code": 0,
+      "observation": "instance-count-near"
+    },
+    {
+      "id": "B19-release-instance-count-near",
+      "exit_code": 0,
+      "observation": "instance-count-near"
+    },
+    {
+      "id": "B19-dispatch-instance-count-over",
+      "exit_code": 3,
+      "observation": "instance-count-over"
+    },
+    {
+      "id": "B19-release-instance-count-over",
+      "exit_code": 3,
+      "observation": "instance-count-over"
+    },
+    {
+      "id": "B19-dispatch-container-depth-near",
+      "exit_code": 0,
+      "observation": "container-depth-near"
+    },
+    {
+      "id": "B19-release-container-depth-near",
+      "exit_code": 0,
+      "observation": "container-depth-near"
+    },
+    {
+      "id": "B19-dispatch-container-depth-over",
+      "exit_code": 3,
+      "observation": "container-depth-over"
+    },
+    {
+      "id": "B19-release-container-depth-over",
+      "exit_code": 3,
+      "observation": "container-depth-over"
+    },
+    {
+      "id": "B19-dispatch-id-near",
+      "exit_code": 0,
+      "observation": "id-near"
+    },
+    {
+      "id": "B19-release-id-near",
+      "exit_code": 0,
+      "observation": "id-near"
+    },
+    {
+      "id": "B19-dispatch-path-depth-near",
+      "exit_code": 0,
+      "observation": "path-depth-near"
+    },
+    {
+      "id": "B19-release-path-depth-near",
+      "exit_code": 0,
+      "observation": "path-depth-near"
+    },
+    {
+      "id": "B20-dispatch-join-near",
+      "exit_code": 0,
+      "observation": "join-near"
+    },
+    {
+      "id": "B20-release-join-near",
+      "exit_code": 0,
+      "observation": "join-near"
+    },
+    {
+      "id": "B20-dispatch-join-over",
+      "exit_code": 4,
+      "observation": "join-over"
+    },
+    {
+      "id": "B20-release-join-over",
+      "exit_code": 4,
+      "observation": "join-over"
+    },
+    {
+      "id": "B20-dispatch-join-over-with-failure",
+      "exit_code": 1,
+      "observation": "join-over-with-failure"
+    },
+    {
+      "id": "B20-release-join-over-with-failure",
+      "exit_code": 1,
+      "observation": "join-over-with-failure"
+    },
+    {
+      "id": "B20-dispatch-join-over-deontic",
+      "exit_code": 4,
+      "observation": "join-over-deontic"
+    },
+    {
+      "id": "B20-release-join-over-deontic",
+      "exit_code": 4,
+      "observation": "join-over-deontic"
+    },
+    {
+      "id": "B21-dispatch-missing-safe-capability",
+      "exit_code": 3,
+      "observation": "missing-safe-capability"
+    },
+    {
+      "id": "B21-release-missing-safe-capability",
+      "exit_code": 3,
+      "observation": "missing-safe-capability"
+    },
+    {
+      "id": "B22-dispatch-reader-counter-control",
+      "exit_code": 0,
+      "observation": "reader-counter-control"
+    },
+    {
+      "id": "B22-release-reader-counter-control",
+      "exit_code": 0,
+      "observation": "reader-counter-control"
+    },
+    {
+      "id": "B22-dispatch-join-counter-control",
+      "exit_code": 0,
+      "observation": "join-counter-control"
+    },
+    {
+      "id": "B22-release-join-counter-control",
+      "exit_code": 0,
+      "observation": "join-counter-control"
+    },
+    {
+      "id": "B23-dispatch-synth-refusal",
+      "exit_code": 3,
+      "observation": "synth-refusal"
+    },
+    {
+      "id": "B23-release-synth-refusal",
+      "exit_code": 3,
+      "observation": "synth-refusal"
+    },
+    {
+      "id": "B23-dispatch-codegen-refusal",
+      "exit_code": 3,
+      "observation": "codegen-refusal"
+    },
+    {
+      "id": "B23-release-codegen-refusal",
+      "exit_code": 3,
+      "observation": "codegen-refusal"
+    },
+    {
+      "id": "B23-dispatch-session-refusal",
+      "exit_code": 3,
+      "observation": "session-refusal"
+    },
+    {
+      "id": "B23-release-session-refusal",
+      "exit_code": 3,
+      "observation": "session-refusal"
+    },
+    {
+      "id": "B23-dispatch-conformance-drift",
+      "exit_code": 0,
+      "observation": "conformance-drift"
+    },
+    {
+      "id": "B23-release-conformance-drift",
+      "exit_code": 0,
+      "observation": "conformance-drift"
+    },
+    {
+      "id": "B23-dispatch-extract-owned-projection",
+      "exit_code": 0,
+      "observation": "extract-owned-projection"
+    },
+    {
+      "id": "B23-release-extract-owned-projection",
+      "exit_code": 0,
+      "observation": "extract-owned-projection"
+    },
+    {
+      "id": "B23-dispatch-verbalize-ownership",
+      "exit_code": 0,
+      "observation": "verbalize-ownership"
+    },
+    {
+      "id": "B23-release-verbalize-ownership",
+      "exit_code": 0,
+      "observation": "verbalize-ownership"
+    },
+    {
+      "id": "B23-dispatch-diagnostic-redaction",
+      "exit_code": 0,
+      "observation": "diagnostic-redaction"
+    },
+    {
+      "id": "B23-release-diagnostic-redaction",
+      "exit_code": 0,
+      "observation": "diagnostic-redaction"
+    },
+    {
+      "id": "B24-dispatch-delivery-current",
+      "exit_code": 0,
+      "observation": "delivery-current"
+    },
+    {
+      "id": "B24-release-delivery-current",
+      "exit_code": 0,
+      "observation": "delivery-current"
+    },
+    {
+      "id": "B17-dispatch-derivation-origins",
+      "exit_code": 0,
+      "observation": "derivation-origins"
+    },
+    {
+      "id": "B17-dispatch-anchored-origins",
+      "exit_code": 4,
+      "observation": "anchored-origins"
+    },
+    {
+      "id": "B17-release-derivation-origins",
+      "exit_code": 0,
+      "observation": "derivation-origins"
+    },
+    {
+      "id": "B17-release-anchored-origins",
+      "exit_code": 4,
+      "observation": "anchored-origins"
+    }
+  ]
+}

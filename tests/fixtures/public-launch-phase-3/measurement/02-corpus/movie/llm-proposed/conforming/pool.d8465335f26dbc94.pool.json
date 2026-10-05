@@ -1,0 +1,41 @@
+{
+  "object_types": {
+    "movie": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "provenance": {
+    "prompt_version": "public-example-v1",
+    "proposer_model": "Codex synthetic fixture authoring",
+    "source": "llm-proposed"
+  },
+  "value_types": {
+    "movie_id": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "title": [
+      "North",
+      "South",
+      "North",
+      "South",
+      "North",
+      "South",
+      "North",
+      "South"
+    ]
+  }
+}

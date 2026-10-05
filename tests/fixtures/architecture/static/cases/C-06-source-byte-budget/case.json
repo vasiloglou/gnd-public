@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "C-06-source-byte-budget",
+  "story": "Regular sources whose aggregate size exceeds 64 MiB are refused before source reads.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "generated-source-bytes",
+    "count": 65,
+    "size": 1048577
+  },
+  "project": []
+}

@@ -1,0 +1,26 @@
+quickstart.md: selected executable blocks passed
+README.md: selected executable blocks passed
+release-example.md: selected executable blocks passed
+01-model.md: selected executable blocks passed
+02-facts.md: selected executable blocks passed
+03-project.md: selected executable blocks passed
+04-application.md: selected executable blocks passed
+05-repair.md: selected executable blocks passed
+06-evolution.md: selected executable blocks passed
+01-model.md: selected executable blocks passed
+02-application.md: selected executable blocks passed
+03-evolution.md: selected executable blocks passed
+python-api.md: selected executable blocks passed
+walkthrough.md: selected executable blocks passed
+scenario.md: selected executable blocks passed
+pyrel.md: selected executable blocks passed
+Native lanes not executed: pyrel
+scenario.md: selected executable blocks passed
+souffle.md: selected executable blocks passed
+Native lanes not executed: souffle
+scenario.md: selected executable blocks passed
+lean.md: selected executable blocks passed
+Native lanes not executed: lean
+scenario.md: selected executable blocks passed
+decision.md: selected executable blocks passed
+122 tutorial blocks passed

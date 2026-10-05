@@ -1,9 +1,10 @@
 # Contributor setup and bootstrap history
 
 Current setup uses only this target checkout and its installed package, as shown
-in [CONTRIBUTING](../../CONTRIBUTING.md). No source-checkout bootstrap is required.
-Both skill roots are installed/adopted locally. Final candidate isolation and
-full selected regression acceptance remain pending in Phase 3.
+in [CONTRIBUTING](https://github.com/vasiloglou/gnd-public/blob/main/CONTRIBUTING.md). No source-checkout bootstrap is required.
+Both skill roots can be installed/adopted locally. Phase 3 recorded acceptance
+for its artifacts. The documentation and packaged examples added in Phase 4.1
+receive affected validation before final Phase 4 candidate sign-off.
 
 P1 historically used a temporary conditional source bootstrap. P2 replaced it
 for selected checks. Those historical records remain valid for their original

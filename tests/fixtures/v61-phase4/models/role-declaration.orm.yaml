@@ -1,0 +1,36 @@
+version: 2
+model_id: urn:gnd-fixture:v61-phase4-role@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+  - { id: code, name: Code, kind: value, primitive: String }
+fact_types:
+  - id: seed
+    reading: "{Item} is seeded"
+    roles: [{ object_type: item, role_name: item }]
+  - id: optional_code
+    reading: "{Item} has code {Code}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: code, role_name: code, redact: true }
+    constraints:
+      - type: uniqueness
+        roles: [code]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One item may carry a given optional code." }
+operations:
+  - id: set_optional_code
+    reading: "{Item} receives code {Code}"
+    parameters:
+      - { name: item, object_type: item }
+      - { name: code, object_type: code }
+    effects:
+      - assert: { fact_type: optional_code, bind: { item: "$item", code: "$code" } }
+    frame: { modality: deontic }
+    source: explicit
+    status: confirmed
+    provenance: { user_quote: "A code may be attached to an item." }
+constraints: []
+rejected_proposals: []

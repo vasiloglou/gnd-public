@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-33-literal-name-indirection-limit",
+  "story": "Literal basename indirection satisfies weak reference evidence but is not path-resolved.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "from pathlib import Path\nname = \"data.json\"\nARTIFACT_PATH = Path(__file__).parent / \"artifacts\" / name\n"
+    }
+  ]
+}

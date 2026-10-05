@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-19-symbol-absent",
+  "story": "A parsed module without the declared effective function reports the missing symbol.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "VALUE = 1\n"
+    }
+  ]
+}

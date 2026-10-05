@@ -1,0 +1,105 @@
+{
+  "pr": {
+    "headRefOid": "85986f1f3a47428033d3ce122227bd92009763d3",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:53Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172240933/job/111347397843",
+        "name": "candidate",
+        "startedAt": "2026-10-04T02:49:51Z",
+        "status": "COMPLETED",
+        "workflowName": "Development and candidate acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:53Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172241065/job/111347398237",
+        "name": "build",
+        "startedAt": "2026-10-04T02:49:51Z",
+        "status": "COMPLETED",
+        "workflowName": "Documentation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:53Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172240933/job/111347397986",
+        "name": "regression (ubuntu-latest, 3.11)",
+        "startedAt": "2026-10-04T02:49:51Z",
+        "status": "COMPLETED",
+        "workflowName": "Development and candidate acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:53Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172241065/job/111347404438",
+        "name": "deploy",
+        "startedAt": "2026-10-04T02:49:54Z",
+        "status": "COMPLETED",
+        "workflowName": "Documentation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:56Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172240933/job/111347397730",
+        "name": "regression (macos-latest, 3.13)",
+        "startedAt": "2026-10-04T02:49:51Z",
+        "status": "COMPLETED",
+        "workflowName": "Development and candidate acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:53Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172240933/job/111347403703",
+        "name": "installed",
+        "startedAt": "2026-10-04T02:49:53Z",
+        "status": "COMPLETED",
+        "workflowName": "Development and candidate acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T02:49:59Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/vasiloglou/gnd-public/actions/runs/37172240933/job/111347410247",
+        "name": "phase2",
+        "startedAt": "2026-10-04T02:49:56Z",
+        "status": "COMPLETED",
+        "workflowName": "Development and candidate acceptance"
+      }
+    ],
+    "url": "https://github.com/vasiloglou/gnd-public/pull/2"
+  },
+  "documentation_annotations": [
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/vasiloglou/gnd-public/blob/85986f1f3a47428033d3ce122227bd92009763d3/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "raw_details": ""
+    },
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/vasiloglou/gnd-public/blob/85986f1f3a47428033d3ce122227bd92009763d3/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "notice",
+      "title": "",
+      "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+      "raw_details": ""
+    }
+  ],
+  "classification": "workflow jobs did not start; account billing/spending-limit blocker; no CI test execution claimed"
+}

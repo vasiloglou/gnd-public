@@ -1,0 +1,10 @@
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers:
+    - reviewer_signs_report
+instances:
+  reviewer: ["r1", "r2"]
+facts:
+  reviewer_signs_report:
+    - { reviewer: "r1", report: "rep1" }

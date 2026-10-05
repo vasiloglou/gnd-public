@@ -1,0 +1,30 @@
+{
+  "method": "Conservative surviving authored-line accounting: full new controls and notes, explicit additions to existing files, allowances for adaptations. Full collection helper included even though partly inherited. Imported tests/resources, unchanged inherited acceptance runner, approval/spec inputs, external review outputs, raw/generated evidence and final completion records are separate. Copies of the same prose are not authored twice.",
+  "counts": {
+    "tests/test_release_acceptance.py": 211,
+    "tests/test_acceptance_controls.py": 62,
+    "tests/test_public_collection.py": 103,
+    ".gnd-planning/milestones/public-launch/notes/phase-3-family-selection.md": 77,
+    ".gnd-planning/milestones/public-launch/notes/phase-3-source-delta.md": 22,
+    ".gnd-planning/milestones/public-launch/notes/phase-3-review-disposition.md": 48,
+    ".github/workflows/development.yml": 102,
+    ".gitignore": 1,
+    "AGENTS.md": 10,
+    "CONTRIBUTING.md": 10,
+    "README.md": 6,
+    "src/gnd/correspondence.py": 18,
+    "tests/support/repository.py": 8,
+    "tests/test_agent_cli.py": 16,
+    "tests/test_development_scaffold.py": 6,
+    "tests/test_guarded_corpus.py": 147,
+    "historical module marker assignments (conservative allowance)": 18,
+    "reference driver adaptations (conservative allowance; driver imported)": 12,
+    "offline fake-tool fixture repair": 2,
+    "source resumption pointer": 9,
+    "source acceptance-blocker checkpoint": 58
+  },
+  "upper_bound_lines": 946,
+  "combined_ceiling": 960,
+  "initial_ceiling": 800,
+  "benchmark_amendment_addition": 160
+}

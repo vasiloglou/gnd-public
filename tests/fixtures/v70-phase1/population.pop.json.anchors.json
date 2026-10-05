@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "population_sha256": "0645868247700b950ef84925394ca1e856eb804cfecba57743022a71ae4adbed",
+  "vocabulary_digest": "02afe40184956236b69901991e43118442d9585971d2d71c3c25aa22729c930e",
+  "document_sha256": "640ce370c51aee91a39917a920b7d9128154be59ad7c999f1de57a6372fc4710",
+  "anchors": [
+    {
+      "fact_key": {
+        "fact_type": "record_has_label",
+        "roles": {
+          "record": "R-1",
+          "label": "Café Alpha"
+        }
+      },
+      "role": "label",
+      "span": {
+        "start": 27,
+        "end": 37
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "f43f727fc3751f7bb6b79b8249b75a4a226a562d33e3de301fa63b6967926d7d"
+    },
+    {
+      "fact_key": {
+        "fact_type": "invoice_has_quantity",
+        "roles": {
+          "invoice": "I-7",
+          "quantity": 1234
+        }
+      },
+      "role": "quantity",
+      "span": {
+        "start": 284,
+        "end": 290
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "7c2fbd8b0380d2681e9daf341f79ee471af08e6f1624126da3294764d1ad1ace"
+    },
+    {
+      "fact_key": {
+        "fact_type": "price_has_value",
+        "roles": {
+          "price": "P-8",
+          "value": -12.5
+        }
+      },
+      "role": "value",
+      "span": {
+        "start": 311,
+        "end": 317
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "92343fb339829a4e242e745c606fb31f9b8b4d497e46358a142355c8db04ceff"
+    },
+    {
+      "fact_key": {
+        "fact_type": "rate_has_value",
+        "roles": {
+          "rate": "D-9",
+          "value": 12.5
+        }
+      },
+      "role": "value",
+      "span": {
+        "start": 339,
+        "end": 345
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "5131ace2a3b4c8df126410e3b6b14130a6a2b02f3cf43aa07be968fe4717d5e2"
+    },
+    {
+      "fact_key": {
+        "fact_type": "date_has_value",
+        "roles": {
+          "date_id": "E-1",
+          "date": "2024-02-29"
+        }
+      },
+      "role": "date",
+      "span": {
+        "start": 367,
+        "end": 377
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "2b65ec693644068605c58315fc62d32e4eff6b2f515de973ce63f5bc6e3dcadf"
+    },
+    {
+      "fact_key": {
+        "fact_type": "notice_to_party",
+        "roles": {
+          "notice": "N-1",
+          "party": "Holder"
+        }
+      },
+      "role": "party",
+      "span": {
+        "start": 418,
+        "end": 424
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "efb13468b1325dfc7b9d2cf25525af78c96b9d914ec67204c64a456c07e9dc55"
+    },
+    {
+      "fact_key": {
+        "fact_type": "pair_has_names",
+        "roles": {
+          "left": "Left",
+          "right": "Right"
+        }
+      },
+      "role": "left",
+      "span": {
+        "start": 431,
+        "end": 435
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "58eb9032e3bb83f0e39d644ebc87ca254117b95bf458483bec7379bea0b419d0"
+    },
+    {
+      "fact_key": {
+        "fact_type": "pair_has_names",
+        "roles": {
+          "left": "Left",
+          "right": "Right"
+        }
+      },
+      "role": "right",
+      "span": {
+        "start": 440,
+        "end": 445
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "883361d5d682a1574410961ce51450b6e036a779c9f098dec71e28aec832bfa6"
+    }
+  ]
+}

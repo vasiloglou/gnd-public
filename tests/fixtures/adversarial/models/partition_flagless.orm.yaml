@@ -1,0 +1,70 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: String
+
+  - id: course
+    name: Course
+    kind: value
+    primitive: String
+
+  - id: duty
+    name: Duty
+    kind: value
+    primitive: String
+
+  - id: student
+    name: Student
+    kind: entity
+    subtype_of: [person]
+    inherits_reference: true
+    derivation: asserted
+
+  - id: staff
+    name: Staff
+    kind: entity
+    subtype_of: [person]
+    inherits_reference: true
+    derivation: asserted
+
+fact_types:
+  - id: student_takes_course
+    reading: "{Student} takes {Course}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+
+  - id: staff_performs_duty
+    reading: "{Staff} performs {Duty}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: duty, role_name: duty }
+
+  - id: person_has_id_card
+    reading: "{Person} has id card {PersonId}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: person_id, role_name: card }
+
+constraints:
+  - type: subtype-partition
+    supertype: person
+    subtypes: [student, staff]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "People here are students and staff." }

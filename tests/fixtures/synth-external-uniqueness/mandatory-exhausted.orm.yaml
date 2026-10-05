@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "slot_key",
+      "name": "SlotKey",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "card_key",
+      "name": "CardKey",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "number",
+      "name": "Number",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "slot",
+      "name": "Slot",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "slot_key"
+      }
+    },
+    {
+      "id": "card",
+      "name": "Card",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "card_key"
+      }
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "card_matches_slot",
+      "reading": "{Card} relates to {Slot}",
+      "roles": [
+        {
+          "object_type": "card",
+          "role_name": "card"
+        },
+        {
+          "object_type": "slot",
+          "role_name": "slot"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "card"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          },
+          "preferred": true
+        },
+        {
+          "type": "uniqueness",
+          "roles": [
+            "slot"
+          ],
+          "preferred": false,
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        },
+        {
+          "type": "mandatory",
+          "role": "card",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        }
+      ]
+    },
+    {
+      "id": "card_has_metric",
+      "reading": "{Card} relates to {Number}",
+      "roles": [
+        {
+          "object_type": "card",
+          "role_name": "card"
+        },
+        {
+          "object_type": "number",
+          "role_name": "metric"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "card"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        },
+        {
+          "type": "mandatory",
+          "role": "card",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic constraint authored for the public algorithm example."
+          }
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "cardinality",
+      "scope": "object",
+      "object_type": "slot",
+      "bound": {
+        "max": 1
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Synthetic constraint authored for the public algorithm example."
+      }
+    }
+  ],
+  "rejected_proposals": [],
+  "deontic_notes": []
+}

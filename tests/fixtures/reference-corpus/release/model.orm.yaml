@@ -1,0 +1,78 @@
+version: 4
+model_id: urn:gnd-fixture:v71-release-references@1
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+object_types:
+- id: release_release
+  name: Release
+  kind: value
+  primitive: String
+- id: release_service
+  name: Service
+  kind: value
+  primitive: String
+- id: release_environment
+  name: Environment
+  kind: value
+  primitive: String
+fact_types:
+- id: release_subject_service
+  reading: '{release} {service}'
+  roles:
+  - role_name: release
+    object_type: release_release
+  - role_name: service
+    object_type: release_service
+- id: release_subject_environment
+  reading: '{release} {environment}'
+  roles:
+  - role_name: release
+    object_type: release_release
+  - role_name: environment
+    object_type: release_environment
+- id: release_catalog_allows
+  reading: '{service} {environment}'
+  roles:
+  - role_name: service
+    object_type: release_service
+  - role_name: environment
+    object_type: release_environment
+- id: release_catalog_label
+  reading: '{service}'
+  roles:
+  - role_name: service
+    object_type: release_service
+constraints:
+- id: release_catalog_membership
+  type: guarded
+  antecedent:
+  - fact_type: release_subject_service
+    bind:
+      release: $s
+      service: $l
+  - fact_type: release_subject_environment
+    bind:
+      release: $s
+      environment: $r
+  consequent:
+    exists:
+      atoms:
+      - fact_type: release_catalog_allows
+        bind:
+          service: $l
+          environment: $r
+  source: user-supplied
+  status: confirmed
+  modality: alethic
+  provenance:
+    user_quote: Every requested service/environment pair must occur in the fixed
+      approval catalog.
+rejected_proposals: []
+reference_populations:
+- id: catalog
+  path: references/catalog.pop.json
+  sha256: bc2b71b8aca4e448b8d9692d743fa38b5ad5f33d22f2c5cf0711eaa44e601947
+  fact_types:
+  - release_catalog_allows

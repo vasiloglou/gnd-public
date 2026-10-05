@@ -1,0 +1,30 @@
+version: 1
+model_id: urn:gnd-fixture:v51-extraction-boundary:mixed@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+
+object_types:
+  - {id: book, name: Book, kind: value, primitive: String}
+
+fact_types:
+  - id: book_listed
+    reading: "{Book} is listed"
+    roles: [{object_type: book, role_name: book}]
+  - id: book_blocked
+    reading: "{Book} is blocked"
+    roles: [{object_type: book, role_name: book}]
+  - id: book_is_eligible
+    reading: "{Book} is eligible"
+    roles: [{object_type: book, role_name: book}]
+    derivation: derived
+    derivation_rule:
+      body: [{fact_type: book_listed, bind: {book: "$b"}}]
+      negate: [{fact_type: book_blocked, bind: {book: "$b"}}]
+      head: {book: "$b"}
+  - id: book_ranked
+    reading: "{Book} is ranked"
+    roles: [{object_type: book, role_name: book}]
+    derivation: derived
+    derivation_rule: "ranked by an opaque external scorer"
+
+constraints: []
+rejected_proposals: []

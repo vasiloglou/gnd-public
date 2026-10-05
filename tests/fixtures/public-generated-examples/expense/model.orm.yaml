@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-public-example:expense@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "expense",
+      "name": "Expense",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "expense_id"
+      }
+    },
+    {
+      "id": "expense_id",
+      "name": "ExpenseId",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "employee",
+      "name": "Employee",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "amount",
+      "name": "Amount",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "chain",
+      "name": "Chain",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "expense_submitted_by_employee",
+      "reading": "{Expense} is submitted by {Employee}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "employee",
+          "role_name": "employee"
+        }
+      ]
+    },
+    {
+      "id": "expense_has_amount",
+      "reading": "{Expense} has {Amount}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "amount",
+          "role_name": "amount"
+        }
+      ]
+    },
+    {
+      "id": "expense_is_approved",
+      "reading": "{Expense} is approved",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        }
+      ]
+    },
+    {
+      "id": "expense_approved_by_chain",
+      "reading": "{Expense} is approved by {Chain}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "chain",
+          "role_name": "chain"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "expense_is_approved",
+          "role": "expense"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "expense_submitted_by_employee",
+          "role": "expense"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The produced role stays inside the admitted input role."
+      }
+    }
+  ]
+}

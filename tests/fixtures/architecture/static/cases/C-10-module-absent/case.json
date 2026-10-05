@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "C-10-module-absent",
+  "story": "A modules-only absent source emits declared-module-missing.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "absent"
+    }
+  ]
+}

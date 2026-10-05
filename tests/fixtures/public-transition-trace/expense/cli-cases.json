@@ -1,0 +1,55 @@
+{
+  "_comment": "CLI argument-shape refusals. These are invocations, not walks: they never reach the transition evaluator, so they carry no pre/steps/post triple of their own and reuse clean-walk's files.",
+  "cases": [
+    {
+      "name": "positional-plus-transition-arm",
+      "story": "A positional population AND the transition arm. The two modes answer different questions and silently preferring one would make the other's arguments decorative.",
+      "argv": [
+        "check",
+        "v2_expense.orm.yaml",
+        "walks/clean-walk/pre.pop.yaml",
+        "--pre",
+        "walks/clean-walk/pre.pop.yaml",
+        "--steps",
+        "walks/clean-walk/steps.json",
+        "--post",
+        "walks/clean-walk/post.pop.yaml"
+      ],
+      "exit": 64
+    },
+    {
+      "name": "partial-triple-pre-only",
+      "story": "--pre with no --steps and no --post. A transition run needs all three; a partial triple is a typo, not a mode.",
+      "argv": [
+        "check",
+        "v2_expense.orm.yaml",
+        "--pre",
+        "walks/clean-walk/pre.pop.yaml"
+      ],
+      "exit": 64
+    },
+    {
+      "name": "partial-triple-steps-and-post",
+      "story": "The other partial shape -- steps and post without a starting state.",
+      "argv": [
+        "check",
+        "v2_expense.orm.yaml",
+        "--steps",
+        "walks/clean-walk/steps.json",
+        "--post",
+        "walks/clean-walk/post.pop.yaml"
+      ],
+      "exit": 64
+    },
+    {
+      "name": "trace-on-check-is-not-offered",
+      "story": "D6: --trace belongs to validate, not to check. Reporting what would be evaluated and evaluating it are different commands.",
+      "argv": [
+        "check",
+        "v2_expense.orm.yaml",
+        "--trace"
+      ],
+      "exit": 64
+    }
+  ]
+}

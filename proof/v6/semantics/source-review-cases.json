@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "original_clause_count": 54,
+  "original_clause_rows_sha256": "d1e6d12762ed90f7b5a76dd23c501d337ec3963debb188ed4a4fdf76e867bc39",
+  "original_expected_sha256": "892cd16dff5503fa4398c0297075228146b82bb434ae08b070008f0d5fe41d5b",
+  "cases": [
+    {
+      "id": "SRC-01",
+      "kind": "temporal",
+      "clauses": [
+        "NS-ORDER-2"
+      ],
+      "left": "2026-01-01T07:00:00-05:00",
+      "right": "2026-01-01T12:00:00Z"
+    },
+    {
+      "id": "SRC-02",
+      "kind": "temporal",
+      "clauses": [
+        "NS-ORDER-2"
+      ],
+      "left": "2026-01-01T08:00:00-05:00",
+      "right": "2026-01-01T12:00:00Z"
+    },
+    {
+      "id": "SRC-03",
+      "kind": "canonical",
+      "clauses": [
+        "NS-CANON-2"
+      ],
+      "values": [
+        2,
+        10
+      ]
+    },
+    {
+      "id": "SRC-04",
+      "kind": "snapshot",
+      "clauses": [
+        "NS-JOIN-2"
+      ],
+      "base": "P2-188",
+      "load_refused": true
+    },
+    {
+      "id": "SRC-05",
+      "kind": "assurance",
+      "clauses": [
+        "NS-DECISION-2"
+      ],
+      "applicable": 3,
+      "current": 3,
+      "in_scope": true,
+      "route": "verify",
+      "authenticated": false
+    },
+    {
+      "id": "SRC-06",
+      "kind": "assurance",
+      "clauses": [
+        "NS-DECISION-2"
+      ],
+      "applicable": 3,
+      "current": 3,
+      "in_scope": true,
+      "route": "verify",
+      "authenticated": true
+    },
+    {
+      "id": "SRC-07",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-GUARDED-4"
+      ],
+      "base": "P2-163",
+      "load_refused": true
+    },
+    {
+      "id": "SRC-08",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-PARTITION-4"
+      ],
+      "base": "P2-172"
+    },
+    {
+      "id": "SRC-09",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-RING-SHAPE-2"
+      ],
+      "base": "P2-069",
+      "population_patch": [
+        {
+          "path": "facts.rel_symmetric_irreflexive",
+          "value": [
+            {
+              "a": 1,
+              "b": 1
+            },
+            {
+              "a": 2,
+              "b": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SRC-10",
+      "kind": "snapshot",
+      "clauses": [
+        "NS-WITNESS-2",
+        "NF-CARD-OBJECT-2"
+      ],
+      "base": "P2-171",
+      "model_patch": [
+        {
+          "path": "constraints[7].bound",
+          "value": {
+            "min": 1,
+            "max": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRC-11",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-CARD-ROLE-2"
+      ],
+      "base": "P2-135"
+    },
+    {
+      "id": "SRC-12",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-PARTITION-5"
+      ],
+      "base": "P2-150",
+      "model_patch": [
+        {
+          "path": "object_types[widget].derivation",
+          "value": "semiderived"
+        }
+      ]
+    },
+    {
+      "id": "SRC-13",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-UC-INTERNAL-2"
+      ],
+      "base": "P2-002"
+    },
+    {
+      "id": "SRC-14",
+      "kind": "snapshot",
+      "clauses": [
+        "NS-CANON-2"
+      ],
+      "base": "P2-036"
+    },
+    {
+      "id": "SRC-15",
+      "kind": "snapshot",
+      "clauses": [
+        "NF-TEXTUAL-2"
+      ],
+      "base": "P2-164"
+    }
+  ]
+}

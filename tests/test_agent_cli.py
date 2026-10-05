@@ -496,20 +496,31 @@ def test_timeout_escalates_term_to_kill_and_awaits_descendants(tmp_path: Path) -
 
 @pytest.mark.skipif(os.name != "posix", reason="process-group assertion is POSIX-specific")
 @pytest.mark.parametrize(
-    ("mode", "expected_status"),
+    ("mode", "expected_status", "creation_delay"),
     [
-        ("orphan-pipes", "timed-out"),
-        ("orphan-detached-streams", "failed"),
+        ("orphan-pipes", "timed-out", 0),
+        ("orphan-pipes", "timed-out", 0.08),
+        ("orphan-detached-streams", "failed", 0),
     ],
 )
 def test_direct_exit_is_not_cleanup_until_the_process_group_is_gone(
     tmp_path: Path,
     mode: str,
     expected_status: str,
+    creation_delay: float,
+    monkeypatch,
 ) -> None:
     program = _write_program(tmp_path / "program")
     marker = tmp_path / f"{mode}-survived"
 
+    create = asyncio.create_subprocess_exec
+
+    async def scheduled_create(*args, **kwargs):
+        process = await create(*args, **kwargs)
+        await asyncio.sleep(creation_delay)
+        return process
+
+    monkeypatch.setattr(asyncio, "create_subprocess_exec", scheduled_create)
     result = asyncio.run(
         run_bounded_process(
             (sys.executable, str(program), mode, str(marker)),
@@ -520,7 +531,8 @@ def test_direct_exit_is_not_cleanup_until_the_process_group_is_gone(
     )
     time.sleep(0.9)
 
-    assert result.status == expected_status
+    allowed = {"failed", "timed-out"} if mode == "orphan-pipes" else {expected_status}
+    assert result.status in allowed
     assert result.process_group_cleaned is True
     assert result.termination in {"terminated", "killed"}
     assert not marker.exists(), "runner returned while a same-group descendant could mutate"

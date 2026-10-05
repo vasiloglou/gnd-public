@@ -1,0 +1,47 @@
+{
+  "models": [
+    {
+      "id": "M-01",
+      "path": "models/role-declaration.orm.yaml",
+      "declarations": [
+        "optional_code.code"
+      ],
+      "effective_roles": [
+        "optional_code.code"
+      ]
+    }
+  ],
+  "snapshot_cases": [
+    {
+      "id": "SN-00",
+      "model": "M-01",
+      "population": "populations/00-clean.yaml",
+      "expected_exit": 0
+    },
+    {
+      "id": "SN-01",
+      "model": "M-01",
+      "population": "populations/01-violating.yaml",
+      "expected_exit": 1
+    }
+  ],
+  "transition_cases": [
+    {
+      "id": "B-01",
+      "model": "M-01",
+      "pre": "populations/transition-pre.yaml",
+      "steps": "steps/binding-only.json",
+      "post": "populations/transition-post.yaml",
+      "expected_exit": 0,
+      "only_secret_echo": "step-binding"
+    }
+  ],
+  "synthetic_exits": [
+    {
+      "id": "X-03-PRE",
+      "kind": "missing-or-invalid-model-before-policy",
+      "expected_exit": 3,
+      "expects_redaction": false
+    }
+  ]
+}

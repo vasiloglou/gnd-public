@@ -1,0 +1,9 @@
+population:
+  model: float_range.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - reading_has_celsius
+facts:
+  reading_has_celsius:
+    - { reading: "R1", celsius: .nan }

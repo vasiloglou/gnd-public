@@ -1,0 +1,9 @@
+population:
+  model: unresolvable_bound.orm.yaml
+  source: agent-output
+  label: violating
+  covers:
+    - batch_has_mass
+facts:
+  batch_has_mass:
+    - { batch: "B1", mass: "heavy" }

@@ -1,0 +1,18 @@
+population:
+  model: ../models/existential-guard.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase6-existential-guard@1
+  source: fixture
+  covers: [radio_sample, neighbor_seen, neighbor_cell]
+facts:
+  radio_sample:
+    - { sample: alpha-1, monitor: alice, pci: 29, token: SECRET-EXISTS-271828 }
+    - { sample: alpha-2, monitor: alice, pci: 7, token: TOKEN-ALPHA-2 }
+    - { sample: alpha-3, monitor: alice, pci: 11, token: TOKEN-ALPHA-3 }
+  neighbor_seen:
+    - { sample: alpha-1, neighbor: n-match }
+    - { sample: alpha-1, neighbor: n-wrong }
+    - { sample: alpha-2, neighbor: n-mismatch }
+  neighbor_cell:
+    - { cell: n-match, pci: 59, modulus: 30 }
+    - { cell: n-wrong, pci: 28, modulus: 30 }
+    - { cell: n-mismatch, pci: 36, modulus: 30 }

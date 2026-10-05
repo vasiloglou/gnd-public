@@ -1,0 +1,23 @@
+{
+  "steps_schema": 1,
+  "model": "../../v2_expense.orm.yaml",
+  "model_digest": "sha256:f15fd343eaece326f69edb9a1627811cb0911e239e1605b579b6957a88615c9b",
+  "operations_digest": "sha256:5e03c615a61b08d89abeaf6ed2e918dadf96e2f07198d48c0380df1fb38c8009",
+  "steps": [
+    {
+      "op": "approve_expense",
+      "bindings": {
+        "expense": 41,
+        "approver": "alice"
+      }
+    },
+    {
+      "op": "submit_expense_to_workday",
+      "bindings": {
+        "expense": 41,
+        "submission": "WD-9001",
+        "chain": "c-1"
+      }
+    }
+  ]
+}

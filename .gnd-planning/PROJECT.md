@@ -1,4 +1,4 @@
-# GND public launch
+# GND public migration
 
 Create a fresh public repository through private reviewed migration, retain the
 phase development workflow, then launch the generic framework. `public-launch`
@@ -19,3 +19,23 @@ returned four reproduced/fixed findings; the stopped follow-up has no opinion.
 Phase 3 separately for final behavior-family/candidate/clean-install/CI acceptance,
 then sign off those exact retained artifacts. No publication or certification
 occurred; source ownership and unrelated pending work remain in place.
+
+## Current direction — Phase 4.1, 2026-10-03
+
+The owner approved [r4](milestones/public-launch/notes/public-launch-plan-r4-amendments.md)
+and its documentation/application implementation. Phase 3 acceptance is recorded
+in [004](milestones/public-launch/004-phase-3.md); earlier paused statements
+above describe the preparation checkpoint. Current order: Phase 4.1, affected
+candidate validation, Phase 4 sign-off, then Phase 5 publication.
+
+## gnd-public-migration — closed, 2026-10-04
+
+The milestone formerly named `public-launch` is renamed **gnd-public-migration**
+and closed by owner instruction ([close record](milestones/public-launch/009-milestone-close.md)).
+Records stay under `milestones/public-launch/`. Phase 4 is signed off by the owner on
+candidate `91f12e2` ([008](milestones/public-launch/008-phase-4-signoff.md)). Its local
+focused gate passes 232 tests; cloud CI after `c63b90cc3` has not run because of
+GitHub billing. **Phase 5 publication is deferred**: the owner makes the repository
+public manually, and PyPI, the release and announcements wait for an owner trigger.
+gnd-public is now the only development repository; the source repository is to be
+archived. This section supersedes the paused and pending statements above.

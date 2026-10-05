@@ -1,0 +1,18 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-v6-phase2:partition@1",
+    "source": "fixture",
+    "label": "boundary",
+    "covers": [
+      "person_has_age",
+      "student_enrolled",
+      "staff_employed"
+    ]
+  },
+  "facts": {
+    "person_has_age": [],
+    "student_enrolled": [],
+    "staff_employed": []
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "wire_versions": {
+    "report": 9,
+    "batch": 2,
+    "measurement": 3,
+    "feedback": 6,
+    "attempt": 6,
+    "result": 4,
+    "contract": 4
+  },
+  "marker": {
+    "redacted": true,
+    "roles": [
+      "optional_code.code"
+    ]
+  },
+  "instance_text_marker": "[REDACTED INSTANCE DETAIL]",
+  "canaries": {
+    "selected": [
+      "P4_SECRET_CODE_00",
+      "P4_SECRET_CODE_01",
+      "P4_SECRET_CODE_02",
+      "P4_SECRET_CODE_04",
+      "P4_SECRET_ILLFORMED_POP",
+      "P4_SECRET_BINDING_ONLY",
+      "P4_SECRET_ILLFORMED_STEP",
+      "P4_SECRET_OVER_CAP_03",
+      "P4_SECRET_CYCLE_A",
+      "P4_SECRET_CYCLE_B",
+      "P4_SECRET_DERIVATION_EXTRA",
+      "P4_SECRET_PRECONDITION_CODE",
+      "P4_SECRET_EFFECT_CODE",
+      "P4_SECRET_DYNAMIC_ITEM",
+      "P4_SECRET_BATCH_00",
+      "P4_SECRET_BATCH_DUPLICATE",
+      "P4_SECRET_BATCH_ILL_FORMED",
+      "P4_SECRET_BATCH_04",
+      "P4_SECRET_MEASURE_OK",
+      "P4_SECRET_MEASURE_DUPLICATE",
+      "P4_SECRET_MEASURE_SPARE_A",
+      "P4_SECRET_MEASURE_SPARE_B"
+    ],
+    "public_controls": [
+      "P4_PUBLIC_ITEM_00",
+      "P4_PUBLIC_ITEM_01_A",
+      "P4_PUBLIC_ITEM_01_B",
+      "P4_PUBLIC_ITEM_02",
+      "P4_PUBLIC_ITEM_03",
+      "P4_PUBLIC_ITEM_04",
+      "P4_PUBLIC_TRANSITION_ITEM",
+      "P4_PUBLIC_DERIVATION_NODE",
+      "P4_PUBLIC_DYNAMIC_RANK",
+      "P4_PUBLIC_BATCH_00",
+      "P4_PUBLIC_BATCH_01",
+      "P4_PUBLIC_BATCH_01_A",
+      "P4_PUBLIC_BATCH_01_B",
+      "P4_PUBLIC_BATCH_02",
+      "P4_PUBLIC_BATCH_03",
+      "P4_PUBLIC_BATCH_04",
+      "P4_PUBLIC_MEASURE_OK",
+      "P4_PUBLIC_MEASURE_DUPLICATE_A",
+      "P4_PUBLIC_MEASURE_DUPLICATE_B",
+      "P4_PUBLIC_MEASURE_SPARE"
+    ]
+  },
+  "expected_bands": {
+    "SN-00": 0,
+    "SN-01": 1,
+    "SN-02": 2,
+    "SN-03": 3,
+    "SN-04": 4,
+    "SN-70": 70,
+    "B-01": 0,
+    "I-02": 3
+  },
+  "applied_redaction": {
+    "mode": "applied",
+    "declarations": [
+      {
+        "case_id": null,
+        "source": "role",
+        "fact_type": "optional_code",
+        "roles": [
+          "code"
+        ]
+      }
+    ]
+  },
+  "projection_time_ceiling_seconds": 5.0,
+  "dirty_controls": {
+    "marker": {
+      "redacted": true,
+      "roles": []
+    }
+  }
+}

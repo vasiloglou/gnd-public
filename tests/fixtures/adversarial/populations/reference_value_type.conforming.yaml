@@ -1,0 +1,14 @@
+population:
+  model: reference_value_type.orm.yaml
+  source: agent-output
+  label: conforming
+  covers:
+    - movie_has_title
+    - movie_directed_by
+facts:
+  movie_has_title:
+    - { movie: 42, title: "Taxi Driver" }
+    - { movie: 7, title: "Memento" }
+  movie_directed_by:
+    - { movie: 42, director: "Scorsese" }
+    - { movie: 7, director: "Nolan" }

@@ -1,0 +1,106 @@
+{
+  "_comment": "Expectations for `gnd validate v2_expense.orm.yaml --trace`. --trace is the SHIPPED PRODUCER of operations_digest, which every steps.json is required to carry, which is why the size cut that would have dropped it was withdrawn.",
+  "argv": [
+    "validate",
+    "v2_expense.orm.yaml",
+    "--trace"
+  ],
+  "exit": 0,
+  "other_paths": [
+    {
+      "name": "trace-over-a-v1-model",
+      "argv": [
+        "validate",
+        "../../models/full_vocabulary.orm.yaml",
+        "--trace"
+      ],
+      "exit": 0,
+      "expect_output": [
+        "operations_digest",
+        "COMPILED OBLIGATIONS",
+        "(none)"
+      ],
+      "story": "A v1 document declares no operations, so --trace has nothing to compile and no fact type to grade. It must still exit 0 and still print both digests -- operations_digest over an absent section is the digest of [], which is the value a steps.json for a v1 model would have to carry."
+    },
+    {
+      "name": "trace-over-invalid-model",
+      "argv": [
+        "validate",
+        "rejecting-models/bad-role-ref.orm.yaml",
+        "--trace"
+      ],
+      "exit": 3,
+      "expect_absent": [
+        "TRACE",
+        "COMPILED OBLIGATIONS"
+      ],
+      "story": "--trace never reaches compilation if layer 2 rejects the model. Reporting on a model that does not load would be reporting on nothing."
+    }
+  ],
+  "prints_model_digest": "sha256:7ba327a9d4413ccdbe1cd94d5b7845814f470d8df1122cb1af17445283418f42",
+  "prints_operations_digest": "sha256:5e03c615a61b08d89abeaf6ed2e918dadf96e2f07198d48c0380df1fb38c8009",
+  "compiled": [
+    {
+      "operation": "reimburse_expense",
+      "obligation": "pre_submitted",
+      "modality": "alethic",
+      "locator": "$.operations[id=reimburse_expense].compiled[0]",
+      "why": "literal-free single atom whose `expense` parameter is also bound by the assert of expense_reimbursed"
+    },
+    {
+      "operation": "reimburse_expense",
+      "obligation": "pre_has_approver",
+      "modality": "deontic",
+      "locator": "$.operations[id=reimburse_expense].compiled[1]",
+      "why": "same shape, deontic -- the only route to finding class 8's warning half"
+    }
+  ],
+  "compilation_rule_note": "Q8: the rule reads 'a literal-free single-atom precondition WHOSE PARAMETER is also a parameter of an asserted fact type' and does not quantify. pre_submitted binds TWO parameters -- $expense (bound by the assert) and $submission (bound by nothing). This fixture assumes the existential reading (at least one). Under a universal reading pre_submitted does NOT compile, the corpus has no alethic compiled obligation at all, and reimburse-unsubmitted becomes unpinnable. The quantifier needs stating normatively.",
+  "transition_only": [
+    {
+      "operation": "approve_expense",
+      "obligation": "pre_draft",
+      "reason": "literal binding on the status role"
+    },
+    {
+      "operation": "submit_expense_to_workday",
+      "obligation": "pre_approved",
+      "reason": "literal binding on the status role"
+    },
+    {
+      "operation": "reimburse_expense",
+      "obligation": "pre_settled",
+      "reason": "two atoms, and a literal binding on the status role"
+    },
+    {
+      "operation": "submit_pair",
+      "obligation": "pre_both_approved",
+      "reason": "two atoms, and a literal binding on the status role"
+    }
+  ],
+  "frame_modalities": {
+    "expense_has_status": "deontic",
+    "expense_approved_by": "alethic",
+    "expense_submitted_to_workday": "deontic",
+    "chain_has_threshold": "alethic",
+    "expense_is_urgent": "alethic",
+    "expense_has_tag": "alethic",
+    "expense_reimbursed": "alethic"
+  },
+  "frame_modality_note": "Per-fact-type grading over the WHOLE model here, not over a walk: a fact type touched by ANY deontic-framed operation grades deontic. expense_has_status and expense_submitted_to_workday are both touched by the deontic-framed submit_expense_to_workday. In a walk that does not use that operation they grade alethic -- which is exactly why sneaky-side-effect (approve only) fails at 1 while audit-log-drift (approve + submit) warns. The harness must compute this per walk.",
+  "model_warnings": [
+    {
+      "rule_id": "semantic:op-dynamic-functional",
+      "operation": "tag_expense"
+    },
+    {
+      "rule_id": "semantic:op-dynamic-functional",
+      "operation": "annotate_expense"
+    },
+    {
+      "rule_id": "semantic:op-dynamic-untouched",
+      "operation": "submit_expense_to_workday",
+      "note": "threshold_only_increases takes a subject its own effects never touch, so it can never fire. Owner decision 2026-08-20 (ledger 14): the evaluator stays silent and layer 2 says so at authoring time. Exactly one operation in this model trips the rule."
+    }
+  ]
+}

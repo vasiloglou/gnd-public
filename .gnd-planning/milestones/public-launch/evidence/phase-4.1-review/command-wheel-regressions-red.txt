@@ -1,0 +1,25 @@
+................F..............................F                         [100%]
+=================================== FAILURES ===================================
+_____ test_reference_command_routes_exist[gnd import rai MODEL --out DIR] ______
+tests/test_documentation_tutorials.py:41: in test_reference_command_routes_exist
+    assert result.returncode == 0, result.stderr
+E   AssertionError: usage: gnd import [-h] {rai-orm} ...
+E     gnd import: error: argument import_command: invalid choice: 'rai' (choose from rai-orm)
+E     
+E   assert 64 == 0
+E    +  where 64 = CompletedProcess(args=['<TARGET>/.venv/bin/python', '-m', 'gnd', 'import', 'rai', 'MODEL', '--out', 'D... import [-h] {rai-orm} ...\ngnd import: error: argument import_command: invalid choice: 'rai' (choose from rai-orm)\n").returncode
+___________ test_installed_validator_requires_matching_wheels[False] ___________
+tests/test_documentation_tutorials.py:81: in test_installed_validator_requires_matching_wheels
+    with pytest.raises(AssertionError, match='wheel origins differ'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+----------------------------- Captured stdout call -----------------------------
+<TMP>/pytest-of-<USER>/pytest-3184/test_installed_validator_requi1/candidate/venv-release/lib/gnd/__init__.py
+1 tutorial blocks passed
+<TMP>/pytest-of-<USER>/pytest-3184/test_installed_validator_requi1/candidate/venv-comparison/lib/gnd/__init__.py
+1 tutorial blocks passed
+Both installed wheel origins passed the documented learning paths.
+=========================== short test summary info ============================
+FAILED tests/test_documentation_tutorials.py::test_reference_command_routes_exist[gnd import rai MODEL --out DIR]
+FAILED tests/test_documentation_tutorials.py::test_installed_validator_requires_matching_wheels[False]
+2 failed, 46 passed, 18 deselected in 6.82s

@@ -1,0 +1,4 @@
+Model declares operations: False
+Supplied approved snapshot exit: 0
+Approval without a recorded submission exit: 1
+Failure types: ['mandatory', 'subset']

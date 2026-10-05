@@ -1,0 +1,75 @@
+<svg aria-labelledby="gnd-orm-d7-title gnd-orm-d7-desc" class="gnd-figure" id="gnd-orm-d7" role="img" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+  <title id="gnd-orm-d7-title">ORM as the intermediate representation</title>
+  <desc id="gnd-orm-d7-desc">Requirements text, existing code, a GSD project or an existing ORM model become one model.orm.yaml. Checking, synthetic data, code generation, verbalization, evolution and exports all read that model.</desc>
+  <style>:where(#gnd-orm-d7){--gf-bg:#f1f4ef;--gf-card:#ffffff;--gf-line:#b7cec5;--gf-ink:#183936;--gf-muted:#5b6f6b;--gf-primary:#164f4b;--gf-accent:#b34e26;--gf-ok:#1f7a4d;--gf-ok-bg:#dcece3;--gf-fail:#b3261e;--gf-fail-bg:#f7dcd6;--gf-warn:#8a5e00;--gf-warn-bg:#fbecc2;--gf-bubble:#164f4b;--gf-bubble-ink:#ffffff;--gf-code:#f6f8f5;--gf-alethic:#6b3fa0;--gf-deontic:#1f5fa8}@media (prefers-color-scheme: dark){:where(#gnd-orm-d7){--gf-bg:#1b2b28;--gf-card:#0f1917;--gf-line:#2d4440;--gf-ink:#e6efec;--gf-muted:#9fb3ae;--gf-primary:#7bd4c6;--gf-accent:#ffb38b;--gf-ok:#6fd39a;--gf-ok-bg:#163b2b;--gf-fail:#ff8f85;--gf-fail-bg:#4a1f1b;--gf-warn:#f2c14e;--gf-warn-bg:#4a3a10;--gf-bubble:#123d39;--gf-bubble-ink:#e6efec;--gf-code:#142320;--gf-alethic:#c3a6ff;--gf-deontic:#8ab8ff}}#gnd-orm-d7 .f-bg{fill:var(--gf-bg)}#gnd-orm-d7 .f-card{fill:var(--gf-card)}#gnd-orm-d7 .f-line{fill:var(--gf-line)}#gnd-orm-d7 .f-ink{fill:var(--gf-ink)}#gnd-orm-d7 .f-muted{fill:var(--gf-muted)}#gnd-orm-d7 .f-primary{fill:var(--gf-primary)}#gnd-orm-d7 .f-accent{fill:var(--gf-accent)}#gnd-orm-d7 .f-ok{fill:var(--gf-ok)}#gnd-orm-d7 .f-ok-bg{fill:var(--gf-ok-bg)}#gnd-orm-d7 .f-fail{fill:var(--gf-fail)}#gnd-orm-d7 .f-fail-bg{fill:var(--gf-fail-bg)}#gnd-orm-d7 .f-warn{fill:var(--gf-warn)}#gnd-orm-d7 .f-warn-bg{fill:var(--gf-warn-bg)}#gnd-orm-d7 .f-bubble{fill:var(--gf-bubble)}#gnd-orm-d7 .f-bubble-ink{fill:var(--gf-bubble-ink)}#gnd-orm-d7 .f-code{fill:var(--gf-code)}#gnd-orm-d7 .f-alethic{fill:var(--gf-alethic)}#gnd-orm-d7 .f-deontic{fill:var(--gf-deontic)}#gnd-orm-d7 .s-bg{stroke:var(--gf-bg)}#gnd-orm-d7 .s-card{stroke:var(--gf-card)}#gnd-orm-d7 .s-line{stroke:var(--gf-line)}#gnd-orm-d7 .s-ink{stroke:var(--gf-ink)}#gnd-orm-d7 .s-muted{stroke:var(--gf-muted)}#gnd-orm-d7 .s-primary{stroke:var(--gf-primary)}#gnd-orm-d7 .s-accent{stroke:var(--gf-accent)}#gnd-orm-d7 .s-ok{stroke:var(--gf-ok)}#gnd-orm-d7 .s-ok-bg{stroke:var(--gf-ok-bg)}#gnd-orm-d7 .s-fail{stroke:var(--gf-fail)}#gnd-orm-d7 .s-fail-bg{stroke:var(--gf-fail-bg)}#gnd-orm-d7 .s-warn{stroke:var(--gf-warn)}#gnd-orm-d7 .s-warn-bg{stroke:var(--gf-warn-bg)}#gnd-orm-d7 .s-bubble{stroke:var(--gf-bubble)}#gnd-orm-d7 .s-bubble-ink{stroke:var(--gf-bubble-ink)}#gnd-orm-d7 .s-code{stroke:var(--gf-code)}#gnd-orm-d7 .s-alethic{stroke:var(--gf-alethic)}#gnd-orm-d7 .s-deontic{stroke:var(--gf-deontic)}#gnd-orm-d7 .sans{font-family:ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif}#gnd-orm-d7 .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;white-space:pre}#gnd-orm-d7 .nofill{fill:none}</style>
+  <rect class="f-bg" height="360" rx="16" width="800" x="0" y="0"/>
+  <text class="sans f-muted" font-size="12" font-weight="600" letter-spacing="2" x="24" y="32">ONE MODEL IN THE MIDDLE</text>
+  <g>
+    <rect class="f-card s-line" height="46" rx="10" stroke-width="1.5" width="210" x="24" y="66"/>
+    <text class="sans f-ink" font-size="13.5" font-weight="650" x="38" y="85">Requirements in text</text>
+    <text class="sans f-muted" font-size="11.5" x="38" y="101">gnd-model-from-text</text>
+  </g>
+  <path class="s-primary nofill" d="M234 89C267 89 267 180 296 180" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="46" rx="10" stroke-width="1.5" width="210" x="24" y="130"/>
+    <text class="sans f-ink" font-size="13.5" font-weight="650" x="38" y="149">Existing code</text>
+    <text class="sans f-muted" font-size="11.5" x="38" y="165">gnd-model-from-code</text>
+  </g>
+  <path class="s-primary nofill" d="M234 153C267 153 267 180 296 180" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="46" rx="10" stroke-width="1.5" width="210" x="24" y="194"/>
+    <text class="sans f-ink" font-size="13.5" font-weight="650" x="38" y="213">A GSD project</text>
+    <text class="sans f-muted" font-size="11.5" x="38" y="229">gnd-adopt</text>
+  </g>
+  <path class="s-primary nofill" d="M234 217C267 217 267 180 296 180" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="46" rx="10" stroke-width="1.5" width="210" x="24" y="258"/>
+    <text class="sans f-ink" font-size="13.5" font-weight="650" x="38" y="277">An existing ORM model</text>
+    <text class="sans f-muted" font-size="11.5" x="38" y="293">gnd import rai-orm</text>
+  </g>
+  <path class="s-primary nofill" d="M234 281C267 281 267 180 296 180" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="42" rx="10" stroke-width="1.5" width="210" x="566" y="48"/>
+    <text class="mono f-ink" font-size="13.5" font-weight="650" x="580" xml:space="preserve" y="67">check · verify</text>
+    <text class="sans f-muted" font-size="11.5" x="580" y="83">facts, plans, derived claims</text>
+  </g>
+  <path class="s-primary nofill" d="M504 180C535 180 535 69 562 69" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="42" rx="10" stroke-width="1.5" width="210" x="566" y="98"/>
+    <text class="mono f-ink" font-size="13.5" font-weight="650" x="580" xml:space="preserve" y="117">synth · measure</text>
+    <text class="sans f-muted" font-size="11.5" x="580" y="133">test data, verifier rates</text>
+  </g>
+  <path class="s-primary nofill" d="M504 180C535 180 535 119 562 119" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="42" rx="10" stroke-width="1.5" width="210" x="566" y="148"/>
+    <text class="mono f-ink" font-size="13.5" font-weight="650" x="580" xml:space="preserve" y="167">codegen · conformance</text>
+    <text class="sans f-muted" font-size="11.5" x="580" y="183">the Python project</text>
+  </g>
+  <path class="s-primary nofill" d="M504 180C535 180 535 169 562 169" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="42" rx="10" stroke-width="1.5" width="210" x="566" y="198"/>
+    <text class="mono f-ink" font-size="13.5" font-weight="650" x="580" xml:space="preserve" y="217">verbalize</text>
+    <text class="sans f-muted" font-size="11.5" x="580" y="233">rules as sentences</text>
+  </g>
+  <path class="s-primary nofill" d="M504 180C535 180 535 219 562 219" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="42" rx="10" stroke-width="1.5" width="210" x="566" y="248"/>
+    <text class="mono f-ink" font-size="13.5" font-weight="650" x="580" xml:space="preserve" y="267">evolve · diff</text>
+    <text class="sans f-muted" font-size="11.5" x="580" y="283">reviewed change</text>
+  </g>
+  <path class="s-primary nofill" d="M504 180C535 180 535 269 562 269" stroke-width="1.6"/>
+  <g>
+    <rect class="f-card s-line" height="42" rx="10" stroke-width="1.5" width="210" x="566" y="298"/>
+    <text class="mono f-ink" font-size="13.5" font-weight="650" x="580" xml:space="preserve" y="317">export</text>
+    <text class="sans f-muted" font-size="11.5" x="580" y="333">Soufflé · Lean · PyRel</text>
+  </g>
+  <path class="s-primary nofill" d="M504 180C535 180 535 319 562 319" stroke-width="1.6"/>
+  <rect class="f-primary" height="176" rx="16" width="200" x="300" y="92"/>
+  <text class="mono f-bubble-ink" font-size="15" font-weight="700" text-anchor="middle" x="400" xml:space="preserve" y="128">model.orm.yaml</text>
+  <text class="sans f-bubble-ink" font-size="13" text-anchor="middle" x="400" y="150">the executable ontology</text>
+  <line class="s-line" opacity="0.5" stroke-width="1" x1="330" x2="470" y1="166" y2="166"/>
+  <text class="sans f-bubble-ink" font-size="13" text-anchor="middle" x="400" y="190">facts · constraints</text>
+  <text class="sans f-bubble-ink" font-size="13" text-anchor="middle" x="400" y="210">modality · provenance</text>
+  <text class="sans f-bubble-ink" font-size="13" text-anchor="middle" x="400" y="230">operations · derivations</text>
+  <text class="sans f-bubble-ink" font-size="11" letter-spacing="2" opacity="0.8" text-anchor="middle" x="400" y="252">ORM 2</text>
+</svg>

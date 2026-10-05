@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "C-14-all-role-source-absent",
+  "story": "One absent source carrying module, required_by, and entry-point roles emits both role findings.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "absent"
+    }
+  ]
+}

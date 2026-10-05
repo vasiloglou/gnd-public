@@ -1,0 +1,62 @@
+version: 2
+model_id: urn:gnd-fixture:v62-phase1-static@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+  - { id: status, name: Status, kind: value, primitive: String }
+fact_types:
+  - id: evidence
+    reading: "{Item} has evidence"
+    roles: [{ object_type: item, role_name: item, redact: true }]
+  - id: blocked
+    reading: "{Item} is blocked"
+    roles: [{ object_type: item, role_name: item }]
+  - id: eligible
+    reading: "{Item} is eligible"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: semiderived
+    derivation_rule:
+      body:
+        - { fact_type: evidence, bind: { item: "$item" } }
+      negate:
+        - { fact_type: blocked, bind: { item: "$item" } }
+      head: { item: "$item" }
+  - id: final_eligible
+    reading: "{Item} is finally eligible"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: eligible, bind: { item: "$item" } }
+      head: { item: "$item" }
+  - id: ticket_status
+    reading: "{Item} has {Status}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: status, role_name: status }
+  - id: note
+    reading: "{Item} has a note"
+    roles:
+      - { object_type: item, role_name: item }
+operations:
+  - id: activate
+    reading: "{Item} is activated"
+    parameters:
+      - { name: item, object_type: item }
+    preconditions:
+      - id: pre_eligible
+        require:
+          - { fact_type: final_eligible, bind: { item: "$item" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { user_quote: "Only eligible items may be activated." }
+    effects:
+      - retract: { fact_type: ticket_status, bind: { item: "$item" } }
+      - assert: { fact_type: ticket_status, bind: { item: "$item", status: "active" } }
+    frame: { modality: alethic }
+    source: user-supplied
+    status: confirmed
+    provenance: { user_quote: "Activation changes only ticket status." }
+constraints: []
+rejected_proposals: []

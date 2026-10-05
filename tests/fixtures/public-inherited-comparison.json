@@ -1,0 +1,1022 @@
+{
+  "observations": [
+    {
+      "case_id": "P5-001",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-002",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-003",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-004",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-005",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-006",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-007",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-008",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-009",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-010",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-011",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-012",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-013",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-014",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-015",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-016",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-017",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-018",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-019",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-020",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-021",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-022",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-023",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    },
+    {
+      "case_id": "P5-024",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": "semantic:derivation-rule-shape",
+        "layer2_path_contains": ".aggregate",
+        "proof_credit": false,
+        "public_exit": 3
+      }
+    },
+    {
+      "case_id": "P5-025",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": "semantic:derivation-operations-unsupported",
+        "layer2_path_contains": ".derivation_rule",
+        "proof_credit": false,
+        "public_exit": 3
+      }
+    },
+    {
+      "case_id": "P5-026",
+      "scope_ids": [],
+      "proved": false,
+      "actual": {
+        "layer2_diagnostic": null,
+        "layer2_path_contains": null,
+        "proof_credit": false,
+        "public_exit": 0
+      }
+    }
+  ],
+  "mutations": [
+    {
+      "mutation_id": "PUBLIC-000",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-001",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-002",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-003",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-004",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-005",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-006",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-007",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-008",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-009",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-010",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-011",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-012",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-013",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-014",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-015",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-016",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-017",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-018",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-019",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-020",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-021",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-022",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-023",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-024",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-025",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-026",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-027",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-028",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-029",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-030",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-031",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-032",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-033",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-034",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-035",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-036",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-037",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-038",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-039",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-040",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-041",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-042",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-043",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-044",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-045",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-046",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-047",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-048",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-049",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-050",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-051",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-052",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-053",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-054",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-055",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-056",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-057",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-058",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-059",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-060",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-061",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-062",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-063",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-064",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-065",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-066",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-067",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PUBLIC-068",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "public-comparison-coordinate",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "IN-024",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "mutated-admission-diagnostic",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PR-024",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "mutated-admission-diagnostic",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "IN-025",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "mutated-admission-diagnostic",
+      "lane": "input"
+    },
+    {
+      "mutation_id": "PR-025",
+      "baseline_passed": true,
+      "detected": true,
+      "detail": {
+        "timed_out": false
+      },
+      "failure_signature": "mutated-admission-diagnostic",
+      "lane": "input"
+    }
+  ]
+}

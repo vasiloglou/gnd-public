@@ -1,0 +1,124 @@
+{
+  "version": 4,
+  "model_id": "urn:gnd:tutorial:release-governance:policy@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "release",
+      "name": "Release",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "service",
+      "name": "Service",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "person",
+      "name": "Person",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "request",
+      "reading": "{Release} {Service} {Person}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        },
+        {
+          "role_name": "service",
+          "object_type": "service"
+        },
+        {
+          "role_name": "requester",
+          "object_type": "person"
+        }
+      ]
+    },
+    {
+      "id": "approval",
+      "reading": "{Release} {Person}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        },
+        {
+          "role_name": "reviewer",
+          "object_type": "person"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "mandatory",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic release governance policy supplied by the tutorial."
+          },
+          "id": "approval_required",
+          "role": "release"
+        },
+        {
+          "type": "uniqueness",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Synthetic release governance policy supplied by the tutorial."
+          },
+          "id": "one_approval",
+          "roles": [
+            "release"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "authorized",
+      "reading": "{Person}",
+      "roles": [
+        {
+          "role_name": "reviewer",
+          "object_type": "person"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "subset",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Synthetic release governance policy supplied by the tutorial."
+      },
+      "id": "authorized_approval",
+      "subset_role_seq": [
+        {
+          "fact_type": "approval",
+          "role": "reviewer"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "authorized",
+          "role": "reviewer"
+        }
+      ]
+    }
+  ],
+  "rejected_proposals": []
+}

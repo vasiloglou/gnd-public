@@ -1,54 +1,3 @@
-# tests/fixtures/models/library.orm.yaml
-# The model the GENERATOR HAS NEVER MET (G-19, plan 03-07 task 1).
-#
-# `full_vocabulary.orm.yaml` is codegen's home turf: every plan from 03-03 to
-# 03-06 emitted, hashed, drifted and re-checked against it, and the emitter's
-# shape was chosen while looking at it. `dispatch.orm.yaml` is unfamiliar to
-# codegen but familiar to the extractor. This file is unfamiliar to BOTH, and it
-# exists because Phase 2 found five oracle defects and every single one of them
-# surfaced through a model the tool under test had not been written against.
-#
-# It is NOT a rename of full_vocabulary. The axes that matter to a generator are
-# varied deliberately, and each one is a shape full_vocabulary cannot produce:
-#
-#   ARITY            a QUATERNARY fact type (`loan_records_copy_to_borrower`,
-#                    4 roles). full_vocabulary's maximum is 3, and exactly one
-#                    fact type reaches it. A 4-role reading, a 4-parameter tool
-#                    signature and a 4-column projection are all new surface.
-#
-#   ROLE NAMING      role names deliberately DIVERGE from their object type ids
-#                    (`borrower` fills a role named `member`, `copy` fills roles
-#                    named `item`, `volume` and `subject`). full_vocabulary
-#                    names most roles after their object type, so a generator
-#                    that quietly keyed on the object type instead of the role
-#                    would have looked correct there and cannot here.
-#
-#   REFERENCE MODES  the PRINCIPAL entity (`borrower`) is `general`, not
-#                    `popular` — full_vocabulary reserves `general` for a
-#                    secondary entity — and the `unit-based` entity measures a
-#                    DURATION in days rather than money in USD, so a generator
-#                    with USD/Money anywhere in its derivation shows it here.
-#
-#   CONSTRAINT FAMILY  `value` in its PLURAL `ranges:` form — a union of
-#                    intervals. full_vocabulary exercises `allowed`, `range` and
-#                    the role-scope hybrid, and never `ranges`. This is also the
-#                    shape 03-CONTEXT's F-05 residual claimed would not converge
-#                    under `gnd synth`; RESEARCH §7.2 could not reproduce that
-#                    (three probes, all exit 0), and carrying the form here
-#                    keeps the open question attached to a real artifact.
-#
-#   RING VARIANTS    `symmetric` and `asymmetric`. full_vocabulary carries
-#                    `acyclic`, `irreflexive` and `intransitive`; these two are
-#                    disjoint from that set.
-#
-# Every other Halpin family full_vocabulary exercises is exercised here too, so
-# the model is a genuinely new POINT in the space rather than a subset of it.
-#
-# D-03-consistent modality: explicit/user-supplied + confirmed -> alethic;
-# llm-inferred/common-sense + proposed -> deontic. Modality is ALWAYS explicit.
-# The textual constraint is DEONTIC on purpose: D-20 makes an alethic textual
-# constraint a permanent indeterminacy warning, and this fixture has no reason
-# to carry one.
 
 version: 1
 
@@ -60,8 +9,6 @@ source:
   mode: guided
 
 object_types:
-  # The principal entity is GENERAL-mode, where full_vocabulary's principal
-  # entity is popular-mode. A borrower is identified by the card they hold.
   - id: borrower
     name: Borrower
     kind: entity
@@ -98,9 +45,6 @@ object_types:
     kind: value
     primitive: Integer
 
-  # Externally identified: a physical copy is identified by the pair
-  # (title it is of, shelf mark it carries) — the external uniqueness
-  # constraint at the bottom of this file.
   - id: copy
     name: Copy
     kind: entity
@@ -131,8 +75,6 @@ object_types:
     kind: value
     primitive: Integer
 
-  # unit-based over a DURATION, not money — full_vocabulary's unit-based entity
-  # is Salary in USD/Money.
   - id: loan_period
     name: LoanPeriod
     kind: entity
@@ -148,7 +90,6 @@ object_types:
     kind: value
     primitive: Number
 
-  # Subtype partition over the physical copy.
   - id: circulating_copy
     name: CirculatingCopy
     kind: entity
@@ -170,7 +111,6 @@ fact_types:
     reading: "{Borrower} has {BorrowerName}"
     inverse_reading: "{BorrowerName} names {Borrower}"
     roles:
-      # NOTE the divergence: the object type is `borrower`, the role is `member`.
       - { object_type: borrower, role_name: member }
       - { object_type: borrower_name, role_name: full_name }
     constraints:
@@ -194,8 +134,6 @@ fact_types:
       - { object_type: borrower, role_name: member }
       - { object_type: card_number, role_name: card }
     constraints:
-      # 1:1 — uniqueness on BOTH roles, which is what makes `general` reference
-      # mode identify the borrower.
       - type: uniqueness
         roles: [member]
         preferred: true
@@ -289,9 +227,6 @@ fact_types:
   - id: copy_is_of_title
     reading: "{Copy} is a copy of {Title}"
     roles:
-      # `copy` fills a role named `item` here, `volume` below, `subject` further
-      # down — one object type under three role names, which full_vocabulary
-      # never does.
       - { object_type: copy, role_name: item }
       - { object_type: title, role_name: work }
     constraints:
@@ -343,9 +278,6 @@ fact_types:
         modality: alethic
         provenance: { user_quote: "A copy lives at one branch." }
 
-  # THE QUATERNARY. Four roles, two of them the same primitive Date under
-  # different role names — so an emitter that keys on the object type rather
-  # than the role name collapses two distinct columns into one.
   - id: loan_records_copy_to_borrower
     reading: "{Copy} was lent to {Borrower} on {CalendarDay} until {CalendarDay}"
     roles:
@@ -361,7 +293,6 @@ fact_types:
         status: confirmed
         modality: alethic
         provenance: { user_quote: "One loan per copy per day it goes out." }
-      # value-comparison, INLINE form, across two roles of the same fact type.
       - type: value-comparison
         operator: "<"
         role_a: { role: lent_on }
@@ -443,8 +374,6 @@ fact_types:
     roles:
       - { object_type: copy, role_name: subject }
 
-  # RING — symmetric. Disjoint from full_vocabulary's {acyclic, irreflexive,
-  # intransitive}.
   - id: borrower_shares_household_with_borrower
     reading: "{Borrower} shares a household with {Borrower}"
     roles:
@@ -461,7 +390,6 @@ fact_types:
           library_entry: "ring/symmetric/co-residence"
           matched_pattern: "shares X with"
 
-  # RING — asymmetric. Also disjoint from full_vocabulary's set.
   - id: title_supersedes_title
     reading: "{Title} supersedes {Title}"
     roles:
@@ -476,7 +404,6 @@ fact_types:
         provenance: { user_quote: "A new edition supersedes the old one, never the other way round." }
 
 constraints:
-  # uniqueness — EXTERNAL: a copy is identified by (its title, its shelf mark).
   - type: uniqueness
     scope: external
     role_refs:
@@ -488,7 +415,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "A shelf mark is unique within a title." }
 
-  # mandatory-disjunctive: every copy is on loan, withdrawn, or shelved.
   - type: mandatory-disjunctive
     role_refs:
       - { fact_type: copy_is_on_loan, role: subject }
@@ -499,8 +425,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "Every copy is either out, withdrawn, or on the shelf." }
 
-  # value — the PLURAL `ranges:` form, absent from full_vocabulary. A union of
-  # two intervals: the historical reserve and the modern catalogue.
   - type: value
     object_type: publication_year
     ranges:
@@ -511,7 +435,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "The catalogue runs from the incunabula through next year's acquisitions." }
 
-  # value — enumeration.
   - type: value
     object_type: genre
     allowed: ["fiction", "history", "science", "reference", "poetry"]
@@ -520,7 +443,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "Five shelving categories, and no others." }
 
-  # value — singular range.
   - type: value
     object_type: fine_amount
     range: { min: 0, max: 250, min_inclusive: true, max_inclusive: true }
@@ -529,7 +451,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "Fines are capped at 250." }
 
-  # frequency — EXTERNAL, across two fact types.
   - type: frequency
     scope: external
     role_refs:
@@ -544,7 +465,6 @@ constraints:
       library_entry: "frequency/external/queue-fairness"
       matched_pattern: "at most N per"
 
-  # subset: only a borrower registered at a branch may reserve a title.
   - type: subset
     subset_role_seq:
       - { fact_type: title_is_reserved_by_borrower, role: member }
@@ -555,7 +475,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "You must be registered before you can reserve." }
 
-  # equality: a copy has a shelf mark exactly when it is of a title.
   - type: equality
     role_seq_a:
       - { fact_type: copy_is_of_title, role: item }
@@ -566,7 +485,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "Cataloguing assigns the title and the shelf mark together." }
 
-  # exclusion: a copy cannot be both out and withdrawn.
   - type: exclusion
     role_seq_a:
       - { fact_type: copy_is_on_loan, role: subject }
@@ -577,7 +495,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "A withdrawn copy is never on loan." }
 
-  # exclusive-or: out or shelved, exactly one.
   - type: exclusive-or
     role_seqs:
       - [{ fact_type: copy_is_on_loan, role: subject }]
@@ -587,7 +504,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "A copy is either out or on the shelf, never both and never neither." }
 
-  # value-comparison — CROSS-fact-type form.
   - type: value-comparison
     operator: "<="
     role_a: { fact_type: title_published_in_year, role: year }
@@ -597,7 +513,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "Publication years are compared against themselves in the catalogue audit." }
 
-  # cardinality — OBJECT scope.
   - type: cardinality
     scope: object
     object_type: branch
@@ -607,7 +522,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "The system runs between one and forty branches." }
 
-  # cardinality — ROLE scope.
   - type: cardinality
     scope: role
     role_ref: { fact_type: librarian_manages_branch, role: staff }
@@ -617,7 +531,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "At most forty branch managers." }
 
-  # subtype-partition over the physical copy.
   - type: subtype-partition
     supertype: copy
     subtypes: [circulating_copy, reference_copy]
@@ -628,8 +541,6 @@ constraints:
     modality: alethic
     provenance: { user_quote: "Every copy is either circulating or reference, never both." }
 
-  # textual — DEONTIC on purpose (D-20: an alethic textual constraint is a
-  # permanent indeterminacy, and this fixture has no reason to carry one).
   - type: textual
     expression: "A ReferenceCopy is never lent to a Borrower."
     formal_language: natural

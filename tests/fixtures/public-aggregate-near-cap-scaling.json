@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "seed": 271828,
+  "unique_rows": 14376,
+  "duplicate_every": 10,
+  "duplicate_rows": 1438,
+  "total_rows": 15814,
+  "sample_width": 7,
+  "group_count": 1,
+  "integer_base_bits": 2048,
+  "population_cap_bytes": 10485760,
+  "expected_input_bytes": 10484894,
+  "expected_sum_sha256": "5348ed42c87a354bc21df692b3b67cd999f3f01d339704ed8fd2e56856383d48",
+  "maximum_work": {
+    "aggregate_candidate_bindings": 15814,
+    "aggregate_contribution_terms": 15814,
+    "aggregate_identity_tokens": 47442,
+    "aggregate_distinct_contributions": 14376,
+    "aggregate_group_lookups": 15814,
+    "aggregate_groups": 1,
+    "aggregate_exact_operations": 14376,
+    "aggregate_maximum_value_bits": 2061
+  }
+}

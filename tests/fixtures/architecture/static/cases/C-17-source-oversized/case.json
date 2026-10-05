@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "C-17-source-oversized",
+  "story": "A source over the 10 MiB per-source cap is refused before reading.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "sparse",
+      "size": 10485761
+    }
+  ]
+}

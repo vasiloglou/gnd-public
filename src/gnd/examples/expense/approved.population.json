@@ -1,0 +1,76 @@
+{
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd-tutorial:expense@1",
+    "source": "fixture",
+    "covers": [
+      "expense_submitted_by_employee",
+      "expense_has_amount",
+      "expense_in_category",
+      "expense_is_approved",
+      "expense_approved_by_chain"
+    ]
+  },
+  "facts": {
+    "expense_submitted_by_employee": [
+      {
+        "expense": 101,
+        "employee": "Ari"
+      },
+      {
+        "expense": 102,
+        "employee": "Bea"
+      },
+      {
+        "expense": 103,
+        "employee": "Ari"
+      }
+    ],
+    "expense_has_amount": [
+      {
+        "expense": 101,
+        "amount": 60
+      },
+      {
+        "expense": 102,
+        "amount": 800
+      },
+      {
+        "expense": 103,
+        "amount": 1400
+      }
+    ],
+    "expense_in_category": [
+      {
+        "expense": 101,
+        "category": "meals"
+      },
+      {
+        "expense": 102,
+        "category": "travel"
+      },
+      {
+        "expense": 103,
+        "category": "equipment"
+      }
+    ],
+    "expense_is_approved": [
+      {
+        "expense": 103
+      },
+      {
+        "expense": 101
+      }
+    ],
+    "expense_approved_by_chain": [
+      {
+        "expense": 103,
+        "chain": "finance"
+      },
+      {
+        "expense": 101,
+        "chain": "team-lead"
+      }
+    ]
+  }
+}

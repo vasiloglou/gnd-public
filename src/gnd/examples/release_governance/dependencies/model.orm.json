@@ -1,0 +1,310 @@
+{
+  "version": 4,
+  "model_id": "urn:gnd:tutorial:release-governance:dependencies@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "release",
+      "name": "Release",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "service",
+      "name": "Service",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "count",
+      "name": "Count",
+      "kind": "value",
+      "primitive": "Integer"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "dependency",
+      "reading": "{Service} {Service}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        },
+        {
+          "role_name": "dependency",
+          "object_type": "service"
+        }
+      ]
+    },
+    {
+      "id": "deployable",
+      "reading": "{Service}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        }
+      ]
+    },
+    {
+      "id": "vulnerable",
+      "reading": "{Service}",
+      "roles": [
+        {
+          "role_name": "component",
+          "object_type": "service"
+        }
+      ]
+    },
+    {
+      "id": "request",
+      "reading": "{Release} {Service}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        },
+        {
+          "role_name": "service",
+          "object_type": "service"
+        }
+      ]
+    },
+    {
+      "id": "reachable",
+      "reading": "{Service} {Service}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        },
+        {
+          "role_name": "dependency",
+          "object_type": "service"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "fact_type": "dependency",
+                "bind": {
+                  "service": "$s",
+                  "dependency": "$d"
+                }
+              }
+            ],
+            "head": {
+              "service": "$s",
+              "dependency": "$d"
+            }
+          },
+          {
+            "body": [
+              {
+                "fact_type": "dependency",
+                "bind": {
+                  "service": "$s",
+                  "dependency": "$m"
+                }
+              },
+              {
+                "fact_type": "reachable",
+                "bind": {
+                  "service": "$m",
+                  "dependency": "$d"
+                }
+              }
+            ],
+            "head": {
+              "service": "$s",
+              "dependency": "$d"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "exposure",
+      "reading": "{Service} {Service}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        },
+        {
+          "role_name": "component",
+          "object_type": "service"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "deployable",
+            "bind": {
+              "service": "$s"
+            }
+          },
+          {
+            "fact_type": "reachable",
+            "bind": {
+              "service": "$s",
+              "dependency": "$d"
+            }
+          },
+          {
+            "fact_type": "vulnerable",
+            "bind": {
+              "component": "$d"
+            }
+          }
+        ],
+        "head": {
+          "service": "$s",
+          "component": "$d"
+        }
+      }
+    },
+    {
+      "id": "affected",
+      "reading": "{Service}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "exposure",
+            "bind": {
+              "service": "$s",
+              "component": "$d"
+            }
+          }
+        ],
+        "head": {
+          "service": "$s"
+        }
+      }
+    },
+    {
+      "id": "unaffected",
+      "reading": "{Service}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "deployable",
+            "bind": {
+              "service": "$s"
+            }
+          }
+        ],
+        "negate": [
+          {
+            "fact_type": "affected",
+            "bind": {
+              "service": "$s"
+            }
+          }
+        ],
+        "head": {
+          "service": "$s"
+        }
+      }
+    },
+    {
+      "id": "vulnerability_count",
+      "reading": "{Service} {Count}",
+      "roles": [
+        {
+          "role_name": "service",
+          "object_type": "service"
+        },
+        {
+          "role_name": "count",
+          "object_type": "count"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "exposure",
+            "bind": {
+              "service": "$s",
+              "component": "$d"
+            }
+          }
+        ],
+        "aggregate": {
+          "fn": "count",
+          "of": "$d",
+          "over": [
+            "$d"
+          ],
+          "as": "$n"
+        },
+        "head": {
+          "service": "$s",
+          "count": "$n"
+        }
+      }
+    },
+    {
+      "id": "blocked",
+      "reading": "{Release} {Service}",
+      "roles": [
+        {
+          "role_name": "release",
+          "object_type": "release"
+        },
+        {
+          "role_name": "service",
+          "object_type": "service"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "request",
+            "bind": {
+              "release": "$r",
+              "service": "$s"
+            }
+          },
+          {
+            "fact_type": "affected",
+            "bind": {
+              "service": "$s"
+            }
+          }
+        ],
+        "head": {
+          "release": "$r",
+          "service": "$s"
+        }
+      }
+    }
+  ],
+  "constraints": [],
+  "rejected_proposals": []
+}

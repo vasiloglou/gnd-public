@@ -1,0 +1,38 @@
+{
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd-fixture:v71-dispatch-lean@1",
+    "source": "fixture",
+    "covers": [
+      "dispatch_allowed",
+      "dispatch_leg"
+    ]
+  },
+  "instances": {
+    "dispatch_type_node": [
+      "WH-A",
+      "WH-B",
+      "WH-C"
+    ]
+  },
+  "facts": {
+    "dispatch_allowed": [
+      {
+        "node": "WH-A"
+      },
+      {
+        "node": "WH-B"
+      }
+    ],
+    "dispatch_leg": [
+      {
+        "source": "WH-A",
+        "target": "WH-B"
+      },
+      {
+        "source": "WH-B",
+        "target": "WH-C"
+      }
+    ]
+  }
+}

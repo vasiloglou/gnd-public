@@ -1,0 +1,4 @@
+scenario.md: selected executable blocks passed
+souffle.md: selected executable blocks passed
+Native lanes executed: souffle
+15 tutorial blocks passed

@@ -1,0 +1,319 @@
+{
+  "version": 4,
+  "model_id": "urn:gnd-fixture:v71-dispatch-lean@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "dispatch_type_job",
+      "name": "Shipment",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "dispatch_type_node",
+      "name": "Warehouse",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "dispatch_type_day",
+      "name": "CalendarDay",
+      "kind": "value",
+      "primitive": "Date"
+    },
+    {
+      "id": "dispatch_type_days",
+      "name": "ShippingWindow",
+      "kind": "value",
+      "primitive": "Duration"
+    },
+    {
+      "id": "dispatch_type_metric",
+      "name": "Quantity",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "dispatch_type_flag",
+      "name": "Approved",
+      "kind": "value",
+      "primitive": "Boolean"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "dispatch_request",
+      "reading": "{Shipment} relates {Warehouse}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_job",
+          "role_name": "job"
+        },
+        {
+          "object_type": "dispatch_type_node",
+          "role_name": "node"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "mandatory",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Fixture-authored mechanical rule."
+          },
+          "role": "job"
+        },
+        {
+          "type": "uniqueness",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Fixture-authored mechanical rule."
+          },
+          "roles": [
+            "job"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dispatch_allowed",
+      "reading": "{Warehouse}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_node",
+          "role_name": "node"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_due",
+      "reading": "{Shipment} relates {CalendarDay}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_job",
+          "role_name": "job"
+        },
+        {
+          "object_type": "dispatch_type_day",
+          "role_name": "day"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_start",
+      "reading": "{Shipment} relates {CalendarDay}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_job",
+          "role_name": "job"
+        },
+        {
+          "object_type": "dispatch_type_day",
+          "role_name": "day"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_window",
+      "reading": "{Shipment} relates {ShippingWindow}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_job",
+          "role_name": "job"
+        },
+        {
+          "object_type": "dispatch_type_days",
+          "role_name": "days"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_leg",
+      "reading": "{Warehouse} relates {Warehouse}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_node",
+          "role_name": "source"
+        },
+        {
+          "object_type": "dispatch_type_node",
+          "role_name": "target"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_reachable",
+      "reading": "{Warehouse} relates {Warehouse}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_node",
+          "role_name": "source"
+        },
+        {
+          "object_type": "dispatch_type_node",
+          "role_name": "target"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "fact_type": "dispatch_leg",
+                "bind": {
+                  "source": "$x",
+                  "target": "$y"
+                }
+              }
+            ],
+            "head": {
+              "source": "$x",
+              "target": "$y"
+            }
+          },
+          {
+            "body": [
+              {
+                "fact_type": "dispatch_leg",
+                "bind": {
+                  "source": "$x",
+                  "target": "$z"
+                }
+              },
+              {
+                "fact_type": "dispatch_leg",
+                "bind": {
+                  "source": "$z",
+                  "target": "$y"
+                }
+              }
+            ],
+            "head": {
+              "source": "$x",
+              "target": "$y"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "dispatch_metric",
+      "reading": "{Shipment} relates {Quantity}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_job",
+          "role_name": "job"
+        },
+        {
+          "object_type": "dispatch_type_metric",
+          "role_name": "value"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_flag",
+      "reading": "{Shipment} relates {Approved}",
+      "roles": [
+        {
+          "object_type": "dispatch_type_job",
+          "role_name": "job"
+        },
+        {
+          "object_type": "dispatch_type_flag",
+          "role_name": "value"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "subset",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Fixture-authored mechanical rule."
+      },
+      "id": "dispatch_approved_node",
+      "subset_role_seq": [
+        {
+          "fact_type": "dispatch_request",
+          "role": "node"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "dispatch_allowed",
+          "role": "node"
+        }
+      ]
+    },
+    {
+      "type": "guarded",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Fixture-authored mechanical rule."
+      },
+      "id": "dispatch_deadline",
+      "antecedent": [
+        {
+          "fact_type": "dispatch_start",
+          "bind": {
+            "job": "$j",
+            "day": "$start"
+          }
+        },
+        {
+          "fact_type": "dispatch_due",
+          "bind": {
+            "job": "$j",
+            "day": "$due"
+          }
+        },
+        {
+          "fact_type": "dispatch_window",
+          "bind": {
+            "job": "$j",
+            "days": "$days"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "left": {
+            "fn": "date_add",
+            "args": [
+              "$start",
+              "$days"
+            ]
+          },
+          "operator": "<=",
+          "right": "$due"
+        }
+      }
+    }
+  ],
+  "rejected_proposals": [],
+  "reference_populations": [
+    {
+      "id": "catalog",
+      "path": "references/catalog.pop.json",
+      "sha256": "0fdd175c40964e77505d3806536f6a5c645c30eabab43d26253482195c61aa4b",
+      "fact_types": [
+        "dispatch_allowed",
+        "dispatch_leg"
+      ]
+    }
+  ]
+}

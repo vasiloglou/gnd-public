@@ -9,3 +9,6 @@ __pycache__/
 .codex/skills/.gnd-install.json
 dist/
 .ruff_cache/
+/candidate/
+/site/
+/.cache/

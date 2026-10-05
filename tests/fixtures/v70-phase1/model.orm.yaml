@@ -1,0 +1,54 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase1-anchors@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: record, name: Record, kind: value, primitive: String}
+  - {id: label, name: Label, kind: value, primitive: String}
+  - {id: invoice, name: Invoice, kind: value, primitive: String}
+  - {id: quantity, name: Quantity, kind: value, primitive: Integer}
+  - {id: price_id, name: PriceId, kind: value, primitive: String}
+  - {id: decimal_value, name: DecimalValue, kind: value, primitive: Float}
+  - {id: rate_id, name: RateId, kind: value, primitive: String}
+  - {id: date_id, name: DateId, kind: value, primitive: String}
+  - {id: calendar_date, name: CalendarDate, kind: value, primitive: Date}
+  - {id: notice, name: Notice, kind: value, primitive: String}
+  - {id: party, name: Party, kind: value, primitive: String}
+  - {id: name, name: Name, kind: value, primitive: String}
+fact_types:
+  - id: record_has_label
+    reading: "{Record} has label {Label}"
+    roles: [{object_type: record, role_name: record}, {object_type: label, role_name: label}]
+    constraints:
+      - {type: anchored, role: label, source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "Café Alpha"}}
+  - id: invoice_has_quantity
+    reading: "{Invoice} has quantity {Quantity}"
+    roles: [{object_type: invoice, role_name: invoice}, {object_type: quantity, role_name: quantity}]
+    constraints:
+      - {type: anchored, role: quantity, recognise: [integer], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "+1,234"}}
+  - id: price_has_value
+    reading: "{PriceId} has price {DecimalValue}"
+    roles: [{object_type: price_id, role_name: price}, {object_type: decimal_value, role_name: value}]
+    constraints:
+      - {type: anchored, role: value, recognise: [decimal], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "-12.50"}}
+  - id: rate_has_value
+    reading: "{RateId} has rate {DecimalValue}"
+    roles: [{object_type: rate_id, role_name: rate}, {object_type: decimal_value, role_name: value}]
+    constraints:
+      - {type: anchored, role: value, recognise: [percent], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "12.5 %"}}
+  - id: date_has_value
+    reading: "{DateId} has date {CalendarDate}"
+    roles: [{object_type: date_id, role_name: date_id}, {object_type: calendar_date, role_name: date}]
+    constraints:
+      - {type: anchored, role: date, recognise: [iso-8601-date], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "2024-02-29"}}
+  - id: notice_to_party
+    reading: "{Notice} is sent to {Party}"
+    roles: [{object_type: notice, role_name: notice}, {object_type: party, role_name: party}]
+    constraints:
+      - {type: anchored, role: party, source: explicit, status: confirmed, modality: deontic, provenance: {user_quote: "Holder"}}
+  - id: pair_has_names
+    reading: "{Name} pairs with {Name}"
+    roles: [{object_type: name, role_name: left}, {object_type: name, role_name: right}]
+    constraints:
+      - {type: anchored, source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "Left and Right"}}
+constraints: []
+rejected_proposals: []

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "C-05-source-count-budget",
+  "story": "A valid declaration with 1,025 unique sources is refused before source reads.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "generated-source-count",
+    "count": 1025
+  },
+  "project": []
+}

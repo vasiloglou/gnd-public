@@ -1,0 +1,15 @@
+{
+  "bad-inverse.orm.yaml": "8d8d66d0d9e22e9f21880cd80aab798393e2c713a553cf86ae0ffb64c6f2d991",
+  "cases.json": "de3a7a02ad42b424e2fe96beb03ddafe94daf10eab1a64fa43a041cdb2b77e0e",
+  "private-source.txt": "641533eae54fb791597b7a2d4b0453ab7c3574d5af426d2fc3b1e201273a5b4a",
+  "private.orm.yaml": "76d0b943323fbe13935ec3ef5ba3f5c719fb3e96338fbe7be06be6ccdab28353",
+  "private.pop.json": "abbfd2c452f64b97853580be3358c7bbb0228d5a464258c757a7859eebf8e812",
+  "private.pop.json.anchors.json": "501f1e7deac52db3c3429735df1b7828915fd02c11c03a76c3c73c5dc0e1653b",
+  "public-empty.pop.json": "5902d4de50f084cdbc9b3d8213b29568df4a4f372856952f443c7a33ba6279cd",
+  "public-shuffled.pop.json": "1d9cf305f95c51a1520bc51428a09bac7e57af1ebce4fa56f91098af49f329f2",
+  "public-source-mutated.txt": "afb242a1c60bec7f51ece6b7ae6a7663bdbaafd26942e34a8603f37bab704af1",
+  "public-source.txt": "4e5e31ca046603510d1a5b05b73a749aa900c8aa74d2cf93e10b75ab39f74ef2",
+  "public.orm.yaml": "7f26e3ecb3e2cb91eebbe27aaf824141e9f9049dac465eb3b2682e8c82d7d3a4",
+  "public.pop.json": "8954d21d326aa6f5343051334699b9a1f5bd5fbec60a46f4c30c29254a90ed6c",
+  "public.pop.json.anchors.json": "9be32bc1fbd83dbd35cc3a8db984d3c8022107009bd6a1d5936f34924b62537e"
+}

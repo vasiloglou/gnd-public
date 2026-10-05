@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "C-15-source-invalid-utf8",
+  "story": "Bytes obtained from an invalid UTF-8 source are scanned and produce one unparseable-source.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "hex",
+      "hex": "fffe"
+    }
+  ]
+}

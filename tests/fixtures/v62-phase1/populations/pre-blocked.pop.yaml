@@ -1,0 +1,17 @@
+population:
+  model: ../models/static.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase1-static@1
+  source: fixture
+  covers: [evidence, blocked, eligible, final_eligible, ticket_status, note]
+facts:
+  evidence:
+    - { item: "SECRET-ITEM-314159" }
+  blocked:
+    - { item: "SECRET-ITEM-314159" }
+  eligible:
+    - { item: "SECRET-ITEM-314159" }
+  final_eligible:
+    - { item: "SECRET-ITEM-314159" }
+  ticket_status:
+    - { item: "SECRET-ITEM-314159", status: "inactive" }
+  note: []

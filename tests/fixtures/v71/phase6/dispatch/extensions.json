@@ -1,0 +1,72 @@
+{
+  "base": {
+    "dispatch_reachable": [
+      [
+        "WH-A",
+        "HUB-B"
+      ],
+      [
+        "WH-A",
+        "PORT-C"
+      ],
+      [
+        "WH-A",
+        "DEST-D"
+      ],
+      [
+        "HUB-B",
+        "PORT-C"
+      ],
+      [
+        "HUB-B",
+        "DEST-D"
+      ],
+      [
+        "PORT-C",
+        "DEST-D"
+      ]
+    ]
+  },
+  "count": {
+    "dispatch_reachable": [
+      [
+        "WH-A",
+        "HUB-B"
+      ],
+      [
+        "WH-A",
+        "PORT-C"
+      ],
+      [
+        "WH-A",
+        "DEST-D"
+      ],
+      [
+        "HUB-B",
+        "PORT-C"
+      ],
+      [
+        "HUB-B",
+        "DEST-D"
+      ],
+      [
+        "PORT-C",
+        "DEST-D"
+      ]
+    ],
+    "dispatch_count": [
+      [
+        "WH-A",
+        1
+      ],
+      [
+        "HUB-B",
+        1
+      ],
+      [
+        "PORT-C",
+        1
+      ]
+    ]
+  }
+}

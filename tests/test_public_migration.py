@@ -6,6 +6,9 @@ from pathlib import Path
 
 import pytest
 
+# Historical migration accounting/storage; current product assertions remain in default tests.
+pytestmark = pytest.mark.evidence
+
 CORPUS = Path(__file__).parent / "fixtures/public-launch-phase-3"
 CASES = json.loads((CORPUS / "inputs.json").read_text())["cases"]
 ANSWERS = {row["id"]: row for row in json.loads((CORPUS / "answers.json").read_text())["cases"]}

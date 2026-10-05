@@ -1,0 +1,135 @@
+{
+  "census": {
+    "constraint": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 0,
+      "unclaimed": 0,
+      "unclaimed_with_evidence": 0
+    },
+    "derivation": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 1,
+      "unclaimed": 1,
+      "unclaimed_with_evidence": 1
+    },
+    "fact_type": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 3,
+      "unclaimed": 3,
+      "unclaimed_with_evidence": 3
+    },
+    "operation": {
+      "claimed": 0,
+      "corroborated": 0,
+      "in_model": 0,
+      "unclaimed": 0,
+      "unclaimed_with_evidence": 0
+    }
+  },
+  "command": "coverage",
+  "covers_exemptions": [],
+  "elements": [
+    {
+      "address": "fact_type:book_listed",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "check-v4.exact.payload.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 2
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:book_blocked",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "check-v4.exact.payload.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 1
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "fact_type:book_is_eligible",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "fact_type",
+      "evidence": [
+        {
+          "path": "check-v4.exact.payload.json",
+          "quote": {
+            "declared": "declared",
+            "facts": 1
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    },
+    {
+      "address": "derivation:book_is_eligible",
+      "addressing": "declared-id",
+      "claims": [],
+      "class": "derivation",
+      "evidence": [
+        {
+          "path": "check-v4.exact.payload.json",
+          "quote": {
+            "derivation": "derived",
+            "derivation_ref": "derivation:book_is_eligible",
+            "modality": "alethic",
+            "reason_code": null,
+            "verdict": "pass"
+          },
+          "source": "check"
+        }
+      ],
+      "status": "unclaimed"
+    }
+  ],
+  "gnd_version": "MASKED",
+  "model": {
+    "digest": "sha256:b698dab1aaf15d14e520189aee160eb447aaa90f3e29b3f0200302fc3ad21133",
+    "path": "eligibility.orm.yaml",
+    "version": 1
+  },
+  "schema_version": 4,
+  "sources": {
+    "check": [
+      "check-v4.exact.payload.json"
+    ],
+    "conformance": [],
+    "experiments": [],
+    "refused": [],
+    "transition": [],
+    "unbound": [
+      {
+        "kind": "check",
+        "path": "check-v4.exact.payload.json",
+        "reason": "legacy-report-without-model-digest",
+        "schema_version": 4
+      }
+    ],
+    "verify": []
+  },
+  "tool": "gnd",
+  "unmatched_covers": [],
+  "unstable_addresses": []
+}

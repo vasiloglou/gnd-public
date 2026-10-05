@@ -1,0 +1,54 @@
+version: 2
+model_id: urn:gnd-fixture:v61-phase5-walk-floor@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: expense, name: Expense, kind: value, primitive: Integer }
+  - { id: approver, name: Approver, kind: value, primitive: String }
+  - { id: submission, name: Submission, kind: value, primitive: String }
+fact_types:
+  - id: expense_approved_by
+    reading: "{Expense} is approved by {Approver}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: approver, role_name: approver }
+  - id: expense_submitted_as
+    reading: "{Expense} is submitted as {Submission}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: submission, role_name: submission }
+operations:
+  - id: approve_expense
+    reading: "{Approver} approves {Expense}"
+    parameters:
+      - { name: expense, object_type: expense }
+      - { name: approver, object_type: approver }
+    effects:
+      - assert: { fact_type: expense_approved_by, bind: { expense: "$expense", approver: "$approver" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { user_quote: "Approval is recorded before submission." }
+  - id: submit_expense_to_workday
+    reading: "Submit {Expense} as {Submission}"
+    parameters:
+      - { name: expense, object_type: expense }
+      - { name: submission, object_type: submission }
+    effects:
+      - assert: { fact_type: expense_submitted_as, bind: { expense: "$expense", submission: "$submission" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { user_quote: "An approved expense may be submitted." }
+  - id: pay_without_approval
+    reading: "Pay {Expense} without approval"
+    parameters:
+      - { name: expense, object_type: expense }
+    effects:
+      - assert: { fact_type: expense_submitted_as, bind: { expense: "$expense", submission: "UNAPPROVED" } }
+    frame: { modality: deontic }
+    source: explicit
+    status: confirmed
+    provenance: { user_quote: "This unsafe operation exists so policy can forbid it." }
+constraints: []
+rejected_proposals: []
+

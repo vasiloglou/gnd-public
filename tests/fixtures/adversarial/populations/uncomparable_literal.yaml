@@ -1,0 +1,10 @@
+population:
+  model: uncomparable_literal.orm.yaml
+  source: agent-output
+  label: boundary
+  covers:
+    - thing_has_qty
+facts:
+  thing_has_qty:
+    - { thing: "T1", qty: 5 }
+    - { thing: "T2", qty: 42 }

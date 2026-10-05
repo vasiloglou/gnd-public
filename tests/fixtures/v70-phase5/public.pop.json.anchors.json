@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "population_sha256": "8954d21d326aa6f5343051334699b9a1f5bd5fbec60a46f4c30c29254a90ed6c",
+  "vocabulary_digest": "d2637a5e14b6c077d252f201224230ae7f35ab99fd6672c244565e96d5735f65",
+  "document_sha256": "4e5e31ca046603510d1a5b05b73a749aa900c8aa74d2cf93e10b75ab39f74ef2",
+  "anchors": [
+    {
+      "fact_key": {
+        "fact_type": "b_pair",
+        "roles": {
+          "left": "Ada",
+          "right": "Zoe"
+        }
+      },
+      "role": "left",
+      "span": {
+        "start": 0,
+        "end": 3
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "99a563ab2f6e21e96998f9fddd2a2bab82b70ac019579502b8d7fc0032ff62bb"
+    },
+    {
+      "fact_key": {
+        "fact_type": "b_pair",
+        "roles": {
+          "left": "Ada",
+          "right": "Zoe"
+        }
+      },
+      "role": "right",
+      "span": {
+        "start": 8,
+        "end": 11
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "458556af7d03d652f06f2fc28727390e6860989a70246cbb93699995f1766798"
+    }
+  ]
+}

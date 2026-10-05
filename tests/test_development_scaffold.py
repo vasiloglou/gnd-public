@@ -26,8 +26,8 @@ def check_references(root):
         if any(part in {'.git', '.venv', '__pycache__'} for part in path.parts):
             continue
         for href in re.findall(r'\]\(([^)]+)\)', path.read_text()):
-            if '://' in href or href.startswith('#'):
-                continue
+            if '://' in href or href.startswith(('#', '<')):
+                continue  # URLs, anchors and <placeholder> paths retained verbatim in records
             assert (path.parent / href.split('#')[0]).exists(), (path, href)
     boot = (root / 'docs/development/bootstrap.md').read_text()
     assert 'No source-checkout bootstrap is required' in boot
@@ -110,9 +110,11 @@ def test_source_owned_units_and_preserved_question_states():
     check_ledger(ROOT)
 
 
+@pytest.mark.evidence
 def test_manifest_bytes_modes_and_sizes():
     # B1 is immutable historical selection; The current batch attributes changed bytes.
-    from test_public_distribution import audit_tree, manifest
+    # The r3 amendment retired whole-tree attribution, so new files need no manifest row.
+    from test_public_distribution import manifest
     b1_path = ROOT/MILESTONE/'migration/b1-files.json'
     assert hashlib.sha256(b1_path.read_bytes()).hexdigest() == '7e2bcccd41671743fdcedad2a856c78b59da7265256c0955256964554bb29c87'
     b1 = json.loads(b1_path.read_text())
@@ -122,7 +124,6 @@ def test_manifest_bytes_modes_and_sizes():
         assert successor['baseline_sha256'] == row['public_sha256']
         if successor['public_sha256'] != row['public_sha256']:
             assert successor['kind'] == 'adaptation' and successor['reason']
-    audit_tree(ROOT)
 
 
 @pytest.mark.parametrize('mutation', ['missing-reference', 'twin-bytes', 'twin-mode',
@@ -165,16 +166,17 @@ def test_controls_reject_isolated_mutations(tmp_path, mutation):
 QUESTION_PIN = "87a273c136ecd36e17a82e68a03babc096d6f46b03a09423ef26b3090125f447"
 
 
-def test_readme_reflects_current_runtime_stage():
-    text = (ROOT / 'README.md').read_text()
-    assert 'Phase 3' in text and 'candidate sign-off remain pending' in text
-    assert 'docs/quickstart.md' in text
-    assert 'runtime migration follows' not in text
+def test_readme_links_to_executable_getting_started():
+    from test_contributor_preparation import check_links
+    check_links(ROOT / 'README.md')
+    assert (ROOT / 'docs/quickstart.md').is_file()
 
 
 def test_ci_uses_verified_p2_build_profile():
     from ruamel.yaml import YAML
     workflow = YAML(typ='safe').load((ROOT / '.github/workflows/development.yml').read_text())
-    pins = [step.get('with', {}).get('version') for step in workflow['jobs']['phase2']['steps']
-            if step.get('uses') == 'astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e']
-    assert pins == ['0.10.10']
+    for job in ['candidate', 'regression', 'installed']:
+        pins = [step.get('with', {}).get('version') for step in workflow['jobs'][job]['steps']
+                if step.get('uses') == 'astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e']
+        assert pins == ['0.10.10']
+    assert set(workflow['jobs']['phase2']['needs']) == {'candidate', 'regression', 'installed'}

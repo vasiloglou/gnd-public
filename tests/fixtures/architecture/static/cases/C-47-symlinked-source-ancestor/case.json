@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "C-47-symlinked-source-ancestor",
+  "story": "A symlinked ancestor of a declared source is never traversed.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules/0/path",
+        "value": "pkg/app.py"
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "real-pkg/app.py",
+      "kind": "text",
+      "text": "def main(argv):\n    return 0\n"
+    },
+    {
+      "path": "pkg",
+      "kind": "symlink",
+      "target": "real-pkg"
+    }
+  ]
+}

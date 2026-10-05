@@ -1,0 +1,41 @@
+
+version: 1
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: movie
+    name: Movie
+    kind: entity
+    reference: { mode: popular, value_type: movie_id }
+
+  - id: movie_id
+    name: MovieId
+    kind: value
+    primitive: Integer
+
+  - id: title
+    name: Title
+    kind: value
+    primitive: String
+
+fact_types:
+  - id: movie_has_title
+    reading: "{Movie} has title {Title}"
+    roles:
+      - { object_type: movie, role_name: movie }
+      - { object_type: title, role_name: title }
+
+constraints:
+  - type: cardinality
+    scope: object
+    object_type: movie_id
+    bound: { max: 2 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      user_quote: "There are at most two movies on file."

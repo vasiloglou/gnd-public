@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 390" role="img" aria-labelledby="title desc">
+<title id="title">Release dependencies and vulnerability impact</title><desc id="desc">Checkout depends on payments, inventory and identity. Payments depends on ledger and serialization. Identity depends on serialization. Ledger depends on vulnerable ledger-db. Inventory and reporting have unaffected database dependencies.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="#64748b"/></marker></defs>
+<rect width="1000" height="390" rx="18" fill="#f8fafc"/>
+<g stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M430 60L230 130M460 60L460 130M490 60L660 130M220 175L150 240M250 175L650 240M650 175L650 240M460 175L460 240M150 285L150 340M850 175L850 240"/></g>
+<g font-family="sans-serif" font-size="18" text-anchor="middle">
+<g fill="#fff1f2" stroke="#be123c"><rect x="380" y="20" width="160" height="45" rx="9"/><rect x="160" y="130" width="160" height="45" rx="9"/><rect x="580" y="130" width="160" height="45" rx="9"/><rect x="70" y="240" width="160" height="45" rx="9"/></g>
+<g fill="#ecfdf5" stroke="#047857"><rect x="380" y="130" width="160" height="45" rx="9"/><rect x="770" y="130" width="160" height="45" rx="9"/><rect x="380" y="240" width="160" height="45" rx="9"/><rect x="770" y="240" width="160" height="45" rx="9"/></g>
+<g fill="#fee2e2" stroke="#b91c1c" stroke-width="3"><rect x="570" y="240" width="180" height="45" rx="9"/><rect x="60" y="340" width="180" height="40" rx="9"/></g>
+<g fill="#0f172a"><text x="460" y="49">checkout</text><text x="240" y="159">payments</text><text x="460" y="159">inventory</text><text x="660" y="159">identity</text><text x="850" y="159">reporting</text><text x="150" y="269">ledger</text><text x="460" y="269">stock-db</text><text x="660" y="269">serialization ⚠</text><text x="850" y="269">analytics-db</text><text x="150" y="367">ledger-db ⚠</text></g>
+<text x="670" y="335" fill="#be123c">Rose: affected service · bold border: vulnerable</text>
+</g></svg>

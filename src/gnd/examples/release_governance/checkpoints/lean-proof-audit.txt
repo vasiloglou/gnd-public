@@ -1,0 +1,4 @@
+'ReleaseProof.candidate_valid' depends on axioms: [propext]
+'ReleaseProof.policy_satisfiable' depends on axioms: [propext]
+'ReleaseProof.approval_requested_redundant' depends on axioms: [propext, Quot.sound]
+'ReleaseProof.reviewed_does_not_imply_approved' depends on axioms: [propext]

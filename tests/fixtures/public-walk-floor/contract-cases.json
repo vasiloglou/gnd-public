@@ -1,0 +1,111 @@
+{
+  "contract": [
+    {
+      "id": "C01"
+    },
+    {
+      "id": "C02"
+    },
+    {
+      "id": "C03"
+    },
+    {
+      "id": "C04"
+    },
+    {
+      "id": "C05"
+    },
+    {
+      "id": "C06"
+    },
+    {
+      "id": "C07"
+    },
+    {
+      "id": "C08"
+    },
+    {
+      "id": "C09"
+    },
+    {
+      "id": "C10"
+    },
+    {
+      "id": "C11"
+    },
+    {
+      "id": "C12"
+    },
+    {
+      "id": "C13"
+    },
+    {
+      "id": "C14"
+    },
+    {
+      "id": "C15"
+    },
+    {
+      "id": "C16"
+    }
+  ],
+  "v4_contract": {
+    "schema_version": 4,
+    "experiment_id": "EXP-v61-phase3-plan",
+    "max_attempts": 3,
+    "wall_seconds": 300.0,
+    "cases": [
+      {
+        "case_id": "expense-plan",
+        "role": "required",
+        "inputs": [
+          {
+            "path": "input/pre.pop.yaml",
+            "media_type": "application/yaml",
+            "encoding": "utf-8",
+            "sha256": "7188dbb065dc7a33e6c8ef779b7e63baaff471fc510279684416913d8cc4812d",
+            "size_bytes": 1047
+          }
+        ],
+        "acceptance": {
+          "mode": "transition"
+        },
+        "verify": {
+          "command": "transition",
+          "model": {
+            "path": "model.orm.yaml",
+            "media_type": "application/yaml",
+            "encoding": "utf-8",
+            "sha256": "2c6ef90365b5c9e4c4531d78bdce9e3ca9e1394fb498a655ee6c9ade05d0784e",
+            "size_bytes": 26838
+          },
+          "pre": "input/pre.pop.yaml",
+          "steps": "plan/steps.json",
+          "post": null
+        }
+      }
+    ]
+  },
+  "tests_case": {
+    "case_id": "gate",
+    "role": "required",
+    "acceptance": {
+      "mode": "tests",
+      "required_tests": [
+        "test_gate.py::test_pass"
+      ],
+      "results_path": "results/results.xml",
+      "results_format": "junit-xml",
+      "protected": [
+        {
+          "path": "test_gate.py",
+          "media_type": "text/x-python",
+          "encoding": "utf-8",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "size_bytes": 0
+        }
+      ],
+      "test_argv_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  }
+}

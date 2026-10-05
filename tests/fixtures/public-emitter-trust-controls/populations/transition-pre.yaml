@@ -1,0 +1,9 @@
+population:
+  model: ../models/role-declaration.orm.yaml
+  model_id: urn:gnd-fixture:v61-phase4-role@1
+  source: fixture
+  covers: [seed, optional_code]
+facts:
+  seed: [{ item: P4_PUBLIC_TRANSITION_ITEM }]
+  optional_code:
+    - { item: P4_PUBLIC_TRANSITION_ITEM, code: baseline-code }

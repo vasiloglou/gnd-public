@@ -1,0 +1,22 @@
+{
+  "schema_version": 4,
+  "experiment_id": "EXP-v61-phase4-redaction",
+  "max_attempts": 2,
+  "wall_seconds": 300.0,
+  "cases": [
+    {
+      "case_id": "snapshot-secret",
+      "role": "required",
+      "inputs": [{"path": "models/role-declaration.orm.yaml", "media_type": "application/yaml", "encoding": "utf-8", "sha256": "93d97095740f4b1a7c2a21bda06b252574ff6bec6472f5833dc75d301f44254e", "size_bytes": 1237}],
+      "acceptance": {"mode": "constraint-satisfaction", "coverage": [{"fact_type": "optional_code", "min_facts": 1}]},
+      "verify": {"command": "check", "model": {"path": "models/role-declaration.orm.yaml", "media_type": "application/yaml", "encoding": "utf-8", "sha256": "93d97095740f4b1a7c2a21bda06b252574ff6bec6472f5833dc75d301f44254e", "size_bytes": 1237}, "subject": "candidate/population.yaml"}
+    },
+    {
+      "case_id": "transition-secret",
+      "role": "required",
+      "inputs": [{"path": "populations/transition-pre.yaml", "media_type": "application/yaml", "encoding": "utf-8", "sha256": "39f6718899dc9f01475dacfa9ff5205a22d62aa0e4e32f4a0bf5c128fe161630", "size_bytes": 286}],
+      "acceptance": {"mode": "transition"},
+      "verify": {"command": "transition", "model": {"path": "models/role-declaration.orm.yaml", "media_type": "application/yaml", "encoding": "utf-8", "sha256": "93d97095740f4b1a7c2a21bda06b252574ff6bec6472f5833dc75d301f44254e", "size_bytes": 1237}, "pre": "populations/transition-pre.yaml", "steps": "candidate/steps.json", "post": null}
+    }
+  ]
+}

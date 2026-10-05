@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "model": "v2_expense.orm.yaml",
+  "walk_root": "walks",
+  "plan_cases": [
+    {
+      "id": "P-01",
+      "walk": "clean-walk",
+      "expected_band": 0,
+      "evaluated": true
+    },
+    {
+      "id": "P-02",
+      "walk": "broken-pre",
+      "expected_band": 1,
+      "evaluated": true
+    },
+    {
+      "id": "P-03",
+      "walk": "open-new-chain",
+      "expected_band": 2,
+      "evaluated": true
+    },
+    {
+      "id": "P-04",
+      "walk": "empty-steps",
+      "expected_band": 3,
+      "evaluated": false
+    },
+    {
+      "id": "P-05",
+      "walk": "tag-unchecked",
+      "expected_band": 4,
+      "evaluated": true
+    },
+    {
+      "id": "P-06",
+      "walk": "clean-walk",
+      "expected_band": 70,
+      "evaluated": false,
+      "injection": "evaluate-plan-runtime-error"
+    }
+  ],
+  "partial_triples": [
+    {
+      "id": "C-01",
+      "coordinates": [
+        "pre"
+      ],
+      "after_exit": 64
+    },
+    {
+      "id": "C-02",
+      "coordinates": [
+        "steps"
+      ],
+      "after_exit": 64
+    },
+    {
+      "id": "C-03",
+      "coordinates": [
+        "post"
+      ],
+      "after_exit": 64
+    },
+    {
+      "id": "C-04",
+      "coordinates": [
+        "pre",
+        "post"
+      ],
+      "after_exit": 64
+    },
+    {
+      "id": "C-05",
+      "coordinates": [
+        "steps",
+        "post"
+      ],
+      "after_exit": 64
+    },
+    {
+      "id": "C-06",
+      "coordinates": [
+        "pre",
+        "steps"
+      ],
+      "after_exit": 0,
+      "named_exception": true
+    }
+  ],
+  "session_refusals": [
+    "wrong-acceptance-verifier-pair",
+    "missing-pre-binding",
+    "duplicate-pre-binding",
+    "steps-bound-as-input",
+    "post-bound-as-input",
+    "unsafe-candidate-path",
+    "missing-candidate-steps",
+    "missing-candidate-post"
+  ],
+  "negative_controls": [
+    "plan-answer-band",
+    "report-extra-key",
+    "report-empty-frame-verdicts",
+    "feedback-secret-canary",
+    "legacy-manifest-digest"
+  ]
+}

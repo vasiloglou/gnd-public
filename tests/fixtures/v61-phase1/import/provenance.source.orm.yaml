@@ -1,0 +1,28 @@
+version: 1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+fact_types:
+  - id: item_named
+    reading: "{Item} is named"
+    roles: [{ object_type: item, role_name: item }]
+    constraints:
+      - type: mandatory
+        role: item
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        rationale: Every item is named.
+  - id: item_titled
+    reading: "{Item} is titled"
+    roles: [{ object_type: item, role_name: item }]
+constraints:
+  - type: mandatory-disjunctive
+    role_refs:
+      - { fact_type: item_named, role: item }
+      - { fact_type: item_titled, role: item }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    rationale: Every item has a name or title.
+rejected_proposals: []

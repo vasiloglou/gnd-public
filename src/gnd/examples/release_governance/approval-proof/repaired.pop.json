@@ -1,0 +1,67 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd:tutorial:release-governance:approval-proof@1",
+    "source": "synthetic",
+    "covers": [
+      "requested",
+      "reviewed",
+      "approved"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "requested": [
+      {
+        "release": "REL-101"
+      },
+      {
+        "release": "REL-102"
+      },
+      {
+        "release": "REL-103"
+      },
+      {
+        "release": "REL-104"
+      },
+      {
+        "release": "REL-105"
+      }
+    ],
+    "reviewed": [
+      {
+        "release": "REL-101"
+      },
+      {
+        "release": "REL-102"
+      },
+      {
+        "release": "REL-103"
+      },
+      {
+        "release": "REL-104"
+      },
+      {
+        "release": "REL-105"
+      }
+    ],
+    "approved": [
+      {
+        "release": "REL-101"
+      },
+      {
+        "release": "REL-102"
+      },
+      {
+        "release": "REL-103"
+      },
+      {
+        "release": "REL-104"
+      },
+      {
+        "release": "REL-105"
+      }
+    ]
+  }
+}

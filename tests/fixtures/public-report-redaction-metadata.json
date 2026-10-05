@@ -1,0 +1,28 @@
+{
+  "applied_redaction": {
+    "mode": "applied",
+    "declarations": [
+      {
+        "case_id": null,
+        "source": "role",
+        "fact_type": "optional_code",
+        "roles": [
+          "code"
+        ]
+      }
+    ]
+  },
+  "unredacted_redaction": {
+    "mode": "unredacted",
+    "declarations": [
+      {
+        "case_id": null,
+        "source": "role",
+        "fact_type": "optional_code",
+        "roles": [
+          "code"
+        ]
+      }
+    ]
+  }
+}

@@ -1,17 +1,32 @@
-# Advanced workflows and limits
+# Build beyond the first check
 
-The introductory examples are deterministic checks of synthetic, supplied facts.
-They perform neither a live agent run nor external judgment. Saved proposals,
-synthetic receipts and replay artifacts are historical or constructed inputs;
-replaying them is not evidence that a provider ran now.
+Once you can validate a model and explain a failed population, choose the next
+guide by the job your application needs to do. Each workflow produces a
+specific artifact or result that you can inspect.
 
-Use `gnd --help` and the installed packaged skills for model authoring, evolution,
-experiment sessions, extraction, conformance and witness/export workflows.
-Select each workflow explicitly. Native compiler/export execution requires its
-own toolchain and bounded validation; export or successful compilation does not
-prove all obligations. Live providers require separately configured credentials
-and authorization; never execute a repository .env file to obtain keys.
+| Your next question | Guide |
+|---|---|
+| How do I translate requirements into checkable rules? | [Modeling](guides/modeling.md) |
+| How do I derive eligibility, use a fixed catalog, or audit a change? | [Data and transitions](guides/data-and-transitions.md) |
+| How do I generate application structure and detect drift? | [Generated projects](guides/generated-projects.md) |
+| How do I exercise rules with synthetic cases? | [Synthetic data](guides/synthetic-data.md) |
+| How do I change existing rules or recover a model from code? | [Evolution and recovery](guides/evolution-and-recovery.md) |
+| How do I check facts extracted from a report? | [Documents](guides/documents.md) |
+| How do I run a bounded agent experiment? | [Experiments](guides/experiments.md) |
+| How do I explain a derived tuple or use a native export? | [Exports and witnesses](guides/exports.md) |
+| How do I ask an agent to use these workflows? | [Agent skills](agents/index.md) |
 
-A mechanical verdict is distinct from formal assurance. Missing/stale certificate
-inputs yield unavailable assurance; this preparation does not recertify changed
-bytes. No native, provider or external-judgment support profile is measured here.
+For a continuous learning path, build [BookRec](bookrec/01-model.md), then try
+the [expense application](expense/01-model.md). The
+[capability matrix](reference/capabilities.md) shows which features compose and
+which consumers have narrower support. The [CLI index](reference/cli.md) and
+[Python API reference](reference/python-api.md) help you integrate the parts
+you select.
+
+The examples use synthetic public inputs and deterministic local checkpoints.
+Saved proposals, transcripts, receipts, and replay artifacts retain their
+original scope; replaying them is not evidence that a provider ran now.
+Live agents, advisory reviewers, and native compilers have separately selected
+prerequisites. A mechanical pass is distinct from formal assurance: missing or
+stale evidence yields unavailable assurance. These tutorials do not recertify
+changed bytes or claim a measured provider/native support profile.

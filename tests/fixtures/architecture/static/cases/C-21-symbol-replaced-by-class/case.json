@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-21-symbol-replaced-by-class",
+  "story": "A later module-level class replaces an earlier function binding.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "def main(argv):\n    return 0\nclass main:\n    pass\n"
+    }
+  ]
+}

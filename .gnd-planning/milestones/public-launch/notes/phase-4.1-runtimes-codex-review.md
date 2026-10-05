@@ -1,0 +1,8 @@
+# Independent terminal review
+
+Retained final answer verbatim except declared operator/check-out path substitutions.
+Model gpt-6-sol, effort xhigh, read-only, stdin prompt. One reviewer, not a panel.
+
+**One actionable finding — the PyRel lane does not enforce its DuckDB pin.** [tools/run_tutorials.py](<implementation-checkout>/tools/run_tutorials.py:36) checks `relationalai==1.30.1` but never checks DuckDB, although the [runtime setup](<implementation-checkout>/docs/runtimes/scenario.md:47) specifies DuckDB 1.5.5 and the [specification](<implementation-checkout>/.gnd-planning/milestones/public-launch/notes/phase-4.1-external-runtimes-spec.md:51) says a wrong-version tool fails its selected lane. I reproduced the gap in memory by making the preflight subprocess return `PyRel 1.30.1\nDuckDB 1.5.4`; `require_runtime("pyrel", ...)` returned successfully. An interpreter with the right PyRel version and a different DuckDB version can therefore pass this gate. Check DuckDB’s installed version in the selected interpreter and add a refusing test.
+
+**Coverage and limits:** I reviewed `git diff --cached` against the specified base, which is `HEAD`. Read-only checks found matching scenario-to-population mappings, matching checkpoint hashes and runtime-lock copies, and matching expected and supplied Soufflé relations for repaired, patched, and cycle cases. I read the Lean proof source and audit for its finite scope. I did not rerun native tools, build wheels, render the site, or verify the published candidate digests. An unstaged test change appeared during review and was excluded from this staged-index finding. This was one independent reviewer, not a panel.

@@ -1,0 +1,9 @@
+population:
+  model: ../model.orm.yaml
+  model_id: urn:gnd-fixture:v61-phase5-walk-floor@1
+  source: fixture
+  covers: [expense_approved_by, expense_submitted_as]
+facts:
+  expense_approved_by: []
+  expense_submitted_as: []
+

@@ -1,0 +1,1160 @@
+{
+  "version": 2,
+  "model_id": "urn:gnd-fixture:transition-expense@2",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "expense",
+      "name": "Expense",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "expense_id"
+      }
+    },
+    {
+      "id": "expense_id",
+      "name": "ExpenseId",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "expense_status",
+      "name": "ExpenseStatus",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "approver",
+      "name": "Approver",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "approver_name"
+      }
+    },
+    {
+      "id": "approver_name",
+      "name": "ApproverName",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "workday_submission",
+      "name": "WorkdaySubmission",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "submission_id"
+      }
+    },
+    {
+      "id": "submission_id",
+      "name": "SubmissionId",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "approval_chain",
+      "name": "ApprovalChain",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "chain_id"
+      }
+    },
+    {
+      "id": "chain_id",
+      "name": "ChainId",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "threshold_eur",
+      "name": "ThresholdEur",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "tag",
+      "name": "Tag",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "reimbursement_amount",
+      "name": "ReimbursementAmount",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "paid_on",
+      "name": "PaidOn",
+      "kind": "value",
+      "primitive": "Date"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "expense_has_status",
+      "reading": "{Expense} has status {ExpenseStatus}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "expense_status",
+          "role_name": "status"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_status_per_expense",
+          "type": "uniqueness",
+          "scope": "internal",
+          "roles": [
+            "expense"
+          ],
+          "preferred": true,
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "An expense is in exactly one state at a time."
+          }
+        },
+        {
+          "type": "mandatory",
+          "role": "expense",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "Every expense has a state from the moment it is filed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_approved_by",
+      "reading": "{Expense} is approved by {Approver}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "approver",
+          "role_name": "approver"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_approver_per_expense",
+          "type": "uniqueness",
+          "scope": "internal",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "One approver signs off on an expense."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_submitted_to_workday",
+      "reading": "{Expense} is submitted to Workday as {WorkdaySubmission}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "workday_submission",
+          "role_name": "submission"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_submission_per_expense",
+          "type": "uniqueness",
+          "scope": "internal",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "One expense reaches Workday once."
+          }
+        }
+      ]
+    },
+    {
+      "id": "chain_has_threshold",
+      "reading": "{ApprovalChain} has threshold {ThresholdEur}",
+      "roles": [
+        {
+          "object_type": "approval_chain",
+          "role_name": "chain"
+        },
+        {
+          "object_type": "threshold_eur",
+          "role_name": "threshold"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_threshold_per_chain",
+          "type": "uniqueness",
+          "scope": "internal",
+          "roles": [
+            "chain"
+          ],
+          "preferred": true,
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "A chain has one approval threshold."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_is_urgent",
+      "reading": "{Expense} is urgent",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        }
+      ]
+    },
+    {
+      "id": "expense_has_tag",
+      "reading": "{Expense} is tagged {Tag}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "tag",
+          "role_name": "tag"
+        }
+      ]
+    },
+    {
+      "id": "expense_reimbursed",
+      "reading": "{Expense} is reimbursed {ReimbursementAmount} on {PaidOn}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "reimbursement_amount",
+          "role_name": "amount"
+        },
+        {
+          "object_type": "paid_on",
+          "role_name": "paid_on"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_reimbursement_per_expense",
+          "type": "uniqueness",
+          "scope": "internal",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "One expense may have one reimbursement in this synthetic transition fixture."
+          }
+        }
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "approve_expense",
+      "reading": "{Expense} is approved by {Approver}",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        },
+        {
+          "name": "approver",
+          "object_type": "approver"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_draft",
+          "require": [
+            {
+              "fact_type": "expense_has_status",
+              "bind": {
+                "expense": "$expense",
+                "status": "draft"
+              }
+            }
+          ],
+          "modality": "alethic",
+          "source": "explicit",
+          "status": "confirmed",
+          "provenance": {
+            "csdp_step": 7,
+            "dialogue_turn": 51,
+            "user_quote": "Only a draft can be approved."
+          }
+        }
+      ],
+      "effects": [
+        {
+          "retract": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$expense"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$expense",
+              "status": "approved"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_approved_by",
+            "bind": {
+              "expense": "$expense",
+              "approver": "$approver"
+            }
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 51
+      }
+    },
+    {
+      "id": "submit_expense_to_workday",
+      "reading": "{Expense} is submitted to Workday as {WorkdaySubmission}",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        },
+        {
+          "name": "submission",
+          "object_type": "workday_submission"
+        },
+        {
+          "name": "chain",
+          "object_type": "approval_chain"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_approved",
+          "require": [
+            {
+              "fact_type": "expense_has_status",
+              "bind": {
+                "expense": "$expense",
+                "status": "approved"
+              }
+            }
+          ],
+          "modality": "alethic",
+          "source": "explicit",
+          "status": "confirmed",
+          "provenance": {
+            "csdp_step": 7,
+            "dialogue_turn": 44,
+            "user_quote": "Nothing reaches Workday before approval."
+          }
+        }
+      ],
+      "effects": [
+        {
+          "create": {
+            "object_type": "workday_submission",
+            "param": "submission"
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_submitted_to_workday",
+            "bind": {
+              "expense": "$expense",
+              "submission": "$submission"
+            }
+          }
+        },
+        {
+          "retract": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$expense"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$expense",
+              "status": "submitted"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "threshold_only_increases",
+          "subject": {
+            "fact_type": "chain_has_threshold",
+            "value_role": "threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          },
+          "op": ">",
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7d"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "deontic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 44
+      }
+    },
+    {
+      "id": "raise_chain_threshold",
+      "reading": "{ApprovalChain} threshold is raised to {ThresholdEur}",
+      "parameters": [
+        {
+          "name": "chain",
+          "object_type": "approval_chain"
+        },
+        {
+          "name": "new_threshold",
+          "object_type": "threshold_eur"
+        }
+      ],
+      "effects": [
+        {
+          "retract": {
+            "fact_type": "chain_has_threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "chain_has_threshold",
+            "bind": {
+              "chain": "$chain",
+              "threshold": "$new_threshold"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "threshold_never_decreases",
+          "subject": {
+            "fact_type": "chain_has_threshold",
+            "value_role": "threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          },
+          "op": ">=",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7d"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 58
+      }
+    },
+    {
+      "id": "reimburse_expense",
+      "reading": "{Expense} is reimbursed {ReimbursementAmount} on {PaidOn}",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        },
+        {
+          "name": "submission",
+          "object_type": "workday_submission"
+        },
+        {
+          "name": "approver",
+          "object_type": "approver"
+        },
+        {
+          "name": "amount",
+          "object_type": "reimbursement_amount"
+        },
+        {
+          "name": "on_date",
+          "object_type": "paid_on"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_submitted",
+          "require": [
+            {
+              "fact_type": "expense_submitted_to_workday",
+              "bind": {
+                "expense": "$expense",
+                "submission": "$submission"
+              }
+            }
+          ],
+          "modality": "alethic",
+          "source": "explicit",
+          "status": "confirmed",
+          "provenance": {
+            "csdp_step": 7,
+            "dialogue_turn": 62,
+            "user_quote": "We only pay what Workday has."
+          }
+        },
+        {
+          "id": "pre_has_approver",
+          "require": [
+            {
+              "fact_type": "expense_approved_by",
+              "bind": {
+                "expense": "$expense",
+                "approver": "$approver"
+              }
+            }
+          ],
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "csdp_step": 7,
+            "dialogue_turn": 62,
+            "user_quote": "We like to know who signed it off."
+          }
+        },
+        {
+          "id": "pre_settled",
+          "require": [
+            {
+              "fact_type": "expense_has_status",
+              "bind": {
+                "expense": "$expense",
+                "status": "submitted"
+              }
+            },
+            {
+              "fact_type": "expense_approved_by",
+              "bind": {
+                "expense": "$expense",
+                "approver": "$approver"
+              }
+            }
+          ],
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "csdp_step": 7,
+            "dialogue_turn": 62,
+            "user_quote": "Finance likes to see the approver on file."
+          }
+        }
+      ],
+      "effects": [
+        {
+          "assert": {
+            "fact_type": "expense_reimbursed",
+            "bind": {
+              "expense": "$expense",
+              "amount": "$amount",
+              "paid_on": "$on_date"
+            }
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 62
+      }
+    },
+    {
+      "id": "set_initial_threshold",
+      "reading": "{ApprovalChain} opens at threshold {ThresholdEur}",
+      "parameters": [
+        {
+          "name": "chain",
+          "object_type": "approval_chain"
+        },
+        {
+          "name": "first_threshold",
+          "object_type": "threshold_eur"
+        }
+      ],
+      "effects": [
+        {
+          "assert": {
+            "fact_type": "chain_has_threshold",
+            "bind": {
+              "chain": "$chain",
+              "threshold": "$first_threshold"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "opening_threshold_never_lowers",
+          "subject": {
+            "fact_type": "chain_has_threshold",
+            "value_role": "threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          },
+          "op": ">=",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7e"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 65
+      }
+    },
+    {
+      "id": "flag_expense",
+      "reading": "{Expense} is flagged",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        }
+      ],
+      "effects": [
+        {
+          "assert": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$expense",
+              "status": "flagged"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_is_urgent",
+            "bind": {
+              "expense": "$expense"
+            }
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 68
+      }
+    },
+    {
+      "id": "tag_expense",
+      "reading": "{Expense} is tagged {Tag}",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        },
+        {
+          "name": "new_tag",
+          "object_type": "tag"
+        }
+      ],
+      "effects": [
+        {
+          "assert": {
+            "fact_type": "expense_has_tag",
+            "bind": {
+              "expense": "$expense",
+              "tag": "$new_tag"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "tag_must_change",
+          "subject": {
+            "fact_type": "expense_has_tag",
+            "value_role": "tag",
+            "bind": {
+              "expense": "$expense"
+            }
+          },
+          "op": "!=",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7f"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 71
+      }
+    },
+    {
+      "id": "annotate_expense",
+      "reading": "{Expense} is annotated {Tag}",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        },
+        {
+          "name": "note_tag",
+          "object_type": "tag"
+        }
+      ],
+      "effects": [
+        {
+          "assert": {
+            "fact_type": "expense_has_tag",
+            "bind": {
+              "expense": "$expense",
+              "tag": "$note_tag"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "annotation_should_change",
+          "subject": {
+            "fact_type": "expense_has_tag",
+            "value_role": "tag",
+            "bind": {
+              "expense": "$expense"
+            }
+          },
+          "op": "!=",
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7f"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 71
+      }
+    },
+    {
+      "id": "tag_expense_pair",
+      "reading": "{Expense} is tagged twice",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        },
+        {
+          "name": "tag_a",
+          "object_type": "tag"
+        },
+        {
+          "name": "tag_b",
+          "object_type": "tag"
+        }
+      ],
+      "effects": [
+        {
+          "assert": {
+            "fact_type": "expense_has_tag",
+            "bind": {
+              "expense": "$expense",
+              "tag": "$tag_a"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_has_tag",
+            "bind": {
+              "expense": "$expense",
+              "tag": "$tag_b"
+            }
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 74
+      }
+    },
+    {
+      "id": "clear_tags",
+      "reading": "{Expense} has its tags cleared",
+      "parameters": [
+        {
+          "name": "expense",
+          "object_type": "expense"
+        }
+      ],
+      "effects": [
+        {
+          "retract": {
+            "fact_type": "expense_has_tag",
+            "bind": {
+              "expense": "$expense"
+            }
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 77
+      }
+    },
+    {
+      "id": "submit_pair",
+      "reading": "{Expense:first} and {Expense:second} are submitted together",
+      "parameters": [
+        {
+          "name": "first",
+          "object_type": "expense"
+        },
+        {
+          "name": "second",
+          "object_type": "expense"
+        },
+        {
+          "name": "first_sub",
+          "object_type": "workday_submission"
+        },
+        {
+          "name": "second_sub",
+          "object_type": "workday_submission"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_both_approved",
+          "require": [
+            {
+              "fact_type": "expense_has_status",
+              "bind": {
+                "expense": "$first",
+                "status": "approved"
+              }
+            },
+            {
+              "fact_type": "expense_has_status",
+              "bind": {
+                "expense": "$second",
+                "status": "approved"
+              }
+            }
+          ],
+          "modality": "alethic",
+          "source": "explicit",
+          "status": "confirmed",
+          "provenance": {
+            "csdp_step": 7,
+            "dialogue_turn": 80,
+            "user_quote": "Nothing reaches Workday before approval."
+          }
+        }
+      ],
+      "effects": [
+        {
+          "create": {
+            "object_type": "workday_submission",
+            "param": "first_sub"
+          }
+        },
+        {
+          "create": {
+            "object_type": "workday_submission",
+            "param": "second_sub"
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_submitted_to_workday",
+            "bind": {
+              "expense": "$first",
+              "submission": "$first_sub"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_submitted_to_workday",
+            "bind": {
+              "expense": "$second",
+              "submission": "$second_sub"
+            }
+          }
+        },
+        {
+          "retract": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$first"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$first",
+              "status": "submitted"
+            }
+          }
+        },
+        {
+          "retract": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$second"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "expense_has_status",
+            "bind": {
+              "expense": "$second",
+              "status": "submitted"
+            }
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 80
+      }
+    },
+    {
+      "id": "lower_chain_threshold",
+      "reading": "{ApprovalChain} threshold is lowered to {ThresholdEur}",
+      "parameters": [
+        {
+          "name": "chain",
+          "object_type": "approval_chain"
+        },
+        {
+          "name": "new_threshold",
+          "object_type": "threshold_eur"
+        }
+      ],
+      "effects": [
+        {
+          "retract": {
+            "fact_type": "chain_has_threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          }
+        },
+        {
+          "assert": {
+            "fact_type": "chain_has_threshold",
+            "bind": {
+              "chain": "$chain",
+              "threshold": "$new_threshold"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "threshold_should_not_decrease",
+          "subject": {
+            "fact_type": "chain_has_threshold",
+            "value_role": "threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          },
+          "op": ">=",
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7g"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 83
+      }
+    },
+    {
+      "id": "close_chain",
+      "reading": "{ApprovalChain} is closed",
+      "parameters": [
+        {
+          "name": "chain",
+          "object_type": "approval_chain"
+        }
+      ],
+      "effects": [
+        {
+          "retract": {
+            "fact_type": "chain_has_threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          }
+        }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "closing_threshold_never_lowers",
+          "subject": {
+            "fact_type": "chain_has_threshold",
+            "value_role": "threshold",
+            "bind": {
+              "chain": "$chain"
+            }
+          },
+          "op": ">=",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "added_at_step": "7h"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "provenance": {
+        "csdp_step": 7,
+        "dialogue_turn": 86
+      }
+    }
+  ]
+}

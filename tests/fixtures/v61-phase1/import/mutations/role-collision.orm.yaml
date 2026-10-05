@@ -1,0 +1,12 @@
+version: 1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+fact_types:
+  - id: item_related
+    reading: "{Item:left} relates to {Item:right}"
+    roles:
+      - { object_type: item, role_name: itemCode }
+      - { object_type: item, role_name: item_code }
+constraints: []
+rejected_proposals: []

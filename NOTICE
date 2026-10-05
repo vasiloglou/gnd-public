@@ -8,3 +8,9 @@ are not included. This notice grants no rights in excluded third-party material.
 The comment scanner in gnd/yaml_comments.py adapts ruamel.yaml 0.19.1
 by Anthon van der Neut, Ruamel bvba, under the MIT license. Its copyright
 and complete license text are retained in that shipped source file.
+
+GND's ORM modeling skills and references (src/gnd/skills/gnd-orm-core and
+src/gnd/skills/gnd-model-from-text) are adapted from RelationalAI's
+rai-agent-skills ORM skills (https://github.com/RelationalAI/rai-agent-skills,
+branch an-orm-skill), Copyright 2026 RelationalAI, licensed under the
+Apache License, Version 2.0.

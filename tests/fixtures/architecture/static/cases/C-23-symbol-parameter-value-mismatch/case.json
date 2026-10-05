@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "C-23-symbol-parameter-value-mismatch",
+  "story": "An effective function with the wrong positional parameter name reports shape mismatch.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/artifacts",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "app.py",
+      "kind": "text",
+      "text": "def main(args):\n    return 0\n"
+    }
+  ]
+}

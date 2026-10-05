@@ -1,0 +1,32 @@
+{
+  "_format": "relpath -> sha256 of the POST-PHASE generated tree, sorted; null = the file is asserted present but its bytes embed the model path as passed to gnd codegen (measured: .gnd-codegen.json model.path, model.artifacts.json lines 18 and 23), so no fixed hash exists; preimages for the two phase-changed rows are answers/goldens/",
+  "_output_directory_names": "The generated skill's name -- and therefore SKILL.md's bytes -- derives from the OUTPUT DIRECTORY name (cli.py passes skill_name=Path(out_dir).name), so the receipt is well-defined only once that name is fixed. These hashes are measured with the projects generated into directories named exactly 'alpha' and 'beta' (IF-P1-4).",
+  "alpha": {
+    ".gnd-codegen.json": null,
+    "SKILL.md": "c4a29d43c7850b66f7fbe95ea965f755497f8dd662b10c68ec1b254e11572ec1",
+    "architecture.contract.yaml": "f66ec0855d3f924daab52dbe7b0e602cfae8ab6932c95527eacd10eb87754d7f",
+    "artifacts/model.applicable.json": "8d20021501fd47c24e0906544a637feffce188b8feff75e3c05c05cfc14d8666",
+    "artifacts/model.artifacts.json": null,
+    "artifacts/model.projection.schema.json": "3c1bbdcb7bd2112b5f7301f4532790001b5a866a4c62f924a460410174d8b4a4",
+    "artifacts/model.verbalization.txt": "eeabf6f8a5c960755f75eb61dcd109fdf51debcd0e6a567eba0d4aef5f55ed35",
+    "model/__init__.py": "dbb491d17dd058be66f23d4015534012f159ee2f3689bff2ce5504a172291fd2",
+    "model/tools.py": "202918079870ffa92b2c1d8c0dd8a02ecad8740df87befb1d7e85dd78c15e482",
+    "pyproject.toml": "817d7f0ecd1d799028b9f818b20fb463ab69040a98081f04326afab890ab0f9f",
+    "references/gnd-model-notes.md": "03dd905ce20f8b5113c60a7668dd811ed714b23d1de8a25883c5109a0c57f625",
+    "test_architecture_smoke_v51_alpha.py": "b7497b3b7de0a04c781be88610305b34ae40a81202ce897a5c2b5b630537f6ed"
+  },
+  "beta": {
+    ".gnd-codegen.json": null,
+    "SKILL.md": "5ce56d2ffe1e2c1269d886b372ef6cc6bdbc886a5060de99dffa10b107d4c824",
+    "architecture.contract.yaml": "f66ec0855d3f924daab52dbe7b0e602cfae8ab6932c95527eacd10eb87754d7f",
+    "artifacts/model.applicable.json": "dd842a6d1a4f236bfb5f465864a055a2123595170cc6ab4249f36fdf8bf1a520",
+    "artifacts/model.artifacts.json": null,
+    "artifacts/model.projection.schema.json": "8a437653d1834ee36ec10d746997340a91cf8c571478f1b1b80d1e1fc39aaaf4",
+    "artifacts/model.verbalization.txt": "4cac56e409416636573cc669bd03fba4928517a83455671f7148b9c6a97207fc",
+    "model/__init__.py": "30e90bdd4f2d6e65987a9c13dcc466a5a2b749b33e24e86a8e049b6ec9b4ef7a",
+    "model/tools.py": "842072c50ec295957dba2f061a0eda4115b575320d729e5233f8ccaeb58c9670",
+    "pyproject.toml": "817d7f0ecd1d799028b9f818b20fb463ab69040a98081f04326afab890ab0f9f",
+    "references/gnd-model-notes.md": "03dd905ce20f8b5113c60a7668dd811ed714b23d1de8a25883c5109a0c57f625",
+    "test_architecture_smoke_v51_beta.py": "b7497b3b7de0a04c781be88610305b34ae40a81202ce897a5c2b5b630537f6ed"
+  }
+}

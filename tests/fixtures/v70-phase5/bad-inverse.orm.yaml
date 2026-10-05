@@ -1,0 +1,29 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase5-public@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: amount, name: Amount, kind: value, primitive: Float}
+  - {id: note, name: Note, kind: value, primitive: String}
+  - {id: person, name: Person, kind: value, primitive: String}
+  - {id: record, name: Record, kind: value, primitive: String}
+  - {id: token, name: Token, kind: value, primitive: String}
+fact_types:
+  - id: a_note
+    reading: "{Note} is filed }"
+    roles: [{object_type: note, role_name: note}]
+  - id: b_pair
+    reading: "{Person:left} meets {Person:right}"
+    inverse_reading: "is met by"
+    roles: [{object_type: person, role_name: left}, {object_type: person, role_name: right}]
+  - id: c_amount
+    reading: "{Record} has amount {Amount}"
+    roles: [{object_type: record, role_name: record}, {object_type: amount, role_name: amount}]
+  - id: d_token
+    reading: "{Record} has token {Token}"
+    roles: [{object_type: record, role_name: record}, {object_type: token, role_name: token}]
+  - id: e_transfer
+    reading: "{Person:sender} sends {Token:item} to {Person:receiver}"
+    inverse_reading: "is received by"
+    roles: [{object_type: person, role_name: sender}, {object_type: token, role_name: item}, {object_type: person, role_name: receiver}]
+constraints: []
+rejected_proposals: []

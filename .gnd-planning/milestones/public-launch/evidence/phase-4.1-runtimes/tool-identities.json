@@ -1,0 +1,27 @@
+{
+  "platform": "macOS arm64",
+  "python": "3.13.12",
+  "uv": "0.10.10",
+  "tools": {
+    "pyrel": "1.30.1",
+    "duckdb": "1.5.5",
+    "souffle": "2.5, 64 bits",
+    "lean": "4.34.0",
+    "lake": "5.0.0-src+293d5d0"
+  },
+  "executables": {
+    "souffle": {
+      "path": "/opt/homebrew/Cellar/souffle/2.5/bin/souffle",
+      "sha256": "0933066a5a05c5260c154e88c629ccb3f9c7b42737f786b99f73d528b7ba810c"
+    },
+    "lake": {
+      "path": "<operator-home>/.cache/gnd-v71-lean/lean-4.34.0-darwin_aarch64/bin/lake",
+      "sha256": "c8c24f1398162ab4004e2a869952d8469f54293651151feaad4526f2b8474c6e"
+    },
+    "lean": {
+      "path": "<operator-home>/.cache/gnd-v71-lean/lean-4.34.0-darwin_aarch64/bin/lean",
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    }
+  },
+  "limits": "Existing exact cached Lean toolchain and Homebrew Souffle used; no hosted connection, model/provider calls, certification, performance claim or cloud acceptance. Ordinary Lean foundational axioms remain visible."
+}

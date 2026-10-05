@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-04",
+  "owner_requested": "direct push without CI or PR",
+  "main_push": "rejected by GitHub: required phase2 status check and pull request",
+  "protection_change": "not executed: automatic approval review rejected temporary administrator bypass and removal of administrator enforcement",
+  "reason": "Owner authorized direct delivery but did not explicitly authorize weakening repository security controls or bypassing required protections.",
+  "state": "Original protections unchanged; draft PR reopened; completed work preserved on codex/public-phase-4-1. Explicit owner approval is required before any temporary protection bypass."
+}

@@ -1,0 +1,4 @@
+scenario.md: selected executable blocks passed
+lean.md: selected executable blocks passed
+Native lanes executed: lean
+12 tutorial blocks passed

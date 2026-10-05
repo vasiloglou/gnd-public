@@ -1,0 +1,11 @@
+population:
+  model: ../models/role-declaration.orm.yaml
+  model_id: urn:gnd-fixture:v61-phase4-role@1
+  source: fixture
+  label: violating
+  covers: [seed, optional_code]
+facts:
+  seed: [{ item: P4_PUBLIC_ITEM_01_A }, { item: P4_PUBLIC_ITEM_01_B }]
+  optional_code:
+    - { item: P4_PUBLIC_ITEM_01_A, code: P4_SECRET_CODE_01 }
+    - { item: P4_PUBLIC_ITEM_01_B, code: P4_SECRET_CODE_01 }

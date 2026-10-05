@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "kind": "souffle-derivation-program",
+  "support_profile": "souffle-relational-v1",
+  "encoding": "souffle-token-v1",
+  "assurance": "none",
+  "binding": {
+    "model_digest": "sha256:1f55a47443d4a18137234913fd24dd676b7b59996dad626875540f88d1b9c299",
+    "candidate_digest": "sha256:026dc3af53e7a4a9c2afc284b00b91e040f58b25ee8f2827c9fade23e065e010",
+    "references": [
+      {
+        "id": "links",
+        "raw_sha256": "b725da445dbf93befd7a465eb047ae4b5268fe4dcbf658069a07f2c3ea55a8e9"
+      }
+    ],
+    "model_raw_sha256": "bb7cea1f12b182a94006ea0b5cd178bf5c1a55d10409ae6b58aa37e5a85f5127",
+    "candidate_raw_sha256": "1705cd8cdb0aae1f748845ba34516a6f154bc43755a15ca8d32bd90070f81827"
+  },
+  "input_formats": {
+    "model": "json",
+    "candidate": "json"
+  },
+  "excluded": {
+    "constraint_evaluation": "all",
+    "constraint_ids": [],
+    "operations": "all"
+  },
+  "files": [
+    {
+      "path": "facts/i0.facts",
+      "bytes": 88,
+      "sha256": "3de12d6dd2cfcf7e8e7fdde1209d0074fb913d9e2cb7ea3f1db9c8c8470bdb3e"
+    },
+    {
+      "path": "facts/i1.facts",
+      "bytes": 28,
+      "sha256": "d4ca59faf062ccc875a10557dcb6d0ec3caab1993d12ab2f60ef90afc750158c"
+    },
+    {
+      "path": "inputs/candidate.json",
+      "bytes": 325,
+      "sha256": "1705cd8cdb0aae1f748845ba34516a6f154bc43755a15ca8d32bd90070f81827"
+    },
+    {
+      "path": "inputs/model.json",
+      "bytes": 2567,
+      "sha256": "bb7cea1f12b182a94006ea0b5cd178bf5c1a55d10409ae6b58aa37e5a85f5127"
+    },
+    {
+      "path": "inputs/reference-0.json",
+      "bytes": 459,
+      "sha256": "b725da445dbf93befd7a465eb047ae4b5268fe4dcbf658069a07f2c3ea55a8e9"
+    },
+    {
+      "path": "origins.json",
+      "bytes": 868,
+      "sha256": "fbb34ab29d504417fc151dfd9a6ea042081b77837204f145eb5b1dbbe7ce6346"
+    },
+    {
+      "path": "program.dl",
+      "bytes": 446,
+      "sha256": "6ce2291d049eba4fab1862d680030209eedb33afed2a5fe4aff361cfffdf217b"
+    },
+    {
+      "path": "symbols.json",
+      "bytes": 1851,
+      "sha256": "205b7662ddefffd42cffcc3f10a6fb7564bfd60014a1d48cf6b0d6dfe86925f2"
+    }
+  ],
+  "limits": {
+    "document_bytes": 10485760,
+    "bundle_bytes": 41943040,
+    "container_depth": 64,
+    "fact_types": 256,
+    "roles": 64,
+    "clauses": 1024,
+    "atom_sites": 4096,
+    "input_rows": 100000,
+    "encoded_cells": 400000,
+    "scalar_bytes": 4096,
+    "numeric_digits": 128,
+    "emission_visits": 1000000,
+    "native_output_bytes": 10485760,
+    "native_rows": 100000,
+    "native_seconds": 30
+  }
+}

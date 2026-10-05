@@ -1,0 +1,313 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-v6-phase2:joins@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "guided"
+  },
+  "object_types": [
+    {
+      "id": "kx",
+      "name": "KeyX",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "ku",
+      "name": "KeyU",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "n",
+      "name": "Number",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "person",
+      "name": "Person",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "person_id"
+      }
+    },
+    {
+      "id": "person_id",
+      "name": "PersonId",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "a",
+      "reading": "{KeyX} has {Number}",
+      "roles": [
+        {
+          "object_type": "kx",
+          "role_name": "x"
+        },
+        {
+          "object_type": "n",
+          "role_name": "v"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "reading": "{KeyU} has {Number}",
+      "roles": [
+        {
+          "object_type": "ku",
+          "role_name": "u"
+        },
+        {
+          "object_type": "n",
+          "role_name": "w"
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "reading": "{Person:p} pairs with {Person:q} at {Number}",
+      "roles": [
+        {
+          "object_type": "person",
+          "role_name": "p"
+        },
+        {
+          "object_type": "person",
+          "role_name": "q"
+        },
+        {
+          "object_type": "n",
+          "role_name": "v"
+        }
+      ]
+    },
+    {
+      "id": "d",
+      "reading": "{Person} reads {Number}",
+      "roles": [
+        {
+          "object_type": "person",
+          "role_name": "r"
+        },
+        {
+          "object_type": "n",
+          "role_name": "w"
+        }
+      ]
+    },
+    {
+      "id": "e",
+      "reading": "{Person} scores {Number:w} against {Number:z}",
+      "roles": [
+        {
+          "object_type": "person",
+          "role_name": "r"
+        },
+        {
+          "object_type": "n",
+          "role_name": "w"
+        },
+        {
+          "object_type": "n",
+          "role_name": "z"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "type": "uniqueness",
+      "scope": "external",
+      "role_refs": [
+        {
+          "fact_type": "a",
+          "role": "v"
+        },
+        {
+          "fact_type": "b",
+          "role": "w"
+        }
+      ],
+      "preferred": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 1
+      }
+    },
+    {
+      "type": "frequency",
+      "scope": "external",
+      "role_refs": [
+        {
+          "fact_type": "a",
+          "role": "v"
+        },
+        {
+          "fact_type": "b",
+          "role": "w"
+        }
+      ],
+      "bound": {
+        "max": 1
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 2
+      }
+    },
+    {
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "a",
+          "role": "v"
+        },
+        {
+          "fact_type": "b",
+          "role": "w"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "e",
+          "role": "w"
+        },
+        {
+          "fact_type": "e",
+          "role": "z"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 3
+      }
+    },
+    {
+      "type": "equality",
+      "role_seq_a": [
+        {
+          "fact_type": "a",
+          "role": "v"
+        },
+        {
+          "fact_type": "b",
+          "role": "w"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "e",
+          "role": "w"
+        },
+        {
+          "fact_type": "e",
+          "role": "z"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 4
+      }
+    },
+    {
+      "type": "exclusion",
+      "role_seq_a": [
+        {
+          "fact_type": "a",
+          "role": "v"
+        },
+        {
+          "fact_type": "b",
+          "role": "w"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "e",
+          "role": "w"
+        },
+        {
+          "fact_type": "e",
+          "role": "z"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 5
+      }
+    },
+    {
+      "type": "value-comparison",
+      "operator": "<=",
+      "role_a": {
+        "fact_type": "a",
+        "role": "v"
+      },
+      "role_b": {
+        "fact_type": "b",
+        "role": "w"
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 6
+      }
+    },
+    {
+      "type": "exclusive-or",
+      "role_seqs": [
+        [
+          {
+            "fact_type": "a",
+            "role": "v"
+          },
+          {
+            "fact_type": "b",
+            "role": "w"
+          }
+        ],
+        [
+          {
+            "fact_type": "e",
+            "role": "w"
+          },
+          {
+            "fact_type": "e",
+            "role": "z"
+          }
+        ]
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 4,
+        "dialogue_turn": 7
+      }
+    }
+  ]
+}

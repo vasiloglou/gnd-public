@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "C-46-root-race-band-74",
+  "story": "A deterministic root-rebind failure outranks findings and selects IO band 74.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": []
+  },
+  "project": [],
+  "seam": "root-race"
+}

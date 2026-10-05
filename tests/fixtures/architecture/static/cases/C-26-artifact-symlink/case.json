@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "C-26-artifact-symlink",
+  "story": "A declared artifact symlink is non-regular and never followed.",
+  "manifest_contract": true,
+  "contract": {
+    "kind": "base",
+    "patches": [
+      {
+        "op": "replace",
+        "path": "/modules",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/artifacts/0/required_by",
+        "value": []
+      },
+      {
+        "op": "replace",
+        "path": "/entry_points",
+        "value": []
+      }
+    ]
+  },
+  "project": [
+    {
+      "path": "artifacts/data.json",
+      "kind": "symlink",
+      "target": "../app.py"
+    }
+  ]
+}

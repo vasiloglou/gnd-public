@@ -1,0 +1,23 @@
+version: 1
+model_id: urn:gnd-fixture:derivation-evaluation:eval-bare-dollar-literal@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+  - { id: tag, name: Tag, kind: value, primitive: String }
+fact_types:
+  - id: item_has_tag
+    reading: "{Item} has {Tag}"
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: tag, role_name: tag }
+  - id: result
+    reading: "{Item} has the dollar tag"
+    roles: [{ object_type: item, role_name: item }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: item_has_tag, bind: { item: "$i", tag: "$" } }]
+      head: { item: "$i" }
+
+constraints: []
+rejected_proposals: []

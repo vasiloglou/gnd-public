@@ -1,0 +1,25 @@
+{
+  "cases": [
+    {
+      "acceptance": {
+        "coverage": [
+          {
+            "fact_type": "f",
+            "min_facts": 1
+          }
+        ],
+        "mode": "constraint-satisfaction"
+      },
+      "case_id": "c",
+      "role": "required",
+      "inputs": [],
+      "verify": {
+        "command": "check",
+        "subject": "population.json"
+      }
+    }
+  ],
+  "experiment_id": "exp-synthetic-4",
+  "max_attempts": 1,
+  "schema_version": 2
+}

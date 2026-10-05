@@ -1,0 +1,63 @@
+{
+  "feedback_v5": {
+    "schema_version": 5,
+    "run_id": "sample-run",
+    "contract_id": "EXP-sample-plan",
+    "contract_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_attempt_index": 1,
+    "candidate_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "case_payload_sha256s": [
+      [
+        "sample-plan",
+        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      ]
+    ],
+    "normalized_verifier_signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "process_exit": 1,
+    "payload_exit": [
+      [
+        "sample-plan",
+        1
+      ]
+    ],
+    "acceptance_ready": false,
+    "required": [
+      {
+        "case_id": "sample-plan",
+        "role": "required",
+        "command": "transition",
+        "band": 1,
+        "steps": [
+          {
+            "index": 1,
+            "operation_id": "approve_item",
+            "outcome": "accepted"
+          },
+          {
+            "index": 2,
+            "operation_id": "submit_item",
+            "outcome": "violated"
+          }
+        ]
+      }
+    ],
+    "diagnostic": [],
+    "disposition": "retry"
+  },
+  "result_v3": {
+    "schema_version": 3,
+    "run_id": "sample-run",
+    "disposition": "accepted",
+    "terminal_reason": "all required cases accepted",
+    "attempt_count": 1,
+    "best_attempt": 1,
+    "best_attempt_manifest_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "best_candidate_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "referenced_evidence_digests": {
+      "attempts/0001/attempt.json": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "acceptance_modes": [
+      "transition"
+    ]
+  }
+}

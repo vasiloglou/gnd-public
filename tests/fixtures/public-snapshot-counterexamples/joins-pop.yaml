@@ -1,0 +1,49 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-v6-phase2:joins@1",
+    "source": "fixture",
+    "label": "boundary",
+    "covers": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e"
+    ]
+  },
+  "facts": {
+    "a": [
+      {
+        "x": "k1",
+        "v": 1
+      }
+    ],
+    "b": [
+      {
+        "u": "k2",
+        "w": 1
+      }
+    ],
+    "c": [
+      {
+        "p": "P1",
+        "q": "P2",
+        "v": 1
+      }
+    ],
+    "d": [
+      {
+        "r": "P1",
+        "w": 1
+      }
+    ],
+    "e": [
+      {
+        "r": "P1",
+        "w": 1,
+        "z": 1
+      }
+    ]
+  }
+}

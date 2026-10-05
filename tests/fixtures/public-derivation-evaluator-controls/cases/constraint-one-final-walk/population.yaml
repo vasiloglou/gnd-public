@@ -1,0 +1,12 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:derivation-evaluation:constraint-one-final-walk@1
+  source: fixture
+  label: boundary
+  covers: [seed, flagged, result, semi_result]
+instances: {}
+facts:
+  seed: [{ item: alpha }]
+  flagged: []
+  result: [{ item: alpha }]
+  semi_result: [{ item: alpha }, { item: surplus }]

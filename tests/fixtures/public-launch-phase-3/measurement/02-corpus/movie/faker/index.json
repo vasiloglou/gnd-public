@@ -1,0 +1,13 @@
+{
+  "not_derivable": [],
+  "populations": [
+    {
+      "band": 0,
+      "case_kind": "conforming",
+      "class": "conforming",
+      "population": "conforming/model.orm.conforming.seed1.json",
+      "seed": 1,
+      "sidecar": "conforming/model.orm.conforming.seed1.meta.json"
+    }
+  ]
+}

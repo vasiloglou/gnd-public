@@ -1,0 +1,15 @@
+version: 2
+model_id: urn:gnd-fixture:v70-phase6-range@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: invoice, name: Invoice, kind: value, primitive: String}
+  - {id: amount, name: Amount, kind: value, primitive: Integer}
+fact_types:
+  - id: invoice_amount
+    reading: "{Invoice} has amount {Amount}"
+    roles: [{object_type: invoice, role_name: invoice}, {object_type: amount, role_name: amount}]
+    constraints:
+      - {id: unique_pair, type: uniqueness, roles: [invoice, amount], source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "An invoice and amount pair occurs once."}}
+      - {id: allowed_amount, type: value, object_type: amount, role_ref: {fact_type: invoice_amount, role: amount}, range: {min: 0, max: 30, min_inclusive: true, max_inclusive: true}, source: explicit, status: confirmed, modality: alethic, provenance: {user_quote: "The amount is between 0 and 30."}}
+constraints: []
+rejected_proposals: []

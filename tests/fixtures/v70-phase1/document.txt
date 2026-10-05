@@ -1,0 +1,29 @@
+Record R-1 bears the label CAFÉ ALPHA. Record R-2 bears the label Atlas.
+Atlas appears once more as a separate name. Atlasian embeds that name inside a longer word.
+A quoted alternative reads “Bright‑Harbor”; the punctuation is part of that label.
+Invoice I-7 specifies a quantity of +1,234 units. Price P-8 is -12.50 dollars.
+Rate D-9 is 12.5 % exactly. Date E-1 is 2024-02-29, a leap day.
+Notice N-1 is addressed to Holder. Pair Left and Right appears in this clause.
+A separate date example 2023-02-29 is intentionally invalid and cannot satisfy a date recogniser.
+A decimal example .75 and a signed integer -2 are present for recogniser controls.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+Background clause: no additional controlled fact is asserted here.
+.................................................

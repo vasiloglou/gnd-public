@@ -1,0 +1,22 @@
+version: 1
+model_id: urn:gnd-fixture:v61-phase4-fact-type@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: value, primitive: String }
+  - { id: code, name: Code, kind: value, primitive: String }
+fact_types:
+  - id: optional_code
+    reading: "{Item} has code {Code}"
+    redact: true
+    roles:
+      - { object_type: item, role_name: item }
+      - { object_type: code, role_name: code }
+    constraints:
+      - type: uniqueness
+        roles: [code]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "One item may carry a given optional code." }
+constraints: []
+rejected_proposals: []

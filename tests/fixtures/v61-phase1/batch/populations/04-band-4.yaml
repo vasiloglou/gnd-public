@@ -1,0 +1,10 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-fixture:v61-phase1-batch@1
+  source: fixture
+  label: boundary
+  covers: [seed, optional_code]
+instances: {}
+facts:
+  seed: [{ item: alpha }]
+  optional_code: [{ item: code }]

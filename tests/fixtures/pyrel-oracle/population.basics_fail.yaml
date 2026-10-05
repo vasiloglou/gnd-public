@@ -1,0 +1,29 @@
+# Violating population for basics.orm.yaml — every declared family violated:
+# duplicate (student, nickname) pair -> spanning UC; roster student 3 with no
+# nickname -> mandatory; student 1 with two grades -> uniqueness [student];
+# grade 150 -> range; color "mauve" -> enumeration; students liking one color
+# -> frequency min (occurring groups); student ref 5000 -> StudentId range via
+# reference widening.
+population:
+  model: basics.orm.yaml
+  source: fixture
+  label: violating
+  covers:
+    - student_has_nickname
+    - student_has_grade
+    - student_likes_color
+instances:
+  student: [1, 2, 3]
+facts:
+  student_has_nickname:
+    - { student: 1, nickname: "ace" }
+    - { student: 1, nickname: "ace" }
+    - { student: 2, nickname: "bee" }
+  student_has_grade:
+    - { student: 1, grade: 90 }
+    - { student: 1, grade: 95 }
+    - { student: 2, grade: 150 }
+  student_likes_color:
+    - { student: 1, color: "red" }
+    - { student: 2, color: "mauve" }
+    - { student: 5000, color: "blue" }

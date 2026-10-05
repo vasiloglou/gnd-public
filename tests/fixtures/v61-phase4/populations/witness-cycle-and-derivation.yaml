@@ -1,0 +1,12 @@
+population:
+  model: ../models/witness-declarations.orm.yaml
+  model_id: urn:gnd-fixture:v61-phase4-witnesses@1
+  source: fixture
+  label: violating
+  covers: [node_links_to, seed_secret, derived_secret]
+facts:
+  node_links_to:
+    - { from: P4_SECRET_CYCLE_A, to: P4_SECRET_CYCLE_B }
+    - { from: P4_SECRET_CYCLE_B, to: P4_SECRET_CYCLE_A }
+  seed_secret: [{ node: P4_PUBLIC_DERIVATION_NODE }]
+  derived_secret: [{ node: P4_SECRET_DERIVATION_EXTRA }]

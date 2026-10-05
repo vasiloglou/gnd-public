@@ -1,0 +1,11 @@
+population:
+  model: model_id_a.orm.yaml
+  model_id: "urn:gnd:model:adversarial-model-id-b"
+  source: agent-output
+  label: conforming
+  covers:
+    - person_has_name
+facts:
+  person_has_name:
+    - { person: "P1", name: "Ada Lovelace" }
+    - { person: "P2", name: "Grace Hopper" }

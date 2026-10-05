@@ -1,0 +1,27 @@
+contract_version: 1
+modules:
+  - path: toy/processor.py
+    symbols:
+      - name: process
+        parameters: [population, user, limit]
+artifacts:
+  - path: artifacts/model.artifacts.json
+    required_by: [toy/processor.py]
+entry_points:
+  - module: toy.cli
+    subcommands: [process]
+    flags: [--model, --input, --output, --user, --limit]
+    consumes: [member_tagged_item, member_is_active, item_is_public]
+    produces: [output_record]
+    exits:
+      - code: 0
+        meaning: output written and conformant
+      - code: 2
+        meaning: invalid input
+      - code: 3
+        meaning: unknown user
+smoke:
+  - id: unknown-user-refused
+    entry_point: toy.cli
+    argv: [process, --output, "{tmp}/out.json", --user, ghost]
+    expect_exit: 3

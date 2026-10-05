@@ -1,0 +1,28 @@
+version: 1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: item, name: Item, kind: entity, reference: { mode: popular, value_type: item_code } }
+  - { id: item_code, name: ItemCode, kind: value, primitive: String }
+fact_types:
+  - id: item_has_code
+    reading: "{Item} has {ItemCode}"
+    roles:
+      - { object_type: item }
+      - { object_type: item_code, role_name: itemCode }
+    constraints:
+      - type: uniqueness
+        roles: [item]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: Each item has at most one code. }
+constraints:
+  - type: value
+    object_type: item_code
+    role_ref: { fact_type: item_has_code, role: itemCode }
+    allowed: [A, B]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: Item codes are A or B. }
+rejected_proposals: []

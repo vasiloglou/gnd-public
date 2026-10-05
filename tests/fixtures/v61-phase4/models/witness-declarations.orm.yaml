@@ -1,0 +1,30 @@
+version: 1
+model_id: urn:gnd-fixture:v61-phase4-witnesses@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: node, name: Node, kind: value, primitive: String }
+fact_types:
+  - id: node_links_to
+    reading: "{Node:from} links to {Node:to}"
+    roles:
+      - { object_type: node, role_name: from }
+      - { object_type: node, role_name: to, redact: true }
+    constraints:
+      - type: ring
+        variant: acyclic
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A node-link chain never cycles." }
+  - id: seed_secret
+    reading: "{Node} is a seed"
+    roles: [{ object_type: node, role_name: node }]
+  - id: derived_secret
+    reading: "{Node} is derived"
+    roles: [{ object_type: node, role_name: node, redact: true }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: seed_secret, bind: { node: "$n" } }]
+      head: { node: "$n" }
+constraints: []
+rejected_proposals: []

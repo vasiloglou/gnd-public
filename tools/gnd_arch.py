@@ -241,6 +241,34 @@ def _is_type_checking(test) -> bool:
     )
 
 
+_UNBOUND = object()
+
+
+class _AliasScopes:
+    """Lexically scoped import-alias bindings, shared by both visitors (RF0-OQ2).
+
+    A name bound to None is a known non-gnd binding; an unbound name is absent.
+    """
+
+    def __init__(self) -> None:
+        self._scopes: list[dict[str, str | None]] = [{}]
+
+    def bind(self, name: str, target: str | None) -> None:
+        self._scopes[-1][name] = target
+
+    def lookup(self, name: str):
+        for scope in reversed(self._scopes):
+            if name in scope:
+                return scope[name]
+        return _UNBOUND
+
+    def push(self) -> None:
+        self._scopes.append({})
+
+    def pop(self) -> None:
+        self._scopes.pop()
+
+
 class _ModuleVisitor(ast.NodeVisitor):
     """One walk per module; every import kind is classified here."""
 
@@ -251,7 +279,7 @@ class _ModuleVisitor(ast.NodeVisitor):
         self.package = module if rel.endswith("/__init__.py") else module.rpartition(".")[0]
         self.function_depth = 0
         self.type_checking_depth = 0
-        self.scopes: list[dict[str, str]] = [{}]
+        self.aliases = _AliasScopes()
         self.edges: set[tuple[str, str, int]] = set()
         self.unresolved: set[int] = set()
         self.private: set[tuple[str, str, int, str]] = set()
@@ -272,13 +300,11 @@ class _ModuleVisitor(ast.NodeVisitor):
         return None
 
     def _bind(self, name: str, module: str) -> None:
-        self.scopes[-1][name] = module
+        self.aliases.bind(name, module)
 
     def _lookup(self, name: str) -> str | None:
-        for scope in reversed(self.scopes):
-            if name in scope:
-                return scope[name]
-        return None
+        found = self.aliases.lookup(name)
+        return None if found is _UNBOUND else found
 
     def _edge(self, target: str | None, line: int, kind: str | None = None) -> None:
         if target is not None and target != self.module:
@@ -338,10 +364,10 @@ class _ModuleVisitor(ast.NodeVisitor):
         if node.returns:
             self.visit(node.returns)
         self.function_depth += 1
-        self.scopes.append({})
+        self.aliases.push()
         for child in node.body:
             self.visit(child)
-        self.scopes.pop()
+        self.aliases.pop()
         self.function_depth -= 1
         self.functions.append((node.name, node.lineno, _function_hash(node)))
 
@@ -351,9 +377,9 @@ class _ModuleVisitor(ast.NodeVisitor):
     def visit_Lambda(self, node: ast.Lambda) -> None:
         self.visit(node.args)
         self.function_depth += 1
-        self.scopes.append({})
+        self.aliases.push()
         self.visit(node.body)
-        self.scopes.pop()
+        self.aliases.pop()
         self.function_depth -= 1
 
     def visit_Call(self, node: ast.Call) -> None:
@@ -468,7 +494,7 @@ class _TestVisitor(ast.NodeVisitor):
     def __init__(self, rel: str, modules: set[str]) -> None:
         self.rel = rel
         self.modules = modules
-        self.aliases: dict[str, str | None] = {}
+        self.aliases = _AliasScopes()
         self.patches: set[tuple[int, str, str, bool]] = set()
         self.scans: set[tuple[int, str]] = set()
         self.private: set[tuple[int, str]] = set()
@@ -477,16 +503,16 @@ class _TestVisitor(ast.NodeVisitor):
         for alias in node.names:
             is_gnd = alias.name == "gnd" or alias.name.startswith("gnd.")
             if alias.asname:
-                self.aliases[alias.asname] = alias.name if is_gnd else None
+                self.aliases.bind(alias.asname, alias.name if is_gnd else None)
             else:
                 head = alias.name.partition(".")[0]
-                self.aliases[head] = head if is_gnd else None
+                self.aliases.bind(head, head if is_gnd else None)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         source = node.module or ""
         is_gnd = not node.level and (source == "gnd" or source.startswith("gnd."))
         for alias in node.names:
-            self.aliases[alias.asname or alias.name] = f"{source}.{alias.name}" if is_gnd else None
+            self.aliases.bind(alias.asname or alias.name, f"{source}.{alias.name}" if is_gnd else None)
             if is_gnd and _is_private(alias.name):
                 self.private.add((node.lineno, f"{source}.{alias.name}"))
 
@@ -495,9 +521,9 @@ class _TestVisitor(ast.NodeVisitor):
         if base is None:
             return ("<expression>", False)
         head, _, rest = base.partition(".")
-        if head not in self.aliases:
+        bound = self.aliases.lookup(head)
+        if bound is _UNBOUND:
             return (base, False)
-        bound = self.aliases[head]
         if bound is None:
             return None
         return (bound + (f".{rest}" if rest else ""), True)
@@ -537,12 +563,21 @@ class _TestVisitor(ast.NodeVisitor):
             base = _dotted(node.value)
             if base:
                 head, _, rest = base.partition(".")
-                bound = self.aliases.get(head)
-                if bound:
+                bound = self.aliases.lookup(head)
+                if bound is not _UNBOUND and bound:
                     full = bound + (f".{rest}" if rest else "")
                     if full in self.modules:
                         self.private.add((node.lineno, f"{full}.{node.attr}"))
         self.generic_visit(node)
+
+    def _scoped(self, node) -> None:
+        self.aliases.push()
+        self.generic_visit(node)
+        self.aliases.pop()
+
+    visit_FunctionDef = _scoped
+    visit_AsyncFunctionDef = _scoped
+    visit_Lambda = _scoped
 
     def visit_Constant(self, node: ast.Constant) -> None:
         if isinstance(node.value, str):

@@ -2164,6 +2164,11 @@ class SessionStore:
                     max_depth=MAX_CANDIDATE_DEPTH + 1,
                     expected_root=self._directory_identities[self._attempts_root],
                     executable_paths=executable_paths,
+                    # An agent that left no candidate bytes (agent-failure) still
+                    # has a snapshot: an empty directory the readers expect.
+                    empty_directories=(
+                        ("candidate",) if staged.inventory.file_count == 0 else ()
+                    ),
                 )
             except ArtifactError as error:
                 if "collision" in str(error):

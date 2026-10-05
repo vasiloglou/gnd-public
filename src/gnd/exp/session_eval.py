@@ -1058,10 +1058,9 @@ class _AttemptFeedbackV5(BaseModel):
 
     @model_validator(mode="after")
     def _version_five_is_transition_disjoint(self) -> Self:
-        rows = (*self.required, *self.diagnostic)
-        # An attempt that produced no candidate (agent-failure) has no verifier
-        # rows at all; only a non-empty row set must carry a transition row.
-        if rows and not any(isinstance(row, TransitionCaseFeedback) for row in rows):
+        if not any(
+            isinstance(row, TransitionCaseFeedback) for row in (*self.required, *self.diagnostic)
+        ):
             raise ValueError("schema_version 5 requires at least one transition feedback row")
         return self
 
@@ -1102,8 +1101,9 @@ class _AttemptFeedbackV7(BaseModel):
 
     @model_validator(mode="after")
     def _version_seven_has_walk_floor_row(self) -> Self:
-        rows = (*self.required, *self.diagnostic)
-        if rows and not any(isinstance(row, TransitionCaseFeedbackV7) for row in rows):
+        if not any(
+            isinstance(row, TransitionCaseFeedbackV7) for row in (*self.required, *self.diagnostic)
+        ):
             raise ValueError("schema_version 7 requires at least one walk-floor feedback row")
         return self
 

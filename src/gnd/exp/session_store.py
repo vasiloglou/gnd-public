@@ -2480,22 +2480,14 @@ class SessionStore:
             raise ValueError("attempt candidate inventory digest is stale")
         candidate_fd = -1
         try:
-            try:
-                candidate_fd = self._open_directory_below(
-                    attempt_fd,
-                    ("candidate",),
-                )
-            except FileNotFoundError:
-                # Publication writes files only, so an attempt whose agent left
-                # no candidate bytes (agent-failure) has no snapshot directory.
-                if inventory.file_count != 0:
-                    raise
-                observed_inventory = inventory
-            else:
-                observed_inventory, _ = _collect_candidate(
-                    self.root / record.candidate_snapshot,
-                    bound_fd=candidate_fd,
-                )
+            candidate_fd = self._open_directory_below(
+                attempt_fd,
+                ("candidate",),
+            )
+            observed_inventory, _ = _collect_candidate(
+                self.root / record.candidate_snapshot,
+                bound_fd=candidate_fd,
+            )
         except (OSError, ValueError) as error:
             raise ValueError(f"candidate snapshot could not be inventoried: {error}") from error
         finally:

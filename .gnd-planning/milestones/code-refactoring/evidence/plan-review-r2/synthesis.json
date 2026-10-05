@@ -1,0 +1,790 @@
+{
+  "schema_version": 1,
+  "run_sha256": "e18303cfbaf3dd6d521dd9f4779f482b8fd5b139c61a2b3827059589a5bef683",
+  "summary": "Final round (bound declared 2026-10-05). Six of six reviewers succeeded, all revise. 40 concerns: 33 in 12 agreed groups, 7 divergent. Reviewers judged the r1 repairs to land in substance. Three agreed groups are defects introduced by r2 itself (A: RF-R1 exception contradiction from the self-check edit; C: dangling RF5-C5; D: five-of-six count). Under the declared bound, no further plan round runs; residual concerns are routed to named phase spec gates.",
+  "agreed_concerns": [
+    {
+      "group_id": "A",
+      "severity": "high",
+      "title": "RF-R1 says no exceptions in two places but keeps an owner-exception clause in two others",
+      "summary": "Introduced by the r2 self-check edit to predicate 1; section 3 and the F9 row say no exception while RF-R1 and predicate 1 allow one.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF-R1-exception"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-r1-no-exception-contradiction"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r1-no-exception-contradiction"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "B",
+      "severity": "high",
+      "title": "Strict xfail layering test is undefined when RF0 finds layers clean and as layers are cleaned",
+      "summary": "A strict xfail XPASSes if the scope is already clean, and SM4 'still passes' is undefined for an xfail test; no step declares a layer clean.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF1-strict-xfail"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "strict-xfail-xpass-and-clean-declaration"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-strict-xfail-pass-semantics"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "H",
+      "severity": "high",
+      "title": "The RF-D2 dependency on public-launch is underspecified",
+      "summary": "Sign-off names differ between RF-D2 and RF-R7; RF0/RF1 commits before sign-off meet the curated-manifest audit; no stall route if public-launch does not record the conditions.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-rf1-precede-signoff-vs-curated-manifest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-d2-no-stall-route"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rfd2-candidate-signoff-naming"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "I",
+      "severity": "high",
+      "title": "Budgets and metrics: the RF0 tool does not measure sizes or co-change, and RF0, RF1 and RF4 are unbounded",
+      "summary": "RF-R9 ties line targets to a tool that reports no line metrics; predicate 5 needs module sizes and co-change pairs nobody produces; RF0/RF1 have no budget and RF4 no parts limit.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-rf1-unbounded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r9-line-targets-unmeasurable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate5-metrics-not-produced"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf4-no-parts-limit"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "G",
+      "severity": "high",
+      "title": "Monkeypatch discovery stops at gnd.cli, and stale patches on old shim paths go undetected",
+      "summary": "SM2 is universal but RF0 inventories only gnd.cli patches; a test patching a re-exported old path passes vacuously.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-sm2-stale-monkeypatch-undetected"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-monkeypatch-inventory-scope"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "K",
+      "severity": "medium",
+      "title": "The helper-family list can be vacuous and 'identical' is undefined",
+      "summary": "Nothing forces every candidate to be classified; parameterized merges of sites differing by newline, and the RF2 re-routes, are not tied to the list.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "identical-family-undefined-newline-param"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf2-reroutes-not-tied-to-family-list"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate3-family-list-vacuous"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "L",
+      "severity": "medium",
+      "title": "Cycles are not assigned to phases and the layering allow-list is unbounded",
+      "summary": "RF4-C1 can pass with nothing assigned; RF3-C1 may need the RF6b split; the allow-list has no shrink rule.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf4-c1-cycle-assignment-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf3-c1-before-rf6b-split"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate2-allow-list-unbounded"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "E",
+      "severity": "medium",
+      "title": "Some audit-derived counts and claims remain unmarked",
+      "summary": "'three model_digest meanings', the dead assignment and its non-observability, and other names lack the (audit) marker.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unmarked-audit-claims"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-dead-assignment-unverified-claim"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "unmarked-audit-claim-model-digest-count"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "F",
+      "severity": "medium",
+      "title": "Missed-target semantics conflict",
+      "summary": "RF-R9 stops the phase on a miss, the risk row counts consecutive misses, and predicates 4 and 5 disagree on whether a miss still allows close.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "missed-target-semantics-contradict"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-predicates-vs-rfr9-miss"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "J",
+      "severity": "medium",
+      "title": "The atomic move unit is not precisely defined",
+      "summary": "'No edit to the moved code' is unachievable literally, and the unit omits manifest, identity and skill-citation updates.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-r4-no-edit-unachievable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r4-move-unit-incomplete"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "D",
+      "severity": "low",
+      "title": "Status says five of six divergent views repaired, but all six were",
+      "summary": "The RF-D2 divergent view was adopted after the owner's ruling; the count was not updated.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "r2-divergent-count-mismatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-divergent-count-mismatch"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r2-divergent-view-count-mismatch"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "C",
+      "severity": "low",
+      "title": "Predicate 4 and RF0 cite RF5-C5, which does not exist",
+      "summary": "The entry-point rule is RF5-C2.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-dangling-rf5-c5-reference"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "stale-rf5-c5-reference"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "late-pins-anchor-drift"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "modelindex-cache-key-digest-unspecified"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "qwen-r2-rf0-c4-skills-exclusion"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "qwen-r2-rf-r7-reachability-hatch"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "qwen-r2-rf1-c1-mutation-evidence"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "qwen-r2-predicate4-cli-imports-unbound"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "missing-rf6-rename"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "F1",
+      "rank": 1,
+      "title": "RF-R1 says no exceptions in two places but keeps an owner-exception clause in two others",
+      "action": "Delete the owner-exception clause from RF-R1 and predicate 1; an observable change requires a plan revision, not a phase-level exception.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF-R1-exception"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-r1-no-exception-contradiction"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r1-no-exception-contradiction"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF-R1-exception",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-r1-no-exception-contradiction",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r1-no-exception-contradiction",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F2",
+      "rank": 2,
+      "title": "Strict xfail layering test is undefined when RF0 finds layers clean and as layers are cleaned",
+      "action": "Use one strict xfail per RF0-confirmed wrong-way edge (none if the scope is clean); the move unit that removes an edge removes its marker; the layer map records which layers are declared clean.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF1-strict-xfail"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "strict-xfail-xpass-and-clean-declaration"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-strict-xfail-pass-semantics"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "RF1-strict-xfail",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "strict-xfail-xpass-and-clean-declaration",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-strict-xfail-pass-semantics",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F3",
+      "rank": 3,
+      "title": "The RF-D2 dependency on public-launch is underspecified",
+      "action": "Use one gate name; state that the curated-manifest test was already failing at 7e08e1e (55 unlisted paths) and is public-launch's to repair; add a stall rule returning to the owner.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-rf1-precede-signoff-vs-curated-manifest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-d2-no-stall-route"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rfd2-candidate-signoff-naming"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-rf1-precede-signoff-vs-curated-manifest",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-d2-no-stall-route",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rfd2-candidate-signoff-naming",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F4",
+      "rank": 4,
+      "title": "Budgets and metrics: the RF0 tool does not measure sizes or co-change, and RF0, RF1 and RF4 are unbounded",
+      "action": "RF0 tool also reports module line counts, moved lines and co-change pairs; RF0 and RF1 specs set file, line and pin-count budgets; RF4 gets a parts limit.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-rf1-unbounded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r9-line-targets-unmeasurable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate5-metrics-not-produced"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf4-no-parts-limit"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-rf1-unbounded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r9-line-targets-unmeasurable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate5-metrics-not-produced",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf4-no-parts-limit",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F5",
+      "rank": 5,
+      "title": "Monkeypatch discovery stops at gnd.cli, and stale patches on old shim paths go undetected",
+      "action": "RF0 inventories every monkeypatch target in the tests; each move unit adds a scan test failing on any patch of a path listed in the shim inventory.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-sm2-stale-monkeypatch-undetected"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-monkeypatch-inventory-scope"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-sm2-stale-monkeypatch-undetected",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-monkeypatch-inventory-scope",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F6",
+      "rank": 6,
+      "title": "The helper-family list can be vacuous and 'identical' is undefined",
+      "action": "Define identical as byte-identical output on every pinned input; every tool candidate is classified with a reason; RF2 re-routes apply only to listed identical sites or carry their own pins.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "identical-family-undefined-newline-param"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf2-reroutes-not-tied-to-family-list"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate3-family-list-vacuous"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "identical-family-undefined-newline-param",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf2-reroutes-not-tied-to-family-list",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate3-family-list-vacuous",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F7",
+      "rank": 7,
+      "title": "Cycles are not assigned to phases and the layering allow-list is unbounded",
+      "action": "RF0 assigns each confirmed SCC to a phase or a bounded allow-list entry; the allow-list count is an RF-R9 metric that may not grow; RF3 may pull a named split forward as a recorded scope change.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf4-c1-cycle-assignment-unspecified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf3-c1-before-rf6b-split"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate2-allow-list-unbounded"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf4-c1-cycle-assignment-unspecified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf3-c1-before-rf6b-split",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-predicate2-allow-list-unbounded",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F8",
+      "rank": 8,
+      "title": "Some audit-derived counts and claims remain unmarked",
+      "action": "Mark them (audit) and have RF0 or the owning spec confirm each before acting on it.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unmarked-audit-claims"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-dead-assignment-unverified-claim"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "unmarked-audit-claim-model-digest-count"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unmarked-audit-claims",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-dead-assignment-unverified-claim",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "unmarked-audit-claim-model-digest-count",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F9",
+      "rank": 9,
+      "title": "Missed-target semantics conflict",
+      "action": "One rule: a miss stops the phase at the owner gate; the owner may re-target with a recorded ruling; close requires each predicate met against its final ruled target.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "missed-target-semantics-contradict"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-predicates-vs-rfr9-miss"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "missed-target-semantics-contradict",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-predicates-vs-rfr9-miss",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F10",
+      "rank": 10,
+      "title": "The atomic move unit is not precisely defined",
+      "action": "Enumerate the edits a move unit may make, check function bodies by AST comparison, and list the manifest and skill-citation updates (subject to RF-R7).",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-r4-no-edit-unachievable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r4-move-unit-incomplete"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-r4-no-edit-unachievable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-rf-r4-move-unit-incomplete",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F11",
+      "rank": 11,
+      "title": "Status says five of six divergent views repaired, but all six were",
+      "action": "Correct the count to six.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "r2-divergent-count-mismatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-divergent-count-mismatch"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r2-divergent-view-count-mismatch"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "r2-divergent-count-mismatch",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-divergent-count-mismatch",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "r2-divergent-view-count-mismatch",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F12",
+      "rank": 12,
+      "title": "Predicate 4 and RF0 cite RF5-C5, which does not exist",
+      "action": "Repoint both references to RF5-C2.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-dangling-rf5-c5-reference"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "stale-rf5-c5-reference"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "qwen-r2-dangling-rf5-c5-reference",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "stale-rf5-c5-reference",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "gemini"
+      ]
+    }
+  ]
+}

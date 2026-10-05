@@ -1,0 +1,84 @@
+{
+  "measure_guarded_exists_refs": {
+    "applicability_matrix": [],
+    "applicable_cells": 0,
+    "band4_reason_codes": [],
+    "band4_reason_codes_exercised": [],
+    "boundary_cases_derived": 0,
+    "boundary_not_derivable": 6,
+    "case_kinds": [
+      "conforming",
+      "boundary",
+      "violating",
+      "no-subjects",
+      "unchecked"
+    ],
+    "case_kinds_present": [],
+    "coverage_fraction": null,
+    "covered_applicable_cells": 0,
+    "families_covered": [],
+    "families_in_model": [],
+    "missing_cells": 0,
+    "not_applicable_cells": 0,
+    "operators_exercised": [],
+    "unsupported_exists_rules": [
+      {
+        "constraint_ref": "constraints[1]",
+        "family": "guarded",
+        "mechanism": "fixture",
+        "operator": null
+      },
+      {
+        "constraint_ref": "constraints[4]",
+        "family": "guarded",
+        "mechanism": "fixture",
+        "operator": null
+      }
+    ]
+  },
+  "measure_output_bytes": {
+    "sha256": "65013abe75d63243bac8a40df81ecf5561c15ea0e0c15bdb547fc3c20cd8dfc0",
+    "size_bytes": 64025
+  },
+  "pyrel_inline_and_top_level_refs": [
+    [
+      "fact_types[B].constraints[0]",
+      {
+        "type": "textual"
+      },
+      "B"
+    ],
+    [
+      "fact_types[B].constraints[1]",
+      {
+        "type": "value"
+      },
+      "B"
+    ],
+    [
+      "fact_types[A].constraints[0]",
+      {
+        "type": "uniqueness"
+      },
+      "A"
+    ],
+    [
+      "constraints[0]",
+      {
+        "type": "equality"
+      },
+      null
+    ],
+    [
+      "constraints[1]",
+      {
+        "type": "subset"
+      },
+      null
+    ]
+  ],
+  "standalone_pyrel_output_bytes": {
+    "sha256": "5c98a948e86ce6d0dfc2f3ddc5186272d249218add98ab9ec49de34da437584d",
+    "size_bytes": 63365
+  }
+}

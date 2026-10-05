@@ -1,0 +1,38 @@
+2026-10-05, base f5a83186f7c2215ac2b2afb0a010c2294eaa433a
+
+Command: uv run python tools/gnd_arch.py measure --out .gnd-planning/milestones/code-refactoring/evidence/metrics-RF2-base.json
+Exit: 2
+Reason: default uv cache denied by sandbox. No metric output created by this invocation.
+
+Command: python3 tools/gnd_arch.py measure --out .gnd-planning/milestones/code-refactoring/evidence/metrics-RF2-base.json
+Exit: 0
+Python: 3.14.4
+
+Command: .venv/bin/python -m pytest -q tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py
+Exit: 1
+Result: 23 failed, 372 passed, 16 xfailed in 70.22s
+Session observations contain additional LANG and LC_ALL supplied environment metadata.
+Agent observations contain macOS sandbox warning emitted by the synthetic program's python3 launcher.
+No code or expected answer changed.
+
+Command: env -u LANG -u LC_ALL .venv/bin/python -m pytest -q tests/test_rf1_agent_cli_pins.py -k success --tb=short
+Exit: 1
+Result: 1 failed, 1 passed, 11 deselected in 1.83s
+Decoded unexpected stderr prefix:
+python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+
+Consumer collection: G4 and G5 exact file selections, default lane exclusions preserved.
+Exit: 0
+Result: 1020 tests collected in 0.93s
+Collection establishes selection only, not test success.
+
+Controlled unsandboxed baseline command:
+env -u LANG -u LC_ALL .venv/bin/python -m pytest -q tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py --tb=short
+Exit: 1
+Result: 10 failed, 385 passed, 16 xfailed in 62.80s
+Full output: RF2-baseline-pins.txt
+Remaining failures: fresh and resume sessions versions 1 through 5; cause unresolved.
+
+Command: .venv/bin/python -m pytest -q tests/test_development_scaffold.py --tb=short
+Exit: 0
+Result: 14 passed, 1 deselected in 4.29s

@@ -2,8 +2,11 @@
 
 ## 1. Status
 
-**Awaiting owner review.** `auto=false`. No implementation file has been
-created. Decisions D1–D12 (section 7) are open.
+**Owner-decided (2026-10-05).** The owner approved this spec at commit
+`0d5cead` (sha256 `c502076506e25d093787f672ab082feca225e2567fa51e0c71c695c9b7e86e82`)
+with every decision D1–D12 as proposed, gave the RF-R7 attestation, and
+ruled that no panel runs over the spec (section 7, *Owner rulings*).
+Implementation may begin.
 
 ## 2. Provenance
 
@@ -424,7 +427,7 @@ change to the `runtime` and `test-acceptance` paths since the RF0 record. No
 source remote is configured, so the control rests on that attestation, as
 RF0 D8 ruled. The RF1 record quotes it.
 
-## 7. Decisions (open)
+## 7. Decisions
 
 | # | Question | Readings and cost | Proposal |
 |---|---|---|---|
@@ -440,6 +443,15 @@ RF0 D8 ruled. The RF1 record quotes it.
 | D10 | RF1 budgets (002 F4; e1) | Hand-written source: estimate 4,350 lines (§6.1, excluding goldens); stop at 1.5× (6,525). Goldens: at most 8 MiB uncompressed on disk, otherwise stored gzipped with a sha-pinned archive as `tests/test_public_coverage_goldens.py:26` does. Default-lane runtime of all `tests/test_rf1_*.py`: at most 180 s on the local machine. Mutation run: at most 45 min. More than 1.5× any estimate, or any ceiling exceeded, stops the phase at the owner gate (RF-D13) | As stated |
 | D11 | Quirks the pins capture (section below) | (a) Pin them as they are and record each as an RF7 or successor open question (RF-R1, RF-R10). (b) Fix any of them here, which breaks RF-R1 and RF1-C2 | (a) |
 | D12 | Existing exact pins (`test_artifacts.py:688`, `test_v70_phase6_corpus.py:71`, `test_verification_fixes.py:172`) | (a) Map them in `inventory.json` as `existing_nodes`, with no mutation obligation (RF1-C1 binds RF1's own pins). (b) Bring them into the mutation table too | (a) |
+
+### Owner rulings (o)
+
+(o) 2026-10-05, owner reply in chat: "approve D1–D12 as proposed, attested,
+no panel". It answered the three gate asks: each row of the table above is
+ruled as its *Proposal* column states; the owner attests under RF-R7 that the
+source repository took no change to the `runtime` and `test-acceptance`
+paths since the RF0 record (no remote configured, so the control rests on
+this attestation, §6.12); and no review panel runs over the spec bytes.
 
 ## Quirks pinned as found (D11)
 

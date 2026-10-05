@@ -1,0 +1,23 @@
+{
+  "target_commit": "91f12e207ba4040cd308862c6f91b2191584c3c4",
+  "version": "0.1.0",
+  "build": "uv build --out-dir <scratch>, built once, not retained",
+  "artifacts": {
+    "get_nick_done-0.1.0-py3-none-any.whl": {
+      "bytes": 1698690,
+      "sha256": "aedd1a4b60d4f5eee1608f3d22f949f123afceb4bf9381536686e68a6c8a5a36"
+    },
+    "get_nick_done-0.1.0.tar.gz": {
+      "bytes": 1498826,
+      "sha256": "2e02db5f641d6cb229b0724ecd2c70872cfdfa07f64cb9730705e2869bfbe019"
+    }
+  },
+  "smoke": "fresh Python 3.11 venv outside the checkout; wheel installed; `gnd --help` exit 0; gnd imported from site-packages",
+  "last_cloud_ci_success": {
+    "commit": "c63b90cc3",
+    "date": "2026-10-03",
+    "workflow": "Development and candidate acceptance",
+    "branch": "codex/public-p3-acceptance"
+  },
+  "cloud_ci_after": "Not started on 91f12e2 and its predecessors since 2026-10-04: GitHub billing/spending refusal"
+}

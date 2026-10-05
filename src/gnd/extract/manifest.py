@@ -46,6 +46,7 @@ from pydantic import (
 )
 
 from gnd.model import ValidationIssue
+from gnd.model import issues_from_validation_error as _validation_issues
 
 __all__ = [
     "MAX_MANIFEST_BYTES",
@@ -375,17 +376,6 @@ def _read_document(path: Path, rule_id: str) -> Any:
         ) from error
 
 
-def _validation_issues(
-    error: ValidationError, rule_id: str
-) -> list[ValidationIssue]:
-    return [
-        ValidationIssue(
-            path=".".join(str(part) for part in entry["loc"]),
-            message=entry["msg"],
-            rule_id=rule_id,
-        )
-        for entry in error.errors()
-    ]
 
 
 def _load(

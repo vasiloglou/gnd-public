@@ -6,7 +6,7 @@ from decimal import Decimal
 from pathlib import Path
 
 from gnd import json_input
-from gnd.artifacts import ArtifactError, canonical_json_bytes
+from gnd.artifacts import ArtifactError, canonical_json_bytes, is_sha256_hex
 from gnd.exp.session_contract import DataDrivenContract
 from gnd.extract.manifest import manifest_path_issue
 
@@ -54,11 +54,7 @@ def _shape(doc):
     if type(doc["schema_version"]) is not int or doc["schema_version"] != 1:
         _refuse("shape", "proposal version must be 1")
     digest = doc["base_candidate_sha256"]
-    if digest is not None and (
-        not isinstance(digest, str)
-        or len(digest) != 64
-        or any(c not in "0123456789abcdef" for c in digest)
-    ):
+    if digest is not None and not is_sha256_hex(digest):
         _refuse("shape", "invalid base digest")
     ops = doc["operations"]
     if not isinstance(ops, list):

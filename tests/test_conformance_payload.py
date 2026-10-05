@@ -831,7 +831,7 @@ def test_conformance_failures_are_operator_neutral_and_invocation_independent(
         def failing_model_digest(path: str | Path) -> str:
             raise ConformanceError(f"{raw_error_sentinel}: {path}")
 
-        monkeypatch.setattr(service_module, "model_digest", failing_model_digest)
+        monkeypatch.setattr(service_module, "model_file_sha256", failing_model_digest)
     else:  # pragma: no cover - parameter list is the closed scenario set
         raise AssertionError(scenario)
 

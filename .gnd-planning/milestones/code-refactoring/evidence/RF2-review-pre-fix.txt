@@ -1,0 +1,1968 @@
+Retention note: absolute machine paths sanitized to placeholders; summaries and findings retained.
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_cli_uses_new_provenance_lookup[synth] __________________
+tests/test_rf2_review_regressions.py:26: in test_cli_uses_new_provenance_lookup
+    with pytest.raises(RuntimeError, match="RF2 new provenance lookup reached"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE RuntimeError
+----------------------------- Captured stdout call -----------------------------
+{"command": "synth", "exit_code": 0, "out": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus", "class": "conforming", "pool": "conforming/pool.cf070003b957fe29.pool.json", "pool_sha256": "cf070003b957fe297ad2f618acecc01ac0f11500fbe744b7a3fb7d291d2d7343", "populations": [{"population": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus/conforming/full_vocabulary.orm.conforming.seed7.json", "sidecar": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus/conforming/full_vocabulary.orm.conforming.seed7.meta.json", "seed": 7, "band": 4, "class": "conforming", "case_kind": "conforming"}, {"population": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus/conforming/full_vocabulary.orm.conforming.seed8.json", "sidecar": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus/conforming/full_vocabulary.orm.conforming.seed8.meta.json", "seed": 8, "band": 4, "class": "conforming", "case_kind": "conforming"}, {"population": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus/conforming/full_vocabulary.orm.conforming.seed9.json", "sidecar": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l0/corpus/conforming/full_vocabulary.orm.conforming.seed9.meta.json", "seed": 9, "band": 4, "class": "conforming", "case_kind": "conforming"}], "not_derivable": [], "isolating_cases": 0, "set_attributed_cases": 0, "isolating_fraction": null}
+_________________ test_cli_uses_new_provenance_lookup[measure] _________________
+tests/test_rf2_review_regressions.py:26: in test_cli_uses_new_provenance_lookup
+    with pytest.raises(RuntimeError, match="RF2 new provenance lookup reached"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE RuntimeError
+----------------------------- Captured stdout call -----------------------------
+{"command": "synth", "exit_code": 0, "out": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus", "class": "conforming", "pool": "conforming/pool.cf070003b957fe29.pool.json", "pool_sha256": "cf070003b957fe297ad2f618acecc01ac0f11500fbe744b7a3fb7d291d2d7343", "populations": [{"population": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus/conforming/full_vocabulary.orm.conforming.seed7.json", "sidecar": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus/conforming/full_vocabulary.orm.conforming.seed7.meta.json", "seed": 7, "band": 4, "class": "conforming", "case_kind": "conforming"}, {"population": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus/conforming/full_vocabulary.orm.conforming.seed8.json", "sidecar": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus/conforming/full_vocabulary.orm.conforming.seed8.meta.json", "seed": 8, "band": 4, "class": "conforming", "case_kind": "conforming"}, {"population": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus/conforming/full_vocabulary.orm.conforming.seed9.json", "sidecar": "<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4188/test_cli_uses_new_provenance_l1/corpus/conforming/full_vocabulary.orm.conforming.seed9.meta.json", "seed": 9, "band": 4, "class": "conforming", "case_kind": "conforming"}], "not_derivable": [], "isolating_cases": 0, "set_attributed_cases": 0, "isolating_fraction": null}
+{
+  "checker_defects": [],
+  "command": "measure",
+  "corpus": [
+    {
+      "path": "conforming/full_vocabulary.orm.conforming.seed7.json",
+      "sha256": "a2fac405fbcfe60bd41b14f7b372f1a7453274d2baf30507e0424204848170ee",
+      "sidecar_path": "conforming/full_vocabulary.orm.conforming.seed7.meta.json",
+      "sidecar_sha256": "4a5be32736cb56eb1e1dd64907ad30861ca8bb5f8e431c3d299834dd71fd6fa4"
+    },
+    {
+      "path": "conforming/full_vocabulary.orm.conforming.seed8.json",
+      "sha256": "3c9573be8a907803071b313096f684ec4d3614d129b4f99fa5bccae9cd8356ed",
+      "sidecar_path": "conforming/full_vocabulary.orm.conforming.seed8.meta.json",
+      "sidecar_sha256": "3d9e28593db8fbaca73b885cd5b4c0345a73347f2a3437e9eb30b1ee9c61e705"
+    },
+    {
+      "path": "conforming/full_vocabulary.orm.conforming.seed9.json",
+      "sha256": "78832cc132d8dba26eb3cb56fbd17c0b46f43df4a279a854162f92a501647b93",
+      "sidecar_path": "conforming/full_vocabulary.orm.conforming.seed9.meta.json",
+      "sidecar_sha256": "6d44e05f9913b26b1873d57e4d1ec047cd4b6cd2bae0fcea8dffa96f00cbb3f5"
+    }
+  ],
+  "coverage_summary": {
+    "applicability_matrix": [
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "cardinality",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "cardinality",
+        "reason": "applicable but absent: no boundary case was emitted for 'cardinality' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "cardinality",
+        "reason": "applicable but absent: no violating case was emitted for 'cardinality' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "cardinality",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'cardinality' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "cardinality",
+        "reason": "the model declares no `cardinality` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `cardinality` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "equality",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "equality",
+        "reason": "applicable but absent: no boundary case was emitted for 'equality' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "equality",
+        "reason": "applicable but absent: no violating case was emitted for 'equality' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "equality",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'equality' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "equality",
+        "reason": "the model declares no `equality` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `equality` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "exclusion",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "exclusion",
+        "reason": "applicable but absent: no boundary case was emitted for 'exclusion' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "exclusion",
+        "reason": "applicable but absent: no violating case was emitted for 'exclusion' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "exclusion",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'exclusion' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "exclusion",
+        "reason": "the model declares no `exclusion` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `exclusion` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "exclusive-or",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "exclusive-or",
+        "reason": "applicable but absent: no boundary case was emitted for 'exclusive-or' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "exclusive-or",
+        "reason": "applicable but absent: no violating case was emitted for 'exclusive-or' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "exclusive-or",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'exclusive-or' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "exclusive-or",
+        "reason": "the model declares no `exclusive-or` constraint whose shape reaches any of its own band-4 routes (derived-unknown, subject-type-ambiguous, xor-disjunctive-undefined): every one of them resolves cleanly, so this model has no undecidable `exclusive-or` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "frequency",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "frequency",
+        "reason": "applicable but absent: no boundary case was emitted for 'frequency' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "frequency",
+        "reason": "applicable but absent: no violating case was emitted for 'frequency' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "frequency",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'frequency' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "frequency",
+        "reason": "the model declares no `frequency` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `frequency` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "mandatory",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "mandatory",
+        "reason": "applicable but absent: no boundary case was emitted for 'mandatory' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "mandatory",
+        "reason": "applicable but absent: no violating case was emitted for 'mandatory' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "mandatory",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'mandatory' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "mandatory",
+        "reason": "the model declares no `mandatory` constraint whose shape reaches any of its own band-4 routes (derived-unknown, role-unresolved): every one of them resolves cleanly, so this model has no undecidable `mandatory` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "mandatory-disjunctive",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "mandatory-disjunctive",
+        "reason": "applicable but absent: no boundary case was emitted for 'mandatory-disjunctive' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "mandatory-disjunctive",
+        "reason": "applicable but absent: no violating case was emitted for 'mandatory-disjunctive' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "mandatory-disjunctive",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'mandatory-disjunctive' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "mandatory-disjunctive",
+        "reason": "the model declares no `mandatory-disjunctive` constraint whose shape reaches any of its own band-4 routes (derived-unknown, subject-type-ambiguous): every one of them resolves cleanly, so this model has no undecidable `mandatory-disjunctive` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "ring",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "ring",
+        "reason": "applicable but absent: no boundary case was emitted for 'ring' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "ring",
+        "reason": "applicable but absent: no violating case was emitted for 'ring' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "ring",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'ring' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "ring",
+        "reason": "the model declares no `ring` constraint whose shape reaches any of its own band-4 routes (derived-unknown, ring-not-binary): every one of them resolves cleanly, so this model has no undecidable `ring` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "subset",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "subset",
+        "reason": "applicable but absent: no boundary case was emitted for 'subset' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "subset",
+        "reason": "applicable but absent: no violating case was emitted for 'subset' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "subset",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'subset' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "subset",
+        "reason": "the model declares no `subset` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `subset` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "subtype-partition",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "subtype-partition",
+        "reason": "subtype(s) ['contractor_employee'] are DERIVATION-ONLY (`derivation: derived`) and have no roster or subtype-typed fact occurrence in this population, so `_check_subtype_partition` returns `unchecked` (reason `subtype-derivation-only`) here — the violating and boundary cells are not measurable here, and counting them covered would inflate the coverage fraction",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "subtype-partition",
+        "reason": "subtype(s) ['contractor_employee'] are DERIVATION-ONLY (`derivation: derived`) and have no roster or subtype-typed fact occurrence in this population, so `_check_subtype_partition` returns `unchecked` (reason `subtype-derivation-only`) here — the violating and boundary cells are not measurable here, and counting them covered would inflate the coverage fraction",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "subtype-partition",
+        "reason": "subtype(s) ['contractor_employee'] are DERIVATION-ONLY (`derivation: derived`) and have no roster or subtype-typed fact occurrence in this population, so `_check_subtype_partition` returns `unchecked` (reason `subtype-derivation-only`) here — the violating and boundary cells are not measurable here, and counting them covered would inflate the coverage fraction — and because the verdict is settled before the subject-set step, emptying the supertype universe cannot make it vacuous either",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "subtype-partition",
+        "reason": "applicable but absent: no unchecked case was emitted for 'subtype-partition' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "textual",
+        "reason": "family 'textual' is excluded from checker.IMPLEMENTED_FAMILIES, so every population over it is `unchecked` — no population can make it mechanically conforming",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "textual",
+        "reason": "family 'textual' declares no mechanically-readable bound, so there is no frontier to sit at",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "textual",
+        "reason": "family 'textual' is excluded from checker.IMPLEMENTED_FAMILIES, so every population over it is `unchecked` — no population can make it mechanically violating",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "textual",
+        "reason": "family 'textual' returns `unchecked` at the verdict step and never reaches the subject-set step, so it cannot be vacuous (01.1-VERIFICATION residual-routes table)",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "textual",
+        "reason": "applicable but absent: no unchecked case was emitted for 'textual' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "uniqueness",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "applicable but absent: no boundary case was emitted for 'uniqueness' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "applicable but absent: no violating case was emitted for 'uniqueness' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'uniqueness' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "uniqueness",
+        "reason": "the model declares no `uniqueness` constraint whose shape reaches any of its own band-4 routes (derived-unknown): every one of them resolves cleanly, so this model has no undecidable `uniqueness` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "value",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "value",
+        "reason": "applicable but absent: no boundary case was emitted for 'value' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "value",
+        "reason": "applicable but absent: no violating case was emitted for 'value' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "value",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'value' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "value",
+        "reason": "the model declares no `value` constraint whose shape reaches any of its own band-4 routes (bound-type-mismatch, derived-unknown): every one of them resolves cleanly, so this model has no undecidable `value` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      },
+      {
+        "case_kind": "conforming",
+        "count": 3,
+        "family": "value-comparison",
+        "reason": null,
+        "status": "covered"
+      },
+      {
+        "case_kind": "boundary",
+        "count": 0,
+        "family": "value-comparison",
+        "reason": "applicable but absent: no boundary case was emitted for 'value-comparison' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "violating",
+        "count": 0,
+        "family": "value-comparison",
+        "reason": "applicable but absent: no violating case was emitted for 'value-comparison' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "no-subjects",
+        "count": 0,
+        "family": "value-comparison",
+        "reason": "applicable but absent: no no-subjects case was emitted for 'value-comparison' — a real gap in the corpus, not a property of the family",
+        "status": "missing"
+      },
+      {
+        "case_kind": "unchecked",
+        "count": 0,
+        "family": "value-comparison",
+        "reason": "the model declares no `value-comparison` constraint whose shape reaches any of its own band-4 routes (derived-unknown, literal-type-ambiguous, no-reference-clock, values-not-comparable): every one of them resolves cleanly, so this model has no undecidable `value-comparison` case to pin. Another model with the guarded shape would make this cell applicable",
+        "status": "not-applicable"
+      }
+    ],
+    "applicable_cells": 51,
+    "band4_reason_codes": [
+      "bound-type-mismatch",
+      "derived-unknown",
+      "family-unimplemented",
+      "join-anchor-ambiguous",
+      "join-disconnected",
+      "literal-type-ambiguous",
+      "no-reference-clock",
+      "partition-asserts-nothing",
+      "reference-join-work-limit",
+      "ring-not-binary",
+      "role-unresolved",
+      "subject-type-ambiguous",
+      "subtype-derivation-only",
+      "textual-not-mechanical",
+      "values-not-comparable",
+      "xor-disjunctive-undefined"
+    ],
+    "band4_reason_codes_exercised": [
+      "subtype-derivation-only",
+      "textual-not-mechanical"
+    ],
+    "boundary_cases_derived": 0,
+    "boundary_not_derivable": 0,
+    "case_kinds": [
+      "conforming",
+      "boundary",
+      "violating",
+      "no-subjects",
+      "unchecked"
+    ],
+    "case_kinds_present": [
+      "conforming"
+    ],
+    "constraint_count": 31,
+    "coverage_fraction": 0.2549019607843137,
+    "covered_applicable_cells": 13,
+    "decided_observations": 87,
+    "families_covered": [
+      "cardinality",
+      "equality",
+      "exclusion",
+      "exclusive-or",
+      "frequency",
+      "mandatory",
+      "mandatory-disjunctive",
+      "ring",
+      "subset",
+      "subtype-partition",
+      "textual",
+      "uniqueness",
+      "value",
+      "value-comparison"
+    ],
+    "families_in_model": [
+      "cardinality",
+      "equality",
+      "exclusion",
+      "exclusive-or",
+      "frequency",
+      "mandatory",
+      "mandatory-disjunctive",
+      "ring",
+      "subset",
+      "subtype-partition",
+      "textual",
+      "uniqueness",
+      "value",
+      "value-comparison"
+    ],
+    "isolating_cases": 0,
+    "missing_cells": 38,
+    "not_applicable_cells": 19,
+    "observation_count": 93,
+    "operators_exercised": [],
+    "population_count": 3,
+    "set_attributed_cases": 0,
+    "wrong_attribution": 0
+  },
+  "generator_version": "gnd-synth/1",
+  "gnd_version": "0.1.0",
+  "lanes": {
+    "deterministic": "run",
+    "llm": "not-applicable-phase-2"
+  },
+  "manifest": {
+    "path": "index.json",
+    "sha256": "75d26380170812472e2ad5aa3a0cb1444d5d71b8cf59781f034d8dd6124ff073"
+  },
+  "model": "tests/fixtures/models/full_vocabulary.orm.yaml",
+  "model_digest": "9ffeeada5d9eb97163eabd45bcead12bc2fbce5a3aaeca415e286e38e441bfa9",
+  "model_id": null,
+  "per_constraint": [
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[0]",
+          "message": "Each combination of (assignment_of_employee.employee, assignment_on_project.project) occurs at most once — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[10]",
+      "constraint_type": "cardinality",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[10]",
+          "message": "The number of department instances is between 1 and 12 — satisfied (3 observed).",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[11]",
+      "constraint_type": "cardinality",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[11]",
+          "message": "The number of distinct player of employee_heads_department.employees is at most 12 — satisfied (1 observed).",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[12]",
+      "constraint_type": "subtype-partition",
+      "coverage": 0.0,
+      "decided": 0,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[12]",
+          "message": "Subtype 'contractor_employee' membership is only derivable via the opaque derivation rule 'Each ContractorEmployee is an Employee who is not full-time and not part-time.' — reported as unchecked; the rule text is quoted data and is never evaluated.",
+          "offending_facts": [],
+          "reason_code": "subtype-derivation-only",
+          "verdict": "unchecked"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": null,
+      "selective_false_pass": null,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[13]",
+      "constraint_type": "textual",
+      "coverage": 0.0,
+      "decided": 0,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[13]",
+          "message": "Textual constraint 'Each Employee who heads a Department must be a PermanentEmployee.' is not mechanically checkable — reported as unchecked; the expression is quoted data and is never evaluated.",
+          "offending_facts": [],
+          "reason_code": "textual-not-mechanical",
+          "verdict": "unchecked"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": null,
+      "selective_false_pass": null,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[1]",
+      "constraint_type": "mandatory-disjunctive",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[1]",
+          "message": "Each employee plays at least one of the roles (employee_works_on_project.employee, employee_heads_department.employee) — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "llm-inferred",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[2]",
+      "constraint_type": "value",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[2]",
+          "message": "Each gender value must be one of ['M', 'F', 'X'] — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[3]",
+      "constraint_type": "value",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[3]",
+          "message": "Each hours value must be between '0' and '1000' — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[4]",
+      "constraint_type": "value",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[4]",
+          "message": "Each hours value must be between '0' and '200' — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "llm-inferred",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[5]",
+      "constraint_type": "frequency",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[5]",
+          "message": "Each occurrence of (employee_works_on_project.employee, employee_leads_project.employee) appears at most 4 times — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[6]",
+      "constraint_type": "subset",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[6]",
+          "message": "If a tuple appears in (employee_leads_project.employee, employee_leads_project.project), then it also appears in (employee_works_on_project.employee, employee_works_on_project.project) — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[7]",
+      "constraint_type": "equality",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[7]",
+          "message": "The populations of (assignment_of_employee.assignment) and (assignment_on_project.assignment) are equal — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[8]",
+      "constraint_type": "exclusion",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[8]",
+          "message": "No tuple appears in both (employee_is_active.employee) and (employee_is_terminated.employee) — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "constraints[9]",
+      "constraint_type": "exclusive-or",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "constraints[9]",
+          "message": "Each employee plays exactly one of (employee_is_fulltime.employee); (employee_is_parttime.employee) — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[assignment_has_hours].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[assignment_has_hours].constraints[0]",
+          "message": "Each assignment plays 'assignment_has_hours' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[assignment_of_employee].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[assignment_of_employee].constraints[0]",
+          "message": "Each assignment plays 'assignment_of_employee' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[assignment_of_employee].constraints[1]",
+      "constraint_type": "mandatory",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[assignment_of_employee].constraints[1]",
+          "message": "Each assignment must play the 'assignment' role in 'assignment_of_employee' — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[assignment_on_project].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[assignment_on_project].constraints[0]",
+          "message": "Each assignment plays 'assignment_on_project' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_earns_salary].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_earns_salary].constraints[0]",
+          "message": "Each employee plays 'employee_earns_salary' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_has_gender].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_has_gender].constraints[0]",
+          "message": "Each employee plays 'employee_has_gender' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_has_name].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_has_name].constraints[0]",
+          "message": "Each employee plays 'employee_has_name' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_has_name].constraints[1]",
+      "constraint_type": "mandatory",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_has_name].constraints[1]",
+          "message": "Each employee must play the 'employee' role in 'employee_has_name' — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_heads_department].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_heads_department].constraints[0]",
+          "message": "Each department plays 'employee_heads_department' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_leads_project].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_leads_project].constraints[0]",
+          "message": "Each project plays 'employee_leads_project' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_reports_to_employee].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_reports_to_employee].constraints[0]",
+          "message": "Each subordinate plays 'employee_reports_to_employee' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_reports_to_employee].constraints[1]",
+      "constraint_type": "ring",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_reports_to_employee].constraints[1]",
+          "message": "The relation 'employee_reports_to_employee' is acyclic — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_reports_to_employee].constraints[2]",
+      "constraint_type": "ring",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_reports_to_employee].constraints[2]",
+          "message": "The relation 'employee_reports_to_employee' is irreflexive — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_works_on_project].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_works_on_project].constraints[0]",
+          "message": "Each employee and project plays 'employee_works_on_project' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[employee_works_on_project].constraints[1]",
+      "constraint_type": "frequency",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[employee_works_on_project].constraints[1]",
+          "message": "Each occurrence of (project in employee_works_on_project) appears at least 1 and at most 10 times — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[project_ran_from_date_to_date].constraints[0]",
+      "constraint_type": "uniqueness",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[project_ran_from_date_to_date].constraints[0]",
+          "message": "Each project plays 'project_ran_from_date_to_date' with at most one combination of the other roles — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "alethic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "explicit",
+      "status": "confirmed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    },
+    {
+      "cells": {
+        "correct": 3,
+        "false_fail": 0,
+        "false_pass": 0,
+        "masked_by_vacuity": 0,
+        "tool_defect": 0,
+        "undecided": 0
+      },
+      "constraint_ref": "fact_types[project_ran_from_date_to_date].constraints[1]",
+      "constraint_type": "value-comparison",
+      "coverage": 1.0,
+      "decided": 3,
+      "evidence": {
+        "population": "conforming/full_vocabulary.orm.conforming.seed7.json",
+        "verdict": {
+          "constraint_ref": "fact_types[project_ran_from_date_to_date].constraints[1]",
+          "message": "In each fact, start is at most end — satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "verdict": "pass"
+        }
+      },
+      "expected_nonpass": 0,
+      "false_fail": 0,
+      "false_fail_rate": 0.0,
+      "false_pass": 0,
+      "false_pass_rate": null,
+      "ground_truth_states_seen": [
+        "satisfied"
+      ],
+      "modality": "deontic",
+      "n": 3,
+      "satisfied": 3,
+      "selective_false_fail": 0.0,
+      "selective_false_pass": 0.0,
+      "set_attributed_evidence": false,
+      "source": "common-sense",
+      "status": "proposed",
+      "undecided_rate": 0.0,
+      "wrong_attribution": 0
+    }
+  ],
+  "pool_source": "faker",
+  "pools": [
+    {
+      "sha256": "cf070003b957fe297ad2f618acecc01ac0f11500fbe744b7a3fb7d291d2d7343",
+      "source": "faker"
+    }
+  ],
+  "population_count": 3,
+  "schema_version": 2,
+  "seeds": [
+    7,
+    8,
+    9
+  ],
+  "tool": "gnd"
+}
+_________________ test_scan_scope_control_rejects_missing_home _________________
+tests/test_rf2_review_regressions.py:33: in test_scan_scope_control_rejects_missing_home
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+____ test_exit_guard_rejects_other_assignment_forms[_EXIT_EXTRA: int = 19] _____
+tests/test_rf2_review_regressions.py:46: in test_exit_guard_rejects_other_assignment_forms
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_____ test_exit_guard_rejects_other_assignment_forms[EXIT_EXTRA = 18 + 1] ______
+tests/test_rf2_review_regressions.py:46: in test_exit_guard_rejects_other_assignment_forms
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf2_review_regressions.py::test_cli_uses_new_provenance_lookup[synth]
+FAILED tests/test_rf2_review_regressions.py::test_cli_uses_new_provenance_lookup[measure]
+FAILED tests/test_rf2_review_regressions.py::test_scan_scope_control_rejects_missing_home
+FAILED tests/test_rf2_review_regressions.py::test_exit_guard_rejects_other_assignment_forms[_EXIT_EXTRA: int = 19]
+FAILED tests/test_rf2_review_regressions.py::test_exit_guard_rejects_other_assignment_forms[EXIT_EXTRA = 18 + 1]
+5 failed in 2.44s

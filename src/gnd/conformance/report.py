@@ -46,6 +46,7 @@ from pathlib import Path
 from typing import Any
 
 from gnd import verbalize
+from gnd.artifacts import canonical_report_text as canonical
 from gnd.codegen.manifest import INTEGRITY_LIMITS, CodegenManifest
 from gnd.conformance import UNEXAMINED_REASON, ConformanceResult, Finding
 from gnd.conformance.architecture import ArchitectureResult
@@ -178,15 +179,6 @@ def load_conformance_schema() -> dict[str, Any]:
     return json.loads(schema_text)
 
 
-def canonical(payload: Mapping[str, Any]) -> str:
-    """The payload as canonical JSON: sorted keys, no NaN, stable separators.
-
-    ``sort_keys`` fixes every object's key order and every list is pre-sorted by
-    the builder, so two runs over one unchanged project are byte-identical.
-    """
-    return json.dumps(
-        payload, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False
-    )
 
 
 def _finding_entry(finding: Finding) -> dict[str, Any]:

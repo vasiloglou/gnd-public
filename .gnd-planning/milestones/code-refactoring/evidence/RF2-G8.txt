@@ -1,0 +1,4 @@
+Command: .venv/bin/ruff check src/gnd/admission_validation.py src/gnd/api.py src/gnd/artifacts.py src/gnd/assurance.py src/gnd/assurance_evidence.py src/gnd/cli.py src/gnd/conformance/currency.py src/gnd/conformance/report.py src/gnd/conformance/service.py src/gnd/coverage.py src/gnd/declared_adapter.py src/gnd/diff.py src/gnd/exits.py src/gnd/exp/adapter_policy.py src/gnd/exp/conclusions.py src/gnd/exp/session_eval.py src/gnd/exp/session_store.py src/gnd/exp/spec.py src/gnd/extract/manifest.py src/gnd/fidelity/report.py src/gnd/install.py src/gnd/measure/report.py src/gnd/model.py src/gnd/recovery/report.py src/gnd/recovery/verify.py src/gnd/review/request.py src/gnd/solve.py src/gnd/synth/assemble.py src/gnd/synth/mutate.py src/gnd/synth/provenance.py src/gnd/transition.py tests/test_conformance_payload.py tests/test_rf2_pre_move_pins.py tests/test_rf2_helpers.py
+All checks passed!
+
+Exit: 0

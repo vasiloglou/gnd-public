@@ -34,6 +34,7 @@ from importlib.resources import files
 from typing import Any
 
 from gnd import verbalize
+from gnd.address import positional_constraint_ref
 from gnd.checker import CheckReport
 from gnd.measure.score import Observation, score_run
 from gnd.measure.truth import expectation_for, resolve_constraint_ref
@@ -485,7 +486,7 @@ def _coverage_matrix_summary(
         )
 
     exists_refs = {
-        f"constraints[{index}]"
+        positional_constraint_ref(None, index)
         for index, constraint in enumerate(model.constraints or [])
         if constraint.get("type") == "guarded"
         and isinstance(constraint.get("consequent"), dict)

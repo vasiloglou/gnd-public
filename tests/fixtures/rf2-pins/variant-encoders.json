@@ -1,0 +1,72 @@
+[
+  {
+    "path": "src/gnd/artifacts.py",
+    "name": "canonical_json_bytes",
+    "sha256": "419d713ec34492706a1e26e8d834f64560b04f13017db9ffa765a369be1dbb44"
+  },
+  {
+    "path": "src/gnd/artifacts.py",
+    "name": "canonical_json_text",
+    "sha256": "ecb7cb93e7dec0617f216a13f4c53f729b1e8520a8a4942706fa8d4a59b32b83"
+  },
+  {
+    "path": "src/gnd/assurance_inheritance.py",
+    "name": "_canonical",
+    "sha256": "12cc526783245dcc9990243411c513513909a3a9715a6158b9791a435a337c1f"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "name": "_canonical_payload",
+    "sha256": "bab1c76fb43845f582b21ecd1e0569eab00156ecd10abe57003e217569397403"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "name": "_evolve_json_bytes",
+    "sha256": "8862e8c1f5529995bc863e36f724916f2b0fcf6fd834d8b071ac03d9d4e862cb"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "name": "canonical",
+    "sha256": "1871363970c7b6bb3d5717c32ef5299d0fbd1666b1e6d794584584674a004978"
+  },
+  {
+    "path": "src/gnd/codegen/emit.py",
+    "name": "_canonical",
+    "sha256": "3383338d2cc4aaf86298f27f113a4ade25640a6cc5ed4ed62b41e05793517b77"
+  },
+  {
+    "path": "src/gnd/evolve/models.py",
+    "name": "_canonical_json",
+    "sha256": "4c5ede160098c83484d3d0513420df9faa740f28748da8e0c7fb5484e9da6bbf"
+  },
+  {
+    "path": "src/gnd/extract/anchors.py",
+    "name": "_canonical",
+    "sha256": "aa757b9dc6e2b52111e557c6fbaaa259af44be944ddd9bf3d227cd1544a37653"
+  },
+  {
+    "path": "src/gnd/measure/report.py",
+    "name": "_canonical",
+    "sha256": "bb6d866323b40b50b296339ba7f44472117eaff7b38cc9b9182a8515d0159f43"
+  },
+  {
+    "path": "src/gnd/model_verbalization.py",
+    "name": "_canonical",
+    "sha256": "305e900ecda2408bc741d164bad7789c6d8440f65bbb71716c45c41a14a036cd"
+  },
+  {
+    "path": "src/gnd/review/request.py",
+    "name": "_canonical_json",
+    "sha256": "23f2971c5bdc0e7719b306e0e3f20e70d9c9df437c325dfccea5720d2c70ee3d"
+  },
+  {
+    "path": "src/gnd/synth/poolfile.py",
+    "name": "_canonical_bytes",
+    "sha256": "e05e5b682c0682667094d79f13b4bf9b1e61647016dc8baa06c05a1ab4c9a3ed"
+  },
+  {
+    "path": "src/gnd/transition.py",
+    "name": "_canonical",
+    "sha256": "f9b76ec603649e0ba23175141c44dabfcc42000525ebef6519c81bddf9639e71"
+  }
+]

@@ -1,0 +1,23 @@
+Retention note: absolute machine paths sanitized to placeholders; summaries and findings retained.
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_dual_capture_cannot_bypass_historical_answer _______________
+tests/test_rf2_instrument.py:100: in test_dual_capture_cannot_bypass_historical_answer
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+---------------------------- Captured stdout setup -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4226/rf2-successor-controls0/EXP-401-session/SPEC.md
+  declares Q1: Did the bounded session establish the contract?
+______________ test_declared_json_input_whitespace_remains_bound _______________
+tests/test_rf2_instrument.py:106: in test_declared_json_input_whitespace_remains_bound
+    assert successor.project_input(b'{"a":1}', {}) != successor.project_input(b'{"a": 1}', {})
+E   assert {'json': {'a': 1}} != {'json': {'a': 1}}
+E    +  where {'json': {'a': 1}} = <function project_input at 0x10ca70bf0>(b'{"a":1}', {})
+E    +    where <function project_input at 0x10ca70bf0> = successor.project_input
+E    +  and   {'json': {'a': 1}} = <function project_input at 0x10ca70bf0>(b'{"a": 1}', {})
+E    +    where <function project_input at 0x10ca70bf0> = successor.project_input
+=========================== short test summary info ============================
+FAILED tests/test_rf2_instrument.py::test_dual_capture_cannot_bypass_historical_answer
+FAILED tests/test_rf2_instrument.py::test_declared_json_input_whitespace_remains_bound
+2 failed, 11 deselected in 1.19s

@@ -34,7 +34,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from jsonschema import Draft202012Validator
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, ValidationError
 from ruamel.yaml import YAML
 
 # Message wording for the layer-2 rules lives with every other CNL template
@@ -100,6 +100,19 @@ class ValidationIssue(BaseModel):
     message: str
     rule_id: str
     severity: Literal["error", "warning"] = "error"
+
+
+def issues_from_validation_error(
+    error: ValidationError, rule_id: str
+) -> list[ValidationIssue]:
+    return [
+        ValidationIssue(
+            path=".".join(str(part) for part in entry["loc"]),
+            message=entry["msg"],
+            rule_id=rule_id,
+        )
+        for entry in error.errors()
+    ]
 
 
 class ModelValidationError(Exception):

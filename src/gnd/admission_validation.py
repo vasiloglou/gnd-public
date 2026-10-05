@@ -124,9 +124,9 @@ def _validate(payload, model, candidate, references):
         if references is not None or payload.get("schema_version") not in {10, 13}:
             raise AdmissionValidationError("candidate admission report required")
         inner = payload
-    from gnd.transition import model_digest
+    from gnd.transition import transition_model_identity
 
-    if inner["model_digest"] != model_digest(model):
+    if inner["model_digest"] != transition_model_identity(model):
         raise AdmissionValidationError("model identity differs")
     universe = {(ft, i) for ft, rows in candidate.facts.items() for i in range(len(rows))}
     all_nodes = {(ft, i) for ft, rows in combined.facts.items() for i in range(len(rows))}

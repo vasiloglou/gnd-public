@@ -62,6 +62,7 @@ from random import Random
 from typing import Any
 
 from gnd import popvalidate
+from gnd.address import positional_constraint_ref
 from gnd.checker import (
     _RING_COMPONENTS,
     _RING_VARIANTS,
@@ -1805,7 +1806,7 @@ def first_implemented_inline_ref(model: Model, ftid: str) -> str | None:
     ft = _ft_by_id(model, ftid)
     for index, constraint in enumerate((ft or {}).get("constraints") or []):
         if str(constraint.get("type")) in IMPLEMENTED_FAMILIES:
-            return f"fact_types[{ftid}].constraints[{index}]"
+            return positional_constraint_ref(ftid, index)
     return None
 
 

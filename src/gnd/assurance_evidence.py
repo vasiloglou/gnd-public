@@ -7,7 +7,6 @@ Any unavailable or malformed evidence withholds assurance, not the verdict.
 
 from __future__ import annotations
 
-import hashlib
 import json
 import math
 import os
@@ -21,6 +20,7 @@ from typing import Any
 
 import jsonschema
 
+from gnd.artifacts import sha256_hex as _sha
 from gnd.assurance import CorrespondenceDigests
 from gnd.semantic_registry import REGISTRY
 
@@ -52,8 +52,6 @@ def enforce_bundle_limits(total_bytes: int, file_count: int) -> None:
         raise ValueError("evidence file count limit")
 
 
-def _sha(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
 
 
 def _pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:

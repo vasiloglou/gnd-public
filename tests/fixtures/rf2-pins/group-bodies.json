@@ -1,0 +1,27 @@
+{
+  "f4d89086": {
+    "source_base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "site": "gnd.artifacts:sha256_hex:210",
+    "body": "def sha256_hex(data: bytes) -> str:\n    \"\"\"Return the lowercase hex content digest of ``data``.\"\"\"\n    return hashlib.sha256(data).hexdigest()"
+  },
+  "2f5a20a1": {
+    "source_base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "site": "gnd.conformance.report:canonical:181",
+    "body": "def canonical(payload: Mapping[str, Any]) -> str:\n    \"\"\"The payload as canonical JSON: sorted keys, no NaN, stable separators.\n\n    ``sort_keys`` fixes every object's key order and every list is pre-sorted by\n    the builder, so two runs over one unchanged project are byte-identical.\n    \"\"\"\n    return json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False)"
+  },
+  "5bebc70e": {
+    "source_base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "site": "gnd.declared_adapter:reject_constant:95",
+    "body": "def reject_constant(token: str) -> None:\n    raise ValueError(f'non-finite JSON number {token!r} is forbidden')"
+  },
+  "d9f0cf8e": {
+    "source_base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "site": "gnd.declared_adapter:reject_duplicates:98",
+    "body": "def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n    document: dict[str, Any] = {}\n    for key, value in pairs:\n        if key in document:\n            raise ValueError(f'duplicate JSON key {key!r}')\n        document[key] = value\n    return document"
+  },
+  "dcbdd645": {
+    "source_base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "site": "gnd.exp.adapter_policy:reject_duplicates:214",
+    "body": "def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n    result: dict[str, Any] = {}\n    for key, value in pairs:\n        if key in result:\n            raise ValueError(f'duplicate JSON key {key!r}')\n        result[key] = value\n    return result"
+  }
+}

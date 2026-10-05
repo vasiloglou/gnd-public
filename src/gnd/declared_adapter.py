@@ -18,7 +18,6 @@ import ssl
 import stat
 import time
 from pathlib import Path, PurePosixPath, PureWindowsPath
-from typing import Any
 from urllib.parse import urlsplit
 
 from gnd.agent_cli import (
@@ -28,7 +27,7 @@ from gnd.agent_cli import (
     ProcessLimits,
     run_bounded_process,
 )
-from gnd.artifacts import canonical_json_bytes
+from gnd.artifacts import canonical_json_bytes, reject_json_constant, reject_json_duplicate_pairs
 from gnd.exp.adapter_policy import (
     CommandAdapterPolicy,
     OpenAICompatiblePolicy,
@@ -92,22 +91,13 @@ def _safe_bundle_path(value: object) -> tuple[str, ...]:
 
 
 def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:
-    def reject_constant(token: str) -> None:
-        raise ValueError(f"non-finite JSON number {token!r} is forbidden")
 
-    def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-        document: dict[str, Any] = {}
-        for key, value in pairs:
-            if key in document:
-                raise ValueError(f"duplicate JSON key {key!r}")
-            document[key] = value
-        return document
 
     try:
         document = json.loads(
             content,
-            parse_constant=reject_constant,
-            object_pairs_hook=reject_duplicates,
+            parse_constant=reject_json_constant,
+            object_pairs_hook=reject_json_duplicate_pairs,
         )
     except (json.JSONDecodeError, ValueError, RecursionError) as error:
         raise CandidateBundleError(f"assistant content is not bundle JSON: {error}") from error

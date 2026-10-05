@@ -81,6 +81,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from gnd import DISTRIBUTION, resolve_version
+from gnd.artifacts import sha256_hex as _sha256
 
 #: The self-locating install receipt (D-10). One per target root, leading dot so
 #: it does not read as a skill directory to either runtime.
@@ -254,14 +255,6 @@ def iter_skill_files(root: Traversable, prefix: str = "") -> Iterator[tuple[str,
             yield f"{prefix}{name}", entry
 
 
-def _sha256(data: bytes) -> str:
-    """Content identity by bytes.
-
-    The only identity function that survives a copy: mtime is not preserved by
-    copying and lies after a ``git checkout``, and size alone cannot tell an edit
-    from a replacement. D-09 asks for byte-identical hashes literally.
-    """
-    return hashlib.sha256(data).hexdigest()
 
 
 # ---------------------------------------------------------------------------

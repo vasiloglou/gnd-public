@@ -1,0 +1,5 @@
+Command: .venv/bin/python -m pytest -q tests/test_development_scaffold.py
+14 passed, 1 deselected in 4.09s
+Exit: 0
+Command: git diff --quiet f5a83186f7c2215ac2b2afb0a010c2294eaa433a -- .gnd-planning/milestones/public-launch/migration/units.json tests/test_public_distribution.py
+Exit: 0

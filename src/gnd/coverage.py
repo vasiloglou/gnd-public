@@ -25,6 +25,7 @@ from gnd.address import (
     parse_address,
     positional_constraint_ref,
 )
+from gnd.artifacts import canonical_report_text as canonical_payload  # noqa: F401 -- compatibility
 from gnd.conformance.report import CONFORMANCE_SCHEMA_VERSION
 from gnd.exp.spec import EXPERIMENT_DIR_PATTERN, SpecError, read_spec
 from gnd.model import Model, structured_derivation_ids
@@ -36,7 +37,7 @@ from gnd.report import (
     PAYLOAD_SCHEMA_VERSION,
     payload_schema_version,
 )
-from gnd.transition import model_digest
+from gnd.transition import transition_model_identity
 
 MAX_EVIDENCE_BYTES = 10 * 1024 * 1024
 
@@ -223,10 +224,6 @@ def build_payload(result: CoverageResult, *, gnd_version: str) -> dict[str, Any]
     }
 
 
-def canonical_payload(payload: Mapping[str, Any]) -> str:
-    """Return deterministic, strict JSON for a coverage payload."""
-
-    return json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False)
 
 
 def render_coverage(payload: Mapping[str, Any]) -> str:
@@ -876,7 +873,7 @@ def build_coverage(
     # D-P3.4: the model, not a constant, decides which report version counts
     # as evidence for it — refused in both mismatch directions.
     expected_payload_version = payload_schema_version(model)
-    census_model_digest = model_digest(model)
+    census_model_digest = transition_model_identity(model)
     unbound: list[SourceBindingGap] = []
     claims: dict[str, list[Claim]] = defaultdict(list)
     evidence: dict[str, list[Evidence]] = defaultdict(list)
@@ -1004,3 +1001,6 @@ def build_coverage(
         covers_exemptions=tuple(exemptions),
         unbound_sources=tuple(sorted(unbound, key=SourceBindingGap.order)),
     )
+
+
+model_digest = transition_model_identity  # RF2 compatibility alias.

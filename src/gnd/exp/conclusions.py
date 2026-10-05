@@ -64,7 +64,7 @@ from pydantic import (
 
 from gnd.exp.frontmatter import FrontmatterError, read_frontmatter
 from gnd.exp.spec import EXPERIMENT_DIR_PATTERN
-from gnd.model import ValidationIssue
+from gnd.model import ValidationIssue, issues_from_validation_error
 
 __all__ = [
     "CONCLUSIONS_RULE_ID",
@@ -210,14 +210,7 @@ class ExperimentConclusions(BaseModel):
 
 
 def _validation_issues(error: ValidationError) -> list[ValidationIssue]:
-    return [
-        ValidationIssue(
-            path=".".join(str(part) for part in entry["loc"]),
-            message=entry["msg"],
-            rule_id=CONCLUSIONS_RULE_ID,
-        )
-        for entry in error.errors()
-    ]
+    return issues_from_validation_error(error, CONCLUSIONS_RULE_ID)
 
 
 def read_conclusions(path: str | Path) -> ExperimentConclusions:

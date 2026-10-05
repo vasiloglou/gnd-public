@@ -1,0 +1,30 @@
+[
+  {
+    "gate": "G1",
+    "command": ".venv/bin/python -m pytest -q tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py --tb=short",
+    "exit": 1,
+    "seconds": 61.85,
+    "output": ".gnd-planning/milestones/code-refactoring/evidence/RF2-G1.txt"
+  },
+  {
+    "gate": "G3",
+    "command": ".venv/bin/python -m pytest -q tests/test_checker_families.py tests/test_artifacts.py tests/test_address.py tests/test_gnd_arch.py --tb=short",
+    "exit": 0,
+    "seconds": 5.66,
+    "output": ".gnd-planning/milestones/code-refactoring/evidence/RF2-G3.txt"
+  },
+  {
+    "gate": "G4",
+    "command": ".venv/bin/python -m pytest -q tests/test_conformance_payload.py tests/test_conformance_drift.py tests/test_coverage_payload.py tests/test_fidelity_payload.py tests/test_exp_spec.py tests/test_extract_manifest.py tests/test_review_request.py tests/test_recovery_report.py tests/test_recovery_adversarial.py tests/test_exp_session_eval.py tests/test_exp_session_store.py --tb=short",
+    "exit": 0,
+    "seconds": 14.63,
+    "output": ".gnd-planning/milestones/code-refactoring/evidence/RF2-G4.txt"
+  },
+  {
+    "gate": "G5",
+    "command": ".venv/bin/python -m pytest -q tests/test_measure_offline.py tests/test_measure_coverage.py tests/test_measure_derivation.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_exp_bands.py tests/test_review_bands.py tests/test_solve.py tests/test_install.py tests/test_doctor_uninstall.py --tb=short",
+    "exit": 0,
+    "seconds": 138.26,
+    "output": ".gnd-planning/milestones/code-refactoring/evidence/RF2-G5.txt"
+  }
+]

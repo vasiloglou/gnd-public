@@ -13,8 +13,9 @@ Read in full: plan §§0–10, records `003-plan-gate.md`, `004-phase-RF0.md`,
 `005-plan-erratum.md`, `006-phase-RF1.md`, and `notes/helper-families.md`.
 RF1 record SHA-256:
 `77d73913a59cd49431e475edb173869c52ac21057ef5521e3b9795c8dddefd21`.
-No panel or independent reviewer has reviewed this spec. No code is authorized
-by this draft. Earlier public-launch delegation does not apply.
+At original draft time, no reviewer had inspected this spec and no code was
+authorized by the draft alone. Owner decisions and subsequent reviews are
+recorded below. Earlier public-launch delegation does not apply.
 
 ## Obligations — harvest
 
@@ -41,7 +42,7 @@ Paths in this table are relative to this milestone unless prefixed `src/`,
 | Plan §0 | RF-R1 through RF-R11 | Standing-rule bindings below |
 | Plan §10 | RF-D5 shim retirement; RF-D9 approval instrument | D1 and D5 |
 | Plan §5 | Count packaged-skill module-path pin sites at gate; update in move unit | Evidence inventory: 9 citations, no citation to renamed functions; paths remain valid |
-| Plan §5; RF0 D4/RF-D3 | Curated manifest adaptation; old release identity unavailable | D7; bounded adaptation only, excluded distribution lane remains unavailable |
+| Plan §5; RF0 D4(b)/RF-D3, superseded in this scope by RF2 D7 | Curated manifest adaptation; old release identity unavailable | D7; bounded adaptation only, excluded distribution lane remains unavailable |
 | Plan §6 | Byte drift, verdict/order drift, dead patches, shrinking scans, dual authority, variant merge, budget overrun, misleading metrics, stale names | T-PINS, T-VARIANT, T-SHIM, T-SCAN, D6, size gate, measured head/base table; owner strings are RF3 |
 | Plan §7 | No features, tightening, release claims, broad-suite repair, source-owned OQs | Out-of-scope section |
 | RF0-OQ4 | Audit's identical canonical-byte claim refuted; accept or rule a normalized view | D2; no silent normalized view |
@@ -225,7 +226,7 @@ was inserted into serialized artifacts or digest inputs.
 | D4 | Retain standalone PyRel runtime/source bytes unchanged and record its ref routing as deferred scope; pin current refs/output first | Importing gnd breaks standalone behavior and embedding a helper changes exported bytes; full routing requires plan repair, not an observable-change exception |
 | D5 / RF-D9 | Approve this spec prose with the existing RF1 executable corpus plus new pre-move green pins | Corpus-first defaults for new serialization contracts; RF2 changes no format or exit contract, and RF1 already provides approved bytes. A separate RED implementation corpus would fail unchanged code for structural reasons, not define different expected bytes |
 | D6 / RF-R7 | Owner attests source repository took no changes to handed-off runtime/test-acceptance paths | No source remote supplied; control remains attestation unless owner supplies reachable source identity for high-water comparison |
-| D7 / RF-D3 | Apply RF0's ruled curated-manifest adaptation for changed paths, preserve units.json and its guard, report prior release evidence unavailable | Whole distribution replay/repair is excluded; no new release/assurance claim |
+| D7 / RF-D3 | Authorize bounded curated-manifest adaptation for changed paths (RF2 ruling; supersedes RF0 D4(b) in this scope), preserve units.json and its guard, report prior release evidence unavailable | Whole distribution replay/repair is excluded; no new release/assurance claim |
 | D8 | Approve target 17 → 5 definitions and budgets below | Miss or overrun stops phase under RF-D13; no relaxed target inferred |
 | D9 | Omit optional spec panel; independent adversarial diff review remains required after implementation | A requested panel consumes separate provider budget and requires explicit instrument selection |
 | D10 | Require a reproduced green RF1 baseline before any move; authorize focused diagnosis of the ten pre-existing session mismatches as the first approved step | No golden changes inferred; any support-module repair triggers RF1-OQ7 and its owner scope decision. Unresolved failures prohibit claiming SM1 |
@@ -387,3 +388,137 @@ macOS's sandbox where it adds warnings to synthetic subprocess stderr.
 Pre-move measure/PyRel predecessor answers were captured with unchanged src/gnd,
 then compared green (four tests). New answers are isolated in
 `tests/fixtures/rf2-pins/pre-move.json`; RF1 goldens and manifest are unchanged.
+
+### Finding RF2-F2 — actual family inventory and aliases
+
+The RF0 measured canonical family contains 19 sites, not the family note's 18:
+cli.py contains an additional nested canonical function. The frozen-encoder
+source control therefore checks 14 divergent sites, not the prose's 13, without
+changing any encoder. The move-only helper controls pass (97 passed, 16 xfailed).
+Ruff's unused-import fix removed two compatibility aliases and an unused CLI
+exit export during preparation; direct import controls caught this before any
+move commit. Explicit compatibility imports restore them; no expected answer
+was changed. The new direct controls exit 0 (25 passed).
+
+### Finding RF2-F3 — preservation instrument conflicts (owner gate)
+
+G1 is red after moves: the exits namespace gains moved allocations, the mutation
+instrument still names deleted source locations, and v1/v2 session execution
+identities transitively hash the changed production roster. These are reproduced
+in RF2-G1.txt and a scratch v1 observation; the latter differs only at the two
+process_receipt.execution.identity fields. No golden was changed, no support-module
+repair was made, and no move commit was created. Proposed disposition and exact
+successor-control contract: phase-RF2-instrument-amendment.md, awaiting owner review.
+The implementation remains uncommitted until this gate and green controls clear.
+
+### RF2-F4 — independent review destination authorization
+
+On 2026-10-05 the owner answered “Authorize the Codex review” to the explicit request to send the RF2 review prompt and inspected repository source/diff to the Codex provider. This resolves the automatic approval review rejection for that named independent review only. It does not approve the separate instrument amendment.
+
+### RF2-F5 — independent review reproduction and triage
+
+Five regression cases reproduced the three reviewer findings before fixes
+(RF2-review-pre-fix.txt: 5 failed, exit 1). Findings 1–3 are blocking:
+new-name consumer lookup is an approved migration obligation; the scan and
+allocation controls fail their declared falsifiability promises. Fixes are
+within the approved RF2 production/test scope and do not alter RF1 support or
+golden meanings. Reviewer proposal ambiguities will be repaired in the pending
+instrument amendment before its owner gate. No completeness expansion selected.
+
+RF2-F5 verification: RF2-review-cli-pre-fix.txt reproduces both final CLI
+regressions red against a temporary copy with the two pre-fix lookups restored
+(2 failed, exit 1). RF2-review-post-fix.txt records 31 passed, exit 0,
+including all six reviewer regression cases and the direct/pre-move controls.
+Explicit lint over cli.py, test_rf2_helpers.py and test_rf2_review_regressions.py
+reports All checks passed, exit 0. The earlier G5 run predates the two lookup
+repairs; its affected consumers will rerun with the amendment's final gates.
+The independent review remains an opinion on its inspected bytes, not a new
+opinion on these repairs. All four diagnostic session comparisons differ only
+in the two execution identity occurrences each; the full path table is retained
+in RF2-session-structured-diff.json. Owner instrument approval remains pending.
+
+### RF2-F6 — approved instrument amendment
+
+2026-10-05: owner approved notes/phase-RF2-instrument-amendment.md
+(SHA-256 5edfe0ed33c8a133eb9cb92ecdcfa25bf54bc221ea17f2a39b7dab9cc3bd4138 before approval append), with explicit go-ahead.
+SM1 now uses the approved bounded successor instrument for four session nodes,
+the historical exit-name projection and retargeted mutation locations. Original
+goldens and goldens.sha256 remain frozen. No budget extension or broader run.
+
+### RF2-F7 — equivalent SHA predicate consumers
+
+Before extracting is_sha256_hex, two real consumers (AssuranceBlockV1 and
+session_patch._shape) passed the same 12-row predecessor acceptance/refusal
+table (RF2-digest-predicate-predecessor.txt, exit 0). Both used the identical
+str/64/ASCII predicate; optional None remains accepted by the callers and false
+by the predicate. The same expression now has one artifacts home. Bytes,
+containers and arbitrary objects have separately tested false results.
+
+### RF2-F8 — manifest ruling provenance correction
+
+D7's wording “RF0's ruled curated-manifest adaptation” was wrong: RF0 D4(b)
+chose not to edit the public-launch migration manifest. RF2 D7 explicitly
+selected bounded adaptation of changed paths, subsequently approved by the
+owner, and is the current authorization for this RF2 edit. It supersedes the
+prior no-manifest-edit choice within this named scope; it is not inherited RF0
+authority. Only existing rows for changed files have been adapted, with prior
+rows retained in RF2-manifest-adaptation.json. No new whole-tree attribution or
+release claim; units.json and test_public_distribution.py remain unchanged.
+The milestone-close plan repair must reconcile the RF0 ruling and plan RF-D3.
+
+### RF2-F9 — subprocess capture boundary
+
+The verifier uses Python -I, so parent monkeypatches and PYTHONPATH do not enter
+its process. The four successor tests therefore replace only that test's
+trusted verifier launch with -I -c bootstrap: explicitly select the parent's
+production source, install the test-only api mint/encoder observation hook,
+and run the real CLI with the original arguments. Payloads and receipt
+generation stay real. Baseline capture passed the complete original goldens
+before any RF2 successor was written; source-base replay passed all four
+committed successors. The hook is test-only and disclosed here, not a claim
+that the production verifier's untouched launch path itself was instrumented.
+
+### RF2-F10 — bounded repair-pass findings
+
+Before fixes: Python 3.11's original v1-fresh node failed the py314-only
+successor (RF2-successor-interpreter-pre-fix.txt, exit 1). The repair review
+also reproduced a locally computed EXIT_EXTRA through Name indirection; its
+new regression failed pre-fix (RF2-review-exit-indirection-pre-fix.txt: 1 failed,
+2 passed, exit 1). Both are blocking instrument defects, not a production byte
+change: supported-interpreter answers must remain supported, and a centralization
+guard must reject local allocations. Capture all four source-base successors
+for each original RF1 minor, and allow only aliases imported from gnd.exits.
+The known _EXIT_PRECEDENCE ordering dictionary is not an integer allocation.
+
+### RF2-F11 — capture and declared-input repair
+
+Repair-review findings 3–4 reproduced pre-fix (RF2-review-capture-input-pre-fix.txt:
+2 failed, exit 1). Both are blocking: capture must prove the original expected
+answer, and the declared-input branch must not erase bytes beyond approved path
+placeholders. Reject dual RF1/RF2 capture flags; compare the original canonical
+observation directly with historical bytes during RF2 capture. Remove the JSON
+semantic projection entirely: retain token-normalized raw text, including JSON
+whitespace, and normalize literal/escaped path forms consistently. No RF1
+support repair, original golden edits or production change is authorized here.
+
+### RF2-F12 — portable AST equality control
+
+Python 3.11's test_one_definition_per_promoted_group failed pre-fix because
+RF0 AST hashes are intentionally Python 3.14-specific (RF2-ast-interpreter-pre-fix.txt,
+exit 1). Blocking CI instrument gap. Retain the five source-base bodies as
+explicit fixtures and compute both candidate and reference signatures under
+the executing interpreter. Historical RF0 group identifiers stay labels, not
+claimed cross-version hashes. The original bodies are read by git show from
+f5a8318, never inferred from the moved implementation. Known duplicate control
+remains executable on each supported interpreter.
+
+### RF2-F13 — final focused evidence
+
+Final G1 plus direct RF2 controls: 457 passed, 16 xfailed, exit 0 under each
+of Python 3.11, 3.13 and 3.14. For each minor, source-base capture and replay
+pass all four successors, and final capture equals the retained RF2 fixture.
+Every archived source byte was checked against f5a8318 git blobs (347 files);
+RF2-source-base-control.json binds that source selection. G3/G4/G5 exit 0;
+the 16 retargeted mutants were killed at unchanged call nodes. Final lint and
+post-commit G6 measurement are recorded in the completion record. No new
+review opinion is claimed for repairs made after the bounded repair review.

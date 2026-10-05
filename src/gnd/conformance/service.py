@@ -22,18 +22,19 @@ from gnd.codegen.manifest import (
 )
 from gnd.conformance import ConformanceError
 from gnd.conformance.architecture import check_architecture
-from gnd.conformance.currency import check_currency, model_digest
+from gnd.conformance.currency import check_currency, model_file_sha256
 from gnd.conformance.integrity import bind_project_root, check_integrity, open_project_root
 from gnd.conformance.report import build_conformance_payload
 from gnd.conformance.structural import check_structural
+from gnd.exits import EXIT_ILL_FORMED, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT
 from gnd.model import ModelLoadError, ModelValidationError, load_model
 
 __all__ = ["ConformanceServiceResult", "run_conformance"]
 
-_EXIT_ILL_FORMED = 3
-_EXIT_MODEL_CODE_DRIFT = 13
-_EXIT_NO_INPUT = 66
-_EXIT_IO = 74
+_EXIT_ILL_FORMED = EXIT_ILL_FORMED
+_EXIT_MODEL_CODE_DRIFT = EXIT_MODEL_CODE_DRIFT
+_EXIT_NO_INPUT = EXIT_NO_INPUT
+_EXIT_IO = EXIT_IO
 
 
 @dataclass(frozen=True, slots=True)
@@ -192,7 +193,7 @@ def run_conformance(model_path: str | Path, project_root: str | Path) -> Conform
                 )
             else:
                 try:
-                    actual_model_sha256 = model_digest(model_path)
+                    actual_model_sha256 = model_file_sha256(model_path)
                     currency = check_currency(model_path, manifest)
                 except ConformanceError:
                     io_failures.append(model_coordinate)
@@ -355,3 +356,6 @@ def run_conformance(model_path: str | Path, project_root: str | Path) -> Conform
         error=error,
     )
     return ConformanceServiceResult(payload=payload, exit_code=exit_code)
+
+
+model_digest = model_file_sha256  # RF2 compatibility alias.

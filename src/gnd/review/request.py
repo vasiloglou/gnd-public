@@ -31,6 +31,7 @@ from pydantic import (
 )
 
 from gnd.artifacts import ArtifactError, read_regular_bounded
+from gnd.artifacts import reject_json_duplicate_pairs as _reject_duplicate_object_pairs
 
 __all__ = [
     "MVP_TRIAGE_CRITERION",
@@ -623,13 +624,6 @@ def canonical_review_request(request: ReviewRequest) -> bytes:
     return _canonical_json(request.model_dump(mode="json"))
 
 
-def _reject_duplicate_object_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-    document: dict[str, Any] = {}
-    for key, value in pairs:
-        if key in document:
-            raise ValueError(f"duplicate JSON key {key!r}")
-        document[key] = value
-    return document
 
 
 def _reject_nonfinite_constant(value: str) -> None:

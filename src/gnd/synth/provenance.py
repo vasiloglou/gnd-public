@@ -225,7 +225,7 @@ class Sidecar(BaseModel):
     unmutated_derivations: list[dict[str, str]] = Field(default_factory=list)
 
 
-def model_digest(model: Any) -> str:
+def validated_model_sha256(model: Any) -> str:
     """The digest plan 04 recomputes and compares (C6). Delegates to
     :func:`gnd.population._model_digest`, the SAME digest the population loader
     stamps its validation marker with, so the two can never disagree about what a
@@ -340,3 +340,6 @@ def read_sidecar(path: str | Path, *, verify_population_hash: bool = True) -> Si
                 f"{actual!r} — the population was edited after emission (C6)."
             )
     return sidecar
+
+
+model_digest = validated_model_sha256  # RF2 compatibility alias.

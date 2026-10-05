@@ -182,7 +182,7 @@ def operations_digest(operations: list[dict[str, Any]] | None) -> str:
     return "sha256:" + artifacts.sha256_hex(payload.encode("utf-8"))
 
 
-def model_digest(model: Model) -> str:
+def transition_model_identity(model: Model) -> str:
     """The same function ``population.py`` uses, called from a second place.
 
     Not a second digest that happens to share a word: identical bytes, so a
@@ -312,7 +312,7 @@ def verify_digests(document: dict[str, Any], model: Model, pre_path: str | Path 
     """Stage 2. Each mismatch has its own rule id, so a caller is never left
     guessing WHICH claim about the world stopped being true."""
     supplied = _supplied_digests(document)
-    expected_model = model_digest(model)
+    expected_model = transition_model_identity(model)
     if supplied["model_digest"] != expected_model:
         _refuse(
             "$.model_digest",
@@ -2222,3 +2222,6 @@ def frame_modalities(model: Model) -> dict[str, tuple[str, list[str]]]:
             sorted(deontic or names),
         )
     return grading
+
+
+model_digest = transition_model_identity  # RF2 compatibility alias.

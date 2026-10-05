@@ -7,11 +7,12 @@ import os
 from pathlib import Path
 from types import SimpleNamespace
 
+from test_measure_offline import MODEL, corpus  # noqa: F401 -- fixture reuse
+
 from gnd import cli
 from gnd.export import emit, pyrel_runtime
 from gnd.measure import coverage, report
 from gnd.synth import frontier
-from test_measure_offline import MODEL, corpus  # noqa: F401 -- fixture reuse
 
 ROOT = Path(__file__).resolve().parents[1]
 ANSWERS = ROOT / "tests/fixtures/rf2-pins/pre-move.json"
@@ -64,7 +65,7 @@ def test_pyrel_inline_and_top_level_refs():
     pin("pyrel_inline_and_top_level_refs", rows)
 
 
-def test_measure_output_bytes(corpus, tmp_path):
+def test_measure_output_bytes(corpus, tmp_path):  # noqa: F811 -- imported fixture
     target = tmp_path / "measurement.json"
     assert cli.main(["measure", str(MODEL), "--populations", str(corpus),
                      "--format", "json", "--out", str(target)]) == 0

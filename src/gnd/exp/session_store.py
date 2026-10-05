@@ -44,6 +44,7 @@ from gnd.agent_cli import AgentAdapterId, InvocationResult
 from gnd.artifacts import (
     ArtifactError,
     LeafSnapshot,
+    Sha256,
     _clear_directory_fd,
     _exchange_paths_atomic,
     _read_regular_bounded_fd,
@@ -51,6 +52,8 @@ from gnd.artifacts import (
     publish_directory_once,
     publish_leaf_atomic,
     read_regular_bounded,
+    reject_json_constant,
+    reject_json_duplicate_pairs,
     sha256_hex,
     tree_sha256_from_inventory,
 )
@@ -157,7 +160,7 @@ SNAPSHOT_EXECUTABLE_FILE_MODE = 0o555
 DIRECTORY_MODE = 0o755
 
 NonEmptyString = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-Sha256 = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
+
 
 
 def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:
@@ -166,20 +169,11 @@ def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:
     except UnicodeDecodeError as error:
         raise ValueError(f"{label} is not UTF-8: {error}") from error
 
-    def reject_constant(token: str) -> None:
-        raise ValueError(f"non-finite JSON number {token!r} is forbidden")
 
-    def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-        document: dict[str, Any] = {}
-        for key, value in pairs:
-            if key in document:
-                raise ValueError(f"duplicate JSON key {key!r}")
-            document[key] = value
-        return document
 
     decoder = json.JSONDecoder(
-        parse_constant=reject_constant,
-        object_pairs_hook=reject_duplicates,
+        parse_constant=reject_json_constant,
+        object_pairs_hook=reject_json_duplicate_pairs,
     )
     try:
         document, end = decoder.raw_decode(text.lstrip())

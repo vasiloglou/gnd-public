@@ -1,0 +1,66 @@
+[
+  {
+    "case": "v1-fresh",
+    "baseline": "tests/fixtures/rf1-pins/goldens/session/v1-fresh.py314.json",
+    "differences": [
+      {
+        "path": "/evidence/attempts/0001/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "f6c81e54ef6974a2247af847e4ee67ef4179be78b362fc0cd4caf78519209689",
+        "after": "cab62d9384a0aba670feda9f6299033f6c802fe5cd2fab9bb0ca7749e873a91f"
+      },
+      {
+        "path": "/evidence/attempts/0002/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "adc9eeff9261848234db77abae118ea9efa3a842281e6f6e356aa8af83bedf21",
+        "after": "629155fc3beca6d6c7540ee2c28ff42ed0696076f3481f504a4df3810f778a43"
+      }
+    ]
+  },
+  {
+    "case": "v2-fresh",
+    "baseline": "tests/fixtures/rf1-pins/goldens/session/v2-fresh.json",
+    "differences": [
+      {
+        "path": "/evidence/attempts/0001/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "be712539ac0b0c309af4f618bc7c4c45aa9d49b441332d7e36264ef8d363d69f",
+        "after": "d1dafdfe2e4eeb75b0bc790cb278884a57f3c8de8ef248702ace77c165624724"
+      },
+      {
+        "path": "/evidence/attempts/0002/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "d6d093cd253773607febc366c94f0afcf392a6cdebb4156592ab11333e2c8ada",
+        "after": "b2e3565100c036a78eb87cf20277ed14b7c7aed129ee9d8428c36e9972f86464"
+      }
+    ]
+  },
+  {
+    "case": "v1-resume",
+    "baseline": "tests/fixtures/rf1-pins/goldens/session/v1-resume.py314.json",
+    "differences": [
+      {
+        "path": "/evidence_after/attempts/0001/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "f6c81e54ef6974a2247af847e4ee67ef4179be78b362fc0cd4caf78519209689",
+        "after": "cab62d9384a0aba670feda9f6299033f6c802fe5cd2fab9bb0ca7749e873a91f"
+      },
+      {
+        "path": "/evidence_after/attempts/0002/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "adc9eeff9261848234db77abae118ea9efa3a842281e6f6e356aa8af83bedf21",
+        "after": "629155fc3beca6d6c7540ee2c28ff42ed0696076f3481f504a4df3810f778a43"
+      }
+    ]
+  },
+  {
+    "case": "v2-resume",
+    "baseline": "tests/fixtures/rf1-pins/goldens/session/v2-resume.json",
+    "differences": [
+      {
+        "path": "/evidence_after/attempts/0001/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "be712539ac0b0c309af4f618bc7c4c45aa9d49b441332d7e36264ef8d363d69f",
+        "after": "d1dafdfe2e4eeb75b0bc790cb278884a57f3c8de8ef248702ace77c165624724"
+      },
+      {
+        "path": "/evidence_after/attempts/0002/attempt.json/text/parsed/assurance_receipts/0/process_receipt/execution/identity",
+        "before": "d6d093cd253773607febc366c94f0afcf392a6cdebb4156592ab11333e2c8ada",
+        "after": "b2e3565100c036a78eb87cf20277ed14b7c7aed129ee9d8428c36e9972f86464"
+      }
+    ]
+  }
+]

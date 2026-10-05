@@ -90,19 +90,19 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.conformance.report:canonical]"
    ],
-   "file": "src/gnd/conformance/report.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-canonical-json-gnd-conformance-report-canonical",
-   "new": "def canonical(payload: Mapping[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The payload as canonical JSON: sorted keys, no NaN, stable separators.\n",
-   "old": "def canonical(payload: Mapping[str, Any]) -> str:\n    \"\"\"The payload as canonical JSON: sorted keys, no NaN, stable separators.\n"
+   "new": "def canonical_report_text(payload: Mapping[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def canonical_report_text(payload: Mapping[str, Any]) -> str:\n"
   },
   {
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.coverage:canonical_payload]"
    ],
-   "file": "src/gnd/coverage.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-canonical-json-gnd-coverage-canonical-payload",
-   "new": "def canonical_payload(payload: Mapping[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Return deterministic, strict JSON for a coverage payload.\"\"\"\n",
-   "old": "def canonical_payload(payload: Mapping[str, Any]) -> str:\n    \"\"\"Return deterministic, strict JSON for a coverage payload.\"\"\"\n"
+   "new": "def canonical_report_text(payload: Mapping[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def canonical_report_text(payload: Mapping[str, Any]) -> str:\n"
   },
   {
    "expect_red": [
@@ -126,10 +126,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.fidelity.report:canonical]"
    ],
-   "file": "src/gnd/fidelity/report.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-canonical-json-gnd-fidelity-report-canonical",
-   "new": "def canonical(payload: Mapping[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The payload as canonical JSON: sorted keys, no NaN, stable separators.\n",
-   "old": "def canonical(payload: Mapping[str, Any]) -> str:\n    \"\"\"The payload as canonical JSON: sorted keys, no NaN, stable separators.\n"
+   "new": "def canonical_report_text(payload: Mapping[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def canonical_report_text(payload: Mapping[str, Any]) -> str:\n"
   },
   {
    "expect_red": [
@@ -173,8 +173,8 @@
    ],
    "file": "src/gnd/synth/poolfile.py",
    "id": "M-HELP-canonical-json-gnd-synth-poolfile-canonical-bytes",
-   "new": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON \u2014 the hash input.\n",
-   "old": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON \u2014 the hash input.\n"
+   "new": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON — the hash input.\n",
+   "old": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON — the hash input.\n"
   },
   {
    "expect_red": [
@@ -317,8 +317,8 @@
    ],
    "file": "src/gnd/conformance/currency.py",
    "id": "M-HELP-model-digest-gnd-conformance-currency-model-digest",
-   "new": "def model_digest(model_path: str | Path) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The model's content identity: sha256 over its bytes.\n",
-   "old": "def model_digest(model_path: str | Path) -> str:\n    \"\"\"The model's content identity: sha256 over its bytes.\n"
+   "new": "def model_file_sha256(model_path: str | Path) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def model_file_sha256(model_path: str | Path) -> str:\n"
   },
   {
    "expect_red": [
@@ -344,8 +344,8 @@
    ],
    "file": "src/gnd/synth/provenance.py",
    "id": "M-HELP-model-digest-gnd-synth-provenance-model-digest",
-   "new": "def model_digest(model: Any) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The digest plan 04 recomputes and compares (C6). Delegates to\n",
-   "old": "def model_digest(model: Any) -> str:\n    \"\"\"The digest plan 04 recomputes and compares (C6). Delegates to\n"
+   "new": "def validated_model_sha256(model: Any) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def validated_model_sha256(model: Any) -> str:\n"
   },
   {
    "expect_red": [
@@ -353,8 +353,8 @@
    ],
    "file": "src/gnd/transition.py",
    "id": "M-HELP-model-digest-gnd-transition-model-digest",
-   "new": "def model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The same function ``population.py`` uses, called from a second place.\n",
-   "old": "def model_digest(model: Model) -> str:\n    \"\"\"The same function ``population.py`` uses, called from a second place.\n"
+   "new": "def transition_model_identity(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def transition_model_identity(model: Model) -> str:\n"
   },
   {
    "expect_red": [
@@ -540,10 +540,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.assurance_evidence:_sha]"
    ],
-   "file": "src/gnd/assurance_evidence.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-sha256-hex-gnd-assurance-evidence-sha",
-   "new": "def _sha(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    return hashlib.sha256(data).hexdigest()\n",
-   "old": "def _sha(data: bytes) -> str:\n    return hashlib.sha256(data).hexdigest()\n"
+   "new": "def sha256_hex(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def sha256_hex(data: bytes) -> str:\n"
   },
   {
    "expect_red": [
@@ -558,10 +558,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.diff:_digest]"
    ],
-   "file": "src/gnd/diff.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-sha256-hex-gnd-diff-digest",
-   "new": "def _digest(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    return hashlib.sha256(data).hexdigest()\n",
-   "old": "def _digest(data: bytes) -> str:\n    return hashlib.sha256(data).hexdigest()\n"
+   "new": "def sha256_hex(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def sha256_hex(data: bytes) -> str:\n"
   },
   {
    "expect_red": [
@@ -585,10 +585,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.install:_sha256]"
    ],
-   "file": "src/gnd/install.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-sha256-hex-gnd-install-sha256",
-   "new": "def _sha256(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Content identity by bytes.\n",
-   "old": "def _sha256(data: bytes) -> str:\n    \"\"\"Content identity by bytes.\n"
+   "new": "def sha256_hex(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def sha256_hex(data: bytes) -> str:\n"
   },
   {
    "expect_red": [
@@ -621,10 +621,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.recovery.verify:_sha256]"
    ],
-   "file": "src/gnd/recovery/verify.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-sha256-hex-gnd-recovery-verify-sha256",
-   "new": "def _sha256(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    return hashlib.sha256(data).hexdigest()\n",
-   "old": "def _sha256(data: bytes) -> str:\n    return hashlib.sha256(data).hexdigest()\n"
+   "new": "def sha256_hex(data: bytes) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def sha256_hex(data: bytes) -> str:\n"
   },
   {
    "expect_red": [
@@ -650,8 +650,8 @@
    ],
    "file": "src/gnd/declared_adapter.py",
    "id": "M-HELP-strict-json-gnd-declared-adapter-bundle-rows",
-   "new": "def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:\n    raise RuntimeError(\"rf1-mutant\")\n    def reject_constant(token: str) -> None:\n",
-   "old": "def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:\n    def reject_constant(token: str) -> None:\n"
+   "new": "def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:\n\n\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:\n\n\n"
   },
   {
    "expect_red": [
@@ -684,10 +684,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.request:_reject_duplicate_object_pairs]"
    ],
-   "file": "src/gnd/review/request.py",
+   "file": "src/gnd/artifacts.py",
    "id": "M-HELP-strict-json-gnd-review-request-reject-duplicate-object-pairs",
-   "new": "def _reject_duplicate_object_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n    raise RuntimeError(\"rf1-mutant\")\n    document: dict[str, Any] = {}\n",
-   "old": "def _reject_duplicate_object_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n    document: dict[str, Any] = {}\n"
+   "new": "def reject_json_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def reject_json_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n"
   },
   {
    "expect_red": [
@@ -711,10 +711,10 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.conclusions:_validation_issues]"
    ],
-   "file": "src/gnd/exp/conclusions.py",
+   "file": "src/gnd/model.py",
    "id": "M-HELP-validation-issues-gnd-exp-conclusions-validation-issues",
-   "new": "def _validation_issues(error: ValidationError) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n    return [\n",
-   "old": "def _validation_issues(error: ValidationError) -> list[ValidationIssue]:\n    return [\n"
+   "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
   },
   {
    "expect_red": [
@@ -738,19 +738,19 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.spec:_validation_issues]"
    ],
-   "file": "src/gnd/exp/spec.py",
+   "file": "src/gnd/model.py",
    "id": "M-HELP-validation-issues-gnd-exp-spec-validation-issues",
-   "new": "def _validation_issues(error: ValidationError) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n    return [\n",
-   "old": "def _validation_issues(error: ValidationError) -> list[ValidationIssue]:\n    return [\n"
+   "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
   },
   {
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.extract.manifest:_validation_issues]"
    ],
-   "file": "src/gnd/extract/manifest.py",
+   "file": "src/gnd/model.py",
    "id": "M-HELP-validation-issues-gnd-extract-manifest-validation-issues",
-   "new": "def _validation_issues(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n    return [\n",
-   "old": "def _validation_issues(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    return [\n"
+   "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
   },
   {
    "expect_red": [
@@ -923,10 +923,10 @@
    "expect_red": [
     "tests/test_rf1_cli_pins.py::test_cli_exit_map"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/exits.py",
    "id": "M-CLI-exit-drift",
-   "new": "EXIT_DRIFT = 9  #",
-   "old": "EXIT_DRIFT = 10  #"
+   "new": "EXIT_DRIFT = 9",
+   "old": "EXIT_DRIFT = 10"
   },
   {
    "expect_red": [

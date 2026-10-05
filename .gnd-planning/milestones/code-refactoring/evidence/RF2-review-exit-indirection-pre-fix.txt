@@ -1,0 +1,10 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_exit_guard_rejects_other_assignment_forms[NEW_CODE = 19\nEXIT_EXTRA = NEW_CODE] _
+tests/test_rf2_review_regressions.py:51: in test_exit_guard_rejects_other_assignment_forms
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf2_review_regressions.py::test_exit_guard_rejects_other_assignment_forms[NEW_CODE = 19\nEXIT_EXTRA = NEW_CODE]
+1 failed, 2 passed, 4 deselected in 1.41s

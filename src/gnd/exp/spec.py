@@ -42,7 +42,7 @@ from pydantic import (
 )
 
 from gnd.exp.frontmatter import FrontmatterError, read_frontmatter
-from gnd.model import ValidationIssue
+from gnd.model import ValidationIssue, issues_from_validation_error
 
 __all__ = [
     "CLOSE_OBLIGATIONS",
@@ -253,14 +253,7 @@ class ExperimentSpec(BaseModel):
 
 
 def _validation_issues(error: ValidationError) -> list[ValidationIssue]:
-    return [
-        ValidationIssue(
-            path=".".join(str(part) for part in entry["loc"]),
-            message=entry["msg"],
-            rule_id=SPEC_RULE_ID,
-        )
-        for entry in error.errors()
-    ]
+    return issues_from_validation_error(error, SPEC_RULE_ID)
 
 
 def read_spec(path: str | Path) -> ExperimentSpec:

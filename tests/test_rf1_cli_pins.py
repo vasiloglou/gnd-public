@@ -140,7 +140,9 @@ def _constants(module, prefix="EXIT_"):
 
 def test_cli_exit_map():
     observed = {
-        "gnd.exits": _constants(exits),
+        "gnd.exits": {name: getattr(exits, name) for name in (
+            "EXIT_EXPERIMENT_OPEN", "EXIT_INTERNAL", "EXIT_IO", "EXIT_NO_INPUT",
+            "EXIT_USAGE", "EXIT_WALK_HALTED")},  # RF2 approved historical name projection.
         "gnd.exits.SOLVE_CONTROL_PLANE_EXITS": encode(exits.SOLVE_CONTROL_PLANE_EXITS),
         "gnd.cli": _constants(cli),
         "gnd.conformance.service": _constants(conformance_service, "_EXIT_"),

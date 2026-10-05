@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import re
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
@@ -11,6 +10,7 @@ from typing import Any
 
 from gnd.address import positional_constraint_ref
 from gnd.artifacts import canonical_json_bytes
+from gnd.artifacts import sha256_hex as _digest
 from gnd.checker import _compare, _identity_token, _partial_compatible, structured_extension_view
 from gnd.extract.anchors import vocabulary_digest
 from gnd.model import Model
@@ -26,8 +26,6 @@ class DiffError(ValueError):
     """A diff input violates its contract."""
 
 
-def _digest(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
 
 
 def _constraints(model: Model) -> list[tuple[str, str, dict[str, Any]]]:

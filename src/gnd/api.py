@@ -290,7 +290,7 @@ def _run_check_raw(
 
     structured = bool(structured_derivation_ids(model))
     try:
-        model_digest = transition_module.model_digest(model)
+        model_digest = transition_module.transition_model_identity(model)
     except Exception as error:
         if not model.reference_populations:
             raise
@@ -521,7 +521,7 @@ def _run_transition_raw(
             error=error,
         )
 
-    model_digest = transition_module.model_digest(model)
+    model_digest = transition_module.transition_model_identity(model)
     structured = bool(structured_derivation_ids(model))
     try:
         populations["pre"], pre_coordinate = _resolve_population(pre_input, model=model, name="pre")
@@ -683,7 +683,7 @@ def _projection_failure_base(
     model = result.model
     if model is None:
         raise ValueError("projection failure requires a loaded model")
-    digest = transition_module.model_digest(model)
+    digest = transition_module.transition_model_identity(model)
     structured = bool(structured_derivation_ids(model))
     if kind == "validate":
         payload = report_module.build_validate_payload(
@@ -742,7 +742,7 @@ def _project_result(
     mode: redaction_module.RedactionMode = "unredacted" if unredacted else "applied"
     source = dict(result.payload)
     if kind == "validate":
-        source["model_digest"] = transition_module.model_digest(result.model)
+        source["model_digest"] = transition_module.transition_model_identity(result.model)
         source["assurance"] = AssuranceBlockV1(
             semantic_decision_for_band(result.exit_code)
         ).as_dict()

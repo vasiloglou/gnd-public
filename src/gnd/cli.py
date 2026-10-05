@@ -152,10 +152,20 @@ from gnd import resolve_version, solve, transition, verbalize
 from gnd.checker import CheckReport, check, check_with_anchors
 from gnd.checker import band as checker_band
 from gnd.exits import (
+    EXIT_CHECKER_DEFECT,
+    EXIT_COLLISION,
+    EXIT_DRIFT,
+    EXIT_EVOLUTION_OPERATIONS_GATED,
     EXIT_EXPERIMENT_OPEN,
+    EXIT_GENERATOR,
     EXIT_INTERNAL,
     EXIT_IO,
+    EXIT_MODEL_CODE_DRIFT,  # noqa: F401 -- compatibility
     EXIT_NO_INPUT,
+    EXIT_NO_INSTALL,
+    EXIT_QUARANTINE,
+    EXIT_REVIEW_INCONCLUSIVE,
+    EXIT_SESSION_NOT_ACCEPTED,
     EXIT_USAGE,
     EXIT_WALK_HALTED,  # noqa: F401 - retained as the historical cli-level re-export
 )
@@ -178,32 +188,7 @@ _DEFAULT_CHECK = check
 # because cli imports solve the reverse import is circular. Their justification
 # prose moved with them. See gnd/exits.py.
 
-# Generator vocabulary (Phase 2). 5-9 were reserved as verdict-band headroom in
-# STATE.md; the synthetic-data generator is the first user of that headroom.
-# 5 = a generator invariant failed (a constructive witness could not be
-# established, a re-admission rejection, an oscillating repair). 6 = a C1
-# quarantine — the checker disagreed with the constructive witness (a candidate
-# checker false-fail), so the case is RETAINED under <out>/quarantine/ rather than
-# discarded. Plan 04 wires 6 into the measurement layer (checker_defects[]); this
-# plan is its first user at the generation layer. 7-9 remain unallocated.
-EXIT_GENERATOR = 5  # a generator invariant failed — GeneratorError
-EXIT_QUARANTINE = 6  # checker/witness disagreement quarantined (C1)
-# 6 has two context-specific NAMES for one MEANING — "the checker disagreed with
-# independent ground truth". At the generation layer (plan 03) it is a quarantined
-# witness discrepancy; at the measurement layer (plan 04) it is a promoted
-# checker_defects[] entry (an alethic false pass, an alethic false fail, or an
-# impossible tool_defect cell — direction-agnostic, C9/D-01). Same value, same
-# meaning, so the exit-code space is not double-allocated. 7-9 stay unallocated.
-EXIT_CHECKER_DEFECT = 6  # measurement found a deterministic checker defect (C9)
-
-# Lifecycle vocabulary — see the module docstring for each code's "would
-# masquerade as X" justification. 5-9 stay unallocated as verdict-band headroom.
-EXIT_DRIFT = 10  # assets stale / missing / modified — doctor's verdict, never install's
-EXIT_COLLISION = 11  # an unmanaged file blocked a write; nothing was destroyed
-EXIT_NO_INSTALL = 12  # no manifest at any resolved target root
-EXIT_MODEL_CODE_DRIFT = 13  # the generated code no longer matches its model
-# EXIT_EXPERIMENT_OPEN (14) is imported from gnd.exits for gnd.exp.close.
-EXIT_SESSION_NOT_ACCEPTED = 15  # a session ended without exact contract acceptance
+# Exit allocations and their rationale live in gnd.exits.
 
 
 def _session_result_exit(result: Any) -> int:
@@ -216,24 +201,6 @@ CLI_TEST_ARGV_REQUIRED_REASON = "cli:test-argv-required"
 CLI_TEST_ARGV_FORBIDDEN_REASON = "cli:test-argv-forbidden"
 CLI_WORK_COVERS_REQUIRED_REASON = "cli:work-covers-required"
 KIND_AUTHOR_EXPECTATION_TESTS_REASON = "kind:author-expectation-tests"
-EXIT_REVIEW_INCONCLUSIVE = 16  # a completed panel had fewer than three successes
-# 17 is the solve harness's walk halt: a gated station walk stopped before the
-# end of its own selection. It is NOT a verdict about the work -- the station's
-# own exit is recorded verbatim in the walk log and interpreted by nobody, and a
-# station exiting 11 must not make `gnd solve` claim EXIT_COLLISION about itself.
-# It is not 15 (that names a session's acceptance, one station's business) and not
-# 14 (an experiment's obligations); this code says only "the walk did not finish".
-# EXIT_WALK_HALTED (17) is imported from gnd.exits -- see the note above.
-# 18 is the ORM+ v2 evolve gate: the proposal is WELL
-# FORMED and refused on policy, which no band above says. It is not 3 (that is
-# "malformed or digest-mismatched input", and a gated proposal is neither), not
-# 11 (that is "a write was refused, nothing was destroyed" — true here, but 11
-# is already the stale/collision band and merging the two would make "retry
-# after refreshing the model" the wrong advice for half of it), and not 13/14/15
-# (each names a different artifact's obligations). Nothing is written on this
-# path either, so the "nothing was destroyed" half of 11 still holds.
-EXIT_EVOLUTION_OPERATIONS_GATED = 18  # a v2 operation delta gnd evolve does not own
-# EXIT_IO (74) is imported from gnd.exits -- see the note above.
 
 #: Rendering formats. An invalid choice routes through _BandSafeParser.error()
 #: to exit 64, which emits no payload — see the module docstring.
@@ -417,7 +384,7 @@ def _print_trace(model: Model, model_path: str) -> None:
     command produces is a format defect.
     """
     print("TRACE")
-    print(f"  model_digest      {transition.model_digest(model)}")
+    print(f"  model_digest      {transition.transition_model_identity(model)}")
     print(f"  operations_digest {transition.operations_digest(model.operations)}")
 
     print("COMPILED OBLIGATIONS")
@@ -1443,7 +1410,7 @@ def _cmd_verify(
         return emit(3, error=error)
 
     structured = bool(structured_derivation_ids(model))
-    model_digest = transition.model_digest(model)
+    model_digest = transition.transition_model_identity(model)
 
     try:
         # model= runs layer-2 model-relative validation and stamps the marker
@@ -6394,7 +6361,7 @@ def _cmd_synth(
             gnd_version=resolve_version(),
             model=model_ref,
             model_id=str(model.model_id) if model.model_id else None,
-            model_digest=_prov.model_digest(model),
+            model_digest=_prov.validated_model_sha256(model),
             pool_source=str(provenance.get("source", "unknown")),
             pool_path=pool_rel,
             pool_sha256=pool.sha256,
@@ -6957,7 +6924,7 @@ def _cmd_measure(
     except IndexValidationError as error:
         return fail(3, str(error))
 
-    expected_model_digest = _prov.model_digest(model)
+    expected_model_digest = _prov.validated_model_sha256(model)
     expected_aggregate_disclosures = sorted(
         (
             f"derivation:{fact_type['id']}",

@@ -67,6 +67,7 @@ from typing import Any
 
 from gnd import checker as checker_module
 from gnd import popvalidate
+from gnd.address import positional_constraint_ref
 from gnd.checker import check, structured_extension_view
 from gnd.model import Model
 from gnd.population import Population, PopulationValidationError, load_population
@@ -1203,7 +1204,7 @@ class _Builder:
                     for role in (fact_types.get(ftid) or {}).get("roles") or []
                     if (ftid, str(role.get("role_name"))) not in referenced
                 )
-            items.append((f"constraints[{index}]", constraint, signatures))
+            items.append((positional_constraint_ref(None, index), constraint, signatures))
 
         components: list[list[tuple[str, dict[str, Any]]]] = []
         remaining = list(items)
@@ -1529,7 +1530,7 @@ class _Builder:
                     if _key(value) in present:
                         continue
                     present.add(_key(value))
-                    constraint_ref = f"fact_types[{ftid}].constraints[{constraint_index}]"
+                    constraint_ref = positional_constraint_ref(ftid, constraint_index)
                     self.facts.setdefault(ftid, []).append(
                         self._mandatory_completion(ft, {role_name: value}, constraint_ref)
                     )
@@ -1666,10 +1667,10 @@ def _join_scoped_sequences(model: Model):
 
     for ft in model.fact_types or []:
         for i, constraint in enumerate(_fact_type_constraints(ft)):
-            ref = f"fact_types[{ft.get('id')}].constraints[{i}]"
+            ref = positional_constraint_ref(ft.get("id"), i)
             yield from emit(constraint, ref)
     for i, constraint in enumerate(model.constraints or []):
-        yield from emit(constraint, f"constraints[{i}]")
+        yield from emit(constraint, positional_constraint_ref(None, i))
 
 
 def assert_non_degenerate(model: Model, population: Population) -> None:
@@ -1721,9 +1722,9 @@ def measure_distinct_ratios(model: Model, doc: dict[str, Any]) -> dict[str, tupl
 def _constraint_iter_with_ref(model: Model):
     for ft in model.fact_types or []:
         for i, constraint in enumerate(_fact_type_constraints(ft)):
-            yield f"fact_types[{ft.get('id')}].constraints[{i}]", constraint, ft
+            yield positional_constraint_ref(ft.get("id"), i), constraint, ft
     for i, constraint in enumerate(model.constraints or []):
-        yield f"constraints[{i}]", constraint, None
+        yield positional_constraint_ref(None, i), constraint, None
 
 
 def _build_expectations(
@@ -2096,7 +2097,7 @@ def _seed_guarded_exists(
     and non-modular guarded forms remain not-derivable.
     """
     for index, constraint in enumerate(model.constraints or []):
-        ref = f"constraints[{index}]"
+        ref = positional_constraint_ref(None, index)
         if only_ref is not None and ref != only_ref:
             continue
         if constraint.get("type") != "guarded":

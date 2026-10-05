@@ -32,6 +32,7 @@ from support.rf1_pins import (
     observe,
     tree_digests,
 )
+from support.rf2_session_pins import assert_successor, install_capture
 
 from gnd import cli
 from gnd.exp.session import case_payload_versions
@@ -341,12 +342,18 @@ VERSIONS = sorted(BUILDERS)
 
 @pytest.mark.parametrize("version", VERSIONS)
 def test_session_fresh(version, tmp_path, monkeypatch):
-    _built, _run, observed = _fresh(version, tmp_path, monkeypatch)
-    assert_golden("session", f"v{version}-fresh", observed)
+    captures = install_capture(monkeypatch) if version in (1, 2) else None
+    built, run, observed = _fresh(version, tmp_path, monkeypatch)
+    if captures is not None:
+        assert_successor(f"v{version}-fresh", observed, captures, built, run, tmp_path,
+                         {**_tokens(tmp_path), **built.tokens})
+    else:
+        assert_golden("session", f"v{version}-fresh", observed)
 
 
 @pytest.mark.parametrize("version", VERSIONS)
 def test_session_resume(version, tmp_path, monkeypatch):
+    captures = install_capture(monkeypatch) if version in (1, 2) else None
     built, run, _observed = _fresh(version, tmp_path, monkeypatch)
     (run / "result.json").unlink()
     before = sorted(path.relative_to(run).as_posix() for path in run.rglob("*"))
@@ -360,7 +367,11 @@ def test_session_resume(version, tmp_path, monkeypatch):
         "new_paths": sorted(set(after) - set(before)),
         "evidence_after": _normalized_run(built, run, tmp_path),
     }
-    assert_golden("session", f"v{version}-resume", observed)
+    if captures is not None:
+        assert_successor(f"v{version}-resume", observed, captures, built, run, tmp_path,
+                         {**_tokens(tmp_path), **built.tokens})
+    else:
+        assert_golden("session", f"v{version}-resume", observed)
 
 
 @pytest.mark.parametrize("version", [7, 8])

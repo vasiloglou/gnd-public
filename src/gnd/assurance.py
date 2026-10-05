@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from gnd import semantic_spec
+from gnd.artifacts import is_sha256_hex
 from gnd.correspondence import AdaptedSnapshot, SnapshotDecision
 from gnd.semantic_registry import REGISTRY, Branch, is_registered, record_branch
 
@@ -333,11 +334,7 @@ class AssuranceBlockV1:
             self.toolchain_digest,
         )
         for value in identities:
-            if value is not None and (
-                not isinstance(value, str)
-                or len(value) != 64
-                or any(c not in "0123456789abcdef" for c in value)
-            ):
+            if value is not None and not is_sha256_hex(value):
                 raise ValueError("invalid assurance identity")
         if self.assurance_level != "none" and (
             self.semantic_decision is None or any(value is None for value in identities)
@@ -471,7 +468,7 @@ def _mint_execution(
         producer = None
     identity = {
         "production_roster_digest": producer,
-        "model": transition.model_digest(model),
+        "model": transition.transition_model_identity(model),
         "populations": [pop.model_dump(mode="json") for pop in populations],
         "steps": steps,
         "result": result.model_dump(mode="json"),

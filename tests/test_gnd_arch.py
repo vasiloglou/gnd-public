@@ -503,3 +503,164 @@ def test_cli_entry_point_runs_as_script(tmp_path):
     )
     assert result.returncode == 0, result.stderr
     assert shutil.which("git")
+
+
+# ---------------------------------------------------------------- review regressions (RF0 codex review)
+
+
+def test_r01_more_edge_and_patch_forms(tmp_path):
+    source = (
+        "import typing\n"
+        "if typing.TYPE_CHECKING:\n"
+        "    import gnd.b\n"
+        "f = lambda: __import__('gnd.c')\n"
+    )
+    files = {
+        "src/gnd/__init__.py": "",
+        "src/gnd/a.py": source,
+        "src/gnd/b.py": "",
+        "src/gnd/c.py": "",
+    }
+    data = measured(tmp_path, files)
+    assert edge_set(data, "gnd.a") == {("gnd.b", "type_only", 3), ("gnd.c", "dynamic", 4)}
+
+
+def test_r01_patch_object_mock_and_delattr(tmp_path):
+    test_source = (
+        "from unittest import mock\n"
+        "from unittest.mock import patch\n"
+        "import gnd.a as m\n"
+        "def test_x(monkeypatch):\n"
+        "    monkeypatch.delattr(m, '_g')\n"
+        "    monkeypatch.delattr('gnd.a.f')\n"
+        "    patch.object(m, 'f')\n"
+        "    mock.patch('gnd.a._h')\n"
+        "    monkeypatch.setattr(target='gnd.a._k', value=1)\n"
+    )
+    files = {"src/gnd/__init__.py": "", "src/gnd/a.py": "", "tests/test_q.py": test_source}
+    data = measured(tmp_path, files)
+    rows = {(p["line"], p["api"], p["target"], p["resolved"]) for p in data["tests"]["patches"]}
+    assert rows == {
+        (5, "delattr", "gnd.a._g", True),
+        (6, "delattr", "gnd.a.f", True),
+        (7, "patch.object", "gnd.a.f", True),
+        (8, "patch", "gnd.a._h", True),
+        (9, "setattr", "gnd.a._k", True),
+    }
+
+
+def test_r01_compare_counts_a_renamed_file_as_moved(tmp_path):
+    repo = tmp_path / "g"
+    (repo / "src/gnd").mkdir(parents=True)
+    git(repo, "init", "-q")
+    (repo / "src/gnd/old.py").write_text("alpha = 1\nbeta = 2\n")
+    git(repo, "add", ".")
+    git(repo, "commit", "-q", "-m", "base")
+    git(repo, "mv", "src/gnd/old.py", "src/gnd/new.py")
+    git(repo, "commit", "-q", "-m", "rename")
+    out = tmp_path / "cmp.json"
+    assert arch.main(["compare", "HEAD~1", "HEAD", "--root", str(repo), "--out", str(out)]) == 0
+    totals = json.loads(out.read_text())["totals"]
+    assert totals["moved_in"] == 2 and totals["moved_out"] == 2
+
+
+@pytest.mark.parametrize(
+    "entry",
+    [{"layer": []}, {"layer": "lanes", "lane": []}, {"layer": "model", "lane": 3}, []],
+)
+def test_r02_wrongly_typed_map_values_exit_3(tmp_path, entry):
+    layer_map = make_map({"gnd": "infrastructure", "gnd.a": "infrastructure"})
+    layer_map["modules"]["gnd.a"] = entry
+    root, map_path = make_tree(tmp_path, BASIC, layer_map=layer_map)
+    assert run_measure(root, map_path, tmp_path / "out.json") == 3
+
+
+def test_r03_missing_out_parent_exits_3_without_measuring(tmp_path, capsys):
+    root, map_path = make_tree(tmp_path, BASIC)
+    assert run_measure(root, map_path, tmp_path / "absent" / "out.json") == 3
+    assert "--out" in capsys.readouterr().err
+
+
+def test_r04_oversized_or_unreadable_source_exits_3(tmp_path, monkeypatch):
+    files = {
+        "src/gnd/__init__.py": "",
+        "src/gnd/big.py": "x = 1\n" * (arch.SOURCE_READ_CAP // 6 + 1),
+    }
+    root, map_path = make_tree(tmp_path, files)
+    assert run_measure(root, map_path, tmp_path / "out.json") == 3
+    root2, map2 = make_tree(tmp_path / "second", BASIC)
+    (root2 / "src/gnd/a.py").chmod(0)
+    try:
+        assert run_measure(root2, map2, tmp_path / "out2.json") == 3
+    finally:
+        (root2 / "src/gnd/a.py").chmod(0o644)
+
+
+def test_r05_r06_type_checking_matches_precisely_and_guards_dynamic(tmp_path):
+    source = (
+        "import foo\n"
+        "from typing import TYPE_CHECKING\n"
+        "import importlib\n"
+        "if foo.TYPE_CHECKING:\n"
+        "    import gnd.b\n"
+        "if TYPE_CHECKING:\n"
+        "    importlib.import_module('gnd.c')\n"
+    )
+    files = {
+        "src/gnd/__init__.py": "",
+        "src/gnd/a.py": source,
+        "src/gnd/b.py": "",
+        "src/gnd/c.py": "import gnd.a\n",
+    }
+    data = measured(tmp_path, files)
+    assert edge_set(data, "gnd.a") == {("gnd.b", "module", 5), ("gnd.c", "type_only", 7)}
+    assert data["sccs"]["runtime"] == []
+
+
+def test_r07_private_submodule_import_is_recorded(tmp_path):
+    files = {
+        "src/gnd/__init__.py": "",
+        "src/gnd/pkg/__init__.py": "",
+        "src/gnd/pkg/_hidden.py": "",
+        "src/gnd/user.py": "from gnd.pkg import _hidden\n",
+    }
+    data = measured(tmp_path, files)
+    assert data["private_imports"] == [
+        {"from": "gnd.user", "to": "gnd.pkg", "name": "_hidden", "line": 1, "kind": "from_import"}
+    ]
+
+
+def test_r08_alias_bindings_are_scoped(tmp_path):
+    source = (
+        "import gnd.a as m\n"
+        "def f():\n"
+        "    import gnd.b as m\n"
+        "    return m._inside\n"
+        "value = m._outside\n"
+    )
+    files = {
+        "src/gnd/__init__.py": "",
+        "src/gnd/a.py": "_outside = 1\n",
+        "src/gnd/b.py": "_inside = 1\n",
+        "src/gnd/user.py": source,
+    }
+    data = measured(tmp_path, files)
+    found = {(p["to"], p["name"]) for p in data["private_imports"]}
+    assert found == {("gnd.b", "_inside"), ("gnd.a", "_outside")}
+
+
+def test_r10_compare_reads_triple_dash_lines_inside_hunks(tmp_path):
+    repo = tmp_path / "g"
+    (repo / "src/gnd").mkdir(parents=True)
+    git(repo, "init", "-q")
+    (repo / "src/gnd/a.py").write_text("x = 1\n-- important\nother = 2\n")
+    git(repo, "add", ".")
+    git(repo, "commit", "-q", "-m", "base")
+    (repo / "src/gnd/a.py").write_text("x = 1\n")
+    git(repo, "commit", "-q", "-am", "head")
+    out = tmp_path / "cmp.json"
+    assert arch.main(["compare", "HEAD~1", "HEAD", "--root", str(repo), "--out", str(out)]) == 0
+    rows = json.loads(out.read_text())["files"]
+    assert rows == [
+        {"path": "src/gnd/a.py", "added": 0, "removed": 2, "moved_in": 0, "moved_out": 0}
+    ]

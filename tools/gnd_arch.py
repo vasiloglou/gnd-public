@@ -40,6 +40,7 @@ from pathlib import Path
 
 SCHEMA_VERSION = 1
 MAP_READ_CAP = 1024 * 1024
+SOURCE_READ_CAP = 4 * 1024 * 1024
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_DIR = "src/gnd"
 RUNTIME_KINDS = frozenset({"module", "lazy", "dynamic"})
@@ -143,7 +144,14 @@ def _validate_layer_map(data) -> None:
             set(entry) <= {"layer", "lane"} and "layer" in entry,
             f"{module}: entry keys are layer and optional lane",
         )
-        _require(entry["layer"] in names, f"{module}: unknown layer {entry['layer']!r}")
+        _require(
+            isinstance(entry["layer"], str) and entry["layer"] in names,
+            f"{module}: unknown layer {entry['layer']!r}",
+        )
+        _require(
+            "lane" not in entry or isinstance(entry["lane"], str),
+            f"{module}: lane must be a string",
+        )
         if entry["layer"] == "lanes":
             _require(entry.get("lane") in lanes, f"{module}: lanes-layer module needs a known lane")
         else:
@@ -197,7 +205,14 @@ def discover_modules(root: Path, excluded) -> dict[str, str]:
 
 def _parse(root: Path, rel: str) -> tuple[ast.Module, int]:
     try:
-        text = (root / rel).read_bytes().decode("utf-8")
+        with (root / rel).open("rb") as stream:
+            raw = stream.read(SOURCE_READ_CAP + 1)
+    except OSError as error:
+        raise _invalid(f"cannot read {rel}: {error.strerror}") from None
+    if len(raw) > SOURCE_READ_CAP:
+        raise _invalid(f"{rel} exceeds {SOURCE_READ_CAP} bytes")
+    try:
+        text = raw.decode("utf-8")
         tree = ast.parse(text, filename=rel)
     except (SyntaxError, ValueError, RecursionError, MemoryError, UnicodeDecodeError) as error:
         raise _invalid(f"cannot parse {rel}: {type(error).__name__}: {error}") from None
@@ -222,7 +237,7 @@ def _is_private(name: str) -> bool:
 
 def _is_type_checking(test) -> bool:
     return (isinstance(test, ast.Name) and test.id == "TYPE_CHECKING") or (
-        isinstance(test, ast.Attribute) and test.attr == "TYPE_CHECKING"
+        _dotted(test) == "typing.TYPE_CHECKING"
     )
 
 
@@ -236,7 +251,7 @@ class _ModuleVisitor(ast.NodeVisitor):
         self.package = module if rel.endswith("/__init__.py") else module.rpartition(".")[0]
         self.function_depth = 0
         self.type_checking_depth = 0
-        self.aliases: dict[str, str] = {}
+        self.scopes: list[dict[str, str]] = [{}]
         self.edges: set[tuple[str, str, int]] = set()
         self.unresolved: set[int] = set()
         self.private: set[tuple[str, str, int, str]] = set()
@@ -256,6 +271,15 @@ class _ModuleVisitor(ast.NodeVisitor):
             dotted = dotted.rpartition(".")[0]
         return None
 
+    def _bind(self, name: str, module: str) -> None:
+        self.scopes[-1][name] = module
+
+    def _lookup(self, name: str) -> str | None:
+        for scope in reversed(self.scopes):
+            if name in scope:
+                return scope[name]
+        return None
+
     def _edge(self, target: str | None, line: int, kind: str | None = None) -> None:
         if target is not None and target != self.module:
             self.edges.add((target, kind or self._kind(), line))
@@ -267,9 +291,9 @@ class _ModuleVisitor(ast.NodeVisitor):
             target = self._resolve(alias.name)
             self._edge(target, node.lineno)
             if alias.asname and target:
-                self.aliases[alias.asname] = target
+                self._bind(alias.asname, target)
             elif not alias.asname:
-                self.aliases["gnd"] = "gnd"
+                self._bind("gnd", "gnd")
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         if node.level:
@@ -286,7 +310,9 @@ class _ModuleVisitor(ast.NodeVisitor):
             candidate = f"{full}.{alias.name}"
             if alias.name != "*" and candidate in self.modules:
                 self._edge(candidate, node.lineno)
-                self.aliases[alias.asname or alias.name] = candidate
+                self._bind(alias.asname or alias.name, candidate)
+                if _is_private(alias.name) and full != self.module:
+                    self.private.add((full, alias.name, node.lineno, "from_import"))
                 continue
             target = self._resolve(full)
             self._edge(target, node.lineno)
@@ -312,8 +338,10 @@ class _ModuleVisitor(ast.NodeVisitor):
         if node.returns:
             self.visit(node.returns)
         self.function_depth += 1
+        self.scopes.append({})
         for child in node.body:
             self.visit(child)
+        self.scopes.pop()
         self.function_depth -= 1
         self.functions.append((node.name, node.lineno, _function_hash(node)))
 
@@ -323,7 +351,9 @@ class _ModuleVisitor(ast.NodeVisitor):
     def visit_Lambda(self, node: ast.Lambda) -> None:
         self.visit(node.args)
         self.function_depth += 1
+        self.scopes.append({})
         self.visit(node.body)
+        self.scopes.pop()
         self.function_depth -= 1
 
     def visit_Call(self, node: ast.Call) -> None:
@@ -332,7 +362,8 @@ class _ModuleVisitor(ast.NodeVisitor):
             first = node.args[0] if node.args else None
             if isinstance(first, ast.Constant) and isinstance(first.value, str):
                 if first.value == "gnd" or first.value.startswith("gnd."):
-                    self._edge(self._resolve(first.value), node.lineno, "dynamic")
+                    kind = "type_only" if self.type_checking_depth else "dynamic"
+                    self._edge(self._resolve(first.value), node.lineno, kind)
             else:
                 self.unresolved.add(node.lineno)
         if (
@@ -352,8 +383,9 @@ class _ModuleVisitor(ast.NodeVisitor):
             base = _dotted(node.value)
             if base:
                 head, _, rest = base.partition(".")
-                if head in self.aliases:
-                    full = self.aliases[head] + (f".{rest}" if rest else "")
+                bound = self._lookup(head)
+                if bound:
+                    full = bound + (f".{rest}" if rest else "")
                     if full in self.modules and full != self.module:
                         self.private.add((full, node.attr, node.lineno, "attribute"))
         self.generic_visit(node)
@@ -480,14 +512,17 @@ class _TestVisitor(ast.NodeVisitor):
             api = "patch.object"
         elif name == "patch" or name.endswith(".patch"):
             api = "patch"
-        if api and node.args:
-            first = node.args[0]
+        keywords = {k.arg: k.value for k in node.keywords if k.arg}
+        first = node.args[0] if node.args else keywords.get("target")
+        if api and first is not None:
             if isinstance(first, ast.Constant) and isinstance(first.value, str):
-                if first.value.startswith("gnd.") and (api != "delattr" or len(node.args) == 1):
+                if first.value.startswith("gnd."):
                     self.patches.add((node.lineno, api, first.value, True))
             elif api != "patch":
                 found = self._target(first)
                 attr = node.args[1] if len(node.args) > 1 else None
+                if attr is None:
+                    attr = keywords.get("name", keywords.get("attribute"))
                 if found and isinstance(attr, ast.Constant) and isinstance(attr.value, str):
                     target, resolved = found
                     self.patches.add((node.lineno, api, f"{target}.{attr.value}", resolved))
@@ -721,11 +756,18 @@ def compare(root: Path, base: str, head: str) -> dict:
     )
     added, removed = defaultdict(list), defaultdict(list)
     old = new = None
+    in_header = False
     for line in diff.splitlines():
-        if line.startswith("--- "):
+        if line.startswith("diff --git "):
+            in_header, old, new = True, None, None
+        elif in_header and line.startswith("@@"):
+            in_header = False
+        elif in_header and line.startswith("--- "):
             old = None if line == "--- /dev/null" else line[6:]
-        elif line.startswith("+++ "):
+        elif in_header and line.startswith("+++ "):
             new = None if line == "+++ /dev/null" else line[6:]
+        elif in_header:
+            continue
         elif line.startswith("+") and new is not None:
             added[new].append(line[1:].strip())
         elif line.startswith("-") and old is not None:
@@ -792,6 +834,8 @@ def main(argv=None) -> int:
     try:
         if args.out.exists() or args.out.is_symlink():
             raise ToolError(11, f"--out already exists: {args.out}")
+        if not args.out.parent.is_dir():
+            raise ToolError(3, f"--out parent directory does not exist: {args.out.parent}")
         if args.command == "measure":
             layers = args.layers or args.root / "tools" / "gnd_layers.json"
             payload = measure(args.root, layers)
@@ -804,6 +848,9 @@ def main(argv=None) -> int:
     except FileExistsError:
         print(f"ERROR: --out already exists: {args.out}", file=sys.stderr)
         return 11
+    except OSError as error:
+        print(f"ERROR: cannot write --out {args.out}: {error.strerror}", file=sys.stderr)
+        return 3
     return 0
 
 

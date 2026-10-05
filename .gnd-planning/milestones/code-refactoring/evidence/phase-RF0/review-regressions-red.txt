@@ -1,0 +1,55 @@
+.F.FF..FFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert {(5, 'delattr....a._h', True)} == {(5, 'delattr....a._k', True)}
+      
+      Extra items in the right set:
+      (9, 'setattr', 'gnd.a._k', True)
+      Use -v to get more diff
+<repo>/tests/test_gnd_arch.py:538: AssertionError: assert {(5, 'delattr....a._h', True)} == {(5, 'delattr....a._k', True)}
+E   TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+<repo>/tools/gnd_arch.py:146: TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+E   TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+<repo>/tools/gnd_arch.py:148: TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+E   FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-3580/test_r03_missing_out_parent_ex0/absent/out.json'
+/Users/nikolaosvasiloglou/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-3580/test_r03_missing_out_parent_ex0/absent/out.json'
+E   AttributeError: module 'gnd_arch' has no attribute 'SOURCE_READ_CAP'
+<repo>/tests/test_gnd_arch.py:580: AttributeError: module 'gnd_arch' has no attribute 'SOURCE_READ_CAP'
+E   AssertionError: assert {('gnd.b', 't...'dynamic', 7)} == {('gnd.b', 'm...ype_only', 7)}
+      
+      Extra items in the left set:
+      ('gnd.b', 'type_only', 5)
+      ('gnd.c', 'dynamic', 7)
+      Extra items in the right set:
+      ('gnd.b', 'module', 5)
+      ('gnd.c', 'type_only', 7)
+      Use -v to get more diff
+<repo>/tests/test_gnd_arch.py:608: AssertionError: assert {('gnd.b', 't...'dynamic', 7)} == {('gnd.b', 'm...ype_only', 7)}
+E   AssertionError: assert [] == [{'from': 'gn...ine': 1, ...}]
+      
+      Right contains one more item: {'from': 'gnd.user', 'to': 'gnd.pkg', 'name': '_hidden', 'line': 1, ...}
+      Use -v to get more diff
+<repo>/tests/test_gnd_arch.py:620: AssertionError: assert [] == [{'from': 'gn...ine': 1, ...}]
+E   AssertionError: assert {('gnd.b', '_..., '_outside')} == {('gnd.a', '_...', '_inside')}
+      
+      Extra items in the left set:
+      ('gnd.b', '_outside')
+      Extra items in the right set:
+      ('gnd.a', '_outside')
+      Use -v to get more diff
+<repo>/tests/test_gnd_arch.py:641: AssertionError: assert {('gnd.b', '_..., '_outside')} == {('gnd.a', '_...', '_inside')}
+E   AssertionError: assert [{'added': 0,...ortant', ...}] == [{'path': 'sr..._in': 0, ...}]
+      
+      At index 0 diff: {'added': 0, 'moved_in': 0, 'moved_out': 0, 'path': 'portant', 'removed': 1} != {'path': 'src/gnd/a.py', 'added': 0, 'removed': 2, 'moved_in': 0, 'moved_out': 0}
+      Use -v to get more diff
+<repo>/tests/test_gnd_arch.py:656: AssertionError: assert [{'added': 0,...ortant', ...}] == [{'path': 'sr..._in': 0, ...}]
+=========================== short test summary info ============================
+FAILED tests/test_gnd_arch.py::test_r01_patch_object_mock_and_delattr - Asser...
+FAILED tests/test_gnd_arch.py::test_r02_wrongly_typed_map_values_exit_3[entry0]
+FAILED tests/test_gnd_arch.py::test_r02_wrongly_typed_map_values_exit_3[entry1]
+FAILED tests/test_gnd_arch.py::test_r03_missing_out_parent_exits_3_without_measuring
+FAILED tests/test_gnd_arch.py::test_r04_oversized_or_unreadable_source_exits_3
+FAILED tests/test_gnd_arch.py::test_r05_r06_type_checking_matches_precisely_and_guards_dynamic
+FAILED tests/test_gnd_arch.py::test_r07_private_submodule_import_is_recorded
+FAILED tests/test_gnd_arch.py::test_r08_alias_bindings_are_scoped - Assertion...
+FAILED tests/test_gnd_arch.py::test_r10_compare_reads_triple_dash_lines_inside_hunks
+9 failed, 4 passed, 33 deselected in 0.29s

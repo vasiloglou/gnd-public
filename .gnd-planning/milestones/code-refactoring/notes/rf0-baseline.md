@@ -15,7 +15,7 @@ reason given.
 
 ## Scope
 
-148 modules and 104,062 lines, with `src/gnd/examples/**` and
+148 modules and 104,094 lines (after the merge of `main`), with `src/gnd/examples/**` and
 `src/gnd/skills/**` excluded. The largest modules are `cli.py` (9,088),
 `model.py` (5,157), `checker.py` (5,143), `exp/session_store.py` (3,018)
 and `exp/session_eval.py` (2,697). The tool records 842 import edges: 478
@@ -26,7 +26,7 @@ module-level, 358 lazy, 5 type-only and 1 dynamic.
 | # | Audit claim | Measured | Status |
 |---|---|---|---|
 | A1 | 454 module-level imports | 454 distinct module-level module pairs | confirmed |
-| A2 | 185 imports that occur only inside functions | 184 lazy-only pairs, plus 1 dynamic pair (`semantic_spec.py:1613`, `__import__("gnd.terms")`) = 185 | confirmed (the audit counted the dynamic import as lazy) |
+| A2 | 185 imports that occur only inside functions | 184 function-level (lazy-only) pairs. The audit's extra pair is most likely the dynamic `__import__("gnd.terms")` at `semantic_spec.py:1613`, but that call sits at module top level, not inside a function | refuted as worded (184); the categories are reported separately (review finding RF0-11) |
 | A3 | The core is one 13-module cycle | The runtime SCC has **14** modules: the audit's 13 plus `gnd.semantic_spec`, which joins only through the dynamic edge `semantic_spec.py:1613 → gnd.terms` (checked by hand). Without dynamic edges the SCC is the audit's 13 | refuted (one more module) |
 | A4 | 189 imports of another module's private names; 47 are `synth.boundary` → `synth.mutate` | 189 private from-imports; 47 from `synth.boundary` to `synth.mutate`. The tool also finds 53 private attribute accesses through module aliases | confirmed |
 | A5 | ~51 canonical-JSON helpers in 30 files, ~35 digest helpers in 23 files, ~30 safe-filesystem helpers in 20 files | Name-pattern families ([helper-families.md](helper-families.md)): canonical JSON 18 sites; sha256-hex 12; file digest 5; safe filesystem 16. The audit's counting method isn't recorded | unverifiable (method); measured counts given |
@@ -36,9 +36,9 @@ module-level, 358 lazy, 5 type-only and 1 dynamic.
 | A9 | `model.fact_types` read 152 times in 42 files; `.get("roles")` 141 times in 31 files | `.fact_types` attribute reads: 179 in 45 modules. `.get("roles")` calls: 145 in 31 modules | refuted (counts differ; the tool counts every attribute load) |
 | A10 | `checker` and `model` changed together in 23 commits | Private history | unverifiable (D3) |
 | A11 | Five session version axes; the version mapping written inline in at least 9 places; `session_v7` is a fork of `session` | Needs reading, not import measurement | unverifiable by the tool; owned by the RF8 spec |
-| A12 | Three `model_digest` meanings (`conformance/currency`, `transition.py:185`, `synth/provenance.py:228`) | All three exist. Two more sites match the family: `population._model_digest` (line 262) and `references.reference_model_digest` (line 157). All five AST hashes differ | refuted ("three"); the RF2 spec must cover five |
+| A12 | Three `model_digest` meanings (`conformance/currency`, `transition.py:185`, `synth/provenance.py:228`) | Five sites, with three output meanings. (1) `conformance.currency.model_digest` hashes the file's bytes. (2) `population._model_digest` hashes the model's content as bare hex, and `synth.provenance.model_digest` delegates to it unchanged. (3) `transition.model_digest` returns the same content digest prefixed with `sha256:`. `references.reference_model_digest` extends the content digest for models with reference populations, and the two wrappers differ only in the prefix (review finding RF0-12) | confirmed (three meanings); the RF2 rename scope covers all five sites |
 | A13 | `SESSION_CONTRACT_VERSION` is assigned 2 at line 64 and reassigned at 483 (the plan called the first assignment dead) | Both assignments exist. Line 482 captures the first as `V2_SESSION_CONTRACT_VERSION` for the frozen v2 reader, so it is **not dead** | refuted (finding F1) |
-| A14 | ~14 test files monkeypatch `gnd.cli` privates (the plan's r1 said 12) | 12 test files patch a `gnd.cli` target (17 patch sites) | refuted for ~14; matches the plan's 12 |
+| A14 | ~14 test files monkeypatch `gnd.cli` privates (the plan's r1 said 12) | 12 test files patch a `gnd.cli.*` target (27 sites) | refuted for ~14; matches the plan's 12 |
 | A15 | ~60 test imports reach into `synth.assemble`/`synth.mutate` privates | 54 sites in 12 test files | refuted (count) |
 | A16 | `agent_cli ↔ exp`; 8 of `agent_cli`'s 10 importers need only the runner | `agent_cli` imports no `gnd` module, so there is no cycle. It has 10 importers. Which parts each importer needs requires reading | importer count confirmed; cycle refuted; the rest is owned by the RF4 spec |
 | A17 | Wrong-way imports `model → popvalidate` (2003, 2649, 2794), `model → population` (4883), `model → references` (4903–4933), `terms → model` (111), `diff → api` (227), `assemble → mutate` (1764) | All present at the stated lines, as lazy edges | confirmed |
@@ -105,7 +105,7 @@ concern F2(B)).
 | Pin site | Measured |
 |---|---|
 | Monkeypatch and `mock.patch` sites targeting `gnd` | 460 sites; 389 resolved across 85 target modules; 71 unresolved (targets bound at run time, mostly tool scripts loaded through `importlib`). Most patched: `assurance_evidence` 27, `checker` 26, `install` 19, `synth.assemble` 19, `cli` 17, `codegen.emit` 15, `artifacts` 14 |
-| Files patching `gnd.cli` | 12 |
+| Files patching `gnd.cli` | 12 files, 27 sites targeting `gnd.cli.*` (17 of them directly on `gnd.cli` attributes) |
 | Test private imports of `synth.assemble`/`synth.mutate` | 54 sites in 12 files |
 | Source-scan sites | 85 in 55 files: `getsource` 35, "module stays unloaded" (`sys.modules`, mostly inside subprocess code strings) 33, `cli.py` path literals 17 |
 | Packaged skill citations of module paths | 9: `gnd.archsmoke` (2), `gnd.conformance`, `src/gnd/model.py`, `gnd.extract.vocabulary`, `gnd.model_verbalization`, `src/gnd/review/adapters.py` (3) |

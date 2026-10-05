@@ -1,11 +1,17 @@
 # GND code refactoring — layered core, shared infrastructure, thin CLI
 
-**Status:** candidate r2, 2026-10-05. The owner asked for a milestone built
-around code refactoring. This document is that plan. It does not approve the
-plan or approve any phase. Candidate r1 (`81f0362`) received a six-of-six
-light panel review ([record](../001-panel.md)). r2 repairs every agreed
-concern group and five of the six divergent views (see *r2 changes* at the
-end). No panel opinion covers the r2 bytes until they are reviewed.
+**Status:** approved r2 with a gate erratum, 2026-10-05. The owner asked
+for a milestone built around code refactoring, and this document is that
+plan. Candidate r1 (`81f0362`) and candidate r2 (`145ce95`) each received
+a six-of-six light panel review ([r1 record](../001-panel.md),
+[r2 record](../002-panel.md)). r2 repaired every agreed concern group from
+the r1 review and all six of its divergent views (see *r2 changes* at the
+end). The owner approved r2 at the plan gate on 2026-10-05, together with
+a text-only erratum (RF-R1, predicate 1, the RF5-C2 reference and this
+paragraph), rulings RF-D4, RF-D6, RF-D8 and RF-D10 to RF-D13, and the
+routing of residual concerns in [002-panel.md](../002-panel.md)
+([gate record](../003-plan-gate.md)). The panel opinions cover the r1 and
+r2 bytes only; no review covers the erratum.
 
 Owner rulings so far are listed in section 10. `src/gnd` stays untouched
 until three things hold: the owner plan gate has passed, the RF0 record
@@ -38,8 +44,7 @@ The milestone can close when all of the following hold:
 
 1. **Behavior pinned:** the RF1 characterization suite (section 4, RF1) was
    green on the pre-move code and is green at close. No pin's expected
-   value has changed, except a pin named by an owner-ruled exception under
-   RF-R1.
+   value has changed.
 2. **Layering holds:** every module under `src/gnd` (skills and examples
    excluded) has an entry in the committed layer map. The layering test runs
    over every layer of the map with no xfail marker, and fails on any import
@@ -52,14 +57,16 @@ The milestone can close when all of the following hold:
    identical has exactly one definition. Every family marked diverged keeps
    its variants, each pinned byte for byte, as RF-D11 rules.
 4. **Thin entry points:** `cli.py` is at most 2,500 lines. The RF0 tool's
-   entry-point rule (RF5-C5) reports no violation: each
+   entry-point rule (RF5-C2) reports no violation: each
    `commands/<group>.py` module imports domain behavior only from
    `gnd.api`, a lane `service` module, `gnd.exits`, `commands/_output` or
    the named allow-list.
 5. **Honest measurements:** a before/after table (SCCs, private
    cross-module imports, duplicate counts, largest-module sizes, co-change
-   pairs) is committed at close. Every target is either met or recorded as
-   missed, with the measured value and the reason.
+   pairs) is committed at close. Every target is met against its final
+   owner-ruled value (RF-D13). Each original target that was missed and
+   re-targeted is listed with its measured value and the ruling that
+   changed it.
 
 ## 0. Binding design rules
 
@@ -70,13 +77,13 @@ are the baseline. In addition:
 
 | Rule | Requirement |
 |---|---|
-| RF-R1 — Behavior-preserving, without exception | Moves and merges preserve CLI and API names, schemas, exit codes, messages, refusals, deterministic output bytes and digests. This milestone hosts no observable change. A change found to be necessary is recorded as an open question for the RF7 successor, unless the owner rules a named exception that the phase spec states as its only observable change. |
+| RF-R1 — Behavior-preserving, without exception | Moves and merges preserve CLI and API names, schemas, exit codes, messages, refusals, deterministic output bytes and digests. This milestone hosts no observable change. A change found to be necessary is recorded as an open question for the RF7 successor. Admitting an observable change into this milestone requires a plan revision, not a phase-level exception. |
 | RF-R2 — Bytes are contracts | Canonical encoders and digest helpers move verbatim. Variant encoders are never merged. A digest helper with a different meaning is renamed under RF-D10, not unified with the others. |
 | RF-R3 — Pin before move | A phase may move or re-route code only on surfaces that RF1 pins. A spec that touches an unpinned surface first adds pins for it, and they must be green on the pre-move code. A move that needs a pin's expected value changed has failed. |
 | RF-R4 — Atomic move units | A move unit is one commit containing the move itself, its re-exports, its updates to `monkeypatch` targets and its widened source scans, with no edit to the moved code. Each move unit is green on its own against the phase's verification selection, so no commit leaves a patch or scan test red. Edits to moved code land in later commits. |
 | RF-R5 — Compatibility shims are inventoried | Old import paths and old names stay importable through re-exports listed in `notes/shim-inventory.md`, each with its retirement trigger (RF-D5). Re-exports do not carry patches across, so every `monkeypatch` of a moved name is pointed at the new location within the same move unit. |
 | RF-R6 — Source scans must not shrink | Tests that scan source text (`inspect.getsource`, reads of `cli.py`, "module stays unloaded" checks) widen to every new module within the same move unit. Each such test asserts that its scanned set covers every module in its declared scope. |
-| RF-R7 — One authority per unit | All work happens in `gnd-public` (RF-D1). The handoff is stated in the RF0 record. The public-launch ledger `.gnd-planning/milestones/public-launch/migration/units.json`, and the distribution-lane test `tests/test_public_distribution.py::test_curated_manifest_and_source_owned_ledger` that guards it, are not edited before public-launch Phase 4 sign-off (RF-D2). At each phase gate the owner attests that the source repository took no change to the handed-off paths. If the source is reachable, the gate also records a high-water-mark comparison; otherwise the record says the control rests on attestation. |
+| RF-R7 — One authority per unit | All work happens in `gnd-public` (RF-D1). The handoff is stated in the RF0 record. The public-launch ledger `.gnd-planning/milestones/public-launch/migration/units.json`, and the distribution-lane test `tests/test_public_distribution.py::test_curated_manifest_and_source_owned_ledger` that guards it, are not edited before the public-launch Phase 4 candidate sign-off (RF-D2, RF-D12). At each phase gate the owner attests that the source repository took no change to the handed-off paths. If the source is reachable, the gate also records a high-water-mark comparison; otherwise the record says the control rests on attestation. |
 | RF-R8 — Release identity changes on every edit | `production_identity` hashes every `src/gnd/**/*.py` file by path, and the distribution-lane manifest pins the source bytes. Prior release or assurance evidence is never reused over refactored bytes, and unavailable evidence is reported as unavailable. |
 | RF-R9 — Measured, non-vacuous budgets | Every numeric target in a spec comes from the RF0 tool's measurement at that phase's base commit and is strictly better than that baseline. The owner approves each target at the spec gate, and a target equal to the baseline is refused. Each spec also states a touched-file and moved-line budget. A target that proves unreachable stops the phase and returns it to the owner gate with the measured value. A metric that gets worse without a recorded reason is a review finding. |
 | RF-R10 — No feature work | No new semantic family, CLI command, flag or schema version. Defects found along the way become open questions unless a decision row brings the fix into scope. |
@@ -147,7 +154,7 @@ re-measured audit, and a recorded authority handoff.
 Commit an AST import-graph tool under `tools/`. It reports module-level and
 lazy edges, strongly connected components, imports of another module's
 private names, fan-in and fan-out, duplicate-helper candidates by name and
-body similarity, and the entry-point rule of RF5-C5. Commit a layer map that
+body similarity, and the entry-point rule of RF5-C2. Commit a layer map that
 assigns every module under `src/gnd` to a layer, using the audit's
 component map as its starting point, and to a lane where one applies.
 Re-measure every row of the audit's summary and every cycle the audit
@@ -345,7 +352,7 @@ RF0 confirmed; a refuted cycle is recorded as already satisfied.
 | `docs/development/architecture-audit.md` | Stays a historical input. The RF0 record holds the re-measured successor numbers. | RF0 |
 | `CONTRIBUTING.md`, `AGENTS.md` | Describe the layer map, the `commands/` pattern, `safefs`, `ModelIndex` and the shim policy once they exist. | RF3–RF6 |
 | Packaged skills that cite module paths | Pin sites are counted at each spec gate and updated in the move unit that moves the module. | per phase |
-| `tests/test_public_distribution.py`, distribution manifest | Update procedure follows RF-D3. The ledger test changes only after public-launch Phase 4 sign-off (RF-R7). | RF0 ruling; first edit at RF2 |
+| `tests/test_public_distribution.py`, distribution manifest | Update procedure follows RF-D3. The ledger test changes only after the public-launch Phase 4 candidate sign-off (RF-R7). | RF0 ruling; first edit at RF2 |
 
 ## 6. Risks and stop conditions
 
@@ -359,7 +366,7 @@ RF0 confirmed; a refuted cycle is recorded as already satisfied.
 | Two repositories edit `runtime` | RF-D1 and RF-R7 attestation at each gate. A source-side edit is a stop. |
 | Diverged helpers get merged | RF-D11 keeps them separate. Merging is deferred successor work. |
 | Phases grow into rewrites | RF-R9 budgets, the RF5 limit of three parts, the RF6a/RF6b split. An overrun returns to the owner gate. |
-| The milestone drifts | If two consecutive phases miss an RF-R9 target, the owner re-plans before the next phase begins. |
+| The milestone drifts | If two consecutive phases miss their original RF-R9 target (RF-D13), the owner re-plans before the next phase begins. |
 | Measurements mislead (fewer cycles, same coupling) | The close table reports private imports and co-change alongside SCCs. |
 | Owner strings, docs and skills keep naming old paths | RF3-C3 resolution test and pin-site counts at every gate. |
 
@@ -414,20 +421,22 @@ results for everything that imports it.
 | RF-D1 — Execution authority | 2026-10-05: "everything happens on the gnd-public". The handoff of `runtime` and `test-acceptance` is stated in the RF0 record. The public-launch ledger follows RF-R7. |
 | RF-D2 — Sequencing with public-launch | 2026-10-05, amended the same day after the r1 review. RF2 and later phases start only after the public-launch Phase 3 acceptance and the Phase 4 candidate sign-off are recorded, the signed-off commit is tagged, and public-launch records that Phase 5 publishes from that tag, with launch fixes landing on a release branch and merging forward. Recording that is a public-launch act: this plan cannot bind public-launch, so RF2 waits for it. The Phase 5 history inspection also covers refactor commits. RF0 and RF1 may proceed after the plan gate. |
 | RF-D7 — Tightening scope | 2026-10-05: RF7 is deferred to a successor milestone in full, including the alias/size guards for the two unguarded YAML loaders (`evolve/service.py:186`, `export/souffle.py:61`). The owner can pull any sub-part forward at a later phase gate. A spot check on 2026-10-05 found that the installer path validator accepts `./a` and `a\b` but refuses `..\x` and `a/../b`, so the audit's "looser" claim concerns unusual names, not traversal. |
+| RF-D4 — Milestone name | 2026-10-05, at the plan gate: accepted as proposed. `code-refactoring`, which uses no semantic version number. |
+| RF-D6 — Divergent primitive resolver | 2026-10-05, at the plan gate: accepted as proposed. Keep both semantics behind a pinned variant parameter. Switching any caller to strict `is True` is RF7 successor work. |
+| RF-D8 — Small defects | 2026-10-05, at the plan gate: accepted as proposed. In RF8, name the version-8 literal and remove the dead first assignment of `SESSION_CONTRACT_VERSION` (both non-observable). Rename `value_domain._in_range` in RF6 under RF-D10. The "unknown version" message text is RF7 successor work. |
+| RF-D10 — Renames and visibility changes | 2026-10-05, at the plan gate: accepted as proposed. Renaming a function or making it public is non-observable when the old name stays importable through a listed shim and appears in no pinned byte stream, digest input or message. Any other rename needs its own ruling. This covers the `model_digest` renames, `safefs`, `synth.oracle`, `SessionStore.best_identity()` and the `checker.py` rebinding renames. |
+| RF-D11 — Diverged helper families | 2026-10-05, at the plan gate: accepted as proposed. Every family that RF0 marks diverged keeps its variants, each pinned byte for byte. Merging is RF7 successor work. |
+| RF-D12 — Public-launch gate name and stall route | 2026-10-05, at the plan gate. "Phase 4 candidate sign-off" is the single name for the public-launch gate throughout this plan. If public-launch has not recorded the RF-D2 conditions by the time the RF1 record is committed, the owner either re-plans around RF0 and RF1 or rules a revised sequence before any further phase starts. |
+| RF-D13 — Missed targets | 2026-10-05, at the plan gate. A missed RF-R9 target or completion ceiling stops the phase at the owner gate. The owner may re-target with a recorded ruling that states the measured value. The milestone closes against the final ruled targets, and the close table lists every original target that was missed. |
 
-**Open.** These are proposals awaiting the plan gate or the named spec
-gate. None of them is an approval.
+**Open.** These are proposals awaiting the named phase gate. None of them
+is an approval.
 
 | Decision | Proposed default | Resolve by |
 |---|---|---|
 | RF-D3 — Distribution manifest and release evidence | Each phase updates the curated manifest as a recorded adaptation and reports `production_identity` as changed and unavailable until the next release regenerates it. | RF0 |
-| RF-D4 — Milestone name | `code-refactoring`, which uses no semantic version number. | Plan gate |
 | RF-D5 — Shim retirement | Shims stay at least until the first public release after RF6. Retiring them is a later, separately approved phase. | RF2 |
-| RF-D6 — Divergent primitive resolver | Keep both semantics behind a pinned variant parameter. Switching any caller to strict `is True` is RF7 successor work. | Plan gate |
-| RF-D8 — Small defects | In RF8, name the version-8 literal and remove the dead first assignment of `SESSION_CONTRACT_VERSION` (both non-observable). Rename `value_domain._in_range` in RF6 under RF-D10. The "unknown version" message text is RF7 successor work. | Plan gate |
 | RF-D9 — Approval instrument | Corpus-first for RF1. Spec prose for the move phases. | Each spec gate |
-| RF-D10 — Renames and visibility changes | Renaming a function or making it public is non-observable when the old name stays importable through a listed shim and appears in no pinned byte stream, digest input or message. Any other rename needs its own ruling. This covers the `model_digest` renames, `safefs`, `synth.oracle`, `SessionStore.best_identity()` and the `checker.py` rebinding renames. | Plan gate |
-| RF-D11 — Diverged helper families | Every family that RF0 marks diverged keeps its variants, each pinned byte for byte. Merging is RF7 successor work. | Plan gate |
 
 ## r2 changes
 

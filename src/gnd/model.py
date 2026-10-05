@@ -79,7 +79,7 @@ from gnd.yaml_comments import configure_comment_scanner
 _PLACEHOLDER = re.compile(r"\{[^{}]+\}")
 
 MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
-MAX_YAML_EVENTS = 1_000_000  # parse-event budget for untrusted YAML
+from gnd.documents import MAX_YAML_EVENTS
 
 
 def yaml_stream_guard_error(path: str | Path) -> str | None:
@@ -113,24 +113,7 @@ def yaml_stream_guard_error(path: str | Path) -> str | None:
     return None
 
 
-def structured_derivation_ids(model: Model) -> tuple[str, ...]:
-    """Ids of fact types whose ``derivation_rule`` is the structured object
-    form, in declared order.
-
-    The ONE published home for the "does this fact type carry a machine-shaped
-    rule" predicate (v5.0 Phase 3, standing rule 4): the report-version
-    selector, codegen's constructor non-emission, conformance's expected
-    surface and synth's refusal all consume this function, never a private
-    ``isinstance`` copy. A legacy free-text ``derivation_rule`` string is NOT
-    structured -- it keeps every pre-v5 behaviour (r2 A10), and this predicate
-    is where that boundary is drawn exactly once.
-    """
-
-    return tuple(
-        str(fact_type.get("id"))
-        for fact_type in model.fact_types
-        if isinstance(fact_type.get("derivation_rule"), dict)
-    )
+from gnd.documents import structured_derivation_ids  # noqa: F401 -- compatibility export
 
 
 def _load_meta_schema() -> dict[str, Any]:
@@ -5279,8 +5262,8 @@ def resolve_context(
 def bind_population(
     model: Model, candidate: Population, *, references: BoundReferenceContext
 ) -> BoundPopulationView:
-    from gnd.checker import _identity_key
     from gnd.population import _combine_validated_populations
+    from gnd.values import identity_key as _identity_key
 
     context = resolve_context(model, references)
     owners = dict(context._owners)

@@ -1,0 +1,22 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_v72_semantic_owners.py tests/test_public_derivation_evaluator_controls.py tests/test_public_adapter_derivation.py tests/test_public_applicability_obligations.py tests/test_public_derivation_cost_mutations.py tests/test_reference_population_corpus.py tests/test_rf3_moves.py --tb=short
+...........................................FF........................... [ 21%]
+........................................................................ [ 42%]
+........................................................................ [ 64%]
+........................................................................ [ 85%]
+...............................................                          [100%]
+=================================== FAILURES ===================================
+_ test_import_boundary_detects_direct_and_transitive_inference[gnd.witness.kernel] _
+tests/test_public_v72_semantic_owners.py:177: in test_import_boundary_detects_direct_and_transitive_inference
+    assert "gnd.checker" in actual["closure"] and "gnd.terms" in actual["closure"]
+E   AssertionError: assert ('gnd.checker' in ['gnd', 'gnd.artifacts', 'gnd.atoms', 'gnd.documents', 'gnd.errors', 'gnd.extraction_scope', ...])
+_ test_import_boundary_detects_direct_and_transitive_inference[gnd.witness.io] _
+tests/test_public_v72_semantic_owners.py:177: in test_import_boundary_detects_direct_and_transitive_inference
+    assert "gnd.checker" in actual["closure"] and "gnd.terms" in actual["closure"]
+E   AssertionError: assert ('gnd.checker' in ['gnd', 'gnd.artifacts', 'gnd.atoms', 'gnd.documents', 'gnd.errors', 'gnd.extraction_scope', ...])
+=========================== short test summary info ============================
+FAILED tests/test_public_v72_semantic_owners.py::test_import_boundary_detects_direct_and_transitive_inference[gnd.witness.kernel]
+FAILED tests/test_public_v72_semantic_owners.py::test_import_boundary_detects_direct_and_transitive_inference[gnd.witness.io]
+2 failed, 333 passed, 3 deselected in 31.12s
+
+Exit: 1

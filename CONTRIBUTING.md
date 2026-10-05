@@ -40,3 +40,19 @@ resolve review conversations before merging. Web edits also use a branch and PR.
 No standing contributor bypass is allowed. Approval to perform phase work does
 not waive this rule. Repository owners can change settings, so configuration
 must be checked before claiming enforcement.
+
+## Refactoring dependencies and compatibility
+
+The measured layer map is [tools/gnd_layers.json](tools/gnd_layers.json).
+Errors and schemas have infrastructure homes; documents, values and universe
+serve model data and lookup; extensions compute facts below checker and
+applicability. Registry descriptors live in branches. Runtime graph checks count
+lazy and literal dynamic imports as well as top-level imports. Add every new
+module to the map, preserve the clean-layer ratchet, and do not grow allowances.
+
+Old module names retain explicit aliases in the
+[shim inventory](.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md).
+Patch the defining module for moved algorithms and the actual public lookup seam
+for consumer wrappers. Move tests pin alias identity and source-scan coverage;
+retirement follows the approved plan's RF-D5 gate. Current source changes make
+old release evidence unavailable until its separately selected controls run.

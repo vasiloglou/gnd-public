@@ -16,8 +16,8 @@ from typing import Any, Literal
 
 from gnd.artifacts import canonical_json_text
 from gnd.atoms import atom_bind
+from gnd.branches import record_branch
 from gnd.model import Model, analyze_declared_aggregate
-from gnd.semantic_registry import record_branch
 from gnd.terms import is_function_term, term_variables
 
 RedactionMode = Literal["applied", "unredacted"]

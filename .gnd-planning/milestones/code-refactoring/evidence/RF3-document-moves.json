@@ -1,0 +1,15 @@
+[
+  {
+    "old": "gnd.model.structured_derivation_ids",
+    "new": "gnd.documents.structured_derivation_ids",
+    "body_sha256": "8f90ecaf3f53b79bf1e2559c509202c388aa273c444af6f88da29eb6164dff5e",
+    "lines": 18,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.model.MAX_YAML_EVENTS",
+    "new": "gnd.documents.MAX_YAML_EVENTS",
+    "kind": "Assign",
+    "lines": 1
+  }
+]

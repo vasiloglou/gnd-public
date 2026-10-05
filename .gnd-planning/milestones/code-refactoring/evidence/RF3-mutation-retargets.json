@@ -238,5 +238,26 @@
       "new": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n    raise RuntimeError(\"rf1-mutant\")\n",
       "old": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n"
     }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.references:reference_model_digest]"
+      ],
+      "file": "src/gnd/values.py",
+      "id": "M-HELP-model-digest-gnd-references-reference-model-digest",
+      "new": "def reference_model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    from gnd.population import _model_digest\n",
+      "old": "def reference_model_digest(model: Model) -> str:\n    from gnd.population import _model_digest\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.references:reference_model_digest]"
+      ],
+      "file": "src/gnd/values.py",
+      "id": "M-HELP-model-digest-gnd-references-reference-model-digest",
+      "new": "def reference_model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def reference_model_digest(model: Model) -> str:\n"
+    },
+    "reason": "Import-only routing removes local import, identical poison now matches signature"
   }
 ]

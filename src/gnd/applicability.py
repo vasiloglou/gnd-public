@@ -21,12 +21,14 @@ def applicable_scope_ids(model: Model, population: Population) -> tuple[str, ...
     otherwise a supplied surplus claim could change the selected proof route.
     """
     # Local imports keep the registry's descriptors usable during checker import.
-    from gnd import checker
     from gnd.address import positional_constraint_ref
+    from gnd.errors import UnvalidatedPopulationError
+    from gnd.extensions import effective_view
     from gnd.proof_bridge import adapt_phase1_slice
+    from gnd.universe import scope_fact_types
 
     if not population.matches_validation_marker(model):
-        raise checker.UnvalidatedPopulationError(population, model)
+        raise UnvalidatedPopulationError(population, model)
 
     def carries_exact_term(value: object) -> bool:
         if isinstance(value, dict):
@@ -54,7 +56,7 @@ def applicable_scope_ids(model: Model, population: Population) -> tuple[str, ...
     from gnd.terms import TEMPORAL_REASONS, uses_temporal
 
     temporal_terms = uses_temporal(model)
-    from gnd.popvalidate import resolve_primitive
+    from gnd.universe import resolve_primitive
 
     duration_facts = {
         str(ft.get("id"))
@@ -198,21 +200,9 @@ def applicable_scope_ids(model: Model, population: Population) -> tuple[str, ...
         and not dynamic_composition_row(row)
         and applicable_row(row)
     }
-    view = population
+    view = effective_view(model, population)
     structured = any(isinstance(ft.get("derivation_rule"), dict) for ft in model.fact_types)
     if structured:
-        if has_opaque:
-            extensions, _verdicts = checker._evaluate_derivations_dispatch(model, population)
-            calculated = checker._ExtensionResult(extensions, 0)
-        elif checker._model_uses_exact_derivations(model):
-            calculated = checker._exact_extension_calculator(
-                model, checker._base_relations(model, population)
-            )
-        else:
-            calculated = checker._python_extension_calculator(
-                model, checker._base_relations(model, population)
-            )
-        view = checker._constraint_view_dispatch(model, population, calculated.extensions)
         derivation_variants = {
             str(ft.get("derivation"))
             for ft in model.fact_types
@@ -368,10 +358,10 @@ def applicable_scope_ids(model: Model, population: Population) -> tuple[str, ...
             ):
                 variants.add("aggregate")
         constraint_term_capable = carries_exact_term(constraint) or bool(
-            set(checker._scope_fact_types(constraint, family, model, ft)) & exact_heads
+            set(scope_fact_types(constraint, family, model, ft)) & exact_heads
         )
         constraint_float_capable = carries_float_term(constraint) or bool(
-            set(checker._scope_fact_types(constraint, family, model, ft)) & float_heads
+            set(scope_fact_types(constraint, family, model, ft)) & float_heads
         )
         selected.update(
             row.scope_id
@@ -384,7 +374,7 @@ def applicable_scope_ids(model: Model, population: Population) -> tuple[str, ...
                 row,
                 temporal_capable=uses_temporal(constraint)
                 or bool(
-                    set(checker._scope_fact_types(constraint, family, model, ft)) & duration_facts
+                    set(scope_fact_types(constraint, family, model, ft)) & duration_facts
                 ),
                 term_capable=constraint_term_capable,
                 float_capable=constraint_float_capable,

@@ -2443,3 +2443,6 @@ def check_with_anchors_partial(
         )
     finally:
         extension_core.PARTIAL_OPAQUE.reset(token)
+
+
+effective_view = extension_core.effective_view

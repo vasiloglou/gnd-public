@@ -55,3 +55,14 @@ resolve review conversations before merging. Web edits also use a branch and PR.
 No standing contributor bypass is allowed. Approval to perform phase work does
 not waive this rule. Repository owners can change settings, so configuration
 must be checked before claiming enforcement.
+
+## Refactoring dependency homes
+
+Use tools/gnd_layers.json for module assignments and runtime import checks,
+including lazy and literal dynamic imports. Keep new homes in the map and keep
+the allowance count at zero. Shared data/lookup live in documents, values and
+universe; extension calculation lives below checker; applicability consumes its
+public effective_view. Descriptor registration lives in branches. Retain moved
+names as explicit identity aliases in the milestone shim inventory; patch the
+defining home or actual public lookup, and preserve source-scan visitation.
+Shim retirement follows RF-D5 in the approved refactoring plan.

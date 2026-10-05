@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf3_moves.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_rf1_semantic_pins.py::test_resolver",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_public_applicability_obligations.py",
+    "tests/test_public_semantic_adapter.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 22.666791915893555
+}

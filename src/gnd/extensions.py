@@ -2741,3 +2741,23 @@ _exact_derivation_obligation.__module__ = 'gnd.checker'
 _evaluate_derivations_dispatch.__module__ = 'gnd.checker'
 
 _constraint_view_dispatch.__module__ = 'gnd.checker'
+
+
+def effective_view(model: Model, population: Population) -> Population | _RuledFactView:
+    """Validated effective facts for applicability, using the checker policies."""
+    if not population.matches_validation_marker(model):
+        raise UnvalidatedPopulationError(population, model)
+    if not any(isinstance(ft.get("derivation_rule"), dict) for ft in model.fact_types):
+        return population
+    has_opaque = any(
+        isinstance(value, dict) and set(value) == {"$opaque"}
+        for rows in population.facts.values() for fact in rows for value in fact.values()
+    )
+    if has_opaque:
+        derived, _verdicts = _evaluate_derivations_dispatch(model, population)
+        calculated = _ExtensionResult(derived, 0)
+    elif _model_uses_exact_derivations(model):
+        calculated = _exact_extension_calculator(model, _base_relations(model, population))
+    else:
+        calculated = _python_extension_calculator(model, _base_relations(model, population))
+    return _constraint_view_dispatch(model, population, calculated.extensions)

@@ -184,8 +184,6 @@ def _model_digest(model: Model) -> str:
     object is retained.
     """
     if model.reference_populations:
-        from gnd.references import reference_model_digest
-
         return reference_model_digest(model).removeprefix("sha256:")
     payload = model.model_dump(
         exclude=set(MODEL_DIGEST_EXCLUDED_FIELDS) | {"reference_populations"}
@@ -201,9 +199,6 @@ from typing import TYPE_CHECKING
 
 
 def reference_model_digest(model: Model) -> str:
-    from gnd.population import _model_digest
-    from gnd.transition import _canonical
-
     if not model.reference_populations:
         return "sha256:" + _model_digest(model)
     document = model.model_dump(exclude={"warnings", "reference_populations"})

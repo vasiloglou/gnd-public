@@ -5,6 +5,7 @@ import ast
 import hashlib
 import importlib
 import json
+import subprocess
 from pathlib import Path
 from unittest.mock import patch
 
@@ -47,9 +48,12 @@ def assert_move_bodies(sources):
         assert hashlib.sha256(segment.encode()).hexdigest() == row['body_sha256'], row
 
 
+MOVE_COMMIT = "4415327"
+
+
 def move_sources():
     modules = {r['new'].rsplit('.', 1)[0] for r in rows()}
-    return {m: (ROOT / ('src/' + m.replace('.', '/') + '.py')).read_text() for m in modules}
+    return {m: subprocess.check_output(['git', 'show', MOVE_COMMIT + ':src/' + m.replace('.', '/') + '.py'], cwd=ROOT, text=True) for m in modules}
 
 
 def test_move_bodies_are_verbatim():

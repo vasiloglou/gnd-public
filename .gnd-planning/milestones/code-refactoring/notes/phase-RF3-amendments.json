@@ -11,5 +11,49 @@
     "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
     "sha256": "bcd41ecb8dcce8e7a9131c1c4f6af4ea05d90467c4605b70d8b564df68c50590",
     "ruling": "Preserve original approval and answers; intermediate units use characterized/direct gates, source-location retargeting preserves semantic mutation and original expected node."
+  },
+  {
+    "date": "2026-10-05",
+    "authorization": "process-phase RF3 auto",
+    "mark": "delegated approval (auto=true)",
+    "amendments": [
+      "A4"
+    ],
+    "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+    "sha256": "ec7082a61710e42a1a49a20d951a4c50c904e9e5fa567f2746058a65d3667f4a",
+    "ruling": "Explicit variant entry uses noncolliding universe.primitive_for name; preserve strict predecessor signature, committed move snapshot, and real anchor controls."
+  },
+  {
+    "date": "2026-10-05",
+    "authorization": "process-phase RF3 auto",
+    "mark": "delegated approval (auto=true)",
+    "amendments": [
+      "A5"
+    ],
+    "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+    "sha256": "1c045b340d1fa0bf411e583832b4e4f6ae9d0b365a48c1b2c9ab9f38f589306d",
+    "ruling": "Follow explicit owner RF0 D10 cycle assignment; retain full original-layer wrong-way/private scope and disclosed plan-reconciliation obligation."
+  },
+  {
+    "date": "2026-10-05",
+    "authorization": "process-phase RF3 auto",
+    "mark": "delegated approval (auto=true)",
+    "amendments": [
+      "A6"
+    ],
+    "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+    "sha256": "dc48fe2c66a38e3e0a47fa8f5a296d1a0d7b7fa352bbc8c143eb1df7097de400",
+    "ruling": "Original added-nonrelocated ceiling 700 -> 2200, with preview arithmetic 7935 - 5948 = 1987 and compatibility/whitespace explanation; other ceilings unchanged."
+  },
+  {
+    "date": "2026-10-05",
+    "authorization": "process-phase RF3 auto",
+    "mark": "delegated approval (auto=true)",
+    "amendments": [
+      "A7"
+    ],
+    "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+    "sha256": "e337073ca5b36b15c8a6e5a51166b0cd81ee318ed918cc251c060acdb0df42f9",
+    "ruling": "Frozen inference inventory retained; explicit current-source successor covers extensions/public aliases and actual-home visitation, old checker closure assertion moves to universe."
   }
 ]

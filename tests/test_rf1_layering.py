@@ -73,7 +73,8 @@ def _pairs(metrics: dict) -> set[tuple[str, str]]:
     "pair",
     [
         pytest.param(pair, id=f"{pair[0]}->{pair[1]}",
-                     marks=pytest.mark.xfail(strict=True, reason=f"{pair[0]} -> {pair[1]}: {KNOWN_PAIRS[pair]} removes"))
+                     marks=() if KNOWN_PAIRS[pair] == "RF3" else pytest.mark.xfail(
+                         strict=True, reason=f"{pair[0]} -> {pair[1]}: {KNOWN_PAIRS[pair]} removes"))
         for pair in _in_scope()
     ],
 )

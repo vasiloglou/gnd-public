@@ -5,6 +5,8 @@ from gnd import extensions
 import hashlib
 import importlib.util
 import json
+from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 from test_public_v72_semantic_owner_inputs import (
@@ -13,6 +15,7 @@ from test_public_v72_semantic_owner_inputs import (
 )
 
 from gnd import checker
+from tests.support.rf3_inference_inventory import inference_imports
 
 HASHES = {
     "tests/fixtures/v72/phase6/inputs.json": "15aff43e9b4206ffe8a6580279920e1f268616b7e005faacb2d8109682a078d0",
@@ -172,14 +175,39 @@ def test_import_boundary_detects_direct_and_transitive_inference(source):
     spec = importlib.util.spec_from_file_location("p6_inventory", EVIDENCE / "inventory.py")
     inventory = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(inventory)
-    actual = inventory.inference_imports()
-    # Complete module reachability includes dormant production imports; it is not isolation.
-    assert "gnd.checker" in actual["closure"] and "gnd.terms" in actual["closure"]
+    visited = set()
+    original = Path.read_text
+
+    def observe(path, *args, **kwargs):
+        visited.add(path)
+        return original(path, *args, **kwargs)
+
+    with patch.object(Path, 'read_text', observe):
+        actual = inference_imports(inventory)
+    moves = json.loads((inventory.ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF3-moves.json').read_text())
+    homes = {inventory.SOURCE / (r['new'].rsplit('.', 1)[0].replace('.', '/') + '.py') for r in moves}
+    assert homes <= visited
+    # Complete reachability includes dormant imports; this is a static boundary.
+    assert "gnd.universe" in actual["closure"] and "gnd.terms" in actual["closure"]
     assert not any(
         "_clause_bindings" in row["names"] for row in actual["potential_inference_imports"]
     )
-    planted = inventory.inference_imports({source: "from gnd.checker import _clause_bindings"})
-    assert any(
-        row["source"] == source and "_clause_bindings" in row["names"]
-        for row in planted["potential_inference_imports"]
-    )
+    for module, name in [('gnd.checker', '_clause_bindings'),
+                         ('gnd.extensions', '_clause_bindings'),
+                         ('gnd.extensions', 'clause_bindings')]:
+        planted = inference_imports(inventory, {source: f"from {module} import {name}"})
+        assert any(row['source'] == source and name in row['names']
+                   for row in planted['potential_inference_imports'])
+
+
+def test_inference_scan_rejects_absent_new_home(monkeypatch):
+    original = Path.read_text
+
+    def missing(path, *args, **kwargs):
+        if path.name == 'extensions.py':
+            raise OSError('RF3 missing scan home')
+        return original(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, 'read_text', missing)
+    with pytest.raises(OSError, match='missing scan home'):
+        test_import_boundary_detects_direct_and_transitive_inference('gnd.witness.kernel')

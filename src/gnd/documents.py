@@ -77,3 +77,29 @@ class Model(BaseModel):
 DeonticNote.__module__ = 'gnd.model'
 
 Model.__module__ = 'gnd.model'
+
+
+MAX_YAML_EVENTS = 1_000_000  # parse-event budget for untrusted YAML
+
+
+def structured_derivation_ids(model: Model) -> tuple[str, ...]:
+    """Ids of fact types whose ``derivation_rule`` is the structured object
+    form, in declared order.
+
+    The ONE published home for the "does this fact type carry a machine-shaped
+    rule" predicate (v5.0 Phase 3, standing rule 4): the report-version
+    selector, codegen's constructor non-emission, conformance's expected
+    surface and synth's refusal all consume this function, never a private
+    ``isinstance`` copy. A legacy free-text ``derivation_rule`` string is NOT
+    structured -- it keeps every pre-v5 behaviour (r2 A10), and this predicate
+    is where that boundary is drawn exactly once.
+    """
+
+    return tuple(
+        str(fact_type.get("id"))
+        for fact_type in model.fact_types
+        if isinstance(fact_type.get("derivation_rule"), dict)
+    )
+
+
+structured_derivation_ids.__module__ = "gnd.model"

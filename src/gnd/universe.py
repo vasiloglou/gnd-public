@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from contextvars import ContextVar
-from typing import Any
+from typing import Any, Literal
 
 from gnd.atoms import atom_has_bind
 
@@ -68,7 +68,18 @@ _DERIVATION_TERM_CACHE: ContextVar[dict | None] = ContextVar("gnd_intake_term_is
 
 DERIVATION_TERM_CACHE = _DERIVATION_TERM_CACHE
 fact_type_roles = _fact_type_roles
-resolved_primitive = _resolved_primitive
+def resolved_primitive(
+    object_type_id: str,
+    object_types: dict[str, dict[str, Any]],
+    seen: set[str] | None = None,
+) -> str | None:
+    """Historical model-intake signature, explicitly choosing truthy resolution."""
+    return primitive_for(object_type_id, object_types, variant="truthy", seen=seen)
+
+
+resolved_primitive.__module__ = "gnd.model"
+resolved_primitive.__name__ = "_resolved_primitive"
+resolved_primitive.__qualname__ = "_resolved_primitive"
 supertype_parents = _supertype_parents
 
 
@@ -205,13 +216,26 @@ def resolve_primitive(object_type_id: str, model: Model) -> str | None:
     declare ``inherits_reference: true`` — reading past one would be exactly the
     guess D-05 forbids.
     """
-    return _resolve_reference(
-        str(object_type_id),
-        _object_types_by_id(model),
-        _supertype_parents({"object_types": model.object_types}),
-        set(),
-        _identifying_primitive,
-    )
+    return primitive_for(str(object_type_id), _object_types_by_id(model), variant="strict")
+
+
+def primitive_for(
+    object_type_id: str,
+    object_types: dict[str, dict[str, Any]],
+    *,
+    variant: Literal["truthy", "strict"],
+    seen: set[str] | None = None,
+) -> str | None:
+    """Resolve with an explicit predecessor policy; the two walks remain distinct."""
+    if variant == "truthy":
+        return _resolved_primitive(object_type_id, object_types, seen)
+    if variant == "strict":
+        return _resolve_reference(
+            str(object_type_id), object_types,
+            _supertype_parents({"object_types": list(object_types.values())}),
+            set() if seen is None else seen, _identifying_primitive,
+        )
+    raise ValueError(f"unknown primitive resolver variant: {variant!r}")
 
 
 identifying_id = _identifying_id

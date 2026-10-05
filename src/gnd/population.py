@@ -47,14 +47,13 @@ from jsonschema import Draft202012Validator
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 from ruamel.yaml import YAML
 
-from gnd.documents import Model
+from gnd.documents import MAX_YAML_EVENTS, Model
 from gnd.errors import (
     MAX_SUMMARY_ISSUES,  # noqa: F401 -- compatibility export
     PopulationLoadError,
     PopulationValidationError,
     ValidationIssue,
 )
-from gnd.model import MAX_YAML_EVENTS
 from gnd.popvalidate import population_validate
 from gnd.values import MODEL_DIGEST_EXCLUDED_FIELDS  # noqa: F401 -- compatibility export
 from gnd.values import (

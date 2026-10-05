@@ -292,3 +292,6 @@ original consumers and the new existing homes (artifacts, model, exits).
 | gnd.correspondence._scalar_identity | gnd.semantic_rows.scalar_identity | RF3 | RF-D5 |
 | gnd.correspondence._canonical_rows | gnd.semantic_rows.canonical_rows | RF3 | RF-D5 |
 | gnd.checker._RING_COMPONENTS | gnd.universe.RING_COMPONENTS | RF3 | RF-D5 |
+
+| gnd.model.structured_derivation_ids | gnd.documents.structured_derivation_ids | RF3 | Alias; same object; RF-D5 retirement |
+| gnd.model.MAX_YAML_EVENTS | gnd.documents.MAX_YAML_EVENTS | RF3 | Alias; same object; RF-D5 retirement |

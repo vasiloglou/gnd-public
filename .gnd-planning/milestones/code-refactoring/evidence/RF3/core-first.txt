@@ -1,0 +1,51 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_core.py --tb=short
+F..F.......................FFFF....                                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_full_current_and_original_core ______________________
+tests/test_rf3_core.py:43: in test_full_current_and_original_core
+    assert_core(measured)
+tests/test_rf3_core.py:32: in assert_core
+    assert not [s for s in metrics['sccs']['runtime'] if len(s) > 1 and set(s) & core]
+E   AssertionError: assert not [['gnd.assurance', 'gnd.assurance_claims', 'gnd.assurance_evidence', 'gnd.assurance_inheritance']]
+_______________ test_every_registry_owner_resolves_to_a_function _______________
+tests/test_rf3_core.py:82: in test_every_registry_owner_resolves_to_a_function
+    resolve_owner(row.owner)
+                  ^^^^^^^^^
+E   AttributeError: 'Branch' object has no attribute 'owner'
+_ test_effective_view_on_real_validated_inputs[tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml-tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/population.yaml] _
+tests/test_rf3_core.py:188: in test_effective_view_on_real_validated_inputs
+    assert actual.model_dump() == expected.model_dump()
+           ^^^^^^^^^^^^^^^^^
+E   AttributeError: '_RuledFactView' object has no attribute 'model_dump'
+_ test_effective_view_on_real_validated_inputs[tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml-tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/population.yaml] _
+tests/test_rf3_core.py:188: in test_effective_view_on_real_validated_inputs
+    assert actual.model_dump() == expected.model_dump()
+           ^^^^^^^^^^^^^^^^^
+E   AttributeError: '_RuledFactView' object has no attribute 'model_dump'
+_ test_effective_view_on_real_validated_inputs[tests/fixtures/v62-phase3/models/exact-terms.orm.yaml-tests/fixtures/v62-phase3/populations/term-input.pop.yaml] _
+tests/test_rf3_core.py:188: in test_effective_view_on_real_validated_inputs
+    assert actual.model_dump() == expected.model_dump()
+           ^^^^^^^^^^^^^^^^^
+E   AttributeError: '_RuledFactView' object has no attribute 'model_dump'
+______________ test_effective_view_refuses_unvalidated_population ______________
+tests/test_rf3_core.py:194: in test_effective_view_refuses_unvalidated_population
+    p = population.Population(facts={})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 2 validation errors for Population
+E   model
+E     Field required [type=missing, input_value={'facts': {}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+E   source
+E     Field required [type=missing, input_value={'facts': {}}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/missing
+=========================== short test summary info ============================
+FAILED tests/test_rf3_core.py::test_full_current_and_original_core - Assertio...
+FAILED tests/test_rf3_core.py::test_every_registry_owner_resolves_to_a_function
+FAILED tests/test_rf3_core.py::test_effective_view_on_real_validated_inputs[tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml-tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/population.yaml]
+FAILED tests/test_rf3_core.py::test_effective_view_on_real_validated_inputs[tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml-tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/population.yaml]
+FAILED tests/test_rf3_core.py::test_effective_view_on_real_validated_inputs[tests/fixtures/v62-phase3/models/exact-terms.orm.yaml-tests/fixtures/v62-phase3/populations/term-input.pop.yaml]
+FAILED tests/test_rf3_core.py::test_effective_view_refuses_unvalidated_population
+6 failed, 29 passed in 2.80s
+
+Exit: 1

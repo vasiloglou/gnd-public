@@ -1,0 +1,6 @@
+$ UV_PROJECT_ENVIRONMENT=<venv311> uv run --python 3.11 python -m pytest -q tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py
+384 passed, 16 xfailed in 62.83s (0:01:02)
+exit=0
+$ UV_PROJECT_ENVIRONMENT=<venv313> uv run --python 3.13 python -m pytest -q tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py
+384 passed, 16 xfailed in 61.81s (0:01:01)
+exit=0

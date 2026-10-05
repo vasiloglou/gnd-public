@@ -1,0 +1,5 @@
+$ uv run python -m pytest -q -p no:cacheprovider tests/test_rf1_*.py   (detached worktree at 4ef5747, before goldens)
+FAILED tests/test_rf1_pin_harness.py::test_golden_manifest_negative[extra-file]
+FAILED tests/test_rf1_pin_harness.py::test_golden_manifest_negative[missing-file]
+FAILED tests/test_rf1_pin_harness.py::test_golden_versions - AssertionError: ...
+346 failed, 38 passed, 16 xfailed in 63.66s (0:01:03)

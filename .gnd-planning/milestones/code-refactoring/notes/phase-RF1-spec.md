@@ -586,3 +586,91 @@ offered:
 Confirmed implementable: the mutation harness's `PYTHONPATH` copy takes
 precedence, because `tests/conftest.py:35` inserts only the repository root
 and `gnd` otherwise resolves through the editable install.
+
+## Implementation findings, recorded as found
+
+Each finding is stated where the run surfaced it. None changes an approved
+decision; where one departs from the spec's text, the departure is named.
+
+- **F1 (hardening; open question).** `synth.provenance._sha256_file`,
+  `measure.promote._digest` and `transition.population_file_digest` block
+  forever when handed a FIFO (the first helper capture hung on it). Only
+  `exp.tests_runner._digest_regular_path` opens with `O_NONBLOCK`. A hang
+  cannot be pinned, so the FIFO input is offered only to that reader.
+- **F2 (refutes spec §6.5 T-SEM-VERB).** There is no `gnd verbalize MODEL`
+  command; the only subcommand is `verbalize population`. Model verbalization
+  is pinned through `gnd extract`, which writes `<stem>.verbalization.txt`.
+- **F3 (new rule N7).** The session prompt embeds the absolute contract path
+  (`cli.py:5436`), so every prompt digest varies with the temporary root.
+  Prompt-digest fields and the `<prompt:sha256=…>` argv token become
+  placeholders.
+- **F4 (refutes the N4 premise).** The receipt nonce is published, as
+  `attempt.json` `assurance_receipts[].process_receipt.nonce`. N4 is amended:
+  a `nonce` field's value is a placeholder; staging names are still checked
+  for absence.
+- **F5 (new rules N9 and an N5 extension).** v1 and v2 evidence carries
+  `production_identity()` and `producer_identity()`, which hash every
+  `src/gnd` file (RF-R8) and would break every session pin on the first RF2
+  edit. Both are replaced only where they equal the value computed in-process.
+  A declared adapter's `executable_sha256` hashes the interpreter's path
+  string (`declared_adapter.py:292`), and `policy_sha256` hashes a policy file
+  that holds absolute paths; N5 now also accepts these declared inputs, still
+  verify-then-replace.
+- **F6 (new rule N8).** Tests-mode `result_sha256` digests cover pytest's
+  JUnit file, which pytest writes with its own timings; they are placeholders.
+- **F7 (harness).** The batch arm of `gnd check` writes to
+  `sys.stdout.buffer`; the in-process runner's `StringIO` has no buffer and
+  first produced a spurious exit 70. The batch pin runs as a real process.
+- **F8 (a vacuous fixture, caught by the harness).** The resolver fixture used
+  reference `mode: simple`, which `popvalidate._resolve_reference` and
+  `model._resolved_primitive` do not follow, so both returned `None` for every
+  flag. The mutation turning `is True` into a truthy test survived. With
+  `mode: popular` the two semantics separate (`1` and `"yes"` resolve through
+  the truthy sites only) and the row kills.
+- **F9 (D2 measured).** 42 golden keys differ by interpreter and are stored per
+  minor version. Causes, each seen in a diff: argparse layout (`cli-help`,
+  `cli-exit`), stdlib JSON messages (3.14 appends `: nan`), the accepted set of
+  `datetime.fromisoformat`, recursion-depth behavior, the `mimetypes` table
+  (quirk Q5 below) in v1 session evidence, and pytest's banner retained in
+  tests-mode stdout (v3).
+- **F10 (size).** A first capture was 11.4 MB, almost all synth corpora. Synth
+  output files are pinned by a per-file sha256 and size map, while the oracle's
+  expected states stay pinned in full by `test_oracle`; any observed value over
+  64 KiB is recorded by digest. Goldens are 2.8 MB of bytes.
+- **F11 (N1 fallback everywhere).** No clock is injected. Injecting a counting
+  clock into `agent_cli` or the session controller would feed their deadline
+  arithmetic, and the number of clock reads varies with scheduling, so N1/N2
+  placeholders apply to every monotonic and seconds field.
+- **F12 (pinned as found).** After `result.json` is removed from a completed
+  run, `read_resume_state` refuses for v1–v6 ("feedback identity does not bind
+  the current immutable attempt") and succeeds for v7 and v8. Resuming through
+  the CLI (the test patches `cli._next_session_run_root` to return the
+  existing run) completes for v1, v4, v5 and v6, refuses for v2 (persisted
+  feedback inconsistent) and v7/v8 (controller budget exhausted), and refuses
+  for v3 because tests-mode creates its run root exclusively and has no resume.
+- **F13 (departure from §6.5).** `validate_claim_graph` and
+  `assurance_inheritance.validate_result` are mapped to their existing exact
+  refusal tests rather than given new pins; `compare_observations` has a new
+  pin. The per-case assurance block is pinned inside every T-SEM-CHK JSON
+  report.
+- **F14 (D3 measured).** The table has 167 rows against the estimate of about
+  90. Helper sites, datetime sites and single functions use a function-entry
+  `raise`, which proves the node exercises that exact function. No source
+  mutation is specific to one checker case or one session version, so their
+  "rows of their own" reuse one mutation per lane, each row naming one node.
+  Refusal branches (diff vocabulary mismatch, extract of temporal models,
+  version-probe failure, tests-mode resume) have their own rows. Three meta
+  nodes are listed in the table's `exempt` list with reasons.
+- **F15 (tool).** `mutate --jobs N` runs rows in parallel, each against its own
+  source copy and pytest temporary root. `capture` runs the pin files in
+  capture mode, which exercises the same observation code as the tests.
+- **F16 (D5 measured).** The unified alias resolver changes no count: the
+  tool's output at `e834c6e` is byte-identical before and after, and identical
+  to `metrics-RF0.json`. The new lexical-scope test was red against the old
+  tool.
+
+### Quirk added
+
+- Q5: the media type recorded in a candidate inventory comes from the stdlib
+  `mimetypes` table, so a `.yaml` candidate is `application/octet-stream` under
+  3.11 and `application/yaml` under 3.13 and later.

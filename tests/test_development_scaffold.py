@@ -26,8 +26,8 @@ def check_references(root):
         if any(part in {'.git', '.venv', '__pycache__'} for part in path.parts):
             continue
         for href in re.findall(r'\]\(([^)]+)\)', path.read_text()):
-            if '://' in href or href.startswith('#'):
-                continue
+            if '://' in href or href.startswith(('#', '<')):
+                continue  # URLs, anchors and <placeholder> paths retained verbatim in records
             assert (path.parent / href.split('#')[0]).exists(), (path, href)
     boot = (root / 'docs/development/bootstrap.md').read_text()
     assert 'No source-checkout bootstrap is required' in boot

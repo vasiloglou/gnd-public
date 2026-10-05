@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {
+    "path": ".gnd-planning/milestones/code-refactoring/notes/code-refactoring-plan.md",
+    "sha256": "db81fdcf9ce31956e56c9bb9a0e7ad305acd343f3dabc836b5ea468c3cea9ce7",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "code-refactoring milestone plan review r1",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Cite one concrete location in the plan for every concern.",
+      "Check that every phase criterion is falsifiable: a run of the stated work could fail it.",
+      "Check that the behavior-preservation claims are enforceable: pins land before moves, digest-bound bytes and variant encoders, monkeypatch targets and source-scan tests after module moves.",
+      "Check sequencing and dependencies, including the recorded owner rulings on execution authority, public-launch sign-off ordering and the RF7 deferral.",
+      "Reject unbounded execution: each phase needs measurable budgets and a stop condition.",
+      "Flag any plan statement that relies on an unverified audit claim without saying so."
+    ]
+  }
+}

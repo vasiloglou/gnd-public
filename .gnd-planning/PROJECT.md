@@ -39,3 +39,17 @@ GitHub billing. **Phase 5 publication is deferred**: the owner makes the reposit
 public manually, and PyPI, the release and announcements wait for an owner trigger.
 gnd-public is now the only development repository; the source repository is to be
 archived. This section supersedes the paused and pending statements above.
+
+## code-refactoring — in progress, 2026-10-05
+
+A behavior-preserving restructuring of `src/gnd`
+([plan](milestones/code-refactoring/notes/code-refactoring-plan.md)): pin
+current behavior, then break the core import cycle, consolidate copied
+helpers, split the CLI into command groups, add a model query layer and
+merge the session versions. Tightening that changes accepted inputs is
+deferred to a successor milestone. The plan was approved on 2026-10-05
+([gate](milestones/code-refactoring/003-plan-gate.md)) and updated by text-only
+erratum e1 ([005](milestones/code-refactoring/005-plan-erratum.md)). **RF0** (baseline,
+measurement tool, authority handoff) is recorded in
+[004](milestones/code-refactoring/004-phase-RF0.md). **Next:** RF1
+characterization tests, run with `process-phase RF1 code-refactoring`.

@@ -1,0 +1,792 @@
+{
+  "schema_version": 1,
+  "run_sha256": "f17fb3b806b67308e19331ccdd3da9b0cdb333c0d155306201af2796bc2a9156",
+  "summary": "Six of six reviewers succeeded (five revise, one block). 39 concerns: 33 fall into 12 agreed groups and 6 are divergent. The structure (pins before moves, variant encoders never merged, shims, source-scan widening) was judged sound. The main gaps are falsifiability: unverified audit counts used as criteria, spec-delegated targets, pins that miss later phases' surfaces, no layer map. The RF0 ledger handoff also collides with public-launch's ledger.",
+  "agreed_concerns": [
+    {
+      "group_id": "G1",
+      "severity": "high",
+      "title": "Audit counts used as pass/fail criteria without RF0 confirmation",
+      "summary": "Numbers the plan admits are unverified (13-module SCC, 11 sites, 47 private imports, 12 patch files) are stated as fact and used as criteria; criteria should be phrased over the RF0-measured inventory.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unverified-audit-claims"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rf4-unverified-count"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf4-c3-hardcoded-audit-count"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "audit-counts-as-criteria"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unverified-audit-numbers-in-criteria"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "audit-counts-embedded-in-criteria"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G2",
+      "severity": "high",
+      "title": "Renames and visibility changes contradict RF-R1 without a decision row or shim obligation",
+      "summary": "RF2 renames the model_digest functions, and RF4/RF8 publish or rename names, while RF-R1 preserves API names; old names need listed shims or an explicit ruling.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rf2-digest-api-compat"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf-r2-rename-no-decision-row"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "public-renames-without-decision-row"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "G3",
+      "severity": "high",
+      "title": "RF1 pins do not cover the surfaces RF3, RF4 and RF6 change",
+      "summary": "Pin-before-move is unenforceable for checker verdicts, diff, safefs, assurance, synth oracle and agent_cli behavior, and RF3/RF4/RF6/RF8 do not list 'RF1 pins unchanged'.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf1-pin-coverage-rf4-rf6"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf1-pins-miss-moved-surfaces"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G4",
+      "severity": "high",
+      "title": "Metric targets are delegated to the spec being gated and can be vacuous",
+      "summary": "RF2-C2, RF3-C2, RF5-C3 and RF6-C1 take thresholds from the spec with no floor; RF5 can split without limit; no stop rule for unreachable targets.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "self-referential-phase-targets"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "budgets-unbounded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "spec-set-metric-targets-vacuous"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G5",
+      "severity": "high",
+      "title": "Completion predicate 4 (thin entry points) has no enforcing criterion",
+      "summary": "No RF5 criterion checks the domain-logic clause and the cli.py ceiling is self-declared.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "predicate4-no-enforcing-check"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate4-thin-entry-unfalsifiable"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G6",
+      "severity": "medium",
+      "title": "No declared layer and lane map, so layering criteria cannot fail",
+      "summary": "Predicate 2's layering test, RF4-C2's 'lane' and the RF1 test scope need a committed module-to-layer assignment.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unfalsifiable-predicates"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf1-layering-test-scope-unstated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf4-c2-purpose-qualifier-unmeasurable"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "G7",
+      "severity": "high",
+      "title": "RF0 handoff edits public-launch's ledger and test, with a wrong path and a circular gate",
+      "summary": "The ledger is .gnd-planning/milestones/public-launch/migration/units.json, guarded by a public-launch test; RF0 'may run now' yet would edit it mid-sign-off, and the header makes src/gnd edits depend on that same record.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-preempts-public-launch-ledger"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-units-ledger-path-and-timing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf0-src-gnd-gate-circular"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G8",
+      "severity": "medium",
+      "title": "Ruled decisions are still treated as open, and RF0 criteria miss the handoff",
+      "summary": "Section 10's preamble calls every row a proposal and RF0 is told to settle RF-D2; RF0 criteria do not check the handoff record.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-settles-ruled-decisions"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "section10-preamble-contradicts-ruled-rows"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-criteria-miss-handoff"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "G9",
+      "severity": "medium",
+      "title": "RF7 deferral not reflected in scope and verification sections",
+      "summary": "Section 1, the Section 3 chain, Section 7 and the Section 9 RF7 row still read as if RF7 runs.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf7-in-verification-table"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf7-deferral-not-reflected-in-scope-sections"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "G10",
+      "severity": "medium",
+      "title": "RF0-C1 accepts any explanation and does not confirm the SCCs later criteria rely on",
+      "summary": "RF4-C1 and RF8-C3 name cycles RF0 never has to confirm; the explanation escape hatch makes RF0-C1 unfailable.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-c1-escape-hatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf4-c1-sccs-not-required-confirmed"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "G11",
+      "severity": "medium",
+      "title": "Monkeypatch and source-scan rules are enforced only in RF5 and conflict with move-only commits",
+      "summary": "RF-R5/RF-R6 need criteria in every moving phase, and a move-only commit must include the test re-point so every commit is green.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "move-only-vs-monkeypatch-repoint"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf-r5-r6-absent-from-moving-phase-criteria"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "G12",
+      "severity": "medium",
+      "title": "Observable changes hosted inside behavior-preserving phases",
+      "summary": "RF-D6's switch to strict resolver semantics in RF3 and RF-D8's message change in RF8 are observable changes inside phases Section 3 calls behavior-preserving.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-d6-tightening-in-preserving-phase"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf8-behavior-preserving-vs-message-text"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rf-d2-gate-ends-before-publication"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rf8-replay-coverage-thin"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "source-repo-stop-undetectable"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "xfail-not-strict"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "diverged-families-unenumerated-no-decision-owner"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "rf6-package-split-uncovered"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "F1",
+      "rank": 1,
+      "title": "Audit counts used as pass/fail criteria without RF0 confirmation",
+      "action": "Mark every audit-derived number at its point of use and restate criteria over the RF0-measured inventory (e.g. every synth.boundary to synth.mutate private import the RF0 tool lists is replaced).",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unverified-audit-claims"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rf4-unverified-count"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf4-c3-hardcoded-audit-count"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "audit-counts-as-criteria"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unverified-audit-numbers-in-criteria"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "audit-counts-embedded-in-criteria"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "unverified-audit-claims",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rf4-unverified-count",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf4-c3-hardcoded-audit-count",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "audit-counts-as-criteria",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unverified-audit-numbers-in-criteria",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "audit-counts-embedded-in-criteria",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F2",
+      "rank": 2,
+      "title": "RF0 handoff edits public-launch's ledger and test, with a wrong path and a circular gate",
+      "action": "Name the real ledger path; record the handoff in a code-refactoring record now and change public-launch's ledger and its test only after public-launch Phase 4 sign-off; rewrite the header gate so it is not circular.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-preempts-public-launch-ledger"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-units-ledger-path-and-timing"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf0-src-gnd-gate-circular"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-preempts-public-launch-ledger",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-units-ledger-path-and-timing",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf0-src-gnd-gate-circular",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F3",
+      "rank": 3,
+      "title": "RF1 pins do not cover the surfaces RF3, RF4 and RF6 change",
+      "action": "Extend RF1 (or make it a per-spec obligation) with pins over checker verdicts and issue order, diff output, safefs results, assurance and synth-oracle outputs and agent_cli behavior; add 'all RF1 pins unchanged' to RF3, RF4, RF6 and RF8.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf1-pin-coverage-rf4-rf6"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf1-pins-miss-moved-surfaces"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf1-pin-coverage-rf4-rf6",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf1-pins-miss-moved-surfaces",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F4",
+      "rank": 4,
+      "title": "Metric targets are delegated to the spec being gated and can be vacuous",
+      "action": "Add an RF-R9 rule: each target derives from the RF0 measurement, is strictly better than baseline, and is owner-approved at the spec gate; give plan-level floors (merged families reach one definition, cli.py ceiling) and a stop rule for unreachable targets and RF5 splits.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "self-referential-phase-targets"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "budgets-unbounded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "spec-set-metric-targets-vacuous"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "self-referential-phase-targets",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "budgets-unbounded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "spec-set-metric-targets-vacuous",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F5",
+      "rank": 5,
+      "title": "Completion predicate 4 (thin entry points) has no enforcing criterion",
+      "action": "Give predicate 4 a check: command modules import domain behavior only from api.py or lane service modules (allow-list), measured by the RF0 tool.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "predicate4-no-enforcing-check"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate4-thin-entry-unfalsifiable"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "predicate4-no-enforcing-check",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "predicate4-thin-entry-unfalsifiable",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F6",
+      "rank": 6,
+      "title": "No declared layer and lane map, so layering criteria cannot fail",
+      "action": "Have RF0 commit a module-to-layer and lane map; state the RF1 layering test's scope and widen it as RF4-RF6 add modules; restate RF4-C2 as an edge rule over the map.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unfalsifiable-predicates"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf1-layering-test-scope-unstated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf4-c2-purpose-qualifier-unmeasurable"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unfalsifiable-predicates",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf1-layering-test-scope-unstated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf4-c2-purpose-qualifier-unmeasurable",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F7",
+      "rank": 7,
+      "title": "Renames and visibility changes contradict RF-R1 without a decision row or shim obligation",
+      "action": "Add a decision row: renames and visibility changes keep the old name importable through a listed shim, and the old name appears in no pinned bytes or digest input; otherwise each rename gets its own ruling.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rf2-digest-api-compat"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf-r2-rename-no-decision-row"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "public-renames-without-decision-row"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rf2-digest-api-compat",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf-r2-rename-no-decision-row",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "public-renames-without-decision-row",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "fix_id": "F8",
+      "rank": 8,
+      "title": "Monkeypatch and source-scan rules are enforced only in RF5 and conflict with move-only commits",
+      "action": "Add RF-R5/RF-R6 criteria to RF2, RF3, RF4, RF6 and RF8, and define the move-only unit as move plus test re-point with every commit green.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "move-only-vs-monkeypatch-repoint"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf-r5-r6-absent-from-moving-phase-criteria"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "move-only-vs-monkeypatch-repoint",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf-r5-r6-absent-from-moving-phase-criteria",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F9",
+      "rank": 9,
+      "title": "Observable changes hosted inside behavior-preserving phases",
+      "action": "Keep both resolver semantics behind a pinned variant parameter in RF3; move the strict switch and the message change out of preserving phases, or rule them before the spec gate and name them as the phase's only observable change.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-d6-tightening-in-preserving-phase"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf8-behavior-preserving-vs-message-text"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf-d6-tightening-in-preserving-phase",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf8-behavior-preserving-vs-message-text",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F10",
+      "rank": 10,
+      "title": "RF0-C1 accepts any explanation and does not confirm the SCCs later criteria rely on",
+      "action": "Require RF0 to list every cycle named by a later criterion as confirmed, refuted or new, with differing edges identified; define what RF4-C1 and RF8-C3 mean for an unreproduced cycle.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-c1-escape-hatch"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf4-c1-sccs-not-required-confirmed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-c1-escape-hatch",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf4-c1-sccs-not-required-confirmed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F11",
+      "rank": 11,
+      "title": "Ruled decisions are still treated as open, and RF0 criteria miss the handoff",
+      "action": "Split Section 10 into ruled and open rows; RF0 records RF-D1, RF-D2, RF-D7 and settles only RF-D3 to RF-D4; add RF0 criteria for the handoff record and the ownership test.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-settles-ruled-decisions"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "section10-preamble-contradicts-ruled-rows"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-criteria-miss-handoff"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rf0-settles-ruled-decisions",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "section10-preamble-contradicts-ruled-rows",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rf0-criteria-miss-handoff",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F12",
+      "rank": 12,
+      "title": "RF7 deferral not reflected in scope and verification sections",
+      "action": "Annotate Sections 1, 3, 7 and 9 with the RF-D7 deferral.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf7-in-verification-table"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf7-deferral-not-reflected-in-scope-sections"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rf7-in-verification-table",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rf7-deferral-not-reflected-in-scope-sections",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ]
+    }
+  ]
+}

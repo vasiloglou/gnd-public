@@ -1,3 +1,3 @@
 $ uv run python tools/rf1_pins.py mutate --out <scratch> --jobs 6
 rows: 167  killed: 167  not killed: 0
-exit=0 elapsed_seconds=93
+exit=0 elapsed_seconds=94

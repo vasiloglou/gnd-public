@@ -674,3 +674,12 @@ decision; where one departs from the spec's text, the departure is named.
 - Q5: the media type recorded in a candidate inventory comes from the stdlib
   `mimetypes` table, so a `.yaml` candidate is `application/octet-stream` under
   3.11 and `application/yaml` under 3.13 and later.
+
+## Owner amendments during implementation (o)
+
+(o) 2026-10-05, owner reply in chat: "1 I am ok with it". It answered the
+RF-D13 question on D10's per-file overruns: `tests/fixtures/rf1-pins/mutations.json`
+(1,705 lines against a 700 estimate) and `tests/test_rf1_helper_pins.py`
+(535 against 350). Both overruns are accepted as measured; the total stays
+under the 6,525-line stop. They are carried to the milestone close table as
+original estimates that were missed.

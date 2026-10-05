@@ -252,6 +252,46 @@ def test_append_once_directory_writes_manifest_last_and_refuses_duplicates(
     )
 
 
+def test_append_once_directory_creates_requested_empty_directories(tmp_path: Path) -> None:
+    root = tmp_path / "root"
+    root.mkdir()
+    inventory = publish_directory_once(
+        root,
+        "attempts/0001",
+        {"attempt.json": b"{}\n"},
+        manifest_name="attempt.json",
+        empty_directories=("candidate",),
+    )
+
+    published = root / "attempts" / "0001"
+    assert inventory.file_count == 1
+    assert (published / "candidate").is_dir() and not any((published / "candidate").iterdir())
+    assert (published / "attempt.json").is_file()
+
+
+@pytest.mark.parametrize(
+    ("directories", "members"),
+    [
+        (("candidate/deeper",), {"attempt.json": b"{}\n"}),
+        (("candidate", "candidate"), {"attempt.json": b"{}\n"}),
+        (("candidate",), {"attempt.json": b"{}\n", "candidate/main.py": b"x\n"}),
+        (("attempt.json",), {"attempt.json": b"{}\n"}),
+        (("..",), {"attempt.json": b"{}\n"}),
+    ],
+)
+def test_append_once_directory_refuses_unsafe_empty_directories(
+    tmp_path: Path, directories: tuple[str, ...], members: dict[str, bytes]
+) -> None:
+    root = tmp_path / "root"
+    root.mkdir()
+    with pytest.raises(ArtifactError):
+        publish_directory_once(
+            root, "attempts/0001", members, manifest_name="attempt.json",
+            empty_directories=directories,
+        )
+    assert not (root / "attempts" / "0001").exists()
+
+
 @pytest.mark.parametrize(
     "alias",
     ["a//b", "a/./b", "a/b/", " a/b", "a/b ", r"a\b"],

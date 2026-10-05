@@ -1509,9 +1509,14 @@ def publish_directory_once(
     max_depth: int = DEFAULT_MAX_DEPTH,
     expected_root: tuple[int, int] | None = None,
     executable_paths: set[str] | frozenset[str] | None = None,
+    empty_directories: tuple[str, ...] = (),
     _published_identity: list[tuple[int, int]] | None = None,
 ) -> TreeInventory:
     """Publish one descriptor-bound directory, writing its manifest leaf last.
+
+    ``empty_directories`` names direct children that must exist even though
+    they hold no file, such as the snapshot of an attempt whose agent left no
+    candidate bytes. They are created before any member is written.
 
     The destination name itself is the atomic no-replace claim.  Every member
     is then written through the claimed directory descriptor, so no pathname
@@ -1553,6 +1558,17 @@ def publish_directory_once(
         parents = PurePosixPath(member).parents
         if any(parent.as_posix() in member_paths for parent in parents if parent.as_posix() != "."):
             raise ArtifactError(f"artifact member {member} collides with a file parent")
+
+    empty_names: list[str] = []
+    for name in empty_directories:
+        name_parts = _safe_parts(name, field="artifact empty directory")
+        if len(name_parts) != 1:
+            raise ArtifactError("artifact empty directories must be direct children")
+        if name in empty_names or any(
+            member == name or member.startswith(name + "/") for member in member_paths
+        ):
+            raise ArtifactError(f"artifact empty directory {name!r} collides with a member")
+        empty_names.append(name)
 
     normalized_executable: set[str] = set()
     for executable in executable_paths or ():
@@ -1617,6 +1633,8 @@ def publish_directory_once(
             or (destination_opened.st_dev, destination_opened.st_ino) != destination_identity
         ):
             raise ArtifactError("artifact destination changed before it opened")
+        for name in empty_names:
+            _mkdir_directory_once(destination_fd, name)
         order = sorted(name for name in normalized_files if name != normalized_manifest)
         for name in order:
             _write_new_file_at(

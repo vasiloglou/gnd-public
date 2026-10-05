@@ -431,7 +431,7 @@ class UnvalidatedPopulationError(Exception):
         )
 
 
-def check(model: Model, population: Population) -> CheckReport:
+def check_legacy(model: Model, population: Population) -> CheckReport:
     """Check a population against every constraint in the model.
 
     Precondition (D-02): ``population`` must carry the layer-2 validation marker
@@ -4362,7 +4362,7 @@ def _derivation_obligation(
     )
 
 
-def _evaluate_derivations(
+def evaluate_derivations_legacy(
     model: Model,
     population: Population,
     *,
@@ -4389,7 +4389,7 @@ def _evaluate_derivations(
     return calculated.extensions, obligations
 
 
-def _constraint_view(
+def constraint_view_legacy(
     model: Model,
     population: Population,
     extensions: Mapping[str, _TypedRelation],
@@ -4428,8 +4428,8 @@ def _constraint_view(
     )
 
 
-_PHASE3_LEGACY_EVALUATE_DERIVATIONS = _evaluate_derivations
-_PHASE3_LEGACY_CONSTRAINT_VIEW = _constraint_view
+_PHASE3_LEGACY_EVALUATE_DERIVATIONS = evaluate_derivations_legacy
+_PHASE3_LEGACY_CONSTRAINT_VIEW = constraint_view_legacy
 
 
 def _exact_derivation_obligation(
@@ -4547,7 +4547,7 @@ def _evaluate_derivations_dispatch(
             key: value for key, value in safe_extensions.items() if key not in affected
         }), verdicts
     if not _model_uses_exact_derivations(model):
-        return _PHASE3_LEGACY_EVALUATE_DERIVATIONS(
+        return evaluate_derivations_legacy(
             model,
             population,
             calculator=calculator,
@@ -4574,7 +4574,7 @@ def _constraint_view_dispatch(
 ) -> _RuledFactView:
     unavailable = getattr(extensions, "unavailable", {})
     if not unavailable:
-        return _PHASE3_LEGACY_CONSTRAINT_VIEW(model, population, extensions)
+        return constraint_view_legacy(model, population, extensions)
     completed = dict(extensions)
     fact_types = {str(item.get("id")): item for item in model.fact_types}
     for fact_type_id in unavailable:
@@ -4584,7 +4584,7 @@ def _constraint_view_dispatch(
             _relation_roles(model, fact_type),
             (),
         )
-    return _PHASE3_LEGACY_CONSTRAINT_VIEW(model, population, MappingProxyType(completed))
+    return constraint_view_legacy(model, population, MappingProxyType(completed))
 
 
 # B1: the pinned FunctionDefs above remain byte-identical. Public lookup is
@@ -4650,7 +4650,7 @@ def _guarded_atom_index(
     return fact_type_id, role_names, rows
 
 
-_PHASE3_LEGACY_CHECK = check
+_PHASE3_LEGACY_CHECK = check_legacy
 
 
 def _guarded_term_failure(
@@ -4836,7 +4836,7 @@ def _partial_constraint_report(
 def _check_dispatch(model: Model, population: Population) -> CheckReport:
     """Preserve exact-term unavailability instead of consuming an empty relation."""
     report = _partial_constraint_report(
-        model, population, _PHASE3_LEGACY_CHECK(model, population)
+        model, population, check_legacy(model, population)
     )
     if not _model_uses_exact_derivations(model) and not any(
         isinstance(constraint, dict)

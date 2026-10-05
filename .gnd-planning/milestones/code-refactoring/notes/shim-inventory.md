@@ -53,3 +53,7 @@ Patch migration: tests/test_conformance_payload.py patches
 conformance.service.model_file_sha256, the real consumer lookup. Its exception
 is observed through build_conformance. Source hash/import-scan scopes cover both
 original consumers and the new existing homes (artifacts, model, exits).
+
+| gnd.checker._PHASE3_LEGACY_CHECK | gnd.checker.check_legacy | RF3 | RF-D5 |
+| gnd.checker._PHASE3_LEGACY_EVALUATE_DERIVATIONS | gnd.checker.evaluate_derivations_legacy | RF3 | RF-D5 |
+| gnd.checker._PHASE3_LEGACY_CONSTRAINT_VIEW | gnd.checker.constraint_view_legacy | RF3 | RF-D5 |

@@ -196,7 +196,7 @@ def resolve(name):
 
 def test_shim_inventory_covers_moves_and_patch_effects():
     text = (MILESTONE / "notes/shim-inventory.md").read_text()
-    rows = [line.split("|")[1:5] for line in text.splitlines() if line.startswith("| gnd.")]
+    rows = [line.split("|")[1:5] for line in text.splitlines() if line.startswith("| gnd.") and line.split("|")[3].strip() == "RF2"]
     assert len(rows) == 34
     for old, new, phase, retirement in rows:
         old, new = old.strip(), new.strip().split(" (")[0]

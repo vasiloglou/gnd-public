@@ -152,7 +152,7 @@
   "gnd.witness.view": {"lane": "witness", "layer": "lanes"},
   "gnd.yaml_comments": {"layer": "infrastructure"}
  },
- "declared_clean": [],
+ "declared_clean": ["entry", "infrastructure"],
  "allow_list": [],
  "helper_patterns": {
   "canonical_json": "^_?(canonical|canonical_json|canonical_bytes|canonical_json_bytes|canonical_json_text|json_bytes|evolve_json_bytes|canonical_payload)$",

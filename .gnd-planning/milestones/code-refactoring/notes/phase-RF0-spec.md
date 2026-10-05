@@ -351,3 +351,42 @@ counted. The ceilings are in D9. The RF0 record reports the measured sizes.
 This prose plus the test table in §8.1, per D1. The fixtures are generated
 inside the tests, so there is no separate answer key to split out; the
 expected outcomes are the "Expect" column above.
+
+## Owner amendments during implementation (o)
+
+(o) 2026-10-05: answers to three questions asked after an investigation
+found that `main` (`cbb9783`) was 38 commits ahead of this branch's base
+`cf4c1d7`.
+
+1. **Merge `main` and re-baseline.** Merged as `19b131b`. RF0's base moves
+   from `1cf27fb` to `19b131b` throughout this spec. T-SRC therefore runs
+   `git diff --quiet 19b131b HEAD -- src/gnd .gnd-planning/milestones/public-launch`.
+   Main's fixes (the r3 amendments file and `a6e83df`) clear both
+   pre-existing scaffold failures, so the D11 ledger row now expects
+   `uv run pytest -q tests/test_development_scaffold.py` to exit 0.
+2. **RF-D2 is treated as satisfied** under RF-D12. Main records the Phase 3
+   acceptance (`004-phase-3.md`), the Phase 4 sign-off (`008-phase-4-signoff.md`)
+   and the milestone close (`009-milestone-close.md`). The close defers
+   Phase 5 and will rebuild the candidate from the then-current commit,
+   because the Phase 4 artifacts were not retained, so a tag would protect
+   nothing. RF2 and later may start once RF0 and RF1 are recorded; there is
+   no tag condition. This plan's RF-D2 text is repaired at milestone close.
+3. **The distribution test is fixed separately.** It landed as a plain PR
+   from `main` (vasiloglou/gnd-public#8), outside this phase, consistent
+   with D4.
+
+## Implementation findings, recorded as found
+
+- The core SCC has 14 modules: the dynamic `__import__` at
+  `semantic_spec.py:1613` adds `semantic_spec`
+  ([rf0-baseline.md](rf0-baseline.md) A3, F3).
+- "Module stays unloaded" checks mostly run inside subprocess code
+  strings. The `sys_modules` scan was extended to string literals
+  containing `sys.modules`, within the §6.1 branch "`sys.modules`
+  lookups"; T9 covers the string case.
+- The first `SESSION_CONTRACT_VERSION` assignment is not dead (F1); this
+  refutes part of RF-D8.
+- Under D7, the canonical-JSON helpers the audit called identical are all
+  diverged (F2). Routed to the RF2 spec gate.
+- `tools/gnd_arch.py` measures 811 lines against the 750 estimate (D9
+  ceiling 900; the 1.5× stop is at 1,125), and the tests 505 against 500.

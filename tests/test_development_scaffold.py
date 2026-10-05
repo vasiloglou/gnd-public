@@ -113,7 +113,8 @@ def test_source_owned_units_and_preserved_question_states():
 @pytest.mark.evidence
 def test_manifest_bytes_modes_and_sizes():
     # B1 is immutable historical selection; The current batch attributes changed bytes.
-    from test_public_distribution import audit_tree, manifest
+    # The r3 amendment retired whole-tree attribution, so new files need no manifest row.
+    from test_public_distribution import manifest
     b1_path = ROOT/MILESTONE/'migration/b1-files.json'
     assert hashlib.sha256(b1_path.read_bytes()).hexdigest() == '7e2bcccd41671743fdcedad2a856c78b59da7265256c0955256964554bb29c87'
     b1 = json.loads(b1_path.read_text())
@@ -123,7 +124,6 @@ def test_manifest_bytes_modes_and_sizes():
         assert successor['baseline_sha256'] == row['public_sha256']
         if successor['public_sha256'] != row['public_sha256']:
             assert successor['kind'] == 'adaptation' and successor['reason']
-    audit_tree(ROOT)
 
 
 @pytest.mark.parametrize('mutation', ['missing-reference', 'twin-bytes', 'twin-mode',

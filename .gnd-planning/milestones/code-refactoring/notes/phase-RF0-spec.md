@@ -2,9 +2,9 @@
 
 ## 1. Status
 
-**Awaiting owner review.** No implementation file exists. Under
-`auto=false`, nothing in this spec is implemented before the owner rules the
-decisions in section 7.
+**Owner-decided (2026-10-05).** The owner approved this spec at commit
+`284e8b3` with every decision D1–D12 as proposed (section 7, *Owner
+rulings*). Implementation may begin.
 
 ## 2. Provenance
 
@@ -260,6 +260,18 @@ ruling RF-D1; the public-launch ledger records the transfer after the Phase
 | D10 | Cycle assignment and allow-list (F7) | Core → RF3; `assurance`, synth `assemble`/`mutate` and `api`↔`diff` → RF4; session → RF8. Any new SCC is assigned at this gate's record or allow-listed with a reason and successor. The allow-list count is an RF-R9 metric that may not grow in any later phase | As stated |
 | D11 | Pre-existing red controls | At `7e08e1e` and `1cf27fb`, `tests/test_development_scaffold.py` fails two tests: `test_reference_closure_and_declared_bootstrap` (public-launch `phase-4-spec.md` links to an absent `public-launch-plan-r3-amendments.md`) and `test_manifest_bytes_modes_and_sizes` (unattributed paths). RF0 doesn't repair them, because they're public-launch's. Its gate requires the failing set to be exactly these two | As stated |
 | D12 | RF5-C2's entry-point rule in the RF0 tool | (a) build it in RF0, where nothing exists to check yet and the rule's allow-list belongs to the RF5 spec; (b) defer the rule to RF5 as a tool extension | (b) |
+
+### Owner rulings (o)
+
+(o) 2026-10-05, owner reply in chat: "I approve". It answered the request to
+rule D1–D12 as proposed, with no amendment. Each row of the table above is
+therefore ruled as its *Proposal* column states.
+
+D3 changes what plan predicate 5 can deliver. Because the approved plan's
+bytes are not rewritten mid-milestone, D3 is recorded as a **refuted
+premise** in the RF0 record: predicate 5's co-change column cannot be
+measured in this repository. An open question, owned by the milestone
+close, will repair the plan text there.
 
 ## 8. Tests and verification
 

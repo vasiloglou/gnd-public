@@ -1,0 +1,4 @@
+uv run pytest -q tests/test_documentation_tutorials.py tests/test_external_runtime_tutorials.py tests/test_bookrec_tutorial.py tests/test_expense_tutorial.py tests/test_release_docs.py tests/test_release_examples.py tests/test_public_generated_examples.py tests/test_contributor_preparation.py tests/test_development_scaffold.py tests/test_public_agent_failure_transition.py tests/test_artifacts.py --tb=short
+target 91f12e207ba4040cd308862c6f91b2191584c3c4, macOS arm64
+232 passed, 1 deselected in 92.74s (0:01:32)
+exit 0

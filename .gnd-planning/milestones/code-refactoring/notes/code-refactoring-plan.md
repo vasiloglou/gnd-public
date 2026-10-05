@@ -1,52 +1,65 @@
 # GND code refactoring — layered core, shared infrastructure, thin CLI
 
-**Status:** candidate r1, 2026-10-05. The owner asked for a milestone built
+**Status:** candidate r2, 2026-10-05. The owner asked for a milestone built
 around code refactoring. This document is that plan. It does not approve the
-plan or approve any phase. The owner ruled RF-D1 on 2026-10-05: all work
-happens in `gnd-public`. The owner accepted the RF-D2 and RF-D7 proposals
-the same day. Nothing in `src/gnd` changes until the plan gate, the RF0
-handoff record, and the public-launch sign-offs that RF-D2 names.
+plan or approve any phase. Candidate r1 (`81f0362`) received a six-of-six
+light panel review ([record](../001-panel.md)). r2 repairs every agreed
+concern group and five of the six divergent views (see *r2 changes* at the
+end). No panel opinion covers the r2 bytes until they are reviewed.
+
+Owner rulings so far are listed in section 10. `src/gnd` stays untouched
+until three things hold: the owner plan gate has passed, the RF0 record
+contains the authority-handoff statement, and the public-launch conditions
+of RF-D2 are recorded. None of these depends on an edit to `src/gnd`, so
+the gate is not circular.
 
 **Inspection baseline:** `7e08e1e`. Input:
 [architecture audit](../../../../docs/development/architecture-audit.md),
 a read-only audit taken at `cf4c1d7` that is explicitly non-authoritative.
-For this draft, the audit's scope numbers were re-measured at `7e08e1e`
-(148 modules, 104,062 lines excluding skills and examples; `cli.py` 9,088,
-`model.py` 5,157, `checker.py` 5,143 lines). No other audit claim was
-re-proved. RF0 re-measures all of them with a committed tool.
+For r1 only the audit's scope numbers were re-measured at `7e08e1e`: 148
+modules, 104,062 lines excluding skills and examples; `cli.py` 9,088,
+`model.py` 5,157 and `checker.py` 5,143 lines. **Every other number in this
+plan is an audit claim that has not been re-proved.** Where such a number
+appears it is marked *(audit)*, and no criterion depends on it. Criteria
+are stated over the inventory that RF0 measures.
 
 ## Thesis and completion predicates
 
-GND's structure no longer matches its intended layers. The core is a
-13-module import cycle once lazy imports are counted. Shared primitives (canonical
-JSON, digests, safe filesystem writes, strict loading) are copied, and some
-copies have diverged. `cli.py` is where most features end up. We restructure
-in small, behavior-preserving steps: pin current behavior first, then move
-code, and tighten behavior only through separate, explicitly approved
-decisions.
+GND's structure no longer matches its intended layers. The audit reports
+that the core forms a 13-module import cycle once lazy imports are counted
+*(audit)*. It also reports that shared primitives (canonical JSON, digests,
+safe filesystem writes, strict loading) are copied, with some copies
+diverged, and `cli.py` is where most features end up. We restructure in
+small, behavior-preserving steps: pin current behavior first, then move
+code. This milestone changes no observable behavior. Every tightening is
+deferred (RF-D7).
 
 The milestone can close when all of the following hold:
 
-1. **Behavior pinned:** every public CLI command's parser tree, help text and
-   exit-code map, every canonical-encoder variant's bytes, every
-   `model_digest` meaning, and one golden replay per session-contract version
-   are characterization tests that were green before the first move and stay
-   green at close, unchanged except through recorded compatibility decisions.
-2. **Layering holds:** the committed import-graph measurement reports no
-   strongly connected component among the model, population, checking and
-   semantics layers (lazy imports counted), and a test fails if a
-   lower-layer module imports a higher layer.
-3. **One home per primitive:** each identical helper family named in RF2 has one
-   definition. Each diverged family has either one implementation behind
-   an explicit `strict=`/variant parameter whose variants are pinned
-   byte-for-byte, or a recorded decision to keep it separate.
-4. **Thin entry points:** `cli.py` is a dispatcher over `commands/<group>.py`
-   modules, and no command handler holds domain logic that `api.py` or a lane
-   `service.py` cannot also reach.
-5. **Honest measurements:** a numerical before/after table (cycle sizes,
-   private cross-module imports, duplicate counts, largest-module sizes) is
-   committed at close, with every target either met or recorded as missed
-   along with its reason.
+1. **Behavior pinned:** the RF1 characterization suite (section 4, RF1) was
+   green on the pre-move code and is green at close. No pin's expected
+   value has changed, except a pin named by an owner-ruled exception under
+   RF-R1.
+2. **Layering holds:** every module under `src/gnd` (skills and examples
+   excluded) has an entry in the committed layer map. The layering test runs
+   over every layer of the map with no xfail marker, and fails on any import
+   from a lower layer to a higher one (lazy imports included) that is not
+   on its allow-list. Each allow-list entry names a reason and the
+   successor work that would remove it. The RF0 tool reports no strongly
+   connected component that spans more than one module in the model,
+   population, checking or semantics layers.
+3. **One home per primitive:** every family that the RF0 family list marks
+   identical has exactly one definition. Every family marked diverged keeps
+   its variants, each pinned byte for byte, as RF-D11 rules.
+4. **Thin entry points:** `cli.py` is at most 2,500 lines. The RF0 tool's
+   entry-point rule (RF5-C5) reports no violation: each
+   `commands/<group>.py` module imports domain behavior only from
+   `gnd.api`, a lane `service` module, `gnd.exits`, `commands/_output` or
+   the named allow-list.
+5. **Honest measurements:** a before/after table (SCCs, private
+   cross-module imports, duplicate counts, largest-module sizes, co-change
+   pairs) is committed at close. Every target is either met or recorded as
+   missed, with the measured value and the reason.
 
 ## 0. Binding design rules
 
@@ -57,29 +70,43 @@ are the baseline. In addition:
 
 | Rule | Requirement |
 |---|---|
-| RF-R1 — Behavior-preserving by default | Moves and merges preserve CLI/API names, schemas, exit codes, messages, refusals, deterministic output bytes and digests. Any observable change needs its own decision row and owner ruling. Merely sitting in a refactor phase does not authorize it. |
-| RF-R2 — Bytes are contracts | Move canonical encoders and digest helpers verbatim. Never merge variant encoders. A digest helper with a different meaning is renamed, not unified. |
-| RF-R3 — Pin before move | No module moves until RF1's characterization tests for the touched surface are green on the pre-move code. A move that needs a characterization pin to change has failed. |
-| RF-R4 — Move-only diffs are separate | Every move lands as a move-only commit (re-exports included) before any edit to the moved code, so reviewers can check a move without reading semantics. |
-| RF-R5 — Compatibility shims are inventoried | Old import paths stay importable through re-exports listed in one shim inventory, each with its retirement trigger. Re-exports do not carry monkeypatches across: every `monkeypatch` of a moved name is re-pointed at the new location in the same phase. |
-| RF-R6 — Source scans must not shrink | Tests that scan source text (`inspect.getsource`, reads of `cli.py`, "module stays unloaded" checks) are widened to cover each new module in the same phase. A test asserts that the scanned set covers every module it is meant to cover. |
-| RF-R7 — One authority per unit | All work happens in `gnd-public` (RF-D1). The `runtime` and `test-acceptance` units are still recorded as source-owned (`migration/units.json`), so RF0 records their handoff before any phase edits them, and the source repository stops accepting changes to them from then on. |
-| RF-R8 — Release identity changes on every edit | `production_identity` hashes every `src/gnd/**/*.py` by path, and the distribution-lane manifest pins source bytes. Prior release or assurance evidence is never reused over refactored bytes. Unavailable evidence is reported as unavailable. |
-| RF-R9 — Measured budgets | Each spec states its before/after import-graph metrics, its touched-file and moved-line budget, and its shim count, all taken from the RF0 tool. A metric that gets worse without a recorded reason is a review finding. |
-| RF-R10 — No feature work | No new semantic family, CLI command, flag or schema version. Defects found along the way are recorded as open questions unless a decision row puts the fix in scope. |
-| RF-R11 — Focused but honest verification | The reduced v6.3 selection applies. Because model, checker and CLI moves affect almost every consumer, each spec measures its impact closure instead of assuming it is small. Running the whole default lane is a named selection, not something to reach for by habit. |
+| RF-R1 — Behavior-preserving, without exception | Moves and merges preserve CLI and API names, schemas, exit codes, messages, refusals, deterministic output bytes and digests. This milestone hosts no observable change. A change found to be necessary is recorded as an open question for the RF7 successor, unless the owner rules a named exception that the phase spec states as its only observable change. |
+| RF-R2 — Bytes are contracts | Canonical encoders and digest helpers move verbatim. Variant encoders are never merged. A digest helper with a different meaning is renamed under RF-D10, not unified with the others. |
+| RF-R3 — Pin before move | A phase may move or re-route code only on surfaces that RF1 pins. A spec that touches an unpinned surface first adds pins for it, and they must be green on the pre-move code. A move that needs a pin's expected value changed has failed. |
+| RF-R4 — Atomic move units | A move unit is one commit containing the move itself, its re-exports, its updates to `monkeypatch` targets and its widened source scans, with no edit to the moved code. Each move unit is green on its own against the phase's verification selection, so no commit leaves a patch or scan test red. Edits to moved code land in later commits. |
+| RF-R5 — Compatibility shims are inventoried | Old import paths and old names stay importable through re-exports listed in `notes/shim-inventory.md`, each with its retirement trigger (RF-D5). Re-exports do not carry patches across, so every `monkeypatch` of a moved name is pointed at the new location within the same move unit. |
+| RF-R6 — Source scans must not shrink | Tests that scan source text (`inspect.getsource`, reads of `cli.py`, "module stays unloaded" checks) widen to every new module within the same move unit. Each such test asserts that its scanned set covers every module in its declared scope. |
+| RF-R7 — One authority per unit | All work happens in `gnd-public` (RF-D1). The handoff is stated in the RF0 record. The public-launch ledger `.gnd-planning/milestones/public-launch/migration/units.json`, and the distribution-lane test `tests/test_public_distribution.py::test_curated_manifest_and_source_owned_ledger` that guards it, are not edited before public-launch Phase 4 sign-off (RF-D2). At each phase gate the owner attests that the source repository took no change to the handed-off paths. If the source is reachable, the gate also records a high-water-mark comparison; otherwise the record says the control rests on attestation. |
+| RF-R8 — Release identity changes on every edit | `production_identity` hashes every `src/gnd/**/*.py` file by path, and the distribution-lane manifest pins the source bytes. Prior release or assurance evidence is never reused over refactored bytes, and unavailable evidence is reported as unavailable. |
+| RF-R9 — Measured, non-vacuous budgets | Every numeric target in a spec comes from the RF0 tool's measurement at that phase's base commit and is strictly better than that baseline. The owner approves each target at the spec gate, and a target equal to the baseline is refused. Each spec also states a touched-file and moved-line budget. A target that proves unreachable stops the phase and returns it to the owner gate with the measured value. A metric that gets worse without a recorded reason is a review finding. |
+| RF-R10 — No feature work | No new semantic family, CLI command, flag or schema version. Defects found along the way become open questions unless a decision row brings the fix into scope. |
+| RF-R11 — Focused but honest verification | The reduced v6.3 selection applies. Model, checker and CLI moves affect almost every consumer, so each spec measures its impact closure instead of assuming it is small. Running the whole default lane is a named selection, made deliberately. |
+
+**Standard move criteria.** Every phase that moves code (RF2, RF3, RF4, RF5,
+RF6 and RF8) carries these criteria in addition to its own:
+
+- **SM1** — every RF1 pin is unchanged.
+- **SM2** — every name moved in the phase is listed in the shim inventory and
+  importable under its old path. For each `monkeypatch` of a moved name, a
+  test patches the new location and observes the effect.
+- **SM3** — every source-scan and "module stays unloaded" test covers each
+  module the phase introduces, as its own coverage assertion checks.
+- **SM4** — every new module has an entry in the layer map, and the
+  layering test still passes for every layer already declared clean.
 
 ## 1. Scope
 
 **In scope:** the restructurings in the audit's *Better abstractions* and
-*Suggested order of work* sections, the duplicate-helper families, the
-wrong-way imports, and the characterization tests and measurement tool they
-require.
+*Suggested order of work* sections, the duplicate-helper families that RF0
+confirms, the wrong-way imports that RF0 confirms, and the tool, layer map
+and characterization tests they require.
 
-**Not selected without a further decision:** tightening safe-filesystem path
-rules, duplicate-key or non-finite JSON refusal, YAML guards on the two
-unguarded loaders, and strict ISO datetime parsing. Each refuses inputs that
-are accepted today. RF7 owns them as separately approved sub-parts.
+**Deferred to a successor milestone by RF-D7 (not in scope):** tightening
+the safe-filesystem path rules, refusing duplicate-key or non-finite JSON,
+YAML guards on the two unguarded loaders, strict ISO datetime parsing,
+switching the primitive resolver to strict semantics (RF-D6), merging any
+diverged helper family (RF-D11), and changing message text (RF-D8). Each of
+these changes observable behavior.
 
 ## 2. Artifacts and record homes
 
@@ -90,109 +117,159 @@ Records go in `.gnd-planning/milestones/code-refactoring/`, following the
   measured budgets and the verification-selection ledger.
 - `notes/shim-inventory.md`: each compatibility re-export with its old path,
   new path, introducing phase and retirement trigger.
-- `evidence/metrics-<phase>.json`: import-graph and duplication measurements
-  bound by digest.
+- `notes/helper-families.md`: the RF0 family list, each family marked
+  identical or diverged, with its sites.
+- `evidence/metrics-<phase>.json`: tool output at the phase's base and head
+  commits, bound by digest.
 - `NNN-phase-N.md`: append-only completion records.
+
+The layer map and the tool live under `tools/`, outside `src/gnd`.
 
 ## 3. Sequence
 
 **RF0 baseline → RF1 characterization → RF2 identical helpers → RF3 core
 cycle → RF4 peripheral layering → RF5 CLI command groups → RF6 model query
-layer and constraint registry → RF7 approved tightening → RF8 session
-profile.** RF0–RF1 do not edit `src/gnd`. RF2–RF6 and RF8 are
-behavior-preserving. RF7 is the only phase whose purpose is a behavior change.
-RF8 carries the highest risk and comes last so it can rely on everything
-before it. RF7 is deferred to a successor milestone (RF-D7) and stays in this
-plan only as a description of that later work. Under RF-D2, RF0 and RF1 may
-run now. RF2 and later wait until public-launch Phase 3 acceptance and the
-Phase 4 candidate sign-off are recorded.
+layer and constraint registry → RF8 session profile.**
+
+RF7 is deferred (RF-D7) and is not part of this chain. RF0 and RF1 do not
+edit `src/gnd`, and under RF-D2 they may run once the plan gate passes.
+RF2 and every later phase wait for the conditions in RF-D2. Every phase from
+RF2 on is behavior-preserving, with no exception (RF-R1). RF8 carries the
+highest risk and comes last so that it can rely on everything before it.
 
 ## 4. Phases
 
 ### RF0 — Baseline, authority and measurement
 
-**Outcome:** a pinned baseline, a recorded handoff of the `runtime` and
-`test-acceptance` units to `gnd-public`, and a measurement tool that every
-later phase uses.
+**Outcome:** a tool and a layer map that every later phase uses, a
+re-measured audit, and a recorded authority handoff.
 
-Commit an AST import-graph tool under `tools/` that reports module-level and
-lazy edges, strongly connected components, imports of another module's private
-names, fan-in/fan-out, and duplicate-helper counts by name pattern. Re-measure
-every number in the audit summary and record agreements and disagreements.
-Inventory the pin sites: tests that monkeypatch `gnd.cli` privates, test
-imports of `synth.assemble`/`synth.mutate` privates, source-scan tests, the
-`cli.py` path pins and the distribution manifest. Record the unit handoff
-in `migration/units.json`, and update the test that currently requires every
-unit to be source-owned. Settle RF-D2 to RF-D4.
+Commit an AST import-graph tool under `tools/`. It reports module-level and
+lazy edges, strongly connected components, imports of another module's
+private names, fan-in and fan-out, duplicate-helper candidates by name and
+body similarity, and the entry-point rule of RF5-C5. Commit a layer map that
+assigns every module under `src/gnd` to a layer, using the audit's
+component map as its starting point, and to a lane where one applies.
+Re-measure every row of the audit's summary and every cycle the audit
+names. Commit `notes/helper-families.md`. Inventory the pin sites: tests
+that monkeypatch `gnd.cli` privates, test imports of
+`synth.assemble`/`synth.mutate` privates, source-scan tests, the `cli.py`
+path pins, the distribution manifest, and packaged skills that cite module
+paths.
 
-**Criteria:** RF0-C1 the tool's output is deterministic (two runs produce
-identical bytes) and reproduces at least the core 13-module SCC, or the record
-explains the difference. RF0-C2 every audit summary row is marked
-confirmed or refuted, with measured values. RF0-C3 the pin-site inventory is
-counted at execution time, not copied from the audit.
+State the handoff of the `runtime` and `test-acceptance` units to
+`gnd-public` in the RF0 record (RF-D1). Do not edit the public-launch
+ledger or its test (RF-R7). Record RF-D1, RF-D2 and RF-D7 as already ruled,
+and bring RF-D3 to its ruling.
+
+**Criteria:**
+- RF0-C1 — the tool's output is byte-identical across two runs.
+- RF0-C2 — every cycle the audit names (core, assurance, synth
+  `assemble`↔`mutate`, `api`↔`diff`, session) and every new SCC the tool
+  finds is listed as confirmed, refuted or new. Each difference from the
+  audit names the specific edge, confirmed by hand at its source line.
+- RF0-C3 — every audit summary row is marked confirmed or refuted, with its
+  measured value.
+- RF0-C4 — the layer map covers every module, and a test fails on any
+  module that has no entry.
+- RF0-C5 — the pin-site inventory and the helper-family list are counted at
+  execution time, not copied from the audit.
+- RF0-C6 — the RF0 record contains the handoff statement and the RF-D3
+  ruling.
 
 ### RF1 — Characterization tests
 
-**Outcome:** current behavior is pinned at every surface later phases touch.
+**Outcome:** current behavior is pinned on every surface that RF2–RF8 move
+or re-route.
 
-Pin the following: the parser tree, help text and exit-code map for each
-command; the exact bytes of every canonical-JSON variant on shared inputs,
-including non-ASCII text, NaN, nested ordering and trailing newlines; the three
-`model_digest` meanings; the two divergent primitive resolvers
-(`inherits_reference` truthy versus `is True`); the ISO-datetime parse sites;
-and one golden replay per session-contract version, covering evidence bytes
-and resume behavior. Add a layering test in xfail mode that RF3 turns green.
+Pin the following:
+- the parser tree, help text and exit-code map of each command;
+- the exact bytes of every canonical-JSON variant on shared inputs
+  (non-ASCII text, NaN, nested ordering, trailing newlines);
+- the three `model_digest` meanings;
+- both primitive-resolver semantics (`inherits_reference` truthy versus
+  `is True`);
+- the ISO-datetime parse sites;
+- over a fixture corpus, checker verdicts together with the order and text
+  of their issues;
+- `diff` output;
+- the accept/refuse table of each safe-filesystem helper over a fixed path
+  set;
+- assurance outputs;
+- synth-oracle expected states;
+- `agent_cli` exit codes and stream handling, against a fake subprocess.
 
-**Criteria:** RF1-C1 every pin fails against a seeded mutation of the code it
-pins (no pin that cannot fail). RF1-C2 the diff contains only test,
-fixture and tool files. RF1-C3 each diverged helper family has a pin per
-variant.
+For sessions, pin one golden replay per contract version and path (fresh
+run, resume, reconstruct, unknown version). Nondeterministic fields in the
+evidence bytes are either normalized by a declared rule or excluded, and
+each such field is named.
+
+Add the layering test as a strict xfail (`strict=True`) scoped to the model,
+population, checking and semantics layers of the map. Its scope widens
+through SM4.
+
+**Criteria:**
+- RF1-C1 — every pin fails against a seeded mutation of the code it pins.
+- RF1-C2 — the diff contains only test, fixture and tool files.
+- RF1-C3 — every diverged family in `notes/helper-families.md` has a pin per
+  variant.
+- RF1-C4 — every surface named by a later phase's work appears in the pin
+  inventory, and the RF1 record maps each one to its tests.
 
 **Shape:** corpus-first by default, because this phase is about serialized
 formats and exit codes.
 
 ### RF2 — Consolidate the identical helpers
 
-Merge the 11 identical canonical-bytes sites into
-`canonical_bytes(v, *, newline, indent)`. Add `sha256_hex`, `Sha256` and
+Merge every site that the family list marks identical: canonical bytes
+(the audit reports 11 sites *(audit)*) into
+`canonical_bytes(v, *, newline, indent)`, plus `sha256_hex`, `Sha256` and
 `is_sha256_hex` in `artifacts`. Move all exit codes into `exits.py`. Add
-`issues_from_validation_error(err, rule_id)`. Route hand-built constraint refs
-through `address.positional_constraint_ref`. Rename the three `model_digest`
-functions to names that state what each one means. Leave the variant encoders
-alone.
+`issues_from_validation_error(err, rule_id)`. Route hand-built constraint
+refs through `address.positional_constraint_ref`. Rename the three
+`model_digest` functions under RF-D10. Variant encoders stay as they are.
 
-**Criteria:** RF2-C1 all RF1 pins are unchanged. RF2-C2 the duplicate counts
-for the merged families reach the spec's target. RF2-C3 the diff contains no
-edit to a variant encoder.
+**Criteria:** SM1–SM4. RF2-C1 — each family the list marks identical has
+exactly one definition. RF2-C2 — the diff contains no edit to a variant
+encoder. RF2-C3 — each old `model_digest` name is still importable, listed
+in the shim inventory, and absent from every pinned byte stream and digest
+input.
 
 ### RF3 — Break the core cycle
 
-Add leaf modules `errors.py`, `documents.py`, `values.py` and `universe.py`,
-plus one primitive resolver, whose `inherits_reference` behavior is decided
-from the RF1 pin under RF-D6. Give the checker a public `effective_view()`
-and move `applicable_scope_ids` up a layer. Before splitting anything, rename
-the in-place rebinding in `checker.py` (`check`, `_PHASE3_LEGACY_CHECK`,
+Add the leaf modules `errors.py`, `documents.py`, `values.py` and
+`universe.py`. Add one primitive-resolver entry point that keeps both
+semantics behind an explicit, pinned variant parameter, with no caller
+changing semantics (RF-D6). Give the checker a public `effective_view()`
+and move `applicable_scope_ids` up a layer. Before any split, rename the
+in-place rebinding in `checker.py` (`check`, `_PHASE3_LEGACY_CHECK`,
 `_evaluate_derivations`, `_constraint_view`). Keep the derivation-term
 ContextVar reachable from both validation and analysis.
 
-**Criteria:** RF3-C1 no SCC among the core modules (lazy edges counted), and
-the RF1 layering test passes without xfail. RF3-C2 the private-import count
-across the core falls by at least the spec's target. RF3-C3 every
-`semantic_registry` `owner=` string resolves to an existing function (new test).
+**Criteria:** SM1–SM4. RF3-C1 — the core layers contain no multi-module SCC,
+lazy edges counted, and the layering test passes with its xfail marker
+removed. RF3-C2 — the core's private-import count meets the RF-R9 target.
+RF3-C3 — every `semantic_registry` `owner=` string resolves to an existing
+function (new test).
 
 ### RF4 — Peripheral layering
 
-Make the safe-filesystem functions public in `safefs.py` (move-only; RF7 owns
-any tightening). Split `agent_cli` into `process.py` and `agents.py`. Have
-`diff` call checker and admission directly instead of going through `api`.
-Make the synth oracle public as `synth/oracle/`. Turn the assurance modules
-into a `gnd/assurance/` package ordered `_wire → core → inheritance → claims →
-evidence`, with shims under the old names.
+Make the safe-filesystem functions public in `safefs.py` as a move only;
+tightening is deferred. Split `agent_cli` into `process.py` and `agents.py`.
+Have `diff` call checker and admission directly instead of going through
+`api`. Make the synth oracle public as `synth/oracle/`. Turn the assurance
+modules into a `gnd/assurance/` package ordered `_wire → core → inheritance
+→ claims → evidence`, with shims under the old names.
 
-**Criteria:** RF4-C1 the `assurance`, `synth` and `api↔diff` SCCs are gone.
-RF4-C2 no lane imports `install` for filesystem helpers. RF4-C3 the 47
-private imports from `synth.boundary` into `synth.mutate` are replaced by public
-oracle imports.
+**Criteria:** SM1–SM4. RF4-C1 — no multi-module SCC remains among the
+modules of each cycle that RF0 confirmed for this phase; a refuted cycle is
+recorded as already satisfied. RF4-C2 — no module the map assigns to a lane
+has an import edge to `gnd.install`, except edges the spec names with a
+reason. RF4-C3 — every private-import edge from `synth.boundary` to
+`synth.mutate` in the RF0 inventory (the audit reports 47 *(audit)*) is
+replaced by a public `synth.oracle` import. RF4-C4 — the layering test's
+scope covers every layer of the map, and the test passes. Any remaining
+wrong-way edge is on the allow-list of predicate 2, and the spec names it.
 
 ### RF5 — CLI command groups
 
@@ -204,131 +281,176 @@ ones (review, exp, evolve), then pull services out of the heavy handlers
 lane `service.py` modules. `cli.py` stays as a file. Shared output envelopes
 move to `commands/_output.py`.
 
-**Criteria:** RF5-C1 the RF1 parser, help and exit pins are unchanged.
-RF5-C2 tests that require `gnd.cli` to stay unloaded also cover
-`gnd.commands.*`. RF5-C3 `cli.py` shrinks to at most the line budget the spec
-declares. RF5-C4 every monkeypatch of a moved name targets the new location.
+**Criteria:** SM1–SM4. RF5-C1 — `cli.py` is at most 2,500 lines, and at
+most the lower ceiling the spec sets under RF-R9. RF5-C2 — the RF0 tool's
+entry-point rule reports no violation. That rule permits imports from
+`gnd.api`, lane `service` modules, `gnd.exits`, `commands/_output` and an
+allow-list that the spec names with a reason for each entry.
 
-**Residual:** splitting the heavy handlers may outgrow one phase. If so, the
-spec splits RF5 into numbered parts, each with its own record.
+**Parts:** RF5 may be split into at most three numbered parts, each with its
+own spec gate and record. A fourth part needs a new owner ruling.
 
 ### RF6 — Model query layer and constraint-family registry
 
 Add a read-only `ModelIndex`, cached by model digest, for id lookup,
 role → object type, supertype closure, primitive resolution and constraint
 iteration with canonical refs. Add one registry entry per constraint family
-(adapter, evaluator, witness, message, scope, implemented flag) that replaces
+(adapter, evaluator, witness, message, scope, implemented flag) to replace
 the if/elif chains, following the existing `_SEMANTIC_RULES` pattern. Only
 then split `model.py` and `checker.py` into packages along their existing
 sections.
 
-**Criteria:** RF6-C1 direct reads of `fact_types` and `.get("roles")` outside
-the model package fall to the spec's target. RF6-C2 adding a fake family in a
-test requires touching only its registry entry. RF6-C3 a `ModelIndex` built
-over a model that is later mutated is never served stale (new test).
+**Criteria:** SM1–SM4. RF6-C1 — outside the model package and `ModelIndex`,
+the code makes no direct read of `fact_types` or `.get("roles")`, apart from
+sites on a spec allow-list that states a reason for each. RF6-C2 — a test
+that adds a fake family touches only its registry entry. RF6-C3 — a
+`ModelIndex` built over a model that is later mutated is never served stale
+(new test). RF6-C4 — the package split stays within its moved-line and
+touched-file budget. Post-split module sizes are recorded in
+`evidence/metrics-RF6.json`, and every old import path of `gnd.model` and
+`gnd.checker` stays importable.
 
-### RF7 — Approved tightening (deferred by RF-D7)
+**Parts:** RF6a covers the index and the registry, and RF6b covers the
+package split. Each has its own spec gate and record.
 
-Not executed in this milestone. The milestone close carries it as an open
-question naming the successor milestone. Each item below would be one
-sub-part: the safefs path validator
-(`./a`, backslashes, final-directory-only checks), strict JSON loading
-(duplicate keys, `1e999`, depth), YAML guards for `evolve/service.py` and
-`export/souffle.py`, and strict ISO datetime parsing. Each sub-part lands a
-red case for an input accepted today, then the refusal, with an explicit entry
-in the release notes.
+### RF7 — Tightening (deferred by RF-D7; not executed)
 
-**Criteria:** RF7-C1 every newly refused input has a case that failed before
-the change. RF7-C2 no RF1 pin changes except those the decision names.
+Kept only to describe the successor work, and carried as an open question at
+milestone close. Its items are the safefs path validator (`./a`,
+backslashes, final-directory-only checks), strict JSON loading (duplicate
+keys, `1e999`, depth), YAML guards for `evolve/service.py` and
+`export/souffle.py`, strict ISO datetime parsing, strict resolver semantics
+(RF-D6), merging diverged families (RF-D11), and the stale "unknown version"
+message text (RF-D8). This milestone has no RF7 criteria.
 
 ### RF8 — Session profile and the v7 merge
 
-Add a `SessionProfile` built once in `DataDrivenContract.model_validate`.
-Replace inline version mappings and `in {7, 8}` checks with profile lookups.
-Make `session_v7.run` and `reconstruct` strategy hooks. Expose
-`SessionStore.best_identity()` instead of `_v7_best`. Name the version-8
-literal and fix the stale "unknown version" text only under RF-D8.
+Add a `SessionProfile`, built once in `DataDrivenContract.model_validate`.
+Replace the inline version mappings and the `in {7, 8}` checks with profile
+lookups. Make `session_v7.run` and `reconstruct` strategy hooks. Expose
+`SessionStore.best_identity()` in place of `_v7_best`. Name the version-8
+literal and remove the dead first assignment of `SESSION_CONTRACT_VERSION`.
+Both are non-observable (RF-D8).
 
-**Criteria:** RF8-C1 the RF1 golden replays produce identical evidence bytes
-and resume behavior for every contract version. RF8-C2 `session_v7.py`
-holds only strategy hooks or is removed behind a shim. RF8-C3 the session SCC
-is gone.
+**Criteria:** SM1–SM4. RF8-C1 — every RF1 session replay (version × path)
+produces identical normalized evidence bytes and identical resume behavior.
+RF8-C2 — `session_v7.py` holds only strategy hooks, or is removed behind a
+shim. RF8-C3 — no multi-module SCC remains among the session modules that
+RF0 confirmed; a refuted cycle is recorded as already satisfied.
 
 ## 5. Development skills and documentation surfaces
 
 | Surface | Treatment | Phase |
 |---|---|---|
 | `docs/development/architecture-audit.md` | Stays a historical input. The RF0 record holds the re-measured successor numbers. | RF0 |
-| `CONTRIBUTING.md`, `AGENTS.md` | Describe the layers, the `commands/` pattern, `safefs`, `ModelIndex` and the shim policy once they exist. | RF3–RF6 |
-| Packaged skills that cite module paths | Pin sites are counted at each spec gate and updated in the phase that moves the module. | per phase |
-| `tests/test_public_distribution.py`, distribution manifest | Update procedure decided in RF-D3. | RF0 |
+| `CONTRIBUTING.md`, `AGENTS.md` | Describe the layer map, the `commands/` pattern, `safefs`, `ModelIndex` and the shim policy once they exist. | RF3–RF6 |
+| Packaged skills that cite module paths | Pin sites are counted at each spec gate and updated in the move unit that moves the module. | per phase |
+| `tests/test_public_distribution.py`, distribution manifest | Update procedure follows RF-D3. The ledger test changes only after public-launch Phase 4 sign-off (RF-R7). | RF0 ruling; first edit at RF2 |
 
 ## 6. Risks and stop conditions
 
 | Risk | Control or stop |
 |---|---|
 | A move changes digest-bound bytes | RF1 byte pins and RF-R2. A changed pin stops the phase. |
-| Monkeypatches silently stop working after a move | RF-R5 inventory. Each moved name gets a test that patches the new location and observes an effect. |
-| Source-scan safety tests check less after a split | RF-R6 coverage assertion. |
-| Release evidence is invalidated mid-launch | RF-D2 sequencing. No refactor commit lands between a release candidate and its sign-off. |
-| Two repositories edit `runtime` | RF-D1: `gnd-public` only. RF0 records the handoff; a later source-side edit to these units is a stop. |
-| Merging diverged helpers changes verdicts | Diverged families are pinned per variant. Merging them requires RF-D6 or RF7. |
-| Phases grow into rewrites | Moved-line and touched-file budgets per spec. Overruns return to the owner gate. |
+| A move or re-route changes verdicts, issue order or outputs | RF1's behavior pins (RF-R3, SM1). A surface without pins cannot be moved. |
+| Monkeypatches silently stop working after a move | RF-R4 atomic move units and SM2's observed-effect test. |
+| Source-scan safety tests check less after a split | RF-R6 and SM3 coverage assertions. |
+| Release evidence is invalidated mid-launch | RF-D2: refactor commits land only after sign-off, and publication uses the signed-off tag. |
+| Two repositories edit `runtime` | RF-D1 and RF-R7 attestation at each gate. A source-side edit is a stop. |
+| Diverged helpers get merged | RF-D11 keeps them separate. Merging is deferred successor work. |
+| Phases grow into rewrites | RF-R9 budgets, the RF5 limit of three parts, the RF6a/RF6b split. An overrun returns to the owner gate. |
+| The milestone drifts | If two consecutive phases miss an RF-R9 target, the owner re-plans before the next phase begins. |
 | Measurements mislead (fewer cycles, same coupling) | The close table reports private imports and co-change alongside SCCs. |
-| Owner strings, docs and skills keep naming old paths | Resolution tests (RF3-C3) and pin-site counts at every gate. |
+| Owner strings, docs and skills keep naming old paths | RF3-C3 resolution test and pin-site counts at every gate. |
 
 ## 7. Out of scope
 
 New semantics, CLI commands, flags or schema versions. Renaming the
 distribution, import or executable. Deleting `cli.py`. Performance work.
-Recertification or new assurance claims. Repairing the broad historical suite.
-Discharging source-owned open questions without an explicit transfer. The
-following carryovers look related but stay with their source owner unless a
-ruling transfers them: `OQ-V72-P1-ARTIFACT-COPIES`,
-`OQ-V52-CLOSE-CANONJSON-1`, `OQ-V52-P1-IMPORTWALK-1`,
-`OQ-V63-CLOSE-HELPER-TAIL-1`.
+Recertification or new assurance claims. Repairing the broad historical
+suite. All RF7 items listed above (RF-D7). Discharging source-owned open
+questions without an explicit transfer. The following carryovers look
+related but stay with their source owner unless a ruling transfers them:
+`OQ-V72-P1-ARTIFACT-COPIES`, `OQ-V52-CLOSE-CANONJSON-1`,
+`OQ-V52-P1-IMPORTWALK-1`, `OQ-V63-CLOSE-HELPER-TAIL-1`.
 
 ## 8. Execution and review protocol
 
-This is a milestone plan, not an invocation of `process-phase`. The next step
-is plan review and the owner plan gate. The plan bar is at least four complete
-reviewer responses. Writing this candidate establishes no panel result.
+This is a milestone plan, not an invocation of `process-phase`. r1 was
+reviewed by a six-of-six light panel ([record](../001-panel.md)). The bound
+on review rounds was declared on 2026-10-05: r2 gets at most one more
+round. After that, residual concerns go to the RF0 spec gate as recorded
+open questions instead of another plan round. The owner plan gate follows.
 
 After the gate, each phase follows `process-phase`: harvest obligations,
 write the spec and stop, owner gate, implement and verify, adversarial diff
-review, refactoring review, record and commit. Default is `auto=false`.
+review, refactoring review, record and commit. The default is `auto=false`.
 Delegation granted for public-launch does not carry over to this milestone.
 
 ## 9. Verification selection
 
 | Phase | Mandatory focused obligation | Starting points (exact commands belong in the spec) |
 |---|---|---|
-| RF0 | Deterministic tool output, re-measured audit, pin-site inventory | The tool's own tests. Audit rows. |
-| RF1 | Every pin fails under a seeded mutation | New characterization tests. Existing CLI, exit and session tests. |
-| RF2 | RF1 pins unchanged; duplicate counts | Byte pins, `tests/test_checker_families.py`, artifact consumers |
-| RF3 | Layering test green; RF1 pins; owner-string resolution | Checker, model, population, references and transition controls |
-| RF4 | SCCs removed; no `install` imports from lanes | Installer/doctor, assurance, synth, agent-runner controls |
-| RF5 | Parser, help and exit pins; unloaded-module tests | CLI tests, the 12 files that patch `gnd.cli` |
-| RF6 | Registry extension test; index staleness test | Checker families, verbalize, semantic adapter controls |
-| RF7 | Red-before-green per newly refused input | Loaders, safefs, datetime consumers |
-| RF8 | Golden replays identical per contract version | `exp` session, store, close and judgments controls |
+| RF0 | Deterministic tool output; cycle and audit-row confirmation; complete layer map | The tool's own tests. Audit rows. |
+| RF1 | Every pin fails under a seeded mutation; pin inventory covers later phases | New characterization tests. Existing CLI, exit, checker and session tests. |
+| RF2 | SM1–SM4; one definition per identical family | Byte pins, `tests/test_checker_families.py`, artifact consumers |
+| RF3 | SM1–SM4; layering test without xfail; owner-string resolution | Checker, model, population, references and transition controls |
+| RF4 | SM1–SM4; confirmed SCCs removed; lane-to-`install` edge rule; layering test over every layer | Installer/doctor, assurance, synth, agent-runner controls |
+| RF5 | SM1–SM4; `cli.py` ceiling; entry-point rule | CLI tests and the RF0-counted files that patch `gnd.cli` |
+| RF6 | SM1–SM4; registry extension test; index staleness test; split budget | Checker families, verbalize, semantic adapter controls |
+| RF7 | Not executed (RF-D7) | — |
+| RF8 | SM1–SM4; replays identical per version and path | `exp` session, store, close and judgments controls |
 
-Each spec records `run`, `inherit` or `cadence` together with its input
-boundary and invalidation trigger. A moved file invalidates inherited results
-for everything that imports it.
+Each spec records `run`, `inherit` or `cadence` for every selection, with its
+input boundary and invalidation trigger. A moved file invalidates inherited
+results for everything that imports it.
 
 ## 10. Owner decisions and open planning questions
 
-These are proposals awaiting the plan gate. None of them is an approval.
+**Ruled by the owner.** These are not reopened by any phase.
+
+| Decision | Ruling |
+|---|---|
+| RF-D1 — Execution authority | 2026-10-05: "everything happens on the gnd-public". The handoff of `runtime` and `test-acceptance` is stated in the RF0 record. The public-launch ledger follows RF-R7. |
+| RF-D2 — Sequencing with public-launch | 2026-10-05, amended the same day after the r1 review. RF2 and later phases start only after the public-launch Phase 3 acceptance and the Phase 4 candidate sign-off are recorded, the signed-off commit is tagged, and public-launch records that Phase 5 publishes from that tag, with launch fixes landing on a release branch and merging forward. Recording that is a public-launch act: this plan cannot bind public-launch, so RF2 waits for it. The Phase 5 history inspection also covers refactor commits. RF0 and RF1 may proceed after the plan gate. |
+| RF-D7 — Tightening scope | 2026-10-05: RF7 is deferred to a successor milestone in full, including the alias/size guards for the two unguarded YAML loaders (`evolve/service.py:186`, `export/souffle.py:61`). The owner can pull any sub-part forward at a later phase gate. A spot check on 2026-10-05 found that the installer path validator accepts `./a` and `a\b` but refuses `..\x` and `a/../b`, so the audit's "looser" claim concerns unusual names, not traversal. |
+
+**Open.** These are proposals awaiting the plan gate or the named spec
+gate. None of them is an approval.
 
 | Decision | Proposed default | Resolve by |
 |---|---|---|
-| RF-D1 — Execution authority | **Ruled by the owner, 2026-10-05: "everything happens on the gnd-public".** RF0 records the handoff of `runtime` and `test-acceptance` in the migration ledger. | Ruled |
-| RF-D2 — Sequencing with public-launch | **Accepted by the owner, 2026-10-05.** No `src/gnd` edit until the public-launch Phase 3 acceptance and Phase 4 candidate sign-off are recorded, so that retained release artifacts keep describing their bytes. RF0–RF1 may proceed now. | Ruled |
 | RF-D3 — Distribution manifest and release evidence | Each phase updates the curated manifest as a recorded adaptation and reports `production_identity` as changed and unavailable until the next release regenerates it. | RF0 |
 | RF-D4 — Milestone name | `code-refactoring`, which uses no semantic version number. | Plan gate |
 | RF-D5 — Shim retirement | Shims stay at least until the first public release after RF6. Retiring them is a later, separately approved phase. | RF2 |
-| RF-D6 — Divergent primitive resolver | Keep `popvalidate`'s strict `is True` semantics, after RF1 shows which callers depend on the looser one. | RF3 spec |
-| RF-D7 — Tightening scope | **Accepted by the owner, 2026-10-05.** RF7 is deferred to a successor milestone in full, including the alias/size guards for the two unguarded YAML loaders (`evolve/service.py:186`, `export/souffle.py:61`). The owner can pull any sub-part forward at a later phase gate. A spot check on 2026-10-05 found that the installer path validator accepts `./a` and `a\b` but refuses `..\x` and `a/../b`. The audit's "looser" claim therefore concerns unusual names, not traversal. | Ruled |
-| RF-D8 — Small defects (version-8 constant and message, duplicated `SESSION_CONTRACT_VERSION`, `value_domain._in_range` name) | Fix the constant and the double assignment in RF8. Rename `_in_range` in RF6. Changing the message text needs a ruling. | RF6/RF8 specs |
-| RF-D9 — Approval instrument | Corpus-first for RF1 and RF7. Spec prose for the move-only phases. | Each spec gate |
+| RF-D6 — Divergent primitive resolver | Keep both semantics behind a pinned variant parameter. Switching any caller to strict `is True` is RF7 successor work. | Plan gate |
+| RF-D8 — Small defects | In RF8, name the version-8 literal and remove the dead first assignment of `SESSION_CONTRACT_VERSION` (both non-observable). Rename `value_domain._in_range` in RF6 under RF-D10. The "unknown version" message text is RF7 successor work. | Plan gate |
+| RF-D9 — Approval instrument | Corpus-first for RF1. Spec prose for the move phases. | Each spec gate |
+| RF-D10 — Renames and visibility changes | Renaming a function or making it public is non-observable when the old name stays importable through a listed shim and appears in no pinned byte stream, digest input or message. Any other rename needs its own ruling. This covers the `model_digest` renames, `safefs`, `synth.oracle`, `SessionStore.best_identity()` and the `checker.py` rebinding renames. | Plan gate |
+| RF-D11 — Diverged helper families | Every family that RF0 marks diverged keeps its variants, each pinned byte for byte. Merging is RF7 successor work. | Plan gate |
+
+## r2 changes
+
+Fix numbers refer to the prioritized fixes in the
+[r1 panel report](../evidence/plan-review-r1/PANEL-REVIEW.md).
+
+| r1 concern | r2 change |
+|---|---|
+| F1 — audit counts used as criteria | Baseline paragraph, *(audit)* markers, criteria stated over the RF0 inventory (RF2, RF4-C3, section 9) |
+| F2 — RF0 ledger path, timing and circular gate | Status paragraph, RF-R7, RF0 body, RF-D2, section 5 |
+| F3 — RF1 pins miss later surfaces | RF-R3, RF1 pin list, RF1-C4, SM1 in every move phase |
+| F4 — vacuous targets | RF-R9, RF5 parts limit, the "milestone drifts" risk row |
+| F5 — predicate 4 cannot fail | Predicate 4, RF5-C1 and RF5-C2 |
+| F6 — no layer map | RF0 layer map, RF0-C4, predicate 2, RF4-C2, RF4-C4, SM4 |
+| F7 — renames versus RF-R1 | RF-D10, RF2-C3 |
+| F8 — patch and scan rules enforced only in RF5 | RF-R4 atomic move units, SM2 and SM3 |
+| F9 — observable changes inside preserving phases | RF-R1 with no exceptions, RF3 resolver, RF-D6, RF-D8 |
+| F10 — RF0-C1 escape hatch and unconfirmed SCCs | RF0-C2, RF4-C1, RF8-C3 |
+| F11 — ruled decisions treated as open | Section 10 split into ruled and open; RF0 body; RF0-C6 |
+| F12 — RF7 deferral not reflected | Sections 1, 3, 4 (RF7), 7 and 9 |
+| Divergent: RF-D2 ends before publication | RF-D2 amended (tagged release commit), owner-accepted 2026-10-05 |
+| Divergent: thin session replay | RF1 session replays per version × path; RF8-C1 |
+| Divergent: source-side edits undetectable | RF-R7 attestation and high-water mark |
+| Divergent: non-strict xfail | RF1 strict xfail |
+| Divergent: diverged families not enumerated | `notes/helper-families.md`, RF1-C3, RF-D11, predicate 3 |
+| Divergent: RF6 split uncovered | RF6-C4, RF6a/RF6b parts |

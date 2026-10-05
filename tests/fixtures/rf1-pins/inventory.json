@@ -1,0 +1,424 @@
+{
+ "schema_version": 1,
+ "surfaces": [
+  {
+   "existing_nodes": [
+    "tests/test_artifacts.py::test_canonical_json_pins_separators_key_order_ascii_and_trailing_newline"
+   ],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body; RF1-C3",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|"
+   ],
+   "status": "pinned",
+   "surface": "canonical-bytes variants (canonical_json family, 18 sites plus non-encoders)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|"
+   ],
+   "status": "pinned",
+   "surface": "sha256_hex, Sha256, is_sha256_hex (sha256_hex family)"
+  },
+  {
+   "existing_nodes": [
+    "tests/test_verification_fixes.py::test_the_shipped_exit_registry_is_exactly_the_literal_allocation_set"
+   ],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body",
+   "rf1_nodes": [
+    "tests/test_rf1_cli_pins.py::test_cli_exit_map",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe["
+   ],
+   "status": "pinned",
+   "surface": "exit codes moving to exits.py"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|"
+   ],
+   "status": "pinned",
+   "surface": "issues_from_validation_error sites (validation_issues family)"
+  },
+  {
+   "existing_nodes": [],
+   "note": "measure/report.py and export/pyrel_runtime.py ref sites are reached only through measure and export commands",
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_oracle[",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[",
+    "tests/test_rf1_semantic_pins.py::test_synth["
+   ],
+   "status": "pinned",
+   "surface": "hand-built constraint refs (synth/assemble.py, synth/mutate.py, measure/report.py, export/pyrel_runtime.py)"
+  },
+  {
+   "existing_nodes": [],
+   "note": "byte pins for gnd measure and gnd export pyrel output are owed by the RF2 spec under RF-R3",
+   "owed_by": "RF2",
+   "phase": "RF2",
+   "plan_anchor": "RF2 body",
+   "rf1_nodes": [],
+   "status": "owed",
+   "surface": "hand-built refs in measure/report.py:488 and export/pyrel_runtime.py:891,893"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body; RF2-C3",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|"
+   ],
+   "status": "pinned",
+   "surface": "model_digest, five sites and three meanings"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "helper-families.md",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|"
+   ],
+   "status": "pinned",
+   "surface": "strict-JSON hooks and readers (move only)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF3 body; RF-D6",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_resolver"
+   ],
+   "status": "pinned",
+   "surface": "primitive resolver, truthy and is-True semantics"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF3 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_check[",
+    "tests/test_rf1_semantic_pins.py::test_check_transition",
+    "tests/test_rf1_semantic_pins.py::test_check_batch",
+    "tests/test_rf1_semantic_pins.py::test_check_anchored",
+    "tests/test_rf1_semantic_pins.py::test_check_coverage"
+   ],
+   "status": "pinned",
+   "surface": "checker verdicts, issue order and text (effective_view, rebinding, constraint view)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF3 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_check[",
+    "tests/test_rf1_semantic_pins.py::test_assurance_blocks"
+   ],
+   "status": "pinned",
+   "surface": "applicable_scope_ids and the assurance input scope"
+  },
+  {
+   "existing_nodes": [],
+   "note": "reached through semantic validation of every corpus model",
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF3 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_check["
+   ],
+   "status": "pinned",
+   "surface": "derivation-term ContextVar (model.py)"
+  },
+  {
+   "existing_nodes": [
+    "tests/test_v6_phase2_registry.py::test_every_production_owner_names_an_actual_callable",
+    "tests/test_v62_phase2_registry.py::test_r01_every_dynamic_id_is_registered_with_its_owner"
+   ],
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF3-C3",
+   "rf1_nodes": [],
+   "status": "existing",
+   "surface": "semantic_registry owner strings"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF3-C1",
+   "rf1_nodes": [
+    "tests/test_rf1_layering.py::test_layer_edge_absent[",
+    "tests/test_rf1_layering.py::test_layer_ratchet"
+   ],
+   "status": "pinned",
+   "surface": "core-cycle wrong-way edges"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF3",
+   "plan_anchor": "RF1 pin list",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[iso_datetime|",
+    "tests/test_rf1_semantic_pins.py::test_datetime_site["
+   ],
+   "status": "pinned",
+   "surface": "ISO-datetime parse sites"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4 body",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|"
+   ],
+   "status": "pinned",
+   "surface": "safe-filesystem helpers (accept/refuse tables)"
+  },
+  {
+   "existing_nodes": [
+    "tests/test_agent_cli.py::"
+   ],
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4 body",
+   "rf1_nodes": [
+    "tests/test_rf1_agent_cli_pins.py::test_agent_argv",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke["
+   ],
+   "status": "pinned",
+   "surface": "agent_cli statuses, exits and streams"
+  },
+  {
+   "existing_nodes": [
+    "tests/test_v70_phase6_corpus.py::test_provided_report_is_red_until_diff_exists"
+   ],
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_diff["
+   ],
+   "status": "pinned",
+   "surface": "diff calling checker and admission instead of api"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4 body; RF4-C3",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_oracle[",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[",
+    "tests/test_rf1_semantic_pins.py::test_synth["
+   ],
+   "status": "pinned",
+   "surface": "synth oracle (expected_state and its consumers)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_assurance_blocks",
+    "tests/test_rf1_semantic_pins.py::test_assurance_inheritance_comparison",
+    "tests/test_rf1_semantic_pins.py::test_check["
+   ],
+   "status": "pinned",
+   "surface": "assurance modules (blocks, inheritance comparison)"
+  },
+  {
+   "existing_nodes": [
+    "tests/test_public_internal_claim_graph.py::"
+   ],
+   "note": "validate_claim_graph and validate_result are pinned by their existing exact refusal tests",
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4 body",
+   "rf1_nodes": [],
+   "status": "existing",
+   "surface": "assurance claim-graph and inherited-result validators"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4-C2",
+   "rf1_nodes": [
+    "tests/test_rf1_layering.py::test_layer_ratchet"
+   ],
+   "status": "pinned",
+   "surface": "lane imports of gnd.install"
+  },
+  {
+   "existing_nodes": [],
+   "note": "strict xfail cases join at RF4 under D4",
+   "owed_by": null,
+   "phase": "RF4",
+   "plan_anchor": "RF4-C4; SM4",
+   "rf1_nodes": [
+    "tests/test_rf1_layering.py::test_layer_ratchet"
+   ],
+   "status": "pinned",
+   "surface": "lanes -> entry wrong-way pairs"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF5",
+   "plan_anchor": "RF5 body",
+   "rf1_nodes": [
+    "tests/test_rf1_cli_pins.py::test_cli_tree",
+    "tests/test_rf1_cli_pins.py::test_cli_help[",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[",
+    "tests/test_rf1_cli_pins.py::test_cli_coverage"
+   ],
+   "status": "pinned",
+   "surface": "CLI parser tree, help text and exit probes for all 52 parsers"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF5",
+   "plan_anchor": "RF5 body",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_check[",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[",
+    "tests/test_rf1_semantic_pins.py::test_extract[",
+    "tests/test_rf1_semantic_pins.py::test_diff[",
+    "tests/test_rf1_semantic_pins.py::test_synth[",
+    "tests/test_rf1_session_pins.py::test_session_fresh["
+   ],
+   "status": "pinned",
+   "surface": "command handlers with byte pins: check, verbalize population, extract, diff, synth, exp run"
+  },
+  {
+   "existing_nodes": [],
+   "note": "parser, help and exit-probe pins exist; handler byte pins are owed by the RF5 part spec that moves each handler (RF-R3)",
+   "owed_by": "RF5",
+   "phase": "RF5",
+   "plan_anchor": "RF5 body; D9",
+   "rf1_nodes": [],
+   "status": "owed",
+   "surface": "command handlers without byte pins: validate, coverage, verify, measure, export, codegen, conformance, recovery, evolve, doccheck, fidelity, review, exp init/validate/author-expectation/close, solve, install, doctor, uninstall, judgments, witness, replay, witness-view, import"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF6",
+   "plan_anchor": "RF6-C1",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_check[",
+    "tests/test_rf1_semantic_pins.py::test_extract[",
+    "tests/test_rf1_semantic_pins.py::test_oracle[",
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|"
+   ],
+   "status": "pinned",
+   "surface": "fact_types and roles read sites (ModelIndex)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF6",
+   "plan_anchor": "RF6 body; RF6-C2",
+   "rf1_nodes": [
+    "tests/test_rf1_semantic_pins.py::test_check[",
+    "tests/test_rf1_semantic_pins.py::test_check_coverage"
+   ],
+   "status": "pinned",
+   "surface": "constraint-family dispatch (registry)"
+  },
+  {
+   "existing_nodes": [],
+   "note": "old import paths are an SM2 obligation of RF6b; behavior is pinned by the checker and model lanes",
+   "owed_by": "RF6",
+   "phase": "RF6",
+   "plan_anchor": "RF6-C4",
+   "rf1_nodes": [],
+   "status": "owed",
+   "surface": "model.py and checker.py package split (import paths)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF8",
+   "plan_anchor": "RF8-C1",
+   "rf1_nodes": [
+    "tests/test_rf1_session_pins.py::test_session_fresh[",
+    "tests/test_rf1_session_pins.py::test_session_resume[",
+    "tests/test_rf1_session_pins.py::test_session_reconstruct[",
+    "tests/test_rf1_session_pins.py::test_session_unknown_version[",
+    "tests/test_rf1_session_pins.py::test_session_determinism["
+   ],
+   "status": "pinned",
+   "surface": "session replays per contract version and path"
+  },
+  {
+   "existing_nodes": [
+    "tests/test_exp_session_store.py::test_resume_requires_the_exact_deterministic_best_pointer"
+   ],
+   "owed_by": null,
+   "phase": "RF8",
+   "plan_anchor": "RF8 body",
+   "rf1_nodes": [
+    "tests/test_rf1_session_pins.py::test_session_reconstruct[",
+    "tests/test_rf1_session_pins.py::test_session_resume["
+   ],
+   "status": "pinned",
+   "surface": "SessionStore resume and best pointer (_v7_best)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF8",
+   "plan_anchor": "RF8 body; RF-D8",
+   "rf1_nodes": [
+    "tests/test_rf1_session_pins.py::test_session_unknown_version["
+   ],
+   "status": "pinned",
+   "surface": "unknown-version refusal and the version-8 literal"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF2 body; RF1-C3; helper-families.md",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|"
+   ],
+   "status": "pinned",
+   "surface": "file-digest variants (file_digest family, diverged; kept apart under RF-D11)"
+  },
+  {
+   "existing_nodes": [],
+   "owed_by": null,
+   "phase": "RF2",
+   "plan_anchor": "RF1-C3; helper-families.md; RF-D7",
+   "rf1_nodes": [
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|"
+   ],
+   "status": "pinned",
+   "surface": "YAML guards (yaml_guard family, diverged; tightening deferred by RF-D7)"
+  }
+ ]
+}

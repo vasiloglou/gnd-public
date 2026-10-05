@@ -234,7 +234,7 @@ local model, replace the stand-in with one of these:
   follows no redirects and rejects tool calls. The request carries only a prompt that
   names the contract, so a model without file tools cannot read your task. Put a small
   gateway in front of it that supplies the context. The example ships one
-  (`approvals/openrouter_gateway.py`), and the
+  ([`tools/openrouter_gateway.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/openrouter_gateway.py)), and the
   [recorded sessions](recorded-sessions.md) used it with nine hosted models.
 
 ```json

@@ -10,7 +10,7 @@ OpenRouter, and returns the reply as the base64 file bundle GND expects.
 The OpenRouter key lives only in this process's environment. GND never sees
 it: the session policy names a placeholder variable for the loopback hop.
 
-    OPENROUTER_API_KEY=... python openrouter_gateway.py --port 8765
+    OPENROUTER_API_KEY=... python tools/openrouter_gateway.py --port 8765
 
 It is an example gateway, not a supported component.
 """

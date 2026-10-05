@@ -25,7 +25,7 @@ through the checker and asserts that it reproduces the recorded band.
   Codex requires the experiment to sit in a git repository and a model that the login
   supports, which was selected with a scratch `CODEX_HOME`.
 - **Nine hosted models** ran through `gnd exp run --adapter-policy` with an
-  `openai-compatible` policy that points at `openrouter_gateway.py` on loopback. The
+  `openai-compatible` policy that points at `tools/openrouter_gateway.py` (in the repository, not the wheel) on loopback. The
   adapter sends a model only a prompt that names the contract, so the gateway supplies
   the context a tool-using agent would read itself: the task, the model and the state.
   The OpenRouter key lived only in the gateway's environment.

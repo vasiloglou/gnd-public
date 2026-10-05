@@ -71,7 +71,7 @@ def test_recordings_contain_no_paths_or_credentials():
 
 
 def test_gateway_wraps_a_reply_as_the_closed_file_bundle():
-    spec = importlib.util.spec_from_file_location("gnd_example_gateway", str(APPROVALS / "openrouter_gateway.py"))
+    spec = importlib.util.spec_from_file_location("gnd_example_gateway", str(Path(__file__).resolve().parents[1] / "tools/openrouter_gateway.py"))
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)

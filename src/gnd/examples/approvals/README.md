@@ -13,7 +13,6 @@ unless a declared operation changes it.
 | `plan-draft-2.steps.json` | The revised plan: approve, submit to Workday, then reimburse |
 | `approve-41.steps.json` + `claimed-post.pop.yaml` | A walk that claims a post-state in which bystander expense 42 also flipped to `rejected` |
 | `stand_in_agent.py` | A scripted stand-in for an agent, used by the offline session tutorial |
-| `openrouter_gateway.py` | An example loopback gateway that lets a hosted model drive a GND session |
 | `recordings/` | Real Claude Code, Codex and hosted-model sessions on one task, with their results |
 
 ```sh

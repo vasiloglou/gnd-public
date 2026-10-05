@@ -89,7 +89,7 @@ fixed a band-1 failure from the feedback.
     **The OpenAI-compatible route gives the model very little.** GND sends such an
     endpoint one prompt that names the contract, so a model without file tools cannot
     read the task, the model or the state. The hosted-model sessions used the small
-    loopback gateway that ships in `approvals/openrouter_gateway.py`: it supplies that
+    loopback gateway in the repository ([`tools/openrouter_gateway.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/openrouter_gateway.py)): it supplies that
     context and keeps the API key in its own process. A terminal agent reads those
     files itself.
 
@@ -225,7 +225,7 @@ write an `openai-compatible` policy that points at it, and name the model in the
 contract (`adapter.parameters.model`):
 
 ```sh
-OPENROUTER_API_KEY=... python approvals/openrouter_gateway.py --port 8765 &
+OPENROUTER_API_KEY=... python tools/openrouter_gateway.py --port 8765 &   # from a repository checkout
 export GND_LOOPBACK_TOKEN=local        # a placeholder: the key stays in the gateway
 gnd exp run EXP-002-pay-dinner --adapter-policy small.policy.json
 ```

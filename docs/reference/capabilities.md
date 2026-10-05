@@ -34,7 +34,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Evaluate saved external opinions | `judgments check`; explicit session judgment gate | Consumes receipts; does not obtain opinions or calibrate providers | [Experiments](../guides/experiments.md) |
 | Explain a finite derived tuple | `witness`, `replay`, `witness-view`; API witness/replay | Selected positive proof fragment, not extension completeness | [Exports](../guides/exports.md) |
 | Export to external runtimes | Bounded Souffle/Lean/PyRel profiles | Export, native execution, compilation and proof are distinct | [Exports](../guides/exports.md), [worked native guides](../runtimes/scenario.md) |
-| Review a plan or result | Explicit advisory review-panel skill and CLI | Live tools/credentials; reviewer findings do not apply fixes | [Agent skills](../guides/agent-skills.md) |
+| Review a plan or result | Explicit advisory review-panel skill and CLI | Live tools/credentials; reviewer findings do not apply fixes | [Exports and a second opinion](../agents/export-and-review.md) |
 
 ## Constraint coverage
 

@@ -1,0 +1,144 @@
+<svg aria-labelledby="gnd-hero-title gnd-hero-desc" class="gnd-figure" id="gnd-hero" role="img" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <title id="gnd-hero-title">An agent's plan checked by GND</title>
+  <desc id="gnd-hero-desc">Asked to reimburse expense 41, the agent proposes a plan that pays it directly. GND checks the plan against the model: the pre_submitted precondition fails and pre_has_approver warns. With that feedback the agent adds the approval and Workday steps; the revised plan passes and the expense is paid.</desc>
+  <style>:where(#gnd-hero){--gf-bg:#f1f4ef;--gf-card:#ffffff;--gf-line:#b7cec5;--gf-ink:#183936;--gf-muted:#5b6f6b;--gf-primary:#164f4b;--gf-accent:#b34e26;--gf-ok:#1f7a4d;--gf-ok-bg:#dcece3;--gf-fail:#b3261e;--gf-fail-bg:#f7dcd6;--gf-warn:#8a5e00;--gf-warn-bg:#fbecc2;--gf-bubble:#164f4b;--gf-bubble-ink:#ffffff;--gf-code:#f6f8f5;--gf-alethic:#6b3fa0;--gf-deontic:#1f5fa8}@media (prefers-color-scheme: dark){:where(#gnd-hero){--gf-bg:#1b2b28;--gf-card:#0f1917;--gf-line:#2d4440;--gf-ink:#e6efec;--gf-muted:#9fb3ae;--gf-primary:#7bd4c6;--gf-accent:#ffb38b;--gf-ok:#6fd39a;--gf-ok-bg:#163b2b;--gf-fail:#ff8f85;--gf-fail-bg:#4a1f1b;--gf-warn:#f2c14e;--gf-warn-bg:#4a3a10;--gf-bubble:#123d39;--gf-bubble-ink:#e6efec;--gf-code:#142320;--gf-alethic:#c3a6ff;--gf-deontic:#8ab8ff}}#gnd-hero .f-bg{fill:var(--gf-bg)}#gnd-hero .f-card{fill:var(--gf-card)}#gnd-hero .f-line{fill:var(--gf-line)}#gnd-hero .f-ink{fill:var(--gf-ink)}#gnd-hero .f-muted{fill:var(--gf-muted)}#gnd-hero .f-primary{fill:var(--gf-primary)}#gnd-hero .f-accent{fill:var(--gf-accent)}#gnd-hero .f-ok{fill:var(--gf-ok)}#gnd-hero .f-ok-bg{fill:var(--gf-ok-bg)}#gnd-hero .f-fail{fill:var(--gf-fail)}#gnd-hero .f-fail-bg{fill:var(--gf-fail-bg)}#gnd-hero .f-warn{fill:var(--gf-warn)}#gnd-hero .f-warn-bg{fill:var(--gf-warn-bg)}#gnd-hero .f-bubble{fill:var(--gf-bubble)}#gnd-hero .f-bubble-ink{fill:var(--gf-bubble-ink)}#gnd-hero .f-code{fill:var(--gf-code)}#gnd-hero .f-alethic{fill:var(--gf-alethic)}#gnd-hero .f-deontic{fill:var(--gf-deontic)}#gnd-hero .s-bg{stroke:var(--gf-bg)}#gnd-hero .s-card{stroke:var(--gf-card)}#gnd-hero .s-line{stroke:var(--gf-line)}#gnd-hero .s-ink{stroke:var(--gf-ink)}#gnd-hero .s-muted{stroke:var(--gf-muted)}#gnd-hero .s-primary{stroke:var(--gf-primary)}#gnd-hero .s-accent{stroke:var(--gf-accent)}#gnd-hero .s-ok{stroke:var(--gf-ok)}#gnd-hero .s-ok-bg{stroke:var(--gf-ok-bg)}#gnd-hero .s-fail{stroke:var(--gf-fail)}#gnd-hero .s-fail-bg{stroke:var(--gf-fail-bg)}#gnd-hero .s-warn{stroke:var(--gf-warn)}#gnd-hero .s-warn-bg{stroke:var(--gf-warn-bg)}#gnd-hero .s-bubble{stroke:var(--gf-bubble)}#gnd-hero .s-bubble-ink{stroke:var(--gf-bubble-ink)}#gnd-hero .s-code{stroke:var(--gf-code)}#gnd-hero .s-alethic{stroke:var(--gf-alethic)}#gnd-hero .s-deontic{stroke:var(--gf-deontic)}#gnd-hero .sans{font-family:ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif}#gnd-hero .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;white-space:pre}#gnd-hero .nofill{fill:none}#gnd-hero .gh-k3{animation:gh-k3 18s linear infinite both}@keyframes gh-k3{0%{opacity:0;transform:translate(0px,8px) scale(1,1)}3.33%{opacity:0;transform:translate(0px,8px) scale(1,1)}5.56%{opacity:1;transform:translate(0px,0px) scale(1,1)}97.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k4{animation:gh-k4 18s linear infinite both}@keyframes gh-k4{0%{opacity:0}7.78%{opacity:0}9.72%{opacity:1}13.33%{opacity:1}15.28%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k5{animation:gh-k5 18s linear infinite both}@keyframes gh-k5{0%{opacity:0}14.44%{opacity:0}16.67%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k6{animation:gh-k6 18s linear infinite both}@keyframes gh-k6{0%{opacity:0}14.44%{opacity:0}16.39%{opacity:1}56.67%{opacity:1}58.61%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k7{animation:gh-k7 18s linear infinite both}@keyframes gh-k7{0%{opacity:0}57.78%{opacity:0}60%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k8{animation:gh-k8 18s linear infinite both}@keyframes gh-k8{0%{opacity:0}14.44%{opacity:0}16.67%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k9{animation:gh-k9 18s linear infinite both}@keyframes gh-k9{0%{opacity:0;transform:translate(0px,8px) scale(1,1)}16.11%{opacity:0;transform:translate(0px,8px) scale(1,1)}18.33%{opacity:1;transform:translate(0px,0px) scale(1,1)}97.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k10{animation:gh-k10 18s linear infinite both}@keyframes gh-k10{0%{opacity:0;transform:translate(0px,8px) scale(1,1)}17.78%{opacity:0;transform:translate(0px,8px) scale(1,1)}20%{opacity:1;transform:translate(0px,0px) scale(1,1)}97.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k11{animation:gh-k11 18s linear infinite both}@keyframes gh-k11{0%{opacity:0;transform:translate(0px,8px) scale(1,1)}19.44%{opacity:0;transform:translate(0px,8px) scale(1,1)}21.67%{opacity:1;transform:translate(0px,0px) scale(1,1)}97.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k12{animation:gh-k12 18s linear infinite both}@keyframes gh-k12{0%{opacity:0}21.11%{opacity:0}23.06%{opacity:1}56.67%{opacity:1}58.61%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k13{animation:gh-k13 18s linear infinite both}@keyframes gh-k13{0%{opacity:0}58.89%{opacity:0}61.11%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k14{animation:gh-k14 18s linear infinite both}@keyframes gh-k14{0%{opacity:0}60.56%{opacity:0}62.78%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k15{animation:gh-k15 18s linear infinite both}@keyframes gh-k15{0%{opacity:0}62.22%{opacity:0}64.44%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k18{animation:gh-k18 18s linear infinite both}@keyframes gh-k18{0%{opacity:0}72.22%{opacity:0}74.44%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k20{animation:gh-k20 18s linear infinite both}@keyframes gh-k20{0%{opacity:0}73.06%{opacity:0}75.28%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k22{animation:gh-k22 18s linear infinite both}@keyframes gh-k22{0%{opacity:0}73.89%{opacity:0}76.11%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k23{animation:gh-k23 18s linear infinite both}@keyframes gh-k23{0%{opacity:0}41.11%{opacity:0}43.06%{opacity:1}71.67%{opacity:1}73.61%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k24{animation:gh-k24 18s linear infinite both}@keyframes gh-k24{0%{opacity:0}27.78%{opacity:0}29.72%{opacity:1}40%{opacity:1}41.94%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k25{animation:gh-k25 18s linear infinite both}@keyframes gh-k25{0%{opacity:0}28.89%{opacity:0}31.11%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k26{animation:gh-k26 18s linear infinite both;transform-box:fill-box;transform-origin:0 50%}@keyframes gh-k26{0%{opacity:0;transform:translate(0px,0px) scale(0,1)}30%{opacity:1;transform:translate(0px,0px) scale(0,1)}39.44%{opacity:1;transform:translate(0px,0px) scale(1,1)}41.39%{opacity:0;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k27{animation:gh-k27 18s linear infinite both;transform-box:fill-box;transform-origin:0 50%}@keyframes gh-k27{0%{opacity:0;transform:translate(0px,0px) scale(0,1)}66.67%{opacity:1;transform:translate(0px,0px) scale(0,1)}71.11%{opacity:1;transform:translate(0px,0px) scale(1,1)}73.06%{opacity:0;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k29{animation:gh-k29 18s linear infinite both}@keyframes gh-k29{0%{opacity:0}41.11%{opacity:0}43.06%{opacity:1}70%{opacity:1}71.94%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k30{animation:gh-k30 18s linear infinite both}@keyframes gh-k30{0%{opacity:0}54.44%{opacity:0}56.39%{opacity:1}68.89%{opacity:1}70.83%{opacity:0}100%{opacity:0}}#gnd-hero .gh-k31{animation:gh-k31 18s linear infinite both}@keyframes gh-k31{0%{opacity:0}72.22%{opacity:0}74.44%{opacity:1}97.22%{opacity:1}100%{opacity:0}}#gnd-hero .gh-k32{animation:gh-k32 18s linear infinite both}@keyframes gh-k32{0%{opacity:0;transform:translate(0px,8px) scale(1,1)}76.67%{opacity:0;transform:translate(0px,8px) scale(1,1)}78.89%{opacity:1;transform:translate(0px,0px) scale(1,1)}97.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}#gnd-hero .gh-k33{animation:gh-k33 18s linear infinite both}@keyframes gh-k33{0%{opacity:0;transform:translate(0px,8px) scale(1,1)}80%{opacity:0;transform:translate(0px,8px) scale(1,1)}82.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}97.22%{opacity:1;transform:translate(0px,0px) scale(1,1)}100%{opacity:0;transform:translate(0px,0px) scale(1,1)}}@media (prefers-reduced-motion: reduce){#gnd-hero *{animation:none !important}}</style>
+  <rect class="f-bg" height="500" rx="16" width="800" x="0" y="0"/>
+  <text class="sans f-muted" font-size="12" font-weight="700" letter-spacing="2" x="36" y="40">CODING AGENT</text>
+  <text class="sans f-muted" font-size="12" font-weight="700" letter-spacing="2" x="436" y="40">GND · YOUR MODEL</text>
+  <g class="gh-k3">
+    <rect class="f-bubble" height="62" rx="16" width="328" x="36" y="56"/>
+    <text class="sans f-bubble-ink" font-size="15" font-weight="600" x="54" y="82">Reimburse Ada's €90 team dinner,</text>
+    <text class="sans f-bubble-ink" font-size="15" font-weight="600" x="54" y="104">expense 41.</text>
+  </g>
+  <g class="gh-k4" opacity="0">
+    <circle class="f-muted" cx="56" cy="152" r="3.5"/>
+    <circle class="f-muted" cx="68" cy="152" r="3.5"/>
+    <circle class="f-muted" cx="80" cy="152" r="3.5"/>
+  </g>
+  <g class="gh-k5">
+    <rect class="f-card s-line" height="236" rx="12" stroke-width="1.5" width="328" x="36" y="134"/>
+  </g>
+  <g class="gh-k6" opacity="0">
+    <text class="mono f-muted" font-size="13" x="54" xml:space="preserve" y="160">plan.steps.json · draft 1</text>
+  </g>
+  <g class="gh-k7">
+    <text class="mono f-muted" font-size="13" x="54" xml:space="preserve" y="160">plan.steps.json · draft 2</text>
+  </g>
+  <g class="gh-k8">
+    <line class="s-line" stroke-width="1" x1="50" x2="350" y1="172" y2="172"/>
+  </g>
+  <g class="gh-k9">
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="198"><tspan class="f-primary">pre:</tspan><tspan class="f-ink">   state.pop.yaml</tspan></text>
+  </g>
+  <g class="gh-k10">
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="222"><tspan class="f-primary">then:</tspan><tspan class="f-ink">  pay if accepted</tspan></text>
+  </g>
+  <g class="gh-k11">
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="246"><tspan class="f-primary">steps:</tspan></text>
+  </g>
+  <g class="gh-k12" opacity="0">
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="270"><tspan class="f-muted">  - </tspan><tspan class="f-accent">reimburse_expense</tspan><tspan class="f-ink">(41)</tspan></text>
+  </g>
+  <g class="gh-k13">
+    <rect class="f-ok-bg" height="22" rx="4" width="310" x="46" y="254"/>
+    <text class="mono f-ok" font-size="14" font-weight="700" x="50" xml:space="preserve" y="270">+</text>
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="270"><tspan class="f-muted">  - </tspan><tspan class="f-accent">approve_expense</tspan><tspan class="f-ink">(41, alice)</tspan></text>
+  </g>
+  <g class="gh-k14">
+    <rect class="f-ok-bg" height="22" rx="4" width="310" x="46" y="278"/>
+    <text class="mono f-ok" font-size="14" font-weight="700" x="50" xml:space="preserve" y="294">+</text>
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="294"><tspan class="f-muted">  - </tspan><tspan class="f-accent">submit_expense_to_workday</tspan><tspan class="f-ink">(41)</tspan></text>
+  </g>
+  <g class="gh-k15">
+    <text class="mono" font-size="14" x="54" xml:space="preserve" y="318"><tspan class="f-muted">  - </tspan><tspan class="f-accent">reimburse_expense</tspan><tspan class="f-ink">(41)</tspan></text>
+  </g>
+  <g>
+    <rect class="f-card s-line" height="182" rx="12" stroke-width="1.5" width="328" x="436" y="56"/>
+    <text class="mono f-muted" font-size="13" x="454" xml:space="preserve" y="82">approvals.orm.yaml</text>
+    <text class="sans f-muted" font-size="12" text-anchor="end" x="746" y="82">3 operations</text>
+    <line class="s-line" stroke-width="1" x1="450" x2="750" y1="94" y2="94"/>
+  </g>
+  <g>
+    <text class="mono f-ink" font-size="14" font-weight="600" x="454" xml:space="preserve" y="118">approve_expense</text>
+    <text class="sans f-muted" font-size="12" x="454" y="136">requires: draft</text>
+    <circle class="f-card s-line" cx="744" cy="124" r="9" stroke-width="1.5"/>
+  </g>
+  <g class="gh-k18">
+    <circle class="f-ok-bg" cx="744" cy="124" r="10"/>
+    <path class="s-ok nofill" d="M739 124L742.5 128L749.5 119.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+  </g>
+  <g>
+    <text class="mono f-ink" font-size="14" font-weight="600" x="454" xml:space="preserve" y="160">submit_expense_to_workday</text>
+    <text class="sans f-muted" font-size="12" x="454" y="178">requires: approved</text>
+    <circle class="f-card s-line" cx="744" cy="166" r="9" stroke-width="1.5"/>
+  </g>
+  <g class="gh-k20">
+    <circle class="f-ok-bg" cx="744" cy="166" r="10"/>
+    <path class="s-ok nofill" d="M739 166L742.5 170L749.5 161.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+  </g>
+  <g>
+    <text class="mono f-ink" font-size="14" font-weight="600" x="454" xml:space="preserve" y="202">reimburse_expense</text>
+    <text class="sans f-muted" font-size="12" x="454" y="220">requires: submitted · approver on file</text>
+    <circle class="f-card s-line" cx="744" cy="208" r="9" stroke-width="1.5"/>
+  </g>
+  <g class="gh-k22">
+    <circle class="f-ok-bg" cx="744" cy="208" r="10"/>
+    <path class="s-ok nofill" d="M739 208L742.5 212L749.5 203.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+  </g>
+  <g class="gh-k23" opacity="0">
+    <circle class="f-fail-bg" cx="744" cy="210" r="10"/>
+    <path class="s-fail nofill" d="M739.5 205.5L748.5 214.5M748.5 205.5L739.5 214.5" stroke-linecap="round" stroke-width="2.4"/>
+  </g>
+  <g class="gh-k24" opacity="0">
+    <path class="s-accent nofill" d="M368 262C398 262 402 266 430 266" stroke-width="2"/>
+    <path class="s-accent nofill" d="M424 261L432 266L424 271" stroke-linejoin="round" stroke-width="2"/>
+    <text class="sans f-accent" font-size="11" font-weight="700" text-anchor="middle" x="400" y="252">check</text>
+  </g>
+  <g class="gh-k25">
+    <rect class="f-code s-line" height="30" rx="15" stroke-width="1" width="328" x="436" y="250"/>
+    <text class="mono f-ink" font-size="12.5" x="452" xml:space="preserve" y="270">$ gnd check --pre state --steps plan</text>
+  </g>
+  <g class="gh-k26" opacity="0">
+    <rect class="f-accent" height="3" rx="1.5" width="328" x="436" y="284"/>
+  </g>
+  <g class="gh-k27" opacity="0">
+    <rect class="f-accent" height="3" rx="1.5" width="328" x="436" y="284"/>
+  </g>
+  <g>
+    <rect class="f-card s-line" height="130" rx="12" stroke-width="1.5" width="328" x="436" y="296"/>
+    <text class="mono f-muted" font-size="13" x="454" xml:space="preserve" y="318">report</text>
+  </g>
+  <g class="gh-k29" opacity="0">
+    <path class="s-fail nofill" d="M457.5 335.5L466.5 344.5M466.5 335.5L457.5 344.5" stroke-linecap="round" stroke-width="2.4"/>
+    <text class="mono f-fail" font-size="14" font-weight="700" x="478" xml:space="preserve" y="345">pre_submitted</text>
+    <text class="sans f-muted" font-size="12" x="478" y="362">step 1 · reimburse_expense · alethic</text>
+    <g>
+      <path class="s-warn nofill" d="M462 375.5L469 387.5L455 387.5Z" stroke-linejoin="round" stroke-width="1.8"/>
+      <path class="s-warn nofill" d="M462 379.5L462 383.5" stroke-linecap="round" stroke-width="1.8"/>
+      <circle class="f-warn" cx="462" cy="385.8" r="0.9"/>
+    </g>
+    <text class="mono f-warn" font-size="14" font-weight="700" x="478" xml:space="preserve" y="387">pre_has_approver</text>
+    <text class="sans f-muted" font-size="12" x="620" y="387">warning</text>
+    <text class="sans f-fail" font-size="13" font-weight="700" x="454" y="414">exit 1 · plan rejected</text>
+  </g>
+  <g class="gh-k30" opacity="0">
+    <path class="s-accent nofill" d="M432 352C398 352 400 304 370 304" stroke-dasharray="5 4" stroke-width="2"/>
+    <path class="s-accent nofill" d="M377 299L369 304L377 309" stroke-linejoin="round" stroke-width="2"/>
+    <text class="sans f-accent" font-size="11" font-weight="700" text-anchor="middle" x="400" y="374">feedback</text>
+  </g>
+  <g class="gh-k31">
+    <path class="s-ok nofill" d="M457 340L460.5 344L467.5 335.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+    <text class="sans f-ok" font-size="13.5" font-weight="650" x="478" y="345">3 steps · every precondition holds</text>
+    <text class="sans f-muted" font-size="12" x="478" y="362">post-state computed</text>
+    <text class="sans f-ok" font-size="13" font-weight="700" x="454" y="414">exit 0 · plan accepted</text>
+  </g>
+  <g class="gh-k32">
+    <rect class="f-ok-bg" height="40" rx="10" width="328" x="36" y="386"/>
+    <path class="s-ok nofill" d="M53 406L56.5 410L63.5 401.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+    <text class="sans f-ok" font-size="14" font-weight="650" x="74" y="411">Paid: expense 41 reimbursed</text>
+  </g>
+  <g class="gh-k33">
+    <text class="sans f-ink" font-size="22" font-weight="750" text-anchor="middle" x="400" y="468">Build agentic data apps that check themselves.</text>
+    <text class="sans f-muted" font-size="12" letter-spacing="1" text-anchor="middle" x="400" y="490">GND · Get Nick Done · inspired by GSD</text>
+  </g>
+</svg>

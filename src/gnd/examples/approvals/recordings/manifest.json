@@ -1,0 +1,99 @@
+{
+  "recorded_on": "2026-10-04",
+  "recordings": {
+    "claude-code": {
+      "source_run": "run-0001",
+      "result": "accepted",
+      "attempts": 1,
+      "files": {
+        "claude-code/attempt-0001/feedback.json": "7fdec6c4d1688f37c2de9c5ce9c6c842be7ee63e174dfc2d7af895307814d444",
+        "claude-code/attempt-0001/steps.json": "324e56d9b59f6555680c15a170b44249c5e01b55ff84f164b66c0c7763ad3cc8",
+        "claude-code/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "terminal agent",
+      "tool": "Claude Code 2.1.281",
+      "model": "the account default alias \"opus\" at recording time",
+      "route": "gnd exp run --adapter claude"
+    },
+    "codex": {
+      "source_run": "run-0001",
+      "result": "accepted",
+      "attempts": 1,
+      "files": {
+        "codex/attempt-0001/feedback.json": "e7924eca6d673c33266619390ab786aab22dfee0d16408e448c12fc4ba974e01",
+        "codex/attempt-0001/steps.json": "0d44d47de2f51b6d372baa21b5ed947044d1c194856cae37b80a77c12ce8ced9",
+        "codex/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "terminal agent",
+      "tool": "Codex CLI 0.156.1",
+      "model": "gpt-5.6-sol",
+      "route": "gnd exp run --adapter codex"
+    },
+    "qwen3-14b": {
+      "source_run": "run-0001",
+      "result": "accepted",
+      "attempts": 1,
+      "files": {
+        "qwen3-14b/attempt-0001/feedback.json": "cf5fce20dd5a743ba63c10cdbfb8cc4719b507dcf17e1b8493a0a78fee29cba4",
+        "qwen3-14b/attempt-0001/steps.json": "92b59696b6e91661129c19e451748d57d6a47d7941430d0d16103ea6b1c58a93",
+        "qwen3-14b/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "hosted model via the loopback gateway",
+      "tool": "openrouter_gateway.py",
+      "model": "qwen/qwen3-14b",
+      "route": "gnd exp run --adapter-policy (openai-compatible)"
+    },
+    "gemma-3-4b-it": {
+      "source_run": "run-0001",
+      "result": "accepted",
+      "attempts": 2,
+      "files": {
+        "gemma-3-4b-it/attempt-0001/feedback.json": "e0749de135b5a49fd0f61e8ee42cea2ef9eac48e1d0febf96261fa0213e6b289",
+        "gemma-3-4b-it/attempt-0001/steps.json": "2af800b4af2a1183646213ca6ca7d5f343972c459230fe4c7e38be60794cdfe1",
+        "gemma-3-4b-it/attempt-0002/feedback.json": "3a4f4223af1b86f7b81e73ab2ade50dd62a51ef64e0174ec58e491c1c17e87f4",
+        "gemma-3-4b-it/attempt-0002/steps.json": "fa33453b2b2fb256a2bf82f8ed26230226f36a1c2675c2baa572a494f2774958",
+        "gemma-3-4b-it/result.json": "60862dcbc7df78517603d7c9d0ff23bc9c47fba9f87e8150360d57a6969c0d17"
+      },
+      "kind": "hosted model via the loopback gateway",
+      "tool": "openrouter_gateway.py",
+      "model": "google/gemma-3-4b-it",
+      "route": "gnd exp run --adapter-policy (openai-compatible)"
+    },
+    "llama-3.1-8b-instruct": {
+      "source_run": "run-0003",
+      "result": "oscillation",
+      "attempts": 3,
+      "files": {
+        "llama-3.1-8b-instruct/attempt-0001/feedback.json": "c2eddf45c9293a49c8a52e7476ec38685b71ed21ca337ebc5b07c4e75b16b434",
+        "llama-3.1-8b-instruct/attempt-0001/steps.json": "2c5cf589fbb43e8e6694703987fac742daa8b987a7c257eb52a7ad492cd394a6",
+        "llama-3.1-8b-instruct/attempt-0002/feedback.json": "ae7ed0a0d70cf16ce168c8cbe555cba365b27fabdd53716c23eb7ecccc920bf6",
+        "llama-3.1-8b-instruct/attempt-0002/steps.json": "d41d6b158dd19b03d9df8132102cc423d01b62a20bf6eb1f409749efbdcf8645",
+        "llama-3.1-8b-instruct/attempt-0003/feedback.json": "2516ef4c465b2e57e7c5c198c0176774f98993316bf4212d77e3c31b50c9ea49",
+        "llama-3.1-8b-instruct/attempt-0003/steps.json": "2c5cf589fbb43e8e6694703987fac742daa8b987a7c257eb52a7ad492cd394a6",
+        "llama-3.1-8b-instruct/result.json": "8441f1184258ad1a4af15cb00a0a7c687d5e8c2fc7c1e02f5013acc8c0689340"
+      },
+      "kind": "hosted model via the loopback gateway",
+      "tool": "openrouter_gateway.py",
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "route": "gnd exp run --adapter-policy (openai-compatible)"
+    },
+    "llama-3.2-3b-instruct": {
+      "source_run": "run-0001",
+      "result": "stagnation",
+      "attempts": 3,
+      "files": {
+        "llama-3.2-3b-instruct/attempt-0001/feedback.json": "127ddb90746cf8f124977733b3e35af8f9b6f1564734b17752fb399e5c45d9b6",
+        "llama-3.2-3b-instruct/attempt-0001/steps.json": "15fb470f202eb9aa9f9600c60a5a0c096ee0fe8f10364e9afd00768a4e2ce6ff",
+        "llama-3.2-3b-instruct/attempt-0002/feedback.json": "910ebe15e6711f426fc06a82ac8bf55cb0486271088fdd7d8899cd865c799c92",
+        "llama-3.2-3b-instruct/attempt-0002/steps.json": "6d3bc1fd2ef7667dde0571794527aab75a907c4781cbd4b057d53133e679d8cf",
+        "llama-3.2-3b-instruct/attempt-0003/feedback.json": "36c355ef55003d193937d948b908ea27cf5d93d25206a3df4a0fe7e7f0f84a9f",
+        "llama-3.2-3b-instruct/attempt-0003/steps.json": "6d3bc1fd2ef7667dde0571794527aab75a907c4781cbd4b057d53133e679d8cf",
+        "llama-3.2-3b-instruct/result.json": "07bd1d9b786075f4d893748958917954b4e82fc87ba142176bd28f552ab11a08"
+      },
+      "kind": "hosted model via the loopback gateway",
+      "tool": "openrouter_gateway.py",
+      "model": "meta-llama/llama-3.2-3b-instruct",
+      "route": "gnd exp run --adapter-policy (openai-compatible)"
+    }
+  }
+}

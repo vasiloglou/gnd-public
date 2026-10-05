@@ -141,6 +141,6 @@ skipped work into a pass. Every group gets an isolated temporary working directo
 > three supplied model views. Do not merge their omitted policies. Stop after
 > model review. I will explicitly select `gnd-export` for a chosen view next.
 
-The [agent workflow guide](../guides/agent-skills.md) explains the handoff. You can
+The [agent workflow guide](../agents/index.md) explains the handoff. You can
 follow every checkpoint without calling an agent. As an exercise, add an unrelated
 service and predict which view needs new facts before running any tool.

@@ -1,0 +1,36 @@
+<svg aria-labelledby="gnd-orm-d4-title gnd-orm-d4-desc" class="gnd-figure" id="gnd-orm-d4" role="img" viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg">
+  <title id="gnd-orm-d4-title">Alethic and deontic constraints</title>
+  <desc id="gnd-orm-d4-desc">The fact type 'User is recommended Book' carries two footnoted rules: an alethic rule that fails the check and a deontic rule that only warns.</desc>
+  <style>:where(#gnd-orm-d4){--gf-bg:#f1f4ef;--gf-card:#ffffff;--gf-line:#b7cec5;--gf-ink:#183936;--gf-muted:#5b6f6b;--gf-primary:#164f4b;--gf-accent:#b34e26;--gf-ok:#1f7a4d;--gf-ok-bg:#dcece3;--gf-fail:#b3261e;--gf-fail-bg:#f7dcd6;--gf-warn:#8a5e00;--gf-warn-bg:#fbecc2;--gf-bubble:#164f4b;--gf-bubble-ink:#ffffff;--gf-code:#f6f8f5;--gf-alethic:#6b3fa0;--gf-deontic:#1f5fa8}@media (prefers-color-scheme: dark){:where(#gnd-orm-d4){--gf-bg:#1b2b28;--gf-card:#0f1917;--gf-line:#2d4440;--gf-ink:#e6efec;--gf-muted:#9fb3ae;--gf-primary:#7bd4c6;--gf-accent:#ffb38b;--gf-ok:#6fd39a;--gf-ok-bg:#163b2b;--gf-fail:#ff8f85;--gf-fail-bg:#4a1f1b;--gf-warn:#f2c14e;--gf-warn-bg:#4a3a10;--gf-bubble:#123d39;--gf-bubble-ink:#e6efec;--gf-code:#142320;--gf-alethic:#c3a6ff;--gf-deontic:#8ab8ff}}#gnd-orm-d4 .f-bg{fill:var(--gf-bg)}#gnd-orm-d4 .f-card{fill:var(--gf-card)}#gnd-orm-d4 .f-line{fill:var(--gf-line)}#gnd-orm-d4 .f-ink{fill:var(--gf-ink)}#gnd-orm-d4 .f-muted{fill:var(--gf-muted)}#gnd-orm-d4 .f-primary{fill:var(--gf-primary)}#gnd-orm-d4 .f-accent{fill:var(--gf-accent)}#gnd-orm-d4 .f-ok{fill:var(--gf-ok)}#gnd-orm-d4 .f-ok-bg{fill:var(--gf-ok-bg)}#gnd-orm-d4 .f-fail{fill:var(--gf-fail)}#gnd-orm-d4 .f-fail-bg{fill:var(--gf-fail-bg)}#gnd-orm-d4 .f-warn{fill:var(--gf-warn)}#gnd-orm-d4 .f-warn-bg{fill:var(--gf-warn-bg)}#gnd-orm-d4 .f-bubble{fill:var(--gf-bubble)}#gnd-orm-d4 .f-bubble-ink{fill:var(--gf-bubble-ink)}#gnd-orm-d4 .f-code{fill:var(--gf-code)}#gnd-orm-d4 .f-alethic{fill:var(--gf-alethic)}#gnd-orm-d4 .f-deontic{fill:var(--gf-deontic)}#gnd-orm-d4 .s-bg{stroke:var(--gf-bg)}#gnd-orm-d4 .s-card{stroke:var(--gf-card)}#gnd-orm-d4 .s-line{stroke:var(--gf-line)}#gnd-orm-d4 .s-ink{stroke:var(--gf-ink)}#gnd-orm-d4 .s-muted{stroke:var(--gf-muted)}#gnd-orm-d4 .s-primary{stroke:var(--gf-primary)}#gnd-orm-d4 .s-accent{stroke:var(--gf-accent)}#gnd-orm-d4 .s-ok{stroke:var(--gf-ok)}#gnd-orm-d4 .s-ok-bg{stroke:var(--gf-ok-bg)}#gnd-orm-d4 .s-fail{stroke:var(--gf-fail)}#gnd-orm-d4 .s-fail-bg{stroke:var(--gf-fail-bg)}#gnd-orm-d4 .s-warn{stroke:var(--gf-warn)}#gnd-orm-d4 .s-warn-bg{stroke:var(--gf-warn-bg)}#gnd-orm-d4 .s-bubble{stroke:var(--gf-bubble)}#gnd-orm-d4 .s-bubble-ink{stroke:var(--gf-bubble-ink)}#gnd-orm-d4 .s-code{stroke:var(--gf-code)}#gnd-orm-d4 .s-alethic{stroke:var(--gf-alethic)}#gnd-orm-d4 .s-deontic{stroke:var(--gf-deontic)}#gnd-orm-d4 .sans{font-family:ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif}#gnd-orm-d4 .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;white-space:pre}#gnd-orm-d4 .nofill{fill:none}</style>
+  <rect class="f-bg" height="270" rx="16" width="720" x="0" y="0"/>
+  <text class="sans f-muted" font-size="12" font-weight="600" letter-spacing="2" x="24" y="32">ORM 2 · MUST VERSUS SHOULD</text>
+  <g>
+    <rect class="f-card s-primary" height="52" rx="12" stroke-width="2" width="130" x="60" y="52"/>
+    <text class="sans f-ink" font-size="16" font-weight="600" text-anchor="middle" x="125" y="75">User</text>
+    <text class="sans f-muted" font-size="12" text-anchor="middle" x="125" y="93">(.id)</text>
+  </g>
+  <g>
+    <rect class="f-card s-primary" height="52" rx="12" stroke-width="2" width="130" x="530" y="52"/>
+    <text class="sans f-ink" font-size="16" font-weight="600" text-anchor="middle" x="595" y="75">Book</text>
+    <text class="sans f-muted" font-size="12" text-anchor="middle" x="595" y="93">(.id)</text>
+  </g>
+  <line class="s-ink" stroke-width="1.6" x1="190" x2="324" y1="78" y2="78"/>
+  <line class="s-ink" stroke-width="1.6" x1="396" x2="530" y1="78" y2="78"/>
+  <g>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="324" y="67"/>
+    <rect class="f-card s-ink" height="22" stroke-width="1.6" width="36" x="360" y="67"/>
+  </g>
+  <text class="sans f-ink" font-size="15" font-style="italic" text-anchor="middle" x="360" y="112">… is recommended …  ¹ ²</text>
+  <rect class="f-card s-alethic" height="104" rx="12" stroke-width="2" width="310" x="40" y="136"/>
+  <text class="sans f-alethic" font-size="14" font-weight="700" x="56" y="160">¹ age_appropriate · alethic</text>
+  <text class="sans f-ink" font-size="14" x="56" y="182">Never recommend an adult-rated</text>
+  <text class="sans f-ink" font-size="14" x="56" y="200">book to a minor.</text>
+  <text class="sans f-fail" font-size="13" font-weight="600" x="56" y="226">Violated → the check fails (band 1)</text>
+  <rect class="f-card s-deontic" height="104" rx="12" stroke-dasharray="6 4" stroke-width="2" width="310" x="370" y="136"/>
+  <circle class="nofill s-deontic" cx="392" cy="155" r="5" stroke-width="2"/>
+  <text class="sans f-deontic" font-size="14" font-weight="700" x="404" y="160">² preferred_genre · deontic</text>
+  <text class="sans f-ink" font-size="14" x="386" y="182">A recommendation should match</text>
+  <text class="sans f-ink" font-size="14" x="386" y="200">a preferred genre.</text>
+  <text class="sans f-warn" font-size="13" font-weight="600" x="386" y="226">Violated → a warning; still accepted</text>
+  <text class="sans f-muted" font-size="12" x="40" y="258">Footnoted textual constraints; the small circle marks the deontic (should) modality.</text>
+</svg>

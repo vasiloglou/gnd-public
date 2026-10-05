@@ -86,6 +86,24 @@ fact types touched by the walk. An unrelated fact type outside that touched
 set is outside the frame check; its constraints may still catch an invalid
 change. Missing coverage for a touched relation is an input refusal.
 
+## Check a plan and its side effects
+
+Two modes use the same walk format:
+
+- **Plan mode** omits `--post`. GND computes the post-state, so an agent's proposed
+  plan can be checked *before* anything runs. A failed precondition names the step,
+  the operation and the binding.
+- **Audit mode** supplies the claimed `--post`. GND compares every change in the
+  claimed post-state with the changes the declared operations make. A change that
+  no operation makes is an undeclared side effect, and the **frame check** fails it.
+  That holds even when every fact in the claimed state is individually legal, which
+  is exactly the case no snapshot check can see.
+
+[Check an agent's plan](../agents/plans.md) runs both modes on the packaged
+`approvals` example: a plan that skips the approval and Workday steps fails
+`pre_submitted`, the revised plan passes, and a walk that silently flips a
+bystander expense to `rejected` fails the frame check.
+
 The [Python API reference](../reference/python-api.md#transition-audit-an-operation-including-its-side-effects)
 contains a complete runnable activation walk. The
 [expense tutorial](../expense/01-model.md) teaches application-side changes and

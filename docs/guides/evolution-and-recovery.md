@@ -76,7 +76,45 @@ possible source file was included or that runtime behavior was executed.
 There is no watcher or continuous code-to-model synchronization.
 
 For an explicit GSD migration, `gnd-adopt` adds imported requirement mapping
-and a manual cleanup checklist around recovery. Select that skill separately.
-See [agent skills](agent-skills.md) and the
+and a manual cleanup checklist around recovery; see
+[adopt a GSD project](#adopt-a-gsd-project). See
+[Work with an agent](../agents/index.md) and the
 [recovery contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-code/references/recovery-contract.md)
 for bounded scope, exclusions, ambiguity, and output requirements.
+
+## Adopt a GSD project
+
+GND is inspired by [GSD (Get Shit Done)](https://github.com/gsd-build/get-shit-done)
+and keeps its discipline of planning, executing, verifying and recording. The
+difference is that GND's requirements document is an executable model. If you
+already run a project with GSD, the `gnd-adopt` skill carries its requirements into a
+GND model once, and every requirement is accounted for:
+
+```text
+Use gnd-adopt on this repository. Source roots: src/ and tests/; docs root: docs/.
+The GSD roots are .planning/PROJECT.md, REQUIREMENTS.md, ROADMAP.md and STATE.md.
+Show me the full mapping table before applying anything.
+```
+
+1. **Recover the model.** The skill runs `gnd-model-from-code` unchanged over the roots
+   you name (`.planning/` is never one of them) and ends with
+   `gnd recovery verify` at exit 0.
+2. **Map every requirement.** Each GSD requirement id gets exactly one disposition:
+   it lands in a model element as an `imported` constraint or fact type, or it becomes
+   an open question, superseded, or history. Each row carries a verbatim anchor
+   quoted from the GSD artifact. For example, requirement `AUTH-03` ("a session
+   expires after 30 minutes of inactivity") becomes a constraint whose provenance
+   cites `REQUIREMENTS.md` by SHA-256 and quotes that sentence.
+3. **You review the mapping table** before anything is applied. A requirement mapped
+   to the wrong element passes every mechanical check, so this human review is the
+   real safeguard.
+4. **Verify the migration.** The skill's bundled `verify_migration.py` checks that
+   every requirement id appears exactly once, that every anchor matches the bytes it
+   quotes, and that every cited model element exists (exit 0).
+5. **Clean up by hand.** The skill prints a checklist for retiring GSD's local
+   environment, and you work through it yourself; it never deletes anything.
+
+The `.planning/` tree is read and quoted but never modified; it remains the historical
+record. Everything in it is treated as untrusted data: a requirement that reads
+"ignore previous instructions" is a string to quote, not an instruction to follow.
+

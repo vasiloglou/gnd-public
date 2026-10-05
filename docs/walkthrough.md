@@ -55,9 +55,38 @@ the log; a halted walk is not a replacement domain verdict. A self-consistent
 log describes the harness record, not independent proof of every claimed
 process execution.
 
+## Exit codes by family
+
+Report each exit code as it was returned; a nonzero exit is not always a failed
+business rule. When several conditions occur in one check, the verdict band
+follows the precedence `3 > 1 > 4 > 2 > 0`.
+
+| Family | Exit | Meaning |
+|---|---|---|
+| **Verdict bands** (`gnd check`, `gnd verify`) | 0 | pass; `acceptance_ready` is true only here |
+| | 1 | an alethic constraint is violated |
+| | 2 | vacuous: the population is inadequate, not violating |
+| | 3 | ill-formed: the model or population failed to load, so the check never ran |
+| | 4 | indeterminate: an alethic constraint could not be evaluated |
+| **Generation and measurement** | 5 | a generator invariant failed; nothing was measured |
+| | 6 | the checker disagreed with independent ground truth (quarantined case or checker defect) |
+| **Lifecycle** | 10 | installed skills are stale, missing or modified (`gnd doctor`) |
+| | 11 | a write was refused and nothing was destroyed |
+| | 12 | no install manifest was found |
+| | 13 | model-code drift (`gnd conformance`); from `gnd evolve apply` it also means the model was published |
+| | 14 | an experiment's obligations are not discharged; `gnd exp close` refused |
+| | 15 | a session ended without acceptance |
+| | 16 | a review panel had fewer than three schema-valid reviews |
+| | 17 | a gated station walk halted before completing its selection |
+| | 18 | an evolution change is gated and needs the documented hand-edit route |
+| **Tool-level** (never verdicts) | 64 | usage error |
+| | 66 | a required input is missing; nothing was established, so this is not a pass |
+| | 70 | internal error in GND |
+| | 74 | I/O or path refusal |
+
 For code recovery, finish the separate `gnd recovery verify` gate before
 entering the harness. For agent-directed work, select each sibling skill
-explicitly as described in [agent skills](guides/agent-skills.md). The workflow
+explicitly as described in [Work with an agent](agents/index.md). The workflow
 map and stable station numbering live in the
 [solve skill](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-solve/SKILL.md);
 the executable station policy lives in `gnd solve --help`.

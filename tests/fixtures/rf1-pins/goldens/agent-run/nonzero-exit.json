@@ -1,0 +1,34 @@
+{
+ "ok": {
+  "stderr": {
+   "hex": "6661696c696e67"
+  },
+  "stdout": {
+   "hex": ""
+  },
+  "wire": {
+   "argv_count": 3,
+   "argv_sha256": "f00c0c7ba296ee33a5df08462da01b85ef06049f48fe84e4e84c0ddb82598523",
+   "cwd": "<working-directory>",
+   "elapsed_seconds": "<monotonic>",
+   "ended_monotonic": "<monotonic>",
+   "environment": [],
+   "process_group_cleaned": true,
+   "return_code": 3,
+   "signal": null,
+   "spawn_error": null,
+   "spawned": true,
+   "started_monotonic": "<monotonic>",
+   "status": "failed",
+   "stderr_observed_bytes": 7,
+   "stderr_retained_bytes": 7,
+   "stderr_truncated": false,
+   "stdout_observed_bytes": 0,
+   "stdout_retained_bytes": 0,
+   "stdout_truncated": false,
+   "termination": "exited",
+   "termination_steps": [],
+   "timed_out": false
+  }
+ }
+}

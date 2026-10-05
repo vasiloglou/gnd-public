@@ -1,0 +1,39 @@
+{
+ "observed": {
+  "alias": {
+   "ok": {
+    "a": 1,
+    "b": 1
+   }
+  },
+  "anchor-only": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "invalid": {
+   "message": "architecture contract is not loadable YAML: while parsing a flow sequence\n  in \"<unicode string>\", line 1, column 4:\n    a: [1\n       ^ (line: 1)\nexpected ',' or ']', but got '<stream end>'\n  in \"<unicode string>\", line 2, column 1:\n    \n    ^ (line: 2)",
+   "raises": "gnd.architecture.ArchitectureContractError"
+  },
+  "large-stream": {
+   "ok_digest": {
+    "bytes": 2588893,
+    "sha256": "0d647e5830e3cd8f910679f8ca66a6d67a62a3fc006c14204dea493955326136"
+   }
+  },
+  "mapping": {
+   "ok": {
+    "a": 1,
+    "b": [
+     "x",
+     "y"
+    ]
+   }
+  },
+  "two-documents": {
+   "message": "architecture contract is not loadable YAML: expected a single document in the stream\n  in \"<unicode string>\", line 1, column 1:\n    a: 1\n    ^ (line: 1)\nbut found another document\n  in \"<unicode string>\", line 2, column 1:\n    ---\n    ^ (line: 2)",
+   "raises": "gnd.architecture.ArchitectureContractError"
+  }
+ },
+ "site": "yaml_guard|gnd.architecture:_load_yaml"
+}

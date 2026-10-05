@@ -1,0 +1,182 @@
+{
+ "cli_admission_json": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/misc.orm.yaml",
+   "tests/fixtures/checker/population.misc_pass.yaml",
+   "--admission",
+   "--format",
+   "json"
+  ],
+  "exit": 4,
+  "stderr": "",
+  "stdout": "{\"schema_version\": 10, \"tool\": \"gnd\", \"command\": \"check\", \"outcome\": \"indeterminate\", \"exit_code\": 4, \"acceptance_ready\": false, \"model\": \"tests/fixtures/checker/misc.orm.yaml\", \"model_digest\": \"sha256:9545284078b7042c21c6962a68188dab8192beb1fc74ee049ca00cee2ac85209\", \"population\": \"tests/fixtures/checker/population.misc_pass.yaml\", \"counts\": {\"pass\": 4, \"fail\": 0, \"warning\": 0, \"unchecked\": 3, \"vacuous\": 0}, \"verdicts\": [{\"constraint_ref\": \"fact_types[task_scores].constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"In each fact, low is at most high \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[task_has_points].constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"In each fact, points is at most 100 \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[task_logged_on].constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"unchecked\", \"message\": \"Value-comparison against the current-time operand 'NOW()' is unchecked \\u2014 a reference clock is out of scope this phase.\", \"offending_facts\": [], \"reason_code\": \"no-reference-clock\", \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"In each fact, task_started_on.on is at most task_finished_on.on \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[1]\", \"constraint_type\": \"subtype-partition\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"Every vehicle is partitioned over: car, truck \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[2]\", \"constraint_type\": \"subtype-partition\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"unchecked\", \"message\": \"Subtype 'widget' membership is only derivable via the opaque derivation rule 'Each Widget is a Gadget that whirs.' \\u2014 reported as unchecked; the rule text is quoted data and is never evaluated.\", \"offending_facts\": [], \"reason_code\": \"subtype-derivation-only\", \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[3]\", \"constraint_type\": \"textual\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"unchecked\", \"message\": \"Textual constraint 'Each Task is reviewed by exactly one reviewer before it closes.' is not mechanically checkable \\u2014 reported as unchecked; the expression is quoted data and is never evaluated.\", \"offending_facts\": [], \"reason_code\": \"textual-not-mechanical\", \"witnesses\": [], \"refused_facts\": []}], \"derivations\": null, \"coverage\": {\"task_scores\": {\"declared\": \"declared\", \"facts\": 1}, \"task_has_points\": {\"declared\": \"declared\", \"facts\": 1}, \"task_logged_on\": {\"declared\": \"declared\", \"facts\": 1}, \"task_started_on\": {\"declared\": \"declared\", \"facts\": 2}, \"task_finished_on\": {\"declared\": \"declared\", \"facts\": 2}, \"vehicle_has_plate\": {\"declared\": \"declared\", \"facts\": 2}, \"gadget_has_label\": {\"declared\": \"declared\", \"facts\": 1}}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [{\"path\": \"$.constraints[3]\", \"message\": \"the 'textual' constraint 'Each Task is reviewed by exactly one reviewer before it closes.' carries modality 'alethic', but its family can never be mechanically evaluated \\u2014 so this model can never reach exit 0 for ANY population: an unverifiable HARD constraint means acceptance cannot be mechanically claimed, and the run is permanently indeterminate (exit 4). Write 'modality: deontic' unless permanent indeterminacy is what you intend (D-20).\", \"rule_id\": \"semantic:textual-alethic\", \"severity\": \"warning\"}], \"error\": null, \"transition\": null, \"assurance\": {\"schema_version\": 1, \"semantic_decision\": \"indeterminate\", \"assurance_level\": \"none\", \"scope_digest\": null, \"semantics_digest\": null, \"production_roster_digest\": null, \"proof_digest\": null, \"toolchain_digest\": null, \"uncovered_applicable_scope_ids\": [\"applicability:adapter:n-a:boolean-in-numeric-role\", \"applicability:adapter:n-a:malformed-constraint\", \"applicability:adapter:n-a:non-finite-number\", \"applicability:adapter:n-a:unregistered-family\", \"applicability:adapter:n-a:unresolvable-role\", \"applicability:adapter:n-a:untyped-string-ordering\", \"applicability:implemented:n-a:family-unimplemented\", \"applicability:join:guarded:disconnected\", \"applicability:join:n-a:anchor-ambiguous\", \"applicability:join:n-a:disconnected\", \"applicability:refusal:n-a:evidence-not-current\", \"applicability:refusal:n-a:out-of-scope-cardinality\", \"applicability:refusal:n-a:out-of-scope-family\", \"applicability:vacuity:cardinality-object:no-observable-subjects\", \"applicability:vacuity:equality:zero-row-join\", \"applicability:vacuity:exclusion:zero-row-join\", \"applicability:vacuity:frequency-external:zero-row-join\", \"applicability:vacuity:guarded:empty-subject-any\", \"applicability:vacuity:n-a:coverage-omission\", \"applicability:vacuity:n-a:empty-subject-all\", \"applicability:vacuity:subtype-partition:no-observable-subjects\", \"applicability:vacuity:uniqueness-external:zero-row-join\", \"applicability:vacuity:value-comparison-cross:zero-row-join\", \"applicability:vacuity:value:no-observable-subjects\", \"composition:band:n-a:alethic-fail\", \"composition:band:n-a:alethic-unchecked\", \"composition:band:n-a:clean\", \"composition:band:n-a:deontic-unchecked-keeps-band\", \"composition:band:n-a:deontic-warning-keeps-band\", \"composition:band:n-a:fail-over-unchecked-over-vacuous\", \"composition:band:n-a:unchecked-over-vacuous\", \"composition:band:n-a:vacuous\", \"composition:band:n-a:vacuous-over-clean\", \"composition:band:phase1:alethic-fail\", \"composition:band:phase1:alethic-unchecked\", \"composition:band:phase1:clean\", \"composition:band:phase1:deontic-warning-keeps-band\", \"composition:band:phase1:fail-over-unchecked-over-vacuous\", \"composition:band:phase1:unchecked-over-vacuous\", \"composition:band:phase1:vacuous\", \"composition:band:phase1:vacuous-over-clean\", \"composition:verifier-verdict:n-a:fail\", \"composition:verifier-verdict:n-a:pass\", \"composition:verifier-verdict:n-a:unchecked\", \"composition:verifier-verdict:n-a:vacuous\", \"composition:verifier-verdict:n-a:warning\", \"report:check:n-a:counts\", \"report:check:n-a:coverage\", \"report:check:n-a:envelope-only\", \"report:check:n-a:incompatible-schema\", \"report:check:n-a:verdict-row\", \"report:check:phase1:acceptance\", \"report:check:phase1:band\", \"report:check:phase1:counts\", \"report:check:phase1:coverage\", \"report:check:phase1:verdict-row\", \"snapshot:subtype-partition:both:clean\", \"snapshot:subtype-partition:both:violated:alethic\", \"snapshot:subtype-partition:exhaustive:clean\", \"snapshot:subtype-partition:exhaustive:violated:alethic\", \"snapshot:subtype-partition:n-a:unchecked-partition-asserts-nothing\", \"snapshot:subtype-partition:n-a:unchecked-subtype-derivation-only\", \"snapshot:textual:phase1:unchecked-textual-not-mechanical\", \"snapshot:value-comparison:cross-joined:clean\", \"snapshot:value-comparison:cross-joined:unchecked-values-not-comparable\", \"snapshot:value-comparison:cross-joined:violated:alethic\", \"snapshot:value-comparison:inline-literal:clean\", \"snapshot:value-comparison:inline-literal:unchecked-literal-type-ambiguous\", \"snapshot:value-comparison:inline-literal:unchecked-values-not-comparable\", \"snapshot:value-comparison:inline-literal:violated:alethic\", \"snapshot:value-comparison:inline-time-literal:unchecked-no-reference-clock\", \"snapshot:value-comparison:inline:clean\", \"snapshot:value-comparison:inline:unchecked-values-not-comparable\", \"snapshot:value-comparison:inline:violated:alethic\"], \"assumptions\": []}, \"admission\": {\"admitted\": [{\"fact_ref\": {\"fact_type\": \"gadget_has_label\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_finished_on\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_finished_on\", \"index\": 1}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_has_points\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_logged_on\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_scores\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_started_on\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"task_started_on\", \"index\": 1}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"vehicle_has_plate\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"vehicle_has_plate\", \"index\": 1}, \"opaque_deps\": []}], \"blocked\": []}}\n"
+ },
+ "cli_json": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/misc.orm.yaml",
+   "tests/fixtures/checker/population.misc_pass.yaml",
+   "--format",
+   "json"
+  ],
+  "exit": 4,
+  "stderr": "",
+  "stdout": "{\"schema_version\": 7, \"tool\": \"gnd\", \"command\": \"check\", \"outcome\": \"indeterminate\", \"exit_code\": 4, \"acceptance_ready\": false, \"model\": \"tests/fixtures/checker/misc.orm.yaml\", \"model_digest\": \"sha256:9545284078b7042c21c6962a68188dab8192beb1fc74ee049ca00cee2ac85209\", \"population\": \"tests/fixtures/checker/population.misc_pass.yaml\", \"counts\": {\"pass\": 4, \"fail\": 0, \"warning\": 0, \"unchecked\": 3, \"vacuous\": 0}, \"verdicts\": [{\"constraint_ref\": \"fact_types[task_scores].constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"In each fact, low is at most high \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[task_has_points].constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"In each fact, points is at most 100 \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[task_logged_on].constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"unchecked\", \"message\": \"Value-comparison against the current-time operand 'NOW()' is unchecked \\u2014 a reference clock is out of scope this phase.\", \"offending_facts\": [], \"reason_code\": \"no-reference-clock\"}, {\"constraint_ref\": \"constraints[0]\", \"constraint_type\": \"value-comparison\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"In each fact, task_started_on.on is at most task_finished_on.on \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[1]\", \"constraint_type\": \"subtype-partition\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"Every vehicle is partitioned over: car, truck \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[2]\", \"constraint_type\": \"subtype-partition\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"unchecked\", \"message\": \"Subtype 'widget' membership is only derivable via the opaque derivation rule 'Each Widget is a Gadget that whirs.' \\u2014 reported as unchecked; the rule text is quoted data and is never evaluated.\", \"offending_facts\": [], \"reason_code\": \"subtype-derivation-only\"}, {\"constraint_ref\": \"constraints[3]\", \"constraint_type\": \"textual\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"unchecked\", \"message\": \"Textual constraint 'Each Task is reviewed by exactly one reviewer before it closes.' is not mechanically checkable \\u2014 reported as unchecked; the expression is quoted data and is never evaluated.\", \"offending_facts\": [], \"reason_code\": \"textual-not-mechanical\"}], \"derivations\": null, \"coverage\": {\"task_scores\": {\"declared\": \"declared\", \"facts\": 1}, \"task_has_points\": {\"declared\": \"declared\", \"facts\": 1}, \"task_logged_on\": {\"declared\": \"declared\", \"facts\": 1}, \"task_started_on\": {\"declared\": \"declared\", \"facts\": 2}, \"task_finished_on\": {\"declared\": \"declared\", \"facts\": 2}, \"vehicle_has_plate\": {\"declared\": \"declared\", \"facts\": 2}, \"gadget_has_label\": {\"declared\": \"declared\", \"facts\": 1}}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [{\"path\": \"$.constraints[3]\", \"message\": \"the 'textual' constraint 'Each Task is reviewed by exactly one reviewer before it closes.' carries modality 'alethic', but its family can never be mechanically evaluated \\u2014 so this model can never reach exit 0 for ANY population: an unverifiable HARD constraint means acceptance cannot be mechanically claimed, and the run is permanently indeterminate (exit 4). Write 'modality: deontic' unless permanent indeterminacy is what you intend (D-20).\", \"rule_id\": \"semantic:textual-alethic\", \"severity\": \"warning\"}], \"error\": null, \"transition\": null, \"assurance\": {\"schema_version\": 1, \"semantic_decision\": \"indeterminate\", \"assurance_level\": \"none\", \"scope_digest\": null, \"semantics_digest\": null, \"production_roster_digest\": null, \"proof_digest\": null, \"toolchain_digest\": null, \"uncovered_applicable_scope_ids\": [\"applicability:adapter:n-a:boolean-in-numeric-role\", \"applicability:adapter:n-a:malformed-constraint\", \"applicability:adapter:n-a:non-finite-number\", \"applicability:adapter:n-a:unregistered-family\", \"applicability:adapter:n-a:unresolvable-role\", \"applicability:adapter:n-a:untyped-string-ordering\", \"applicability:implemented:n-a:family-unimplemented\", \"applicability:join:guarded:disconnected\", \"applicability:join:n-a:anchor-ambiguous\", \"applicability:join:n-a:disconnected\", \"applicability:refusal:n-a:evidence-not-current\", \"applicability:refusal:n-a:out-of-scope-cardinality\", \"applicability:refusal:n-a:out-of-scope-family\", \"applicability:vacuity:cardinality-object:no-observable-subjects\", \"applicability:vacuity:equality:zero-row-join\", \"applicability:vacuity:exclusion:zero-row-join\", \"applicability:vacuity:frequency-external:zero-row-join\", \"applicability:vacuity:guarded:empty-subject-any\", \"applicability:vacuity:n-a:coverage-omission\", \"applicability:vacuity:n-a:empty-subject-all\", \"applicability:vacuity:subtype-partition:no-observable-subjects\", \"applicability:vacuity:uniqueness-external:zero-row-join\", \"applicability:vacuity:value-comparison-cross:zero-row-join\", \"applicability:vacuity:value:no-observable-subjects\", \"composition:band:n-a:alethic-fail\", \"composition:band:n-a:alethic-unchecked\", \"composition:band:n-a:clean\", \"composition:band:n-a:deontic-unchecked-keeps-band\", \"composition:band:n-a:deontic-warning-keeps-band\", \"composition:band:n-a:fail-over-unchecked-over-vacuous\", \"composition:band:n-a:unchecked-over-vacuous\", \"composition:band:n-a:vacuous\", \"composition:band:n-a:vacuous-over-clean\", \"composition:band:phase1:alethic-fail\", \"composition:band:phase1:alethic-unchecked\", \"composition:band:phase1:clean\", \"composition:band:phase1:deontic-warning-keeps-band\", \"composition:band:phase1:fail-over-unchecked-over-vacuous\", \"composition:band:phase1:unchecked-over-vacuous\", \"composition:band:phase1:vacuous\", \"composition:band:phase1:vacuous-over-clean\", \"composition:verifier-verdict:n-a:fail\", \"composition:verifier-verdict:n-a:pass\", \"composition:verifier-verdict:n-a:unchecked\", \"composition:verifier-verdict:n-a:vacuous\", \"composition:verifier-verdict:n-a:warning\", \"report:check:n-a:counts\", \"report:check:n-a:coverage\", \"report:check:n-a:envelope-only\", \"report:check:n-a:incompatible-schema\", \"report:check:n-a:verdict-row\", \"report:check:phase1:acceptance\", \"report:check:phase1:band\", \"report:check:phase1:counts\", \"report:check:phase1:coverage\", \"report:check:phase1:verdict-row\", \"snapshot:subtype-partition:both:clean\", \"snapshot:subtype-partition:both:violated:alethic\", \"snapshot:subtype-partition:exhaustive:clean\", \"snapshot:subtype-partition:exhaustive:violated:alethic\", \"snapshot:subtype-partition:n-a:unchecked-partition-asserts-nothing\", \"snapshot:subtype-partition:n-a:unchecked-subtype-derivation-only\", \"snapshot:textual:phase1:unchecked-textual-not-mechanical\", \"snapshot:value-comparison:cross-joined:clean\", \"snapshot:value-comparison:cross-joined:unchecked-values-not-comparable\", \"snapshot:value-comparison:cross-joined:violated:alethic\", \"snapshot:value-comparison:inline-literal:clean\", \"snapshot:value-comparison:inline-literal:unchecked-literal-type-ambiguous\", \"snapshot:value-comparison:inline-literal:unchecked-values-not-comparable\", \"snapshot:value-comparison:inline-literal:violated:alethic\", \"snapshot:value-comparison:inline-time-literal:unchecked-no-reference-clock\", \"snapshot:value-comparison:inline:clean\", \"snapshot:value-comparison:inline:unchecked-values-not-comparable\", \"snapshot:value-comparison:inline:violated:alethic\"], \"assumptions\": []}}\n"
+ },
+ "cli_text": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/misc.orm.yaml",
+   "tests/fixtures/checker/population.misc_pass.yaml"
+  ],
+  "exit": 4,
+  "stderr": "",
+  "stdout": "WARNING at $.constraints[3]: the 'textual' constraint 'Each Task is reviewed by exactly one reviewer before it closes.' carries modality 'alethic', but its family can never be mechanically evaluated — so this model can never reach exit 0 for ANY population: an unverifiable HARD constraint means acceptance cannot be mechanically claimed, and the run is permanently indeterminate (exit 4). Write 'modality: deontic' unless permanent indeterminacy is what you intend (D-20). [semantic:textual-alethic]\nBLOCKING (alethic)\n  [unchecked] fact_types[task_logged_on].constraints[0]: Value-comparison against the current-time operand 'NOW()' is unchecked — a reference clock is out of scope this phase.\n  [unchecked] constraints[2]: Subtype 'widget' membership is only derivable via the opaque derivation rule 'Each Widget is a Gadget that whirs.' — reported as unchecked; the rule text is quoted data and is never evaluated.\n  [unchecked] constraints[3]: Textual constraint 'Each Task is reviewed by exactly one reviewer before it closes.' is not mechanically checkable — reported as unchecked; the expression is quoted data and is never evaluated.\nADVISORY (deontic)\n  (none)\npass=4 fail=0 warning=0 unchecked=3 vacuous=0\nCOVERAGE\n  task_scores: declared, facts=1\n  task_has_points: declared, facts=1\n  task_logged_on: declared, facts=1\n  task_started_on: declared, facts=2\n  task_finished_on: declared, facts=2\n  vehicle_has_plate: declared, facts=2\n  gadget_has_label: declared, facts=1\n"
+ },
+ "in_process": {
+  "ok": {
+   "excluded": [
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:value-comparison:inline:clean"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:value-comparison:inline-literal:clean"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:value-comparison:inline-time-literal:unchecked-no-reference-clock"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:value-comparison:cross-joined:clean"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:subtype-partition:both:clean"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:subtype-partition:n-a:unchecked-subtype-derivation-only"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:textual:phase1:unchecked-textual-not-mechanical"
+    }
+   ],
+   "wire": {
+    "coverage": {
+     "gadget_has_label": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "task_finished_on": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "task_has_points": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "task_logged_on": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "task_scores": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "task_started_on": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "vehicle_has_plate": {
+      "declared": "declared",
+      "facts": 2
+     }
+    },
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[task_scores].constraints[0]",
+      "constraint_type": "value-comparison",
+      "message": "In each fact, low is at most high — satisfied.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "pass"
+     },
+     {
+      "constraint_ref": "fact_types[task_has_points].constraints[0]",
+      "constraint_type": "value-comparison",
+      "message": "In each fact, points is at most 100 — satisfied.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "pass"
+     },
+     {
+      "constraint_ref": "fact_types[task_logged_on].constraints[0]",
+      "constraint_type": "value-comparison",
+      "message": "Value-comparison against the current-time operand 'NOW()' is unchecked — a reference clock is out of scope this phase.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": "no-reference-clock",
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "unchecked"
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "value-comparison",
+      "message": "In each fact, task_started_on.on is at most task_finished_on.on — satisfied.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "pass"
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "constraint_type": "subtype-partition",
+      "message": "Every vehicle is partitioned over: car, truck — satisfied.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "pass"
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "constraint_type": "subtype-partition",
+      "message": "Subtype 'widget' membership is only derivable via the opaque derivation rule 'Each Widget is a Gadget that whirs.' — reported as unchecked; the rule text is quoted data and is never evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": "subtype-derivation-only",
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "unchecked"
+     },
+     {
+      "constraint_ref": "constraints[3]",
+      "constraint_type": "textual",
+      "message": "Textual constraint 'Each Task is reviewed by exactly one reviewer before it closes.' is not mechanically checkable — reported as unchecked; the expression is quoted data and is never evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": "textual-not-mechanical",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "verdict": "unchecked"
+     }
+    ]
+   }
+  }
+ }
+}

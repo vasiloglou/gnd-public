@@ -1,0 +1,14 @@
+{
+ "observed": {
+  "empty": {
+   "ok": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gnd-newline": {
+   "ok": "e669a3e2d6d0fe70c8a20b73fce2d427c6fbd70add1b94b9094f19d0e5049a90"
+  },
+  "one-mebibyte": {
+   "ok": "9bc1b2a288b26af7257a36277ae3816a7d4f16e89c1e7e77d0a5c48bad62b360"
+  }
+ },
+ "site": "sha256_hex|gnd.install:_sha256"
+}

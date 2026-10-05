@@ -1,0 +1,34 @@
+{
+ "ok": {
+  "stderr": {
+   "hex": ""
+  },
+  "stdout": {
+   "hex": ""
+  },
+  "wire": {
+   "argv_count": 1,
+   "argv_sha256": "0e5ff485a450b0f717f5a1ec35d964f212e602a5051619b2cc7a2eca3f743dc5",
+   "cwd": "<working-directory>",
+   "elapsed_seconds": "<monotonic>",
+   "ended_monotonic": "<monotonic>",
+   "environment": [],
+   "process_group_cleaned": true,
+   "return_code": null,
+   "signal": null,
+   "spawn_error": "FileNotFoundError",
+   "spawned": false,
+   "started_monotonic": "<monotonic>",
+   "status": "spawn-failed",
+   "stderr_observed_bytes": 0,
+   "stderr_retained_bytes": 0,
+   "stderr_truncated": false,
+   "stdout_observed_bytes": 0,
+   "stdout_retained_bytes": 0,
+   "stdout_truncated": false,
+   "termination": "not-started",
+   "termination_steps": [],
+   "timed_out": false
+  }
+ }
+}

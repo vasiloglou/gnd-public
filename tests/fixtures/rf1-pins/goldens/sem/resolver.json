@@ -1,0 +1,186 @@
+{
+ "absent": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": null
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": null
+  }
+ },
+ "empty-string": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": null
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": null
+  }
+ },
+ "false": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": null
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": null
+  }
+ },
+ "none": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": null
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": null
+  }
+ },
+ "one": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": "String"
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base, inheriting the reference of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": "String"
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": "Code"
+  }
+ },
+ "true": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base, inheriting the reference of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": "String"
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base, inheriting the reference of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": "String"
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": "Code"
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": "String"
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": "Code"
+  }
+ },
+ "yes": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": "String"
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base, inheriting the reference of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": "String"
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": "Code"
+  }
+ },
+ "zero": {
+  "extract.vocabulary._object_type_sentence": {
+   "ok": "Child is a kind of Base."
+  },
+  "model._resolved_primitive": {
+   "ok": null
+  },
+  "model_verbalization._object_type_cnl": {
+   "ok": "Child is a kind of Base."
+  },
+  "popvalidate.resolve_primitive": {
+   "ok": null
+  },
+  "popvalidate.resolve_reference_value_type": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.primitive": {
+   "ok": null
+  },
+  "pyrel_runtime.ModelIndex.reference_value_type": {
+   "ok": null
+  }
+ }
+}

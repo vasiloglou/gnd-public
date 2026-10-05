@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/bookrec/model.orm.yaml",
+   "src/gnd/examples/bookrec/already-read.population.json",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"book_has_genre\",\"index\":0},\"sentence\":\"'cosmos' has primary genre 'science'.\"}\n{\"fact_ref\":{\"fact_type\":\"book_has_genre\",\"index\":1},\"sentence\":\"'map' has primary genre 'fantasy'.\"}\n{\"fact_ref\":{\"fact_type\":\"book_has_genre\",\"index\":2},\"sentence\":\"'night' has primary genre 'fantasy'.\"}\n{\"fact_ref\":{\"fact_type\":\"book_has_genre\",\"index\":3},\"sentence\":\"'read' has primary genre 'fantasy'.\"}\n{\"fact_ref\":{\"fact_type\":\"book_has_genre\",\"index\":4},\"sentence\":\"'river' has primary genre 'fantasy'.\"}\n{\"fact_ref\":{\"fact_type\":\"book_rated_adult\",\"index\":0},\"sentence\":\"'night' is adult-rated.\"}\n{\"fact_ref\":{\"fact_type\":\"recommendation\",\"index\":0},\"sentence\":\"'ada' is recommended 'read'.\"}\n{\"fact_ref\":{\"fact_type\":\"recommendation\",\"index\":1},\"sentence\":\"'ben' is recommended 'night'.\"}\n{\"fact_ref\":{\"fact_type\":\"user_is_minor\",\"index\":0},\"sentence\":\"'ada' is a minor.\"}\n{\"fact_ref\":{\"fact_type\":\"user_prefers_genre\",\"index\":0},\"sentence\":\"'ada' prefers 'fantasy'.\"}\n{\"fact_ref\":{\"fact_type\":\"user_prefers_genre\",\"index\":1},\"sentence\":\"'ben' prefers 'fantasy'.\"}\n{\"fact_ref\":{\"fact_type\":\"user_rated_book\",\"index\":0},\"sentence\":\"'ada' rated 'read'.\"}\n{\"fact_ref\":{\"fact_type\":\"user_rated_book\",\"index\":1},\"sentence\":\"'ben' rated 'read'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/bookrec/model.orm.yaml",
+   "src/gnd/examples/bookrec/already-read.population.json",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT book_has_genre[0]: 'cosmos' has primary genre 'science'.\nFACT book_has_genre[1]: 'map' has primary genre 'fantasy'.\nFACT book_has_genre[2]: 'night' has primary genre 'fantasy'.\nFACT book_has_genre[3]: 'read' has primary genre 'fantasy'.\nFACT book_has_genre[4]: 'river' has primary genre 'fantasy'.\nFACT book_rated_adult[0]: 'night' is adult-rated.\nFACT recommendation[0]: 'ada' is recommended 'read'.\nFACT recommendation[1]: 'ben' is recommended 'night'.\nFACT user_is_minor[0]: 'ada' is a minor.\nFACT user_prefers_genre[0]: 'ada' prefers 'fantasy'.\nFACT user_prefers_genre[1]: 'ben' prefers 'fantasy'.\nFACT user_rated_book[0]: 'ada' rated 'read'.\nFACT user_rated_book[1]: 'ben' rated 'read'.\n"
+ }
+}

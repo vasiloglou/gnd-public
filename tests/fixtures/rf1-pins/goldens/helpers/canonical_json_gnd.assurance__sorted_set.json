@@ -1,0 +1,14 @@
+{
+ "observed": {
+  "duplicates": {
+   "ok": [
+    "a",
+    "b"
+   ]
+  },
+  "empty": {
+   "ok": []
+  }
+ },
+ "site": "canonical_json|gnd.assurance:_sorted_set"
+}

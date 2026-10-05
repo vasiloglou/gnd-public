@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.precedence.yaml",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"booking_by_person\",\"index\":0},\"sentence\":\"'b1' is by '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"booking_by_person\",\"index\":1},\"sentence\":\"'b1' is by '2'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.precedence.yaml",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT booking_by_person[0]: 'b1' is by '1'.\nFACT booking_by_person[1]: 'b1' is by '2'.\n"
+ }
+}

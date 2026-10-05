@@ -1,0 +1,57 @@
+{
+ "observed": {
+  "decimal": {
+   "message": "Object of type Decimal is not JSON serializable",
+   "raises": "builtins.TypeError"
+  },
+  "empty-object": {
+   "ok": {
+    "hex": "7b7d0a"
+   }
+  },
+  "infinity": {
+   "message": "Out of range float values are not JSON compliant",
+   "raises": "builtins.ValueError"
+  },
+  "int-key": {
+   "ok": {
+    "hex": "7b2231223a22696e74206b6579227d0a"
+   }
+  },
+  "large-float": {
+   "ok": {
+    "hex": "31652b31360a"
+   }
+  },
+  "nan": {
+   "message": "Out of range float values are not JSON compliant",
+   "raises": "builtins.ValueError"
+  },
+  "nested-ordering": {
+   "ok": {
+    "hex": "7b2261223a7b2263223a22c3bc222c2264223a5b322c315d7d2c2262223a317d0a"
+   }
+  },
+  "non-ascii-text": {
+   "ok": {
+    "hex": "22c3a9e280a8f09f9880220a"
+   }
+  },
+  "pydantic-model": {
+   "ok": {
+    "hex": "7b22636f756e74223a322c226e616d65223a22c3a9227d0a"
+   }
+  },
+  "scalars": {
+   "ok": {
+    "hex": "5b6e756c6c2c747275652c302e302c2d302e305d0a"
+   }
+  },
+  "trailing-newline-string": {
+   "ok": {
+    "hex": "226c696e655c6e220a"
+   }
+  }
+ },
+ "site": "canonical_json|gnd.artifacts:canonical_json_bytes"
+}

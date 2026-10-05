@@ -1,0 +1,41 @@
+{
+ "observed": {
+  "decimal": {
+   "message": "Object of type Decimal is not JSON serializable",
+   "raises": "builtins.TypeError"
+  },
+  "empty-object": {
+   "ok": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+  },
+  "infinity": {
+   "message": "Out of range float values are not JSON compliant",
+   "raises": "builtins.ValueError"
+  },
+  "int-key": {
+   "ok": "8ca147b8cc0cdb44c4e9e585800f6dbedf3eb642b31f07fae2f8b39212ab442e"
+  },
+  "large-float": {
+   "ok": "f65e16f808bcc0f4a09faef4589cdabcce42060efabd18631bbeefd2000ec1c7"
+  },
+  "nan": {
+   "message": "Out of range float values are not JSON compliant",
+   "raises": "builtins.ValueError"
+  },
+  "nested-ordering": {
+   "ok": "525732da5301364bc42d637d87cbadec9f533c37ef43e79e0369b260f413b399"
+  },
+  "non-ascii-text": {
+   "ok": "c3f0a9aeffaf6d060bd689ba965ec60fc36c220df496eb3b92d8fe7540ee698b"
+  },
+  "pydantic-model": {
+   "ok": "eccdcc0a4b24e5ce51f603e142edb0bcd3af44b71c6955fe2e10c87fdb2f2341"
+  },
+  "scalars": {
+   "ok": "16a7a78391fb76708afeac4eec9ccd4618425409ed4efecb843648707263a0b0"
+  },
+  "trailing-newline-string": {
+   "ok": "b2958d8c2144e68f58eeb1589b2417430deff8d329d38e0674099cff2b555008"
+  }
+ },
+ "site": "file_digest|gnd.evolve.service:final_record_file_sha256"
+}

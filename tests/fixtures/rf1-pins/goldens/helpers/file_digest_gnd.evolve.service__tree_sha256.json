@@ -1,0 +1,18 @@
+{
+ "observed": {
+  "missing": {
+   "message": "artifact root <tmp>/absent could not be inspected: [Errno 2] No such file or directory: '<tmp>/absent'",
+   "raises": "gnd.evolve.service.EvolutionError"
+  },
+  "plain": {
+   "ok": "481acb6e2365d7f50d44b43be66743eb152125c14c473d159869cdea4cf03ae5"
+  },
+  "relative": {
+   "ok": "26a4231a7eb695038763e0d5454b646122d1a97ee9ed1ac1453e783f493f39d8"
+  },
+  "with-symlink": {
+   "ok": "68e118f6ddd61e1e9153eb661bd6e23f95be5efb62f7f4c85924adf8a5f39eaa"
+  }
+ },
+ "site": "file_digest|gnd.evolve.service:_tree_sha256"
+}

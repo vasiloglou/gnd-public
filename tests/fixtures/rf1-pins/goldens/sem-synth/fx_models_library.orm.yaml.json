@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/models/library.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 5,
+ "files": null,
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 5, \"error\": \"generator invariant failed at seed 0: assembled population failed re-admission (load_population): population validation failed: $.facts.title_is_reserved_by_borrower[0]: Fact 0 of 'title_is_reserved_by_borrower' omits role 'work'; an instance of 'title_is_reserved_by_borrower' fills all 2 of its roles ('member', 'work'). A fact missing a role is not a partial fact (population:missing-role). \\u2014 a structurally-invalid population contributes zero verdicts and must be loud (exit 5).\"}\n"
+}

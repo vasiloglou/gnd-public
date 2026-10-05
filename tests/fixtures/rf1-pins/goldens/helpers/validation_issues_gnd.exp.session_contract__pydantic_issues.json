@@ -1,0 +1,71 @@
+{
+ "observed": {
+  "1": {
+   "ok": [
+    {
+     "data": {
+      "message": "Field required",
+      "path": "name",
+      "rule_id": "experiment:session-contract-invalid",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    },
+    {
+     "data": {
+      "message": "Input should be a valid integer, unable to parse string as an integer",
+      "path": "inner.value",
+      "rule_id": "experiment:session-contract-invalid",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    }
+   ]
+  },
+  "3": {
+   "ok": [
+    {
+     "data": {
+      "message": "Field required",
+      "path": "name",
+      "rule_id": "contract:shape",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    },
+    {
+     "data": {
+      "message": "Input should be a valid integer, unable to parse string as an integer",
+      "path": "inner.value",
+      "rule_id": "contract:shape",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    }
+   ]
+  },
+  "8": {
+   "ok": [
+    {
+     "data": {
+      "message": "Field required",
+      "path": "name",
+      "rule_id": "contract:shape",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    },
+    {
+     "data": {
+      "message": "Input should be a valid integer, unable to parse string as an integer",
+      "path": "inner.value",
+      "rule_id": "contract:shape",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    }
+   ]
+  }
+ },
+ "site": "validation_issues|gnd.exp.session_contract:_pydantic_issues"
+}

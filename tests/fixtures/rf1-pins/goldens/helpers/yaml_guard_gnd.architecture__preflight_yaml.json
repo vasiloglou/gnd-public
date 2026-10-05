@@ -1,0 +1,27 @@
+{
+ "observed": {
+  "alias": {
+   "message": "architecture contract uses forbidden YAML alias '*x'",
+   "raises": "gnd.architecture.ArchitectureContractError"
+  },
+  "anchor-only": {
+   "ok": null
+  },
+  "invalid": {
+   "message": "architecture contract is not parseable YAML: while parsing a flow sequence\n  in \"<unicode string>\", line 1, column 4:\n    a: [1\n       ^ (line: 1)\nexpected ',' or ']', but got '<stream end>'\n  in \"<unicode string>\", line 2, column 1:\n    \n    ^ (line: 2)",
+   "raises": "gnd.architecture.ArchitectureContractError"
+  },
+  "large-stream": {
+   "message": "architecture contract exceeds the 100000-event YAML budget",
+   "raises": "gnd.architecture.ArchitectureContractError"
+  },
+  "mapping": {
+   "ok": null
+  },
+  "two-documents": {
+   "message": "architecture contract contains 2 YAML documents; exactly one is required",
+   "raises": "gnd.architecture.ArchitectureContractError"
+  }
+ },
+ "site": "yaml_guard|gnd.architecture:_preflight_yaml"
+}

@@ -1,0 +1,66 @@
+{
+ "date-only": {
+  "ok": [
+   "2024-01-01T00:00:00.000001",
+   "PT0.000001S"
+  ]
+ },
+ "fractional": {
+  "ok": [
+   "2024-01-01T00:00:00.123457+00:00",
+   "PT0.000001S"
+  ]
+ },
+ "hour-24": {
+  "ok": [
+   "2024-01-02T00:00:00.000001",
+   "PT0.000001S"
+  ]
+ },
+ "integer": {
+  "message": "1 is not an ISO-8601 datetime bound",
+  "raises": "gnd.synth.boundary.NoOrdering"
+ },
+ "leading-space": {
+  "message": "' 2024-01-01T00:00:00Z' is not an ISO-8601 datetime bound",
+  "raises": "gnd.synth.boundary.NoOrdering"
+ },
+ "naive": {
+  "ok": [
+   "2024-01-01T00:00:00.000001",
+   "PT0.000001S"
+  ]
+ },
+ "none": {
+  "message": "None is not an ISO-8601 datetime bound",
+  "raises": "gnd.synth.boundary.NoOrdering"
+ },
+ "offset": {
+  "ok": [
+   "2024-01-01T00:00:00.000001+00:00",
+   "PT0.000001S"
+  ]
+ },
+ "space-separator": {
+  "ok": [
+   "2024-01-01T00:00:00.000001",
+   "PT0.000001S"
+  ]
+ },
+ "utc-lower-z": {
+  "message": "'2024-01-01T00:00:00z' is not an ISO-8601 datetime bound",
+  "raises": "gnd.synth.boundary.NoOrdering"
+ },
+ "utc-z": {
+  "ok": [
+   "2024-01-01T00:00:00.000001+00:00",
+   "PT0.000001S"
+  ]
+ },
+ "week-date": {
+  "ok": [
+   "2024-01-01T00:00:00.000001",
+   "PT0.000001S"
+  ]
+ }
+}

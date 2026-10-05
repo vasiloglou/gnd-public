@@ -1,0 +1,44 @@
+{
+ "observed": {
+  "..": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "d": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "d/sub": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "file": {
+   "outcome": {
+    "message": "artifact directory component 'file' is not a directory",
+    "raises": "gnd.artifacts.ArtifactError"
+   },
+   "target_after": "file\n"
+  },
+  "link_to_d": {
+   "outcome": {
+    "message": "artifact directory component 'link_to_d' is a symlink",
+    "raises": "gnd.artifacts.ArtifactError"
+   },
+   "target_after": null
+  },
+  "missing": {
+   "outcome": {
+    "message": "artifact directory component 'missing' could not be inspected: [Errno 2] No such file or directory: 'missing'",
+    "raises": "gnd.artifacts.ArtifactError"
+   },
+   "target_after": null
+  }
+ },
+ "site": "safe_filesystem|gnd.artifacts:_descend"
+}

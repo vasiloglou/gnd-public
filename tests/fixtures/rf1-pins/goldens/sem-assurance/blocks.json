@@ -1,0 +1,418 @@
+{
+ "0": {
+  "block": {
+   "ok": {
+    "assumptions": [],
+    "assurance_level": "none",
+    "production_roster_digest": null,
+    "proof_digest": null,
+    "schema_version": 1,
+    "scope_digest": null,
+    "semantic_decision": "accept",
+    "semantics_digest": null,
+    "toolchain_digest": null,
+    "uncovered_applicable_scope_ids": []
+   }
+  },
+  "decision": {
+   "ok": "accept"
+  }
+ },
+ "1": {
+  "block": {
+   "ok": {
+    "assumptions": [],
+    "assurance_level": "none",
+    "production_roster_digest": null,
+    "proof_digest": null,
+    "schema_version": 1,
+    "scope_digest": null,
+    "semantic_decision": "refuse",
+    "semantics_digest": null,
+    "toolchain_digest": null,
+    "uncovered_applicable_scope_ids": []
+   }
+  },
+  "decision": {
+   "ok": "refuse"
+  }
+ },
+ "2": {
+  "block": {
+   "ok": {
+    "assumptions": [],
+    "assurance_level": "none",
+    "production_roster_digest": null,
+    "proof_digest": null,
+    "schema_version": 1,
+    "scope_digest": null,
+    "semantic_decision": "indeterminate",
+    "semantics_digest": null,
+    "toolchain_digest": null,
+    "uncovered_applicable_scope_ids": []
+   }
+  },
+  "decision": {
+   "ok": "indeterminate"
+  }
+ },
+ "3": {
+  "block": {
+   "ok": {
+    "assumptions": [],
+    "assurance_level": "none",
+    "production_roster_digest": null,
+    "proof_digest": null,
+    "schema_version": 1,
+    "scope_digest": null,
+    "semantic_decision": null,
+    "semantics_digest": null,
+    "toolchain_digest": null,
+    "uncovered_applicable_scope_ids": []
+   }
+  },
+  "decision": {
+   "ok": null
+  }
+ },
+ "4": {
+  "block": {
+   "ok": {
+    "assumptions": [],
+    "assurance_level": "none",
+    "production_roster_digest": null,
+    "proof_digest": null,
+    "schema_version": 1,
+    "scope_digest": null,
+    "semantic_decision": "indeterminate",
+    "semantics_digest": null,
+    "toolchain_digest": null,
+    "uncovered_applicable_scope_ids": []
+   }
+  },
+  "decision": {
+   "ok": "indeterminate"
+  }
+ },
+ "5": {
+  "block": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  },
+  "decision": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "6": {
+  "block": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  },
+  "decision": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "64": {
+  "block": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  },
+  "decision": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "66": {
+  "block": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  },
+  "decision": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "70": {
+  "block": {
+   "ok": {
+    "assumptions": [],
+    "assurance_level": "none",
+    "production_roster_digest": null,
+    "proof_digest": null,
+    "schema_version": 1,
+    "scope_digest": null,
+    "semantic_decision": null,
+    "semantics_digest": null,
+    "toolchain_digest": null,
+    "uncovered_applicable_scope_ids": []
+   }
+  },
+  "decision": {
+   "ok": null
+  }
+ },
+ "74": {
+  "block": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  },
+  "decision": {
+   "message": "band has no report envelope",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "phase3_scope_ids": {
+  "ok": [
+   "applicability:adapter:n-a:boolean-in-numeric-role",
+   "applicability:adapter:n-a:malformed-constraint",
+   "applicability:adapter:n-a:non-finite-number",
+   "applicability:adapter:n-a:opaque-value",
+   "applicability:adapter:n-a:unregistered-family",
+   "applicability:adapter:n-a:unresolvable-role",
+   "applicability:adapter:n-a:untyped-string-ordering",
+   "applicability:implemented:n-a:family-unimplemented",
+   "applicability:join:guarded:disconnected",
+   "applicability:join:n-a:anchor-ambiguous",
+   "applicability:join:n-a:disconnected",
+   "applicability:opaque:n-a:opaque-value",
+   "applicability:refusal:n-a:evidence-not-current",
+   "applicability:refusal:n-a:out-of-scope-cardinality",
+   "applicability:refusal:n-a:out-of-scope-family",
+   "applicability:vacuity:cardinality-object:no-observable-subjects",
+   "applicability:vacuity:equality:zero-row-join",
+   "applicability:vacuity:exclusion:zero-row-join",
+   "applicability:vacuity:frequency-external:zero-row-join",
+   "applicability:vacuity:guarded:empty-subject-any",
+   "applicability:vacuity:n-a:coverage-omission",
+   "applicability:vacuity:n-a:empty-subject-all",
+   "applicability:vacuity:subtype-partition:no-observable-subjects",
+   "applicability:vacuity:uniqueness-external:zero-row-join",
+   "applicability:vacuity:value-comparison-cross:zero-row-join",
+   "applicability:vacuity:value:no-observable-subjects",
+   "certification:assurance:phase1:none",
+   "certification:assurance:phase1:partial",
+   "certification:assurance:phase1:proof-backed",
+   "certification:decision:phase1:accept",
+   "certification:decision:phase1:indeterminate",
+   "certification:decision:phase1:refuse",
+   "composition:band:n-a:alethic-fail",
+   "composition:band:n-a:alethic-unchecked",
+   "composition:band:n-a:clean",
+   "composition:band:n-a:deontic-unchecked-keeps-band",
+   "composition:band:n-a:deontic-warning-keeps-band",
+   "composition:band:n-a:fail-over-unchecked-over-vacuous",
+   "composition:band:n-a:unchecked-over-vacuous",
+   "composition:band:n-a:vacuous",
+   "composition:band:n-a:vacuous-over-clean",
+   "composition:band:phase1:alethic-fail",
+   "composition:band:phase1:alethic-unchecked",
+   "composition:band:phase1:clean",
+   "composition:band:phase1:deontic-warning-keeps-band",
+   "composition:band:phase1:fail-over-unchecked-over-vacuous",
+   "composition:band:phase1:unchecked-over-vacuous",
+   "composition:band:phase1:vacuous",
+   "composition:band:phase1:vacuous-over-clean",
+   "composition:verifier-verdict:n-a:fail",
+   "composition:verifier-verdict:n-a:pass",
+   "composition:verifier-verdict:n-a:unchecked",
+   "composition:verifier-verdict:n-a:vacuous",
+   "composition:verifier-verdict:n-a:warning",
+   "experiment-feedback:projection:constraint-satisfaction:repair-details",
+   "experiment-feedback:projection:n-a:current-v2",
+   "report:check:n-a:counts",
+   "report:check:n-a:coverage",
+   "report:check:n-a:envelope-only",
+   "report:check:n-a:incompatible-schema",
+   "report:check:n-a:verdict-row",
+   "report:check:phase1:acceptance",
+   "report:check:phase1:band",
+   "report:check:phase1:counts",
+   "report:check:phase1:coverage",
+   "report:check:phase1:verdict-row",
+   "snapshot:anchored:all:clean",
+   "snapshot:anchored:all:non-lexical",
+   "snapshot:anchored:all:sidecar-absent",
+   "snapshot:anchored:all:vacuous",
+   "snapshot:anchored:all:violated:alethic",
+   "snapshot:anchored:all:violated:deontic",
+   "snapshot:anchored:role:clean",
+   "snapshot:anchored:role:non-lexical",
+   "snapshot:anchored:role:sidecar-absent",
+   "snapshot:anchored:role:vacuous",
+   "snapshot:anchored:role:violated:alethic",
+   "snapshot:anchored:role:violated:deontic",
+   "snapshot:cardinality:object:clean",
+   "snapshot:cardinality:object:violated:alethic",
+   "snapshot:cardinality:object:violated:deontic",
+   "snapshot:cardinality:role:clean",
+   "snapshot:cardinality:role:violated:alethic",
+   "snapshot:cardinality:role:violated:deontic",
+   "snapshot:equality:joined:clean",
+   "snapshot:equality:joined:violated:alethic",
+   "snapshot:equality:joined:violated:deontic",
+   "snapshot:equality:single:clean",
+   "snapshot:equality:single:violated:alethic",
+   "snapshot:equality:single:violated:deontic",
+   "snapshot:exclusion:joined:clean",
+   "snapshot:exclusion:joined:violated:alethic",
+   "snapshot:exclusion:joined:violated:deontic",
+   "snapshot:exclusion:single:clean",
+   "snapshot:exclusion:single:violated:alethic",
+   "snapshot:exclusion:single:violated:deontic",
+   "snapshot:exclusive-or:multi-role:unchecked-xor-disjunctive-undefined",
+   "snapshot:exclusive-or:multi-role:violated:alethic",
+   "snapshot:exclusive-or:multi-role:violated:deontic",
+   "snapshot:exclusive-or:single-role:clean",
+   "snapshot:exclusive-or:single-role:unchecked-subject-type-ambiguous",
+   "snapshot:exclusive-or:single-role:violated:alethic",
+   "snapshot:exclusive-or:single-role:violated:deontic",
+   "snapshot:frequency:external:clean",
+   "snapshot:frequency:external:violated:alethic",
+   "snapshot:frequency:external:violated:deontic",
+   "snapshot:frequency:internal:clean",
+   "snapshot:frequency:internal:violated:alethic",
+   "snapshot:frequency:internal:violated:deontic",
+   "snapshot:frequency:phase1-internal:clean",
+   "snapshot:frequency:phase1-internal:vacuous-empty-subject",
+   "snapshot:frequency:phase1-internal:violated:alethic",
+   "snapshot:frequency:phase1-internal:violated:deontic",
+   "snapshot:guarded:absence:clean",
+   "snapshot:guarded:absence:violated:alethic",
+   "snapshot:guarded:absence:violated:deontic",
+   "snapshot:guarded:atom:clean",
+   "snapshot:guarded:atom:violated:alethic",
+   "snapshot:guarded:atom:violated:deontic",
+   "snapshot:guarded:comparison:clean",
+   "snapshot:guarded:comparison:unchecked-date-out-of-range",
+   "snapshot:guarded:comparison:unchecked-literal-type-ambiguous",
+   "snapshot:guarded:comparison:unchecked-opaque-date-operand",
+   "snapshot:guarded:comparison:unchecked-temporal-work-limit",
+   "snapshot:guarded:comparison:unchecked-values-not-comparable",
+   "snapshot:guarded:comparison:violated:alethic",
+   "snapshot:guarded:comparison:violated:deontic",
+   "snapshot:guarded:n-a:clean-zero-bindings",
+   "snapshot:guarded:n-a:unchecked-family-unimplemented",
+   "snapshot:guarded:n-a:unchecked-reference-join-work-limit",
+   "snapshot:mandatory-disjunctive:n-a:clean",
+   "snapshot:mandatory-disjunctive:n-a:unchecked-subject-type-ambiguous",
+   "snapshot:mandatory-disjunctive:n-a:violated:alethic",
+   "snapshot:mandatory-disjunctive:n-a:violated:deontic",
+   "snapshot:mandatory:inline:clean",
+   "snapshot:mandatory:inline:unchecked-role-unresolved",
+   "snapshot:mandatory:inline:violated:alethic",
+   "snapshot:mandatory:inline:violated:deontic",
+   "snapshot:mandatory:phase1-inline:clean",
+   "snapshot:mandatory:phase1-inline:vacuous-coverage-omission",
+   "snapshot:mandatory:phase1-inline:vacuous-empty-subject",
+   "snapshot:mandatory:phase1-inline:violated:alethic",
+   "snapshot:mandatory:phase1-inline:violated:deontic",
+   "snapshot:ring:acyclic-intransitive:clean",
+   "snapshot:ring:acyclic-intransitive:violated:alethic",
+   "snapshot:ring:acyclic-intransitive:violated:deontic",
+   "snapshot:ring:acyclic:clean",
+   "snapshot:ring:acyclic:violated:alethic",
+   "snapshot:ring:acyclic:violated:deontic",
+   "snapshot:ring:antisymmetric:clean",
+   "snapshot:ring:antisymmetric:violated:alethic",
+   "snapshot:ring:antisymmetric:violated:deontic",
+   "snapshot:ring:asymmetric-intransitive:clean",
+   "snapshot:ring:asymmetric-intransitive:violated:alethic",
+   "snapshot:ring:asymmetric-intransitive:violated:deontic",
+   "snapshot:ring:asymmetric:clean",
+   "snapshot:ring:asymmetric:violated:alethic",
+   "snapshot:ring:asymmetric:violated:deontic",
+   "snapshot:ring:intransitive:clean",
+   "snapshot:ring:intransitive:violated:alethic",
+   "snapshot:ring:intransitive:violated:deontic",
+   "snapshot:ring:irreflexive:clean",
+   "snapshot:ring:irreflexive:violated:alethic",
+   "snapshot:ring:irreflexive:violated:deontic",
+   "snapshot:ring:n-a:unchecked-ring-not-binary",
+   "snapshot:ring:purely-reflexive:clean",
+   "snapshot:ring:purely-reflexive:violated:alethic",
+   "snapshot:ring:purely-reflexive:violated:deontic",
+   "snapshot:ring:reflexive:clean",
+   "snapshot:ring:reflexive:violated:alethic",
+   "snapshot:ring:reflexive:violated:deontic",
+   "snapshot:ring:symmetric-intransitive:clean",
+   "snapshot:ring:symmetric-intransitive:violated:alethic",
+   "snapshot:ring:symmetric-intransitive:violated:deontic",
+   "snapshot:ring:symmetric-irreflexive:clean",
+   "snapshot:ring:symmetric-irreflexive:violated:alethic",
+   "snapshot:ring:symmetric-irreflexive:violated:deontic",
+   "snapshot:ring:symmetric:clean",
+   "snapshot:ring:symmetric:violated:alethic",
+   "snapshot:ring:symmetric:violated:deontic",
+   "snapshot:ring:transitive:clean",
+   "snapshot:ring:transitive:violated:alethic",
+   "snapshot:ring:transitive:violated:deontic",
+   "snapshot:subset:joined:clean",
+   "snapshot:subset:joined:violated:alethic",
+   "snapshot:subset:joined:violated:deontic",
+   "snapshot:subset:single:clean",
+   "snapshot:subset:single:violated:alethic",
+   "snapshot:subset:single:violated:deontic",
+   "snapshot:subtype-partition:both:clean",
+   "snapshot:subtype-partition:both:violated:alethic",
+   "snapshot:subtype-partition:both:violated:deontic",
+   "snapshot:subtype-partition:exclusive:clean",
+   "snapshot:subtype-partition:exclusive:violated:alethic",
+   "snapshot:subtype-partition:exclusive:violated:deontic",
+   "snapshot:subtype-partition:exhaustive:clean",
+   "snapshot:subtype-partition:exhaustive:violated:alethic",
+   "snapshot:subtype-partition:exhaustive:violated:deontic",
+   "snapshot:subtype-partition:n-a:unchecked-partition-asserts-nothing",
+   "snapshot:subtype-partition:n-a:unchecked-subtype-derivation-only",
+   "snapshot:textual:n-a:unchecked-textual-not-mechanical",
+   "snapshot:textual:phase1:unchecked-textual-not-mechanical",
+   "snapshot:uniqueness:external:clean",
+   "snapshot:uniqueness:external:violated:alethic",
+   "snapshot:uniqueness:external:violated:deontic",
+   "snapshot:uniqueness:inline:clean",
+   "snapshot:uniqueness:inline:violated:alethic",
+   "snapshot:uniqueness:inline:violated:deontic",
+   "snapshot:value-comparison:cross-joined:clean",
+   "snapshot:value-comparison:cross-joined:unchecked-values-not-comparable",
+   "snapshot:value-comparison:cross-joined:violated:alethic",
+   "snapshot:value-comparison:cross-joined:violated:deontic",
+   "snapshot:value-comparison:cross-same:clean",
+   "snapshot:value-comparison:cross-same:unchecked-values-not-comparable",
+   "snapshot:value-comparison:cross-same:violated:alethic",
+   "snapshot:value-comparison:cross-same:violated:deontic",
+   "snapshot:value-comparison:inline-literal:clean",
+   "snapshot:value-comparison:inline-literal:unchecked-literal-type-ambiguous",
+   "snapshot:value-comparison:inline-literal:unchecked-values-not-comparable",
+   "snapshot:value-comparison:inline-literal:violated:alethic",
+   "snapshot:value-comparison:inline-literal:violated:deontic",
+   "snapshot:value-comparison:inline-time-literal:unchecked-no-reference-clock",
+   "snapshot:value-comparison:inline:clean",
+   "snapshot:value-comparison:inline:unchecked-values-not-comparable",
+   "snapshot:value-comparison:inline:violated:alethic",
+   "snapshot:value-comparison:inline:violated:deontic",
+   "snapshot:value:enum-role:clean",
+   "snapshot:value:enum-role:violated:alethic",
+   "snapshot:value:enum-role:violated:deontic",
+   "snapshot:value:enum:clean",
+   "snapshot:value:enum:violated:alethic",
+   "snapshot:value:enum:violated:deontic",
+   "snapshot:value:range-role:clean",
+   "snapshot:value:range-role:unchecked-bound-type-mismatch",
+   "snapshot:value:range-role:violated:alethic",
+   "snapshot:value:range-role:violated:deontic",
+   "snapshot:value:range:clean",
+   "snapshot:value:range:unchecked-bound-type-mismatch",
+   "snapshot:value:range:violated:alethic",
+   "snapshot:value:range:violated:deontic",
+   "snapshot:value:ranges-role:clean",
+   "snapshot:value:ranges-role:unchecked-bound-type-mismatch",
+   "snapshot:value:ranges-role:violated:alethic",
+   "snapshot:value:ranges-role:violated:deontic",
+   "snapshot:value:ranges:clean",
+   "snapshot:value:ranges:unchecked-bound-type-mismatch",
+   "snapshot:value:ranges:violated:alethic",
+   "snapshot:value:ranges:violated:deontic"
+  ]
+ }
+}

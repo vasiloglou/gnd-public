@@ -1,0 +1,40 @@
+{
+ "json": {
+  "argv": [
+   "diff",
+   "src/gnd/examples/bookrec/model.orm.yaml",
+   "src/gnd/examples/bookrec/complete.orm.yaml",
+   "--format",
+   "json"
+  ],
+  "exit": 3,
+  "stderr": "ERROR: diff:vocabulary-mismatch\n",
+  "stdout": ""
+ },
+ "text": {
+  "argv": [
+   "diff",
+   "src/gnd/examples/bookrec/model.orm.yaml",
+   "src/gnd/examples/bookrec/complete.orm.yaml",
+   "--format",
+   "text"
+  ],
+  "exit": 3,
+  "stderr": "ERROR: diff:vocabulary-mismatch\n",
+  "stdout": ""
+ },
+ "with_populations": {
+  "argv": [
+   "diff",
+   "src/gnd/examples/bookrec/model.orm.yaml",
+   "src/gnd/examples/bookrec/complete.orm.yaml",
+   "--populations",
+   "<tmp>/pops",
+   "--format",
+   "json"
+  ],
+  "exit": 3,
+  "stderr": "ERROR: diff:vocabulary-mismatch\n",
+  "stdout": ""
+ }
+}

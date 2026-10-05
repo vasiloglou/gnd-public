@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/expense/currency.orm.json",
+   "src/gnd/examples/expense/currency-missing.population.json",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"expense_approved_by_chain\",\"index\":0},\"sentence\":\"'103' is approved by 'finance'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_has_amount\",\"index\":0},\"sentence\":\"'101' has '60'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_has_amount\",\"index\":1},\"sentence\":\"'102' has '800'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_has_amount\",\"index\":2},\"sentence\":\"'103' has '1400'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_has_currency\",\"index\":0},\"sentence\":\"'103' is denominated in 'EUR'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_in_category\",\"index\":0},\"sentence\":\"'101' is in 'meals'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_in_category\",\"index\":1},\"sentence\":\"'102' is in 'travel'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_in_category\",\"index\":2},\"sentence\":\"'103' is in 'equipment'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_is_approved\",\"index\":0},\"sentence\":\"'103' is approved.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_submitted_by_employee\",\"index\":0},\"sentence\":\"'101' is submitted by 'Ari'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_submitted_by_employee\",\"index\":1},\"sentence\":\"'102' is submitted by 'Bea'.\"}\n{\"fact_ref\":{\"fact_type\":\"expense_submitted_by_employee\",\"index\":2},\"sentence\":\"'103' is submitted by 'Ari'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/expense/currency.orm.json",
+   "src/gnd/examples/expense/currency-missing.population.json",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT expense_approved_by_chain[0]: '103' is approved by 'finance'.\nFACT expense_has_amount[0]: '101' has '60'.\nFACT expense_has_amount[1]: '102' has '800'.\nFACT expense_has_amount[2]: '103' has '1400'.\nFACT expense_has_currency[0]: '103' is denominated in 'EUR'.\nFACT expense_in_category[0]: '101' is in 'meals'.\nFACT expense_in_category[1]: '102' is in 'travel'.\nFACT expense_in_category[2]: '103' is in 'equipment'.\nFACT expense_is_approved[0]: '103' is approved.\nFACT expense_submitted_by_employee[0]: '101' is submitted by 'Ari'.\nFACT expense_submitted_by_employee[1]: '102' is submitted by 'Bea'.\nFACT expense_submitted_by_employee[2]: '103' is submitted by 'Ari'.\n"
+ }
+}

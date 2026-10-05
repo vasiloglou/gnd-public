@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd judgments [-h] {check} ...\n\npositional arguments:\n  {check}\n    check     check saved receipts and confidence floors\n\noptions:\n  -h, --help  show this help message and exit\n",
+ "path": "gnd judgments"
+}

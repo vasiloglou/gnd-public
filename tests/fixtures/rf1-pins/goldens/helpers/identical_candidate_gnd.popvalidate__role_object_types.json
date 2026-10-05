@@ -1,0 +1,637 @@
+{
+ "observed": {
+  "src/gnd/examples/approvals/model.orm.yaml": {
+   "ok": {
+    "expense_approved_by": {
+     "approver": "approver",
+     "expense": "expense"
+    },
+    "expense_has_status": {
+     "expense": "expense",
+     "status": "expense_status"
+    },
+    "expense_reimbursed": {
+     "amount": "reimbursement_amount",
+     "expense": "expense",
+     "paid_on": "paid_on"
+    },
+    "expense_submitted_to_workday": {
+     "expense": "expense",
+     "submission": "workday_submission"
+    }
+   }
+  },
+  "src/gnd/examples/bookrec/complete.orm.yaml": {
+   "ok": {
+    "book_has_genre": {
+     "book": "book",
+     "genre": "genre"
+    },
+    "book_is_blocked_for": {
+     "book": "book",
+     "user": "user"
+    },
+    "book_is_eligible": {
+     "book": "book",
+     "user": "user"
+    },
+    "book_rated_adult": {
+     "book": "book"
+    },
+    "recommendation": {
+     "book": "book",
+     "user": "user"
+    },
+    "user_is_minor": {
+     "user": "user"
+    },
+    "user_prefers_genre": {
+     "genre": "genre",
+     "user": "user"
+    },
+    "user_rated_book": {
+     "book": "book",
+     "user": "user"
+    }
+   }
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml": {
+   "ok": {
+    "book_has_genre": {
+     "book": "book",
+     "genre": "genre"
+    },
+    "book_rated_adult": {
+     "book": "book"
+    },
+    "recommendation": {
+     "book": "book",
+     "user": "user"
+    },
+    "user_is_minor": {
+     "user": "user"
+    },
+    "user_prefers_genre": {
+     "genre": "genre",
+     "user": "user"
+    },
+    "user_rated_book": {
+     "book": "book",
+     "user": "user"
+    }
+   }
+  },
+  "src/gnd/examples/bookrec/strict.orm.yaml": {
+   "ok": {
+    "book_has_genre": {
+     "book": "book",
+     "genre": "genre"
+    },
+    "book_rated_adult": {
+     "book": "book"
+    },
+    "recommendation": {
+     "book": "book",
+     "user": "user"
+    },
+    "user_is_minor": {
+     "user": "user"
+    },
+    "user_prefers_genre": {
+     "genre": "genre",
+     "user": "user"
+    },
+    "user_rated_book": {
+     "book": "book",
+     "user": "user"
+    }
+   }
+  },
+  "src/gnd/examples/dispatch/model.orm.json": {
+   "ok": {
+    "dispatch_allowed": {
+     "node": "dispatch_type_node"
+    },
+    "dispatch_due": {
+     "day": "dispatch_type_day",
+     "job": "dispatch_type_job"
+    },
+    "dispatch_flag": {
+     "job": "dispatch_type_job",
+     "value": "dispatch_type_flag"
+    },
+    "dispatch_leg": {
+     "source": "dispatch_type_node",
+     "target": "dispatch_type_node"
+    },
+    "dispatch_metric": {
+     "job": "dispatch_type_job",
+     "value": "dispatch_type_metric"
+    },
+    "dispatch_reachable": {
+     "source": "dispatch_type_node",
+     "target": "dispatch_type_node"
+    },
+    "dispatch_request": {
+     "job": "dispatch_type_job",
+     "node": "dispatch_type_node"
+    },
+    "dispatch_start": {
+     "day": "dispatch_type_day",
+     "job": "dispatch_type_job"
+    },
+    "dispatch_window": {
+     "days": "dispatch_type_days",
+     "job": "dispatch_type_job"
+    }
+   }
+  },
+  "src/gnd/examples/expense/currency.orm.json": {
+   "ok": {
+    "expense_approved_by_chain": {
+     "chain": "chain",
+     "expense": "expense"
+    },
+    "expense_has_amount": {
+     "amount": "amount",
+     "expense": "expense"
+    },
+    "expense_has_currency": {
+     "currency": "currency",
+     "expense": "expense"
+    },
+    "expense_in_category": {
+     "category": "category",
+     "expense": "expense"
+    },
+    "expense_is_approved": {
+     "expense": "expense"
+    },
+    "expense_submitted_by_employee": {
+     "employee": "employee",
+     "expense": "expense"
+    }
+   }
+  },
+  "src/gnd/examples/expense/model.orm.json": {
+   "ok": {
+    "expense_approved_by_chain": {
+     "chain": "chain",
+     "expense": "expense"
+    },
+    "expense_has_amount": {
+     "amount": "amount",
+     "expense": "expense"
+    },
+    "expense_in_category": {
+     "category": "category",
+     "expense": "expense"
+    },
+    "expense_is_approved": {
+     "expense": "expense"
+    },
+    "expense_submitted_by_employee": {
+     "employee": "employee",
+     "expense": "expense"
+    }
+   }
+  },
+  "src/gnd/examples/release/model.orm.json": {
+   "ok": {
+    "release_allowed": {
+     "node": "release_type_node"
+    },
+    "release_due": {
+     "day": "release_type_day",
+     "job": "release_type_job"
+    },
+    "release_flag": {
+     "job": "release_type_job",
+     "value": "release_type_flag"
+    },
+    "release_leg": {
+     "source": "release_type_node",
+     "target": "release_type_node"
+    },
+    "release_metric": {
+     "job": "release_type_job",
+     "value": "release_type_metric"
+    },
+    "release_reachable": {
+     "source": "release_type_node",
+     "target": "release_type_node"
+    },
+    "release_request": {
+     "job": "release_type_job",
+     "node": "release_type_node"
+    },
+    "release_start": {
+     "day": "release_type_day",
+     "job": "release_type_job"
+    },
+    "release_window": {
+     "days": "release_type_days",
+     "job": "release_type_job"
+    }
+   }
+  },
+  "tests/fixtures/checker/misc.orm.yaml": {
+   "ok": {
+    "gadget_has_label": {
+     "gadget": "gadget",
+     "label": "glabel"
+    },
+    "task_finished_on": {
+     "on": "stamp",
+     "task": "task"
+    },
+    "task_has_points": {
+     "points": "score",
+     "task": "task"
+    },
+    "task_logged_on": {
+     "at": "stamp",
+     "task": "task"
+    },
+    "task_scores": {
+     "high": "score",
+     "low": "score",
+     "task": "task"
+    },
+    "task_started_on": {
+     "on": "stamp",
+     "task": "task"
+    },
+    "vehicle_has_plate": {
+     "plate": "plate",
+     "vehicle": "vehicle"
+    }
+   }
+  },
+  "tests/fixtures/checker/ring.orm.yaml": {
+   "ok": {
+    "rel_acyclic": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_acyclic_intransitive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_antisymmetric": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_asymmetric": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_asymmetric_intransitive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_intransitive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_irreflexive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_purely_reflexive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_reflexive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_symmetric": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_symmetric_intransitive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_symmetric_irreflexive": {
+     "a": "node",
+     "b": "node"
+    },
+    "rel_transitive": {
+     "a": "node",
+     "b": "node"
+    }
+   }
+  },
+  "tests/fixtures/checker/setfam.orm.yaml": {
+   "ok": {
+    "booking_by_person": {
+     "booking": "booking",
+     "person": "person"
+    },
+    "booking_of_room": {
+     "booking": "booking",
+     "room": "room"
+    },
+    "person_is_active": {
+     "person": "person"
+    },
+    "person_is_enrolled": {
+     "person": "person"
+    },
+    "person_is_registered": {
+     "person": "person"
+    },
+    "person_is_staff": {
+     "person": "person"
+    },
+    "person_is_student": {
+     "person": "person"
+    },
+    "person_is_suspended": {
+     "person": "person"
+    },
+    "person_leads_course": {
+     "course": "course",
+     "person": "person"
+    },
+    "person_takes_course": {
+     "course": "course",
+     "person": "person"
+    },
+    "person_teaches_course": {
+     "course": "course",
+     "person": "person"
+    },
+    "room_has_seats": {
+     "room": "room",
+     "seats": "seats"
+    }
+   }
+  },
+  "tests/fixtures/models/dispatch.orm.yaml": {
+   "ok": {
+    "courier_based_at_depot": {
+     "courier": "courier",
+     "depot": "depot"
+    },
+    "courier_drives_route": {
+     "courier": "courier",
+     "route": "route"
+    },
+    "courier_has_name": {
+     "courier": "courier",
+     "name": "courier_name"
+    },
+    "courier_is_off_duty": {
+     "courier": "courier"
+    },
+    "courier_is_on_shift": {
+     "courier": "courier"
+    },
+    "delivery_by_courier": {
+     "courier": "courier",
+     "delivery": "delivery"
+    },
+    "delivery_has_stop_count": {
+     "delivery": "delivery",
+     "stops": "stop_count"
+    },
+    "delivery_of_parcel": {
+     "delivery": "delivery",
+     "parcel": "parcel"
+    },
+    "delivery_on_route": {
+     "delivery": "delivery",
+     "route": "route"
+    },
+    "parcel_has_status": {
+     "parcel": "parcel",
+     "status": "parcel_status"
+    },
+    "parcel_has_weight": {
+     "parcel": "parcel",
+     "weight": "weight_kg"
+    },
+    "route_starts_at_depot": {
+     "depot": "depot",
+     "route": "route"
+    }
+   }
+  },
+  "tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "ok": {
+    "assignment_has_hours": {
+     "assignment": "assignment",
+     "hours": "hours"
+    },
+    "assignment_has_overtime_hours": {
+     "assignment": "assignment",
+     "hours": "hours"
+    },
+    "assignment_of_employee": {
+     "assignment": "assignment",
+     "employee": "employee"
+    },
+    "assignment_on_project": {
+     "assignment": "assignment",
+     "project": "project"
+    },
+    "employee_earns_salary": {
+     "employee": "employee",
+     "salary": "salary"
+    },
+    "employee_has_gender": {
+     "employee": "employee",
+     "gender": "gender"
+    },
+    "employee_has_name": {
+     "employee": "employee",
+     "name": "employee_name"
+    },
+    "employee_heads_department": {
+     "department": "department",
+     "employee": "employee"
+    },
+    "employee_is_active": {
+     "employee": "employee"
+    },
+    "employee_is_fulltime": {
+     "employee": "employee"
+    },
+    "employee_is_parttime": {
+     "employee": "employee"
+    },
+    "employee_is_terminated": {
+     "employee": "employee"
+    },
+    "employee_leads_project": {
+     "employee": "employee",
+     "project": "project"
+    },
+    "employee_reports_to_employee": {
+     "manager": "employee",
+     "subordinate": "employee"
+    },
+    "employee_works_on_project": {
+     "employee": "employee",
+     "project": "project"
+    },
+    "project_ran_from_date_to_date": {
+     "end": "calendar_date",
+     "project": "project",
+     "start": "calendar_date"
+    }
+   }
+  },
+  "tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "ok": {
+    "expense_has_amount": {
+     "amount": "amount",
+     "expense": "expense"
+    },
+    "expense_has_status": {
+     "expense": "expense",
+     "status": "status"
+    },
+    "expense_in_category": {
+     "category": "category",
+     "expense": "expense"
+    }
+   }
+  },
+  "tests/fixtures/models/keywords.orm.yaml": {
+   "ok": {
+    "global": {
+     "for": "class",
+     "in": "type"
+    },
+    "import": {
+     "from": "class",
+     "return": "lambda"
+    },
+    "yield": {
+     "as": "lambda",
+     "is": "match"
+    }
+   }
+  },
+  "tests/fixtures/models/library.orm.yaml": {
+   "ok": {
+    "borrower_has_name": {
+     "full_name": "borrower_name",
+     "member": "borrower"
+    },
+    "borrower_holds_card": {
+     "card": "card_number",
+     "member": "borrower"
+    },
+    "borrower_owes_fine": {
+     "member": "borrower",
+     "owed": "fine_amount"
+    },
+    "borrower_registered_at_branch": {
+     "home_branch": "branch",
+     "member": "borrower"
+    },
+    "borrower_shares_household_with_borrower": {
+     "housemate": "borrower",
+     "member": "borrower"
+    },
+    "copy_has_shelf_mark": {
+     "mark": "shelf_mark",
+     "volume": "copy"
+    },
+    "copy_held_at_branch": {
+     "holding_branch": "branch",
+     "item": "copy"
+    },
+    "copy_is_of_title": {
+     "item": "copy",
+     "work": "title"
+    },
+    "copy_is_on_loan": {
+     "subject": "copy"
+    },
+    "copy_is_shelved": {
+     "subject": "copy"
+    },
+    "copy_is_withdrawn": {
+     "subject": "copy"
+    },
+    "librarian_manages_branch": {
+     "managed_branch": "branch",
+     "staff": "librarian"
+    },
+    "loan_records_copy_to_borrower": {
+     "due_on": "calendar_day",
+     "item": "copy",
+     "lent_on": "calendar_day",
+     "member": "borrower"
+    },
+    "title_grants_loan_period": {
+     "term": "loan_period",
+     "work": "title"
+    },
+    "title_has_genre": {
+     "category": "genre",
+     "work": "title"
+    },
+    "title_has_isbn": {
+     "code": "isbn",
+     "work": "title"
+    },
+    "title_is_reserved_by_borrower": {
+     "member": "borrower",
+     "work": "title"
+    },
+    "title_published_in_year": {
+     "work": "title",
+     "year": "publication_year"
+    },
+    "title_supersedes_title": {
+     "predecessor": "title",
+     "successor": "title"
+    }
+   }
+  },
+  "tests/fixtures/models/v2_operations.orm.yaml": {
+   "ok": {
+    "work_item_has_note": {
+     "item": "work_item",
+     "note": "note"
+    },
+    "work_item_has_priority": {
+     "item": "work_item",
+     "priority": "priority"
+    },
+    "work_item_has_state": {
+     "item": "work_item",
+     "state": "work_state"
+    },
+    "work_item_reviewed_by": {
+     "item": "work_item",
+     "reviewer": "reviewer"
+    }
+   }
+  },
+  "tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "ok": {
+    "chain_has_threshold": {
+     "chain": "approval_chain",
+     "threshold": "threshold_eur"
+    },
+    "expense_has_status": {
+     "expense": "expense",
+     "status": "expense_status"
+    },
+    "expense_submitted_to_workday": {
+     "expense": "expense",
+     "submission": "workday_submission"
+    }
+   }
+  }
+ },
+ "site": "identical_candidate|gnd.popvalidate:_role_object_types"
+}

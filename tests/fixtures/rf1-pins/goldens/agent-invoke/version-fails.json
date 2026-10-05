@@ -1,0 +1,55 @@
+{
+ "ok": {
+  "stderr": {
+   "hex": ""
+  },
+  "stdout": {
+   "hex": ""
+  },
+  "wire": {
+   "adapter": "claude",
+   "argv": [
+    "claude",
+    "--print",
+    "--permission-mode",
+    "acceptEdits",
+    "--output-format",
+    "text",
+    "<prompt:sha256=e97081552dd4cc467a3508b7884807a5f6c33f2dd1192d4744d7815f4b15a519>"
+   ],
+   "cwd": "<candidate-root>",
+   "ended_monotonic": "<monotonic>",
+   "environment": [
+    {
+     "name": "PATH",
+     "provenance": "inherited"
+    },
+    {
+     "name": "NO_COLOR",
+     "provenance": "fixed"
+    },
+    {
+     "name": "PYTHONUNBUFFERED",
+     "provenance": "fixed"
+    }
+   ],
+   "executable": "claude",
+   "exit_code": null,
+   "feedback_sha256": null,
+   "process_group_cleaned": true,
+   "prompt_sha256": "e97081552dd4cc467a3508b7884807a5f6c33f2dd1192d4744d7815f4b15a519",
+   "spawn_error": "VersionProbeFailed",
+   "spawned": false,
+   "started_monotonic": "<monotonic>",
+   "status": "failed",
+   "stderr_observed_bytes": 0,
+   "stderr_retained_bytes": 0,
+   "stderr_truncated": false,
+   "stdout_observed_bytes": 0,
+   "stdout_retained_bytes": 0,
+   "stdout_truncated": false,
+   "termination": "not-started",
+   "version": ""
+  }
+ }
+}

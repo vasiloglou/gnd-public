@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd export lean-compile [-h] [--json] [--executable EXECUTABLE]\n                               [--elaborate-stubs]\n                               bundle\n\npositional arguments:\n  bundle\n\noptions:\n  -h, --help            show this help message and exit\n  --json\n  --executable EXECUTABLE\n  --elaborate-stubs\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd export lean-compile [-h] [--json] [--executable EXECUTABLE]\n                               [--elaborate-stubs]\n                               bundle\ngnd export lean-compile: error: the following arguments are required: bundle\n",
+  "stdout": ""
+ }
+}

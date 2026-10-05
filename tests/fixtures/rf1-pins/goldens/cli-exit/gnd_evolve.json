@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd evolve [-h] {preview,apply,finalize} ...\n\nRun the staged offline evolution protocol over explicit files. Preview\nvalidates without mutation; apply revalidates the exact reviewed preview,\nperforms the model CAS, and completes the live conformance recheck in one\ninvocation; finalize completes a pending state left behind by an interrupted\napply. The CLI does not propose changes, repair projects, or select a runtime.\n\npositional arguments:\n  {preview,apply,finalize}\n    preview             validate a proposal and publish one immutable review\n                        claim\n    apply               revalidate an exact preview and complete the whole\n                        evolution\n    finalize            complete exact pending leaves and publish the final\n                        record last\n\noptions:\n  -h, --help            show this help message and exit\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd evolve [-h] {preview,apply,finalize} ...\ngnd evolve: error: the following arguments are required: evolve_command\n",
+  "stdout": ""
+ }
+}

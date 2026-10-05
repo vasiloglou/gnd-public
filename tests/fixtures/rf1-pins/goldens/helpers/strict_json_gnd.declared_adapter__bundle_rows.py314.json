@@ -1,0 +1,41 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "bundle requires exactly schema_version and files",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "deep": {
+   "message": "bundle requires exactly schema_version and files",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "duplicate-key": {
+   "message": "assistant content is not bundle JSON: duplicate JSON key 'a'",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "fenced": {
+   "message": "assistant content is not bundle JSON: Expecting value: line 1 column 1 (char 0)",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "invalid-utf8": {
+   "message": "assistant content is not bundle JSON: Expecting value: line 1 column 1 (char 0)",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "nan": {
+   "message": "assistant content is not bundle JSON: non-finite JSON number 'NaN' is forbidden",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "object": {
+   "message": "bundle requires exactly schema_version and files",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "overflow": {
+   "message": "bundle requires exactly schema_version and files",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  },
+  "trailing-data": {
+   "message": "assistant content is not bundle JSON: Extra data: line 1 column 9 (char 8)",
+   "raises": "gnd.declared_adapter.CandidateBundleError"
+  }
+ },
+ "site": "strict_json|gnd.declared_adapter:_bundle_rows"
+}

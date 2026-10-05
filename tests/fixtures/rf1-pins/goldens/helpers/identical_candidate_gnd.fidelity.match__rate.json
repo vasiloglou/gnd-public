@@ -1,0 +1,18 @@
+{
+ "observed": {
+  "half": {
+   "ok": {
+    "float": "0.5"
+   }
+  },
+  "third": {
+   "ok": {
+    "float": "0.3333333333333333"
+   }
+  },
+  "zero-denominator": {
+   "ok": null
+  }
+ },
+ "site": "identical_candidate|gnd.fidelity.match:_rate"
+}

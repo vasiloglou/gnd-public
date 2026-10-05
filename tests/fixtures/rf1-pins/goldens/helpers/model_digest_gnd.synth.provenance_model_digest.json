@@ -1,0 +1,59 @@
+{
+ "observed": {
+  "src/gnd/examples/approvals/model.orm.yaml": {
+   "ok": "278b20b244428f78a095c7824b12b6ae9c120ce70a16a485f612f878a077588f"
+  },
+  "src/gnd/examples/bookrec/complete.orm.yaml": {
+   "ok": "c29e734f8c6ca3c86a208f0c1bbc666da8eb52c57e7a13c357f9116cdd2ce400"
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml": {
+   "ok": "417d529ab03e04ed2195668dbbf1ae8cb0941bf982193cefc671806fd21810d7"
+  },
+  "src/gnd/examples/bookrec/strict.orm.yaml": {
+   "ok": "aab82b2e067f1c0b6041ee1f20c707a4b98e95d914703c64d5417efa7a0c2d80"
+  },
+  "src/gnd/examples/dispatch/model.orm.json": {
+   "ok": "152eaa394990fda69a9bad916ae40e3602a0b2d77b6696622ff37e0990a562ce"
+  },
+  "src/gnd/examples/expense/currency.orm.json": {
+   "ok": "10c9af7bc398277506ece4530b86b2d611032a4d2327816c4a5281e87185b08f"
+  },
+  "src/gnd/examples/expense/model.orm.json": {
+   "ok": "ed57ad2a02856a88faf08cf5d22c8d80fdcec715ce0363195ed46b28f82843ec"
+  },
+  "src/gnd/examples/release/model.orm.json": {
+   "ok": "3cb6e00de57d04642a4f3ff0b759c119ec17e5a9eef41166ea2ed93e48083e1c"
+  },
+  "tests/fixtures/checker/misc.orm.yaml": {
+   "ok": "9545284078b7042c21c6962a68188dab8192beb1fc74ee049ca00cee2ac85209"
+  },
+  "tests/fixtures/checker/ring.orm.yaml": {
+   "ok": "bd3e6e3a0ef16ad1f94250074c411a0da6f6ab39f58d460b5fb209f178caf737"
+  },
+  "tests/fixtures/checker/setfam.orm.yaml": {
+   "ok": "221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd"
+  },
+  "tests/fixtures/models/dispatch.orm.yaml": {
+   "ok": "58b5f31023ee985a0bc73d4cb73c180b8ae776f51dac84d25a2f10f136c9ba6e"
+  },
+  "tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "ok": "9ffeeada5d9eb97163eabd45bcead12bc2fbce5a3aaeca415e286e38e441bfa9"
+  },
+  "tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "ok": "971cee95db13819e60e24daded6b204d91ead9c7168f55b9fd12f4e754762f60"
+  },
+  "tests/fixtures/models/keywords.orm.yaml": {
+   "ok": "cb6f47c8e4f7c9d9f081f7628e005475aca9abf05263bca0e9a22396633b1fcb"
+  },
+  "tests/fixtures/models/library.orm.yaml": {
+   "ok": "8c598378a7509c43a7907faf29410c6b25bb7bf4d838920143ee39ef109920d3"
+  },
+  "tests/fixtures/models/v2_operations.orm.yaml": {
+   "ok": "c073b49c74f969eea396becb2eea7ff31774b64bba391bd699ced8c8c7359a76"
+  },
+  "tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "ok": "fbcfde082dbcbb76ddb12be314ab5ae622b8dad4c023a7447ed3d95180d32e41"
+  }
+ },
+ "site": "model_digest|gnd.synth.provenance:model_digest"
+}

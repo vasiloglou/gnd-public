@@ -1,0 +1,4972 @@
+{
+ "actions": [
+  {
+   "choices": null,
+   "class": "_HelpAction",
+   "const": null,
+   "default": "==SUPPRESS==",
+   "dest": "help",
+   "help": "show this help message and exit",
+   "metavar": null,
+   "nargs": 0,
+   "option_strings": [
+    "-h",
+    "--help"
+   ],
+   "required": false,
+   "type": null
+  },
+  {
+   "choices": null,
+   "class": "_VersionAction",
+   "const": null,
+   "default": "==SUPPRESS==",
+   "dest": "version",
+   "help": "print the installed version and exit",
+   "metavar": null,
+   "nargs": 0,
+   "option_strings": [
+    "--version"
+   ],
+   "required": false,
+   "type": null
+  },
+  {
+   "choices": [
+    "witness",
+    "replay",
+    "witness-view",
+    "import",
+    "validate",
+    "diff",
+    "coverage",
+    "check",
+    "verbalize",
+    "verify",
+    "synth",
+    "measure",
+    "extract",
+    "export",
+    "codegen",
+    "conformance",
+    "recovery",
+    "evolve",
+    "doccheck",
+    "fidelity",
+    "review",
+    "exp",
+    "solve",
+    "install",
+    "doctor",
+    "uninstall",
+    "judgments"
+   ],
+   "class": "_SubParsersAction",
+   "const": null,
+   "default": null,
+   "dest": "command",
+   "help": null,
+   "metavar": null,
+   "nargs": "A...",
+   "option_strings": [],
+   "required": true,
+   "type": null
+  }
+ ],
+ "description": "GND ORM runtime: validate conceptual models, check populations",
+ "epilog": null,
+ "formatter_class": "argparse.HelpFormatter",
+ "parser_class": "gnd.cli._BandSafeParser",
+ "prog": "gnd",
+ "subcommands": {
+  "check": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "population",
+     "help": "path to the population file (YAML or JSON) -- the snapshot arm",
+     "metavar": null,
+     "nargs": "?",
+     "option_strings": [],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "populations",
+     "help": "batch arm: directory of sorted .json/.yaml/.yml population projections",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--populations"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "pre",
+     "help": "transition arm: the population the walk starts from",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--pre"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "steps",
+     "help": "transition arm: the steps.json document describing the walk",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--steps"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "post",
+     "help": "transition arm: the population the walk is claimed to end in",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--post"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "anchors",
+     "help": "bound source anchor sidecar for snapshot checks",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--anchors"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "document",
+     "help": "source document for anchor spans",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--document"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "admission",
+     "help": "include the occurrence admission partition in the check report",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--admission"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "unredacted",
+     "help": "==SUPPRESS==",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--unredacted"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Two arms, and exactly one runs. SNAPSHOT: a positional population is checked against the model's constraints. TRANSITION: --pre, --steps and --post audit a WALK -- the operation invocations claimed to have carried the pre-population to the post-population -- reporting failed preconditions, undeclared side effects and illegal intermediate states. Mixing the two, or supplying part of the transition triple, is a usage error at 64: they answer different questions, and silently preferring one would make the other's arguments decorative. Model version 3 supports guarded Date plus/minus Duration calendar-day terms (date_add/date_sub), selecting report v11; --admission selects temporal report v13.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "check a population against a model, or a walk between two populations",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd check",
+   "subcommands": {}
+  },
+  "codegen": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "output directory for the generated project",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "force",
+     "help": "overwrite hand-edited derived files and adopt unmanaged files at derived paths. Extension files (pyproject.toml, references/) are NEVER overwritten, with or without this flag, and no path outside the generated layout is ever touched.",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--force"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Turn model.orm.yaml into a plain-Python project with the GND shape: <package>/tools.py (one derived function per fact type, named and parameterized through the published model-id to Python-symbol mapping, with docstrings derived from the model's readings), the four-file extraction artifact bundle under artifacts/, a code-emitted SKILL.md the terminal agent runs, and create-once extension files (pyproject.toml, references/) that regeneration never rewrites. No provider SDK and no network library is emitted, so the generated project is CI-runnable with zero network and no API key — the agent running the generated SKILL.md is the only place a model is ever called. Every emitted Python module is parsed before any byte reaches disk. Re-running over an existing generated project is idempotent: an unchanged model performs ZERO writes and leaves every hash identical. A derived file you hand-edited, and an unmanaged file sitting at a derived path, are REFUSED rather than overwritten; --force overwrites them and still never touches an extension file. Exits 0 when the tree is written or already current, 3 when the model is invalid, two of its ids sanitize to one Python symbol (rename one), or the existing manifest is unreadable, 11 when a write was refused and nothing was destroyed, 64 on usage errors, 70 when an emitter invariant breaks over an already-valid model, 74 when the output path is refused or unwritable.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "emit a plain-Python agent project derived from the model (GEN-01)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd codegen",
+   "subcommands": {}
+  },
+  "conformance": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "directory",
+     "help": "the generated project's root (the directory `gnd codegen --out` wrote)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Ask whether a project `gnd codegen` generated still agrees with the model it came from. FOUR assertions run. Two are exact and corroborating: INTEGRITY — every code-emitted file still hashes to what the codegen manifest recorded — and CURRENCY, the manifest's model digest against the model's digest now, which IS model-code drift: the model moved and the code did not. Both are importable functions rather than CLI-only paths, so a downstream tool can invoke them without going through argv. The third is STRUCTURAL, and it is the assertion that makes a green result mean anything: the emitted surface is checked against the fact types the MODEL declares, computed from the model and the filesystem and never from the manifest or a previous generation. Without it the other two establish only that the generator agrees with itself — a project that is well-formed and empty, with every digest re-signed, passes both. The fourth is ARCHITECTURE: authored module, symbol, artifact and entry-point declarations are compared with static filesystem and AST observations without executing the project. Fully offline over committed artifacts, and the generated project is NEVER imported — this command reads bytes and hashes them, because importing a module to inspect it would execute the project's own code on every CI run. What a GREEN result does not say travels in the payload, not only in this text: every file the manifest records appears in either `examined` or `unexamined` by integrity, and extension files (pyproject.toml, references/) are not digest-gated because human- and LLM-authored text is not byte-reproducible and cannot be digest-gated, and the required `limits` block names the manifest co-edit blind spot — a manifest cannot record its own digest, so a derived file edited TOGETHER with its manifest entry is undetectable by digest comparison, exactly as in `gnd doctor`. Two runs over one unchanged project print byte-identical JSON. Exits 0 when all four assertions ran and found nothing, 13 when the generated code no longer matches its model (one band for the whole command — the payload names which assertion and which file), 3 when the codegen manifest will not parse, 64 on usage errors, 66 when the manifest or the model is missing so nothing could be compared at all (fail closed — a check that could not run must not read as one that passed), 74 when the project tree could not be read.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "check that a generated project still matches its model (GEN-02); temporal models refused",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd conformance",
+   "subcommands": {}
+  },
+  "coverage": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "experiments",
+     "help": null,
+     "metavar": "DIR",
+     "nargs": null,
+     "option_strings": [
+      "--experiments"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "check",
+     "help": null,
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--check"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "verify",
+     "help": null,
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--verify"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "conformance",
+     "help": null,
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--conformance"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "transition",
+     "help": null,
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--transition"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "report claims and cited evidence for every addressable model element",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd coverage",
+   "subcommands": {}
+  },
+  "diff": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model_a",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model_b",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "populations",
+     "help": null,
+     "metavar": "DIR",
+     "nargs": null,
+     "option_strings": [
+      "--populations"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": 0,
+     "dest": "seed",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--seed"
+     ],
+     "required": false,
+     "type": "builtins.int"
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "unredacted",
+     "help": "==SUPPRESS==",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--unredacted"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "compare two models over one vocabulary",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd diff",
+   "subcommands": {}
+  },
+  "doccheck": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "manifest",
+     "help": "path to the document manifest (paths resolve beside it)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "artifacts",
+     "help": "the gnd extract bundle directory holding <stem>.applicable.json",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--artifacts"
+     ],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Discharge the gnd-render-doc skill's obligations by CODE over the document manifest (skill prose explains, validators discharge). Four obligations: (1) binding — document_sha256, source_population_sha256 and applicable_sha256 match the actual file bytes; (2) rendering — every role filler of every APPLICABLE fact type in the source population is mentioned in the document under lexical normalization, direct fillers as their value and composite fillers via their identifying component values; inapplicable fact types are exempt BY the published applicable-set artifact, never by leniency; (3) distractors — at least one of each kind (out-of-model, near-miss-entity, absent-fact), every distractor text present in the document, and every absent-fact distractor genuinely absent from the source population; (4) renderer identity fields non-empty. Exits 0 when every obligation holds, 3 on any violation (one line each), 64 on usage errors, 66 when the applicable-set artifact or any manifest-named file is missing (fail closed — an obligation that cannot be checked is never skipped).",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "validate a rendered document's manifest against its renderer obligations (DATA-02)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd doccheck",
+   "subcommands": {}
+  },
+  "doctor": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "claude",
+     "help": "target Claude Code's skills directory (default: both runtimes)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--claude"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "codex",
+     "help": "target Codex CLI's skills directory (default: both runtimes)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--codex"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreConstAction",
+     "const": "global",
+     "default": "global",
+     "dest": "scope",
+     "help": "user level (DEFAULT): ~/.claude/skills and $CODEX_HOME/skills (~/.codex/skills)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--global"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreConstAction",
+     "const": "project",
+     "default": "global",
+     "dest": "scope",
+     "help": "this project: ./.claude/skills and ./.codex/skills",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--project"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Report every placed asset as current, stale, missing, modified or collided, and print the two environment facts that explain most 'it did not work' reports: the directory the running executable lives in with an on-PATH verdict, and every target root inspected. BOTH scopes are always inspected, whichever scope flag is given, because skill precedence puts the user level ahead of the project level and a shadowed project install is the most common confusing outcome. Exits 0 when everything is current, 10 on drift, 11 on a collision, 12 when nothing is installed anywhere. Text output only, for the reason `gnd install --help` gives (D-25). Scope: installed-asset state ONLY. A green doctor says nothing about your model or its conformance state — in particular it does not report a pending evolution finalization, which `gnd evolve` reports and refuses. Reading exit 0 here as 'my model is fine' is the one misreading this command cannot make for you.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "report the state of every GND skill this machine has placed",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd doctor",
+   "subcommands": {}
+  },
+  "evolve": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "preview",
+      "apply",
+      "finalize"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "evolve_command",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Run the staged offline evolution protocol over explicit files. Preview validates without mutation; apply revalidates the exact reviewed preview, performs the model CAS, and completes the live conformance recheck in one invocation; finalize completes a pending state left behind by an interrupted apply. The CLI does not propose changes, repair projects, or select a runtime.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "preview, apply, and finalize one digest-bound model evolution",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd evolve",
+   "subcommands": {
+    "apply": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "current model file beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "proposal",
+       "help": "closed evolution proposal JSON beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "preview",
+       "help": "exact reviewed PREVIEW JSON beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--preview"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "workspace",
+       "help": "authoritative existing workspace ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--workspace"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "records",
+       "help": "authoritative immutable evidence DIR",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--records"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "text",
+        "json"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "text",
+       "dest": "format",
+       "help": "output rendering: human-readable text (default) or one JSON payload",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--format"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Require PROPOSAL and PREVIEW to reproduce the current exact preview, obtain the exact blast-radius digest for a breaking proposal, publish the candidate model CAS and durable pending-finalization evidence, then complete the verbalization, live linked-project conformance, and final record in the same invocation. The exit is the raw aggregate conformance exit, so linked drift returns 13 with the model published and no rollback.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "revalidate an exact preview and complete the whole evolution",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd evolve apply",
+     "subcommands": {}
+    },
+    "finalize": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "published model file beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "pending",
+       "help": "immutable pending-finalization JSON beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "workspace",
+       "help": "authoritative existing workspace ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--workspace"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "records",
+       "help": "authoritative immutable evidence DIR",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--records"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "text",
+        "json"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "text",
+       "dest": "format",
+       "help": "output rendering: human-readable text (default) or one JSON payload",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--format"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Load one immutable PENDING identity, finish its exact verbalization and linked-project conformance leaves, and publish the final evolution record last. Linked drift remains exit 13 with its raw evidence; no rollback or regeneration occurs.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "complete exact pending leaves and publish the final record last",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd evolve finalize",
+     "subcommands": {}
+    },
+    "preview": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "current model file beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "proposal",
+       "help": "closed evolution proposal JSON beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "workspace",
+       "help": "authoritative existing workspace ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--workspace"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "records",
+       "help": "authoritative immutable evidence DIR",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--records"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "write-once PREVIEW JSON path beneath ROOT",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "text",
+        "json"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "text",
+       "dest": "format",
+       "help": "output rendering: human-readable text (default) or one JSON payload",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--format"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Read MODEL and PROPOSAL beneath the authoritative workspace, validate the candidate and blast radius, and write the complete digest-bound preview to PREVIEW without changing the model, verbalization, records, or linked projects.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "validate a proposal and publish one immutable review claim",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd evolve preview",
+     "subcommands": {}
+    }
+   }
+  },
+  "exp": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "init",
+      "validate",
+      "author-expectation",
+      "run",
+      "close"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "exp_command",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Work with experiments — the unit that carries a question, the run that answered it, and the evidence for the answer. This lane owns the structural INVARIANTS (does the spec parse, does every declared question id resolve, does every evidence pointer name a file inside the experiment); the language — what makes a good question or a good conclusion — belongs to the skill. Fully offline: an experiment's recorded conclusion is only worth something if a reviewer can recompute it from the committed tree.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "scaffold, author, run, validate, and close experiments",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd exp",
+   "subcommands": {
+    "author-expectation": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "directory",
+       "help": "the data-driven experiment directory",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "case_id",
+       "help": "case_id to update",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--case"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "output_id",
+       "help": "expected output id to insert or replace",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--output-id"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "candidate_path",
+       "help": "output path relative to candidate/",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--candidate-path"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "source",
+       "help": "produced answer file inside the experiment root",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--from"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "application/json",
+       "dest": "media_type",
+       "help": "declared media type (default: application/json)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--media-type"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "utf-8",
+       "dest": "encoding",
+       "help": "declared encoding (default: utf-8)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--encoding"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Author one answer-free exact-bytes expectation in <DIR>/session.contract.json. --from must be an experiment-relative regular file (an absolute path is accepted only when it remains inside DIR). The source is read through descriptor-anchored, no-follow traversal and the 10 MiB session-input cap, the updated contract is production-validated before publication, the source is deleted, and every regular file under the experiment root is scanned for equal bytes. The contract entry contains sha256, output_id, candidate_path, comparison, media_type, and encoding, but no path or size_bytes. Exits 0 only after the published contract loads and no answer copy remains; 3 when the spec, contract, case, output, source, or answer-copy state is refused; 64 on usage errors; 66 when SPEC.md is missing; 74 on refused or failed path/I/O.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "hash an exact answer, remove its source, and reject any surviving copy",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd exp author-expectation",
+     "subcommands": {}
+    },
+    "close": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "directory",
+       "help": "the experiment directory",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": "Refuse to close an experiment that did not finish what it declared. The verdict is a difference of two SETS — the question ids in SPEC.md and the resolution ids in CONCLUSIONS.md — and it fails when EITHER difference is non-empty: a declared question left unresolved, or an orphan answer to a question nobody asked. It also fails when a resolution's evidence pointer does not name a file inside the experiment directory, or when a follows: reference names an experiment that does not exist or has not concluded. The OUTCOME VALUES never affect the verdict. An experiment whose every question honestly resolves to 'unanswered' with a reason and a citation CLOSES at exit 0 — a gate that demanded success would pay for lying, and the gate's job is that a question cannot be quietly forgotten, not that experiments succeed. This is a validator, not a state machine: nothing is written and no status is recorded. Exits 0 when every obligation is discharged, 3 when SPEC.md or CONCLUSIONS.md is unparseable, schema-invalid, or declares another experiment's id, 14 when an obligation is undischarged INCLUDING a missing CONCLUSIONS.md (the gate's own verdict — the experiment is open, not the input missing), 64 on usage errors, 66 when SPEC.md is missing entirely, 74 when the directory cannot be read.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "has this experiment discharged every question it declared?",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd exp close",
+     "subcommands": {}
+    },
+    "init": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "id",
+       "help": "the experiment id, e.g. EXP-001-codegen-drift",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "directory the experiment directory is created in",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "codegen",
+        "analysis",
+        "roundtrip",
+        "data-driven",
+        "work"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "codegen",
+       "dest": "kind",
+       "help": "the closed experiment kind (default: codegen)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--kind"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "title",
+       "help": "one line saying what this experiment is for",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--title"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": null,
+       "dest": "questions",
+       "help": "a declared question; repeatable. Every id must be answered to close.",
+       "metavar": "ID=TEXT",
+       "nargs": null,
+       "option_strings": [
+        "--question"
+       ],
+       "required": false,
+       "type": "gnd.cli._parse_question"
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": null,
+       "dest": "covers",
+       "help": "compact JSON model-element cover with exactly one of operation, constraint, fact_type, or derivation (which addresses derivation:<id>); repeatable",
+       "metavar": "ENTRY",
+       "nargs": null,
+       "option_strings": [
+        "--covers"
+       ],
+       "required": false,
+       "type": "gnd.cli._parse_covers"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "session_contract",
+       "help": "contract inspected only to establish the work tests-only covers exemption",
+       "metavar": "PATH",
+       "nargs": null,
+       "option_strings": [
+        "--session-contract"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Create <out>/<ID>/SPEC.md declaring the questions this experiment will have to answer. ID must match ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ because the id IS the directory name, and every write goes through the shipped traversal guard. An existing experiment directory is REFUSED, never overwritten, and there is deliberately no --force: an experiment directory holds recorded conclusions and evidence. Exits 0 when the spec is written, 3 when the requested declaration is not a valid ExperimentSpec, 11 when the experiment directory already exists (nothing was written), 64 on usage errors including a malformed ID or a --question that is not ID=TEXT, 74 when the output path is refused by the guard or is unwritable.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "scaffold a new experiment directory with its SPEC.md",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd exp init",
+     "subcommands": {}
+    },
+    "run": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "directory",
+       "help": "the data-driven experiment directory",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "claude",
+        "codex"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "adapter",
+       "help": "legacy trusted terminal-agent adapter (contracts v1-v5)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--adapter"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "adapter_policy",
+       "help": "trusted local declared-adapter policy path (contracts v6/v7; v7 supports bounded patches and ranking)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--adapter-policy"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "wall_seconds",
+       "help": "optional positive finite tightening of the contract wall bound",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--wall-seconds"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_finite_float"
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": null,
+       "dest": "test_argv",
+       "help": "one exact tests-mode child argv word; repeatable and never shell-parsed",
+       "metavar": "WORD",
+       "nargs": null,
+       "option_strings": [
+        "--test-argv"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Load a kind: data-driven SPEC.md and its conventional session.contract.json, invoke exactly one trusted terminal-agent adapter, run GND's machine verifier over every declared case, and publish immutable evidence under runs/. The adapter vocabulary is closed; no executable, provider, model, argv, attempt increase, or contract-bound loosening is accepted. This does not close the experiment: gnd exp close remains the separate completeness gate. Exits 0 on exact required-case acceptance, 15 on a well-formed nonaccepted session, 3 on malformed or mismatched committed input, 64 on usage errors or a wall-bound loosening, 66 when a required artifact or selected adapter is missing, 70 on an internal defect, 74 on refused or failed path/I/O. Child verifier exits 1 through 4 are retained as case evidence and never become this parent exit.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "run one bounded attempt for a data-driven experiment",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd exp run",
+     "subcommands": {}
+    },
+    "validate": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "directory",
+       "help": "the experiment directory",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": "Read <DIR>/SPEC.md and report its structure: id, kind, title, the declared question ids in declared order, and any follows: references. The spec is UNTRUSTED committed metadata, so the read is byte-capped before it happens, anchors/aliases are refused, unknown keys are rejected (extra=forbid), the experiment kind is a closed vocabulary, and duplicate or empty question ids are refused — a duplicate declaration makes the close gate's declared-vs-resolved set difference ambiguous. Exits 0 when the experiment is well-formed, 3 when SPEC.md is unparseable, schema-invalid, or declares an id that disagrees with its own directory name, 64 on usage errors, 66 when SPEC.md is missing entirely (fail closed — a directory without a spec is not an experiment with nothing wrong).",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "check that an experiment directory is structurally well-formed",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd exp validate",
+     "subcommands": {}
+    }
+   }
+  },
+  "export": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "souffle",
+      "souffle-verify",
+      "souffle-run",
+      "souffle-witness",
+      "lean",
+      "lean-verify",
+      "lean-compile",
+      "pyrel"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "export_target",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "export an optional standalone artifact",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd export",
+   "subcommands": {
+    "lean": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "population",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "toolchain",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--toolchain"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "reference_root",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--reference-root"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "raw",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--raw"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "finite Lean definitions; explicit unproved obligations",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export lean",
+     "subcommands": {}
+    },
+    "lean-compile": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "bundle",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "lake",
+       "dest": "executable",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--executable"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "elaborate_stubs",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--elaborate-stubs"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "finite Lean definitions; explicit unproved obligations",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export lean-compile",
+     "subcommands": {}
+    },
+    "lean-verify": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "bundle",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "finite Lean definitions; explicit unproved obligations",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export lean-verify",
+     "subcommands": {}
+    },
+    "pyrel": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "path to the model file",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "new Python program path",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": ":memory:",
+       "dest": "duckdb_path",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--duckdb-path"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "connection",
+       "help": "reserved named Snowflake connection",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--connection"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "export a standalone PyRel program",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export pyrel",
+     "subcommands": {}
+    },
+    "souffle": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "population",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "reference_root",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--reference-root"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "raw",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--raw"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "bounded standalone Souffle derivation claim",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export souffle",
+     "subcommands": {}
+    },
+    "souffle-run": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "bundle",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "raw",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--raw"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "souffle",
+       "dest": "executable",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--executable"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "bounded standalone Souffle derivation claim",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export souffle-run",
+     "subcommands": {}
+    },
+    "souffle-verify": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "bundle",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "bounded standalone Souffle derivation claim",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export souffle-verify",
+     "subcommands": {}
+    },
+    "souffle-witness": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "bundle",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "json",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--json"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "raw",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--raw"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "souffle",
+       "dest": "executable",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--executable"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "targets",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--targets"
+       ],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "bounded standalone Souffle derivation claim",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export souffle-witness",
+     "subcommands": {}
+    }
+   }
+  },
+  "extract": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "output directory for the four-file bundle",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Derive the per-model extraction artifacts OFFLINE from model.orm.yaml: <stem>.projection.schema.json (the closed, shape-only structured-output projection, gated by a recursive allowlist that fails closed on unlisted keywords), <stem>.verbalization.txt (the constraint-blind rendering seed), <stem>.applicable.json (the three-path reference-scheme applicable set) and <stem>.artifacts.json (sha256 digests plus the header_template the executing skill copies verbatim). No provider is called and no network is touched — the executing agent running the gnd-extract skill is the only place a model is ever called. Exits 0 when the bundle is emitted, 3 when the model is invalid, 64 on usage errors, 70 when the projection gate refuses gnd's own emitter (an internal invariant breach), 74 when the output path is refused or unwritable.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "emit the per-model extraction artifact bundle (VER-01, DATA-02)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd extract",
+   "subcommands": {}
+  },
+  "fidelity": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "cases",
+     "help": "directory of case directories, each carrying source.population.json, document.md, document.manifest.json, extracted.population.json and extracted.population.extraction.json (or extraction.skipped.json)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--cases"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "artifacts",
+     "help": "the gnd extract bundle directory holding <stem>.applicable.json",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--artifacts"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "write the payload to this path",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Measure the EXTRACTOR, per fact type, over committed case directories. This command emits RATES and never a per-run verdict — it is the dual of `gnd verify`, which emits verdicts and never a rate: a checker pass over an uncalibrated extraction is not evidence of faithfulness. Matching is by the model's own reference scheme under a LEXICAL-only normalization, multiset (tp per identity key is min(source_count, extracted_count)), with INCLUSIVE precision (unresolved and ambiguous extractions stay in the denominator) and `ambiguous` as an explicit outcome for normalization collisions and broken composite identities — never an arbitrary match. Every rate ships with its numerator AND denominator, no figure blends fact types, and the payload is schema-REQUIRED to report calibration.state 'uncalibrated' and publishable false: the round trip measures the round trip, and while the calibration set is deferred no interval field may exist at all. Fully offline over committed artifacts. Exits 0 with the report, 3 on a digest binding mismatch inside a case, 64 on usage errors or a case set spanning more than one model, 66 when a required extraction artifact is missing (fail closed — a missing applicable set must not read as coverage), 70 on an internal contract breach, 74 when the output path is refused.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "measure extractor fidelity per fact type over committed cases (DATA-02)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd fidelity",
+   "subcommands": {}
+  },
+  "import": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "rai-orm"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "import_command",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "import a supported foreign ORM dialect create-once",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd import",
+   "subcommands": {
+    "rai-orm": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "path to the source RAI ORM YAML file",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "new directory for model.orm.yaml and aliases.json",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "source_artifact",
+       "help": "stable relative POSIX source path recorded in provenance",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--source-artifact"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "source_commit",
+       "help": "source repository commit required when provenance must be synthesized",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--source-commit"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "import the bounded rai-orm-from-schema dialect",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd import rai-orm",
+     "subcommands": {}
+    }
+   }
+  },
+  "install": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "claude",
+     "help": "target Claude Code's skills directory (default: both runtimes)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--claude"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "codex",
+     "help": "target Codex CLI's skills directory (default: both runtimes)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--codex"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreConstAction",
+     "const": "global",
+     "default": "global",
+     "dest": "scope",
+     "help": "user level (DEFAULT): ~/.claude/skills and $CODEX_HOME/skills (~/.codex/skills)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--global"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreConstAction",
+     "const": "project",
+     "default": "global",
+     "dest": "scope",
+     "help": "this project: ./.claude/skills and ./.codex/skills",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--project"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "symlink",
+     "help": "link skill directories instead of copying — DEVELOPMENT INSTALLS ONLY. A tool environment is rebuilt on upgrade and removed on uninstall, so a link into one is silently swapped after a same-interpreter reinstall and dangles outright after an interpreter-version change or an uninstall",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--symlink"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "force",
+     "help": "replace unmanaged files that block a write (never touches files you edited)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--force"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "sync",
+     "help": "ignore the runtime and scope flags; refresh every standard root that already carries an install manifest. This is the second half of `uv tool upgrade get-nick-done && gnd install --sync`",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--sync"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Place every packaged GND skill into your agent runtime's skills directory. Copies by default; a second run with no intervening change performs zero writes, and a file GND did not place is never overwritten without --force. Text output only: --format json exists so a retry loop can consume VERIFIER output, and this is a human-operated setup command with no programmatic consumer, so a machine-readable install report is deliberately not offered (D-25).",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "place every packaged GND skill into your agent runtime's skills directory",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd install",
+   "subcommands": {}
+  },
+  "judgments": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "check"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "judgment_command",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "evaluate saved external opinions",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd judgments",
+   "subcommands": {
+    "check": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "population",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "policy",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--policy"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "receipts",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--receipts"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "trusted_root",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--trusted-root"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "reference_root",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--reference-root"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "unredacted",
+       "help": null,
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--unredacted"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": [
+        "json",
+        "text"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "text",
+       "dest": "format",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--format"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "check saved receipts and confidence floors",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd judgments check",
+     "subcommands": {}
+    }
+   }
+  },
+  "measure": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "promote",
+     "help": "D-14: copy each defect-revealing population and its model into DIR (the adversarial corpus root) and PRINT manifest rows in the locked record shape. The append itself stays a reviewed act — this never edits manifest.yaml",
+     "metavar": "DIR",
+     "nargs": null,
+     "option_strings": [
+      "--promote"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "populations",
+     "help": "output root of a `gnd synth` run (the directory holding index.json)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--populations"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "write the JSON payload to this path (default: stdout)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "unredacted",
+     "help": "==SUPPRESS==",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--unredacted"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Measure the checker's per-constraint false-pass, false-fail and undecided rates over labelled synthetic populations. Reads the populations `gnd synth` wrote and their provenance sidecars, verifies the C6 sidecar binding before scoring, and emits a per-constraint report — three rates, each with its numerator AND its conditional denominator (C2), never a blended accuracy number (D-01). Computed OFFLINE from committed artifacts: no timestamp, so two runs over one corpus reproduce byte-for-byte. Exits 3 on a sidecar-binding mismatch, 5 on a population that fails to load, 6 on a checker defect (C9), 64 on a corpus mixing models or pool sources (C4).",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "measure per-constraint false-pass/false-fail/undecided rates (VER-03)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd measure",
+   "subcommands": {}
+  },
+  "recovery": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "inventory",
+      "verify"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "recovery_command",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Run the one-time, execution-free recovery boundary. Inventory reads only explicit categorized roots under ROOT with closed byte/file limits and writes one immutable JSON census. Verify re-resolves the canonical model, full verbalization, report, evidence digests, typed locators, and exact selected-path census. Neither command imports or executes repository code, launches an agent, invokes conformance, or generates code. Exits 3 for an ill-formed inventory/report or failed digest/locator claim, 66 when a required input is missing, and 74 for refused or unreadable paths and I/O.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "inventory static code evidence and verify one recovered model bundle",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd recovery",
+   "subcommands": {
+    "inventory": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "root",
+       "help": "authoritative existing repository root",
+       "metavar": "ROOT",
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": "[]",
+       "dest": "sources",
+       "help": "repository-relative source root (repeatable)",
+       "metavar": "PATH",
+       "nargs": null,
+       "option_strings": [
+        "--source"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": "[]",
+       "dest": "tests",
+       "help": "repository-relative test root (repeatable)",
+       "metavar": "PATH",
+       "nargs": null,
+       "option_strings": [
+        "--tests"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": "[]",
+       "dest": "docs",
+       "help": "repository-relative documentation root (repeatable)",
+       "metavar": "PATH",
+       "nargs": null,
+       "option_strings": [
+        "--docs"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": "[]",
+       "dest": "configs",
+       "help": "repository-relative configuration root (repeatable)",
+       "metavar": "PATH",
+       "nargs": null,
+       "option_strings": [
+        "--config"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": "[]",
+       "dest": "schemas",
+       "help": "repository-relative schema root (repeatable)",
+       "metavar": "PATH",
+       "nargs": null,
+       "option_strings": [
+        "--schema"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": "[]",
+       "dest": "exclude",
+       "help": "closed exclusion reason and repository-relative path (repeatable)",
+       "metavar": "REASON=PATH",
+       "nargs": null,
+       "option_strings": [
+        "--exclude"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 2097152,
+       "dest": "max_file_bytes",
+       "help": "maximum bytes read from one selected file (default: 2097152)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--max-file-bytes"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_int"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 33554432,
+       "dest": "max_total_bytes",
+       "help": "maximum aggregate bytes read from selected files (default: 33554432)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--max-total-bytes"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_int"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 10000,
+       "dest": "max_files",
+       "help": "maximum selected file observations (default: 10000)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--max-files"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_int"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "write-once inventory JSON destination beneath ROOT",
+       "metavar": "INVENTORY.json",
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": "Read explicitly selected source, test, documentation, configuration, and schema roots as inert bytes. Every selected path is classified as parsed, excluded, ambiguous, or frontier; source text is never copied into the inventory. --exclude uses REASON=PATH where REASON is dependency, vendored, generated, cache, build, or sensitive-tree. The output is write-once. Exits 3 for an empty/malformed scope, 66 for a missing root, and 74 for an unsafe/unreadable path or refused output.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "write one bounded closed census of explicit static repository roots",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd recovery inventory",
+     "subcommands": {}
+    },
+    "verify": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "root",
+       "help": "authoritative existing recovery bundle/repository root",
+       "metavar": "ROOT",
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "report",
+       "help": "explicit canonical model.recovery.json beneath ROOT",
+       "metavar": "REPORT",
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "model.orm.yaml",
+       "dest": "model",
+       "help": "explicit recovered model sibling (default: model.orm.yaml)",
+       "metavar": "MODEL",
+       "nargs": null,
+       "option_strings": [
+        "--model"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "model.verbalization.txt",
+       "dest": "verbalization",
+       "help": "explicit full verbalization sibling (default: model.verbalization.txt)",
+       "metavar": "VERBALIZATION",
+       "nargs": null,
+       "option_strings": [
+        "--verbalization"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Verify REPORT beneath authoritative ROOT, together with its explicit canonical sibling model and full verbalization. All leaves are no-follow regular files; the runtime reloads the model, reproduces the complete verbalization, resolves every evidence locator, and re-inventories the selected roots. Exits 3 for malformed/stale evidence, 66 for a missing artifact, and 74 for unsafe/unreadable paths or I/O.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "verify the canonical three-artifact recovery bundle and every claim",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd recovery verify",
+     "subcommands": {}
+    }
+   }
+  },
+  "replay": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "population",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "certificate",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "reference_root",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--reference-root"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "json",
+     "help": null,
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--json"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "raw",
+     "help": "explicitly expose target values",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--raw"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "independently replay a finite derivation witness",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd replay",
+   "subcommands": {}
+  },
+  "review": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "panel",
+      "panel-light",
+      "finalize"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "review_command",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Advisory multi-CLI review over ONE of exactly three input classes — a plan, an experiment outcome, or a spec/results/delta bundle. GND attempts six reviewer seats over five installed terminal-agent CLIs (claude, codex, qwen, gemini, kimi, plus a glm seat that runs the claude CLI against Z.AI's Anthropic-compatible endpoint) through fixed Python-owned invocation argv and bounded prompt transport (stdin for five, one --prompt argv element for Kimi), keeps one closed envelope per reviewer including every timeout, authentication failure, missing executable and unparseable response, and requires three DISTINCT schema-valid successes before any panel result may be reported. Every reviewer must first return substantive help that documents every long flag in the invocation GND is about to send; an incompatible reviewer is never invoked. GND does not sandbox reviewer CLIs or enforce read-only execution. It verifies the reviewed artifacts are unchanged before publishing a run. The panel ships no provider SDK and sources no credentials.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "run the bounded six-reviewer advisory panel and finalize its synthesis (REV-01)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd review",
+   "subcommands": {
+    "finalize": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "run",
+       "help": "the immutable panel run directory published by gnd review panel",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "synthesis",
+       "help": "the closed semantic synthesis JSON authored over that run",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "path to write PANEL-REVIEW.md; an existing file is never replaced",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": "Take one immutable panel RUN directory and one closed SYNTHESIS document — the semantic grouping an agent authored over the successful responses — and prove it before rendering: the synthesis must bind the run by digest, account for every retained concern exactly once, give every agreed concern at least two DISTINCT successful supporting reviewers, keep every evidence-backed singleton under divergent views, and trace every prioritized fix to the complete supporter and evidence set of each group it touches. Reviewer quorum (three) and concern agreement (two) are different thresholds and neither substitutes for the other. Nothing in a reviewed artifact is ever written, no fix is applied, and an existing report is never replaced. Exits 0 when the report is rendered, 16 when the run itself is below quorum, 3 when the run evidence or the synthesis fails closed validation, 11 when the report path already exists, 64 on usage errors, 66 when the run directory or the synthesis is missing, 74 on refused or failed path/IO.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "validate a semantic synthesis against immutable run evidence and render it",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd review finalize",
+     "subcommands": {}
+    },
+    "panel": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "request",
+       "help": "repository-relative path to the review request JSON (kind plan, experiment-outcome, or spec-results-delta), resolved against the current directory",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": "gnd.cli._repository_relative_path"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "directory to publish immutable panel evidence into; it must not exist",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 600.0,
+       "dest": "reviewer_timeout",
+       "help": "positive finite per-reviewer wall-clock bound in seconds (default: 600)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--reviewer-timeout"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_finite_float"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 900.0,
+       "dest": "overall_timeout",
+       "help": "positive finite whole-panel wall-clock bound in seconds (default: 900)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--overall-timeout"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_finite_float"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 536870912,
+       "dest": "max_output_bytes",
+       "help": "positive retained byte cap per reviewer stream; the whole-panel aggregate is twice this value (default: 536870912 -- effectively uncapped; pass a smaller value to bound a run)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--max-output-bytes"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_int"
+      }
+     ],
+     "description": "Load and digest-bind a review request, attempt all six reviewers concurrently under one shared deadline, and publish the normalized request, four raw streams and one closed envelope per reviewer, every validated response, and a manifest-last run.json into a directory that must not already exist. REQUEST and every artifact it names are repository-relative paths resolved against the directory you are standing in. Every bound must be strictly positive and is validated BEFORE any process is spawned; each reviewer's deadline is the earlier of --reviewer-timeout and the remaining --overall-timeout. Prints one closed JSON summary and never a verdict, a rate, or a conformance result. Exits 0 when at least three distinct reviewers returned schema-valid responses, 16 when all six attempts completed and fewer than three did, 3 when the request or a reviewer-cited artifact is ill-formed, 11 when the output directory already exists (nothing was written and no reviewer was invoked), 64 on usage errors including a non-positive bound, 66 when the request or a reviewed artifact is missing, 70 on an internal defect, 74 on refused or failed path/IO.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "attempt all six reviewers and publish one immutable evidence directory",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd review panel",
+     "subcommands": {}
+    },
+    "panel-light": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "request",
+       "help": "repository-relative path to the review request JSON (kind plan, experiment-outcome, or spec-results-delta), resolved against the current directory",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": "gnd.cli._repository_relative_path"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "directory to publish immutable panel evidence into; it must not exist",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 600.0,
+       "dest": "reviewer_timeout",
+       "help": "positive finite per-reviewer wall-clock bound in seconds (default: 600)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--reviewer-timeout"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_finite_float"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 900.0,
+       "dest": "overall_timeout",
+       "help": "positive finite whole-panel wall-clock bound in seconds (default: 900)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--overall-timeout"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_finite_float"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": 536870912,
+       "dest": "max_output_bytes",
+       "help": "positive retained byte cap per reviewer stream; the whole-panel aggregate is twice this value (default: 536870912 -- effectively uncapped; pass a smaller value to bound a run)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--max-output-bytes"
+       ],
+       "required": false,
+       "type": "gnd.cli._positive_int"
+      },
+      {
+       "choices": [
+        "high",
+        "medium"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "high",
+       "dest": "effort",
+       "help": "supported per-run effort for Claude and Codex (default: high)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--effort"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Run the same bounded six-reviewer advisory panel and publish the same immutable evidence as `gnd review panel`, but request a lighter supported per-run effort from Claude and Codex. The default is high; --effort medium is the only alternative. Qwen uses persistent effort configuration, and Gemini, Kimi, and the GLM seat expose no per-run effort flag, so their invocation policies and models are unchanged. All request, quorum, deadline, evidence, exit-band, and no-sandbox rules are identical to the quality-first panel.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "run the same panel at high or medium supported per-run effort",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd review panel-light",
+     "subcommands": {}
+    }
+   }
+  },
+  "solve": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreOnce",
+     "const": null,
+     "default": null,
+     "dest": "workspace",
+     "help": "the directory every station writes into. Required: a walk that wrote five artifacts into whatever directory the caller happened to be standing in is the accident this argument exists to prevent",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--workspace"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreOnce",
+     "const": null,
+     "default": null,
+     "dest": "experiment",
+     "help": "the data-driven experiment directory for the exp-run station, which must resolve strictly inside --workspace. Mandatory when exp-run is selected and refused when it is not",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--experiment"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreOnce",
+     "const": null,
+     "default": null,
+     "dest": "from_station",
+     "help": "first station to run, inclusive",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--from"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreOnce",
+     "const": null,
+     "default": null,
+     "dest": "until",
+     "help": "last station to run, inclusive",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--until"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "skip",
+     "help": "omit a station; repeatable, and repeating one name is not an error",
+     "metavar": "NAME",
+     "nargs": null,
+     "option_strings": [
+      "--skip"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "auto",
+     "help": "authorize every gate without blocking. The log is NOT byte-identical to a gated walk: flags.auto is true and every authorization carries the auto source token",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--auto"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "claude",
+      "codex"
+     ],
+     "class": "_StoreOnce",
+     "const": null,
+     "default": null,
+     "dest": "adapter",
+     "help": "terminal-agent adapter for the exp-run station; resolves to claude",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--adapter"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreOnce",
+     "const": null,
+     "default": null,
+     "dest": "adapter_policy",
+     "help": "trusted local declared-adapter policy for a schema-v6 exp-run station",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--adapter-policy"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "test_argv",
+     "help": "forwarded to the exp-run station verbatim, in the order given",
+     "metavar": "WORD",
+     "nargs": null,
+     "option_strings": [
+      "--test-argv"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": "[]",
+     "dest": "station_timeout",
+     "help": "override one station's outer timeout. SECONDS is a positive integer no greater than 86400: an unbounded override is an unbounded child wearing a flag",
+     "metavar": "NAME=SECONDS",
+     "nargs": null,
+     "option_strings": [
+      "--station-timeout"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Walk the CLI-pure GND stations in locked order -- validate, synth, codegen, exp-run, conformance -- blocking for an authorization before each one and appending an authorization record to a walk log before the station is spawned.\n\nWHAT THIS GUARANTEES: sequence, gating and logging FOR WALKS THAT GO THROUGH IT. Nothing more.\n\nWHAT IT DOES NOT GUARANTEE: the process in general. Running the stations a la carte stays legal and is not a violation of anything -- a harness that could not be bypassed would be routed around, and a bypassed harness is worse than none, because its log's existence would falsely imply the walk is where work happens.\n\nIT DOES NOT JUDGE STATION-INTERNAL AGENT WORK. The guarantee's perimeter is the walk log's perimeter.\n\nA STATION'S OWN EXIT IS IN THE LOG, NOT IN THIS COMMAND'S EXIT CODE. The exit code is a control plane: 0 a completed walk or informational action, 17 a walk that halted at a station, 64 usage, 66 a missing path, 70 an internal defect, 74 an I/O refusal. A caller scripting this command reads the code and then reads the log; a station exiting 11 does not make gnd solve claim a collision about itself.\n\nTHE BROWNFIELD PROFILE ASSUMES RECOVERY ALREADY COMPLETED. --skip synth --skip codegen --skip conformance leaves gnd validate; a recovered model's gate is gnd recovery verify, which runs BEFORE this harness is entered, not inside it.\n\nTHE WALK LOG RECORDS WHAT THIS HARNESS DID; IT IS NOT PROOF THAT IT DID IT. A log that satisfies the walk predicate is a self-consistent document, and a file authored by hand can be self-consistent too. It attests no spawn, no executed argv, no existing artifact and no human presence.\n\nTHE OUTER STATION TIMEOUT IS NOT THE CONTRACT'S INNER --wall-seconds BOUND. --station-timeout bounds the child process; this harness passes no --wall-seconds to gnd exp run, because a contract's own wall bound is the contract's business.",
+   "epilog": null,
+   "formatter_class": "argparse.RawDescriptionHelpFormatter",
+   "listed_help": "walk the CLI-pure GND stations in order, gating each, and log the walk",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd solve",
+   "subcommands": {}
+  },
+  "synth": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": ".gnd/synth",
+     "dest": "out",
+     "help": "output root for populations (default: .gnd/synth)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "conforming",
+      "boundary",
+      "violating",
+      "all"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "conforming",
+     "dest": "synth_class",
+     "help": "the population class to generate: conforming, boundary, violating, or all. `boundary` derives cases from the constraints' own declared bounds (D-06) and includes the `no-subjects` and `unchecked` frontier kinds",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--class"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "pool",
+     "help": "path to an admitted pool artifact (default: build a Faker pool)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--pool"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "seed",
+     "help": "RNG seed (omitted: draw OS entropy, the probabilistic development default)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--seed"
+     ],
+     "required": false,
+     "type": "builtins.int"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "baseline_seed",
+     "help": "seed of the conforming baseline a violating run mutates (recorded in every violating sidecar so each case is traceable to what it mutated; default: --seed, else OS entropy)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--baseline-seed"
+     ],
+     "required": false,
+     "type": "builtins.int"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": 1,
+     "dest": "seeds",
+     "help": "number of independent seed variants to generate for every requested class (default 1, the lightweight dev lane). --seeds 30 is the publication/degeneracy invocation: 30 clean seeds give 95%% confidence (rule of three) that fewer than 10%% of the GENERATOR's runs are degenerate",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--seeds"
+     ],
+     "required": false,
+     "type": "gnd.cli._positive_int"
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Generate labelled synthetic populations, each with a provenance SIDECAR. --class conforming builds populations the checker accepts; --class violating mutates a conforming baseline, one population per (constraint, operator) pair, each admitted only after the real checker confirms the model-derived typed prediction (D-05'); --class all does both. The development lane is probabilistic by default: --seed omitted draws OS entropy per population and records it, so data is fresh yet regenerable; --seed N is the deterministic variant-regeneration path. --pool consumes an admitted pool artifact; an omitted --pool builds and materialises a Faker pool beside the corpus. Exits 5 on a generator invariant failure, 6 on a quarantined checker/witness or prediction/observation disagreement (C1).",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "generate labelled synthetic populations from a model (DATA-01)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd synth",
+   "subcommands": {}
+  },
+  "uninstall": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "claude",
+     "help": "target Claude Code's skills directory (default: both runtimes)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--claude"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "codex",
+     "help": "target Codex CLI's skills directory (default: both runtimes)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--codex"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreConstAction",
+     "const": "global",
+     "default": "global",
+     "dest": "scope",
+     "help": "user level (DEFAULT): ~/.claude/skills and $CODEX_HOME/skills (~/.codex/skills)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--global"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreConstAction",
+     "const": "project",
+     "default": "global",
+     "dest": "scope",
+     "help": "this project: ./.claude/skills and ./.codex/skills",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--project"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Remove every skill file GND placed at the requested target roots. A file is deleted only when its bytes still hash to what the install receipt recorded, so anything you edited is KEPT and named in the report — there is deliberately no flag that overrides this. Files GND never placed are never touched. The directories emptied by the removal are pruned and the receipt is removed last. Unlike `doctor`, this acts on exactly the scope you name. Exits 0 on a clean removal, 10 when something was kept, 12 when nothing is installed, 74 when a receipt could not be trusted (in which case nothing at all was deleted). Text output only (D-25).",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "remove the GND skills this machine placed, leaving your own edits alone",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd uninstall",
+   "subcommands": {}
+  },
+  "validate": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "trace",
+     "help": "report what a transition run would evaluate, WITHOUT evaluating anything: the two digests every steps.json must carry, which preconditions compile to standing obligations and which are retained per-step and why, and the frame modality each fact type would be graded with. Reports; never decides, never reads a population. This is the only shipped producer of operations_digest, which every steps.json is required to carry",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--trace"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "unredacted",
+     "help": "==SUPPRESS==",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--unredacted"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Validate the model; version-4 references bind beneath its parent with disjoint fixed ownership and exact raw hashes.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "validate a model and bind declared fixed reference populations",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd validate",
+   "subcommands": {}
+  },
+  "verbalize": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "population"
+     ],
+     "class": "_SubParsersAction",
+     "const": null,
+     "default": null,
+     "dest": "verbalize_target",
+     "help": null,
+     "metavar": null,
+     "nargs": "A...",
+     "option_strings": [],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "render supplied facts as deterministic sentences",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd verbalize",
+   "subcommands": {
+    "population": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "population",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "anchors",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--anchors"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "document",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--document"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": [
+        "text",
+        "jsonl"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "text",
+       "dest": "format",
+       "help": null,
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--format"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "unredacted",
+       "help": "==SUPPRESS==",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--unredacted"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": null,
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "render one population in text or JSONL",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd verbalize population",
+     "subcommands": {}
+    }
+   }
+  },
+  "verify": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "population",
+     "help": "path to the PRE-EXTRACTED population file (YAML or JSON)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "sidecar",
+     "help": "path to the extraction sidecar (default: the population path with an .extraction.json suffix, beside the population)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--sidecar"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "artifacts",
+     "help": "directory containing the model's extraction bundle; required on the extraction path so projection_sha256 is verified",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--artifacts"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "no_extraction",
+     "help": "the INTENTIONAL opt-out: check a population that was not produced by an extraction; records extraction.state=skipped with the reason",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--no-extraction"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "also write the JSON payload to this path (from argv only)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "unredacted",
+     "help": "==SUPPRESS==",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--unredacted"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Run the full derived verifier: popvalidate then check over a PRE-EXTRACTED population file. This command never calls a model and never orchestrates extraction (R-03''): the executing agent running the gnd-extract skill writes the population and its <population>.extraction.json sidecar, and verify validates the handoff before composing the checker. Exit bands are REUSED unchanged with precedence 3 > 1 > 4 > 2 > 0: 3 ill-formed (including an ill-formed extraction handoff), 1 alethic fail, 4 indeterminate, 2 vacuous, 0 pass. The payload's extraction block carries the machine-readable state (ran | skipped | failed + reason); a missing sidecar is extraction:sidecar-missing, a malformed one extraction:sidecar-invalid, and a digest that does not match the file bytes extraction:binding-mismatch — all exit 3, state failed. skipped is written ONLY by --no-extraction. Never a fidelity rate in this payload: a checker pass over an uncalibrated extraction is checker acceptance, not proof of faithfulness.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "run the full derived verifier over a pre-extracted population (VER-01, VER-02)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd verify",
+   "subcommands": {}
+  },
+  "witness": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "population",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "targets",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--targets"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "reference_root",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--reference-root"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "raw",
+     "help": "explicitly expose replayable raw values",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--raw"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "create a new raw certificate; requires --raw",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "produce a finite grounded derivation witness",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd witness",
+   "subcommands": {}
+  },
+  "witness-view": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "certificate",
+     "help": null,
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "raw",
+     "help": null,
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--raw"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "expand",
+     "help": null,
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--expand"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "json",
+     "help": null,
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--json"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": null,
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "view a witness with default value redaction",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd witness-view",
+   "subcommands": {}
+  }
+ }
+}

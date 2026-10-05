@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd verbalize [-h] {population} ...\n\npositional arguments:\n  {population}\n    population  render one population in text or JSONL\n\noptions:\n  -h, --help    show this help message and exit\n",
+ "path": "gnd verbalize"
+}

@@ -1,0 +1,45 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "rf1 must contain a JSON object",
+   "raises": "builtins.ValueError"
+  },
+  "deep": {
+   "message": "rf1 is not strict JSON: maximum recursion depth exceeded while decoding a JSON array from a unicode string",
+   "raises": "builtins.ValueError"
+  },
+  "duplicate-key": {
+   "message": "rf1 is not strict JSON: duplicate JSON key 'a'",
+   "raises": "builtins.ValueError"
+  },
+  "fenced": {
+   "message": "rf1 is not strict JSON: Expecting value: line 1 column 1 (char 0)",
+   "raises": "builtins.ValueError"
+  },
+  "invalid-utf8": {
+   "message": "rf1 is not UTF-8: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+   "raises": "builtins.ValueError"
+  },
+  "nan": {
+   "message": "rf1 is not strict JSON: non-finite JSON number 'NaN' is forbidden",
+   "raises": "builtins.ValueError"
+  },
+  "object": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "overflow": {
+   "ok": {
+    "a": {
+     "float": "inf"
+    }
+   }
+  },
+  "trailing-data": {
+   "message": "rf1 contains trailing bytes",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "site": "strict_json|gnd.exp.session_store:_strict_object_bytes"
+}

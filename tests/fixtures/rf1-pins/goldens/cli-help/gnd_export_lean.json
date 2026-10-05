@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd export lean [-h] [--json] --toolchain TOOLCHAIN\n                       [--reference-root REFERENCE_ROOT] [--out OUT] [--raw]\n                       model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --json\n  --toolchain TOOLCHAIN\n  --reference-root REFERENCE_ROOT\n  --out OUT\n  --raw\n",
+ "path": "gnd export lean"
+}

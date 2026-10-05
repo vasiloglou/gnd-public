@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/dispatch/model.orm.json",
+   "src/gnd/examples/dispatch/repaired.pop.json",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"dispatch_due\",\"index\":0},\"sentence\":\"'SHIP-0' relates '2026-01-04'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_flag\",\"index\":0},\"sentence\":\"'SHIP-0' relates 'False'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_flag\",\"index\":1},\"sentence\":\"'SHIP-0' relates 'True'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_metric\",\"index\":0},\"sentence\":\"'SHIP-0' relates '-1'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_metric\",\"index\":1},\"sentence\":\"'SHIP-0' relates '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_reachable\",\"index\":2},\"sentence\":\"'WH-A' relates 'DEST-D'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_reachable\",\"index\":0},\"sentence\":\"'WH-A' relates 'WH-B'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_reachable\",\"index\":1},\"sentence\":\"'WH-A' relates 'WH-C'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_reachable\",\"index\":4},\"sentence\":\"'WH-B' relates 'DEST-D'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_reachable\",\"index\":3},\"sentence\":\"'WH-B' relates 'WH-C'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_reachable\",\"index\":5},\"sentence\":\"'WH-C' relates 'DEST-D'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_request\",\"index\":0},\"sentence\":\"'SHIP-0' relates 'WH-A'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_start\",\"index\":0},\"sentence\":\"'SHIP-0' relates '2026-01-01'.\"}\n{\"fact_ref\":{\"fact_type\":\"dispatch_window\",\"index\":0},\"sentence\":\"'SHIP-0' relates '3'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/dispatch/model.orm.json",
+   "src/gnd/examples/dispatch/repaired.pop.json",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT dispatch_due[0]: 'SHIP-0' relates '2026-01-04'.\nFACT dispatch_flag[0]: 'SHIP-0' relates 'False'.\nFACT dispatch_flag[1]: 'SHIP-0' relates 'True'.\nFACT dispatch_metric[0]: 'SHIP-0' relates '-1'.\nFACT dispatch_metric[1]: 'SHIP-0' relates '2'.\nFACT dispatch_reachable[2]: 'WH-A' relates 'DEST-D'.\nFACT dispatch_reachable[0]: 'WH-A' relates 'WH-B'.\nFACT dispatch_reachable[1]: 'WH-A' relates 'WH-C'.\nFACT dispatch_reachable[4]: 'WH-B' relates 'DEST-D'.\nFACT dispatch_reachable[3]: 'WH-B' relates 'WH-C'.\nFACT dispatch_reachable[5]: 'WH-C' relates 'DEST-D'.\nFACT dispatch_request[0]: 'SHIP-0' relates 'WH-A'.\nFACT dispatch_start[0]: 'SHIP-0' relates '2026-01-01'.\nFACT dispatch_window[0]: 'SHIP-0' relates '3'.\n"
+ }
+}

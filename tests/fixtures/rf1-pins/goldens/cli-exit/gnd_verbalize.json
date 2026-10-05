@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd verbalize [-h] {population} ...\n\npositional arguments:\n  {population}\n    population  render one population in text or JSONL\n\noptions:\n  -h, --help    show this help message and exit\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd verbalize [-h] {population} ...\ngnd verbalize: error: the following arguments are required: verbalize_target\n",
+  "stdout": ""
+ }
+}

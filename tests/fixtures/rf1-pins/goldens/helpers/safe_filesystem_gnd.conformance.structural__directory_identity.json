@@ -1,0 +1,14 @@
+{
+ "observed": {
+  "fixed": {
+   "ok": [
+    3,
+    11,
+    16877,
+    64,
+    null
+   ]
+  }
+ },
+ "site": "safe_filesystem|gnd.conformance.structural:_directory_identity"
+}

@@ -1,0 +1,46 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "invalid rf1 JSON: top level must be an object",
+   "raises": "gnd.review.request.ReviewRequestError"
+  },
+  "deep": {
+   "message": "invalid rf1 JSON: top level must be an object",
+   "raises": "gnd.review.request.ReviewRequestError"
+  },
+  "duplicate-key": {
+   "message": "invalid rf1 JSON: duplicate JSON key 'a'",
+   "raises": "gnd.review.request.ReviewRequestError"
+  },
+  "fenced": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "invalid-utf8": {
+   "message": "invalid rf1 JSON: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+   "raises": "gnd.review.request.ReviewRequestError"
+  },
+  "nan": {
+   "message": "invalid rf1 JSON: non-finite JSON constant 'NaN' is not allowed",
+   "raises": "gnd.review.request.ReviewRequestError"
+  },
+  "object": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "overflow": {
+   "ok": {
+    "a": {
+     "float": "inf"
+    }
+   }
+  },
+  "trailing-data": {
+   "message": "invalid rf1 JSON: Extra data: line 1 column 9 (char 8)",
+   "raises": "gnd.review.request.ReviewRequestError"
+  }
+ },
+ "site": "strict_json|gnd.review.request:_strict_json_object"
+}

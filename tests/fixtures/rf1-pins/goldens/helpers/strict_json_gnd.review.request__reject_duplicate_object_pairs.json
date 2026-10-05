@@ -1,0 +1,15 @@
+{
+ "observed": {
+  "duplicate": {
+   "message": "duplicate JSON key 'a'",
+   "raises": "builtins.ValueError"
+  },
+  "unique": {
+   "ok": {
+    "a": 1,
+    "b": 2
+   }
+  }
+ },
+ "site": "strict_json|gnd.review.request:_reject_duplicate_object_pairs"
+}

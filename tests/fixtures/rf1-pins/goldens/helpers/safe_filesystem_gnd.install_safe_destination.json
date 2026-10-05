@@ -1,0 +1,104 @@
+{
+ "observed": {
+  "absolute": {
+   "message": "install destination: refusing the absolute path '/abs' (as supplied: /abs). Install destinations are always relative to the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "backslash": {
+   "ok": {
+    "path": "<tmp>/dest/tree/a\\b"
+   }
+  },
+  "backslash-parent": {
+   "message": "install destination: refusing '..\\x' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "dot": {
+   "message": "install destination: '.' is empty after normalisation",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "dot-slash": {
+   "ok": {
+    "path": "<tmp>/dest/tree/a"
+   }
+  },
+  "dotdot": {
+   "message": "install destination: refusing '..' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "double-slash": {
+   "ok": {
+    "path": "<tmp>/dest/tree/a/b"
+   }
+  },
+  "drive-absolute": {
+   "message": "install destination: refusing the absolute path 'C:\\\\a' (as supplied: C:\\a). Install destinations are always relative to the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "drive-relative": {
+   "message": "install destination: refusing the absolute path 'C:a' (as supplied: C:a). Install destinations are always relative to the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "empty": {
+   "message": "install destination: the relative path is empty or blank ('')",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "inner-parent": {
+   "message": "install destination: refusing 'a/../b' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "nested": {
+   "ok": {
+    "path": "<tmp>/dest/tree/a/b"
+   }
+  },
+  "non-ascii": {
+   "ok": {
+    "path": "<tmp>/dest/tree/é"
+   }
+  },
+  "nul": {
+   "message": "install destination: the relative path 'a\u0000b' contains a NUL byte",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "parent": {
+   "message": "install destination: refusing '../a' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "plain": {
+   "ok": {
+    "path": "<tmp>/dest/tree/a"
+   }
+  },
+  "tilde": {
+   "ok": {
+    "path": "<tmp>/dest/tree/~"
+   }
+  },
+  "trailing-slash": {
+   "ok": {
+    "path": "<tmp>/dest/tree/a"
+   }
+  },
+  "tree:d/existing": {
+   "ok": {
+    "path": "<tmp>/dest/tree/d/existing"
+   }
+  },
+  "tree:file/x": {
+   "ok": {
+    "path": "<tmp>/dest/tree/file/x"
+   }
+  },
+  "tree:link_file": {
+   "ok": {
+    "path": "<tmp>/dest/tree/link_file"
+   }
+  },
+  "tree:link_to_d/x": {
+   "message": "install destination: 'link_to_d/x' crosses an existing symlink at <tmp>/dest/tree/link_to_d. A planted link must not be able to redirect a write out of the target root (T-01.2-06).",
+   "raises": "gnd.install.InstallPathError"
+  }
+ },
+ "site": "safe_filesystem|gnd.install:safe_destination"
+}

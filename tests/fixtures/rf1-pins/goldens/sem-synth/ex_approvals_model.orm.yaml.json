@@ -1,0 +1,243 @@
+{
+ "argv": [
+  "synth",
+  "src/gnd/examples/approvals/model.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 0,
+ "files": {
+  "boundary/fact_types-expense_approved_by-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 1176,
+   "sha256": "13b3e7d995aa96d597c60e9b6862821123c6128d4b7921598cdbb798d49eac35"
+  },
+  "boundary/fact_types-expense_approved_by-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 9044,
+   "sha256": "778b90a55d13883b4b1100c0056be19a8efd749c2c213ea64267ae739eca3988"
+  },
+  "boundary/fact_types-expense_approved_by-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 1430,
+   "sha256": "be52c0c1b02f50ec4f9210702e642d4d884bccdc26965051364f1b1801b93838"
+  },
+  "boundary/fact_types-expense_approved_by-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 9015,
+   "sha256": "91e99345dce9b15cab5a154c6f2f0b309920c7908a2b01e1c83a9706a299a2eb"
+  },
+  "boundary/fact_types-expense_approved_by-.constraints-0.occurs-twice.json": {
+   "bytes": 1501,
+   "sha256": "b0e6a5d80a14ea4279cc9f1743041d4af8fa014a067c57a417a01d76ef268388"
+  },
+  "boundary/fact_types-expense_approved_by-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 9000,
+   "sha256": "0b8b6efab336c51c962c2a8ebde072bb9b8683ee08290a77ed6051318d7bc87b"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 1188,
+   "sha256": "d0c09ecfc097ee70d649b2452d0c9ce9bdcc3821049426bec15333efbffa43c7"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 9069,
+   "sha256": "fd1d0e44047dec6c2cfedce6f06a60a5a2c55e606311b785e5f23be7f8ed12f2"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 1430,
+   "sha256": "be52c0c1b02f50ec4f9210702e642d4d884bccdc26965051364f1b1801b93838"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 9013,
+   "sha256": "5e5bfdd02b0756bb64855125e101142ec25c2ee28e92738ea43b89abad57959f"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-0.occurs-twice.json": {
+   "bytes": 1498,
+   "sha256": "2a00223b2eb6df581fd3f656078d82031ca7d7f9e4dd132879d8434f3fac96ed"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 8999,
+   "sha256": "441a51f376ddee8489d92a0f3e32b5718d0a764f43a7dc8b7a348b8338edf4ef"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-1.coverage-omission.json": {
+   "bytes": 1402,
+   "sha256": "adae6a66150fd0f13bcf1f672ec512445712289f220396d321463daadfad4d25"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 9037,
+   "sha256": "0b83f2fabdbfaa6d38f4676d969d059c62c1a13466d7bf6922b7bbe070d59b3e"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 1430,
+   "sha256": "be52c0c1b02f50ec4f9210702e642d4d884bccdc26965051364f1b1801b93838"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 9036,
+   "sha256": "4169ba3baf2cc81ed91b613e08ae5a3c6f88cbc6e0016a08423059bc432cab19"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 1469,
+   "sha256": "a2161ea4ff210f5d192dbbece7a7e16f853beb717826d28bfeb898a9ee567e85"
+  },
+  "boundary/fact_types-expense_has_status-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 9044,
+   "sha256": "067e721d6ae07ff9eb5e810b986fa87149f6709fb7e6129208643c85c8f55cdd"
+  },
+  "boundary/fact_types-expense_reimbursed-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 1090,
+   "sha256": "699ec9e095e5afa162d3fc6807e0363b6f84c7d513096058f87e9e5a1c8aeab2"
+  },
+  "boundary/fact_types-expense_reimbursed-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 9041,
+   "sha256": "ce7048fc2c614b7898c56acdff502ce1178e68741f0577c8e106c0ee62469caf"
+  },
+  "boundary/fact_types-expense_reimbursed-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 1430,
+   "sha256": "be52c0c1b02f50ec4f9210702e642d4d884bccdc26965051364f1b1801b93838"
+  },
+  "boundary/fact_types-expense_reimbursed-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 9012,
+   "sha256": "05eb54c9fb4ebe1b8b587e0ae866ed693ed3621d0506c6bc7bd13e6ea2631d52"
+  },
+  "boundary/fact_types-expense_reimbursed-.constraints-0.occurs-twice.json": {
+   "bytes": 1532,
+   "sha256": "7e715ad0cdfcb9b0d7114b8d0c6be45a280297bcc6ce2cc26c8aaaa609901740"
+  },
+  "boundary/fact_types-expense_reimbursed-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 8999,
+   "sha256": "5468af9a47beccd41b2753847d8ea0b96fa27ce53758db79c807303844ad3b3b"
+  },
+  "boundary/fact_types-expense_submitted_to_workday-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 1170,
+   "sha256": "2b0631db7b341d7f2c5959fac12e5fa1c3699f695f01a55b3080a678a8098d41"
+  },
+  "boundary/fact_types-expense_submitted_to_workday-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 9061,
+   "sha256": "a9fc9417365a25024e13c3c516974cd561f83f6c1bd02c37e5e7b409fa2ba9c7"
+  },
+  "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 1430,
+   "sha256": "be52c0c1b02f50ec4f9210702e642d4d884bccdc26965051364f1b1801b93838"
+  },
+  "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 9033,
+   "sha256": "ec14c8be59d38c46221847752f37c97ce378f60427ab45f5831c1625f0c3631d"
+  },
+  "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-twice.json": {
+   "bytes": 1524,
+   "sha256": "51f4f2ee8d7bc13a4df67971bc245a4f92cd7543061f11e0ab35ba4b2c10318e"
+  },
+  "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 9019,
+   "sha256": "e9db4bea5b3c2ad8aab4d952b074776b97546bed4d77d33d6c6e6ba76949a144"
+  },
+  "conforming/model.orm.conforming.seed0.json": {
+   "bytes": 1432,
+   "sha256": "4acf4b76f698cf7576f5cc42b45393931d07fb1b6e5269dd6601a6ae679b4a49"
+  },
+  "conforming/model.orm.conforming.seed0.meta.json": {
+   "bytes": 8897,
+   "sha256": "d5d5b61451825f04090c5eaa884844027663b38c455d257ad64214a5e4ed56db"
+  },
+  "conforming/pool.0b6eb7afcceb6b78.pool.json": {
+   "bytes": 1511,
+   "sha256": "4c7b17deae00998e547de2a76838078381a4c16d7680b211ae96cc742a63718d"
+  },
+  "index.json": {
+   "bytes": 23579,
+   "sha256": "ecbc43e133653b636be56c0fe7c75e49b75a1499877efe06f47edde6b548cff4"
+  },
+  "violating/fact_types-expense_approved_by-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 1502,
+   "sha256": "7bdd7697a8f41b87fbd51af77adcda4f83973acab7a5b4fa3cde119b9657f434"
+  },
+  "violating/fact_types-expense_approved_by-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 9125,
+   "sha256": "11a0b8796b5a1db2605d27d82d1d9b728beeb6104ab11b8b5c24e5c492090e84"
+  },
+  "violating/fact_types-expense_approved_by-.constraints-0.empty-fact-type.json": {
+   "bytes": 1177,
+   "sha256": "6a9c253e4dac158dd8153dbfde0a0458fb7103d9fa9184255cf5840686d27178"
+  },
+  "violating/fact_types-expense_approved_by-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 9119,
+   "sha256": "bdc157c56dd369a3a816c76d20717df0a94071c7a6369e2eacd1ddc0377fd13c"
+  },
+  "violating/fact_types-expense_has_status-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 1501,
+   "sha256": "2b8abb5a70281f04e41de26d81417593d4497ed5cffb54a511fd2173ba18852d"
+  },
+  "violating/fact_types-expense_has_status-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 9122,
+   "sha256": "249a3357fb56be60cfda0c50bf2f7f2bcf77da857ddefdfe69f2160e238d5959"
+  },
+  "violating/fact_types-expense_has_status-.constraints-0.empty-fact-type.json": {
+   "bytes": 1189,
+   "sha256": "5849b3514c40bb04fa620c633653f8e7e0d7df4d56d3514fcbe37e16e2b1dce2"
+  },
+  "violating/fact_types-expense_has_status-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 9197,
+   "sha256": "01272d3bfe9b93015a97b5e3a580f91c8ce30e0b9de21771b26f212bc82bbf79"
+  },
+  "violating/fact_types-expense_has_status-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 1403,
+   "sha256": "a859477831d5031df1368bddc33e7639df8738c40e57ee9db276c5bf3ca15c17"
+  },
+  "violating/fact_types-expense_has_status-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 9139,
+   "sha256": "d16213904b01b3b026d3b825beb3c78180e6af8b4db4f045cb4bce3a2f5ce992"
+  },
+  "violating/fact_types-expense_has_status-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 1505,
+   "sha256": "835da9dec0ba6102b9b861646e965eefc49f6784c5b2d3307f4c6de6907c973f"
+  },
+  "violating/fact_types-expense_has_status-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 9107,
+   "sha256": "0616de40930c36113d6657af4d9160ef12cd5761b2d1e840478447599ecc349f"
+  },
+  "violating/fact_types-expense_has_status-.constraints-1.roster-add-instance.json": {
+   "bytes": 1470,
+   "sha256": "f83699b1129c5e2672a213f7a14d6c32c2c2fd570b3f06b3e7efc6fabd5fce8f"
+  },
+  "violating/fact_types-expense_has_status-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 9104,
+   "sha256": "38c34724a3ba93f06c6055f4e3da21cf109c04e621ed372a0255f2495d75c7d4"
+  },
+  "violating/fact_types-expense_reimbursed-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 1533,
+   "sha256": "f660cfe9af66613dcbdfd78d469e0dbff0533ff1c8a40c5a2dc927cc904f533d"
+  },
+  "violating/fact_types-expense_reimbursed-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 9121,
+   "sha256": "fc6ae31760eaedeceee89ffe03d4a2c28c7462abd0a61b3262fc2f09bdc147bf"
+  },
+  "violating/fact_types-expense_reimbursed-.constraints-0.empty-fact-type.json": {
+   "bytes": 1091,
+   "sha256": "38b24e092b5ddccd5fe079fb5cb2df499be10ba6555c2183150b2f4bf124b2d9"
+  },
+  "violating/fact_types-expense_reimbursed-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 9116,
+   "sha256": "190f2d3c0800178c898210036826d3f12abcd05b9290e040bd96a7b65b2926aa"
+  },
+  "violating/fact_types-expense_submitted_to_workday-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 1525,
+   "sha256": "fb7bfabb2b775bdd286d0c2abdd610397a8f044e3bf7cae40d9d94290f9b8dc3"
+  },
+  "violating/fact_types-expense_submitted_to_workday-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 9162,
+   "sha256": "cf8014a8c6a72f18e9663a3ba193f8d5015dcb1d1252d8c78382a43c556fd605"
+  },
+  "violating/fact_types-expense_submitted_to_workday-.constraints-0.empty-fact-type.json": {
+   "bytes": 1171,
+   "sha256": "1f9efa3fc6d94e660c19b31b566e46ba8eab5cce11fbae31ed5ebaae34d53efe"
+  },
+  "violating/fact_types-expense_submitted_to_workday-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 9155,
+   "sha256": "7dbda6e5bd9624b9cf434dc51a39fa8809690ebe696d632fe60264ac981b8aab"
+  }
+ },
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 0, \"out\": \"<tmp>/synth\", \"class\": \"all\", \"pool\": \"conforming/pool.0b6eb7afcceb6b78.pool.json\", \"pool_sha256\": \"0b6eb7afcceb6b785d68a0788f176898932d51c2dd7a1b70ee69cd2ef0d341a5\", \"populations\": [{\"population\": \"<tmp>/synth/conforming/model.orm.conforming.seed0.json\", \"sidecar\": \"<tmp>/synth/conforming/model.orm.conforming.seed0.meta.json\", \"seed\": 0, \"band\": 0, \"class\": \"conforming\", \"case_kind\": \"conforming\"}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 11337555201775827560, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[expense_has_status].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-0.occurs-twice.meta.json\", \"seed\": 10192806430767916924, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[expense_has_status].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 1296058113017369913, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[expense_has_status].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 6347610766004200314, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[expense_has_status].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_approved_by-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_approved_by-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 17204901968985323555, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[expense_approved_by].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_approved_by-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_approved_by-.constraints-0.occurs-twice.meta.json\", \"seed\": 5962757353748998896, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[expense_approved_by].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 18274409315696908642, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-twice.meta.json\", \"seed\": 13530833534456930455, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_reimbursed-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_reimbursed-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 1786406282402535658, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[expense_reimbursed].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_reimbursed-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_reimbursed-.constraints-0.occurs-twice.meta.json\", \"seed\": 13608559603241839291, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[expense_reimbursed].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 13927687182299352190, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[expense_has_status].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_has_status-.constraints-1.coverage-omission.meta.json\", \"seed\": 11577933862587231643, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[expense_has_status].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_approved_by-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_approved_by-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 12979769537047016080, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[expense_approved_by].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_submitted_to_workday-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_submitted_to_workday-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 4580787153763941367, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-expense_reimbursed-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-expense_reimbursed-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 7221760594472951181, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[expense_reimbursed].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 14268662674720218907, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[expense_has_status].constraints[0]\", \"violates_target\": \"fact_types[expense_has_status].constraints[0]\", \"violates\": [\"fact_types[expense_has_status].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-0.empty-fact-type.meta.json\", \"seed\": 10201035352011694126, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[expense_has_status].constraints[0]\", \"violates_target\": \"fact_types[expense_has_status].constraints[0]\", \"violates\": [\"fact_types[expense_has_status].constraints[0]\", \"fact_types[expense_has_status].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-1.roster-add-instance.meta.json\", \"seed\": 16847170649210165716, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[expense_has_status].constraints[1]\", \"violates_target\": \"fact_types[expense_has_status].constraints[1]\", \"violates\": [\"fact_types[expense_has_status].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 5075803989299172484, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[expense_has_status].constraints[1]\", \"violates_target\": \"fact_types[expense_has_status].constraints[1]\", \"violates\": [\"fact_types[expense_has_status].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_has_status-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 11380103344893326495, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[expense_has_status].constraints[1]\", \"violates_target\": \"fact_types[expense_has_status].constraints[1]\", \"violates\": [\"fact_types[expense_has_status].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_approved_by-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_approved_by-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 7028881966616483206, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[expense_approved_by].constraints[0]\", \"violates_target\": \"fact_types[expense_approved_by].constraints[0]\", \"violates\": [\"fact_types[expense_approved_by].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_approved_by-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_approved_by-.constraints-0.empty-fact-type.meta.json\", \"seed\": 1531911133322932829, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[expense_approved_by].constraints[0]\", \"violates_target\": \"fact_types[expense_approved_by].constraints[0]\", \"violates\": [\"fact_types[expense_approved_by].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_submitted_to_workday-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_submitted_to_workday-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 16140745930517489370, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"violates_target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"violates\": [\"fact_types[expense_submitted_to_workday].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_submitted_to_workday-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_submitted_to_workday-.constraints-0.empty-fact-type.meta.json\", \"seed\": 1082685759895967830, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"violates_target\": \"fact_types[expense_submitted_to_workday].constraints[0]\", \"violates\": [\"fact_types[expense_submitted_to_workday].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_reimbursed-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_reimbursed-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 4036010400712859060, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[expense_reimbursed].constraints[0]\", \"violates_target\": \"fact_types[expense_reimbursed].constraints[0]\", \"violates\": [\"fact_types[expense_reimbursed].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-expense_reimbursed-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-expense_reimbursed-.constraints-0.empty-fact-type.meta.json\", \"seed\": 12556490460304861354, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[expense_reimbursed].constraints[0]\", \"violates_target\": \"fact_types[expense_reimbursed].constraints[0]\", \"violates\": [\"fact_types[expense_reimbursed].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}], \"not_derivable\": [{\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:bound-type-mismatch\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:bound-type-mismatch\", \"mechanism\": \"band-4 route `bound-type-mismatch` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:derived-unknown\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:derived-unknown\", \"mechanism\": \"band-4 route `derived-unknown` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:family-unimplemented\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:family-unimplemented\", \"mechanism\": \"band-4 route `family-unimplemented` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-anchor-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-anchor-ambiguous\", \"mechanism\": \"band-4 route `join-anchor-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-disconnected\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-disconnected\", \"mechanism\": \"band-4 route `join-disconnected` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:literal-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:literal-type-ambiguous\", \"mechanism\": \"band-4 route `literal-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:no-reference-clock\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:no-reference-clock\", \"mechanism\": \"band-4 route `no-reference-clock` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:partition-asserts-nothing\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:partition-asserts-nothing\", \"mechanism\": \"band-4 route `partition-asserts-nothing` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:reference-join-work-limit\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:reference-join-work-limit\", \"mechanism\": \"band-4 route `reference-join-work-limit` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:ring-not-binary\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:ring-not-binary\", \"mechanism\": \"band-4 route `ring-not-binary` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:role-unresolved\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:role-unresolved\", \"mechanism\": \"band-4 route `role-unresolved` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subject-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subject-type-ambiguous\", \"mechanism\": \"band-4 route `subject-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subtype-derivation-only\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subtype-derivation-only\", \"mechanism\": \"band-4 route `subtype-derivation-only` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:textual-not-mechanical\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:textual-not-mechanical\", \"mechanism\": \"band-4 route `textual-not-mechanical` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:values-not-comparable\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:values-not-comparable\", \"mechanism\": \"band-4 route `values-not-comparable` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:xor-disjunctive-undefined\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:xor-disjunctive-undefined\", \"mechanism\": \"band-4 route `xor-disjunctive-undefined` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"fact_types[expense_has_status].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}], \"isolating_cases\": 10, \"set_attributed_cases\": 1, \"isolating_fraction\": 0.9090909090909091}\n"
+}

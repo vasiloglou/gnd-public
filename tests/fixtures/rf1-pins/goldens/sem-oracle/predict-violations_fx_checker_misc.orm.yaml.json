@@ -1,0 +1,28 @@
+{
+ "ok": {
+  "constraints[1]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "fact_types[task_has_points].constraints[0]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "fact_types[task_scores].constraints[0]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  }
+ }
+}

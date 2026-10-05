@@ -1,0 +1,45 @@
+{
+ "observed": {
+  "d": {
+   "outcome": {
+    "message": "[Errno 17] File exists: '<tmp>/s5/tree/d'",
+    "raises": "builtins.FileExistsError"
+   },
+   "target_after": null
+  },
+  "d/existing": {
+   "outcome": {
+    "message": "[Errno 17] File exists: '<tmp>/s1/tree/d/existing'",
+    "raises": "builtins.FileExistsError"
+   },
+   "target_after": "old\n"
+  },
+  "d/new": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  },
+  "link_file": {
+   "outcome": {
+    "message": "[Errno 17] File exists: '<tmp>/s3/tree/link_file'",
+    "raises": "builtins.FileExistsError"
+   },
+   "target_after": null
+  },
+  "link_to_d/new": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  },
+  "missing/new": {
+   "outcome": {
+    "message": "[Errno 2] No such file or directory: '<tmp>/s4/tree/missing/new'",
+    "raises": "builtins.FileNotFoundError"
+   },
+   "target_after": null
+  }
+ },
+ "site": "safe_filesystem|gnd.export.pyrel_runtime:write_new"
+}

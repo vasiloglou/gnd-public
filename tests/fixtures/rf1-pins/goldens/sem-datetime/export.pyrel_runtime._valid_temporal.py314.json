@@ -1,0 +1,38 @@
+{
+ "date-only": {
+  "ok": false
+ },
+ "fractional": {
+  "ok": true
+ },
+ "hour-24": {
+  "ok": true
+ },
+ "integer": {
+  "ok": false
+ },
+ "leading-space": {
+  "ok": false
+ },
+ "naive": {
+  "ok": true
+ },
+ "none": {
+  "ok": false
+ },
+ "offset": {
+  "ok": true
+ },
+ "space-separator": {
+  "ok": true
+ },
+ "utc-lower-z": {
+  "ok": true
+ },
+ "utc-z": {
+  "ok": true
+ },
+ "week-date": {
+  "ok": false
+ }
+}

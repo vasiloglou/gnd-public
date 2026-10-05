@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd export souffle-run [-h] [--json] [--raw] [--executable EXECUTABLE]\n                              bundle\n\npositional arguments:\n  bundle\n\noptions:\n  -h, --help            show this help message and exit\n  --json\n  --raw\n  --executable EXECUTABLE\n",
+ "path": "gnd export souffle-run"
+}

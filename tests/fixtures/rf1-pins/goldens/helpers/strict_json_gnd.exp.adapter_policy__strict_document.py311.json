@@ -1,0 +1,45 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "adapter policy must contain a JSON object",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  },
+  "deep": {
+   "message": "adapter policy is not strict JSON: maximum recursion depth exceeded while decoding a JSON array from a unicode string",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  },
+  "duplicate-key": {
+   "message": "adapter policy is not strict JSON: duplicate JSON key 'a'",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  },
+  "fenced": {
+   "message": "adapter policy is not strict JSON: Expecting value: line 1 column 1 (char 0)",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  },
+  "invalid-utf8": {
+   "message": "adapter policy is not UTF-8: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  },
+  "nan": {
+   "message": "adapter policy is not strict JSON: non-finite JSON number 'NaN' is forbidden",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  },
+  "object": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "overflow": {
+   "ok": {
+    "a": {
+     "float": "inf"
+    }
+   }
+  },
+  "trailing-data": {
+   "message": "adapter policy is not strict JSON: Extra data: line 1 column 9 (char 8)",
+   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+  }
+ },
+ "site": "strict_json|gnd.exp.adapter_policy:_strict_document"
+}

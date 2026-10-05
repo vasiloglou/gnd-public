@@ -1,0 +1,138 @@
+{
+ "date-only": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-naive",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-01-01"
+   }
+  }
+ },
+ "fractional": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-aware",
+    "num": 63839664000123456,
+    "ordered": true,
+    "token": "2024-01-01T00:00:00.123456Z"
+   }
+  }
+ },
+ "hour-24": {
+  "ok": null
+ },
+ "integer": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "number",
+    "kind": "number",
+    "num": 1,
+    "ordered": true,
+    "token": "1/1"
+   }
+  }
+ },
+ "leading-space": {
+  "ok": null
+ },
+ "naive": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-naive",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-01-01T00:00:00"
+   }
+  }
+ },
+ "none": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "null",
+    "kind": "null",
+    "num": 0,
+    "ordered": false,
+    "token": "null"
+   }
+  }
+ },
+ "offset": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-aware",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-01-01T00:00:00+00:00"
+   }
+  }
+ },
+ "space-separator": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-naive",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-01-01 00:00:00"
+   }
+  }
+ },
+ "utc-lower-z": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-aware",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-01-01T00:00:00z"
+   }
+  }
+ },
+ "utc-z": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-aware",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-01-01T00:00:00Z"
+   }
+  }
+ },
+ "week-date": {
+  "ok": {
+   "dataclass": "Scalar",
+   "fields": {
+    "den": 1,
+    "identity_kind": "string",
+    "kind": "datetime-naive",
+    "num": 63839664000000000,
+    "ordered": true,
+    "token": "2024-W01-1"
+   }
+  }
+ }
+}

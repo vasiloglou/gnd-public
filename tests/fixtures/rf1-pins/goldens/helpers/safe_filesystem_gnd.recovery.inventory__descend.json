@@ -1,0 +1,44 @@
+{
+ "observed": {
+  "..": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "d": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "d/sub": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "file": {
+   "outcome": {
+    "message": "selected root component 'file' is not a real directory",
+    "raises": "gnd.recovery.inventory.RecoveryInventoryError"
+   },
+   "target_after": "file\n"
+  },
+  "link_to_d": {
+   "outcome": {
+    "message": "selected root component 'link_to_d' is not a real directory",
+    "raises": "gnd.recovery.inventory.RecoveryInventoryError"
+   },
+   "target_after": null
+  },
+  "missing": {
+   "outcome": {
+    "message": "[Errno 2] No such file or directory: 'missing'",
+    "raises": "builtins.FileNotFoundError"
+   },
+   "target_after": null
+  }
+ },
+ "site": "safe_filesystem|gnd.recovery.inventory:_descend"
+}

@@ -1,0 +1,203 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/models/keywords.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 0,
+ "files": {
+  "boundary/fact_types-global-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 644,
+   "sha256": "e292acba90ad995905af4f614a0b0eaea979e0a3ac2337bf663eb6dea837733b"
+  },
+  "boundary/fact_types-global-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 8774,
+   "sha256": "27ccce5ec58d58bd68a621da65cf465317c607b59ce32130961f5782857d8dd1"
+  },
+  "boundary/fact_types-global-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 847,
+   "sha256": "a78f9008d2771bae2ddc41708ee44f2168d17ba486799d6a2e89470c0204c520"
+  },
+  "boundary/fact_types-global-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 8745,
+   "sha256": "2567a33b194988ec149db459266b3bdeff0f1b359bc77183dc4e4d7fedab47ad"
+  },
+  "boundary/fact_types-global-.constraints-0.occurs-twice.json": {
+   "bytes": 908,
+   "sha256": "79ea0a709bcf3ada6944f336ad922ddbe280ed7c1dbf651e3608ee5e5899ce06"
+  },
+  "boundary/fact_types-global-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 8730,
+   "sha256": "b31d3585682c9a5e92eb517dc566afff35fc2cec914ff1f346d9aa21f50dd029"
+  },
+  "boundary/fact_types-import-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 627,
+   "sha256": "6fc0d3a369ba3c6e74dc08fe808ba8f4a37c9e6d4fb3c9c42089161dfbb8d497"
+  },
+  "boundary/fact_types-import-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 8800,
+   "sha256": "11f91288e0c170be05513c945e7279a01486d5129e92e241be2259609963d734"
+  },
+  "boundary/fact_types-import-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 847,
+   "sha256": "a78f9008d2771bae2ddc41708ee44f2168d17ba486799d6a2e89470c0204c520"
+  },
+  "boundary/fact_types-import-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 8744,
+   "sha256": "ee3b6a42bd70a0cc70fa69609577a1f8193093543d9d625bb825b668be3fc4d6"
+  },
+  "boundary/fact_types-import-.constraints-0.occurs-twice.json": {
+   "bytes": 912,
+   "sha256": "454f36830fee40a2fd6db17c841dddb838e6b0d169f54f814fd06b99bf49d17a"
+  },
+  "boundary/fact_types-import-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 8731,
+   "sha256": "5068796654405ae7af4bfca16a337e2b78510d3c84df20a543a4d63dc15e3477"
+  },
+  "boundary/fact_types-import-.constraints-1.coverage-omission.json": {
+   "bytes": 831,
+   "sha256": "b46c76c8312646d10e0592785348ae2df9fda06a7c82e4d230664454981ee6a5"
+  },
+  "boundary/fact_types-import-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 8768,
+   "sha256": "115e5d2c1e517c9215864f09e1d7dc5c3fdf6d3d2ed537c48ba3f6529ff3c7af"
+  },
+  "boundary/fact_types-import-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 847,
+   "sha256": "a78f9008d2771bae2ddc41708ee44f2168d17ba486799d6a2e89470c0204c520"
+  },
+  "boundary/fact_types-import-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 8769,
+   "sha256": "8207910c5d88fecf3cf88d67d18f17d77b89bcaf0385997c797c4cf794f1d806"
+  },
+  "boundary/fact_types-import-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 892,
+   "sha256": "1f08b7fbf51a63b066ec62e0a032116d5eaec274b9abc7ff10df6ebeae30a369"
+  },
+  "boundary/fact_types-import-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 8776,
+   "sha256": "4337897f2a9eb959519b1a18f6786fa09ab55571a514cc59140dcdb9677e94f3"
+  },
+  "boundary/fact_types-yield-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 639,
+   "sha256": "6a42be4bac41023b6b07ba3d8d5fbd53ae0f64dc2be79b4d85f3f8de4b2c46dc"
+  },
+  "boundary/fact_types-yield-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 8772,
+   "sha256": "9bb690bd2b9480c1fe5b7c7bcf2f594e9c395fe4fcbb26087e6680e4c48e939f"
+  },
+  "boundary/fact_types-yield-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 847,
+   "sha256": "a78f9008d2771bae2ddc41708ee44f2168d17ba486799d6a2e89470c0204c520"
+  },
+  "boundary/fact_types-yield-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 8742,
+   "sha256": "5e59e1debce7c3d39817e518b20d0b47931a92a451cf3a7abd3b786bd4b2952b"
+  },
+  "boundary/fact_types-yield-.constraints-0.occurs-twice.json": {
+   "bytes": 907,
+   "sha256": "4d0013b8cc79d076f8bdf71e227cb07339fda3f6258b55690e84ad9ec2817298"
+  },
+  "boundary/fact_types-yield-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 8728,
+   "sha256": "d55d76c4bd82f342361780352fbffb31ec4602c7230649e5ddeda5c7e7eed07c"
+  },
+  "conforming/keywords.orm.conforming.seed0.json": {
+   "bytes": 849,
+   "sha256": "0d55b9d8e84152be460a555bdf0fc712fead95d53d35a7c9ec6f1bccc5775108"
+  },
+  "conforming/keywords.orm.conforming.seed0.meta.json": {
+   "bytes": 8656,
+   "sha256": "16655f98771b75596ef1291ca9617f5117469492322a515cf6a954e870bc2a42"
+  },
+  "conforming/pool.ec1b247203be21d8.pool.json": {
+   "bytes": 943,
+   "sha256": "08643ac8c14059c89be8438b7060ff2d0841bf36f47a401481fadfe3a77ea741"
+  },
+  "index.json": {
+   "bytes": 19332,
+   "sha256": "2302b5c1cc5182cb8f1654030dfba89976698385de144a5527f4ce7effa302bc"
+  },
+  "violating/fact_types-global-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 908,
+   "sha256": "4d099564136f2ecc9b1e34f0e5f1fd3ae31b7034747f52bf857efa0e9a59c6de"
+  },
+  "violating/fact_types-global-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 8830,
+   "sha256": "509e109e29330b13be1ea09f76e518e29cd297c16a80370f845d2fe999fd4080"
+  },
+  "violating/fact_types-global-.constraints-0.empty-fact-type.json": {
+   "bytes": 645,
+   "sha256": "b8f887c90d3822f36c3b0fbc46b46bef93363c18b1889eeec0e96af645392f1d"
+  },
+  "violating/fact_types-global-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 8824,
+   "sha256": "642526a895bce9af3e331431e5f9d2606d6be33752ac29b781fa38b883f96a0f"
+  },
+  "violating/fact_types-import-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 913,
+   "sha256": "90e8661bfdedac630cb5514defe5c9dccc02de42c405a34f2888b964d0e3dc5b"
+  },
+  "violating/fact_types-import-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 8829,
+   "sha256": "6a92d7cdfb8a9a494fcf4d5dcde2717eed50e23eb5494bbeb6567c4af81b8e00"
+  },
+  "violating/fact_types-import-.constraints-0.empty-fact-type.json": {
+   "bytes": 628,
+   "sha256": "a13c68454e64a97b2bab76806573174e0629bd0303d5e2afd34f0104b362566b"
+  },
+  "violating/fact_types-import-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 8893,
+   "sha256": "37d74f49cf426c2724f630596cbc676c98bc748e26c3a63a4542e4d6cd6aa927"
+  },
+  "violating/fact_types-import-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 832,
+   "sha256": "1bb610d9e518bf89c41561e65e95d338d8d85b3510dc25548383239cca2a9d59"
+  },
+  "violating/fact_types-import-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 8847,
+   "sha256": "edfe4573b25664501aa5e3fefb8b452e67df17f83619eda0fad0bec4d0b4d598"
+  },
+  "violating/fact_types-import-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 917,
+   "sha256": "81bc930ac9e1363115854e0cadf85c6c5646a468dcc454af4e4ea5519e9f1023"
+  },
+  "violating/fact_types-import-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 8815,
+   "sha256": "3d08898332e33b1fc6f28c223e059bd138c6a2b51038824acd8a47afe7459485"
+  },
+  "violating/fact_types-import-.constraints-1.roster-add-instance.json": {
+   "bytes": 893,
+   "sha256": "432b31a8096c4020b0539a0b16d41485c3c0fd6a6a0d07f36d0064361bd4ef63"
+  },
+  "violating/fact_types-import-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 8811,
+   "sha256": "2399e96c5b3dca5f678948a7f49922998b0e471179f69f16cb892118ab787fe1"
+  },
+  "violating/fact_types-yield-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 911,
+   "sha256": "b679a0d6acc22c3b0651dc05b7e75e3a42873237982d758420db5139e4990b8c"
+  },
+  "violating/fact_types-yield-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 8826,
+   "sha256": "1312665d98aeed79ae53772b7f4b426638f3dee7b33500c21c5c86852ad8cd37"
+  },
+  "violating/fact_types-yield-.constraints-0.empty-fact-type.json": {
+   "bytes": 640,
+   "sha256": "c2445b1cbdf86262721c7e61ba9a64e221d151d2ab069eec51580fd063d70e17"
+  },
+  "violating/fact_types-yield-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 8818,
+   "sha256": "7f433209e6ea992368cd16ad791038940273c1ee66e1a228f6dcb7c9f3965473"
+  }
+ },
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 0, \"out\": \"<tmp>/synth\", \"class\": \"all\", \"pool\": \"conforming/pool.ec1b247203be21d8.pool.json\", \"pool_sha256\": \"ec1b247203be21d8dd22b327ab77dff17e29f832a1db8cb525ce078b0c5ee535\", \"populations\": [{\"population\": \"<tmp>/synth/conforming/keywords.orm.conforming.seed0.json\", \"sidecar\": \"<tmp>/synth/conforming/keywords.orm.conforming.seed0.meta.json\", \"seed\": 0, \"band\": 0, \"class\": \"conforming\", \"case_kind\": \"conforming\"}, {\"population\": \"<tmp>/synth/boundary/fact_types-import-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-import-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 8608020873237484769, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[import].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-import-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-import-.constraints-0.occurs-twice.meta.json\", \"seed\": 13355202517012413458, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[import].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-import-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-import-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 16289492876484247320, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[import].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-import-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-import-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 3268169739616211415, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[import].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-global-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-global-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 17696967332920005593, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[global].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-global-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-global-.constraints-0.occurs-twice.meta.json\", \"seed\": 5809967938537249532, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[global].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-yield-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-yield-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 2079004607898333648, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[yield].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-yield-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-yield-.constraints-0.occurs-twice.meta.json\", \"seed\": 7756449937193810501, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[yield].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-import-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-import-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 4826699088109362430, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[import].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-import-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-import-.constraints-1.coverage-omission.meta.json\", \"seed\": 1667185284562313146, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[import].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-global-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-global-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 13666411530533937548, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[global].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-yield-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-yield-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 16040626416238855396, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[yield].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-import-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-import-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 2845042805553680800, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[import].constraints[0]\", \"violates_target\": \"fact_types[import].constraints[0]\", \"violates\": [\"fact_types[import].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-import-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-import-.constraints-0.empty-fact-type.meta.json\", \"seed\": 16738099886053338305, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[import].constraints[0]\", \"violates_target\": \"fact_types[import].constraints[0]\", \"violates\": [\"fact_types[import].constraints[0]\", \"fact_types[import].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-import-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-import-.constraints-1.roster-add-instance.meta.json\", \"seed\": 4269947394797311879, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[import].constraints[1]\", \"violates_target\": \"fact_types[import].constraints[1]\", \"violates\": [\"fact_types[import].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-import-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-import-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 8884665569542472638, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[import].constraints[1]\", \"violates_target\": \"fact_types[import].constraints[1]\", \"violates\": [\"fact_types[import].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-import-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-import-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 16835057515860558736, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[import].constraints[1]\", \"violates_target\": \"fact_types[import].constraints[1]\", \"violates\": [\"fact_types[import].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-global-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-global-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 12144548945628404870, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[global].constraints[0]\", \"violates_target\": \"fact_types[global].constraints[0]\", \"violates\": [\"fact_types[global].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-global-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-global-.constraints-0.empty-fact-type.meta.json\", \"seed\": 14487935563701957740, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[global].constraints[0]\", \"violates_target\": \"fact_types[global].constraints[0]\", \"violates\": [\"fact_types[global].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-yield-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-yield-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 12754135928138578565, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[yield].constraints[0]\", \"violates_target\": \"fact_types[yield].constraints[0]\", \"violates\": [\"fact_types[yield].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-yield-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-yield-.constraints-0.empty-fact-type.meta.json\", \"seed\": 870703297791471904, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[yield].constraints[0]\", \"violates_target\": \"fact_types[yield].constraints[0]\", \"violates\": [\"fact_types[yield].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}], \"not_derivable\": [{\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:bound-type-mismatch\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:bound-type-mismatch\", \"mechanism\": \"band-4 route `bound-type-mismatch` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:derived-unknown\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:derived-unknown\", \"mechanism\": \"band-4 route `derived-unknown` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:family-unimplemented\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:family-unimplemented\", \"mechanism\": \"band-4 route `family-unimplemented` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-anchor-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-anchor-ambiguous\", \"mechanism\": \"band-4 route `join-anchor-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-disconnected\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-disconnected\", \"mechanism\": \"band-4 route `join-disconnected` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:literal-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:literal-type-ambiguous\", \"mechanism\": \"band-4 route `literal-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:no-reference-clock\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:no-reference-clock\", \"mechanism\": \"band-4 route `no-reference-clock` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:partition-asserts-nothing\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:partition-asserts-nothing\", \"mechanism\": \"band-4 route `partition-asserts-nothing` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:reference-join-work-limit\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:reference-join-work-limit\", \"mechanism\": \"band-4 route `reference-join-work-limit` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:ring-not-binary\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:ring-not-binary\", \"mechanism\": \"band-4 route `ring-not-binary` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:role-unresolved\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:role-unresolved\", \"mechanism\": \"band-4 route `role-unresolved` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subject-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subject-type-ambiguous\", \"mechanism\": \"band-4 route `subject-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subtype-derivation-only\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subtype-derivation-only\", \"mechanism\": \"band-4 route `subtype-derivation-only` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:textual-not-mechanical\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:textual-not-mechanical\", \"mechanism\": \"band-4 route `textual-not-mechanical` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:values-not-comparable\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:values-not-comparable\", \"mechanism\": \"band-4 route `values-not-comparable` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:xor-disjunctive-undefined\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:xor-disjunctive-undefined\", \"mechanism\": \"band-4 route `xor-disjunctive-undefined` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"fact_types[import].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}], \"isolating_cases\": 8, \"set_attributed_cases\": 1, \"isolating_fraction\": 0.8888888888888888}\n"
+}

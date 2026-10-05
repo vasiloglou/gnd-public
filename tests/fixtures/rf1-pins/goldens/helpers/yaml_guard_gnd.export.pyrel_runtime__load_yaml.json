@@ -1,0 +1,37 @@
+{
+ "observed": {
+  "alias": {
+   "ok": {
+    "a": 1,
+    "b": 1
+   }
+  },
+  "anchor-only": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "invalid": {
+   "message": "malformed document: while parsing a flow sequence\n  in \"<unicode string>\", line 1, column 4:\n    a: [1\n       ^ (line: 1)\nexpected ',' or ']', but got '<stream end>'\n  in \"<unicode string>\", line 2, column 1:\n    \n    ^ (line: 2)",
+   "raises": "gnd.export.pyrel_runtime.ExportInputError"
+  },
+  "large-stream": {
+   "message": "document must be a mapping",
+   "raises": "gnd.export.pyrel_runtime.ExportInputError"
+  },
+  "mapping": {
+   "ok": {
+    "a": 1,
+    "b": [
+     "x",
+     "y"
+    ]
+   }
+  },
+  "two-documents": {
+   "message": "malformed document: expected a single document in the stream\n  in \"<unicode string>\", line 1, column 1:\n    a: 1\n    ^ (line: 1)\nbut found another document\n  in \"<unicode string>\", line 2, column 1:\n    ---\n    ^ (line: 2)",
+   "raises": "gnd.export.pyrel_runtime.ExportInputError"
+  }
+ },
+ "site": "yaml_guard|gnd.export.pyrel_runtime:_load_yaml"
+}

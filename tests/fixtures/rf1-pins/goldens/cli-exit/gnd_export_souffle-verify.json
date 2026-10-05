@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd export souffle-verify [-h] [--json] bundle\n\npositional arguments:\n  bundle\n\noptions:\n  -h, --help  show this help message and exit\n  --json\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd export souffle-verify [-h] [--json] bundle\ngnd export souffle-verify: error: the following arguments are required: bundle\n",
+  "stdout": ""
+ }
+}

@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd witness-view [-h] [--raw] [--expand] [--json] certificate\n\npositional arguments:\n  certificate\n\noptions:\n  -h, --help   show this help message and exit\n  --raw\n  --expand\n  --json\n",
+ "path": "gnd witness-view"
+}

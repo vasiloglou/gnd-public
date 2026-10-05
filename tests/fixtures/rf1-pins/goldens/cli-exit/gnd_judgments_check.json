@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd judgments check [-h] --policy POLICY --receipts RECEIPTS\n                           --trusted-root TRUSTED_ROOT\n                           [--reference-root REFERENCE_ROOT] [--unredacted]\n                           [--format {json,text}]\n                           model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --policy POLICY\n  --receipts RECEIPTS\n  --trusted-root TRUSTED_ROOT\n  --reference-root REFERENCE_ROOT\n  --unredacted\n  --format {json,text}\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd judgments check [-h] --policy POLICY --receipts RECEIPTS\n                           --trusted-root TRUSTED_ROOT\n                           [--reference-root REFERENCE_ROOT] [--unredacted]\n                           [--format {json,text}]\n                           model population\ngnd judgments check: error: the following arguments are required: model, population, --policy, --receipts, --trusted-root\n",
+  "stdout": ""
+ }
+}

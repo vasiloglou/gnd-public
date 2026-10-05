@@ -1,0 +1,45 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "rf1 must contain exactly one JSON object",
+   "raises": "gnd.review.runner.ReviewRunError"
+  },
+  "deep": {
+   "message": "RecursionError",
+   "raises": "builtins.RecursionError"
+  },
+  "duplicate-key": {
+   "message": "rf1 is invalid JSON: duplicate JSON key 'a'",
+   "raises": "gnd.review.runner.ReviewRunError"
+  },
+  "fenced": {
+   "message": "rf1 is invalid JSON: Expecting value: line 1 column 1 (char 0)",
+   "raises": "gnd.review.runner.ReviewRunError"
+  },
+  "invalid-utf8": {
+   "message": "rf1 is not UTF-8 JSON",
+   "raises": "gnd.review.runner.ReviewRunError"
+  },
+  "nan": {
+   "message": "rf1 is invalid JSON: non-finite JSON constant NaN",
+   "raises": "gnd.review.runner.ReviewRunError"
+  },
+  "object": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "overflow": {
+   "ok": {
+    "a": {
+     "float": "inf"
+    }
+   }
+  },
+  "trailing-data": {
+   "message": "rf1 is invalid JSON: Extra data: line 1 column 9 (char 8)",
+   "raises": "gnd.review.runner.ReviewRunError"
+  }
+ },
+ "site": "strict_json|gnd.review.runner:_strict_json"
+}

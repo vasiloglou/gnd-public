@@ -1,0 +1,12 @@
+{
+ "observed": {
+  "nan": {
+   "message": "pool rejected with 1 failure(s):\n  pool contains a non-finite number that strict JSON cannot encode: Out of range float values are not JSON compliant: nan",
+   "raises": "gnd.synth.poolfile.PoolValidationError"
+  },
+  "small": {
+   "ok": "815fc624760d8eb5090c0da64ed49386a8da3a0ef36c4a331d131430f76e6530"
+  }
+ },
+ "site": "sha256_hex|gnd.synth.poolfile:_sha256"
+}

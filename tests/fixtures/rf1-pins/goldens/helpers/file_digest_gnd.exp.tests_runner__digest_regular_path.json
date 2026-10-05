@@ -1,0 +1,33 @@
+{
+ "observed": {
+  "dir": {
+   "message": "manifest file changed before opening",
+   "raises": "gnd.exp.tests_runner._VerifierFailure"
+  },
+  "empty": {
+   "ok": [
+    0,
+    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   ]
+  },
+  "fifo": {
+   "message": "manifest file changed before opening",
+   "raises": "gnd.exp.tests_runner._VerifierFailure"
+  },
+  "link": {
+   "message": "[Errno 62] Too many levels of symbolic links: '<tmp>/files/link'",
+   "raises": "builtins.OSError"
+  },
+  "missing": {
+   "message": "[Errno 2] No such file or directory: '<tmp>/files/missing'",
+   "raises": "builtins.FileNotFoundError"
+  },
+  "regular": {
+   "ok": [
+    4,
+    "e669a3e2d6d0fe70c8a20b73fce2d427c6fbd70add1b94b9094f19d0e5049a90"
+   ]
+  }
+ },
+ "site": "file_digest|gnd.exp.tests_runner:_digest_regular_path"
+}

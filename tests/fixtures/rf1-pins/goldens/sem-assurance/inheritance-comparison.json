@@ -1,0 +1,10 @@
+{
+ "one-mutation-dropped": {
+  "message": "inherited observation or mutation census changed",
+  "raises": "builtins.ValueError"
+ },
+ "retained": {
+  "message": "inherited observation or mutation census changed",
+  "raises": "builtins.ValueError"
+ }
+}

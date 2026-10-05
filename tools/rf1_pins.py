@@ -200,8 +200,13 @@ def _run_nodes(root: Path, nodes: list[str], pythonpath: Path, work: Path, env: 
     result = {}
     for node in nodes:
         seen = events.get(node, [])
-        if any(outcome == "failed" for _when, outcome in seen):
+        # A kill is a failing assertion: only a call-phase failure counts
+        # (review finding RF1-09). A setup or teardown failure is an error,
+        # which neither kills a row nor lets the control pass.
+        if ("call", "failed") in seen:
             result[node] = "failed"
+        elif any(outcome == "failed" for _when, outcome in seen):
+            result[node] = "error"
         elif ("call", "passed") in seen:
             result[node] = "passed"
         elif any(outcome == "skipped" for _when, outcome in seen):

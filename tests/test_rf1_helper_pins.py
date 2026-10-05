@@ -69,7 +69,6 @@ CASES = load_cases()
 # Sites reached only through a caller: site -> the RF1 node that pins them.
 PINNED_VIA = {
     "gnd.cli:canonical": "tests/test_rf1_semantic_pins.py::test_extract",
-    "gnd.artifacts:directory_identity": "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.evolve.service:_tree_sha256]",
     "gnd.exp.session_store:descend": "tests/test_rf1_session_pins.py::test_session",
     "gnd.declared_adapter:reject_constant": "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.declared_adapter:_bundle_rows]",
     "gnd.declared_adapter:reject_duplicates": "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.declared_adapter:_bundle_rows]",
@@ -84,6 +83,10 @@ PINNED_VIA = {
     "gnd.exp.session_judgments:entry": "tests/test_rf1_session_pins.py::test_session",
     "gnd.exp.session_v7:_entry": "tests/test_rf1_session_pins.py::test_session",
 }
+# Sites no RF1 node can detect, owed by the phase that moves them (RF-R3).
+# artifacts.directory_identity is nested in tree_sha256_from_directory; a fixed
+# tree never exercises its identity-change refusal (review finding RF1-07).
+OWED = {"gnd.artifacts:directory_identity": "RF4"}
 # helper-families.md classifies these as trivial constructors, not a family.
 NOT_A_FAMILY = {
     "gnd.exp.junit:__init__",
@@ -523,7 +526,7 @@ def _metric_sites() -> set[str]:
 def test_helper_coverage():
     """T-HELP-COV: every RF0 family site and identical-candidate site is pinned or routed."""
     pinned = {site.split("|", 1)[1].split("[", 1)[0] for site in SITE_IDS}
-    missing = sorted(_metric_sites() - pinned - set(PINNED_VIA) - NOT_A_FAMILY)
+    missing = sorted(_metric_sites() - pinned - set(PINNED_VIA) - set(OWED) - NOT_A_FAMILY)
     assert missing == []
     assert len(SITE_IDS) == len(set(SITE_IDS))
 

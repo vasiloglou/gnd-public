@@ -189,19 +189,46 @@ def evidence_tree(root: Path) -> dict[str, bytes]:
     return files
 
 
-# N7 (RF1 implementation finding): the session prompt embeds the absolute
-# contract path (cli.py, "caller-validated contract at ..."), so every prompt
-# digest varies with the temporary root; N4 amended: the receipt nonce is
-# published inside attempt.json. Both are replaced by field-keyed placeholders.
-KEYED_FIELDS = {
-    "base_prompt_sha256": "<prompt-sha256>",
-    "controller_prompt_sha256": "<prompt-sha256>",
-    "effective_prompt_sha256": "<prompt-sha256>",
-    "prompt_sha256": "<prompt-sha256>",
-    "nonce": "<nonce>",
-}
-_PROMPT_TOKEN = re.compile(r"<prompt:sha256=[0-9a-f]{64}>")
+# N4 amended (RF1 finding F4): the receipt nonce is published inside
+# attempt.json; a 64-hex nonce value becomes a placeholder (any other shape
+# stays literal and fails the pin). Prompt digests are NOT erased: callers pass
+# the expected prompt strings as declared inputs, and N5 verifies each digest
+# against them (review finding RF1-02).
+KEYED_FIELDS = {"nonce": "<nonce>"}
 _RESULT_SHA = re.compile(r'\\?"result_sha256\\?"\s*:\s*\{[^{}]*\}')
+_JUNIT_ENTRY = re.compile(r'(\.xml\\?"\s*:\s*\\?")[0-9a-f]{64}')
+# N4: random names GND gives transient staging entries (session_store.py).
+STAGING_NAMES = re.compile(r"patch-input-[0-9a-f]{16}|\.staging/\d{4}-[0-9a-f]{16}|cleanup-[0-9a-f]{32}")
+
+
+def check_timing(files: Mapping[str, bytes]) -> None:
+    """Semantic checks that run before N1/N2 hide the values (review finding RF1-03).
+
+    Every elapsed or accounted duration is non-negative, and every record that
+    carries both monotonic endpoints ends no earlier than it starts.
+    """
+
+    def walk(node: Any, where: str) -> None:
+        if isinstance(node, dict):
+            for field in SECONDS_FIELDS:
+                value = node.get(field)
+                if isinstance(value, (int, float)) and not isinstance(value, bool) and value < 0:
+                    raise NormalizationError(f"timing: {where}.{field} is negative")
+            start, end = node.get("started_monotonic"), node.get("ended_monotonic")
+            if all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in (start, end)) and end < start:
+                raise NormalizationError(f"timing: {where} ends before it starts")
+            for key, value in node.items():
+                walk(value, f"{where}.{key}")
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                walk(value, f"{where}[{index}]")
+
+    for name, data in files.items():
+        try:
+            document = json.loads(data)
+        except (UnicodeDecodeError, ValueError):
+            continue
+        walk(document, name)
 
 
 def normalize_text(
@@ -218,10 +245,9 @@ def normalize_text(
             text = text.replace(needle, placeholder)
     for name, placeholder in KEYED_FIELDS.items():
         text = re.sub(rf'(\\?"{name}\\?"\s*:\s*\\?")[0-9a-f]{{64}}', rf"\g<1>{placeholder}", text)
-    text = _PROMPT_TOKEN.sub("<prompt:sha256>", text)
-    # N8: digests of a tests-mode results file, which pytest writes with its own
-    # timing attributes, are placeholders.
-    text = _RESULT_SHA.sub(lambda m: _HEX64.sub("<junit-sha256>", m.group(0)), text)
+    # N8: digests of a tests-mode JUnit results file (an .xml entry of a
+    # result_sha256 object), which pytest writes with its own timings.
+    text = _RESULT_SHA.sub(lambda m: _JUNIT_ENTRY.sub(r"\g<1><junit-sha256>", m.group(0)), text)
 
     def digest(match: re.Match[str]) -> str:
         target = by_digest.get(match.group(0))
@@ -263,11 +289,16 @@ def normalize_tree(
     another file's raw bytes, so a broken digest chain still fails the pin.
     """
     by_digest = tree_digests(files, inputs)
+    if not clock_injected:
+        check_timing(files)
     result: dict[str, Any] = {}
     for name, data in files.items():
         for needle in forbidden:
             if needle and needle.encode() in data:
                 raise NormalizationError(f"N4: forbidden token present in {name}")
+        found = STAGING_NAMES.search(data.decode("utf-8", "replace"))
+        if found:
+            raise NormalizationError(f"N4: staging name {found.group(0)!r} present in {name}")
         try:
             text = data.decode("utf-8")
         except UnicodeDecodeError:

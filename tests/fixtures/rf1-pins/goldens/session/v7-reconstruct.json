@@ -128,7 +128,7 @@
        "<root>/v7/producer-log"
       ],
       "cwd": "<candidate-root>",
-      "effective_prompt_sha256": "<prompt-sha256>",
+      "effective_prompt_sha256": "<sha256:input:prompt+attempts/0001/feedback.json+transport>",
       "ended_monotonic": "<monotonic>",
       "endpoint_sha256": null,
       "environment": [
@@ -149,7 +149,7 @@
       "policy_kind": "command",
       "policy_sha256": "<sha256:input:adapter-policy>",
       "process_group_cleaned": true,
-      "prompt_sha256": "<prompt-sha256>",
+      "prompt_sha256": "<sha256:input:prompt>",
       "request_bytes": 0,
       "response_body_bytes": 0,
       "response_header_bytes": 0,

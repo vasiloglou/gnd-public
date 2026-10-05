@@ -43,6 +43,13 @@ WALK = ROOT / "tests/fixtures/public-walk-floor/session"
 STEPS = (WALK / "candidate/steps.json").read_bytes()
 
 
+# The retry prompt tails the CLI appends (exp/session.py, exp/declared_invocation.py).
+RETRY_TAILS = {
+    "stdin": "Canonical current-attempt feedback is supplied byte-for-byte on stdin.",
+    "transport": "Canonical current-attempt feedback is supplied byte-for-byte by the adapter transport.",
+}
+
+
 @dataclass
 class Built:
     root: Path
@@ -50,15 +57,45 @@ class Built:
     argv: list[str]
     tokens: dict[str, str] = field(default_factory=dict)
 
-    def inputs(self) -> dict[str, bytes]:
+    def inputs(self, run: Path | None = None) -> dict[str, bytes]:
         """Declared inputs outside the run tree whose digests the evidence cites (N5).
 
-        The adapter policy file, and the interpreter path string that a declared
-        adapter's executable_sha256 hashes (declared_adapter.py).
+        The adapter policy file; the interpreter path string that a declared
+        adapter's executable_sha256 hashes (declared_adapter.py); and the prompts
+        the CLI is expected to build: the base prompt and, for each feedback
+        leaf in the run, its retry prompt. A changed prompt leaves its digest
+        literal, so the pin fails (review finding RF1-02).
         """
         found = {"python-path": sys.executable.encode(), "python-realpath": os.path.realpath(sys.executable).encode()}
         if "--adapter-policy" in self.argv:
             found["adapter-policy"] = Path(self.argv[self.argv.index("--adapter-policy") + 1]).read_bytes()
+        prompt = (
+            "Modify only the current candidate directory so it satisfies every required case in the "
+            f"caller-validated contract at {(self.root / 'session.contract.json').absolute()}."
+        )
+        found["prompt"] = prompt.encode()
+        if run is None or not run.is_dir():
+            return found
+        # The controller binds the session policy digest (exp/session.py); the
+        # candidates are the policy digests the evidence itself publishes.
+        policies = {hashlib.sha256(found["adapter-policy"]).hexdigest()} if "adapter-policy" in found else set()
+        contract = json.loads((self.root / "session.contract.json").read_bytes())
+        compact = json.dumps(contract, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        policies.add(hashlib.sha256(compact.encode()).hexdigest())
+        for launch in sorted(run.glob("launches/*.json")):
+            value = json.loads(launch.read_bytes()).get("policy_sha256")
+            if isinstance(value, str):
+                policies.add(value)
+        controllers = {"prompt": prompt}
+        for policy in sorted(policies):
+            controllers[f"controller[{policy[:12]}]"] = f"{prompt}\n\nSession policy SHA-256: {policy}"
+        for label, controller in controllers.items():
+            found[label] = controller.encode()
+            for leaf in sorted(run.rglob("feedback.json")):
+                digest = hashlib.sha256(leaf.read_bytes()).hexdigest()
+                head = f"{controller}\n\nCurrent attempt feedback SHA-256: {digest}\n"
+                for tail, text in RETRY_TAILS.items():
+                    found[f"{label}+{leaf.relative_to(run).as_posix()}+{tail}"] = (head + text).encode()
         return found
 
 
@@ -259,13 +296,13 @@ def _forbidden(run: Path) -> list[str]:
 def _normalized_run(built: Built, run: Path, tmp_path: Path) -> dict:
     tokens = {**_tokens(tmp_path), **built.tokens}
     return normalize_tree(evidence_tree(run), tokens=tokens, forbidden=_forbidden(run), clock_injected=False,
-                          inputs=built.inputs())
+                          inputs=built.inputs(run))
 
 
 def _norm(value, built: Built, tmp_path: Path, run: Path | None) -> object:
     """Normalize a stream or state observation with the evidence tree's rules (N3, N7, N5, N1/N2)."""
     files = evidence_tree(run) if run is not None and run.is_dir() else {}
-    by_digest = tree_digests(files, built.inputs())
+    by_digest = tree_digests(files, built.inputs(run))
     text = normalize_text(json.dumps(value, ensure_ascii=False), own=None, by_digest=by_digest,
                           tokens={**_tokens(tmp_path), **built.tokens}, clock_injected=False)
     return json.loads(text)

@@ -26,7 +26,7 @@ from support.rf1_pins import (
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = PINS_ROOT / "goldens.sha256"
 # The manifest's own digest: changing any golden edits this line too (SM1).
-MANIFEST_SHA256 = "f9e5cd02a08a6b5d788791dad73a2d00e09414299f39a8a5efc93922d9fccf8a"
+MANIFEST_SHA256 = "68d9163ee30f32fc03f59294b94c709e52ac569168ac6ecc773eb5dd22a36444"
 
 _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
 tool = importlib.util.module_from_spec(_SPEC)
@@ -188,9 +188,10 @@ def test_norm_keyed_prompt_nonce_and_inputs():
     text = json.dumps({"prompt_sha256": "b" * 64, "nonce": "c" * 64, "policy_sha256": sha256_hex(policy),
                        "argv": ["<prompt:sha256=" + "d" * 64 + ">"], "result_sha256": {"r.xml": "e" * 64}})
     out = normalize_tree({"a.json": text.encode()}, tokens={}, inputs={"policy": policy})
+    # An unverified prompt digest stays literal (review finding RF1-02 removed N7's erasure).
     assert json.loads(out["a.json"]["text"]) == {
-        "prompt_sha256": "<prompt-sha256>", "nonce": "<nonce>", "policy_sha256": "<sha256:input:policy>",
-        "argv": ["<prompt:sha256>"], "result_sha256": {"r.xml": "<junit-sha256>"},
+        "prompt_sha256": "b" * 64, "nonce": "<nonce>", "policy_sha256": "<sha256:input:policy>",
+        "argv": ["<prompt:sha256=" + "d" * 64 + ">"], "result_sha256": {"r.xml": "<junit-sha256>"},
     }
 
 
@@ -312,3 +313,78 @@ def test_tool_merge_keys_by_interpreter(tmp_path):
     assert sorted(p.relative_to(out).as_posix() for p in out.rglob("*.json")) == [
         "lane/diff.py311.json", "lane/diff.py313.json", "lane/diff.py314.json", "lane/same.json"]
     check_manifest(out, out.parent / "goldens.sha256")
+
+
+# --- regressions for the single adversarial review (notes/phase-RF1-codex-review.md)
+
+
+def test_r01_goldens_carry_no_machine_paths():
+    import os
+    import tempfile
+
+    needles = {str(ROOT), str(Path.home()), os.path.realpath(tempfile.gettempdir()), "/private/var/folders", "/Users/"}
+    leaking = sorted(
+        path.relative_to(GOLDENS).as_posix()
+        for path in GOLDENS.rglob("*.json")
+        if any(needle in path.read_text(encoding="utf-8") for needle in needles)
+    )
+    assert leaking == []
+
+
+def test_r02_prompt_digest_is_verified_not_erased():
+    from support.rf1_pins import normalize_text
+
+    prompt = b"Modify only the candidate."
+    known = sha256_hex(prompt)
+    seen = {}
+    for digest in (known, "d" * 64):
+        text = json.dumps({"prompt_sha256": digest, "argv": [f"<prompt:sha256={digest}>"]})
+        seen[digest] = normalize_text(text, own=None, by_digest={known: "input:prompt"}, tokens={}, clock_injected=False)
+    assert "<sha256:input:prompt>" in seen[known]
+    assert "d" * 64 in seen["d" * 64]
+
+
+@pytest.mark.parametrize(
+    "document",
+    [{"elapsed_seconds": -1.0}, {"started_monotonic": 5.0, "ended_monotonic": 4.0}, {"accounted_wall_seconds": -0.5}],
+    ids=["negative-elapsed", "ended-before-started", "negative-accounted"],
+)
+def test_r03_timing_semantics_are_checked_before_placeholders(document):
+    from support.rf1_pins import check_timing
+
+    with pytest.raises(NormalizationError, match="timing"):
+        check_timing({"a.json": json.dumps({"nested": [document]}).encode()})
+    check_timing({"a.json": b'{"elapsed_seconds": 0.0, "started_monotonic": 1.0, "ended_monotonic": 2.0}'})
+
+
+def test_r04_junit_placeholder_is_limited_to_xml_results():
+    text = json.dumps({"result_sha256": {"results/results.xml": "c" * 64, "not-junit.json": "f" * 64}})
+    out = normalize_tree({"a.json": text.encode()}, tokens={})["a.json"]["text"]
+    assert "<junit-sha256>" in out and "f" * 64 in out
+
+
+@pytest.mark.parametrize("name", ["patch-input-0123456789abcdef", ".staging/0001-0123456789abcdef", "cleanup-" + "a" * 32])
+def test_r06_staging_names_are_refused_in_published_bytes(name):
+    with pytest.raises(NormalizationError, match="N4"):
+        normalize_tree({"a.json": json.dumps({"path": name}).encode()}, tokens={})
+
+
+def test_r09_a_teardown_failure_is_not_a_kill(tmp_path):
+    rows = [{"id": "teardown", "file": "src/minipkg/core.py", "old": "    return 1\n",
+             "new": "    import builtins\n    builtins.RF1_TEARDOWN = True\n    return 1\n",
+             "expect_red": ["tests/test_mini.py::test_value"]}]
+    root = _mini(tmp_path, rows=rows)
+    (root / "tests" / "conftest.py").write_text(
+        "import builtins, pytest\n\n@pytest.fixture(autouse=True)\ndef boom():\n    yield\n"
+        "    if getattr(builtins, 'RF1_TEARDOWN', False):\n        raise RuntimeError('teardown only')\n"
+    )
+    assert _mutate(root, tmp_path / "out") == 1
+    report = json.loads((tmp_path / "out" / "mutation-report.json").read_text())
+    assert report["rows"]["teardown"]["status"] == "survived"
+
+
+def test_r10_owed_surfaces_carry_their_approval_anchor():
+    rows = json.loads((PINS_ROOT / "inventory.json").read_text())["surfaces"]
+    unanchored = [row["surface"] for row in rows if row["status"] == "owed" and not re.search(r"\b(D9|RF-R3)\b", row.get("note", ""))]
+    assert unanchored == []
+    assert [row["surface"] for row in rows if not row["rf1_nodes"] and not row["existing_nodes"] and row["owed_by"] is None] == []

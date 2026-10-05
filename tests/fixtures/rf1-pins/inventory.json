@@ -66,7 +66,7 @@
   },
   {
    "existing_nodes": [],
-   "note": "byte pins for gnd measure and gnd export pyrel output are owed by the RF2 spec under RF-R3",
+   "note": "byte pins for gnd measure and gnd export pyrel output are owed by the RF2 spec under RF-R3; owed under RF-R3",
    "owed_by": "RF2",
    "phase": "RF2",
    "plan_anchor": "RF2 body",
@@ -314,7 +314,7 @@
   },
   {
    "existing_nodes": [],
-   "note": "parser, help and exit-probe pins exist; handler byte pins are owed by the RF5 part spec that moves each handler (RF-R3)",
+   "note": "parser, help and exit-probe pins exist; handler byte pins are owed by the RF5 part spec that moves each handler (RF-R3); owed under RF-R3 (D9)",
    "owed_by": "RF5",
    "phase": "RF5",
    "plan_anchor": "RF5 body; D9",
@@ -350,7 +350,7 @@
   },
   {
    "existing_nodes": [],
-   "note": "old import paths are an SM2 obligation of RF6b; behavior is pinned by the checker and model lanes",
+   "note": "old import paths are an SM2 obligation of RF6b; behavior is pinned by the checker and model lanes; owed under RF-R3",
    "owed_by": "RF6",
    "phase": "RF6",
    "plan_anchor": "RF6-C4",
@@ -419,6 +419,16 @@
    ],
    "status": "pinned",
    "surface": "YAML guards (yaml_guard family, diverged; tightening deferred by RF-D7)"
+  },
+  {
+   "existing_nodes": [],
+   "note": "no RF1 node detects a broken identity check; RF4 adds a changing-stat pin before moving it, owed under RF-R3",
+   "owed_by": "RF4",
+   "phase": "RF4",
+   "plan_anchor": "RF4 body (safefs); review finding RF1-07",
+   "rf1_nodes": [],
+   "status": "owed",
+   "surface": "artifacts.directory_identity (nested; identity-change refusal unexercised by RF1)"
   }
  ]
 }

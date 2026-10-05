@@ -217,7 +217,8 @@ def _anchored_cases() -> dict[str, dict]:
 
 
 def test_check_anchored():
-    assert_golden("sem-check", "anchored", {name: encode(result) for name, result in _anchored_cases().items()})
+    observed = {name: encode(result) for name, result in _anchored_cases().items()}
+    assert_golden("sem-check", "anchored", scrub(observed, {str(ROOT): "<repo>"}))
 
 
 def _outcome(verdict: str) -> str | None:

@@ -13,13 +13,21 @@ routing of residual concerns in [002-panel.md](../002-panel.md)
 ([gate record](../003-plan-gate.md)). The panel opinions cover the r1 and
 r2 bytes only; no review covers the erratum.
 
-Owner rulings so far are listed in section 10. `src/gnd` stays untouched
-until three things hold: the owner plan gate has passed, the RF0 record
-contains the authority-handoff statement, and the public-launch conditions
-of RF-D2 are recorded. None of these depends on an edit to `src/gnd`, so
-the gate is not circular.
+(e1) **Erratum e1, 2026-10-05** ([record](../005-plan-erratum.md)): a
+text-only update after RF0 ([record](../004-phase-RF0.md)). It brings this
+plan into line with rulings and measurements already recorded and adds no
+new decision. Every changed site is tagged `(e1)`.
 
-**Inspection baseline:** `7e08e1e`. Input:
+Owner rulings so far are listed in section 10. (e1) All three conditions
+for editing `src/gnd` now hold: the plan gate passed
+([003](../003-plan-gate.md)), the RF0 record states the authority handoff
+([004](../004-phase-RF0.md)), and RF-D2 is satisfied (section 10). Code
+edits begin at RF2, after RF1 is recorded.
+
+**Inspection baseline:** `7e08e1e` for r1 and r2. (e1) The measured
+baseline is now `19b131b` (this branch merged with `main` `cbb9783`): see
+[rf0-baseline.md](rf0-baseline.md), which supersedes the audit's numbers.
+Input:
 [architecture audit](../../../../docs/development/architecture-audit.md),
 a read-only audit taken at `cf4c1d7` that is explicitly non-authoritative.
 For r1 only the audit's scope numbers were re-measured at `7e08e1e`: 148
@@ -62,8 +70,10 @@ The milestone can close when all of the following hold:
    `gnd.api`, a lane `service` module, `gnd.exits`, `commands/_output` or
    the named allow-list.
 5. **Honest measurements:** a before/after table (SCCs, private
-   cross-module imports, duplicate counts, largest-module sizes, co-change
-   pairs) is committed at close. Every target is met against its final
+   cross-module imports, duplicate counts, largest-module sizes) is
+   committed at close. (e1) Co-change pairs were removed: they cannot be
+   measured in this repository's history (RF0 D3), and the audit's
+   private-history figures stay unverifiable. Every target is met against its final
    owner-ruled value (RF-D13). Each original target that was missed and
    re-targeted is listed with its measured value and the ruling that
    changed it.
@@ -139,8 +149,8 @@ cycle → RF4 peripheral layering → RF5 CLI command groups → RF6 model query
 layer and constraint registry → RF8 session profile.**
 
 RF7 is deferred (RF-D7) and is not part of this chain. RF0 and RF1 do not
-edit `src/gnd`, and under RF-D2 they may run once the plan gate passes.
-RF2 and every later phase wait for the conditions in RF-D2. Every phase from
+edit `src/gnd`. (e1) RF-D2 is satisfied, so RF2 may start as soon as the
+RF1 record is committed. Every phase from
 RF2 on is behavior-preserving, with no exception (RF-R1). RF8 carries the
 highest risk and comes last so that it can rely on everything before it.
 
@@ -188,6 +198,13 @@ and bring RF-D3 to its ruling.
 
 **Outcome:** current behavior is pinned on every surface that RF2–RF8 move
 or re-route.
+
+(e1) Obligations RF0 routed here (open questions in
+[004-phase-RF0.md](../004-phase-RF0.md)): RF0-OQ2 (unify the two
+alias resolvers in `tools/gnd_arch.py`), and RF0-OQ3 (the per-edge strict
+xfail list is the 27 wrong-way edges in `evidence/metrics-RF0.json`, with
+`declared_clean` = entry, infrastructure). The RF1 budget is set at its
+spec gate (002-panel routing F4).
 
 Pin the following:
 - the parser tree, help text and exit-code map of each command;
@@ -336,8 +353,10 @@ Add a `SessionProfile`, built once in `DataDrivenContract.model_validate`.
 Replace the inline version mappings and the `in {7, 8}` checks with profile
 lookups. Make `session_v7.run` and `reconstruct` strategy hooks. Expose
 `SessionStore.best_identity()` in place of `_v7_best`. Name the version-8
-literal and remove the dead first assignment of `SESSION_CONTRACT_VERSION`.
-Both are non-observable (RF-D8).
+literal (non-observable, RF-D8). (e1) The first assignment of
+`SESSION_CONTRACT_VERSION` is **not** dead: `exp/session_contract.py:482`
+captures it as `V2_SESSION_CONTRACT_VERSION` for the frozen v2 reader
+(rf0-baseline A13), so RF8 leaves it in place.
 
 **Criteria:** SM1–SM4. RF8-C1 — every RF1 session replay (version × path)
 produces identical normalized evidence bytes and identical resume behavior.
@@ -362,7 +381,7 @@ RF0 confirmed; a refuted cycle is recorded as already satisfied.
 | A move or re-route changes verdicts, issue order or outputs | RF1's behavior pins (RF-R3, SM1). A surface without pins cannot be moved. |
 | Monkeypatches silently stop working after a move | RF-R4 atomic move units and SM2's observed-effect test. |
 | Source-scan safety tests check less after a split | RF-R6 and SM3 coverage assertions. |
-| Release evidence is invalidated mid-launch | RF-D2: refactor commits land only after sign-off, and publication uses the signed-off tag. |
+| Release evidence is invalidated mid-launch | (e1) No longer applies: public-launch is closed, and Phase 5 rebuilds its candidate from the then-current commit (RF-D2). Phase 5's history scan covers refactor commits |
 | Two repositories edit `runtime` | RF-D1 and RF-R7 attestation at each gate. A source-side edit is a stop. |
 | Diverged helpers get merged | RF-D11 keeps them separate. Merging is deferred successor work. |
 | Phases grow into rewrites | RF-R9 budgets, the RF5 limit of three parts, the RF6a/RF6b split. An overrun returns to the owner gate. |
@@ -419,11 +438,11 @@ results for everything that imports it.
 | Decision | Ruling |
 |---|---|
 | RF-D1 — Execution authority | 2026-10-05: "everything happens on the gnd-public". The handoff of `runtime` and `test-acceptance` is stated in the RF0 record. The public-launch ledger follows RF-R7. |
-| RF-D2 — Sequencing with public-launch | 2026-10-05, amended the same day after the r1 review. RF2 and later phases start only after the public-launch Phase 3 acceptance and the Phase 4 candidate sign-off are recorded, the signed-off commit is tagged, and public-launch records that Phase 5 publishes from that tag, with launch fixes landing on a release branch and merging forward. Recording that is a public-launch act: this plan cannot bind public-launch, so RF2 waits for it. The Phase 5 history inspection also covers refactor commits. RF0 and RF1 may proceed after the plan gate. |
+| RF-D2 — Sequencing with public-launch | (e1) **Satisfied, 2026-10-05**, by owner ruling under RF-D12, recorded in the RF0 spec's owner amendment 2. Public-launch (renamed gnd-public-migration) recorded the Phase 3 acceptance (`004`), the Phase 4 sign-off (`008`) and its close (`009`). The close defers Phase 5, and Phase 5 will rebuild its candidate from the then-current commit, so there is no tag condition. RF2 may start once RF1 is recorded. Original text, superseded: 2026-10-05, amended the same day after the r1 review. RF2 and later phases start only after the public-launch Phase 3 acceptance and the Phase 4 candidate sign-off are recorded, the signed-off commit is tagged, and public-launch records that Phase 5 publishes from that tag, with launch fixes landing on a release branch and merging forward. Recording that is a public-launch act: this plan cannot bind public-launch, so RF2 waits for it. The Phase 5 history inspection also covers refactor commits. RF0 and RF1 may proceed after the plan gate. |
 | RF-D7 — Tightening scope | 2026-10-05: RF7 is deferred to a successor milestone in full, including the alias/size guards for the two unguarded YAML loaders (`evolve/service.py:186`, `export/souffle.py:61`). The owner can pull any sub-part forward at a later phase gate. A spot check on 2026-10-05 found that the installer path validator accepts `./a` and `a\b` but refuses `..\x` and `a/../b`, so the audit's "looser" claim concerns unusual names, not traversal. |
 | RF-D4 — Milestone name | 2026-10-05, at the plan gate: accepted as proposed. `code-refactoring`, which uses no semantic version number. |
 | RF-D6 — Divergent primitive resolver | 2026-10-05, at the plan gate: accepted as proposed. Keep both semantics behind a pinned variant parameter. Switching any caller to strict `is True` is RF7 successor work. |
-| RF-D8 — Small defects | 2026-10-05, at the plan gate: accepted as proposed. In RF8, name the version-8 literal and remove the dead first assignment of `SESSION_CONTRACT_VERSION` (both non-observable). Rename `value_domain._in_range` in RF6 under RF-D10. The "unknown version" message text is RF7 successor work. |
+| RF-D8 — Small defects | 2026-10-05, at the plan gate: accepted as proposed. In RF8, name the version-8 literal (non-observable). (e1) The removal of the first `SESSION_CONTRACT_VERSION` assignment is withdrawn: that assignment is live (rf0-baseline A13). Rename `value_domain._in_range` in RF6 under RF-D10. The "unknown version" message text is RF7 successor work. |
 | RF-D10 — Renames and visibility changes | 2026-10-05, at the plan gate: accepted as proposed. Renaming a function or making it public is non-observable when the old name stays importable through a listed shim and appears in no pinned byte stream, digest input or message. Any other rename needs its own ruling. This covers the `model_digest` renames, `safefs`, `synth.oracle`, `SessionStore.best_identity()` and the `checker.py` rebinding renames. |
 | RF-D11 — Diverged helper families | 2026-10-05, at the plan gate: accepted as proposed. Every family that RF0 marks diverged keeps its variants, each pinned byte for byte. Merging is RF7 successor work. |
 | RF-D12 — Public-launch gate name and stall route | 2026-10-05, at the plan gate. "Phase 4 candidate sign-off" is the single name for the public-launch gate throughout this plan. If public-launch has not recorded the RF-D2 conditions by the time the RF1 record is committed, the owner either re-plans around RF0 and RF1 or rules a revised sequence before any further phase starts. |

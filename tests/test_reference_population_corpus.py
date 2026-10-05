@@ -23,7 +23,7 @@ import pytest
 from jsonschema import Draft202012Validator, ValidationError
 from ruamel.yaml import YAML
 
-from gnd import api
+from gnd import api, extensions
 from gnd.model import load_model
 from gnd.population import Population, load_population
 
@@ -431,7 +431,7 @@ def _run(case: dict[str, Any], b: dict[str, Any], monkeypatch: pytest.MonkeyPatc
             def forbidden(*args: Any, **kwargs: Any) -> Any:
                 pytest.fail("domain evaluator invoked before ownership refusal")
 
-            monkeypatch.setattr(checker, "_evaluate_derivations", forbidden)
+            monkeypatch.setattr(extensions, "evaluate_derivations", forbidden)
             return _check(b)["exit_code"]
         if n == "declaration-before-file":
             refs.append({**deepcopy(refs[0]), "id": "second"})

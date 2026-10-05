@@ -108,7 +108,7 @@ def uses_temporal(model: Any) -> bool:
 def require_non_temporal(model: Any, consumer: str) -> None:
     """Refuse unsupported consumers before they publish artifacts or claims."""
     if uses_temporal(model):
-        from gnd.model import ModelValidationError, ValidationIssue
+        from gnd.errors import ModelValidationError, ValidationIssue
 
         raise ModelValidationError(
             [

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from gnd import correspondence
+from gnd import checker, correspondence, extensions
 from gnd import semantic_adapter as adapter
 from gnd import semantic_ir as ir
 from gnd.model import load_model
@@ -16,8 +16,9 @@ def test_dependency_graph_and_bare_dollar_literal_are_preserved(monkeypatch):
 
     def forbidden(*args, **kwargs):
         raise AssertionError('the adapter must not evaluate constraints or derive extensions')
-    for name in ('check', '_python_extension_calculator', '_derivation_obligation'):
-        monkeypatch.setattr(adapter.checker, name, forbidden)
+    monkeypatch.setattr(checker, 'check', forbidden)
+    for name in ('_python_extension_calculator', '_derivation_obligation'):
+        monkeypatch.setattr(extensions, name, forbidden)
     monkeypatch.setattr(correspondence, 'evaluate_snapshot', forbidden)
     root = ROOT / 'tests/fixtures/derivation-evaluation/cases'
     directory = root / 'cost-chain-counted'
@@ -41,7 +42,7 @@ def test_semiderived_claims_are_retained_without_computing_extensions(monkeypatc
 
     def forbidden(*args, **kwargs):
         raise AssertionError('preserve rules and claims without calculating their meaning')
-    monkeypatch.setattr(adapter.checker, '_python_extension_calculator', forbidden)
+    monkeypatch.setattr(extensions, '_python_extension_calculator', forbidden)
     result = adapter.adapt_snapshot(model, population)
     assert any(row.derivation == 'semiderived' and row.relation_source == 'computed-extension' for row in result.fact_types)
     for relation in result.relations:
@@ -115,7 +116,7 @@ def test_derivation_literal_patterns_keep_raw_identity(tmp_path, primitive, patt
     population_path = tmp_path / 'population.json'
     population_path.write_text(json.dumps({'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'boundary', 'covers': ['item_has_tag', 'result']}, 'facts': {'item_has_tag': [{'item': 'alpha', 'tag': actual}], 'result': []}}))
     population = load_population(population_path, model=model)
-    report = adapter.checker.check(model, population)
+    report = checker.check(model, population)
     assert report.derivations[0].verdict == 'pass'
     result = adapter.adapt_snapshot(model, population)
     term = dict(result.derivations[0].body[0].bindings)['tag']

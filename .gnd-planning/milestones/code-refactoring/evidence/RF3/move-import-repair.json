@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_public_v72_semantic_owners.py",
+    "tests/test_rf3_moves.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 3.550813913345337
+}

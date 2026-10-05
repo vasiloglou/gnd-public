@@ -10,7 +10,8 @@ from functools import cmp_to_key
 from typing import Any, Literal
 
 from gnd import semantic_spec
-from gnd.model import Model
+from gnd.branches import REGISTRY, record_branch, snapshot_branch, violated_branch
+from gnd.documents import Model
 from gnd.population import Population
 from gnd.semantic_adapter import (
     AdaptedSnapshot,
@@ -20,7 +21,12 @@ from gnd.semantic_adapter import (
     correspondence_scope,
 )
 from gnd.semantic_ir import IRConstraint, Scalar, SnapshotIR
-from gnd.semantic_registry import REGISTRY, record_branch, snapshot_branch, violated_branch
+from gnd.semantic_rows import (
+    canonical_rows as _canonical_rows,
+)
+from gnd.semantic_rows import (
+    scalar_identity as _scalar_identity,
+)
 from gnd.terms import compare_terms
 
 _SPEC_GUARDED_ATOM_STATE = semantic_spec.guarded_atom_state
@@ -344,10 +350,6 @@ def _legacy_string_order_result(
     return verdict, None, witness
 
 
-def _scalar_identity(value: Scalar) -> tuple[str, str]:
-    return value.identity_kind, value.token
-
-
 def _indexed_mandatory_result(constraint: IRConstraint, snapshot: SnapshotIR):
     """Use the specification's cursor and identity with a linear membership index."""
     if constraint.family != "mandatory":
@@ -368,22 +370,6 @@ def _indexed_mandatory_result(constraint: IRConstraint, snapshot: SnapshotIR):
         None,
         _canonical_rows(missing),
     )
-
-
-def _canonical_rows(rows: Sequence[tuple[Scalar, ...]]) -> tuple[tuple[Scalar, ...], ...]:
-    """Deduplicate canonical IR rows without the specification's quadratic scan."""
-    distinct: dict[tuple[tuple[str, str], ...], tuple[Scalar, ...]] = {}
-    for row in rows:
-        distinct.setdefault(tuple(_scalar_identity(value) for value in row), row)
-
-    def compare(left: tuple[Scalar, ...], right: tuple[Scalar, ...]) -> int:
-        if semantic_spec.row_canonical_less(left, right):
-            return -1
-        if semantic_spec.row_canonical_less(right, left):
-            return 1
-        return 0
-
-    return tuple(sorted(distinct.values(), key=cmp_to_key(compare)))
 
 
 class ReferenceJoinLimit(ValueError):

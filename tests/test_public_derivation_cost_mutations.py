@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from gnd import checker
+from gnd import extensions
 from gnd.checker import _base_relations, _python_extension_calculator
 from gnd.model import ModelValidationError, load_model
 from gnd.population import PopulationValidationError, load_population
@@ -82,7 +82,7 @@ def test_quadratic_join_mutation_reds(monkeypatch: pytest.MonkeyPatch) -> None:
     model, population = _loaded(case)
     relations = _base_relations(model, population)
     expected = vars(_python_extension_calculator(model, relations).counted_operations).copy()
-    original = checker._joined_bindings
+    original = extensions._joined_bindings
 
     def nested_rescan(atoms: Any, facts: Any, *, variable_of: Any, work: Any):
         bindings = original(atoms, facts, variable_of=variable_of, work=work)
@@ -94,7 +94,7 @@ def test_quadratic_join_mutation_reds(monkeypatch: pytest.MonkeyPatch) -> None:
                         work.atom_role_terms_read += 1
         return bindings
     with monkeypatch.context() as mutation:
-        mutation.setattr(checker, '_joined_bindings', nested_rescan)
+        mutation.setattr(extensions, '_joined_bindings', nested_rescan)
         mutated = vars(_python_extension_calculator(model, relations).counted_operations)
     assert mutated != expected
     with pytest.raises(AssertionError):
@@ -106,12 +106,12 @@ def test_relation_materialization_is_linear_in_strata(monkeypatch: pytest.Monkey
     model, population = _loaded(case)
     relations = _base_relations(model, population)
     sizes: list[int] = []
-    original = checker._relation_facts
+    original = extensions._relation_facts
 
     def traced(current: Any):
         sizes.append(len(current))
         return original(current)
-    monkeypatch.setattr(checker, '_relation_facts', traced)
+    monkeypatch.setattr(extensions, '_relation_facts', traced)
     _python_extension_calculator(model, relations)
     assert sizes == [len(relations), 1, 1, 1]
 
@@ -121,10 +121,10 @@ def test_dependency_direction_mutation_reds(monkeypatch: pytest.MonkeyPatch) -> 
     relations = _base_relations(model, population)
     expected = _python_extension_calculator(model, relations).extensions
     assert expected['top'].rows == (('alpha',),)
-    original = checker.derivation_strata
+    original = extensions.derivation_strata
     for mutated_order in (lambda document: list(reversed(original(document))), lambda document: [component for component in original(document) if 'middle' not in component]):
         with monkeypatch.context() as mutation:
-            mutation.setattr(checker, 'derivation_strata', mutated_order)
+            mutation.setattr(extensions, 'derivation_strata', mutated_order)
             changed = _python_extension_calculator(model, relations).extensions
         assert changed['top'].rows == ()
         with pytest.raises(AssertionError):

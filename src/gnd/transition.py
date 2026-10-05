@@ -35,7 +35,6 @@ so exactly one identity exists in the process (spec D1).
 from __future__ import annotations
 
 import copy
-import datetime as _datetime
 import json
 from collections.abc import Collection, Mapping
 from dataclasses import dataclass
@@ -46,6 +45,7 @@ from jsonschema import Draft202012Validator
 from pydantic import BaseModel, Field, model_serializer, model_validator
 
 from gnd import artifacts, patterns, transition_kernel
+from gnd.branches import UnregisteredBranchError, branch, record_branch
 
 # D1: THE single import of the checker's private helpers, in this module and
 # nowhere else. `patterns.py` is handed `_identity_key` as a callable instead of
@@ -53,27 +53,25 @@ from gnd import artifacts, patterns, transition_kernel
 # identity semantics exists in the process. A behaviour test over these three
 # names ships with the phase, so a rename in checker.py fails loudly here rather
 # than silently changing what "the same fact" means.
-from gnd.checker import (
-    CheckReport,
-    Verdict,
-    _descendant_closure,
-    _identity_key,
-    _partial_compatible,
-    _Wildcard,
-    check,
-    derivation_claims_against,
-    structured_extension_view,
-)
+from gnd.checker import CheckReport, Verdict, check
 from gnd.checker import band as checker_band
-from gnd.model import (
-    Model,
+from gnd.documents import Model
+from gnd.errors import (
+    TransitionLoadError,
     ValidationIssue,
-    derivation_classifications,
-    dynamic_subject_is_functional,
 )
-from gnd.population import Population, _model_digest, load_population_bytes
-from gnd.popvalidate import resolve_primitive
-from gnd.semantic_registry import UnregisteredBranchError, branch, record_branch
+from gnd.extensions import Wildcard as _Wildcard
+from gnd.extensions import derivation_claims_against, structured_extension_view
+from gnd.extensions import partial_compatible as _partial_compatible
+from gnd.model import derivation_classifications, dynamic_subject_is_functional
+from gnd.population import Population, load_population_bytes
+from gnd.universe import descendant_closure as _descendant_closure
+from gnd.universe import resolve_primitive
+from gnd.values import ISO_TYPES as _ISO_TYPES  # noqa: F401 -- compatibility export
+from gnd.values import canonical as _canonical
+from gnd.values import identity_key as _identity_key
+from gnd.values import model_digest as _model_digest
+from gnd.values import refuse as _refuse
 
 #: The untrusted-input posture population.py already takes, applied to the one
 #: other document a caller hands us. A cap bounds the DOCUMENT, never the
@@ -85,81 +83,11 @@ _SCHEMA_PATH = Path(__file__).parent / "schema" / "steps.schema.json"
 #: Non-JSON scalars the YAML loader can legitimately produce inside a model.
 #: A date in a provenance note is not an error -- it is a date -- so the digest
 #: canonicalizes it rather than raising, and refuses only what it cannot name.
-_ISO_TYPES = (_datetime.datetime, _datetime.date, _datetime.time)
-
-
-class TransitionLoadError(Exception):
-    """A walk was refused before evaluation. Always exit 3.
-
-    Carries the digests AS SUPPLIED (or ``None`` where the document could not
-    be parsed far enough to have them) because ``report.schema.json`` promises a
-    payload on every exit path, and the payload for a refused walk still has to
-    say which model and which operations the caller claimed to be walking.
-    """
-
-    def __init__(
-        self,
-        issues: list[ValidationIssue],
-        *,
-        supplied: dict[str, Any] | None = None,
-    ) -> None:
-        super().__init__(issues[0].message if issues else "transition run refused")
-        self.issues = issues
-        self.supplied = supplied or {}
-
-
-def _refuse(path: str, message: str, rule_id: str, supplied: dict[str, Any] | None = None):
-    raise TransitionLoadError(
-        [ValidationIssue(path=path, message=message, rule_id=rule_id)],
-        supplied=supplied,
-    )
 
 
 # --------------------------------------------------------------------------- #
 # Digests -- three of them, on three bases, and the reasons differ
 # --------------------------------------------------------------------------- #
-
-
-def _canonical(value: Any, path: str) -> Any:
-    """Everything JSON can carry, unchanged; dates as ISO text; nothing else.
-
-    Totality belongs to the function (design rule 1). ``json.dumps`` refuses the
-    ``datetime.date`` the YAML loader returns for an unquoted ISO date, and a
-    model carrying one in a provenance note VALIDATES AT EXIT 0 -- so the
-    digest, which every steps.json is required to carry, would raise an
-    uncaught TypeError on a legal model and no walk against it could be
-    authored. Two consequences, both deliberate:
-
-    * quoted and unquoted spellings of one date produce the SAME digest, so the
-      value identifies operations up to scalar spelling, and re-quoting a
-      comment does not invalidate existing steps files;
-    * anything outside the closed set is REFUSED with a rule id rather than
-      crashing. Every input gets an answer, including "no".
-    """
-    if isinstance(value, dict):
-        for key in value:
-            if not isinstance(key, str):
-                _refuse(
-                    path,
-                    f"mapping key {key!r} is a {type(key).__name__}, not a string; "
-                    f"quote it in the model. Coercing it would let two different "
-                    f"sections hash identically",
-                    "transition:operations-digest-unrepresentable",
-                )
-        return {str(k): _canonical(v, f"{path}.{k}") for k, v in value.items()}
-    if isinstance(value, list):
-        return [_canonical(v, f"{path}[{i}]") for i, v in enumerate(value)]
-    if isinstance(value, bool) or value is None or isinstance(value, (str, int, float)):
-        return value
-    if isinstance(value, _ISO_TYPES):
-        return value.isoformat()
-    _refuse(
-        path,
-        f"value of type '{type(value).__name__}' cannot be represented in the "
-        f"operations digest; quote it in the model or remove it",
-        "transition:operations-digest-unrepresentable",
-    )
-    return None  # pragma: no cover - _refuse always raises
 
 
 def operations_digest(operations: list[dict[str, Any]] | None) -> str:
@@ -1300,7 +1228,7 @@ def _load_intermediate(
         population = load_population_bytes(
             payload, source=f"<intermediate state after step {index}>", model=model
         )
-    except Exception as error:  # noqa: BLE001 - any refusal is one unchecked verdict
+    except Exception as error:  # noqa: BLE001 - an intermediate refusal stays a verdict
         population = None
         detail = str(error)
     if transition_kernel.intermediate_verdict(population is not None) != "pass":
@@ -1989,7 +1917,7 @@ def _evaluate_to_state(
     """Evaluate the shared pre/step spine and return its admitted final state."""
     fixed_facts = {}
     if model.reference_populations:
-        from gnd.references import bind_population, resolve_context
+        from gnd.model import bind_population, resolve_context
 
         context = resolve_context(model)
         view = bind_population(model, pre, references=context)
@@ -2044,7 +1972,7 @@ def _evaluate_to_state(
         state = {ft: rows for ft, rows in state.items() if ft not in fixed_facts}
         try:
             asserted_population = _population_from_asserted_state(model, state, covers, index)
-        except Exception:  # noqa: BLE001 - normative intermediate owns unchecked
+        except Exception:  # noqa: BLE001 - final intermediate already records band 4
             asserted_population = None
         selected = _dynamic_heads_for_step(model, operation)
         old_extensions = extensions

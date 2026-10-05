@@ -1,3 +1,5 @@
+from gnd import extensions
+
 """Phase 6 corpus-first compatibility lane; no answer-generating producer."""
 
 import hashlib
@@ -85,12 +87,12 @@ def test_selective_refresh_binding_owner(kind):
 
 
 def test_shared_binding_mutant_is_discriminated(monkeypatch):
-    original = checker._clause_bindings
+    original = extensions._clause_bindings
 
     def skip_negation(rule, facts, work):
         return original({key: value for key, value in rule.items() if key != "negate"}, facts, work)
 
-    monkeypatch.setattr(checker, "_clause_bindings", skip_negation)
+    monkeypatch.setattr(extensions, "_clause_bindings", skip_negation)
     for engine in ("legacy", "exact", "scc"):
         row = {"consumer": "calculator", "engine": engine, "variant": "negation"}
         observed = CHARACTERIZE.observe(row)
@@ -113,7 +115,7 @@ def test_production_inference_fault_remains_independently_invalid(domain, tmp_pa
     helper.save(b)
     clean = helper.produce(b)
     assert clean["exit_code"] == 2 and clean["results"][0]["status"] == "missing"
-    original = checker.compare_terms
+    original = extensions.compare_terms
     reached = []
 
     def false_success(*args, **kwargs):
@@ -123,7 +125,7 @@ def test_production_inference_fault_remains_independently_invalid(domain, tmp_pa
             return replace(result, value=True)
         return result
 
-    monkeypatch.setattr(checker, "compare_terms", false_success)
+    monkeypatch.setattr(extensions, "compare_terms", false_success)
     corrupted = helper.produce(b)
     assert reached, "fault must execute inside actual production inference"
     assert corrupted["exit_code"] == 0 and corrupted["results"][0]["status"] == "proved"
@@ -132,7 +134,7 @@ def test_production_inference_fault_remains_independently_invalid(domain, tmp_pa
     independent = helper.kernel(b, corrupted["certificate"])
     assert independent["exit_code"] == 1
     assert independent["results"][0]["status"] == "invalid"
-    assert checker.compare_terms is false_success and len(reached) == still_active
+    assert extensions.compare_terms is false_success and len(reached) == still_active
 
 
 @pytest.mark.parametrize("domain", ["dispatch", "release"])
@@ -156,7 +158,7 @@ def test_replay_blocks_direct_and_transitive_production_inference(domain, tmp_pa
         "evaluate_term",
         "materialize_scalar",
     ):
-        monkeypatch.setattr(checker, name, forbidden)
+        monkeypatch.setattr(extensions, name, forbidden)
     monkeypatch.setattr(terms, "compare_terms", forbidden)
     assert helper.kernel(b)["results"][0]["status"] == "proved"
     helper.comparison(b, {"primitive": "Integer", "left": 2, "operator": "=", "right": 3})

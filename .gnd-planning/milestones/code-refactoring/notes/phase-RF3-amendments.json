@@ -1,0 +1,15 @@
+[
+  {
+    "date": "2026-10-05",
+    "authorization": "process-phase RF3 auto",
+    "mark": "delegated approval (auto=true)",
+    "amendments": [
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+    "sha256": "bcd41ecb8dcce8e7a9131c1c4f6af4ea05d90467c4605b70d8b564df68c50590",
+    "ruling": "Preserve original approval and answers; intermediate units use characterized/direct gates, source-location retargeting preserves semantic mutation and original expected node."
+  }
+]

@@ -28,6 +28,7 @@ from test_public_derivation_parity_corpus import ANSWER_KEY, CORPUS
 
 from gnd import checker
 from gnd import cli as cli_module
+from gnd import extensions as extension_core
 from gnd.address import derivation_address, fact_type_address, parse_address
 from gnd.checker import (
     CheckReport,
@@ -544,7 +545,7 @@ def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyP
         target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
         target_model, target_population = _loaded(target_case)
         calls: list[str] = []
-        original_evaluate = checker._evaluate_derivations
+        original_evaluate = extension_core.evaluate_derivations
         original_message = checker._correspondence_message
 
         def traced_evaluate(*args: Any, **kwargs: Any):
@@ -557,7 +558,7 @@ def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyP
             calls.append(f"constraint:{args[2].constraint_id}")
             return original_message(*args, **kwargs)
 
-        monkeypatch.setattr(checker, "_evaluate_derivations", traced_evaluate)
+        monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
         monkeypatch.setattr(checker, "_correspondence_message", traced_message)
         report = checker.check(target_model, target_population)
         constraint_calls = [event for event in calls if event.startswith("constraint:")]

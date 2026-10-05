@@ -8,11 +8,14 @@ import re
 from collections.abc import Mapping
 from typing import Any
 
-from gnd.checker import _identity_token
-from gnd.extract.anchors import AnchorSidecar, bind_anchors
-from gnd.model import Model, _layer1_structural, semantic_validate
-from gnd.population import Population, PopulationLoadError, _content_digest, load_population_bytes
+from gnd.anchors import AnchorSidecar, bind_anchors
+from gnd.documents import Model
+from gnd.errors import PopulationLoadError
+from gnd.extensions import identity_token as _identity_token
+from gnd.model import _layer1_structural, semantic_validate
+from gnd.population import Population, load_population_bytes
 from gnd.redaction import INSTANCE_DETAIL, RedactionPolicy, RedactionProjectionError, project_output
+from gnd.values import content_digest as _content_digest
 from gnd.verbalize import _quote, line_text
 
 _PLACEHOLDER = re.compile(r"\{[^{}]+\}")
@@ -193,7 +196,7 @@ def verbalize_population(
     """Render every occurrence, with source indices preserved after sorting."""
     validate_model_object(model)
     if model.reference_populations:
-        from gnd.references import bind_population, resolve_context
+        from gnd.model import bind_population, resolve_context
 
         bind_population(model, population, references=resolve_context(model))
     if not population.matches_validation_marker(model):
@@ -237,7 +240,8 @@ def render_witness(
     if fact_type is None or not isinstance(binding, Mapping):
         raise PopulationVerbalizationError("unknown fact type or invalid binding")
     _complete_binding(fact_type, binding)
-    from gnd.popvalidate import _PRIMITIVE_PREDICATES, resolve_primitive
+    from gnd.popvalidate import _PRIMITIVE_PREDICATES
+    from gnd.universe import resolve_primitive
 
     for role in fact_type["roles"]:
         name = str(role["role_name"])

@@ -9,7 +9,7 @@ from typing import Any
 
 import pytest
 
-from gnd import checker
+from gnd import checker, extensions
 from gnd import cli as cli_module
 from gnd.checker import (
     DerivationFinding,
@@ -148,7 +148,7 @@ def test_comparison_mutation_receipts(monkeypatch: pytest.MonkeyPatch) -> None:
             "obligation:derived-surplus",
         )
     }
-    original = checker._derivation_obligation
+    original = extensions._derivation_obligation
 
     def silenced(fact_type: dict[str, Any], population: Any, computed: Any):
         row = original(fact_type, population, computed)
@@ -164,7 +164,7 @@ def test_comparison_mutation_receipts(monkeypatch: pytest.MonkeyPatch) -> None:
         )
 
     with monkeypatch.context() as mutation:
-        mutation.setattr(checker, "_derivation_obligation", silenced)
+        mutation.setattr(extensions, "_derivation_obligation", silenced)
         for branch in ("obligation:derived-missing", "obligation:derived-surplus"):
             model, population = _loaded(cases[branch])
             assert band(checker.check(model, population)) == 0
@@ -187,7 +187,7 @@ def test_comparison_mutation_receipts(monkeypatch: pytest.MonkeyPatch) -> None:
         )
 
     with monkeypatch.context() as mutation:
-        mutation.setattr(checker, "_derivation_obligation", always_fires)
+        mutation.setattr(extensions, "_derivation_obligation", always_fires)
         model, population = _loaded(cases["obligation:derived-exact"])
         assert band(checker.check(model, population)) == 1
 
@@ -209,7 +209,7 @@ def test_disconnected_component_mutations_red(monkeypatch: pytest.MonkeyPatch) -
     relations = _base_relations(model, population)
     expected = _python_extension_calculator(model, relations).extensions["result"].rows
     assert len(expected) == 4
-    original = checker._component_atoms
+    original = extensions._component_atoms
 
     for kept_component in (0, 1):
 
@@ -217,7 +217,7 @@ def test_disconnected_component_mutations_red(monkeypatch: pytest.MonkeyPatch) -
             return [original(rule)[slot]]
 
         with monkeypatch.context() as mutation:
-            mutation.setattr(checker, "_component_atoms", drop_other)
+            mutation.setattr(extensions, "_component_atoms", drop_other)
             with pytest.raises(KeyError):
                 _python_extension_calculator(model, relations)
 
@@ -226,7 +226,7 @@ def test_disconnected_component_mutations_red(monkeypatch: pytest.MonkeyPatch) -
         return [[atom for component in components for atom in component]]
 
     with monkeypatch.context() as mutation:
-        mutation.setattr(checker, "_component_atoms", refuse_disconnection)
+        mutation.setattr(extensions, "_component_atoms", refuse_disconnection)
         with pytest.raises(checker.JoinDisconnectedError):
             _python_extension_calculator(model, relations)
 
@@ -239,7 +239,7 @@ def test_evaluator_exception_is_internal(monkeypatch: pytest.MonkeyPatch) -> Non
         raise RuntimeError("seeded evaluator defect")
 
     output = io.StringIO()
-    monkeypatch.setattr(checker, "_evaluate_derivations", explode)
+    monkeypatch.setattr(extensions, "evaluate_derivations", explode)
     with contextlib.redirect_stdout(output):
         exit_code = cli_module._cmd_check(str(model_path), str(population_path), "json")
     payload = json.loads(output.getvalue())
@@ -256,12 +256,12 @@ def test_witness_order() -> None:
     fact_type = next(item for item in model.fact_types if item.get("id") == "result")
     roles = (("item", "String"),)
     computed = _TypedRelation("result", roles, (("beta",), ("alpha",)))
-    missing = checker._derivation_obligation(
+    missing = extensions._derivation_obligation(
         fact_type,
         population.model_copy(update={"facts": population.facts | {"result": []}}),
         computed,
     )
-    surplus = checker._derivation_obligation(
+    surplus = extensions._derivation_obligation(
         fact_type,
         population.model_copy(
             update={"facts": population.facts | {"result": [{"item": "beta"}, {"item": "alpha"}]}}
@@ -328,7 +328,7 @@ def test_constraints_run_once_after_all_extensions(monkeypatch: pytest.MonkeyPat
     case = next(case for case in CASES if case["branch"] == "constraint:one-final-walk")
     model, population = _loaded(case)
     calls: list[str] = []
-    original_evaluate = checker._evaluate_derivations
+    original_evaluate = extensions.evaluate_derivations
     original_message = checker._correspondence_message
 
     def traced_evaluate(*args: Any, **kwargs: Any):
@@ -341,7 +341,7 @@ def test_constraints_run_once_after_all_extensions(monkeypatch: pytest.MonkeyPat
         calls.append(f"constraint:{args[2].constraint_id}")
         return original_message(*args, **kwargs)
 
-    monkeypatch.setattr(checker, "_evaluate_derivations", traced_evaluate)
+    monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
     monkeypatch.setattr(checker, "_correspondence_message", traced_message)
     report = checker.check(model, population)
     assert len(report.verdicts) == 1

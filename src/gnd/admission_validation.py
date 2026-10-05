@@ -14,12 +14,13 @@ from jsonschema import Draft202012Validator
 from gnd.address import positional_constraint_ref
 from gnd.admission import build_admission
 from gnd.artifacts import canonical_json_bytes
-from gnd.model import Model
+from gnd.documents import Model
+from gnd.model import bind_population, resolve_context
 from gnd.population import Population
-from gnd.popvalidate import resolve_primitive, resolve_reference_value_type
-from gnd.references import bind_population, reference_model_digest, resolve_context
-from gnd.report import load_report_schema
+from gnd.report_schema import load_report_schema
 from gnd.semantic_adapter import canonical_scalar
+from gnd.universe import resolve_primitive, resolve_reference_value_type
+from gnd.values import reference_model_digest
 
 _VALIDATOR = Draft202012Validator(load_report_schema())
 

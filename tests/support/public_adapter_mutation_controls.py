@@ -1,3 +1,5 @@
+from gnd import extensions
+
 """Exact original mutation-control bodies over reviewed public inputs."""
 import json
 from itertools import pairwise
@@ -169,7 +171,7 @@ def test_semiderived_claims_are_retained_without_computing_extensions(monkeypatc
     def forbidden(*args, **kwargs):
         raise AssertionError("preserve rules and claims without calculating their meaning")
 
-    monkeypatch.setattr(adapter.checker, "_python_extension_calculator", forbidden)
+    monkeypatch.setattr(extensions, "_python_extension_calculator", forbidden)
     result = adapter.adapt_snapshot(model, population)
     assert any(
         row.derivation == "semiderived" and row.relation_source == "computed-extension"

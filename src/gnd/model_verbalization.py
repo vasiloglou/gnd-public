@@ -16,12 +16,13 @@ from pathlib import Path
 from typing import Any
 
 from gnd.atoms import atom_bind
-from gnd.extract.refscheme import reference_identity
-from gnd.extract.vocabulary import reading_text
-from gnd.model import Model, analyze_declared_aggregate, iter_derivation_clauses, load_model
-from gnd.popvalidate import resolve_primitive
+from gnd.documents import Model
+from gnd.model import analyze_declared_aggregate, iter_derivation_clauses, load_model
+from gnd.refscheme import reference_identity
 from gnd.terms import term_variables
+from gnd.universe import resolve_primitive
 from gnd.verbalize import line_text
+from gnd.vocabulary import reading_text
 
 __all__ = ["VerbalizationError", "render_model_verbalization"]
 

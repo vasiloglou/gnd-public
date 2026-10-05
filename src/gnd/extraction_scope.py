@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from gnd.model import Model, structured_derivation_ids
+from gnd.documents import Model
+from gnd.model import structured_derivation_ids
 
 __all__ = [
     "STRUCTURED_DERIVATION_INAPPLICABLE_REASON",

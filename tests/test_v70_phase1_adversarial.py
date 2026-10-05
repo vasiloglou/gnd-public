@@ -67,7 +67,7 @@ def test_repeated_value_reuses_recogniser_occurrence_lookup(tmp_path):
     anchors["vocabulary_digest"] = vocabulary_digest(model)
     anchor_path = tmp_path / "population.pop.json.anchors.json"
     anchor_path.write_text(json.dumps(anchors))
-    with patch("gnd.extract.anchors.recognised_ranges", wraps=recognised_ranges) as lookup:
+    with patch("gnd.anchors.recognised_ranges", wraps=recognised_ranges) as lookup:
         result = check(model_path, population_path, anchors=anchor_path, document=source_path)
     assert result["exit_code"] == 0
     assert lookup.call_count == 1

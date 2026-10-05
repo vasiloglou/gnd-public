@@ -22,11 +22,14 @@ document and evaluated.
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from gnd.population import Population
 import json
 import math
 import re
 from collections.abc import Mapping
-from contextvars import ContextVar
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
 from importlib.resources import files
@@ -34,13 +37,22 @@ from pathlib import Path
 from typing import Any, Literal
 
 from jsonschema import Draft202012Validator
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, ValidationError
 from ruamel.yaml import YAML
 
 # Message wording for the layer-2 rules lives with every other CNL template
 # (gnd.verbalize imports nothing from gnd, so this cannot cycle).
 from gnd import verbalize
 from gnd.atoms import atom_bind, atom_has_bind
+from gnd.documents import (
+    DeonticNote,  # noqa: F401 -- compatibility export
+    Model,
+)
+from gnd.errors import (
+    ModelLoadError,
+    ModelValidationError,
+    ValidationIssue,
+    issues_from_validation_error,  # noqa: F401 -- compatibility export
+)
 from gnd.terms import (
     DEFAULT_LIMITS,
     FLOAT_FUNCTION_ARITY,
@@ -49,6 +61,18 @@ from gnd.terms import (
     is_function_term,
     term_variables,
 )
+from gnd.universe import (
+    DERIVATION_TERM_CACHE as _DERIVATION_TERM_CACHE,
+)
+from gnd.universe import (
+    fact_type_roles as _fact_type_roles,
+)
+from gnd.universe import (
+    resolved_primitive as _resolved_primitive,
+)
+from gnd.universe import (
+    supertype_parents as _supertype_parents,
+)
 from gnd.yaml_comments import configure_comment_scanner
 
 #: Fixed pattern counting {Type} / {Type:role} placeholders in readings.
@@ -56,10 +80,6 @@ _PLACEHOLDER = re.compile(r"\{[^{}]+\}")
 
 MAX_MODEL_BYTES = 10 * 1024 * 1024  # 10 MB — same cap as population input
 MAX_YAML_EVENTS = 1_000_000  # parse-event budget for untrusted YAML
-
-
-class ModelLoadError(Exception):
-    """Raised when a model file cannot be safely read/parsed (pre-validation)."""
 
 
 def yaml_stream_guard_error(path: str | Path) -> str | None:
@@ -91,108 +111,6 @@ def yaml_stream_guard_error(path: str | Path) -> str | None:
                     f"input (alias-amplification defense, T-01-02)"
                 )
     return None
-
-
-class ValidationIssue(BaseModel):
-    """Unified error record for both validation layers."""
-
-    path: str
-    message: str
-    rule_id: str
-    severity: Literal["error", "warning"] = "error"
-
-
-def issues_from_validation_error(
-    error: ValidationError, rule_id: str
-) -> list[ValidationIssue]:
-    return [
-        ValidationIssue(
-            path=".".join(str(part) for part in entry["loc"]),
-            message=entry["msg"],
-            rule_id=rule_id,
-        )
-        for entry in error.errors()
-    ]
-
-
-class ModelValidationError(Exception):
-    """Raised when a model file fails layer-1 or layer-2 validation."""
-
-    def __init__(
-        self,
-        issues: list[ValidationIssue],
-        warnings: list[ValidationIssue] | None = None,
-    ):
-        self.issues = list(issues)
-        self.warnings = list(warnings or [])
-        summary = "; ".join(f"{i.path}: {i.message}" for i in self.issues)
-        super().__init__(f"model validation failed: {summary}")
-
-
-class DeonticNote(BaseModel):
-    """A retained top-level deontic note from the ORM document."""
-
-    text: str
-    rationale: str | None = None
-
-
-class Model(BaseModel):
-    """A loaded, validated ORM conceptual model."""
-
-    # Attribute assignment is the common mutation path and should fail
-    # immediately. Nested dictionaries/lists remain mutable, so Population's
-    # validation marker also binds a digest of current model content.
-    model_config = ConfigDict(frozen=True, extra="forbid")
-
-    version: int
-    #: D-06: a stable, OPAQUE identifier for this model. Optional for backward
-    #: compatibility — every model authored before the field existed has None,
-    #: and the population header cross-check simply does not run for those. It
-    #: is never resolved to a path and never opened (T-01.1-01); the
-    #: unforgeable runtime proof that a population was validated against THIS
-    #: model is ``Population.validated_against`` (D-02), not this string.
-    model_id: str | None = None
-    source: dict[str, Any] = Field(default_factory=dict)
-    object_types: list[dict[str, Any]]
-    fact_types: list[dict[str, Any]]
-    constraints: list[dict[str, Any]] = Field(default_factory=list)
-    #: ORM+ v2 state transitions, raw dicts like every other section. A v1
-    #: document loads with ``operations: []`` and is byte-identical to what it
-    #: loaded before v2 existed. Every downstream consumer feature-detects on
-    #: THIS list being non-empty, never on ``version``: a ``version: 2``
-    #: document that declares no operations must behave exactly like a v1 one,
-    #: and a version test would silently make it behave differently.
-    operations: list[dict[str, Any]] = Field(default_factory=list)
-    reference_populations: list[dict[str, Any]] = Field(default_factory=list)
-    _references: Any = PrivateAttr(default=None)
-    rejected_proposals: list[dict[str, Any]] = Field(default_factory=list)
-    #: Trace-compiled obligations, keyed by operation id (B2). A SIDE TABLE
-    #: rather than an ``operation["compiled"]`` key, which is what the plan and
-    #: the phase spec first described.
-    #:
-    #: The attachment was tried and reproduced a defect: ``operations_digest``
-    #: is taken over the operations section, so writing into those dicts moved
-    #: the digest and every committed steps.json stopped matching its own model.
-    #: Stripping the key back out before hashing would have worked only if no
-    #: author could ever write one -- and ``$defs.operation`` does not set
-    #: ``additionalProperties: false``, so an authored ``compiled:`` key is legal
-    #: YAML that the digest would then silently ignore. A private attribute has
-    #: neither problem: the loaded section stays exactly as authored, and there
-    #: is nothing for a key to collide with.
-    _compiled: dict[str, list[dict[str, Any]]] = PrivateAttr(default_factory=dict)
-
-    def model_dump(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
-        document = super().model_dump(*args, **kwargs)
-        if not self.reference_populations:
-            document.pop("reference_populations", None)
-        return document
-
-    def compiled_obligations(self, operation_id: str) -> list[dict[str, Any]]:
-        """The compiled and retained obligations of one operation, in order."""
-        return self._compiled.get(str(operation_id), [])
-
-    deontic_notes: list[DeonticNote] = Field(default_factory=list)
-    warnings: list[ValidationIssue] = Field(default_factory=list)
 
 
 def structured_derivation_ids(model: Model) -> tuple[str, ...]:
@@ -360,19 +278,6 @@ def _iter_role_refs(constraint: dict[str, Any]):
         ref = constraint.get(field)
         if isinstance(ref, dict) and "fact_type" in ref:
             yield ref
-
-
-def _fact_type_roles(doc: dict[str, Any]) -> dict[str, set[str]]:
-    """fact_type id -> set of role_names."""
-    return {
-        str(ft.get("id")): {
-            str(role.get("role_name"))
-            for role in ft.get("roles") or []
-            if isinstance(role, dict) and role.get("role_name")
-        }
-        for ft in doc.get("fact_types") or []
-        if isinstance(ft, dict) and ft.get("id") is not None
-    }
 
 
 # --- layer-2 rules (each: pure function doc -> list[ValidationIssue]) ---
@@ -721,36 +626,6 @@ def _rule_reference_value_type(doc: dict[str, Any]) -> list[ValidationIssue]:
     return issues
 
 
-def _resolved_primitive(
-    object_type_id: str,
-    object_types: dict[str, dict[str, Any]],
-    seen: set[str] | None = None,
-) -> str | None:
-    """Resolve a primitive without importing popvalidate (which imports Model)."""
-    seen = set(seen or ())
-    if object_type_id in seen:
-        return None
-    seen.add(object_type_id)
-    object_type = object_types.get(object_type_id)
-    if object_type is None:
-        return None
-    if object_type.get("kind") == "value":
-        primitive = object_type.get("primitive")
-        return str(primitive) if primitive is not None else None
-    reference = object_type.get("reference") or {}
-    if reference.get("mode") in ("popular", "general") and reference.get("value_type"):
-        return _resolved_primitive(str(reference["value_type"]), object_types, seen)
-    if object_type.get("inherits_reference"):
-        inherited = {
-            primitive
-            for parent in object_type.get("subtype_of") or []
-            if (primitive := _resolved_primitive(str(parent), object_types, seen)) is not None
-        }
-        if len(inherited) == 1:
-            return inherited.pop()
-    return None
-
-
 def _temporal_literal_valid(value: str, primitive: str) -> bool:
     try:
         if primitive == "Date":
@@ -1052,18 +927,6 @@ def _rule_string_ref(doc: dict[str, Any]) -> list[ValidationIssue]:
             if str(subtype) not in object_type_ids:
                 unresolved(path, f"subtypes entry names undeclared object type '{subtype}'")
     return issues
-
-
-def _supertype_parents(doc: dict[str, Any]) -> dict[str, list[str]]:
-    """object-type id -> declared direct supertypes (``subtype_of``)."""
-    return {
-        str(ot.get("id")): [str(s) for s in ot.get("subtype_of") or []]
-        for ot in doc.get("object_types") or []
-        # `isinstance` BEFORE `.get`: a non-mapping entry is layer 1's finding,
-        # and this helper raising would deny every layer-2 rule the chance to
-        # report its own. Surfaced by v5.0 Phase 1's hostile-shape sweep.
-        if isinstance(ot, dict) and ot.get("id") is not None
-    }
 
 
 def _ancestor_closure(object_type_id: str, parents: dict[str, list[str]]) -> set[str]:
@@ -2013,7 +1876,8 @@ def _rule_op_create_ref_mode(doc: dict[str, Any]) -> list[ValidationIssue]:
     rule) — including its ``seen`` set, so a subtype cycle resolves to None
     rather than recursing forever. The import is deferred because
     ``popvalidate`` imports this module at module scope."""
-    from gnd.popvalidate import _identifying_id, _resolve_reference
+    from gnd.universe import identifying_id as _identifying_id
+    from gnd.universe import resolve_reference as _resolve_reference
 
     issues: list[ValidationIssue] = []
     object_types = {
@@ -2659,7 +2523,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
     # Local import avoids the module-import cycle: popvalidate imports Model and
     # the shared semantic helpers from this module. Resolution still has exactly
     # one implementation, in gnd.popvalidate.
-    from gnd.popvalidate import resolve_primitive
+    from gnd.universe import resolve_primitive
 
     issues: list[ValidationIssue] = []
     role_types = _role_object_types(doc) if isinstance(doc, dict) else {}
@@ -2804,7 +2668,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
 
 def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every exists.where comparison has compatible resolved term types."""
-    from gnd.popvalidate import resolve_primitive
+    from gnd.universe import resolve_primitive
 
     issues: list[ValidationIssue] = []
     role_types = _role_object_types(doc) if isinstance(doc, dict) else {}
@@ -4288,9 +4152,6 @@ def _derivation_head_term_issues(doc: dict[str, Any]) -> list[ValidationIssue]:
     return issues
 
 
-_DERIVATION_TERM_CACHE: ContextVar[dict | None] = ContextVar("gnd_intake_term_issues", default=None)
-
-
 def _filter_derivation_term_issues(doc: dict[str, Any], *, rule_id: str) -> list[ValidationIssue]:
     cache = _DERIVATION_TERM_CACHE.get()
     if cache is None or cache["document"] is not doc:
@@ -4893,7 +4754,8 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
         text = text.rstrip()
     doc = None
     if text.lstrip().startswith("{"):
-        from gnd.population import PopulationLoadError, _parse_document_bytes
+        from gnd.errors import PopulationLoadError
+        from gnd.population import _parse_document_bytes
 
         try:
             doc = _parse_document_bytes(data, suffix=".json", source=str(source))
@@ -4913,7 +4775,6 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
     if errors:
         raise ModelValidationError(errors, warnings)
     model = Model.model_validate({**dict(doc), "warnings": warnings})
-    from gnd.references import validate_declarations
 
     validate_declarations(model)
     _attach_compiled_obligations(model)
@@ -4923,7 +4784,6 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
 def _load_model_no_follow(path: Path) -> Model:
     """Strict path intake for consumers whose contract forbids symlink traversal."""
     from gnd import artifacts
-    from gnd.references import ReferenceInputError, _bind_at, retained_root
 
     with retained_root(path.parent) as descriptor:
         data, _ = artifacts.read_regular_bounded_at(
@@ -4943,7 +4803,6 @@ def load_model(path: str | Path) -> Model:
     import os
 
     from gnd import artifacts
-    from gnd.references import ReferenceInputError
 
     path = Path(path)
     if hasattr(os, "O_NOFOLLOW") and hasattr(os, "O_DIRECTORY"):
@@ -5168,3 +5027,376 @@ def _attach_compiled_obligations(model: Model) -> None:
     effects = _effect_index(model.operations)
     for operation in model.operations:
         model._compiled[str(operation.get("id"))] = compile_operation(operation, effects)
+
+
+import hashlib
+import os
+import weakref
+from contextlib import contextmanager
+from typing import Literal
+
+from gnd import artifacts
+from gnd.values import reference_model_digest
+
+MAX_BYTES = 10 * 1024 * 1024
+
+
+MAX_SET_BYTES = 32 * 1024 * 1024
+
+
+MAX_ENTRIES = 100_000
+
+
+_TOKEN = object()
+
+
+_BOUND = weakref.WeakValueDictionary()
+
+
+_COMBINED = weakref.WeakValueDictionary()
+
+
+class ReferenceInputError(ValueError):
+    """A reference boundary refused its input before domain evaluation."""
+
+    def __init__(self, message: str, *, model: Model | None = None):
+        super().__init__(message)
+        self.model = model
+
+
+@dataclass(frozen=True)
+class ReferenceOrigin:
+    id: str
+    raw_sha256: str
+
+
+@dataclass(frozen=True)
+class OccurrenceOrigin:
+    kind: Literal["candidate", "reference"]
+    reference_id: str | None
+
+
+@dataclass(frozen=True)
+class BoundReferenceContext:
+    _model: Model
+    _digest: str
+    _snapshots: tuple[tuple[ReferenceOrigin, str, bytes], ...]
+    _owners: tuple[tuple[str, str], ...]
+    _populations: tuple[Population, ...]
+    _token: object
+
+
+@dataclass(frozen=True)
+class BoundPopulationView:
+    combined: Population
+    candidate: Population
+    occurrence_origins: tuple[dict[str, Any], ...]
+    references: BoundReferenceContext
+
+
+def validate_reference_structure(document: object) -> None:
+    stack = [(document, 0)]
+    while stack:
+        node, parent_depth = stack.pop()
+        if isinstance(node, (list, dict)):
+            depth = parent_depth + 1
+            if depth > 64:
+                raise ReferenceInputError("reference container depth exceeds 64")
+            stack.extend((v, depth) for v in (node.values() if isinstance(node, dict) else node))
+
+
+def _relative(path: object) -> str:
+    if not isinstance(path, str) or not path or len(path) > 4096:
+        raise ReferenceInputError("reference path is empty or exceeds 4096 characters")
+    parts = path.split("/")
+    if len(parts) > 32 or any(p in {"", ".", ".."} for p in parts):
+        raise ReferenceInputError(
+            "reference path must have at most 32 nonempty relative components"
+        )
+    if "\\" in path or "\x00" in path or re.match(r"^[A-Za-z]:", path):
+        raise ReferenceInputError("reference path is not a confined POSIX relative path")
+    return path
+
+
+@contextmanager
+def retained_root(root: str | Path):
+    """Open every lexical ancestor without following a symlink."""
+    if not hasattr(os, "O_NOFOLLOW") or not hasattr(os, "O_DIRECTORY"):
+        raise ReferenceInputError("safe reference descriptor traversal is unavailable")
+    absolute = Path(root)
+    if not absolute.is_absolute():
+        absolute = Path.cwd() / absolute
+    descriptor = os.open(absolute.anchor, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        for part in absolute.parts[1:]:
+            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = next_fd
+        yield descriptor
+    finally:
+        os.close(descriptor)
+
+
+def validate_declarations(model: Model) -> dict[str, str]:
+    declarations = model.reference_populations
+    if declarations:
+        from gnd.model import _layer1_structural, semantic_validate
+
+        document = model.model_dump(exclude={"warnings"})
+        if _layer1_structural(document) or any(
+            i.severity == "error" for i in semantic_validate(document)
+        ):
+            raise ReferenceInputError("reference-bearing model structure or semantics are invalid")
+    if declarations and model.version != 4:
+        raise ReferenceInputError("reference_populations requires model version 4")
+    if len(declarations) > 32:
+        raise ReferenceInputError("reference file count exceeds 32")
+    ids: set[str] = set()
+    owners: dict[str, str] = {}
+    types = {ft["id"]: ft for ft in model.fact_types}
+    for d in declarations:
+        if set(d) != {"id", "path", "sha256", "fact_types"}:
+            raise ReferenceInputError("reference declaration has missing or extra fields")
+        identifier = d["id"]
+        if not isinstance(identifier, str) or not 1 <= len(identifier) <= 128 or identifier in ids:
+            raise ReferenceInputError("reference id must be unique and 1..128 characters")
+        ids.add(identifier)
+        _relative(d["path"])
+        if not isinstance(d["sha256"], str) or not re.fullmatch("[0-9a-f]{64}", d["sha256"]):
+            raise ReferenceInputError("reference sha256 must be 64 lowercase hexadecimal digits")
+        claimed = d["fact_types"]
+        if not isinstance(claimed, list) or not claimed:
+            raise ReferenceInputError("reference fact_types must be a nonempty list")
+        for ft in claimed:
+            if not isinstance(ft, str) or ft not in types or ft in owners:
+                raise ReferenceInputError(
+                    "reference fact ownership is unknown, duplicated or overlapping"
+                )
+            if types[ft].get("derivation", "base") not in {"base", None}:
+                raise ReferenceInputError("references may own only base fact types")
+            owners[ft] = identifier
+    for operation in model.operations:
+        for effect in operation.get("effects", []):
+            for action in ("assert", "retract"):
+                if effect.get(action, {}).get("fact_type") in owners:
+                    raise ReferenceInputError(
+                        "operation effects cannot write a reference-owned fact type"
+                    )
+    return owners
+
+
+def _bind_at(model: Model, descriptor: int) -> BoundReferenceContext:
+    from gnd.population import PopulationLoadError, _build_population, _parse_document_bytes
+
+    owners = validate_declarations(model)
+    snapshots = []
+    populations = []
+    fact_entries = instance_entries = 0
+    total = 0
+    for d in sorted(model.reference_populations, key=lambda d: d["id"]):
+        raw, _leaf = artifacts.read_regular_bounded_at(descriptor, d["path"], max_bytes=MAX_BYTES)
+        total += len(raw)
+        if total > MAX_SET_BYTES:
+            raise ReferenceInputError("reference set exceeds 32 MiB")
+        digest = hashlib.sha256(raw).hexdigest()
+        if digest != d["sha256"]:
+            raise ReferenceInputError("reference raw hash does not match declared sha256")
+        doc = _parse_document_bytes(raw, suffix=Path(d["path"]).suffix, source=d["path"])
+        validate_reference_structure(doc)
+        if isinstance(doc, dict):
+            for section in ("facts", "instances"):
+                entries = doc.get(section, {})
+                if (
+                    isinstance(entries, dict)
+                    and sum(len(rows) for rows in entries.values() if isinstance(rows, list))
+                    > MAX_ENTRIES
+                ):
+                    raise ReferenceInputError("reference entries exceed 100000")
+        try:
+            pop = _build_population(doc, model=model, deduplicate_shape_rows=True)
+        except PopulationLoadError as error:
+            raise ReferenceInputError(
+                "reference population structure or types are invalid"
+            ) from error
+        if any(ft not in d["fact_types"] for ft in pop.facts):
+            raise ReferenceInputError("reference asserts an unowned fact type")
+        fact_entries += sum(map(len, pop.facts.values()))
+        instance_entries += sum(map(len, pop.instances.values()))
+        if fact_entries > MAX_ENTRIES or instance_entries > MAX_ENTRIES:
+            raise ReferenceInputError("reference fact or instance entry count exceeds 100000")
+        snapshots.append((ReferenceOrigin(d["id"], digest), d["path"], raw))
+        populations.append(pop)
+    context = BoundReferenceContext(
+        model,
+        reference_model_digest(model),
+        tuple(snapshots),
+        tuple(sorted(owners.items())),
+        tuple(populations),
+        _TOKEN,
+    )
+    _BOUND[id(context)] = context
+    return context
+
+
+def bind_references(model: Model, *, root: str | Path) -> BoundReferenceContext:
+    validate_declarations(model)
+    with retained_root(root) as descriptor:
+        return _bind_at(model, descriptor)
+
+
+def resolve_context(
+    model: Model, references: BoundReferenceContext | None = None
+) -> BoundReferenceContext:
+    context = references if references is not None else model._references
+    if (
+        not isinstance(context, BoundReferenceContext)
+        or context._token is not _TOKEN
+        or _BOUND.get(id(context)) is not context
+    ):
+        raise ReferenceInputError("reference-bearing model requires a bound reference context")
+    if context._model is not model or context._digest != reference_model_digest(model):
+        raise ReferenceInputError("reference context does not match this model's current identity")
+    owners = validate_declarations(model)
+    expected = {d["id"]: d for d in model.reference_populations}
+    if tuple(sorted(owners.items())) != context._owners or len(expected) != len(context._snapshots):
+        raise ReferenceInputError("reference context ownership or snapshot roster changed")
+    if len(context._populations) != len(context._snapshots) or any(
+        not pop.matches_validation_marker(model) for pop in context._populations
+    ):
+        raise ReferenceInputError("reference context validated population changed")
+    for origin, path, raw in context._snapshots:
+        declaration = expected.get(origin.id)
+        if (
+            declaration is None
+            or path != declaration["path"]
+            or origin.raw_sha256 != declaration["sha256"]
+            or hashlib.sha256(raw).hexdigest() != origin.raw_sha256
+        ):
+            raise ReferenceInputError("reference context snapshot identity changed")
+    return context
+
+
+def bind_population(
+    model: Model, candidate: Population, *, references: BoundReferenceContext
+) -> BoundPopulationView:
+    from gnd.checker import _identity_key
+    from gnd.population import _combine_validated_populations
+
+    context = resolve_context(model, references)
+    owners = dict(context._owners)
+    if any(ft in owners for ft in candidate.facts):
+        raise ReferenceInputError("candidate cannot mention a reference-owned fact type")
+    if not candidate.matches_validation_marker(model):
+        raise ReferenceInputError("candidate population is not validated against the current model")
+    facts = {ft: [dict(row) for row in rows] for ft, rows in candidate.facts.items()}
+    instances = {ot: list(values) for ot, values in candidate.instances.items()}
+    covers = list(candidate.covers)
+    format_version = candidate.format_version
+    origins = [
+        {"origin": {"kind": "candidate", "reference_id": None}, "fact_type": ft, "index": i}
+        for ft, rows in candidate.facts.items()
+        for i in range(len(rows))
+    ]
+    for (origin, _path, _raw), pop in zip(context._snapshots, context._populations, strict=True):
+        format_version = max(format_version, pop.format_version)
+        for ot, values in pop.instances.items():
+            instances.setdefault(ot, []).extend(values)
+        for ft, rows in pop.facts.items():
+            facts[ft] = [dict(row) for row in rows]
+            origins.extend(
+                {
+                    "origin": {"kind": "reference", "reference_id": origin.id},
+                    "fact_type": ft,
+                    "index": i,
+                }
+                for i in range(len(rows))
+            )
+        covers.extend(ft for ft in pop.covers if ft not in covers)
+    if (
+        sum(map(len, facts.values())) > MAX_ENTRIES
+        or sum(map(len, instances.values())) > MAX_ENTRIES
+    ):
+        raise ReferenceInputError("combined fact or instance entry count exceeds 100000")
+    instances = {
+        ot: list({_identity_key(value): value for value in values}.values())
+        for ot, values in instances.items()
+    }
+    combined = _combine_validated_populations(
+        model,
+        (candidate, *context._populations),
+        {
+            "format_version": format_version,
+            "population": {
+                "model": candidate.model,
+                "model_id": candidate.model_id,
+                "source": candidate.source,
+                "covers": covers,
+            },
+            "facts": facts,
+            "instances": instances,
+        },
+    )
+    combined._reference_combined = True
+    combined._reference_context = context
+    _COMBINED[id(combined)] = combined
+    origins.sort(
+        key=lambda row: (
+            row["origin"]["kind"],
+            row["origin"]["reference_id"] or "",
+            row["fact_type"],
+            row["index"],
+        )
+    )
+    return BoundPopulationView(combined, candidate, tuple(origins), context)
+
+
+def candidate_fact_count(view: BoundPopulationView) -> int:
+    return sum(map(len, view.candidate.facts.values()))
+
+
+def is_bound_population(
+    model: Model, population: Population, context: BoundReferenceContext
+) -> bool:
+    """Recognize only a current combined population created by this binder."""
+    return (
+        _COMBINED.get(id(population)) is population
+        and population._reference_context is context
+        and population.matches_validation_marker(model)
+    )
+
+
+BOUND = _BOUND
+COMBINED = _COMBINED
+TOKEN = _TOKEN
+bind_at = _bind_at
+relative = _relative
+
+ReferenceInputError.__module__ = 'gnd.references'
+
+ReferenceOrigin.__module__ = 'gnd.references'
+
+OccurrenceOrigin.__module__ = 'gnd.references'
+
+BoundReferenceContext.__module__ = 'gnd.references'
+
+BoundPopulationView.__module__ = 'gnd.references'
+
+validate_reference_structure.__module__ = 'gnd.references'
+
+_relative.__module__ = 'gnd.references'
+
+retained_root.__module__ = 'gnd.references'
+
+validate_declarations.__module__ = 'gnd.references'
+
+_bind_at.__module__ = 'gnd.references'
+
+bind_references.__module__ = 'gnd.references'
+
+resolve_context.__module__ = 'gnd.references'
+
+bind_population.__module__ = 'gnd.references'
+
+candidate_fact_count.__module__ = 'gnd.references'
+
+is_bound_population.__module__ = 'gnd.references'

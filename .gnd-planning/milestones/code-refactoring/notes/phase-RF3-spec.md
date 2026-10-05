@@ -105,3 +105,11 @@ Before split, the rename unit runs the complete G1; intermediate move units run 
 ### F2/A2 — accumulated shim inventory
 
 Rename G1 had453 passed/one failed because RF2 test counted all milestone shim rows as RF2. Delegated amendment scopes its34-row assertion to RF2 rows; retains all34 expected names and identity/effect assertions, while RF3 has its own complete new-row guard. No behavior-golden answer changed.
+
+### F3 — dependency closures and identity
+
+Split controls reproduced missing registry globals/ring constants, historical exception module-name changes, duplicate reference-context classes after a mistaken facade restore, and a module alias shadowed by the local extensions variable. Each was corrected before its move commit. Original body hashes and old/new object identity controls now pass; no expected behavior artifact was changed. Imported checker helper bindings used by the owner-characterization consumers are retained as explicit historical exports.
+
+### F4/A3 — formatting-sensitive mutation and lint repair
+
+Delegated amendment (auto=true), 2026-10-05: the anchored mutation now matches the same unique function signature and injects the same refusal before its imports. Import sorting had invalidated its source-location match; original id and expected-red node remain unchanged, with before/after retained. A reduced lint selection accidentally removed pre-existing suppressions for excluded rules; original annotations and moved bodies were restored, and verification uses the full configured lint selection. The dynamic inference guard now patches the actual extensions globals. The move-body guard binds this unit verbatim; later routing changes will check that committed snapshot rather than claim the final edited bodies remain verbatim.

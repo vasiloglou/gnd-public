@@ -1,0 +1,166 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_derivation_evaluator_controls.py tests/test_public_adapter_derivation.py tests/test_public_applicability_obligations.py tests/test_public_derivation_cost_mutations.py tests/test_public_v72_semantic_owners.py tests/test_reference_population_corpus.py tests/test_rf3_moves.py --tb=short
+...................................FF......FFFFFFFF.............FF...... [ 21%]
+........................................................................ [ 42%]
+........................................................................ [ 64%]
+........................................................................ [ 85%]
+...............................................                          [100%]
+=================================== FAILURES ===================================
+_____________ test_calculator_join_compatibility[exact-exact-add] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1983: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+_____________ test_calculator_join_compatibility[exact-aggregate] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1983: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+______________ test_calculator_join_compatibility[scc-exact-add] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1983: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+______________ test_calculator_join_compatibility[scc-aggregate] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1983: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+_________ test_calculator_join_compatibility[join-exact-multiplicity] __________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+__________ test_calculator_join_compatibility[join-exact-empty-atoms] __________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+__________ test_calculator_join_compatibility[join-exact-empty-rows] ___________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+_____________ test_calculator_join_compatibility[join-exact-typed] _____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+_________ test_calculator_join_compatibility[join-exact-disconnected] __________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+___________ test_calculator_join_compatibility[join-exact-reordered] ___________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-2_nwo8hx/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+___ test_replay_blocks_direct_and_transitive_production_inference[dispatch] ____
+tests/test_public_v72_semantic_owners.py:160: in test_replay_blocks_direct_and_transitive_production_inference
+    monkeypatch.setattr(checker, name, forbidden)
+E   AttributeError: <module 'gnd.checker' from '<worktree>/src/gnd/checker.py'> has no attribute 'compare_terms'
+____ test_replay_blocks_direct_and_transitive_production_inference[release] ____
+tests/test_public_v72_semantic_owners.py:160: in test_replay_blocks_direct_and_transitive_production_inference
+    monkeypatch.setattr(checker, name, forbidden)
+E   AttributeError: <module 'gnd.checker' from '<worktree>/src/gnd/checker.py'> has no attribute 'compare_terms'
+=========================== short test summary info ============================
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-exact-add]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-aggregate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-exact-add]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-aggregate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-multiplicity]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-empty-atoms]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-empty-rows]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-typed]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-disconnected]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-reordered]
+FAILED tests/test_public_v72_semantic_owners.py::test_replay_blocks_direct_and_transitive_production_inference[dispatch]
+FAILED tests/test_public_v72_semantic_owners.py::test_replay_blocks_direct_and_transitive_production_inference[release]
+12 failed, 323 passed, 3 deselected in 32.77s
+
+Exit: 1

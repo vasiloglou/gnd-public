@@ -40,16 +40,19 @@ from __future__ import annotations
 import json
 import math
 from collections.abc import Mapping
-from importlib.resources import files
+from importlib.resources import files  # noqa: F401 -- compatibility export
 from typing import Any, Literal
 
 from pydantic import TypeAdapter
 
 from gnd import transition_kernel
 from gnd.assurance import AssuranceBlockV1, semantic_decision_for_band
+from gnd.branches import record_branch
 from gnd.checker import CheckReport
-from gnd.model import Model, ValidationIssue, structured_derivation_ids
-from gnd.semantic_registry import record_branch
+from gnd.documents import Model
+from gnd.errors import ValidationIssue
+from gnd.model import structured_derivation_ids
+from gnd.report_schema import load_report_schema  # noqa: F401 -- compatibility export
 
 #: Payload key-set version. Phase 4 consumes these keys — bump ONLY on a
 #: breaking change to the key set or to a value's meaning (D-12).
@@ -107,17 +110,6 @@ _EMPTY_COUNTS: dict[str, int] = {
     "unchecked": 0,
     "vacuous": 0,
 }
-
-
-def load_report_schema() -> dict[str, Any]:
-    """The Draft 2020-12 schema describing this payload.
-
-    Loaded through ``importlib.resources`` like the model and population
-    schemas, so the contract ships with the installed package rather than
-    living only in the source tree.
-    """
-    schema_text = files("gnd").joinpath("report.schema.json").read_text(encoding="utf-8")
-    return json.loads(schema_text)
 
 
 def _error_record(error: BaseException | None) -> dict[str, str] | None:

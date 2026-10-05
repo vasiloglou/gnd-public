@@ -1,0 +1,1626 @@
+[
+  {
+    "old": "gnd.model.ModelLoadError",
+    "new": "gnd.errors.ModelLoadError",
+    "body_sha256": "e1c6728ea77a7968a654ca7263147b00bdbdc81a743e873527025ddb59f7f17a",
+    "lines": 2,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.model.ValidationIssue",
+    "new": "gnd.errors.ValidationIssue",
+    "body_sha256": "a799c99fb420c7ec8d2322edc49c27ea2613735385411b68f6838c032ef925c1",
+    "lines": 7,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.model.issues_from_validation_error",
+    "new": "gnd.errors.issues_from_validation_error",
+    "body_sha256": "f7da3f23ee75aeac341d81b2f5243e8b7c17807074c9eb8b83fa7e62ee5fa664",
+    "lines": 11,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.model.ModelValidationError",
+    "new": "gnd.errors.ModelValidationError",
+    "body_sha256": "b8ce91eeb31f77274af57a640e040fb4eb37960da18950a692689e33c90c77ad",
+    "lines": 12,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.population.PopulationLoadError",
+    "new": "gnd.errors.PopulationLoadError",
+    "body_sha256": "d878c489e754af21f2d418086089a29e650205f9141c946429df69b5379a290c",
+    "lines": 2,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.population.MAX_SUMMARY_ISSUES",
+    "new": "gnd.errors.MAX_SUMMARY_ISSUES",
+    "body_sha256": "61cb13f8c5f5a0bf7294e1c7b7d00d72abd3842c3f9cf1e0e972587f5d869d54",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.population.PopulationValidationError",
+    "new": "gnd.errors.PopulationValidationError",
+    "body_sha256": "2bcf2410358a69b524e4e093bc1114065bcd8db98dbd0bd750be00e2d2091535",
+    "lines": 29,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.UnvalidatedPopulationError",
+    "new": "gnd.errors.UnvalidatedPopulationError",
+    "body_sha256": "b17fd0765e61c9580ff01b6d97c72b9d10ee757712301e0f9575b5aa5dda99ab",
+    "lines": 42,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.transition.TransitionLoadError",
+    "new": "gnd.errors.TransitionLoadError",
+    "body_sha256": "ddcdff1b48eba1bdcc5d95403851a5540045d401223c0f9953dcab24d89d49f8",
+    "lines": 18,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.model.DeonticNote",
+    "new": "gnd.documents.DeonticNote",
+    "body_sha256": "31183d277dde09cb542ed86dd9d81ad162dfb255d97e343152d9e38f321b045e",
+    "lines": 5,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.model.Model",
+    "new": "gnd.documents.Model",
+    "body_sha256": "a45a4416c7a963017f4ca6e935685ddfa32dcaff9708322d4646b00ddbbd0508",
+    "lines": 57,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._identity_key",
+    "new": "gnd.values.identity_key",
+    "body_sha256": "fb94f8e525d7f65023109b7c69fb9057480b64e1d8e389b9534f9e936ef75287",
+    "lines": 19,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._IdentitySet",
+    "new": "gnd.values.IdentitySet",
+    "body_sha256": "f658e7fe951a5854ce0c613b9f042942c9dac06e360e747fc0826d01680bbc03",
+    "lines": 14,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._INVALID_LITERAL",
+    "new": "gnd.values.INVALID_LITERAL",
+    "body_sha256": "0315bbdfe1a72447e7f43df06b5a028cc25704ace006387902aa65259b364264",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._literal",
+    "new": "gnd.values.literal",
+    "body_sha256": "dc2d2f6a901ebe555b5fe2188d256e839c6b24c2f84c3cc4c263c3b6931cda04",
+    "lines": 29,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.transition._ISO_TYPES",
+    "new": "gnd.values.ISO_TYPES",
+    "body_sha256": "a71c978e2e433d20a97e7c5aa4a61d3d6ca4e7da6839b95a92b720db5d2c47a0",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.transition._refuse",
+    "new": "gnd.values.refuse",
+    "body_sha256": "833bdf1d77698248a6ccce44ec3d76b859dc87e6609a3e4efeffa5e9eae7a3e6",
+    "lines": 5,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.transition._canonical",
+    "new": "gnd.values.canonical",
+    "body_sha256": "27683baca3126ecb300d244f766188cc598b1183a3ca6ce74daf4fc1e591ee64",
+    "lines": 40,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.population._content_digest",
+    "new": "gnd.values.content_digest",
+    "body_sha256": "a6f28d397d793222aa3b8bb18e5492713bd54f80ab3d494a4198a6424247f4a2",
+    "lines": 23,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.population.MODEL_DIGEST_EXCLUDED_FIELDS",
+    "new": "gnd.values.MODEL_DIGEST_EXCLUDED_FIELDS",
+    "body_sha256": "3f3aa8703d99a9b53c00a4d5f79ca5d32dd93f7c7902842abe9d5e25aff3242c",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.population._model_digest",
+    "new": "gnd.values.model_digest",
+    "body_sha256": "3688b0a3333e894fdb91013257d4061fdba55beec3ca0595779f20ddb19bd5fd",
+    "lines": 15,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.reference_model_digest",
+    "new": "gnd.values.reference_model_digest",
+    "body_sha256": "18324d75db87829b4a7b8a2ad86dd1f63c7d9442c92aa7c5337deb08b5354d8b",
+    "lines": 16,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.model._fact_type_roles",
+    "new": "gnd.universe.fact_type_roles",
+    "body_sha256": "bb4b90908038338fa66130dc349662cb624a9303b4246629c73456970ca2dd04",
+    "lines": 11,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.model._resolved_primitive",
+    "new": "gnd.universe.resolved_primitive",
+    "body_sha256": "7723022949e07020b9fbcf7f21391aab32606d670831222cc900699bcfe69a67",
+    "lines": 28,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.model._supertype_parents",
+    "new": "gnd.universe.supertype_parents",
+    "body_sha256": "9fa2435594d699e176a21ef8ea61194b32b9050d3ebe74c80a3cc0ccd1593a91",
+    "lines": 10,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.model._DERIVATION_TERM_CACHE",
+    "new": "gnd.universe.DERIVATION_TERM_CACHE",
+    "body_sha256": "282f68ac4d09e769df5e84766ba86c7a51719be0096355984c8f17d99bb4794a",
+    "lines": 1,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.popvalidate._object_types_by_id",
+    "new": "gnd.universe.object_types_by_id",
+    "body_sha256": "c8b2f93de5dfe5d6c635f62e51c8c5f868a20f5d82d906c0e41fe72d5d0c2d3a",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.popvalidate._identifying_primitive",
+    "new": "gnd.universe.identifying_primitive",
+    "body_sha256": "cbe152966b6640d61cf2b84cde2062b5011ebff1bc23ae6edeef95832af4ebd2",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.popvalidate._identifying_id",
+    "new": "gnd.universe.identifying_id",
+    "body_sha256": "0bdb5df2382c88445f49bfee6e25bb9bcabacd7db9d91dd44c210a0641ac627e",
+    "lines": 3,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.popvalidate._resolve_reference",
+    "new": "gnd.universe.resolve_reference",
+    "body_sha256": "1b40f87dd30ae9f59e2e23d3044eb18b4177a67bc334ce4aed7ef730f985f463",
+    "lines": 59,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.popvalidate.resolve_reference_value_type",
+    "new": "gnd.universe.resolve_reference_value_type",
+    "body_sha256": "0671a55167808a4e42e55a8d83baa0f1d99093d3c596ab4896dad00329e2fbfd",
+    "lines": 24,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.popvalidate.resolve_primitive",
+    "new": "gnd.universe.resolve_primitive",
+    "body_sha256": "7acdf1a51972717ed8bcd3dec6c93166737cac1215ae0e41a5b59d34ccf65927",
+    "lines": 31,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.IMPLEMENTED_FAMILIES",
+    "new": "gnd.universe.IMPLEMENTED_FAMILIES",
+    "body_sha256": "111ed15cdb8691e309aa63283b9b1949cd44c6396ad650e03a01a82bf874daa2",
+    "lines": 17,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._RING_VARIANTS",
+    "new": "gnd.universe.RING_VARIANTS",
+    "body_sha256": "6e2ecd297f563860e3d6f4e6406f6af605e5c601877348f44a5717a0eb8dcb76",
+    "lines": 11,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._is_implemented",
+    "new": "gnd.universe.is_implemented",
+    "body_sha256": "f24b8b0865d3e309f19b9d423f809ae2cc144e120242fd25d96f6ce73e9255e8",
+    "lines": 70,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._constraint_role_refs",
+    "new": "gnd.universe.constraint_role_refs",
+    "body_sha256": "fd8eb6d8143cb5e8cd1cdaff8a271865c1d6b7c2eba8576fb25d7f4e5a57f4c4",
+    "lines": 20,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._scope_fact_types",
+    "new": "gnd.universe.scope_fact_types",
+    "body_sha256": "a6bc2a4e1ba4ca700d87a436fd0c2f92bbb6a294312b8c75282414cfe6f85f8c",
+    "lines": 37,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._fact_type_by_id",
+    "new": "gnd.universe.fact_type_by_id",
+    "body_sha256": "d37abd9c607b08254768967bae0641221cf728cfe46e552555c4fa4332072d6b",
+    "lines": 5,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._role_object_type",
+    "new": "gnd.universe.role_object_type",
+    "body_sha256": "2e4288df46fac9c987e5865b2004f3073c1712ad0fe7a4258075f0b894adb803",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._descendant_closure",
+    "new": "gnd.universe.descendant_closure",
+    "body_sha256": "ee8d4c35655640c773463bc37e8097eb6a882005b52f1439f4bee8572aba7077",
+    "lines": 38,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._denoting_types",
+    "new": "gnd.universe.denoting_types",
+    "body_sha256": "8fa5b158d7c6c822451cc4fd01d76c8837380a997c65a0f9fa2d94f1df956654",
+    "lines": 39,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._instance_values_of",
+    "new": "gnd.universe.instance_values_of",
+    "body_sha256": "12853592dd94d0690f41468f89e376958d58be7825f4fc839dd91a053d48d3d4",
+    "lines": 48,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._kind_of",
+    "new": "gnd.universe.kind_of",
+    "body_sha256": "e55588c80d0c0afbf91918c7c2ada37e4b1254b4b2e39560c88cfc090cde4d7f",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._instances_of",
+    "new": "gnd.universe.instances_of",
+    "body_sha256": "3bea466f9443a1352ee071c39dd86aa50e1848f9e4546ea0f182d440be40a58e",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.applicable_scope_ids",
+    "new": "gnd.applicability.applicable_scope_ids",
+    "body_sha256": "f7092c0512447f590dae273aeb331b6fa421cfe685dc20a05227fda0399ff230",
+    "lines": 381,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.SURFACES",
+    "new": "gnd.branches.SURFACES",
+    "body_sha256": "147722d32b1a1a2df6fa522e3257ed9c6e4927d427ec55c04efa2e5f58c49ed0",
+    "lines": 10,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.OBLIGATION_KINDS",
+    "new": "gnd.branches.OBLIGATION_KINDS",
+    "body_sha256": "d0d2ddaf451350d50a0007df02e720bc6792d1ab46811c4cbe3f31e7c532b737",
+    "lines": 9,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.OUTCOMES",
+    "new": "gnd.branches.OUTCOMES",
+    "body_sha256": "c55baff244cb5b4f8b1bb2281dd94c3244b2fd25426035275eb9aff72af88397",
+    "lines": 17,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.WITNESS_KINDS",
+    "new": "gnd.branches.WITNESS_KINDS",
+    "body_sha256": "09cf305c3b0cc985cdee063c2f8a3623b7e247ef7734c15b0d03990c06434c00",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.IR_DIMENSIONS",
+    "new": "gnd.branches.IR_DIMENSIONS",
+    "body_sha256": "11d7eb6a1aeb531d08438cde5627021c1586d5642642fee8a093ec73dc100b3c",
+    "lines": 20,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.Branch",
+    "new": "gnd.branches.Branch",
+    "body_sha256": "856654a239f7d275b926dbaeb092cff20435db4a1b07f4eaef5a1d0e72899971",
+    "lines": 15,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.semantic_registry.UnregisteredBranchError",
+    "new": "gnd.branches.UnregisteredBranchError",
+    "body_sha256": "59ca03e05aa638b687ab8e1c1c4bbaa0eacfea60dab4155aa41098621768fea1",
+    "lines": 2,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.semantic_registry._UNIVERSE",
+    "new": "gnd.branches.UNIVERSE",
+    "body_sha256": "e4805788aa9b0fc2de85371960fcd54761ee7f0452e28434060e0730cd273274",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry._SNAPSHOT",
+    "new": "gnd.branches.SNAPSHOT",
+    "body_sha256": "704672e9a7cb2ccd9cc1cc0ac85e38fe24366413b5a2dd21980a8922ddf35a23",
+    "lines": 133,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry._row",
+    "new": "gnd.branches.row",
+    "body_sha256": "62be78b5cc1c5107b0daae4d72262ef2bf40bdb47f9e49ca224fa561caf3a64e",
+    "lines": 31,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._snapshot_rows",
+    "new": "gnd.branches.snapshot_rows",
+    "body_sha256": "1a1928c18ff2086118937ae883e00beac9a1cf2b3ff58589f2d02e41ede23311",
+    "lines": 270,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._applicability_rows",
+    "new": "gnd.branches.applicability_rows",
+    "body_sha256": "823c9b68d57be5b001fe76ad666b5ba5d68a4045f1d525e1f9cdd1b1cfe142e2",
+    "lines": 97,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._composition_rows",
+    "new": "gnd.branches.composition_rows",
+    "body_sha256": "c059b07959a35e21688c8bbb6d1dbbc66ab2c38d3683525be7248c2aeceff782",
+    "lines": 91,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._derivation_rows",
+    "new": "gnd.branches.derivation_rows",
+    "body_sha256": "3d99534e33ed05930302cca42170e6495668109ecd656114760b9e2bb144db78",
+    "lines": 102,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._transition_rows",
+    "new": "gnd.branches.transition_rows",
+    "body_sha256": "92631fb462ebffe2b4de123c91d41e49c74e7efcffdec362d91e463a92483f97",
+    "lines": 233,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._projection_rows",
+    "new": "gnd.branches.projection_rows",
+    "body_sha256": "9278e038b6a8a4042771459b1a6ecc80acd83abdff5226cc11f20e72e0d31ed2",
+    "lines": 70,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._feedback_rows",
+    "new": "gnd.branches.feedback_rows",
+    "body_sha256": "293b9aca794db65aa50bf8a804829325b9530a9e34d0621e349bfa1edb73795f",
+    "lines": 105,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._assurance_rows",
+    "new": "gnd.branches.assurance_rows",
+    "body_sha256": "0410a7cdb1c177d2ec178282921bf74e7ae14f968cb200e5989962ec99dfb06a",
+    "lines": 42,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.REGISTRY",
+    "new": "gnd.branches.REGISTRY",
+    "body_sha256": "98aa0cf647b680e9216f161a24e33a488d2fa94a9a19980bc66a2c992db93e0f",
+    "lines": 15,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.semantic_registry._BY_ID",
+    "new": "gnd.branches.BY_ID",
+    "body_sha256": "760966812c14cd62c0c6be965896f13a983a42811734f1df4a039c744ffb295f",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.branch",
+    "new": "gnd.branches.branch",
+    "body_sha256": "31dc33dce1fe70135a7d0b1a1c239f105b3657d8c278a48bda5c822115554a04",
+    "lines": 5,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.is_registered",
+    "new": "gnd.branches.is_registered",
+    "body_sha256": "8d96f27c6986c3dbfe716ee3ea175b29e7eb6ddd1dfce0a8fbaac33898122905",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.snapshot_branch",
+    "new": "gnd.branches.snapshot_branch",
+    "body_sha256": "e4520eecab090391d3e4ef50c335928d2ef65b920d6180073df9f49730277797",
+    "lines": 3,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.violated_branch",
+    "new": "gnd.branches.violated_branch",
+    "body_sha256": "02f82bfc88ae909c01ab1bbea3106871883311d9a81658d3ec8c693242c2abfb",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._TRACES",
+    "new": "gnd.branches.TRACES",
+    "body_sha256": "7f8733ebd26e5815ef29b8c0b14ccfb4cd68a700e09ec1cc4496b3f7fa192b0e",
+    "lines": 1,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.semantic_registry.capture_branches",
+    "new": "gnd.branches.capture_branches",
+    "body_sha256": "c53699463d7855a5df496c3d4984ab1affd5e3ee4d21c3f1eed7f1e733836d19",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.record_branch",
+    "new": "gnd.branches.record_branch",
+    "body_sha256": "9b1de123505b56e04ae781108f9aafb63c6aacc5f497fc4a40487007316605d3",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry._TIME_RELATIVE",
+    "new": "gnd.branches.TIME_RELATIVE",
+    "body_sha256": "f18ac7d27579b046411f30c91f8b16c7e97453852f18137adfe81fd396ddfbab",
+    "lines": 3,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.semantic_registry.time_relative_operand",
+    "new": "gnd.branches.time_relative_operand",
+    "body_sha256": "7eff40f08ba469f5dcc96f90d9742d7ac24d577c83d15f4ec1b075425c72a57e",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.semantic_registry.constraint_variant",
+    "new": "gnd.branches.constraint_variant",
+    "body_sha256": "dbf6bd5b4f9a813f125e1f5326c6273032b7f2e1845fc6aba45071bf56670a82",
+    "lines": 78,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.DerivationKind",
+    "new": "gnd.extensions.DerivationKind",
+    "body_sha256": "a830f898883c7b4b04bbbf77ca4423c4861851c72956bab6207d69a9edd820c4",
+    "lines": 5,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker.DerivationReason",
+    "new": "gnd.extensions.DerivationReason",
+    "body_sha256": "4a37d1ca0f3801a6ad10d3acfcd3d49d8d7e1fc96a72f1cd589629b065287449",
+    "lines": 13,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker.DERIVATION_REASON_CODES",
+    "new": "gnd.extensions.DERIVATION_REASON_CODES",
+    "body_sha256": "072f5021a53ca3ed035693f450354a21e2fd0452199b5ea733894b409100c191",
+    "lines": 6,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.checker.EXACT_DERIVATION_REASON_CODES",
+    "new": "gnd.extensions.EXACT_DERIVATION_REASON_CODES",
+    "body_sha256": "30daf8452a0c4272c60a41e2062840f473cfe80653819a4a385ac281e5fc4d98",
+    "lines": 10,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.checker.DerivationFinding",
+    "new": "gnd.extensions.DerivationFinding",
+    "body_sha256": "ad266262935e9d9afbe3a468888703e7a44d87f50762349111f7d21434eb4a57",
+    "lines": 6,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.DerivationVerdict",
+    "new": "gnd.extensions.DerivationVerdict",
+    "body_sha256": "c9fa71ea72351223ea529e2a8c5c9d6e643f889f5cc6291d9cc76b4c1edf2503",
+    "lines": 54,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.JoinDisconnectedError",
+    "new": "gnd.extensions.JoinDisconnectedError",
+    "body_sha256": "05e24b4d153c0f84a1a56d33d1074363fbdcde1342238a3b77ab7837a7a78f0a",
+    "lines": 13,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.Scalar",
+    "new": "gnd.extensions.Scalar",
+    "body_sha256": "54112db7e86e254f5c29e1429a331aea464a4201f66305e7ed2175dc672b5259",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker.IdentityCodecVersion",
+    "new": "gnd.extensions.IdentityCodecVersion",
+    "body_sha256": "4c346ed527979d02d1c0bea53aa29330dcdbbbcd6cfb5d3eb70de19ea4b1b932",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker.FactPath",
+    "new": "gnd.extensions.FactPath",
+    "body_sha256": "591511199647ba41e401451debdc23fe58c8523f9bcba59ffac3ad133567aec9",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker.RowLineage",
+    "new": "gnd.extensions.RowLineage",
+    "body_sha256": "69c864a0c6cb5b92ee11d628ca170f79d87b9586311ab9ed95834319dfc9f7d7",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._TypedRelation",
+    "new": "gnd.extensions.TypedRelation",
+    "body_sha256": "d4695d515745dd8020ffc9bcbd5b396a01bfc4a593bce83f8f04501792970e79",
+    "lines": 7,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._JoinWork",
+    "new": "gnd.extensions.JoinWork",
+    "body_sha256": "1716c82c943a26d5ab3cb39bfe51e5239dbff3999a6e4a9263369f760ad925a6",
+    "lines": 11,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._ExactJoinWork",
+    "new": "gnd.extensions.ExactJoinWork",
+    "body_sha256": "b3a860408c6e8d75f01ea8385a32336c7cc5921a8424e0a7097beff9d074fb86",
+    "lines": 13,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._FixpointJoinWork",
+    "new": "gnd.extensions.FixpointJoinWork",
+    "body_sha256": "2a740078ed1b2d7e3ef741eb77df9ee50185e71153451aec98faa6bf1d907d34",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._count_term_work",
+    "new": "gnd.extensions.count_term_work",
+    "body_sha256": "846a435590ccecb09a42d8c40f8c9ff4ed077f9be124f54dc97ecc7c7b10734a",
+    "lines": 7,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._ExtensionResult",
+    "new": "gnd.extensions.ExtensionResult",
+    "body_sha256": "356d289579302eb163eacbf8f636a8902bdd8feb2450d79e72872e3438ff6855",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.RelationUnavailable",
+    "new": "gnd.extensions.RelationUnavailable",
+    "body_sha256": "390e0d15014acd8ae7b50854583fbe227c0a78191c7b6c3c32c0ffcab666e401",
+    "lines": 6,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._ExactExtensions",
+    "new": "gnd.extensions.ExactExtensions",
+    "body_sha256": "7d586b96745e51e5d0e0ee43a10fad26d2da52c444f87942e1523861c8892450",
+    "lines": 11,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._Wildcard",
+    "new": "gnd.extensions.Wildcard",
+    "body_sha256": "73f1d12a5e33442c50daac3191a25760ef791a7e971160074dfa2f61a9fc434d",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._PartialTermFailure",
+    "new": "gnd.extensions.PartialTermFailure",
+    "body_sha256": "2fefd145453346e55b2923c93f5d2c71cc07182e9ce806c756c28d0fca7591f2",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._PartialExtensions",
+    "new": "gnd.extensions.PartialExtensions",
+    "body_sha256": "ea8aceec70012aaf6b29466a884a05cbd92bdd44d752157c8851ac8d82509071",
+    "lines": 10,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._PARTIAL_OPAQUE",
+    "new": "gnd.extensions.PARTIAL_OPAQUE",
+    "body_sha256": "e0df249f3751b855fa6c32a703113e3cc6d85981361c386baa8e5d8606ef8ba3",
+    "lines": 1,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.checker._symbolic_value",
+    "new": "gnd.extensions.symbolic_value",
+    "body_sha256": "b4be7a14979d5cc7262d34d88ba354f31f694fe77d266aabdb0a25d1125dc8f0",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_token",
+    "new": "gnd.extensions.partial_token",
+    "body_sha256": "75dcffcf7d2404eb85a762fdeb79063117fe3d897663a13079aebae18398b383",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_compatible",
+    "new": "gnd.extensions.partial_compatible",
+    "body_sha256": "c36ffc4dedd58122fe55fd9d3fde69b822904d5f27e897094825cf98eabbd6d0",
+    "lines": 8,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._scalar_primitive_compatible",
+    "new": "gnd.extensions.scalar_primitive_compatible",
+    "body_sha256": "ff17a4e92b9fb26b7b143608974d87ddb9df4b9a647d7ab38edbfffaee965a39",
+    "lines": 10,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_merge",
+    "new": "gnd.extensions.partial_merge",
+    "body_sha256": "f9b64b73c7975eeb0e0b28326522ecc0482a89893727c4209bb57b6f96c9d8a2",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_row_facts",
+    "new": "gnd.extensions.partial_row_facts",
+    "body_sha256": "6d16684fa65e25ea0f20a3907b4d558154c40a776fa76b4a661cca4eb243c352",
+    "lines": 5,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_binding_shape",
+    "new": "gnd.extensions.partial_binding_shape",
+    "body_sha256": "6ca1ac70c6b6749c04e9168417ac7fcd047af609c60aee1e6d72b153d1be701b",
+    "lines": 11,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_bindings",
+    "new": "gnd.extensions.partial_bindings",
+    "body_sha256": "a9814c1c2a57f023a1a1eea7ba9553377e71caccefa0a5fde03ae4082a5307a0",
+    "lines": 72,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_negation",
+    "new": "gnd.extensions.partial_negation",
+    "body_sha256": "8b4f509c8870dc0602df06e8a00983edf48fa7d3514370c5650d25f4e4183232",
+    "lines": 30,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._WITNESS_TRACE",
+    "new": "gnd.extensions.WITNESS_TRACE",
+    "body_sha256": "da8bb5b626e5bdfd8f7824ef123a381cc7cd440a8a3397a680f836c2ef9d1dc0",
+    "lines": 1,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.checker._witness_charge",
+    "new": "gnd.extensions.witness_charge",
+    "body_sha256": "7515e6cd1032ad1e0e25a03204c37bebdcd3d163789d51a4d30dade03ca1a114",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._witness_row",
+    "new": "gnd.extensions.witness_row",
+    "body_sha256": "02b739e46d92f429b21405b56b157cad6f274893637b60bd0cebcca7bf1641a4",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._partial_clause_rows",
+    "new": "gnd.extensions.partial_clause_rows",
+    "body_sha256": "ef3f75f4b9c7be687963e6c3ba6bd45772405ba8bdf3b52edb092072ef9cb5a2",
+    "lines": 115,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._ExactExtensionResult",
+    "new": "gnd.extensions.ExactExtensionResult",
+    "body_sha256": "bdde2655f6574f70e6e177b7a7d814bea3071e5b08736a9d2444defa31d78481",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.ExtensionCalculator",
+    "new": "gnd.extensions.ExtensionCalculator",
+    "body_sha256": "cdbfa77fa7dddce59b9b26554560b6a2c48ab70463f8615a9ef43a1364f42abb",
+    "lines": 4,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker.VariableResolver",
+    "new": "gnd.extensions.VariableResolver",
+    "body_sha256": "1be0289568920ae20cba934338f9bc9d4d94dc4d822d6e1b5e5a104a5e75cc2c",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._RuledFactView",
+    "new": "gnd.extensions.RuledFactView",
+    "body_sha256": "c48930970f7f90899e36924a57f38356dce5013a12405091c456a92720c468b8",
+    "lines": 6,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._identity_token",
+    "new": "gnd.extensions.identity_token",
+    "body_sha256": "3ea371155a232463a0566bd9e271624f0debef79d19e8a6ed7f9a8419dc73fcc",
+    "lines": 18,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._joined_atom_candidates",
+    "new": "gnd.extensions.joined_atom_candidates",
+    "body_sha256": "bd61132af96b842cd049401a831a4857cbf8645789629fa02c6617993236c18e",
+    "lines": 47,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._REFERENCE_PRESENTATION_WORK",
+    "new": "gnd.extensions.REFERENCE_PRESENTATION_WORK",
+    "body_sha256": "1c2a7ff3a3fc6e5a08efd8f985e6eda5c59e63f01066beda2fcf8f46e246a3cb",
+    "lines": 3,
+    "kind": "AnnAssign"
+  },
+  {
+    "old": "gnd.checker._joined_bindings",
+    "new": "gnd.extensions.joined_bindings",
+    "body_sha256": "4fa89a3435150c87c41fc65c4496c7cf0d16de147f8ea7439d85f1712eebb392",
+    "lines": 101,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._relation_facts",
+    "new": "gnd.extensions.relation_facts",
+    "body_sha256": "1653085f19cc30d1292be9a000eea9c27ab68680ced9776b4da189ee59285822",
+    "lines": 17,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._relation_roles",
+    "new": "gnd.extensions.relation_roles",
+    "body_sha256": "4d9fc317a4cbf318226983771e1b9948d147a85282ae98a3d6ebcdaa3d2745b9",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._rows_from_facts",
+    "new": "gnd.extensions.rows_from_facts",
+    "body_sha256": "17a10718e4d0a551038245263a6c6515840291dec5fec5899e2f9e09f6182062",
+    "lines": 5,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._base_relations",
+    "new": "gnd.extensions.base_relations",
+    "body_sha256": "e180d48393aeb0662ce0dedb2669cec4db806a4edd1f2dd313905906595d6b72",
+    "lines": 18,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._component_atoms",
+    "new": "gnd.extensions.component_atoms",
+    "body_sha256": "3548cb58fc0d47a94540b5e8c31f2cdf2cf019ce04678706e82e68634425d234",
+    "lines": 20,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._component_product",
+    "new": "gnd.extensions.component_product",
+    "body_sha256": "ae29baef4390915ba85dcb0111815318d0e760dead3759ba39634afdeabb6bad",
+    "lines": 22,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._apply_negation",
+    "new": "gnd.extensions.apply_negation",
+    "body_sha256": "bbfe5bd3b4b1a36bb9671e144a926e8cb134776a85549221dd0ff6072cfb9c6e",
+    "lines": 33,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._clause_bindings",
+    "new": "gnd.extensions.clause_bindings",
+    "body_sha256": "a121ea41021694725be4c8dce82e43287f10a34b4a9d2605cf76197b19901262",
+    "lines": 12,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._project_extension",
+    "new": "gnd.extensions.project_extension",
+    "body_sha256": "97b6fd8afed3d60a466b66262d46c78f70d2ca1b653388268ef5f2082a1037c4",
+    "lines": 19,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._binding_lineages",
+    "new": "gnd.extensions.binding_lineages",
+    "body_sha256": "ddd81e08eafee700b0833f7a2d1a8f45bf32371846a179b2ab98ea17f4eff3cc",
+    "lines": 33,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._project_lineage",
+    "new": "gnd.extensions.project_lineage",
+    "body_sha256": "c659a57aa566f290e6e78ec8d8d2ad0667818124dcca369c47590e378de65e4f",
+    "lines": 17,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._python_extension_calculator",
+    "new": "gnd.extensions.python_extension_calculator",
+    "body_sha256": "44b44896f8e1cce6d1ace0f57b1a9c385cce78fc60070c13b2620dd23821d416",
+    "lines": 40,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._rule_uses_exact_terms",
+    "new": "gnd.extensions.rule_uses_exact_terms",
+    "body_sha256": "86e030a057f02be6639fe8c0e2c93167c299125f3f5684d598150c89530adeb5",
+    "lines": 10,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._aggregate_identity_token",
+    "new": "gnd.extensions.aggregate_identity_token",
+    "body_sha256": "527862e1c7ddcfe234f85cf17d03a642dc42333a06e5fb2c315604e55d482ade",
+    "lines": 17,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._aggregate_bindings",
+    "new": "gnd.extensions.aggregate_bindings",
+    "body_sha256": "a8748209f793a8c19e01bcefd9cbbbd7ce04226e59fdb28f0a99bc0d6c46ce26",
+    "lines": 156,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._model_uses_exact_derivations",
+    "new": "gnd.extensions.model_uses_exact_derivations",
+    "body_sha256": "8b5d33674c55342505295b3ad26c3a3d168c8ac4baac1c3d2a505430d9cc6d50",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._requires_fixpoint",
+    "new": "gnd.extensions.requires_fixpoint",
+    "body_sha256": "ac3327797a121d1da248b1c7f30adb4be8922cf8dedb12931ad7dc68857c204f",
+    "lines": 11,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._evaluate_stratified_extensions",
+    "new": "gnd.extensions.evaluate_stratified_extensions",
+    "body_sha256": "52e478953773d983bdcb3ba37dd5e57c19db9f19219329fab519f78da662b2d6",
+    "lines": 342,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._exact_extension_calculator",
+    "new": "gnd.extensions.exact_extension_calculator",
+    "body_sha256": "bce8e7e51046475d2a68e57cc1e5609a8d5acb6023c2b63935940bee03a436b2",
+    "lines": 169,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.exact_extension_envelope",
+    "new": "gnd.extensions.exact_extension_envelope",
+    "body_sha256": "e974b86f659e931d2bfb4045360297965742527a9301029f0e94e320a42e6530",
+    "lines": 33,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.DynamicRefreshWork",
+    "new": "gnd.extensions.DynamicRefreshWork",
+    "body_sha256": "bfb4621a2d3546ccd1b64444f79259f2de178d04a017432e8b10af6737e34560",
+    "lines": 28,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker.StructuredExtensionView",
+    "new": "gnd.extensions.StructuredExtensionView",
+    "body_sha256": "a9fe20dc1aa5fab352af05aea574238811409f3578c1e6181b6396811d54e421",
+    "lines": 11,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.checker._public_refresh_work",
+    "new": "gnd.extensions.public_refresh_work",
+    "body_sha256": "5d9246f76fcaa17a65b0b1b026657500b1dcea6f0b903443ded2e3e814dab29e",
+    "lines": 36,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._extension_fact_map",
+    "new": "gnd.extensions.extension_fact_map",
+    "body_sha256": "f43008ead080690e6390ed1004bef48a65a5af77ab27d1c060ba47a50620fd3b",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.structured_extension_view",
+    "new": "gnd.extensions.structured_extension_view",
+    "body_sha256": "679cdf98d0f222970cce97b534f625f54db4542dbc55d644862de3719e37f93a",
+    "lines": 256,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.derivation_claims_against",
+    "new": "gnd.extensions.derivation_claims_against",
+    "body_sha256": "ffbe7049f28ffb7e8e23616b20473cb758caa6b7a954936c3feda696afb04126",
+    "lines": 26,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._rows_by_identity",
+    "new": "gnd.extensions.rows_by_identity",
+    "body_sha256": "13cc2dbcf1b37f77dbc0c5e2653d91a6a994b93aa869f4e874d245a431e2afc3",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._witness",
+    "new": "gnd.extensions.witness",
+    "body_sha256": "4bde45538a524c7f1180d2271ab24e3ec52f89f554afbcaf2194976f983c03b3",
+    "lines": 7,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._derivation_obligation",
+    "new": "gnd.extensions.derivation_obligation",
+    "body_sha256": "9920048cb4e1e05ffa2d879c229c8b013de711526faf4a7d4b128998a80fd46f",
+    "lines": 128,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.evaluate_derivations_legacy",
+    "new": "gnd.extensions.evaluate_derivations_legacy",
+    "body_sha256": "104cb0bc3044bf5a9ca2c866eb4b6e6cae8d1cfb34a11a0ef33de8fa91926c10",
+    "lines": 25,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker.constraint_view_legacy",
+    "new": "gnd.extensions.constraint_view_legacy",
+    "body_sha256": "2a51f6e2fae294b8be0ea83a08209ce263dd89977450a525a5e93e7006a85b71",
+    "lines": 37,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+    "new": "gnd.extensions.PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+    "body_sha256": "d2c43c02f1900311bcfaa729e272713d129d21aa2ae3f6e76f4851e47c5fe8c0",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._PHASE3_LEGACY_CONSTRAINT_VIEW",
+    "new": "gnd.extensions.PHASE3_LEGACY_CONSTRAINT_VIEW",
+    "body_sha256": "547e8ea018aa1a44f8ac45cd8cb2abceb696aca51148c76ba1cf308cc99591d4",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._exact_derivation_obligation",
+    "new": "gnd.extensions.exact_derivation_obligation",
+    "body_sha256": "399bb768db09ad45450eefeabd477c4d760b86a4ff3e696e1c9b26980248e118",
+    "lines": 34,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._evaluate_derivations_dispatch",
+    "new": "gnd.extensions.evaluate_derivations_dispatch",
+    "body_sha256": "997b8e19a3592b159b8de66380abebcda5f3bfd80cd15d5d84a3b5c3bbbe9dd9",
+    "lines": 97,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._constraint_view_dispatch",
+    "new": "gnd.extensions.constraint_view_dispatch",
+    "body_sha256": "98b7e720276874bd9588d6d45137d5f63b5eed92fb696888be1024125ed332c5",
+    "lines": 18,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._evaluate_derivations",
+    "new": "gnd.extensions.evaluate_derivations",
+    "body_sha256": "6adfc1ce59af17ea7772b0f8e53c159366968033bd075bd3238db99185ee3096",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.checker._constraint_view",
+    "new": "gnd.extensions.constraint_view",
+    "body_sha256": "f13fc12bf086f380ed559ab0d1608a03442a9469b1a8d443ce3540d74c6bc1cd",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references.MAX_BYTES",
+    "new": "gnd.model.MAX_BYTES",
+    "body_sha256": "ba51cfa6ea019a2b96a1e5dec9d94e94f9106b6262a5e87120bfce3da8f4b556",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references.MAX_SET_BYTES",
+    "new": "gnd.model.MAX_SET_BYTES",
+    "body_sha256": "b4f726ad11ca48628e3bbb5c42d0f87bf2f03a6a75a2ed9c0d113088fa67be93",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references.MAX_ENTRIES",
+    "new": "gnd.model.MAX_ENTRIES",
+    "body_sha256": "4cbfe9aa8bdf35093bed51d2eb2827c320fefeba42b98ae51769fe0051ee1f8f",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references._TOKEN",
+    "new": "gnd.model.TOKEN",
+    "body_sha256": "707b50f95928f78ed56a205791b956ffa294ceb2b5a62450a5cbe09540411fae",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references._BOUND",
+    "new": "gnd.model.BOUND",
+    "body_sha256": "74d2bb38d022391c9a8684b9e695158fc0087391d7e62490414e6fb485e1f108",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references._COMBINED",
+    "new": "gnd.model.COMBINED",
+    "body_sha256": "ae3409464b8c99ad04392e0e0a7853b33f84fa3bf87b155837f14d09a928bcdd",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.references.ReferenceInputError",
+    "new": "gnd.model.ReferenceInputError",
+    "body_sha256": "9cd76337c71ab3d7b5d5cdaf29fde2d4a3b7d51fc678922272861daebb0d5c8f",
+    "lines": 6,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.references.ReferenceOrigin",
+    "new": "gnd.model.ReferenceOrigin",
+    "body_sha256": "0a471796ea9694bcf8dcb8fe70fe5c697a74e7ca0af8c02262fdfede793c6bda",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.references.OccurrenceOrigin",
+    "new": "gnd.model.OccurrenceOrigin",
+    "body_sha256": "af1f269e3765ee13c895f4b97ad40ccaf487a76b08c626092b34ec252b407894",
+    "lines": 4,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.references.BoundReferenceContext",
+    "new": "gnd.model.BoundReferenceContext",
+    "body_sha256": "f8f7d8c0cf683f504f9c3ac8f6af962e8f3f11f151e3830e5c228aaa7cd09990",
+    "lines": 8,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.references.BoundPopulationView",
+    "new": "gnd.model.BoundPopulationView",
+    "body_sha256": "370f1f613ce4927b717fc796c92504bde8689f260976f4a79c0698d14613957f",
+    "lines": 6,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.references.validate_reference_structure",
+    "new": "gnd.model.validate_reference_structure",
+    "body_sha256": "23e0bff60f98129385c561242d3c6b6dd19127be51e04bd4b30067a0372fcf82",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references._relative",
+    "new": "gnd.model.relative",
+    "body_sha256": "bf78ccec3363f4db78ee6fc57cab6b91e19ee3c76212fe718b6ccaa559dd715a",
+    "lines": 11,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.retained_root",
+    "new": "gnd.model.retained_root",
+    "body_sha256": "968d8a9b8a2186624d3d02b6fa3efe76a002eed1e90332fb689dc92cd4177761",
+    "lines": 17,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.validate_declarations",
+    "new": "gnd.model.validate_declarations",
+    "body_sha256": "e1de4e90da83db7aefdef3f4c6256cde34d7f118286063c7895d8fd153c8d448",
+    "lines": 46,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references._bind_at",
+    "new": "gnd.model.bind_at",
+    "body_sha256": "f8dd186f2421a7bd0db780140ae211ba840ea83b2e3de04cf6fabfb3b1060571",
+    "lines": 51,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.bind_references",
+    "new": "gnd.model.bind_references",
+    "body_sha256": "a48967c94771b62863af8eb365d752a335a8d8d9288785596c1404608a64439f",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.resolve_context",
+    "new": "gnd.model.resolve_context",
+    "body_sha256": "e5b22e0b2cef01671bb2e8016a997183ae5ea27a96bda1daf7405cd88ad0da41",
+    "lines": 30,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.bind_population",
+    "new": "gnd.model.bind_population",
+    "body_sha256": "34d5899a6a3dde62c7f50fd1928a73a094a6a185d9f58bd536b46228ff0b44f1",
+    "lines": 72,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.candidate_fact_count",
+    "new": "gnd.model.candidate_fact_count",
+    "body_sha256": "1c825b6ea72405790d2b18bf55202a846c220f8774e834544eba9826852333ec",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.references.is_bound_population",
+    "new": "gnd.model.is_bound_population",
+    "body_sha256": "252e2ae51483b8d8c87ab1f4a93b164bf9797bd88fb7654119a9404b6f3f18d6",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/identity.__all__",
+    "new": "gnd.anchor_identity.__all__",
+    "body_sha256": "bb2f336b53b8ead41df8aa59211c6f091d87177caa14e966c9f573862938bbbd",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/identity._ANCHOR_TRANSLATION",
+    "new": "gnd.anchor_identity.ANCHOR_TRANSLATION",
+    "body_sha256": "37dd700a5ccb8f347dc1762d35bab0fe061949a2c8f2154925a292bd04edbbff",
+    "lines": 4,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/identity.anchor_normalize",
+    "new": "gnd.anchor_identity.anchor_normalize",
+    "body_sha256": "247e3c5f709e0b7fb4854f1b36670c34640c825d48d682f446387ae1e53e60e7",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/identity.lexical_normalize",
+    "new": "gnd.anchor_identity.lexical_normalize",
+    "body_sha256": "fa235e325d917b180292ed0cd5d9026430d7dfe9690a5d6668a9796cc6005886",
+    "lines": 11,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/identity.identity_key",
+    "new": "gnd.anchor_identity.identity_key",
+    "body_sha256": "6eed03c54354f06aa1c48428587b6a3d75c6f07604b47157a87010deed0a4497",
+    "lines": 19,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.MAX_SIDECAR_BYTES",
+    "new": "gnd.anchors.MAX_SIDECAR_BYTES",
+    "body_sha256": "526eb903596a6c185e3579a5336954f8893d991bcb75ee546aae82d54ad2021a",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors.MAX_DOCUMENT_BYTES",
+    "new": "gnd.anchors.MAX_DOCUMENT_BYTES",
+    "body_sha256": "c622c058898f5c051b9ee7282646c7d69cee9292222849d78baf4b6c23e39758",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors._HEX",
+    "new": "gnd.anchors.HEX",
+    "body_sha256": "577d8bfebac7108d8d69848099bda39be7aed24c401b1c661586907bd33c9b74",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors._NUMBER",
+    "new": "gnd.anchors.NUMBER",
+    "body_sha256": "8e4eb2407ea7f810f2b68c48d312849bb6c14beebd741dc585de64436ba0b2af",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors._INTEGER",
+    "new": "gnd.anchors.INTEGER",
+    "body_sha256": "dcc44b4598a9df33f2f30f7f324cd75585ac6849a6cd4befde4827efa33fefbf",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors._DECIMAL",
+    "new": "gnd.anchors.DECIMAL",
+    "body_sha256": "9b47e3413344bd7ca2803422a43c8aaed9088e9615c98086d8275b68f650ed92",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors._DATE",
+    "new": "gnd.anchors.DATE",
+    "body_sha256": "9d7acbd0fb0feb67bce36d36ccaf06878e20cb8ccd90ef802882bff741f14164",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors._NUMERIC_TOKEN",
+    "new": "gnd.anchors.NUMERIC_TOKEN",
+    "body_sha256": "3115b46e2681cbe1cc3271a9df7c2d8ffb8cd5d33aeda79f3af53f1c3f9cc46f",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/anchors.AnchorError",
+    "new": "gnd.anchors.AnchorError",
+    "body_sha256": "b7a6f2bbe1e50e837ba751bbb388244b1ba8777f2490dd93e587adda7c968881",
+    "lines": 2,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.extract/anchors.AnchorSidecar",
+    "new": "gnd.anchors.AnchorSidecar",
+    "body_sha256": "c4ecec0f607964b0e9134027387d949f0d9f67f70c6c22e29a11d5c21d582442",
+    "lines": 7,
+    "kind": "ClassDef"
+  },
+  {
+    "old": "gnd.extract/anchors._pairs",
+    "new": "gnd.anchors.pairs",
+    "body_sha256": "93c1be902b17f0a2c0ddfdad83ba60cb3938a724e8e32eed026bc69921418b8e",
+    "lines": 7,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._reject_constant",
+    "new": "gnd.anchors.reject_constant",
+    "body_sha256": "5f8b16dbbbf82e7193defea241d6fa100e91b7edfea8e10484fa1f2bdb73b453",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._parse",
+    "new": "gnd.anchors.parse",
+    "body_sha256": "bcb3caed492b1196c0512457fdf35c6a0ee3b3747016be666f2fcb143bfce8eb",
+    "lines": 20,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._exact_keys",
+    "new": "gnd.anchors.exact_keys",
+    "body_sha256": "6c84fe560138132c123bc1a792a2faee8a2fc693d62810b83c47a03bbe6acda8",
+    "lines": 3,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._digest",
+    "new": "gnd.anchors.digest",
+    "body_sha256": "60a46424cab5cdb9aa1331a131cb363f9f4710b899bdbf3506074c6f47ab8c2b",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._scalar",
+    "new": "gnd.anchors.scalar",
+    "body_sha256": "97131b1fc32143ef990c66f4b611b2f37b8e697ab798484102d8eddae6f29559",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.parse_anchor_sidecar",
+    "new": "gnd.anchors.parse_anchor_sidecar",
+    "body_sha256": "d0e6e16e773630085bb770c9d5cecaf6b9618e5e4b14002dae5af91c9a4fa6aa",
+    "lines": 35,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.read_anchor_sidecar",
+    "new": "gnd.anchors.read_anchor_sidecar",
+    "body_sha256": "214e5d7639a8277235569d8a64646fca4ecd709c1e2eeb2bf69416e27fe3585f",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.read_regular_path",
+    "new": "gnd.anchors.read_regular_path",
+    "body_sha256": "50a1bd862c7f3da18e177332a2b1ef6d271232a5b633fbd60c69f8306cb83c66",
+    "lines": 10,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.validate_anchor_sidecar",
+    "new": "gnd.anchors.validate_anchor_sidecar",
+    "body_sha256": "87a0e33aa0532d2ac22d4f4f1e89b2f2f3f89d65d3ac8fa2c6d1effccb77cefc",
+    "lines": 13,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._canonical",
+    "new": "gnd.anchors.canonical",
+    "body_sha256": "b7c108c201d2a97c1a5ceb83793480e68d3eef02bb69337c7f457dd0bf062c08",
+    "lines": 14,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.vocabulary_digest",
+    "new": "gnd.anchors.vocabulary_digest",
+    "body_sha256": "f9df14af637b7614deea966cea8406eb00731f49fe19d1fb5d8e1fe5f1730c29",
+    "lines": 8,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.canonical_document_text",
+    "new": "gnd.anchors.canonical_document_text",
+    "body_sha256": "a751fa68ef26d6214272de71c9ec297f302f1ac011e6837faf9eda36c19c6932",
+    "lines": 7,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.bind_anchors",
+    "new": "gnd.anchors.bind_anchors",
+    "body_sha256": "27a08d6397680e0d2e1aa766724cb775bb6cd0df2019621ab086f97dca93851f",
+    "lines": 34,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.write_anchor_sidecar",
+    "new": "gnd.anchors.write_anchor_sidecar",
+    "body_sha256": "b91ee53b08fc40fd8e7b01d9d9846baa494b8f94977df6d5e8b2c0defde8de78",
+    "lines": 24,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors._word",
+    "new": "gnd.anchors.word",
+    "body_sha256": "f276be7dd726f26c6c030a56a975e10fd4afa2442a65e0cdf82f2c8fdcc85f06",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.lexical_ranges",
+    "new": "gnd.anchors.lexical_ranges",
+    "body_sha256": "c54829727edc7372ec4c8d2305b03c7fcd3a8fe170d588412030be37c15e49f0",
+    "lines": 73,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.recognition_target",
+    "new": "gnd.anchors.recognition_target",
+    "body_sha256": "64c149a33241ff2cd227998966e590ed7b7aa11b60771ee3156c60f286dee5bf",
+    "lines": 3,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.recognition_index",
+    "new": "gnd.anchors.recognition_index",
+    "body_sha256": "793cc180989e559000bdc9d9d9e1758476c6b311334637268af53e876d58c417",
+    "lines": 42,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/anchors.recognised_ranges",
+    "new": "gnd.anchors.recognised_ranges",
+    "body_sha256": "96b0da83403005353d7adb491c86bde05f901089e60c88e3658ca16402fedcbc",
+    "lines": 6,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme.__all__",
+    "new": "gnd.refscheme.__all__",
+    "body_sha256": "035599d1ea03c6761fc251d08e12f4a23f1451245df7a0ae241dc109695dc7cb",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/refscheme._object_types_by_id",
+    "new": "gnd.refscheme.object_types_by_id",
+    "body_sha256": "263f2f4c43a34c061ae65add9f2abfd3dedf852222cb6d38694f70c0d41d830e",
+    "lines": 4,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme._fact_types_by_id",
+    "new": "gnd.refscheme.fact_types_by_id",
+    "body_sha256": "989aa8fd66d1fbc525c9764c27455867219e045a9e8d6238cdb67254ead3a629",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme._referenced_object_type",
+    "new": "gnd.refscheme.referenced_object_type",
+    "body_sha256": "0a6fd9402bc05acac6b6e45d64bca875992eb5ce87b667b3a31aaebfa654576d",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme._anchors_on",
+    "new": "gnd.refscheme.anchors_on",
+    "body_sha256": "87182f28d95ec60410b788e11ecc688ea4d2a658ecc8a9dc1cb6aeeb582bb977",
+    "lines": 26,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme._unmatchable_reason",
+    "new": "gnd.refscheme.unmatchable_reason",
+    "body_sha256": "51722ef18bd1b145304429f80868a693461a41a00810e773214ee86169c49d86",
+    "lines": 34,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme.reference_identity",
+    "new": "gnd.refscheme.reference_identity",
+    "body_sha256": "35ee0317f9fbbb5816ba74bac24683f215773f449c4c024cdc0487ae64228f8a",
+    "lines": 92,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/refscheme.applicable_set",
+    "new": "gnd.refscheme.applicable_set",
+    "body_sha256": "14e0e54f4e34854c228a8f4a6c75f2e2809435f54286b558dcbffe55e2def6c5",
+    "lines": 62,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/vocabulary.__all__",
+    "new": "gnd.vocabulary.__all__",
+    "body_sha256": "993818cc08ce946d757d3fd9767b366c77506fdcba1fa69087379a29574d422d",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/vocabulary._PLACEHOLDER",
+    "new": "gnd.vocabulary.PLACEHOLDER",
+    "body_sha256": "0263826cd301032ea82f8310d2b677671e9994f00e8b5ed50a1694051e67777b",
+    "lines": 1,
+    "kind": "Assign"
+  },
+  {
+    "old": "gnd.extract/vocabulary.reading_text",
+    "new": "gnd.vocabulary.reading_text",
+    "body_sha256": "66b1f4dece2d1974ce0cbe802af4ff629950592eb797733832a135d691fa3053",
+    "lines": 18,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/vocabulary._display",
+    "new": "gnd.vocabulary.display",
+    "body_sha256": "b4ca4fc4419e75466e9360d7bddfa36dc17739ec46c38467dbddce9089262784",
+    "lines": 3,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/vocabulary._object_type_sentence",
+    "new": "gnd.vocabulary.object_type_sentence",
+    "body_sha256": "059b9b5a928c8c19f8bcfdaee557eec5f22e7b1f0aa000dc487dc651142f0edd",
+    "lines": 51,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/vocabulary.render_verbalization",
+    "new": "gnd.vocabulary.render_verbalization",
+    "body_sha256": "b209aa6bad3afc90645dfe33fb8a5564b72204f70a8fe5209aeb43beb6afceb6",
+    "lines": 62,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.report.load_report_schema",
+    "new": "gnd.report_schema.load_report_schema",
+    "body_sha256": "bb7097c5b4ffeb78e4ac6f62111435366816fa343bf0dd8c094b564198bc9cca",
+    "lines": 9,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.extract/manifest.manifest_path_issue",
+    "new": "gnd.manifest_paths.manifest_path_issue",
+    "body_sha256": "50dac3d658a7e2d5259dff1d2a9d0b356481da48842cd18b1473df576958c130",
+    "lines": 26,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.correspondence._scalar_identity",
+    "new": "gnd.semantic_rows.scalar_identity",
+    "body_sha256": "e2103c70b3026582ed4c831b8f3cf237ede0b71fc9df1e1f3a01c2a24b306f3b",
+    "lines": 2,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.correspondence._canonical_rows",
+    "new": "gnd.semantic_rows.canonical_rows",
+    "body_sha256": "48e55972733425b1102b87a5a20cb95dbd22099721ce6e8d31200071bbfe9eb1",
+    "lines": 14,
+    "kind": "FunctionDef"
+  },
+  {
+    "old": "gnd.checker._RING_COMPONENTS",
+    "new": "gnd.universe.RING_COMPONENTS",
+    "body_sha256": "81355a3d41d2e0b5422103f70224d2a2fae33f941f827925b406914963dc2271",
+    "lines": 6,
+    "kind": "Assign"
+  }
+]

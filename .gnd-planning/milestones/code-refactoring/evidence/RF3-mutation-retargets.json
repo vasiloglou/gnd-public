@@ -1,0 +1,242 @@
+[
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.extract.anchors:_canonical]"
+      ],
+      "file": "src/gnd/extract/anchors.py",
+      "id": "M-HELP-canonical-json-gnd-extract-anchors-canonical",
+      "new": "def _canonical(value: Any) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    def walk(node: Any) -> None:\n",
+      "old": "def _canonical(value: Any) -> bytes:\n    def walk(node: Any) -> None:\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.extract.anchors:_canonical]"
+      ],
+      "file": "src/gnd/anchors.py",
+      "id": "M-HELP-canonical-json-gnd-extract-anchors-canonical",
+      "new": "def _canonical(value: Any) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    def walk(node: Any) -> None:\n",
+      "old": "def _canonical(value: Any) -> bytes:\n    def walk(node: Any) -> None:\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.transition:_canonical]"
+      ],
+      "file": "src/gnd/transition.py",
+      "id": "M-HELP-canonical-json-gnd-transition-canonical",
+      "new": "def _canonical(value: Any, path: str) -> Any:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Everything JSON can carry, unchanged; dates as ISO text; nothing else.\n",
+      "old": "def _canonical(value: Any, path: str) -> Any:\n    \"\"\"Everything JSON can carry, unchanged; dates as ISO text; nothing else.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.transition:_canonical]"
+      ],
+      "file": "src/gnd/values.py",
+      "id": "M-HELP-canonical-json-gnd-transition-canonical",
+      "new": "def _canonical(value: Any, path: str) -> Any:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Everything JSON can carry, unchanged; dates as ISO text; nothing else.\n",
+      "old": "def _canonical(value: Any, path: str) -> Any:\n    \"\"\"Everything JSON can carry, unchanged; dates as ISO text; nothing else.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.population:_model_digest]"
+      ],
+      "file": "src/gnd/population.py",
+      "id": "M-HELP-model-digest-gnd-population-model-digest",
+      "new": "def _model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Stable digest of model content that layer 2 validated/checker reads.\n",
+      "old": "def _model_digest(model: Model) -> str:\n    \"\"\"Stable digest of model content that layer 2 validated/checker reads.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.population:_model_digest]"
+      ],
+      "file": "src/gnd/values.py",
+      "id": "M-HELP-model-digest-gnd-population-model-digest",
+      "new": "def _model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Stable digest of model content that layer 2 validated/checker reads.\n",
+      "old": "def _model_digest(model: Model) -> str:\n    \"\"\"Stable digest of model content that layer 2 validated/checker reads.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.references:reference_model_digest]"
+      ],
+      "file": "src/gnd/references.py",
+      "id": "M-HELP-model-digest-gnd-references-reference-model-digest",
+      "new": "def reference_model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    from gnd.population import _model_digest\n",
+      "old": "def reference_model_digest(model: Model) -> str:\n    from gnd.population import _model_digest\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.references:reference_model_digest]"
+      ],
+      "file": "src/gnd/values.py",
+      "id": "M-HELP-model-digest-gnd-references-reference-model-digest",
+      "new": "def reference_model_digest(model: Model) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    from gnd.population import _model_digest\n",
+      "old": "def reference_model_digest(model: Model) -> str:\n    from gnd.population import _model_digest\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.extract.anchors:_digest]"
+      ],
+      "file": "src/gnd/extract/anchors.py",
+      "id": "M-HELP-sha256-hex-gnd-extract-anchors-digest",
+      "new": "def _digest(value: Any) -> bool:\n    raise RuntimeError(\"rf1-mutant\")\n    return isinstance(value, str) and _HEX.fullmatch(value) is not None\n",
+      "old": "def _digest(value: Any) -> bool:\n    return isinstance(value, str) and _HEX.fullmatch(value) is not None\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.extract.anchors:_digest]"
+      ],
+      "file": "src/gnd/anchors.py",
+      "id": "M-HELP-sha256-hex-gnd-extract-anchors-digest",
+      "new": "def _digest(value: Any) -> bool:\n    raise RuntimeError(\"rf1-mutant\")\n    return isinstance(value, str) and _HEX.fullmatch(value) is not None\n",
+      "old": "def _digest(value: Any) -> bool:\n    return isinstance(value, str) and _HEX.fullmatch(value) is not None\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.population:_content_digest]"
+      ],
+      "file": "src/gnd/population.py",
+      "id": "M-HELP-sha256-hex-gnd-population-content-digest",
+      "new": "def _content_digest(population: Population) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"A stable digest of everything layer 2 validated and the checker reads.\n",
+      "old": "def _content_digest(population: Population) -> str:\n    \"\"\"A stable digest of everything layer 2 validated and the checker reads.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.population:_content_digest]"
+      ],
+      "file": "src/gnd/values.py",
+      "id": "M-HELP-sha256-hex-gnd-population-content-digest",
+      "new": "def _content_digest(population: Population) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"A stable digest of everything layer 2 validated and the checker reads.\n",
+      "old": "def _content_digest(population: Population) -> str:\n    \"\"\"A stable digest of everything layer 2 validated and the checker reads.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.conclusions:_validation_issues]"
+      ],
+      "file": "src/gnd/model.py",
+      "id": "M-HELP-validation-issues-gnd-exp-conclusions-validation-issues",
+      "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.conclusions:_validation_issues]"
+      ],
+      "file": "src/gnd/errors.py",
+      "id": "M-HELP-validation-issues-gnd-exp-conclusions-validation-issues",
+      "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.spec:_validation_issues]"
+      ],
+      "file": "src/gnd/model.py",
+      "id": "M-HELP-validation-issues-gnd-exp-spec-validation-issues",
+      "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.spec:_validation_issues]"
+      ],
+      "file": "src/gnd/errors.py",
+      "id": "M-HELP-validation-issues-gnd-exp-spec-validation-issues",
+      "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.extract.manifest:_validation_issues]"
+      ],
+      "file": "src/gnd/model.py",
+      "id": "M-HELP-validation-issues-gnd-extract-manifest-validation-issues",
+      "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.extract.manifest:_validation_issues]"
+      ],
+      "file": "src/gnd/errors.py",
+      "id": "M-HELP-validation-issues-gnd-extract-manifest-validation-issues",
+      "new": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def issues_from_validation_error(\n    error: ValidationError, rule_id: str\n) -> list[ValidationIssue]:\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_resolver"
+      ],
+      "file": "src/gnd/popvalidate.py",
+      "id": "M-SEM-resolver-is-true",
+      "new": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\"):",
+      "old": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\") is True:"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_resolver"
+      ],
+      "file": "src/gnd/universe.py",
+      "id": "M-SEM-resolver-is-true",
+      "new": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\"):",
+      "old": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\") is True:"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_object_types_by_id]"
+      ],
+      "file": "src/gnd/popvalidate.py",
+      "id": "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id",
+      "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+      "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_object_types_by_id]"
+      ],
+      "file": "src/gnd/universe.py",
+      "id": "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id",
+      "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+      "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check_coverage"
+      ],
+      "file": "src/gnd/checker.py",
+      "id": "M-SEM-check-coverage-anchored",
+      "new": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n    raise RuntimeError(\"rf1-mutant\")\n    from gnd.extract.anchors import (\n",
+      "old": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n    from gnd.extract.anchors import (\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check_coverage"
+      ],
+      "file": "src/gnd/checker.py",
+      "id": "M-SEM-check-coverage-anchored",
+      "new": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+      "old": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n"
+    }
+  }
+]

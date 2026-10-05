@@ -217,6 +217,10 @@ def test_diverged_encoder_source_unchanged():
     assert len(rows) == 14
     for row in rows:
         source = (ROOT / row["path"]).read_text()
+        moved = {("src/gnd/extract/anchors.py", "_canonical"): "gnd.anchors",
+                 ("src/gnd/transition.py", "_canonical"): "gnd.values"}
+        if (row["path"], row["name"]) in moved:
+            source = inspect.getsource(getattr(importlib.import_module(moved[(row["path"], row["name"])]), row["name"]))
         found = [node for node in ast.walk(ast.parse(source))
                  if isinstance(node, ast.FunctionDef) and node.name == row["name"]]
         assert len(found) == 1

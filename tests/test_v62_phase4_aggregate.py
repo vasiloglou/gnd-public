@@ -6,7 +6,7 @@ from fractions import Fraction
 import pytest
 from support.v62_phase4_corpus import CASES_DOC, FIXTURE, document
 
-from gnd import checker
+from gnd import extensions
 from gnd.checker import (
     _aggregate_bindings,
     _ExactJoinWork,
@@ -123,12 +123,12 @@ def test_c05_c06_duplicate_proofs_deduplicate_but_equal_values_do_not() -> None:
 
 def test_c08_over_order_is_preserved_in_contribution_identity(monkeypatch: pytest.MonkeyPatch) -> None:
     seen: list[object] = []
-    original = checker._aggregate_identity_token
+    original = extensions._aggregate_identity_token
 
     def recording_token(value: object) -> bytes:
         seen.append(value)
         return original(value)
-    monkeypatch.setattr(checker, '_aggregate_identity_token', recording_token)
+    monkeypatch.setattr(extensions, '_aggregate_identity_token', recording_token)
     row = {'group': 'north', 'id': 'one', 'other': 'two', 'value': 7}
     assert _collapsed('count', [row], over=['$id', '$other'])[0]['result'] == 1
     assert seen == ['north', 'one', 'two', 7]

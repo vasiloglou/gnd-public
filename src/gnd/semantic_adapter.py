@@ -15,17 +15,18 @@ from typing import Any
 
 from gnd import checker, semantic_spec
 from gnd.address import positional_constraint_ref
+from gnd.applicability import applicable_scope_ids
 from gnd.atoms import atom_bind, atom_has_bind
-from gnd.checker import UnvalidatedPopulationError
+from gnd.branches import REGISTRY, constraint_variant, record_branch, time_relative_operand
+from gnd.documents import Model
+from gnd.errors import UnvalidatedPopulationError
 from gnd.model import (
-    Model,
     body_components,
     derivation_dependencies,
     derivation_strata,
     iter_derivation_clauses,
 )
 from gnd.population import Population
-from gnd.popvalidate import resolve_primitive
 from gnd.semantic_ir import (
     ADAPTER_REFUSALS,
     IRAtom,
@@ -42,13 +43,7 @@ from gnd.semantic_ir import (
     Scalar,
     SnapshotIR,
 )
-from gnd.semantic_registry import (
-    REGISTRY,
-    applicable_scope_ids,
-    constraint_variant,
-    record_branch,
-    time_relative_operand,
-)
+from gnd.universe import resolve_primitive
 
 _FAMILIES = frozenset(row.family for row in REGISTRY if row.surface == "snapshot")
 _NUMERIC = ("Integer", "Float", "Number")

@@ -7,7 +7,7 @@ tests/test_rf2_helpers.py:60: in assert_one_definition
     assert counts == dict.fromkeys(GROUPS, 1), counts
 E   AssertionError: {'f4d89086': 0, '2f5a20a1': 0, '5bebc70e': 0, 'd9f0cf8e': 0, ...}
 E   assert {'f4d89086': ...cf8e': 0, ...} == {'f4d89086': ...cf8e': 1, ...}
-E     
+E
 E     Differing items:
 E     {'f4d89086': 0} != {'f4d89086': 1}
 E     {'2f5a20a1': 0} != {'2f5a20a1': 1}

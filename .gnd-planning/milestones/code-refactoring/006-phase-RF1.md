@@ -196,6 +196,10 @@ questions. Dispositions: [phase-RF1-codex-review.md](notes/phase-RF1-codex-revie
   land before the owning phase moves the surface (RF-R3): RF2 measure and
   pyrel ref sites; RF4 `artifacts.directory_identity`; RF5 handler byte pins
   (D9); RF6 package-split import paths.
+  RF2 discharge annotation (2026-10-05): [007-phase-RF2.md](007-phase-RF2.md)
+  supplies the measure-output, guarded-exists and standalone PyRel byte/reference
+  successor pins before routing. Other owed families keep their assigned owners;
+  standalone PyRel producer routing remains an explicitly approved RF2 exception.
 - **RF1-OQ2 → RF8 spec gate:** resume through the CLI refuses for v2, v3, v7
   and v8 after a completed run's result is removed (F12). This is pinned as
   found; RF8 should decide whether it is intended.

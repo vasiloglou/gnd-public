@@ -1,0 +1,783 @@
+{
+  "retention": "Edited: operator/worktree/tmp paths sanitized; raw log digests bind original temporary streams, not edited retained sections.",
+  "subjects": [
+    {
+      "source_commit": "733389db588a3f32956f35fce30b94af59824c34",
+      "platform": "macOS",
+      "checks": [
+        {
+          "name": "clone-build",
+          "argv": [
+            "git",
+            "clone",
+            "--shared",
+            "--no-checkout",
+            "<worktree>",
+            "/private/tmp/gnd-local-ci-20261006-733389d/build"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d",
+          "exit": 0,
+          "seconds": 0.03,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/clone-build.log",
+          "raw_sha256": "77d589cd31b52d4940a8f8f7509f36d4f8c1ca62ec4e8b28848e01e7973c7d60"
+        },
+        {
+          "name": "checkout-build",
+          "argv": [
+            "git",
+            "checkout",
+            "--detach",
+            "733389db588a3f32956f35fce30b94af59824c34"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/build",
+          "exit": 0,
+          "seconds": 0.69,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/checkout-build.log",
+          "raw_sha256": "e7b46777225106e8aa13854b80ed883bca1799af3978e843246fbdc46845c254"
+        },
+        {
+          "name": "candidate-build",
+          "argv": [
+            "uv",
+            "build",
+            "--python",
+            "/private/tmp/rf2-py311/bin/python",
+            "--out-dir",
+            "/private/tmp/gnd-local-ci-20261006-733389d/candidate/release"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/build",
+          "exit": 0,
+          "seconds": 0.21,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/candidate-build.log",
+          "raw_sha256": "aab97e0875fc6693682154e17d2ac2af6eee19d01d0a1babd8db6531a8dc4ed9"
+        },
+        {
+          "name": "comparison-build",
+          "argv": [
+            "uv",
+            "build",
+            "--python",
+            "/private/tmp/rf2-py311/bin/python",
+            "--wheel",
+            "/private/tmp/gnd-local-ci-20261006-733389d/candidate/source/get_nick_done-0.1.0",
+            "--out-dir",
+            "/private/tmp/gnd-local-ci-20261006-733389d/candidate/comparison"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/build",
+          "exit": 0,
+          "seconds": 0.09,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/comparison-build.log",
+          "raw_sha256": "ba040622cff3ac3257f9fdf202b7bef801b2fb8c10ffa8ae522d3de6fa165adc"
+        },
+        {
+          "name": "candidate-hashes",
+          "argv": [
+            "shasum",
+            "-a",
+            "256",
+            "-c",
+            "SHA256SUMS"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/candidate",
+          "exit": 0,
+          "seconds": 0.04,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/candidate-hashes.log",
+          "raw_sha256": "defcb440827b4b8adda782c7775fa118f2e804020b24c84e2d7b948bb661d29c"
+        },
+        {
+          "name": "clone-313",
+          "argv": [
+            "git",
+            "clone",
+            "--shared",
+            "--no-checkout",
+            "<worktree>",
+            "/private/tmp/gnd-local-ci-20261006-733389d/py313"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d",
+          "exit": 0,
+          "seconds": 0.03,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/clone-313.log",
+          "raw_sha256": "fe478753bf934bd5791b25a2ce0939b15ee52ee9ae704545823fbb7a2aff65b5"
+        },
+        {
+          "name": "clone-311",
+          "argv": [
+            "git",
+            "clone",
+            "--shared",
+            "--no-checkout",
+            "<worktree>",
+            "/private/tmp/gnd-local-ci-20261006-733389d/py311"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d",
+          "exit": 0,
+          "seconds": 0.03,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/clone-311.log",
+          "raw_sha256": "ee5ce2af9fa53ea98861f2e26f728436a08609fdba82739c7f22b87e0eed31a1"
+        },
+        {
+          "name": "checkout-313",
+          "argv": [
+            "git",
+            "checkout",
+            "--detach",
+            "733389db588a3f32956f35fce30b94af59824c34"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 0.49,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/checkout-313.log",
+          "raw_sha256": "e7b46777225106e8aa13854b80ed883bca1799af3978e843246fbdc46845c254"
+        },
+        {
+          "name": "checkout-311",
+          "argv": [
+            "git",
+            "checkout",
+            "--detach",
+            "733389db588a3f32956f35fce30b94af59824c34"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 0.49,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/checkout-311.log",
+          "raw_sha256": "e7b46777225106e8aa13854b80ed883bca1799af3978e843246fbdc46845c254"
+        },
+        {
+          "name": "sync-313",
+          "argv": [
+            "uv",
+            "sync",
+            "--locked",
+            "--group",
+            "dev",
+            "--python",
+            "/private/tmp/rf2-py313/bin/python"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 0.12,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/sync-313.log",
+          "raw_sha256": "ff98207f5b987b0fe8dcbc30be8f0c982a5265dacca47af95a37342dfe892139"
+        },
+        {
+          "name": "sync-311",
+          "argv": [
+            "uv",
+            "sync",
+            "--locked",
+            "--group",
+            "dev",
+            "--python",
+            "/private/tmp/rf2-py311/bin/python"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 0.12,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/sync-311.log",
+          "raw_sha256": "67dd2f07578cd3605bb893d2f866e92f613d469d52c7a735ba2d5dbfe9cab5a7"
+        },
+        {
+          "name": "install-311",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "install",
+            "--symlink",
+            "--project",
+            "--force"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 1.83,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/install-311.log",
+          "raw_sha256": "427dac947884225a33681e5dc9837b3416a0aec52fd03e4a1c6144f6d0636747"
+        },
+        {
+          "name": "install-313",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "install",
+            "--symlink",
+            "--project",
+            "--force"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 2.19,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/install-313.log",
+          "raw_sha256": "d2809c0d102df3618674ccbd3f3e2d876f2195168afb6d98f1fcc0bfc0f99132"
+        },
+        {
+          "name": "doctor-311",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "doctor",
+            "--project"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 0.43,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/doctor-311.log",
+          "raw_sha256": "99b78c1b493ba6496f7e3f44f58f8d6abd35d6267b8b6d134e316aa097f979a2"
+        },
+        {
+          "name": "doctor-313",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "doctor",
+            "--project"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 0.5,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/doctor-313.log",
+          "raw_sha256": "863768c5150548c744ad6a8cca22dcb8b371fd808732c2080e8335752d1fb339"
+        },
+        {
+          "name": "collect-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "--collect-only",
+            "-q"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 7.78,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/collect-311.log",
+          "raw_sha256": "f1430c3bb6eec1a4b8aa3cb0c8f2c6367f3d7a1b35933db7962a10705644dc47"
+        },
+        {
+          "name": "collect-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "--collect-only",
+            "-q"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 7.81,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/collect-313.log",
+          "raw_sha256": "4fc45945cd21bcee9c5e0ce5d0178585445ae52cc7f1b2c29335233da47bc0cc"
+        },
+        {
+          "name": "platform-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-raP",
+            "tests/test_agent_cli.py",
+            "tests/test_guarded_corpus.py",
+            "tests/test_public_souffle_successors.py",
+            "tests/test_v70_phase3_successors.py",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 34.89,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/platform-311.log",
+          "raw_sha256": "891b5fd8c67bcb3eff6ccc909379814530bd09240c0270c8f3c97e5cc535c5f3"
+        },
+        {
+          "name": "platform-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-raP",
+            "tests/test_agent_cli.py",
+            "tests/test_guarded_corpus.py",
+            "tests/test_public_souffle_successors.py",
+            "tests/test_v70_phase3_successors.py",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 37.01,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/platform-313.log",
+          "raw_sha256": "bf3b5f650efbda58161c6c61a7f76a4c7f85341b9c6e787201284c1716ed5c3c"
+        },
+        {
+          "name": "regression-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-ra",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 1,
+          "seconds": 1846.94,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/regression-313.log",
+          "raw_sha256": "f8bdf5b3425c2f2b04580acf905787f4ee71d1199d3e89f1af7444ba7cd1e57c"
+        },
+        {
+          "name": "regression-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-ra",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 1,
+          "seconds": 1907.12,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/regression-311.log",
+          "raw_sha256": "06cc00b557de892592e377477321e174c1f4d04f9bd1e53127492dcdcc4594df"
+        },
+        {
+          "name": "installed-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-o",
+            "addopts=",
+            "tests/test_release_acceptance.py",
+            "-s",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py313",
+          "exit": 0,
+          "seconds": 1077.35,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/installed-313.log",
+          "raw_sha256": "e031371941a17f5d0d4d20e88edb83511fb06906fc1e4d3074ff58b530340e88"
+        },
+        {
+          "name": "installed-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-o",
+            "addopts=",
+            "tests/test_release_acceptance.py",
+            "-s",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-733389d/py311",
+          "exit": 0,
+          "seconds": 1103.06,
+          "log": "/private/tmp/gnd-local-ci-20261006-733389d/installed-311.log",
+          "raw_sha256": "9de6897ca9fda288a6123e8599670b0759882848a11b17501997c78e7087b53e"
+        }
+      ],
+      "candidate_sha256s": [
+        "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183  comparison/get_nick_done-0.1.0-py3-none-any.whl",
+        "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183  release/get_nick_done-0.1.0-py3-none-any.whl",
+        "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86  release/get_nick_done-0.1.0.tar.gz"
+      ],
+      "build_profile": "Python 3.11.15\nuv 0.10.10 (Homebrew 2026-03-13)\n"
+    },
+    {
+      "source_commit": "a390599c1a8fe8bdf13596e2f71805b6a94e109d",
+      "platform": "macOS",
+      "checks": [
+        {
+          "name": "clone-build",
+          "argv": [
+            "git",
+            "clone",
+            "--shared",
+            "--no-checkout",
+            "<worktree>",
+            "/private/tmp/gnd-local-ci-20261006-final/build"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final",
+          "exit": 0,
+          "seconds": 0.03,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/clone-build.log",
+          "raw_sha256": "73e1734b6e07a3de84b77bbc2b06b064cc850532acfab80bf4270a1c2394f97b"
+        },
+        {
+          "name": "checkout-build",
+          "argv": [
+            "git",
+            "checkout",
+            "--detach",
+            "a390599c1a8fe8bdf13596e2f71805b6a94e109d"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/build",
+          "exit": 0,
+          "seconds": 0.78,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/checkout-build.log",
+          "raw_sha256": "f430a124105ba9473e8cb570de1bfabbce1d62575505090778d9526b12545f99"
+        },
+        {
+          "name": "candidate-build",
+          "argv": [
+            "uv",
+            "build",
+            "--python",
+            "/private/tmp/rf2-py311/bin/python",
+            "--out-dir",
+            "/private/tmp/gnd-local-ci-20261006-final/candidate/release"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/build",
+          "exit": 0,
+          "seconds": 0.27,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/candidate-build.log",
+          "raw_sha256": "5d2725a2154dd42ed2afe50b8049d19af95f7eef47df3076c76f9bfa7552b42b"
+        },
+        {
+          "name": "comparison-build",
+          "argv": [
+            "uv",
+            "build",
+            "--python",
+            "/private/tmp/rf2-py311/bin/python",
+            "--wheel",
+            "/private/tmp/gnd-local-ci-20261006-final/candidate/source/get_nick_done-0.1.0",
+            "--out-dir",
+            "/private/tmp/gnd-local-ci-20261006-final/candidate/comparison"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/build",
+          "exit": 0,
+          "seconds": 0.12,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/comparison-build.log",
+          "raw_sha256": "bf374ad2b27bbc1f9fdd4d3d8bd44a5c37925a4347022199e009d9c716441f4c"
+        },
+        {
+          "name": "candidate-hashes",
+          "argv": [
+            "shasum",
+            "-a",
+            "256",
+            "-c",
+            "SHA256SUMS"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/candidate",
+          "exit": 0,
+          "seconds": 0.04,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/candidate-hashes.log",
+          "raw_sha256": "defcb440827b4b8adda782c7775fa118f2e804020b24c84e2d7b948bb661d29c"
+        },
+        {
+          "name": "clone-313",
+          "argv": [
+            "git",
+            "clone",
+            "--shared",
+            "--no-checkout",
+            "<worktree>",
+            "/private/tmp/gnd-local-ci-20261006-final/py313"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final",
+          "exit": 0,
+          "seconds": 0.03,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/clone-313.log",
+          "raw_sha256": "744a775c15221c0dd67a1173f38176d23b1284887d5dcf1f6ff8f4529123cc55"
+        },
+        {
+          "name": "clone-311",
+          "argv": [
+            "git",
+            "clone",
+            "--shared",
+            "--no-checkout",
+            "<worktree>",
+            "/private/tmp/gnd-local-ci-20261006-final/py311"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final",
+          "exit": 0,
+          "seconds": 0.04,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/clone-311.log",
+          "raw_sha256": "6a3f870f76493efbcf07e14d570e1bc4c9e8848acf7087c7a9b5004c5baec185"
+        },
+        {
+          "name": "checkout-311",
+          "argv": [
+            "git",
+            "checkout",
+            "--detach",
+            "a390599c1a8fe8bdf13596e2f71805b6a94e109d"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 0.68,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/checkout-311.log",
+          "raw_sha256": "f430a124105ba9473e8cb570de1bfabbce1d62575505090778d9526b12545f99"
+        },
+        {
+          "name": "checkout-313",
+          "argv": [
+            "git",
+            "checkout",
+            "--detach",
+            "a390599c1a8fe8bdf13596e2f71805b6a94e109d"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 0.68,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/checkout-313.log",
+          "raw_sha256": "f430a124105ba9473e8cb570de1bfabbce1d62575505090778d9526b12545f99"
+        },
+        {
+          "name": "sync-311",
+          "argv": [
+            "uv",
+            "sync",
+            "--locked",
+            "--group",
+            "dev",
+            "--python",
+            "/private/tmp/rf2-py311/bin/python"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 0.16,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/sync-311.log",
+          "raw_sha256": "3de69840e7efc673f8221cce5ec714db1f836a455d65e32f2538471309ee4e5b"
+        },
+        {
+          "name": "sync-313",
+          "argv": [
+            "uv",
+            "sync",
+            "--locked",
+            "--group",
+            "dev",
+            "--python",
+            "/private/tmp/rf2-py313/bin/python"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 0.16,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/sync-313.log",
+          "raw_sha256": "20a3f560adf09200e406b763b89333faa0f4414982d7eb0ecc45ffc0641d83d8"
+        },
+        {
+          "name": "install-311",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "install",
+            "--symlink",
+            "--project",
+            "--force"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 1.56,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/install-311.log",
+          "raw_sha256": "d51ac80c88c60b63966e66264fa25c958520d33c4223d90928a2e269b2da8e7e"
+        },
+        {
+          "name": "install-313",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "install",
+            "--symlink",
+            "--project",
+            "--force"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 1.98,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/install-313.log",
+          "raw_sha256": "d818d67f7dbc2e32c10609804388c2be06915b0c2ccf3bf0763eadf15a5f48ae"
+        },
+        {
+          "name": "doctor-311",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "doctor",
+            "--project"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 0.6,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/doctor-311.log",
+          "raw_sha256": "58b2c366f762b2a5c24bd098f13dd62b08c8853c8587188f6379283ce6c4d7ac"
+        },
+        {
+          "name": "doctor-313",
+          "argv": [
+            "uv",
+            "run",
+            "gnd",
+            "doctor",
+            "--project"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 0.73,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/doctor-313.log",
+          "raw_sha256": "25428bf7e462e94270d355507a4b4ed6be4a935cece38cafc50d7e06f3a84578"
+        },
+        {
+          "name": "collect-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "--collect-only",
+            "-q"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 11.23,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/collect-311.log",
+          "raw_sha256": "899a360d90b577a10ad31b8e47f6705afdadfe40c884cac9ac9d7441017c21b7"
+        },
+        {
+          "name": "collect-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "--collect-only",
+            "-q"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 11.3,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/collect-313.log",
+          "raw_sha256": "1b47ea4f10885032fae66157232f0627ee4e59a7612c7d4d3b87fdd60abca5eb"
+        },
+        {
+          "name": "platform-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-raP",
+            "tests/test_agent_cli.py",
+            "tests/test_guarded_corpus.py",
+            "tests/test_public_souffle_successors.py",
+            "tests/test_v70_phase3_successors.py",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 47.1,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/platform-311.log",
+          "raw_sha256": "a3320cdf4d34816b1b3ad2e2d9c90f961498458bb8b8c5fe7d9e1f020944d7bf"
+        },
+        {
+          "name": "platform-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-raP",
+            "tests/test_agent_cli.py",
+            "tests/test_guarded_corpus.py",
+            "tests/test_public_souffle_successors.py",
+            "tests/test_v70_phase3_successors.py",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 51.02,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/platform-313.log",
+          "raw_sha256": "f1fb2b9e4dcfb07842ec02fe92dd808b3d24df5043dbfae2c19c72e5c972431c"
+        },
+        {
+          "name": "regression-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-ra",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 2021.24,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/regression-313.log",
+          "raw_sha256": "472280ed4f79878b9d332ffde59509c266e947fb89f872af65e0ed5c4c181af3"
+        },
+        {
+          "name": "regression-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-ra",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 2085.02,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/regression-311.log",
+          "raw_sha256": "057e255ac38933fabda9a492435a8acf8b01f5a00e2b46ac030a3983ce5ebee7"
+        },
+        {
+          "name": "installed-313",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-o",
+            "addopts=",
+            "tests/test_release_acceptance.py",
+            "-s",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py313",
+          "exit": 0,
+          "seconds": 809.66,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/installed-313.log",
+          "raw_sha256": "f1367005306fbfd57030974c0ce0f77a1f56aedec390ff3f4e594c10daef3f1c"
+        },
+        {
+          "name": "installed-311",
+          "argv": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-o",
+            "addopts=",
+            "tests/test_release_acceptance.py",
+            "-s",
+            "--tb=short"
+          ],
+          "cwd": "/private/tmp/gnd-local-ci-20261006-final/py311",
+          "exit": 0,
+          "seconds": 870.1,
+          "log": "/private/tmp/gnd-local-ci-20261006-final/installed-311.log",
+          "raw_sha256": "3f869a63132c8808c92887b232fd81f1c3d285af2ac3ebbcf65432567957c701"
+        }
+      ],
+      "candidate_sha256s": [
+        "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183  comparison/get_nick_done-0.1.0-py3-none-any.whl",
+        "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183  release/get_nick_done-0.1.0-py3-none-any.whl",
+        "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86  release/get_nick_done-0.1.0.tar.gz"
+      ],
+      "build_profile": "Python 3.11.15\nuv 0.10.10 (Homebrew 2026-03-13)\n"
+    }
+  ]
+}

@@ -8719,56 +8719,302 @@
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 2,
+   "line": 10,
+   "to": "gnd.admission_validation"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 11,
+   "to": "gnd.admission_validation"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 12,
+   "to": "gnd.agents"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 13,
+   "to": "gnd.artifacts"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 14,
+   "to": "gnd.artifacts"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 15,
+   "to": "gnd.artifacts"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 16,
+   "to": "gnd.artifacts"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 17,
+   "to": "gnd.artifacts"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 18,
+   "to": "gnd.artifacts"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 19,
+   "to": "gnd.exp.session_contract"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 20,
+   "to": "gnd.exp.session_contract"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 21,
+   "to": "gnd.exp.session_contract"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 22,
+   "to": "gnd.exp.session_contract"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 23,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 24,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 25,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 26,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 27,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 28,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 29,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 30,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 31,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 32,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 33,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 34,
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 35,
+   "to": "gnd.exp.session_patch"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 36,
+   "to": "gnd.exp.session_patch"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 37,
+   "to": "gnd.exp.session_patch"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 38,
+   "to": "gnd.exp.session_patch"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 50,
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 3,
+   "line": 51,
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 4,
+   "line": 52,
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 5,
+   "line": 53,
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 6,
+   "line": 54,
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 7,
+   "line": 55,
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 8,
+   "line": 56,
    "to": "gnd.exp.session_replay"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 57,
+   "to": "gnd.exp.session_runtime"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 58,
+   "to": "gnd.exp.session_runtime"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 39,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 40,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 41,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 42,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 43,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 44,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 45,
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 46,
+   "to": "gnd.exp.session_store"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
    "line": 9,
-   "to": "gnd.exp.session_runtime"
+   "to": "gnd.input_policy"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "module",
-   "line": 10,
-   "to": "gnd.exp.session_runtime"
+   "line": 47,
+   "to": "gnd.model"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 48,
+   "to": "gnd.population"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "module",
+   "line": 49,
+   "to": "gnd.references"
   },
   {
    "from": "gnd.exp.spec",
@@ -16585,7 +16831,7 @@
    "module": "gnd.admission"
   },
   {
-   "fan_in": 2,
+   "fan_in": 3,
    "fan_out": 12,
    "module": "gnd.admission_validation"
   },
@@ -16595,7 +16841,7 @@
    "module": "gnd.agent_cli"
   },
   {
-   "fan_in": 10,
+   "fan_in": 11,
    "fan_out": 1,
    "module": "gnd.agents"
   },
@@ -16630,7 +16876,7 @@
    "module": "gnd.archsmoke"
   },
   {
-   "fan_in": 57,
+   "fan_in": 58,
    "fan_out": 0,
    "module": "gnd.artifacts"
   },
@@ -17025,7 +17271,7 @@
    "module": "gnd.exp.session"
   },
   {
-   "fan_in": 14,
+   "fan_in": 15,
    "fan_out": 8,
    "module": "gnd.exp.session_contract"
   },
@@ -17040,7 +17286,7 @@
    "module": "gnd.exp.session_environment"
   },
   {
-   "fan_in": 7,
+   "fan_in": 8,
    "fan_out": 10,
    "module": "gnd.exp.session_eval"
   },
@@ -17050,7 +17296,7 @@
    "module": "gnd.exp.session_judgments"
   },
   {
-   "fan_in": 3,
+   "fan_in": 4,
    "fan_out": 5,
    "module": "gnd.exp.session_patch"
   },
@@ -17075,13 +17321,13 @@
    "module": "gnd.exp.session_runtime"
   },
   {
-   "fan_in": 4,
+   "fan_in": 5,
    "fan_out": 12,
    "module": "gnd.exp.session_store"
   },
   {
    "fan_in": 0,
-   "fan_out": 2,
+   "fan_out": 13,
    "module": "gnd.exp.session_v7"
   },
   {
@@ -17250,7 +17496,7 @@
    "module": "gnd.fidelity.service"
   },
   {
-   "fan_in": 54,
+   "fan_in": 55,
    "fan_out": 0,
    "module": "gnd.input_policy"
   },
@@ -17310,7 +17556,7 @@
    "module": "gnd.measure.truth"
   },
   {
-   "fan_in": 67,
+   "fan_in": 68,
    "fan_out": 7,
    "module": "gnd.model"
   },
@@ -17355,7 +17601,7 @@
    "module": "gnd.payloads"
   },
   {
-   "fan_in": 34,
+   "fan_in": 35,
    "fan_out": 6,
    "module": "gnd.population"
   },
@@ -17420,7 +17666,7 @@
    "module": "gnd.redaction"
   },
   {
-   "fan_in": 11,
+   "fan_in": 12,
    "fan_out": 2,
    "module": "gnd.references"
   },
@@ -19054,7 +19300,7 @@
   {
    "lane": "exp",
    "layer": "lanes",
-   "lines": 10,
+   "lines": 58,
    "module": "gnd.exp.session_v7",
    "path": "src/gnd/exp/session_v7.py"
   },
@@ -22738,49 +22984,70 @@
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 2,
+   "line": 25,
+   "name": "_case_feedback",
+   "to": "gnd.exp.session_eval"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "from_import",
+   "line": 45,
+   "name": "_collect_candidate",
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "from_import",
+   "line": 46,
+   "name": "_evidence_entry",
+   "to": "gnd.exp.session_store"
+  },
+  {
+   "from": "gnd.exp.session_v7",
+   "kind": "from_import",
+   "line": 50,
    "name": "_read",
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 3,
+   "line": 51,
    "name": "_entry",
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 4,
+   "line": 52,
    "name": "_model",
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 5,
+   "line": 53,
    "name": "_evaluate",
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 6,
+   "line": 54,
    "name": "_project",
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 7,
+   "line": 55,
    "name": "_feedback",
    "to": "gnd.exp.session_replay"
   },
   {
    "from": "gnd.exp.session_v7",
    "kind": "from_import",
-   "line": 9,
+   "line": 57,
    "name": "_copy_files",
    "to": "gnd.exp.session_runtime"
   },
@@ -25860,7 +26127,7 @@
    "src/gnd/examples/**",
    "src/gnd/skills/**"
   ],
-  "line_count": 111424,
+  "line_count": 111472,
   "module_count": 227,
   "package": "src/gnd",
   "python": "3.14"

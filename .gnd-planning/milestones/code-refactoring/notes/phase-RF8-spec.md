@@ -186,3 +186,15 @@ Prior RF6b original400 facade target and RF7 file ceiling amendment are retained
 RF8 work is re-bounded here under the explicit delegated scope, not an implicit
 plan rewrite or permission to grow source work. Plan/retarget integration stays
 with milestone close. No further work is authorized beyond this phase.
+
+### A5 — Source line budget measurement, delegated approval(auto=true),2026-10-06
+The committed RF0 compare tool measures3246 addedlines and2243 movedlines,
+so1003 nonrelocated additions against original650. Of these303 are blanklines
+that move accounting deliberately excludes; nonblank additions2943 minus2243
+matched moves=700. The650 estimate undercounted explicit compatibility reexports,
+duplicate dependency imports, metadata restoration and original moved blanklines.
+Re-target the same raw metric to1100 (1003 measured +97 bounded repair headroom).
+This is a declared miss, not a claim that a move-count reduction makes newcode
+smaller. Moved4000/touched120/test1600/doc1600 ceilings, SCC0 and shim60 remain.
+Any later increase must be recorded before dependent work; no feature scope changes.
+The close table must list original650 and90 completion ceilings as missed.

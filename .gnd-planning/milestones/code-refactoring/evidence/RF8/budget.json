@@ -1,0 +1,20 @@
+{
+  "base": "de4eed6",
+  "measured_head": "6a0875097ae3547bf829c3818606487cc63b4060",
+  "touched_files": 116,
+  "touched_ceiling": 120,
+  "source_added": 3246,
+  "moved_lines": 2243,
+  "moved_ceiling": 4000,
+  "nonrelocated_source_additions": 1003,
+  "nonrelocated_source_ceiling": 1100,
+  "test_data_additions": 299,
+  "test_data_ceiling": 1600,
+  "non_evidence_doc_additions": 435,
+  "doc_ceiling": 1600,
+  "original_misses": {
+    "touched_files": 90,
+    "nonrelocated_source_additions": 650
+  },
+  "pending_completion_record": true
+}

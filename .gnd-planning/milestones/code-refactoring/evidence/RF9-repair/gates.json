@@ -35,7 +35,7 @@
     "evidence": "lint.txt"
   },
   {
-    "name": "whitespace",
+    "name": "working-tree whitespace at original execution (committed/untracked retained evidence excluded)",
     "command": "git diff --check",
     "exit": 0,
     "output": ""
@@ -60,5 +60,32 @@
     "exit": 0,
     "output": "1 passed in 0.95s",
     "evidence": "feedback-branch-current.txt"
+  },
+  {
+    "name": "native R1 repair direct/session/store/close/judgment impact",
+    "command": "PATH=\"$PWD/.venv/bin:$PATH\" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_rf9_repairs.py tests/test_rf8_structure.py tests/test_rf8_sessions.py tests/test_exp_close_work_gate.py tests/test_exp_close.py tests/test_exp_session_store.py tests/test_v71_phase4_successors.py tests/test_public_v71_judgment_successor_guards.py --tb=short -p no:cacheprovider",
+    "exit": 0,
+    "output": "254 passed, 1 warning in 26.80s",
+    "evidence": "review-R1-green.txt"
+  },
+  {
+    "name": "R1 adjacent v7/v8 replay pins",
+    "command": "env -u LANG -u LC_ALL -u TERM PATH=\"$PWD/.venv/bin:$PATH\" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q 'tests/test_rf1_session_pins.py::test_session_fresh[7]' 'tests/test_rf1_session_pins.py::test_session_fresh[8]' 'tests/test_rf1_session_pins.py::test_session_resume[7]' 'tests/test_rf1_session_pins.py::test_session_resume[8]' 'tests/test_rf1_session_pins.py::test_session_reconstruct[7]' 'tests/test_rf1_session_pins.py::test_session_reconstruct[8]' --tb=short -p no:cacheprovider",
+    "exit": 0,
+    "output": "6 passed in 5.65s",
+    "evidence": "R1-replay-impact.txt"
+  },
+  {
+    "name": "full-phase source/test/tool whitespace",
+    "command": "git diff --check 26dbff6 -- src tests tools",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "name": "post-R1 metadata",
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python .gnd-planning/milestones/code-refactoring/evidence/RF9-repair/metadata_checks.py",
+    "exit": 0,
+    "output": "432 frozen controls unchanged; 25 output aliases and exact body move; 228 modules; zero explicit runtime/module SCCs, wrong-way/entry violations and allowances; 18 exact target adaptations.\nImplicit package-parent edges: 4087; structural combined SCCs: 7 (diagnostic, no zero-cycle claim).",
+    "evidence": "review-metadata.txt"
   }
 ]

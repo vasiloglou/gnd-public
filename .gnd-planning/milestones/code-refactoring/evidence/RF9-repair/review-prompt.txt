@@ -1,7 +1,7 @@
 Independently adversarially review the approved RF9 repairs. Read-only local inspection; do not edit files, run broad suites, install dependencies, use environment/credential files, launch other providers, certify, merge or publish. Existing native authentication is managed outside this prompt. One reviewer is one reviewer; state verification limitations.
 
 Base:26dbff6abe53d020d6a933e48d99915089f52054
-Implementation:f5979caaaa9385faa2ad44ba10364ddb9e5d561e
+Implementation:ef0fe9f09edf5c170e5103b926a0539fa4be97a4
 Inspect git diff of base to implementation for src, tests, tools, the RF9-repair spec, shim inventory and b3-files.json. Read fully .gnd-planning/milestones/code-refactoring/notes/phase-RF9-repair-spec.md and phase-RF9-review.md. Explicit owner approval selects RF9-F1–F9 correctness repairs, not milestone-close, certification or source-owned authority transfer. At most one substantive repair review is budgeted after this assessment.
 
 Try to REFUTE the concrete criteria:
@@ -18,3 +18,5 @@ Metadata:432 frozen controls, units.json and distribution authority guard unchan
 Read tests/test_rf9_repairs.py and affected neighbors from evidence/RF9-repair/gates.json. Retained red/equality-red/no-best-base-red/parent-edge-base-red prove pre-fix defects. Metadata and manifest-adaptations.json bind claims. Current focused480passed; session impact278passed1warning; original replay pins28passed with only LANG/LC_ALL/TERM unset to match recorded environment; that environmental mismatch is separately reproduced on exact base with an environment-only passing sibling. Native minor equality/annotation controls4passed each. No broad suite is claimed.
 
 Look for introduced regressions, unsupported evidence and missing reachable branches. Give each actionable finding a precise path/line, concrete failure shape and MVP class: blocking, hardening or completeness. Reproduction is the implementer's responsibility; do not state an unrun probe as observed. Do not require unrelated ownership/publication work. Also list the claims inspected and supported and what could not be verified. If no actionable finding, say so explicitly with coverage. Return a compact final assessment, not a diff summary.
+
+The current reviewed commit also includes test_accepted_feedback_cannot_replace_contract_acceptance: operator/projected dispositions are forged with consistent hashes while acceptance_ready remains false; nonterminal reconstruction accepts the internal chain, but terminal reconstruction must refuse. Exact26dbff6 is observed red and current code green. Production remains identical to f5979ca.

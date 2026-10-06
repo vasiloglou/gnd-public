@@ -2,6 +2,6 @@
   "source_base": "26dbff6",
   "function": "reconstruct",
   "path": "src/gnd/exp/session_replay.py",
-  "ast_sha256": "33efe0e2aa723ec9d26bb5408e9151d5d920e8ceef35740372b8ee5811bd79a4",
-  "reason": "RF9 F1 terminal-integrity validation; exact new body, no normalization of integrity branch"
+  "ast_sha256": "975463c4be7d6e737ea66f97d74de99fa351750fb6d4e047c56bc0f2014aa0c2",
+  "reason": "RF9 F1 terminal integrity plus reproduced native R1 bidirectional acceptance; exact body, integrity branch is not normalized"
 }

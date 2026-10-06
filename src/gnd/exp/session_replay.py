@@ -485,10 +485,9 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
             != (None if identity is None else identity.attempt_manifest_sha256)
             or terminal.best_candidate_sha256
             != (None if identity is None else identity.candidate_sha256)
-            or (terminal.disposition == "accepted" and (
-                operator.disposition != "accepted"
-                or not contract_accepts(contract, record.evaluation)
-            ))
+            or ((terminal.disposition == "accepted") != (operator.disposition == "accepted"))
+            or (terminal.disposition == "accepted"
+                and not contract_accepts(contract, record.evaluation))
         ):
             raise ValueError("terminal result differs from reconstructed attempt evidence")
     if contract.profile.judgments and allow_terminal and (store.root / "result.json").exists():

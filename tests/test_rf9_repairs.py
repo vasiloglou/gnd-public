@@ -350,3 +350,48 @@ def test_accepted_feedback_cannot_replace_contract_acceptance(failing_work_sessi
     with pytest.raises(ValueError, match='terminal result differs'):
         reconstruct(store, contract, allow_terminal=True)
     assert store.best_identity() == before
+
+
+def test_accepted_terminal_cannot_be_downgraded(tmp_path, monkeypatch):
+    from test_rf1_session_pins import _contract, build_v7, run_main
+
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import SessionStore
+
+    monkeypatch.setenv('PATH', str(ROOT / '.venv/bin') + os.pathsep + os.environ['PATH'])
+    built = build_v7(tmp_path, monkeypatch)
+    assert run_main(built.argv, cwd=tmp_path).returncode == 0
+    contract = _contract(built)
+    run = built.root / 'runs/run-0001'
+    store = SessionStore(run, run_id=run.name, contract_id=contract.experiment_id)
+    reconstruct(store, contract, allow_terminal=True)
+    before = store.best_identity()
+    result_path = run / 'result.json'
+    result = json.loads(result_path.read_text())
+    assert result['disposition'] == 'accepted'
+    result_path.write_bytes(canonical_json_bytes(
+        dict(result, disposition='stagnation', terminal_reason='forged nonacceptance')))
+    with pytest.raises(ValueError, match='terminal result differs'):
+        reconstruct(store, contract, allow_terminal=True)
+    assert store.best_identity() == before
+
+
+def test_missing_best_accessor_is_a_structured_refusal(failing_work_session, monkeypatch):
+    from gnd.exp import close
+    from gnd.exp.session_store import SessionStore
+
+    built, contract, run, result_path, _ = failing_work_session
+    monkeypatch.setattr(SessionStore, 'best_record', lambda self: None)
+    findings = close._declared_case_findings(
+        close._SessionRun(1, run, result_path, False), built.root, result_path.read_bytes(),
+        experiment_id=contract.experiment_id)
+    assert any('reconstruction has none' in finding.message for finding in findings)
+
+
+def test_offline_relative_import_cannot_climb_above_package():
+    import pytest
+    import test_measure_offline as guard
+
+    with pytest.raises(ValueError, match='climbs above'):
+        guard._imports('from ... import escape', package='gnd.exp')

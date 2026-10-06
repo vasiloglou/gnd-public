@@ -167,3 +167,30 @@ mistakenly tried nonterminal reconstruction while result.json was present and
 hit the pre-existing terminal-resume guard. Its corrected sibling temporarily
 removes that file for the internal-consistency control, then restores it for the
 terminal test. Both observations are retained; production bytes did not change.
+
+## Independent review triage and one bounded repair
+
+The initial native review of ef0fe9f completed exit0 after explicit provider-
+transmission authorization. Its exact sanitized return is retained. R1 is a
+reproduced hardening finding: an honestly accepted terminal result changed only
+to valid stagnation reconstructs and publishes caches. The work gate refuses that
+result, but replay must preserve evidence integrity in both acceptance directions.
+The actual pre-fix regression exits1 with DID NOT RAISE. The named repair approval
+covers this same F1 boundary; implement equality of the terminal/operator accepted
+predicate, retaining the independent final contract-acceptance requirement. One
+substantive repair review is selected under the already declared/authorized bound.
+
+R2 is completeness of the evidence claim, not a source defect. The literal
+working-tree git diff --check was observed exit0; it did not cover committed/
+untracked retained output. The requested full base-to-subject check is reproduced
+exit2 for trailing spaces in retained pytest streams. Correct the gate description
+in place and separately record the source/test/tool base-to-current whitespace
+check. Retained verbatim output spacing is intentionally preserved; no general
+all-artifact whitespace-clean claim is made.
+
+The post-review branch-table audit adds direct missing-best accessor totality and
+relative-import-above-package refusal cases. The genuine no-best case previously
+reached the earlier terminal-integrity refusal; the new accessor case exercises
+the close guard itself. These are test-only coverage successors, not new scope or
+production changes beyond R1. Their original26dbff6 failure and current passing
+controls are retained. No broader replay or third assessment is selected.

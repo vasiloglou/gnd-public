@@ -1,0 +1,18 @@
+{
+  "base": "523cdd1",
+  "head": "e404262",
+  "touched_files": 71,
+  "test_data_added": 404,
+  "non_evidence_docs_added": 137,
+  "production_added": 976,
+  "production_removed": 636,
+  "production_moved": 172,
+  "production_nonrelocated_added": 804,
+  "ceilings": {
+    "touched_files": 120,
+    "test_data_added": 2500,
+    "non_evidence_docs_added": 1500,
+    "production_moved": 4000,
+    "production_nonrelocated_added": 2200
+  }
+}

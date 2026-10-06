@@ -1,6 +1,15 @@
 {
-  "baseline": 320,
-  "ceiling": 310,
+  "baseline": 371,
+  "ceiling": 361,
+  "original_attribute_get_metric": {
+    "baseline": 320,
+    "ceiling": 310,
+    "current": 299
+  },
+  "literal_subscription_metric": {
+    "baseline": 51,
+    "current": 51
+  },
   "rows": [
     {
       "path": "src/gnd/admission.py",
@@ -26,6 +35,20 @@
     {
       "path": "src/gnd/admission_validation.py",
       "owner": "_validate",
+      "expression": "fact_type['roles']",
+      "count": 1,
+      "reason": "_validate retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
+      "expression": "ft['roles']",
+      "count": 1,
+      "reason": "_validate retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
       "expression": "model.fact_types",
       "count": 2,
       "reason": "_validate retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
@@ -36,6 +59,13 @@
       "expression": "model.fact_types",
       "count": 1,
       "reason": "constraint_annotations retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "bind_anchors",
+      "expression": "fact_key['roles']",
+      "count": 1,
+      "reason": "bind_anchors retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/anchors.py",
@@ -53,10 +83,24 @@
     },
     {
       "path": "src/gnd/anchors.py",
+      "owner": "parse_anchor_sidecar",
+      "expression": "fact_key['roles']",
+      "count": 3,
+      "reason": "parse_anchor_sidecar retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/anchors.py",
       "owner": "vocabulary_digest",
       "expression": "model.fact_types",
       "count": 1,
       "reason": "vocabulary_digest retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "vocabulary_digest",
+      "expression": "model['fact_types']",
+      "count": 1,
+      "reason": "vocabulary_digest retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/api.py",
@@ -99,6 +143,13 @@
       "expression": "fact_type.get('roles')",
       "count": 2,
       "reason": "_anchored_verdicts retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_anchored_verdicts",
+      "expression": "record['fact_key']['roles']",
+      "count": 3,
+      "reason": "_anchored_verdicts retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/checker.py",
@@ -271,6 +322,13 @@
     {
       "path": "src/gnd/diff.py",
       "owner": "_derivation_rows",
+      "expression": "fact['roles']",
+      "count": 1,
+      "reason": "_derivation_rows retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_derivation_rows",
       "expression": "model_a.fact_types",
       "count": 1,
       "reason": "_derivation_rows retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
@@ -362,6 +420,20 @@
     {
       "path": "src/gnd/export/lean.py",
       "owner": "__init__",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "__init__ retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "__init__",
+      "expression": "f['roles']",
+      "count": 1,
+      "reason": "__init__ retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "__init__",
       "expression": "model.fact_types",
       "count": 1,
       "reason": "__init__ emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
@@ -372,6 +444,34 @@
       "expression": "c.get('roles')",
       "count": 1,
       "reason": "classify selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "classify",
+      "expression": "f['roles']",
+      "count": 1,
+      "reason": "classify retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "constraints",
+      "expression": "md['fact_types']",
+      "count": 1,
+      "reason": "constraints retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "family",
+      "expression": "c['roles']",
+      "count": 1,
+      "reason": "family retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "roles",
+      "expression": "self.facts[i]['roles']",
+      "count": 1,
+      "reason": "roles retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/export/pyrel_runtime.py",
@@ -453,9 +553,23 @@
     {
       "path": "src/gnd/export/souffle.py",
       "owner": "admit",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "admit retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
       "expression": "model.fact_types",
       "count": 4,
       "reason": "admit emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "render_souffle",
+      "expression": "ft['roles']",
+      "count": 1,
+      "reason": "render_souffle retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/export/souffle.py",
@@ -473,10 +587,24 @@
     },
     {
       "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "extensions",
+      "expression": "relation['roles']",
+      "count": 2,
+      "reason": "extensions retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
       "owner": "map_proof",
       "expression": "model.fact_types",
       "count": 1,
       "reason": "map_proof retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "visit",
+      "expression": "relation['roles']",
+      "count": 4,
+      "reason": "visit retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/extensions.py",
@@ -628,6 +756,13 @@
     {
       "path": "src/gnd/extract/projection.py",
       "owner": "_build_projection",
+      "expression": "declaration['fact_types']",
+      "count": 1,
+      "reason": "_build_projection retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "owner": "_build_projection",
       "expression": "fact_type.get('roles')",
       "count": 1,
       "reason": "_build_projection retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
@@ -648,6 +783,13 @@
     },
     {
       "path": "src/gnd/fidelity/doccheck_service.py",
+      "owner": "_cmd_doccheck",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "_cmd_doccheck retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
       "owner": "role_object_types",
       "expression": "fact_type.get('roles')",
       "count": 1,
@@ -663,6 +805,13 @@
     {
       "path": "src/gnd/fidelity/match.py",
       "owner": "__init__",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "__init__ retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "owner": "__init__",
       "expression": "fact_type.get('roles')",
       "count": 1,
       "reason": "__init__ retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
@@ -673,6 +822,20 @@
       "expression": "model.fact_types",
       "count": 1,
       "reason": "__init__ retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/fidelity/report.py",
+      "owner": "build_fidelity_payload",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "build_fidelity_payload retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "owner": "_cmd_fidelity",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "_cmd_fidelity retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/judgments.py",
@@ -726,6 +889,13 @@
     {
       "path": "src/gnd/model_verbalization.py",
       "owner": "render_model_verbalization",
+      "expression": "declaration['fact_types']",
+      "count": 1,
+      "reason": "render_model_verbalization retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "render_model_verbalization",
       "expression": "item.get('roles')",
       "count": 1,
       "reason": "render_model_verbalization selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
@@ -775,9 +945,23 @@
     {
       "path": "src/gnd/rai_import.py",
       "owner": "_guard_dialect_shape",
+      "expression": "document['fact_types']",
+      "count": 1,
+      "reason": "_guard_dialect_shape retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_guard_dialect_shape",
       "expression": "fact.get('roles')",
       "count": 1,
       "reason": "_guard_dialect_shape selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_guard_dialect_shape",
+      "expression": "fact['roles']",
+      "count": 1,
+      "reason": "_guard_dialect_shape retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/rai_import.py",
@@ -788,10 +972,31 @@
     },
     {
       "path": "src/gnd/rai_import.py",
+      "owner": "_rewrite_reference_node",
+      "expression": "node['roles']",
+      "count": 1,
+      "reason": "_rewrite_reference_node retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "document['fact_types']",
+      "count": 3,
+      "reason": "plan_rai_import retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
       "owner": "plan_rai_import",
       "expression": "fact.get('roles')",
       "count": 1,
       "reason": "plan_rai_import selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "fact['roles']",
+      "count": 2,
+      "reason": "plan_rai_import retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/rai_import.py",
@@ -834,6 +1039,13 @@
       "expression": "row.get('roles')",
       "count": 1,
       "reason": "project_output emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "project_output",
+      "expression": "row['roles']",
+      "count": 2,
+      "reason": "project_output retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/redaction.py",
@@ -883,6 +1095,13 @@
       "expression": "fact_type.get('roles', [])",
       "count": 1,
       "reason": "_operand retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_constraint",
+      "expression": "source['roles']",
+      "count": 1,
+      "reason": "adapt_constraint retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/semantic_adapter.py",
@@ -1641,6 +1860,34 @@
       "reason": "_instance_values_of retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
     },
     {
+      "path": "src/gnd/values.py",
+      "owner": "reference_model_digest",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "reference_model_digest retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_complete_binding",
+      "expression": "fact_type['roles']",
+      "count": 1,
+      "reason": "_complete_binding retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_excerpts",
+      "expression": "anchor['fact_key']['roles']",
+      "count": 1,
+      "reason": "_excerpts retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_project_rows",
+      "expression": "item['roles']",
+      "count": 1,
+      "reason": "_project_rows retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
       "path": "src/gnd/verbalize_population.py",
       "owner": "_project_rows",
       "expression": "model.fact_types",
@@ -1650,9 +1897,23 @@
     {
       "path": "src/gnd/verbalize_population.py",
       "owner": "render_witness",
+      "expression": "fact_type['roles']",
+      "count": 2,
+      "reason": "render_witness retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "render_witness",
       "expression": "model.fact_types",
       "count": 1,
       "reason": "render_witness retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "verbalize_population",
+      "expression": "fact_type['roles']",
+      "count": 1,
+      "reason": "verbalize_population retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/verbalize_population.py",
@@ -1674,6 +1935,20 @@
       "expression": "model.fact_types",
       "count": 1,
       "reason": "render_verbalization retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "intake",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "intake retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "roster",
+      "expression": "ft['roles']",
+      "count": 1,
+      "reason": "roster retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
     },
     {
       "path": "src/gnd/witness/io.py",

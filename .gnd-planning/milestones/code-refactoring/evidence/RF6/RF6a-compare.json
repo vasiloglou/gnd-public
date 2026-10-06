@@ -1,0 +1,90 @@
+{
+ "base": "523cdd1a2ae1ad6ea0e8ca092fe29629dd10607c",
+ "files": [
+  {
+   "added": 237,
+   "moved_in": 23,
+   "moved_out": 24,
+   "path": "src/gnd/checker.py",
+   "removed": 216
+  },
+  {
+   "added": 51,
+   "moved_in": 2,
+   "moved_out": 0,
+   "path": "src/gnd/constraint_families.py",
+   "removed": 0
+  },
+  {
+   "added": 181,
+   "moved_in": 10,
+   "moved_out": 0,
+   "path": "src/gnd/model_index.py",
+   "removed": 0
+  },
+  {
+   "added": 141,
+   "moved_in": 115,
+   "moved_out": 0,
+   "path": "src/gnd/model_queries.py",
+   "removed": 0
+  },
+  {
+   "added": 4,
+   "moved_in": 0,
+   "moved_out": 3,
+   "path": "src/gnd/popvalidate.py",
+   "removed": 12
+  },
+  {
+   "added": 122,
+   "moved_in": 9,
+   "moved_out": 10,
+   "path": "src/gnd/semantic_adapter.py",
+   "removed": 107
+  },
+  {
+   "added": 71,
+   "moved_in": 3,
+   "moved_out": 3,
+   "path": "src/gnd/semantic_spec.py",
+   "removed": 36
+  },
+  {
+   "added": 3,
+   "moved_in": 0,
+   "moved_out": 3,
+   "path": "src/gnd/synth/oracle/constructive.py",
+   "removed": 10
+  },
+  {
+   "added": 3,
+   "moved_in": 0,
+   "moved_out": 1,
+   "path": "src/gnd/synth/poolfile.py",
+   "removed": 6
+  },
+  {
+   "added": 10,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/synth/value_domain.py",
+   "removed": 3
+  },
+  {
+   "added": 153,
+   "moved_in": 10,
+   "moved_out": 128,
+   "path": "src/gnd/universe.py",
+   "removed": 246
+  }
+ ],
+ "head": "e4042622ff40197df95e6a1f6f2265c1fca9ef07",
+ "schema_version": 1,
+ "totals": {
+  "added": 976,
+  "moved_in": 172,
+  "moved_out": 172,
+  "removed": 636
+ }
+}

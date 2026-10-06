@@ -34,5 +34,14 @@
     "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A4-spec.md",
     "sha256": "125b9916bf1587e14d567550310c29f4fad21d6337d18ce025cc63bdc2bc7253",
     "note": "Artifact snapshot reconstructed from the unchanged append-only spec prefix; no claim that snapshot creation preceded prototype work."
+  },
+  {
+    "id": "A5",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-05",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A5-spec.md",
+    "sha256": "f0b005d250642ec8a5bf8c61db3526e425305ffedb2b598fa3c9aa153fbc231f",
+    "note": "Recorded before scanner-only repair; original numeric metric and target retained."
   }
 ]

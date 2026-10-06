@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-05",
+  "scope": [
+    "RF6a initial independent Codex review",
+    "RF6a at most one repair review",
+    "RF6b initial independent Codex review",
+    "RF6b at most one repair review"
+  ],
+  "transport": "bounded prompts and inspected source/diffs to Codex provider using existing native authentication",
+  "owner_answer": "Authorize the RF6 Codex reviews",
+  "earlier_refusal": "Automatic approval review rejected RF6 transmission because the earlier provider authorization covered RF2/RF5.",
+  "ruling": "Explicit current owner authorization received; no new credential-file access authorized."
+}

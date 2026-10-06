@@ -1,3 +1,5 @@
+Historical implementation status at35aa122. Superseded2026-10-06 by013-phase-RF7.md after authorized review and repairs. The hashes and pending-review statements below describe the earlier bytes, not current source.
+
 # RF7 implementation status -- review pending
 
 Date2026-10-06. Branch claude/rf1-code-refactoring-225109; source predecessor10608c4761bae7c0989b774a20de5f43c6350912. Owner explicitly selected RF7 auto, approved restriction test changes, and said “yes implement RF7”. Approved corpus-first snapshot and authorization are retained in evidence/RF7; red commit21dfa0e precedes production implementation.

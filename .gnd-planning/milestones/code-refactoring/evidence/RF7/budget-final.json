@@ -1,0 +1,19 @@
+{
+  "measured": {
+    "source_additions": 389,
+    "test_data_additions": 2425,
+    "non_evidence_docs_additions": 742,
+    "touched_files": 210,
+    "moved_lines": 7,
+    "source_nonrelocated_additions": 382,
+    "source_compare_head": "d8e5487c9ea17bb1198765b0536281a15b637859",
+    "note": "Includes this budget artifact and final record/scaffold artifacts; source hash unchanged after repair commit; evidence additions excluded from line budgets."
+  },
+  "limits": {
+    "touched_files": 210,
+    "source_additions": 4000,
+    "test_data_additions": 5000,
+    "non_evidence_docs_additions": 1800,
+    "moved_lines": 1000
+  }
+}

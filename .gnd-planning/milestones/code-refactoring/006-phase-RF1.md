@@ -182,6 +182,7 @@ questions. Dispositions: [phase-RF1-codex-review.md](notes/phase-RF1-codex-revie
 - The session prompt embeds the absolute contract path (`cli.py:5436`), so
   evidence digests depend on where an experiment lives. Open question RF1-OQ4.
 - Three file-digest readers block forever on a FIFO (F1). RF1-OQ5.
+  Discharged2026-10-06 by013-phase-RF7.md timed current-reader controls; this RF1 observation remains historical.
 - Candidate media types come from the interpreter's `mimetypes` table (Q5).
   RF1-OQ6.
 - The batch arm of `gnd check` writes to `sys.stdout.buffer`, bypassing the
@@ -221,7 +222,7 @@ questions. Dispositions: [phase-RF1-codex-review.md](notes/phase-RF1-codex-revie
 - **RF1-OQ4 → RF8 or the successor milestone:** prompt embeds the absolute
   contract path.
 - **RF1-OQ5 → successor milestone (RF7 safefs work):** FIFO-blocking digest
-  readers (F1).
+  readers (F1). Discharged2026-10-06 by013-phase-RF7.md; original RF1 boundary unchanged.
 - **RF1-OQ6 → successor milestone:** interpreter-dependent media types (Q5).
 - **RF1-OQ7 → next phase that edits the support module:** unify `scrub` and
   `normalize_text` token replacement, and bind declared-input bytes (review

@@ -15,3 +15,7 @@ One reviewer is one reviewer. No broad replay, certification, source-owned disch
 ## Status update -- 2026-10-05
 
 The owner explicitly authorized RF4 prompt/source transmission. Initial Codex review completed with three findings retained verbatim in phase-RF4-codex-review.md. Independent observed-red controls and before-fix triage are retained; twenty bindings are restored and identity/source guards now follow defining homes. Repair-controls:1126 passed; current repair cases:81 passed on eachPython3.11/3.13; explicit changed-path Ruff passes. RF4 remains pending the one bounded repair review and completion record. Earlier pending-authorization language above describes the prior state, not the current state.
+
+## Final status -- 2026-10-05
+
+The bounded repair review and phase record resolve the earlier pending state. See [009-phase-RF4.md](../009-phase-RF4.md) for current claims, review dispositions, exact gates and limits. This note preserves the earlier history.

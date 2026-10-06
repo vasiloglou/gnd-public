@@ -200,6 +200,10 @@ questions. Dispositions: [phase-RF1-codex-review.md](notes/phase-RF1-codex-revie
   supplies the measure-output, guarded-exists and standalone PyRel byte/reference
   successor pins before routing. Other owed families keep their assigned owners;
   standalone PyRel producer routing remains an explicitly approved RF2 exception.
+  RF4 discharge annotation (2026-10-05): [009-phase-RF4.md](009-phase-RF4.md)
+  supplies the source-base nested artifact directory-identity refusal pin and its
+  observed disabling control before filesystem routing. Other owed families
+  retain their named owners; RF1's original boundary remains unchanged.
 - **RF1-OQ2 → RF8 spec gate:** resume through the CLI refuses for v2, v3, v7
   and v8 after a completed run's result is removed (F12). This is pinned as
   found; RF8 should decide whether it is intended.

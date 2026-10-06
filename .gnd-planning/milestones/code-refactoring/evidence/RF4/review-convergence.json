@@ -1,0 +1,26 @@
+{
+  "limit": 2,
+  "rounds": [
+    {
+      "round": 1,
+      "findings": 3,
+      "root_reproduced": 3,
+      "blocking": 1,
+      "hardening": 2,
+      "completeness": 0
+    },
+    {
+      "round": 2,
+      "findings": 0,
+      "self_inflicted_numerator": 0,
+      "self_inflicted_denominator": 0,
+      "self_inflicted_ratio": null,
+      "same_seat_count_change": [
+        3,
+        0
+      ]
+    }
+  ],
+  "stop": "Required initial and permitted single repair review complete; no residual finding, no third round.",
+  "scope": "One reviewer is one reviewer; read-only retained-evidence inspection, no reviewer suite replay or certification."
+}

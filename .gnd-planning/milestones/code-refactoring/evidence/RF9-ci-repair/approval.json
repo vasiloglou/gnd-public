@@ -1,0 +1,10 @@
+{
+  "authorization": "do repairs",
+  "date": "2026-10-06",
+  "base": "d6f1e8aeacab902914e22b2dab799b65f879fdda",
+  "instrument": "corpus-first, delegated repair approval",
+  "sha256": {
+    ".gnd-planning/milestones/code-refactoring/notes/phase-RF9-ci-repair-spec.md": "154f43c4bc3d03fcb110dc247ab7f6ab709105602e6859161af6d4c577f01390",
+    "tests/test_rf9_ci_repairs.py": "31e66e6e75b5edb359b9b48783964f6b5c0ad378ce67b31653a600a0e9f2fe0d"
+  }
+}

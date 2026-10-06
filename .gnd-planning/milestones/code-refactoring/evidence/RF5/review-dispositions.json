@@ -1,0 +1,22 @@
+{
+  "initial_source_head": "d8dd49d",
+  "verified_source_head": "d8dd49d",
+  "initial_findings": 2,
+  "classification": "both hardening of phase-owned instruments",
+  "initial_reproduction": "review-regressions-pre-fix.txt, 4failed before any fix",
+  "triage": "review-triage-before-fix.json",
+  "fixes": [
+    "per-source declared domain-service bindings; reject unused exceptions",
+    "activate entry check for policy or any command module; refuse missing group with policy present or absent"
+  ],
+  "repair_regressions": 4,
+  "repair_controls": 426,
+  "blocking_remaining": 0,
+  "repair_review": "pending",
+  "repair_gate_names": [
+    "review-repair-controls",
+    "review-repair-py311",
+    "review-repair-py313",
+    "review-repair-lint"
+  ]
+}

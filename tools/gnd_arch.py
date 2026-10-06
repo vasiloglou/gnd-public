@@ -762,7 +762,9 @@ def measure(root: Path, layers_path: Path) -> dict:
             "get_roles_calls": sorted(query_roles, key=lambda q: (q["module"], q["line"])),
         },
     }
-    if "gnd.commands.checking" in modules:
+    if (root / "tools/gnd_entrypoints.json").exists() or any(
+        module == "gnd.commands" or module.startswith("gnd.commands.") for module in modules
+    ):
         policy_path = root / "tools/gnd_entrypoints.json"
         try:
             raw = policy_path.read_bytes()
@@ -804,9 +806,18 @@ def entrypoint_rule(metrics: dict, policy: dict) -> dict:
             (".service", "_service")
         ):
             raise ValueError("invalid entry-point service target")
-    allowed = set(policy["service_targets"]) | {
+    bindings = policy["service_bindings"]
+    if set(bindings) != scope or any(
+        not isinstance(targets, list) or not set(targets) <= set(policy["service_targets"])
+        for targets in bindings.values()
+    ):
+        raise ValueError("invalid per-source entry-point service bindings")
+    if {target for targets in bindings.values() for target in targets} != set(policy["service_targets"]):
+        raise ValueError("unused entry-point service target")
+    common = {
         "gnd.commands._arguments", "gnd.commands._output", "gnd.exits"
     }
+    edge_pairs = {(edge["from"], edge["to"]) for edge in metrics["edges"]}
     exceptions = {}
     for row in policy["exceptions"]:
         if set(row) != {"source", "target", "reason"} or not row["reason"].strip():
@@ -814,6 +825,8 @@ def entrypoint_rule(metrics: dict, policy: dict) -> dict:
         pair = (row["source"], row["target"])
         if pair in exceptions or row["source"] not in scope or row["target"] not in actual:
             raise ValueError("invalid entry-point exception scope")
+        if pair not in edge_pairs:
+            raise ValueError("unused entry-point exception")
         exceptions[pair] = row["reason"]
     violations = []
     for edge in metrics["edges"]:
@@ -823,7 +836,7 @@ def entrypoint_rule(metrics: dict, policy: dict) -> dict:
         # The bootstrap imports exactly the declared command groups.
         if source == "gnd.cli" and target in expected - {"gnd.cli"}:
             continue
-        if target in allowed or (source, target) in exceptions:
+        if target in common or target in bindings[source] or (source, target) in exceptions:
             continue
         violations.append(dict(edge, rule="entry-point imports a non-service module"))
     return {"scope": sorted(scope), "violations": violations,

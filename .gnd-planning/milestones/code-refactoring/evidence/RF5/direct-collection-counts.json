@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "--collect-only",
+    "-q",
+    "tests/test_rf5_commands.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_gnd_arch.py"
+  ],
+  "exit": 0,
+  "counts": {
+    "tests/test_rf5_commands.py": 263,
+    "tests/test_rf1_layering.py": 26,
+    "tests/test_gnd_arch.py": 47
+  },
+  "collection_only": true
+}

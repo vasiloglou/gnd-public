@@ -207,11 +207,6 @@
       "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
     },
     {
-      "source": "gnd.commands.exp",
-      "target": "gnd.solve",
-      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
-    },
-    {
       "source": "gnd.commands.export",
       "target": "gnd.export.emit",
       "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
@@ -261,5 +256,64 @@
       "target": "gnd.witness.cli",
       "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
     }
-  ]
+  ],
+  "service_bindings": {
+    "gnd.cli": [
+      "gnd.codegen.service",
+      "gnd.conformance.cli_service",
+      "gnd.evolve.cli_service",
+      "gnd.exp.cli_service",
+      "gnd.export.verification_service",
+      "gnd.extract.service",
+      "gnd.fidelity.doccheck_service",
+      "gnd.fidelity.service",
+      "gnd.measure.service",
+      "gnd.recovery.service",
+      "gnd.review.service",
+      "gnd.synth.corpus_service",
+      "gnd.synth.service"
+    ],
+    "gnd.commands.checking": [],
+    "gnd.commands.codegen": [
+      "gnd.codegen.service"
+    ],
+    "gnd.commands.conformance": [
+      "gnd.conformance.cli_service"
+    ],
+    "gnd.commands.doccheck": [
+      "gnd.fidelity.doccheck_service"
+    ],
+    "gnd.commands.evolve": [
+      "gnd.evolve.cli_service"
+    ],
+    "gnd.commands.exp": [
+      "gnd.exp.cli_service"
+    ],
+    "gnd.commands.export": [],
+    "gnd.commands.extract": [
+      "gnd.extract.service"
+    ],
+    "gnd.commands.fidelity": [
+      "gnd.fidelity.service"
+    ],
+    "gnd.commands.judgments": [],
+    "gnd.commands.lifecycle": [],
+    "gnd.commands.measure": [
+      "gnd.measure.service"
+    ],
+    "gnd.commands.recovery": [
+      "gnd.recovery.service"
+    ],
+    "gnd.commands.review": [
+      "gnd.review.service"
+    ],
+    "gnd.commands.solve": [],
+    "gnd.commands.synth": [
+      "gnd.synth.service"
+    ],
+    "gnd.commands.verify": [
+      "gnd.export.verification_service"
+    ],
+    "gnd.commands.witness": []
+  }
 }

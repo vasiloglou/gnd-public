@@ -1,0 +1,24 @@
+{
+  "command": [
+    "codex",
+    "exec",
+    "--ephemeral",
+    "--model",
+    "gpt-6-sol",
+    "--config",
+    "model_reasoning_effort=\"xhigh\"",
+    "--sandbox",
+    "read-only",
+    "--color",
+    "never",
+    "--skip-git-repo-check",
+    "--output-last-message",
+    "<temporary-root>/rf5-review-output.md",
+    "-"
+  ],
+  "stdin": "evidence/RF5/review-prompt.txt",
+  "exit": 0,
+  "source_head": "d8dd49d",
+  "findings": 2,
+  "review_round": "initial"
+}

@@ -1,0 +1,9 @@
+Retained output edited to replace absolute machine paths.
+Command: /private/tmp/rf2-py313/bin/python -m pytest -q tests/test_rf5_review_regressions.py tests/test_rf5_commands.py
+........................................................................ [ 26%]
+........................................................................ [ 53%]
+........................................................................ [ 80%]
+...................................................                      [100%]
+267 passed in 6.36s
+
+Exit: 0

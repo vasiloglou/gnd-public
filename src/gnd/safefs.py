@@ -509,3 +509,8 @@ reject_unsafe_relpath = _reject_unsafe_relpath
 rename_noreplace = _rename_noreplace
 replace_staged_leaf = _replace_staged_leaf
 temp_name = _temp_name
+
+# Unqualified public read seams retain the artifact-specific algorithm.
+read_regular_bounded = _artifacts.read_regular_bounded
+read_regular_bounded_at = _artifacts.read_regular_bounded_at
+read_regular_file_bytes = _artifacts.read_regular_file_bytes

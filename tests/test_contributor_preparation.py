@@ -53,7 +53,9 @@ def test_contributor_controls_reject(tmp_path, mutation):
     # Copy only this predicate's dependency boundary, preserving link values.
     for name in ['.codex/skills', '.claude/skills', 'src/gnd/skills', 'docs/development']:
         shutil.copytree(ROOT / name, tmp_path / name, symlinks=True)
-    for name in ['CONTRIBUTING.md', 'SECURITY.md']:
+    for name in ['CONTRIBUTING.md', 'SECURITY.md', 'tools/gnd_layers.json',
+                 '.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md']:
+        (tmp_path / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, tmp_path / name)
     (tmp_path / 'docs/releasing.md').write_text('placeholder')
     check_current(tmp_path)

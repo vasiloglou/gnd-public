@@ -1,0 +1,272 @@
+[
+  {
+    "path": "tests/test_agent_cli.py",
+    "line": 381,
+    "owner": "agent_cli_module.asyncio",
+    "binding": "create_subprocess_exec"
+  },
+  {
+    "path": "tests/test_agent_cli.py",
+    "line": 419,
+    "owner": "agent_cli_module",
+    "binding": "_stop_process_group"
+  },
+  {
+    "path": "tests/test_agent_cli.py",
+    "line": 460,
+    "owner": "agent_cli_module",
+    "binding": "run_bounded_process"
+  },
+  {
+    "path": "tests/test_report_json.py",
+    "line": 358,
+    "owner": "cli_module.report_module",
+    "binding": "emit"
+  },
+  {
+    "path": "tests/test_report_json.py",
+    "line": 607,
+    "owner": "cli_module.api_module.checker_module",
+    "binding": "check"
+  },
+  {
+    "path": "tests/test_codegen_force.py",
+    "line": 497,
+    "owner": "install_module",
+    "binding": "atomic_write"
+  },
+  {
+    "path": "tests/test_codegen_force.py",
+    "line": 554,
+    "owner": "install_module.os",
+    "binding": "open"
+  },
+  {
+    "path": "tests/test_codegen_force.py",
+    "line": 599,
+    "owner": "install_module",
+    "binding": "_matches_leaf"
+  },
+  {
+    "path": "tests/test_codegen_force.py",
+    "line": 781,
+    "owner": "install_module",
+    "binding": "rename_noreplace"
+  },
+  {
+    "path": "tests/test_codegen_force.py",
+    "line": 1572,
+    "owner": "install_module",
+    "binding": "atomic_write"
+  },
+  {
+    "path": "tests/test_measure_offline.py",
+    "line": 486,
+    "owner": "measure_report",
+    "binding": "__file__"
+  },
+  {
+    "path": "tests/test_v61_phase4_projection.py",
+    "line": 174,
+    "owner": "api_redaction",
+    "binding": "project_output"
+  },
+  {
+    "path": "tests/test_v61_phase4_projection.py",
+    "line": 176,
+    "owner": "gnd.api",
+    "binding": "project_output"
+  },
+  {
+    "path": "tests/test_public_assurance_feedback.py",
+    "line": 109,
+    "owner": "assurance_evidence",
+    "binding": "load_assurance_evidence"
+  },
+  {
+    "path": "tests/test_public_assurance_feedback.py",
+    "line": 140,
+    "owner": "assurance_evidence",
+    "binding": "load_assurance_evidence"
+  },
+  {
+    "path": "tests/test_public_derivation_evaluation_complete.py",
+    "line": 239,
+    "owner": "cli_module.api_module.checker_module",
+    "binding": "check"
+  },
+  {
+    "path": "tests/test_public_derivation_evaluation_complete.py",
+    "line": 281,
+    "owner": "cli_module.report_module",
+    "binding": "emit"
+  },
+  {
+    "path": "tests/test_public_semantic_boundaries.py",
+    "line": 101,
+    "owner": "api",
+    "binding": "diff"
+  },
+  {
+    "path": "tests/test_v6_phase6_execution.py",
+    "line": 142,
+    "owner": "assurance_evidence",
+    "binding": "production_identity"
+  },
+  {
+    "path": "tests/test_recovery_adversarial.py",
+    "line": 1425,
+    "owner": "agent_cli",
+    "binding": "invoke_agent"
+  },
+  {
+    "path": "tests/test_recovery_adversarial.py",
+    "line": 1428,
+    "owner": "cli.install_module",
+    "binding": "apply"
+  },
+  {
+    "path": "tests/test_recovery_adversarial.py",
+    "line": 1429,
+    "owner": "cli.install_module",
+    "binding": "remove"
+  },
+  {
+    "path": "tests/test_public_corpus_observer_cheap.py",
+    "line": 38,
+    "owner": "corpus_observer.assurance_evidence",
+    "binding": "_read"
+  },
+  {
+    "path": "tests/test_public_corpus_observer_cheap.py",
+    "line": 44,
+    "owner": "corpus_observer.assurance_evidence",
+    "binding": "enforce_bundle_limits"
+  },
+  {
+    "path": "tests/test_public_assurance_feedback_surfaces.py",
+    "line": 19,
+    "owner": "assurance_evidence",
+    "binding": "load_assurance_evidence"
+  },
+  {
+    "path": "tests/test_doctor_uninstall.py",
+    "line": 910,
+    "owner": "install",
+    "binding": "_unlink"
+  },
+  {
+    "path": "tests/test_documentation_tutorials.py",
+    "line": 51,
+    "owner": "installed_docs",
+    "binding": "__file__"
+  },
+  {
+    "path": "tests/test_documentation_tutorials.py",
+    "line": 75,
+    "owner": "installed_docs.subprocess",
+    "binding": "run"
+  },
+  {
+    "path": "tests/test_synth_mutate.py",
+    "line": 799,
+    "owner": "mutate",
+    "binding": "predict_violations"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 646,
+    "owner": "install.os",
+    "binding": "open"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 647,
+    "owner": "install.os",
+    "binding": "fdopen"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 678,
+    "owner": "install",
+    "binding": "_atomic_write"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 704,
+    "owner": "install",
+    "binding": "_atomic_write"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 745,
+    "owner": "install",
+    "binding": "iter_skill_files"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 766,
+    "owner": "install",
+    "binding": "iter_skill_files"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 1220,
+    "owner": "install",
+    "binding": "iter_skill_files"
+  },
+  {
+    "path": "tests/test_install.py",
+    "line": 1343,
+    "owner": "install",
+    "binding": "_atomic_write"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 154,
+    "owner": "install",
+    "binding": "_unlink"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 184,
+    "owner": "install",
+    "binding": "_atomic_write"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 534,
+    "owner": "install",
+    "binding": "MAX_CLASSIFY_BYTES"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 559,
+    "owner": "install",
+    "binding": "MAX_MANIFEST_BYTES"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 619,
+    "owner": "install",
+    "binding": "_atomic_write"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 757,
+    "owner": "install",
+    "binding": "_atomic_write"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 779,
+    "owner": "install",
+    "binding": "_unlink"
+  },
+  {
+    "path": "tests/test_review_fixes.py",
+    "line": 911,
+    "owner": "install",
+    "binding": "resolve_version"
+  }
+]

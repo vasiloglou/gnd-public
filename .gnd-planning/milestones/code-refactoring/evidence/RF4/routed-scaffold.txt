@@ -1,0 +1,22 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_development_scaffold.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py tests/test_measure_offline.py --tb=short -x
+...............F
+=================================== FAILURES ===================================
+______________ test_contributor_controls_reject[broken_reference] ______________
+tests/test_contributor_preparation.py:59: in test_contributor_controls_reject
+    check_current(tmp_path)
+tests/test_contributor_preparation.py:41: in check_current
+    check_links(p)
+tests/test_contributor_preparation.py:14: in check_links
+    assert (path.parent / href.split('#')[0]).exists(), (path, href)
+E   AssertionError: (PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4324/test_contributor_controls_reje0/CONTRIBUTING.md'), 'tools/gnd_layers.json')
+E   assert False
+E    +  where False = exists()
+E    +    where exists = (PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4324/test_contributor_controls_reje0') / 'tools/gnd_layers.json').exists
+E    +      where PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4324/test_contributor_controls_reje0') = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4324/test_contributor_controls_reje0/CONTRIBUTING.md').parent
+=========================== short test summary info ============================
+FAILED tests/test_contributor_preparation.py::test_contributor_controls_reject[broken_reference]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 15 passed, 1 deselected in 4.66s
+
+Exit: 1

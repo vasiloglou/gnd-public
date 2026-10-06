@@ -222,7 +222,7 @@ def _derivation_rows(model_a: Model, model_b: Model, pop_a: Any, pop_b: Any) -> 
 
 def compare_population(model_a: Model, model_b: Model, population_bytes: bytes, *, source: str, population_ref: str, origin: str = "provided") -> dict[str, Any]:
     """Load the same bytes independently under both models and compare results."""
-    from gnd import api
+    from gnd import checker, checking_service
 
     populations = []
     reports = []
@@ -234,7 +234,9 @@ def compare_population(model_a: Model, model_b: Model, population_bytes: bytes, 
             reports.append({"state": "not_comparable", "rule": type(error).__name__})
             continue
         populations.append(population)
-        payload = api.check(model, population, admission=True, unredacted=True)
+        payload = checking_service.check_report(
+            model, population, evaluator=checker.check_partial, admission=True, unredacted=True
+        ).payload
         reports.append(payload.get("report", payload))
     summary = [_summary(r) if pop is not None else r for pop, r in zip(populations, reports, strict=True)]
     a_to_b: list[dict[str, Any]] = []

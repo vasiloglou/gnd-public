@@ -46,5 +46,21 @@
     "authorization": "process-phase RF4 auto",
     "sha256": "83a3359217660704a1ced710f32cce337d0ebecd32bda5ccfb2dfb54f2454a9e",
     "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A6-spec.md"
+  },
+  {
+    "id": "A7",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "sha256": "58b8fe9b7a41b62d8f368d82815536b93251372b3857e809dd6e9e9ae40413bf",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A7-spec.md"
+  },
+  {
+    "id": "A8",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "sha256": "744861e9d2e90a3086801c8ca314a8b454bd032e51cec66c6671898fc52bf42b",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A8-spec.md"
   }
 ]

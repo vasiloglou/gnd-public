@@ -87,6 +87,24 @@ def _definition(source, name):
     return None
 
 
+def _import_bindings(node):
+    return sorted(a.asname or (a.name.split('.')[0] if isinstance(n, ast.Import) else a.name)
+                  for n in ast.walk(node) if isinstance(n, (ast.Import, ast.ImportFrom))
+                  for a in n.names)
+
+
+@pytest.mark.parametrize('changed', ['binding', 'removed'])
+def test_body_import_control_is_live(changed):
+    before = ast.parse('def f():\n    from gnd.model import load_model\n    return load_model("x")').body[0]
+    after = ast.parse('def f():\n    from gnd.model import load_model\n    return load_model("x")').body[0]
+    if changed == 'binding':
+        after.body[0].names[0].asname = 'other'
+    else:
+        del after.body[0]
+    assert _algorithm(before) == _algorithm(after)
+    assert _import_bindings(before) != _import_bindings(after)
+
+
 def _algorithm(node):
     """Only declared dependency imports may differ; every other AST node binds."""
     class ImportSeams(ast.NodeTransformer):
@@ -96,7 +114,9 @@ def _algorithm(node):
         def visit_ImportFrom(self, node):
             return None
 
-    return ast.dump(ImportSeams().visit(node), include_attributes=False)
+    import copy
+
+    return ast.dump(ImportSeams().visit(copy.deepcopy(node)), include_attributes=False)
 
 
 @pytest.mark.parametrize('move', [m for m in MOVES['names'] if not m['name'].isupper()],
@@ -109,6 +129,7 @@ def test_moved_algorithm_preserves_base_body(move):
         return  # constants/imported aliases are covered by identity rather than an algorithm claim
     after = _definition(_source(move['new']).read_text(), move['name'])
     assert after is not None
+    assert _import_bindings(before) == _import_bindings(after)
     assert _algorithm(before) == _algorithm(after)
 
 
@@ -148,7 +169,13 @@ def test_actual_process_and_adapter_patch_seams(monkeypatch, tmp_path):
         raise RuntimeError('RF4 runner intercepted')
 
     monkeypatch.setattr(agents, 'run_bounded_process', runner)
-    assert agents.invoke_agent.__globals__['run_bounded_process'] is runner
+    import asyncio
+    import sys
+
+    monkeypatch.setattr(agents.shutil, 'which', lambda *_args, **_kwargs: sys.executable)
+    with pytest.raises(RuntimeError, match='runner intercepted'):
+        asyncio.run(agents.invoke_agent(agents.AgentAdapterId.codex, prompt='pin', cwd=tmp_path,
+                                      timeout_seconds=1))
     assert process.run_bounded_process.__globals__['__name__'] == 'gnd.process'
 
 

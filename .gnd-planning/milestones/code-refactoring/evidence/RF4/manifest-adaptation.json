@@ -355,6 +355,33 @@
     }
   },
   {
+    "path": "src/gnd/diff.py",
+    "before": {
+      "path": "src/gnd/diff.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 19234,
+      "public_sha256": "0d56c218bb7d7c56593c973109a9193b8ca632cdfa137158a25e1df8fabe5189",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/diff.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "67762cc812200aa80b57b5da8228afcee9d771040ab91ccf2b3dd3966961710e"
+    },
+    "after": {
+      "path": "src/gnd/diff.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 19339,
+      "public_sha256": "54157d19bfeb7d19d2dc2984aef12e1781216ceba8aba4ffaab3b7efcb007b61",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/diff.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "67762cc812200aa80b57b5da8228afcee9d771040ab91ccf2b3dd3966961710e"
+    }
+  },
+  {
     "path": "src/gnd/evolve/service.py",
     "before": {
       "path": "src/gnd/evolve/service.py",
@@ -904,6 +931,27 @@
     }
   },
   {
+    "path": "tests/test_report_json.py",
+    "before": {
+      "path": "tests/test_report_json.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "public_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "bytes": 30758,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_report_json.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "public_sha256": "af1fa8a4334ff97fc0ca8fde80b24bfc2afad784d135a6a0296574499a3c29d9",
+      "bytes": 30791,
+      "mode": 420
+    }
+  },
+  {
     "path": "tests/test_synth_false_pass_quarantine.py",
     "before": {
       "path": "tests/test_synth_false_pass_quarantine.py",
@@ -999,20 +1047,6 @@
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "0d526513f57dc6c85806ef932e8cc059ae7318c7d60ca916d17cf82aeb3bbb37"
-    }
-  },
-  {
-    "path": "src/gnd/assurance/core.py",
-    "before": null,
-    "after": {
-      "path": "src/gnd/assurance/core.py",
-      "kind": "adaptation",
-      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
-      "bytes": 24478,
-      "public_sha256": "a242aeb20a3ab0446aadb1cb1eb415aa7f50cf64c1b0a370b19288bde1db54d3",
-      "mode": 420,
-      "baseline_sha256": null,
-      "source_sha256": "a242aeb20a3ab0446aadb1cb1eb415aa7f50cf64c1b0a370b19288bde1db54d3"
     }
   },
   {
@@ -1120,11 +1154,11 @@
       "path": "src/gnd/safefs.py",
       "kind": "adaptation",
       "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
-      "bytes": 19934,
-      "public_sha256": "5e9cb9eb3766d2f4f9950de647039056499653942a4dc958f3ae462e9ec5c225",
+      "bytes": 20184,
+      "public_sha256": "76afa2e97094e957d98bbc305ba40a5ab1151d37e0e711e6a966e8a8c766c9be",
       "mode": 420,
       "baseline_sha256": null,
-      "source_sha256": "5e9cb9eb3766d2f4f9950de647039056499653942a4dc958f3ae462e9ec5c225"
+      "source_sha256": "76afa2e97094e957d98bbc305ba40a5ab1151d37e0e711e6a966e8a8c766c9be"
     }
   },
   {

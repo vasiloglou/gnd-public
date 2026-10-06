@@ -83,7 +83,11 @@ def architecture():
 
 def test_bootstrap_ceiling_and_single_parse_dispatch():
     source = (ROOT / 'src/gnd/cli.py').read_text()
-    assert len(source.splitlines()) <= 1500
+    from support.rf5_sources import assert_cli_ceiling
+    assert_cli_ceiling(source)
+    oversized = source + "\n# RF5 ceiling countercheck" * (1501 - len(source.splitlines()))
+    with pytest.raises(AssertionError, match="bootstrap exceeds"):
+        assert_cli_ceiling(oversized)
     main = next(node for node in ast.parse(source).body if isinstance(node, ast.FunctionDef) and node.name == 'main')
     assert sum(isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == 'parse_args' for node in ast.walk(main)) == 1
     assert not any(isinstance(node, ast.Name) and node.id.startswith('_cmd_') for node in ast.walk(main))

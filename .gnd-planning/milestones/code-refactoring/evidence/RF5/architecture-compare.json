@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "tools/gnd_arch.py",
+    "compare",
+    "--base",
+    "29915d9",
+    "--head",
+    "a89358a",
+    "--out",
+    ".gnd-planning/milestones/code-refactoring/evidence/RF5/source-compare.json"
+  ],
+  "exit": 2,
+  "seconds": 0.030070781707763672
+}

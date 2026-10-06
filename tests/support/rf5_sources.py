@@ -29,3 +29,8 @@ def cli_sources(paths=None):
     if selected != expected:
         raise AssertionError('incomplete CLI defining-source scope')
     return '\n'.join(path.read_text(encoding='utf-8') for path in sorted(selected))
+
+
+def assert_cli_ceiling(source: str) -> None:
+    if len(source.splitlines()) > 1500:
+        raise AssertionError('RF5 bootstrap exceeds 1500 lines')

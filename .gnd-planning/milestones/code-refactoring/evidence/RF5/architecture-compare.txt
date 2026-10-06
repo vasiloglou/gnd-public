@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python tools/gnd_arch.py compare --base 29915d9 --head a89358a --out .gnd-planning/milestones/code-refactoring/evidence/RF5/source-compare.json
+usage: gnd_arch.py [-h] {measure,compare} ...
+gnd_arch.py: error: unrecognized arguments: --base --head
+
+Exit: 2

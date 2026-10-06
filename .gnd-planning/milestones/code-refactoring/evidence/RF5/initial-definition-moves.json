@@ -1,0 +1,948 @@
+{
+  "base": "29915d9",
+  "names": [
+    {
+      "name": "_stale_smoke_modules",
+      "old": "gnd.cli",
+      "new": "gnd.codegen.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "0d20c4924f9e174316725350aad27a7e772e0984bec47f33e517754649c4ad80"
+    },
+    {
+      "name": "_cmd_codegen",
+      "old": "gnd.cli",
+      "new": "gnd.codegen.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "13959f856db2d6217ee88bf31fbd041ebe46c364a1bc17c94b30cce846f64c98"
+    },
+    {
+      "name": "_BandSafeParser",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "ClassDef",
+      "ast_sha256": "6b9581330515de1b9ce8d1e9ce7dd4a1888a8f511b0375c552b95217645b2462"
+    },
+    {
+      "name": "_StoreOnce",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "ClassDef",
+      "ast_sha256": "d9713d10e4301a5bf57402b84ddce586c940221d141c75e5fc99787853056fa4"
+    },
+    {
+      "name": "_positive_int",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "8e8d1690606cd00b6ddb0834dbe1e22b86c139122b963f8be6a465e3f9b68113"
+    },
+    {
+      "name": "_positive_finite_float",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "2828c60bef53bedc54de6f85fb15de9d81334655d63a0f026658ef3eea577410"
+    },
+    {
+      "name": "_add_format_argument",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "809c8da273b1c18bac392d0f11703995d29caed17d72ff901f78a61687a2f1bf"
+    },
+    {
+      "name": "_add_unredacted_argument",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "4b862a464ebf65bc812749a6321f5c3f127d7d72cd2bb85853b38150405f2fb7"
+    },
+    {
+      "name": "OUTPUT_FORMATS",
+      "old": "gnd.cli",
+      "new": "gnd.commands._arguments",
+      "source_kind": "Assign",
+      "ast_sha256": "3740ed653f156458ea6ed47c1a57249b86554a61477f71479f5a7656c7f32ffa"
+    },
+    {
+      "name": "_print_issues",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fe86abee9b9d653c7b4264febc5810a8b96e070ef6772118cedf05139a6b58e1"
+    },
+    {
+      "name": "_print_trace",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "283ff90debd22afeca14c52a212b762b55016da7cc072e059a06f580fbc1c8da"
+    },
+    {
+      "name": "_print_projected_text",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "f82a735a0430d2b3e612b1ebf4260e137302e5ccaed2a8ee11a2c85363cc05c9"
+    },
+    {
+      "name": "_constraint_verdict_line",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "81d064100a3eda1cfacf5c1c5f2e918033bad070621df74aadcef80db025dd04"
+    },
+    {
+      "name": "_derivation_verdict_lines",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "b513948602b1520857b8bc091d8c7310a5870ec0bc3a1faf4b75de284b85bfc1"
+    },
+    {
+      "name": "_print_report",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3a5132bb92bff523c47b9783ec48bddc9c955f2f3a886e375cdb42bcd37e4701"
+    },
+    {
+      "name": "_band",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "2f66f982c92ddbacf279e32520d2c44aac79ecd6b6bc5033c7cd924e8c0c8d5a"
+    },
+    {
+      "name": "_print_transition",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "63c83a93b097cd7d34ec5a85fb2a3f5bffcdd58e84216d68157773440cb3924d"
+    },
+    {
+      "name": "_print_derived_change_summaries",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "caf8d9212cffc6504fdc72a08972c89460f6de3ae9a22ff4574b4acaf511da57"
+    },
+    {
+      "name": "_print_check_verdicts",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "554417ac824971bacb9dd4c6e2a40b389787016908d41b5d16574f084872a3d0"
+    },
+    {
+      "name": "_live_assurance",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "f713f342a01e65d8f876df8ed7041f4dd3ddbe99edfe71459eb1ca2604da7429"
+    },
+    {
+      "name": "_print_admission_text",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3324bfb673e2174d91a5ac5ac90e7b1508d3920a2aa0989801b14f81e49c7b3e"
+    },
+    {
+      "name": "_canonical_payload",
+      "old": "gnd.cli",
+      "new": "gnd.commands._output",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "1a1b6e5d1c5f5131de5dbc6edd7566c842acc9e15e6e4afbabaa181435770710"
+    },
+    {
+      "name": "_cmd_validate",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "754994aeecf03b996aae6636c37c608f9cd461bb360f0e3dcc92f4c0f9450687"
+    },
+    {
+      "name": "_cmd_coverage",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "6adaf23d21cf2f140fb044206258a55ce72ec559c3cb3ba3c735f437b456f520"
+    },
+    {
+      "name": "_cmd_transition",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "232040fe561ce1c1d465734de7eed6106777fe58433a3c02de66e31a2f79fcff"
+    },
+    {
+      "name": "_cmd_check",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
+    },
+    {
+      "name": "_cmd_verbalize_population",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fdc9c8aae0a4f252ee83c6ab6725615d6133d4a0e325c0c5184a6bcf560dcedc"
+    },
+    {
+      "name": "_cmd_diff",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "969308c72abae19a24094c4647480d3bff7fa9616caeb2d45c49cd88f09da59a"
+    },
+    {
+      "name": "_cmd_rai_import",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "4f4efb88f79bd9c410c545dffac100dc6dc2323a1208359390e36289d7e15295"
+    },
+    {
+      "name": "_cmd_check_batch",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "9524f7ccdca5ef73b656ad7aef21f7bb09dc07fc922345e538ad88bd84e4c292"
+    },
+    {
+      "name": "_DEFAULT_CHECK",
+      "old": "gnd.cli",
+      "new": "gnd.commands.checking",
+      "source_kind": "Assign",
+      "ast_sha256": "441de690acfa2ebeb9630a0c5cc251f756d08b85e7a534d1fc6e6137fb8d5739"
+    },
+    {
+      "name": "_parse_question",
+      "old": "gnd.cli",
+      "new": "gnd.commands.exp",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fa425cab7a52ab8ed67af015023f3ee62a574d81b0c9b07e79b240eede66a334"
+    },
+    {
+      "name": "_parse_covers",
+      "old": "gnd.cli",
+      "new": "gnd.commands.exp",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "523fea8df9d4fc13373d1d176e5f21e59491a62023ea7431faecbb62bdb49d52"
+    },
+    {
+      "name": "_cmd_export_pyrel",
+      "old": "gnd.cli",
+      "new": "gnd.commands.export",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "dba15359e90b5914a75c195cf92bfcc5ac2e4c1d4e4ae4e8e0267133a22aff4b"
+    },
+    {
+      "name": "_add_target_arguments",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "60235fd22b51aae7ecf69501bb9548932e9cf91e28709fa045e0cae51a62cd83"
+    },
+    {
+      "name": "_install_outcome",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "f705311298bdc61dc46365c4ea8d9540ec5f8a3f00116702fa55cd3d5f46ab0a"
+    },
+    {
+      "name": "_doctor_outcome",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "5461b5f48d23bfaa2d9d0c6c96e048d36b8ff4b3709c0e621620295756b973d9"
+    },
+    {
+      "name": "_render_states",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "74f07b173817f5dd5499b0212775d1ecb4f45988e5cdbc9ce2853356c378f7eb"
+    },
+    {
+      "name": "_render_diagnosis",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "e8671a87576f3c8110412baed818842d3132a72453441c8ec669adcc461d9da6"
+    },
+    {
+      "name": "_cmd_doctor",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "f9eaf6e23509d0ee97c76011f1509f06292a0bbf03b7a38cbc3dbe48df9ce3e8"
+    },
+    {
+      "name": "_uninstall_outcome",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "c7f269dfeddd8527c61062166c867fbaf58e091fe49492055d09dbcfe216a706"
+    },
+    {
+      "name": "_cmd_uninstall",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "ccf0dd547041c9f79d77015fb3e5da99962a3f89c9bbe577b5cdabb0d55f0c28"
+    },
+    {
+      "name": "_render_target_result",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "807129093691de8bf843fd1987037dfffb104b11c918c750ea00657c723ddf34"
+    },
+    {
+      "name": "_cmd_install",
+      "old": "gnd.cli",
+      "new": "gnd.commands.lifecycle",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "12d55b8962e6f9e681c8e74cf3e767b8621608fb52ccf7bf8adfff98de5e0257"
+    },
+    {
+      "name": "_add_review_panel_arguments",
+      "old": "gnd.cli",
+      "new": "gnd.commands.review",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "eaddf4473d20cf1bc7ad559bff15be2b5858c4974bf12e9512fc1b252ac32809"
+    },
+    {
+      "name": "_utf8_clean",
+      "old": "gnd.cli",
+      "new": "gnd.commands.solve",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "63770ab7aa80b216bcbeeee1a5023452927eb9369efa76ccfa28fe4f4402f923"
+    },
+    {
+      "name": "_cmd_solve",
+      "old": "gnd.cli",
+      "new": "gnd.commands.solve",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "510bdf0fbdc968a335d5ddef80741dfc4580a0a20f860b0c123a30b1cf548321"
+    },
+    {
+      "name": "_cmd_conformance",
+      "old": "gnd.cli",
+      "new": "gnd.conformance.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "88152d40c0e02924d76c3b8b7eae30d4c177d2f4133d8f8386398d55e07ac4e7"
+    },
+    {
+      "name": "_EvolutionCLIError",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "ClassDef",
+      "ast_sha256": "77061ecc638ac306856b4b15ba38fe07e96f19628d40433717f1f13102090a16"
+    },
+    {
+      "name": "_evolve_reject_unsafe_spelling",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "75e811d5202fef136c5b26e3de41bf7266a2b05ecf1f7875c682290d2c4a3320"
+    },
+    {
+      "name": "_evolve_absolute_path",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "749719110ce99c9b70d0b5dacaf426f1d06c6af9b7e51d5d04c4565ab9a4f72e"
+    },
+    {
+      "name": "_evolve_reject_existing_symlinks",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "9507bf222c10862aa809c95f2509ca3f16d193a873e6d49bde94769b80f19ec8"
+    },
+    {
+      "name": "_evolve_workspace",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "d0b978d9fbeb4680bcfe3efe4f208e4d2aca44e6bee845d693b4bb9a2545ed2a"
+    },
+    {
+      "name": "_evolve_rooted_path",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "6ddfe0bac7fa0e447d075170f7927a036095d5496ea3f9d859d0fe02bc3db77d"
+    },
+    {
+      "name": "_evolve_workspace_path",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "29a33ce59f3720adafa39d8007ebb3d7c9ab43cba28a13c717253ae7117e4583"
+    },
+    {
+      "name": "_evolve_records_root",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "7b52429aedd52992d71590cd211e51d9561ea007fe2eb5b232fe48e75d14de64"
+    },
+    {
+      "name": "_evolve_read_claim",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "b7c663dcda596a56b779e7971ca87e76fc38472f67e1bf8a68063c1e34be6c52"
+    },
+    {
+      "name": "_evolve_validate_proposal_roots",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fdcba443e0cfbdc8df1f5f03e77f504a7e274317cf805ce908089b27160f6049"
+    },
+    {
+      "name": "_evolve_service_exit",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "5a0ae02c3e8deccd71c10e6bc0f33553761b6fb5ef3d1751b67e9b48c48f4fe4"
+    },
+    {
+      "name": "_evolve_json_bytes",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fc06ac2e0ef08b9ff6c337a759347b1a3b9ec739a1e4b7d05d57bed4818a1322"
+    },
+    {
+      "name": "_evolve_emit_claim",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3b7696b398b5555a9ac787e3278af340a37069a7667b28723bc66aa84ea7feef"
+    },
+    {
+      "name": "_evolve_publish_preview",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "9509cc5786882ea13bcbc22943c6d289fb7c7375061b598f0d299ffcd4d31879"
+    },
+    {
+      "name": "_evolve_same_review_identity",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "07532efa23b01357f7facb8445755d5780074aea0eb408ce896cacf382926838"
+    },
+    {
+      "name": "_evolve_error_exit",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "83af045a10c9a2f25c81eab24ee67309faa1ae7b0312803063b0bcc1eefca3e1"
+    },
+    {
+      "name": "_evolve_fail",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "803e63685382688b530a50908ca536a5e8a2640a9cc2f0e9edceccf5dbc8dd4b"
+    },
+    {
+      "name": "_evolve_finish_apply",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "143de79222482995f6c5400f1f104e9149b4463c048ff14d4952e6e6349181d1"
+    },
+    {
+      "name": "_cmd_evolve_preview",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3616be80e57598a6023835eca10306b042faee994c99cec700077ab864a13af5"
+    },
+    {
+      "name": "_cmd_evolve_apply",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "13d38ed9e56f66ba0dbe40e91e42d9d50d3b70f9e0a86f7089f0f1a4780e8926"
+    },
+    {
+      "name": "_cmd_evolve_finalize",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "66d0ebf9486ac3f6d9550060de86ee6ae0d2b043b6cdcebc86209b9171f9977f"
+    },
+    {
+      "name": "_EVOLUTION_CLAIM_MAX_BYTES",
+      "old": "gnd.cli",
+      "new": "gnd.evolve.cli_service",
+      "source_kind": "Assign",
+      "ast_sha256": "59e0bb1b8cec2dd1fddc889cd9b246ff0af9ad414d3eb048c0490904c01068ce"
+    },
+    {
+      "name": "_session_result_exit",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "211046eadc3c910886cf90ba9c0fb57bdcaec0361c761fd6d431e1d62d7efd93"
+    },
+    {
+      "name": "_experiment_outcome",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "59c89ce13cdfb8c49a59f0fc1ab9bfea4507a4a0f3b6cd7eed9cb6eeb16d3643"
+    },
+    {
+      "name": "_cmd_exp_init",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "1f97d2807453f8cb600c5221c8f337423f4292201fab3315148a171395c385c8"
+    },
+    {
+      "name": "_cmd_exp_validate",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "0ff1c409152b150fd26ced9c93e90c7dcc881412e67bfcd37bc936e539b13cfe"
+    },
+    {
+      "name": "_cmd_exp_author_expectation",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "a1adeafb0a712f159fc99e2e63ffbde28ab586e1a419267183ef7c136550e56b"
+    },
+    {
+      "name": "_cmd_exp_close",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "de87200a3baf600bdd3cefc5609c0d9af3ab5717cd1942c3a95d215fc4d79130"
+    },
+    {
+      "name": "_next_session_run_root",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "7249589075fee66c8b51eb3f433f93a4db0a2a9d51bb999e91aff00e0da3a088"
+    },
+    {
+      "name": "_run_tests_mode_bridge",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "966cbb4ad8feb4940c885b1aa2a719dc89d5082be3165d6d8e5f2f01019dd3cd"
+    },
+    {
+      "name": "_cmd_exp_run",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "25ece4b3d2be4b74f114a8c2a209f99c344964b6262cb165c281391fa8996c9a"
+    },
+    {
+      "name": "CLI_TEST_ARGV_REQUIRED_REASON",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "Assign",
+      "ast_sha256": "9a44b7f5250c0e31c9bcc5fa74e4174f046ca76d1cb4c372e29d68966702bee0"
+    },
+    {
+      "name": "CLI_TEST_ARGV_FORBIDDEN_REASON",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "Assign",
+      "ast_sha256": "581d8091577e1aab82099e27ab4ccfd877268cdfa9499f65bb7d7952936425ff"
+    },
+    {
+      "name": "CLI_WORK_COVERS_REQUIRED_REASON",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "Assign",
+      "ast_sha256": "247a066425eba0d3a9ce905223645eb252e0908fcc8b29cf0cf57d3656a0e8bd"
+    },
+    {
+      "name": "KIND_AUTHOR_EXPECTATION_TESTS_REASON",
+      "old": "gnd.cli",
+      "new": "gnd.exp.cli_service",
+      "source_kind": "Assign",
+      "ast_sha256": "b77fa092b4377f7dd10dac9665fee57c2a9bb31d63ac8412cc215a6fca2a66a0"
+    },
+    {
+      "name": "_cmd_verify",
+      "old": "gnd.cli",
+      "new": "gnd.export.verification_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "aacfdf3a6759c7e7169823ff12063a3c841df086b4fc7e770749657472ad601a"
+    },
+    {
+      "name": "_extract_stem",
+      "old": "gnd.cli",
+      "new": "gnd.extract.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "79da200d824492019864bcea3d5ec70e04bffd4c9a31851c955843d5fb383c02"
+    },
+    {
+      "name": "_extraction_header_template",
+      "old": "gnd.cli",
+      "new": "gnd.extract.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "faa037be00dbbe09f8bbef12ac7a433465b602af7cc5d743e306a5e1a45c6077"
+    },
+    {
+      "name": "_artifact_index_issue",
+      "old": "gnd.cli",
+      "new": "gnd.extract.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "e0d3cd34bc6e6a672ecb2d2758688d53e7486e4cfa73682c90dbc83fd3747b9e"
+    },
+    {
+      "name": "_cmd_extract",
+      "old": "gnd.cli",
+      "new": "gnd.extract.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "abd0f8f856e9ad2c1c1cbcf90bbe04b451bc12f126506b07d97db08ed79a0e7e"
+    },
+    {
+      "name": "_cmd_doccheck",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.doccheck_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "cb7b3d77621ef58c5e3d9afe66dcdecbcedb01686ac105bf96e3ba6ee4d7efb1"
+    },
+    {
+      "name": "_cmd_fidelity",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fb248626b85c0f86e657883eb61628efae2e0a81cc9edcba08747dd0dfa396f6"
+    },
+    {
+      "name": "_CASE_SOURCE",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "Assign",
+      "ast_sha256": "216cc38001f380c05808df93144884ef006ffb746cf5db008c574a956c2c8da9"
+    },
+    {
+      "name": "_CASE_DOCUMENT",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "Assign",
+      "ast_sha256": "7c49c26f69ce9c1fda17a5b02722debb2b8c2450114236fb3e6eb6f5f778d27f"
+    },
+    {
+      "name": "_CASE_MANIFEST",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "Assign",
+      "ast_sha256": "eb9df3210c572a9f84f6d9740696a061ce6b0c73ecfd2268d91dbc571bb2d2ee"
+    },
+    {
+      "name": "_CASE_EXTRACTED",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "Assign",
+      "ast_sha256": "f171f0c40e0795c9e25db83dd886cf84aae285f0010ddfaad23fb5d72220b65e"
+    },
+    {
+      "name": "_CASE_SIDECAR",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "Assign",
+      "ast_sha256": "ff29494a70e74a77fbb02c771e356b103b8105285447e1406173f7ddeef7aafe"
+    },
+    {
+      "name": "_CASE_SKIPPED",
+      "old": "gnd.cli",
+      "new": "gnd.fidelity.service",
+      "source_kind": "Assign",
+      "ast_sha256": "296dbe7089abe07b9cdc8e7b934d101e373234518c3a3255134649a1e23cf959"
+    },
+    {
+      "name": "_cmd_measure",
+      "old": "gnd.cli",
+      "new": "gnd.measure.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "38cf22dc75402003dff5e3368d8468d59fb00b2cdd6eb957b7c3a6a6ef073273"
+    },
+    {
+      "name": "_promote_defects",
+      "old": "gnd.cli",
+      "new": "gnd.measure.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3404077ca465c15aa65eb8e29c0fe5f997ca5bdfe36bc0ebbca014ede28aa7ba"
+    },
+    {
+      "name": "_RecoveryCLIError",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "ClassDef",
+      "ast_sha256": "121a944101e7996253998458381675e8da77786cb784af38eb15b0a52d91daf0"
+    },
+    {
+      "name": "_recovery_root",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "2f0cc34ee92d70651508b04ab0cba0cf6a14e6858552f911d2e590ac20948e03"
+    },
+    {
+      "name": "_recovery_relative_argv",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "57e2f71dbef010f0e013b9b1889ea657fa22e34d8c4776dc8a50e4643a5529ac"
+    },
+    {
+      "name": "_recovery_required_canonical_leaf",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3b4e1cd2459afc2e21b08b29703ce5c315f04c2727315f395ee7a0a2ec4d31f6"
+    },
+    {
+      "name": "_recovery_cause_is",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3b11719fa6372d4bb8068ae8e5e997afaae305b000e6e48ea8303b7b7c174ab6"
+    },
+    {
+      "name": "_recovery_json",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "e31183758e65e27bfa8c691ceac23383364739bea7ee9182d61b8e9b53ec1683"
+    },
+    {
+      "name": "_recovery_open_output_parent",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "6dcd82ccede2742335676dfa3323ca10e924a271339d854794bb0a2cc7860c18"
+    },
+    {
+      "name": "_recovery_canonical_directory_parts",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "7086003a423d243a901606d76a128ba2b486508d4501d32c8e3dd3056ab8d5a3"
+    },
+    {
+      "name": "_recovery_require_absent_output",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "db38c6c562e9f53dfe45a4efd064a128a7bc5d303eb27bd49d8bae0356e8d158"
+    },
+    {
+      "name": "_recovery_require_existing_exclusion",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fb2054a7270b81cf3a2646bcbc2c00e50ac14dbfaacc97d3be41c43d8d9d0249"
+    },
+    {
+      "name": "_recovery_root_still_bound",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "9c5de5ed2ff816ff5bd5b1229b836bfe893de8f7228e32ca277497ae4a8e87c1"
+    },
+    {
+      "name": "_recovery_publish_absent",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "fc1afec798727b05879fdbd0f011a207deccb6d062a38722dbba4c56718fc756"
+    },
+    {
+      "name": "_parse_recovery_exclusion",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "f883c15cd8c7a25b2577497e8348a26608eb3d5b952c3764961e233309458571"
+    },
+    {
+      "name": "_cmd_recovery_inventory",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "551426744502acc0b54288da8a906a6faf371cf366dea2da88e6469075675c5f"
+    },
+    {
+      "name": "_cmd_recovery_verify",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "bd9c3729ac965040e0356d0c7fd15aa927d3978b01548aecdf1424b3c65ab34d"
+    },
+    {
+      "name": "_RECOVERY_DIRECTORY_NAME_OBSERVATION_CAP",
+      "old": "gnd.cli",
+      "new": "gnd.recovery.service",
+      "source_kind": "Assign",
+      "ast_sha256": "d05177b179c026491b5c9eb483b559204d2dc5cfd3c2cf9ae69757b71c49e170"
+    },
+    {
+      "name": "_review_outcome",
+      "old": "gnd.cli",
+      "new": "gnd.review.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "ab59606c0c04243106dc864dff59e30789ddcf9363222898db76f2fdb707e920"
+    },
+    {
+      "name": "_repository_relative_path",
+      "old": "gnd.cli",
+      "new": "gnd.review.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "424a06bcb20cc7e68e6b07ba6ca7b492cf240faa742298bd5eaaa46117af6727"
+    },
+    {
+      "name": "_cmd_review_panel",
+      "old": "gnd.cli",
+      "new": "gnd.review.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "ec8d1964ee67cab8ffc791537843bfa5fce2457bfb3daf04a2676eb52b5114b8"
+    },
+    {
+      "name": "_cmd_review_finalize",
+      "old": "gnd.cli",
+      "new": "gnd.review.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "e4458eb7a0f2112c0d61bf5834b494e73f17511b7bc070321ef4c3ad1c8e2880"
+    },
+    {
+      "name": "REVIEW_ATTEMPTED_REVIEWERS",
+      "old": "gnd.cli",
+      "new": "gnd.review.service",
+      "source_kind": "Assign",
+      "ast_sha256": "fcfb9fff1fb751f7751e40a6063794dd33d1636ab033d3e85af50aab7fb7096c"
+    },
+    {
+      "name": "REVIEW_TERMINATE_GRACE_SECONDS",
+      "old": "gnd.cli",
+      "new": "gnd.review.service",
+      "source_kind": "Assign",
+      "ast_sha256": "178ab7d1c9257eea44e0a7f1c96f3af139270b7c1643d6f38e2c2c373c94d642"
+    },
+    {
+      "name": "IndexValidationError",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "ClassDef",
+      "ast_sha256": "4bc60f9843804443cb370477e54214b69f89278c2f9062c755bf41aca1a3de91"
+    },
+    {
+      "name": "_validate_index_document",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "a49234f79173c1c35221b961ed91cae20438380784c7324715f4dcd4e2dd4a18"
+    },
+    {
+      "name": "_SynthCorpusTransaction",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "ClassDef",
+      "ast_sha256": "cc94ccd95c6136eecd07433b2ccd49f14ad30a9b1faae09c7f788e016064e434"
+    },
+    {
+      "name": "_validate_existing_synth_index",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3a4366d8f8cad7a47139443b336a73e477df370a0b9f2c0a0e32aa13b42a5d56"
+    },
+    {
+      "name": "CorpusPathError",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "ClassDef",
+      "ast_sha256": "bccea741b5dc4844faefc1d2d2981977967357def61b641b7cea81c42236aace"
+    },
+    {
+      "name": "_resolve_corpus_path",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "d47cd331e0fe098bece879ce4dc3207d3b70203247fe049cf59d5d1fd4a74994"
+    },
+    {
+      "name": "_resolve_unique_index_entries",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "0cabad9b79f10e9bbe64f34d907a26a2354772d30dd1358bdd94d21e6361fa1e"
+    },
+    {
+      "name": "_corpus_relative",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "7c3fd32a8246238fe440b290fb032ef5c760fbf460a4b0933a8584b8da37b641"
+    },
+    {
+      "name": "_merge_index",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "cc44a58aaf4085770bc0f1dca7c927d0688f43892642400d5fbbb168aa4e90d0"
+    },
+    {
+      "name": "_INDEX_SCHEMA",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "AnnAssign",
+      "ast_sha256": "9031ef739cd5122661def88ee229bf53518e6d993a546da103eb4180e861614b"
+    },
+    {
+      "name": "_INDEX_VALIDATOR",
+      "old": "gnd.cli",
+      "new": "gnd.synth.corpus_service",
+      "source_kind": "Assign",
+      "ast_sha256": "c5ccb7f7494f2b9e3dd6b5aba748d2cb68f195ad193f34aa2f4a3b5cc107ff60"
+    },
+    {
+      "name": "_emit_boundary_corpus",
+      "old": "gnd.cli",
+      "new": "gnd.synth.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "e49aac21a510e7b6bc2264030d5138519c25b32d2a8b95840f172512b4498fd8"
+    },
+    {
+      "name": "_bind_synth_not_derivable",
+      "old": "gnd.cli",
+      "new": "gnd.synth.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "3819ee0196a9b9ccbd8c1b1c492ea4d8203ac4b8c9e0e913a7d7905beb0d23fb"
+    },
+    {
+      "name": "_cmd_synth",
+      "old": "gnd.cli",
+      "new": "gnd.synth.service",
+      "source_kind": "FunctionDef",
+      "ast_sha256": "6de71ba1b100792a9f8578e97d3c05f05b851a4d3a4ecef7409926611c70e201"
+    }
+  ],
+  "binding_substitutions": {
+    "install_module": "gnd.safefs (exceptions remain identical)",
+    "report_module": "gnd.payloads",
+    "output_api_module": "gnd.checking_service._certify_assurance is certify_assurance"
+  }
+}

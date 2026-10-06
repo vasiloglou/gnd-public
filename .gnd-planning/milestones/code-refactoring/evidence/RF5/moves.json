@@ -494,7 +494,7 @@
     {
       "name": "_session_result_exit",
       "old": "gnd.cli",
-      "new": "gnd.exp.cli_service",
+      "new": "gnd.commands.exp",
       "source_kind": "FunctionDef",
       "ast_sha256": "211046eadc3c910886cf90ba9c0fb57bdcaec0361c761fd6d431e1d62d7efd93"
     },
@@ -536,21 +536,21 @@
     {
       "name": "_next_session_run_root",
       "old": "gnd.cli",
-      "new": "gnd.exp.cli_service",
+      "new": "gnd.commands.exp",
       "source_kind": "FunctionDef",
       "ast_sha256": "7249589075fee66c8b51eb3f433f93a4db0a2a9d51bb999e91aff00e0da3a088"
     },
     {
       "name": "_run_tests_mode_bridge",
       "old": "gnd.cli",
-      "new": "gnd.exp.cli_service",
+      "new": "gnd.commands.exp",
       "source_kind": "FunctionDef",
       "ast_sha256": "966cbb4ad8feb4940c885b1aa2a719dc89d5082be3165d6d8e5f2f01019dd3cd"
     },
     {
       "name": "_cmd_exp_run",
       "old": "gnd.cli",
-      "new": "gnd.exp.cli_service",
+      "new": "gnd.commands.exp",
       "source_kind": "FunctionDef",
       "ast_sha256": "25ece4b3d2be4b74f114a8c2a209f99c344964b6262cb165c281391fa8996c9a"
     },

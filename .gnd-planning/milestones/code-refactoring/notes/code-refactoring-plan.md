@@ -37,6 +37,17 @@ plan is an audit claim that has not been re-proved.** Where such a number
 appears it is marked *(audit)*, and no criterion depends on it. Criteria
 are stated over the inventory that RF0 measures.
 
+## RF9 owner-requested review amendment, 2026-10-06
+
+The owner requested: "ok start this detailed code review and register it in the plan as RF9".
+RF9 is the cumulative review defined below, following completed RF8. This request
+explicitly authorizes this plan registration and the review; it does not authorize
+production repairs, milestone close, certification or merge. Original r1/r2 panel
+opinions describe their original bytes, not this amendment. RF7 was subsequently
+pulled forward by explicit owner instructions and is recorded in013-phase-RF7.md;
+RF9 assesses those approved restrictions, not the obsolete RF7-deferred premise.
+The original scope text remains historical evidence pending close reconciliation.
+
 ## Thesis and completion predicates
 
 GND's structure no longer matches its intended layers. The audit reports
@@ -153,6 +164,8 @@ edit `src/gnd`. (e1) RF-D2 is satisfied, so RF2 may start as soon as the
 RF1 record is committed. Every phase from
 RF2 on is behavior-preserving, with no exception (RF-R1). RF8 carries the
 highest risk and comes last so that it can rely on everything before it.
+
+RF9 follows RF8 as a cumulative code review, under the owner amendment above.
 
 ## 4. Phases
 
@@ -364,6 +377,38 @@ RF8-C2 — `session_v7.py` holds only strategy hooks, or is removed behind a
 shim. RF8-C3 — no multi-module SCC remains among the session modules that
 RF0 confirmed; a refuted cycle is recorded as already satisfied.
 
+### RF9 — Cumulative code review
+
+**Outcome:** review the combined RF1–RF8 changes for regressions and cross-phase
+interaction defects. Compare the pre-refactor source atf5a83186f7c2215ac2b2afb0a010c2294eaa433a
+with production atd440b2e37449ef46647d18c491c46d9bb8d3e851. Later RF9 commits
+may add review artifacts only; changed production would require a new subject.
+
+Four separately prompted native Codex review runs own: (A) behavior/compatibility,
+(B) architecture and actual coupling, (C) state/cache/input/failure correctness,
+and (D) test/evidence integrity. The primary reviewer reconciles and reproduces
+findings; four runs using one model/provider are not four independent models or
+the maintained six-seat advisory panel. No automatic panel handoff is selected.
+
+**Criteria:** RF9-C1 — all four readings return with exact subject, inspected scope,
+confirmed claims and uncovered areas. RF9-C2 — each retained finding has current
+path/line, trigger, expected/observed consequence, reproduction or explicit
+unverified status, severity, blocking/hardening/completeness classification and
+proposed owner. RF9-C3 — focused current-source counterexamples and historical
+comparisons distinguish introduced regressions from accepted RF7 restrictions,
+pre-existing defects and deferred work. RF9-C4 — final report audits coverage,
+architectural measurements, compatibility, test liveness and remaining evidence
+gaps, with exact commands/exits and byte-bound artifacts. No clean bill of health
+is inferred from a lack of findings. RF9-C5 — production and original fixtures
+stay unchanged; repairs require a separately approved implementation scope.
+
+Budget: one initial review per area, no repair round in this review-only phase;
+at most25 touched artifact/probe files,1000 probe lines,1500 non-evidence prose
+lines and zero production changes. Full default/historical suites, certification,
+release, source-owned transfers and merge remain outside scope. A review may
+finish with blockers; completion means the findings are assessed and retained.
+The detailed selection and review protocol live innotes/phase-RF9-spec.md.
+
 ## 5. Development skills and documentation surfaces
 
 | Surface | Treatment | Phase |
@@ -426,6 +471,7 @@ Delegation granted for public-launch does not carry over to this milestone.
 | RF6 | SM1–SM4; registry extension test; index staleness test; split budget | Checker families, verbalize, semantic adapter controls |
 | RF7 | Not executed (RF-D7) | — |
 | RF8 | SM1–SM4; replays identical per version and path | `exp` session, store, close and judgments controls |
+| RF9 | RF9-C1–C5; four bounded cumulative readings, primary reproduction and coverage audit | Review prompts, focused counterexamples, current graph and evidence bindings; no broad replay |
 
 Each spec records `run`, `inherit` or `cadence` for every selection, with its
 input boundary and invalidation trigger. A moved file invalidates inherited
@@ -437,6 +483,7 @@ results for everything that imports it.
 
 | Decision | Ruling |
 |---|---|
+| RF-D14 — RF9 registration and review | 2026-10-06: owner explicitly requests detailed cumulative review and registration as RF9. Read-only production scope and four reviewer areas as defined above; fixes/close/merge remain separate. |
 | RF-D1 — Execution authority | 2026-10-05: "everything happens on the gnd-public". The handoff of `runtime` and `test-acceptance` is stated in the RF0 record. The public-launch ledger follows RF-R7. |
 | RF-D2 — Sequencing with public-launch | (e1) **Satisfied, 2026-10-05**, by owner ruling under RF-D12, recorded in the RF0 spec's owner amendment 2. Public-launch (renamed gnd-public-migration) recorded the Phase 3 acceptance (`004`), the Phase 4 sign-off (`008`) and its close (`009`). The close defers Phase 5, and Phase 5 will rebuild its candidate from the then-current commit, so there is no tag condition. RF2 may start once RF1 is recorded. Original text, superseded: 2026-10-05, amended the same day after the r1 review. RF2 and later phases start only after the public-launch Phase 3 acceptance and the Phase 4 candidate sign-off are recorded, the signed-off commit is tagged, and public-launch records that Phase 5 publishes from that tag, with launch fixes landing on a release branch and merging forward. Recording that is a public-launch act: this plan cannot bind public-launch, so RF2 waits for it. The Phase 5 history inspection also covers refactor commits. RF0 and RF1 may proceed after the plan gate. |
 | RF-D7 — Tightening scope | 2026-10-05: RF7 is deferred to a successor milestone in full, including the alias/size guards for the two unguarded YAML loaders (`evolve/service.py:186`, `export/souffle.py:61`). The owner can pull any sub-part forward at a later phase gate. A spot check on 2026-10-05 found that the installer path validator accepts `./a` and `a\b` but refuses `..\x` and `a/../b`, so the audit's "looser" claim concerns unusual names, not traversal. |

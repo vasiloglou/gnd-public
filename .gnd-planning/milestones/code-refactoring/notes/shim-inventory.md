@@ -306,3 +306,12 @@ canonical defining homes and are exposed through distinct public seams.
 Agent runner/adapter, assurance, oracle, payload and export/witness service
 aliases retain predecessor objects and historical serialized qualifications.
 Retirement follows RF-D5: first public release after RF6 plus separate approval.
+
+## RF6a primitive query move
+
+| gnd.universe._resolved_primitive | gnd.model_queries._resolved_primitive | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
+| gnd.universe._supertype_parents | gnd.model_queries._supertype_parents | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
+| gnd.universe._identifying_primitive | gnd.model_queries._identifying_primitive | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
+| gnd.universe._identifying_id | gnd.model_queries._identifying_id | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
+| gnd.universe._resolve_reference | gnd.model_queries._resolve_reference | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
+| gnd.universe.primitive_for | gnd.model_queries.primitive_for | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |

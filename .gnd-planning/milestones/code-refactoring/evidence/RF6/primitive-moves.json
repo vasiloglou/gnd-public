@@ -1,0 +1,32 @@
+[
+  {
+    "old": "gnd.universe._resolved_primitive",
+    "new": "gnd.model_queries._resolved_primitive",
+    "body_sha256": "7723022949e07020b9fbcf7f21391aab32606d670831222cc900699bcfe69a67"
+  },
+  {
+    "old": "gnd.universe._supertype_parents",
+    "new": "gnd.model_queries._supertype_parents",
+    "body_sha256": "9fa2435594d699e176a21ef8ea61194b32b9050d3ebe74c80a3cc0ccd1593a91"
+  },
+  {
+    "old": "gnd.universe._identifying_primitive",
+    "new": "gnd.model_queries._identifying_primitive",
+    "body_sha256": "cbe152966b6640d61cf2b84cde2062b5011ebff1bc23ae6edeef95832af4ebd2"
+  },
+  {
+    "old": "gnd.universe._identifying_id",
+    "new": "gnd.model_queries._identifying_id",
+    "body_sha256": "0bdb5df2382c88445f49bfee6e25bb9bcabacd7db9d91dd44c210a0641ac627e"
+  },
+  {
+    "old": "gnd.universe._resolve_reference",
+    "new": "gnd.model_queries._resolve_reference",
+    "body_sha256": "1b40f87dd30ae9f59e2e23d3044eb18b4177a67bc334ce4aed7ef730f985f463"
+  },
+  {
+    "old": "gnd.universe.primitive_for",
+    "new": "gnd.model_queries.primitive_for",
+    "body_sha256": "75a5a07058eded8975540c9e0211642654702c93b7974a52f38ac89cb4206472"
+  }
+]

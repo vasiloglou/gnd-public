@@ -1,0 +1,579 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf7_input_policy.py tests/test_rf7_consumers.py --tb=short
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF...FFFFFFFF.FF                         [100%]
+=================================== FAILURES ===================================
+_______________________ test_json_refusal[{"x":1,"x":2}] _______________________
+tests/test_rf7_input_policy.py:19: in test_json_refusal
+    policy().loads(raw)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_________________________ test_json_refusal[{"x":NaN}] _________________________
+tests/test_rf7_input_policy.py:19: in test_json_refusal
+    policy().loads(raw)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+________________________ test_json_refusal[[Infinity]] _________________________
+tests/test_rf7_input_policy.py:19: in test_json_refusal
+    policy().loads(raw)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+__________________________ test_json_refusal[[1e999]] __________________________
+tests/test_rf7_input_policy.py:19: in test_json_refusal
+    policy().loads(raw)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_ test_json_refusal[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[0]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]] _
+tests/test_rf7_input_policy.py:19: in test_json_refusal
+    policy().loads(raw)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_________________ test_json_acceptance_types_and_custom_hooks __________________
+tests/test_rf7_input_policy.py:23: in test_json_acceptance_types_and_custom_hooks
+    p = policy()
+        ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_____________________ test_json_decoder_trailing_and_depth _____________________
+tests/test_rf7_input_policy.py:37: in test_json_decoder_trailing_and_depth
+    decoder = policy().JSONDecoder()
+              ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_________ test_yaml_preconstruction_refusal[x: &a [1]\ny: *a-limits0] __________
+tests/test_rf7_input_policy.py:51: in test_yaml_preconstruction_refusal
+    policy().guard_yaml(raw, **limits)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_______________ test_yaml_preconstruction_refusal[x: 1-limits1] ________________
+tests/test_rf7_input_policy.py:51: in test_yaml_preconstruction_refusal
+    policy().guard_yaml(raw, **limits)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_____________ test_yaml_preconstruction_refusal[x: [1, 2]-limits2] _____________
+tests/test_rf7_input_policy.py:51: in test_yaml_preconstruction_refusal
+    policy().guard_yaml(raw, **limits)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_____________ test_yaml_preconstruction_refusal[x: [[1]]-limits3] ______________
+tests/test_rf7_input_policy.py:51: in test_yaml_preconstruction_refusal
+    policy().guard_yaml(raw, **limits)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_____________________ test_yaml_accepted_quote_and_limits ______________________
+tests/test_rf7_input_policy.py:55: in test_yaml_accepted_quote_and_limits
+    policy().guard_yaml('x: "*alias [["\ny: [1, 2]')
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_________________ test_datetime_accepted[2024-02-29T00:00:00Z] _________________
+tests/test_rf7_input_policy.py:60: in test_datetime_accepted
+    assert policy().parse_datetime(value).year == 2024
+           ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+___________________ test_datetime_accepted[2024-02-29T00:00] ___________________
+tests/test_rf7_input_policy.py:60: in test_datetime_accepted
+    assert policy().parse_datetime(value).year == 2024
+           ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+___________ test_datetime_accepted[2024-02-29T00:00:00.123456+01:30] ___________
+tests/test_rf7_input_policy.py:60: in test_datetime_accepted
+    assert policy().parse_datetime(value).year == 2024
+           ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+____________________ test_datetime_refusal[20240229T000000] ____________________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+__________________ test_datetime_refusal[2024-02-29 00:00:00] __________________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_________________ test_datetime_refusal[2024-02-29t00:00:00z] __________________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_______________ test_datetime_refusal[2024-02-29T00:00:00+0130] ________________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_______________ test_datetime_refusal[2024-02-29T00:00:00+01:99] _______________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_________________ test_datetime_refusal[2024-02-30T00:00:00Z] __________________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_____________ test_datetime_refusal[2024-02-29T00:00:00.1234567Z] ______________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_______ test_datetime_refusal[\uff12\uff10\uff12\uff14-02-29T00:00:00Z] ________
+tests/test_rf7_input_policy.py:66: in test_datetime_refusal
+    policy().parse_datetime(value)
+    ^^^^^^^^
+tests/test_rf7_input_policy.py:13: in policy
+    return importlib.import_module('gnd.input_policy')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1398: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1371: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1335: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'gnd.input_policy'
+_______________________ test_path_spelling_refused[./a] ________________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+_______________________ test_path_spelling_refused[a//b] _______________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+______________________ test_path_spelling_refused[a/./b] _______________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+_______________________ test_path_spelling_refused[a\\b] _______________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+________________________ test_path_spelling_refused[ a] ________________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+________________________ test_path_spelling_refused[a ] ________________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+________________________ test_path_spelling_refused[a/] ________________________
+tests/test_rf7_consumers.py:17: in test_path_spelling_refused
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+______________________ test_path_parents_and_leaf_policy _______________________
+tests/test_rf7_consumers.py:23: in test_path_parents_and_leaf_policy
+    with pytest.raises(safefs.InstallPathError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE InstallPathError
+___________________ test_primitive_nonboolean_inheritance[1] ___________________
+tests/test_rf7_consumers.py:37: in test_primitive_nonboolean_inheritance
+    assert primitive_for('entity', types, variant=variant) is None
+E   AssertionError: assert 'String' is None
+E    +  where 'String' = <function primitive_for at 0x1081b8510>('entity', {'value': {'id': 'value', 'kind': 'value', 'primitive': 'String'}, 'entity': {'id': 'entity', 'kind': 'entity', 'inherits_reference': 1, 'subtype_of': ['value']}}, variant='truthy')
+__________________ test_primitive_nonboolean_inheritance[yes] __________________
+tests/test_rf7_consumers.py:37: in test_primitive_nonboolean_inheritance
+    assert primitive_for('entity', types, variant=variant) is None
+E   AssertionError: assert 'String' is None
+E    +  where 'String' = <function primitive_for at 0x1081b8510>('entity', {'value': {'id': 'value', 'kind': 'value', 'primitive': 'String'}, 'entity': {'id': 'entity', 'kind': 'entity', 'inherits_reference': 'yes', 'subtype_of': ['value']}}, variant='truthy')
+_________________ test_primitive_nonboolean_inheritance[true] __________________
+tests/test_rf7_consumers.py:37: in test_primitive_nonboolean_inheritance
+    assert primitive_for('entity', types, variant=variant) is None
+E   AssertionError: assert 'String' is None
+E    +  where 'String' = <function primitive_for at 0x1081b8510>('entity', {'value': {'id': 'value', 'kind': 'value', 'primitive': 'String'}, 'entity': {'id': 'entity', 'kind': 'entity', 'inherits_reference': 'true', 'subtype_of': ['value']}}, variant='truthy')
+________________ test_yaml_alias_actual_reader_refuses[evolve] _________________
+tests/test_rf7_consumers.py:48: in test_yaml_alias_actual_reader_refuses
+    with pytest.raises(ValueError, match='alias'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+________________ test_yaml_alias_actual_reader_refuses[souffle] ________________
+tests/test_rf7_consumers.py:52: in test_yaml_alias_actual_reader_refuses
+    with pytest.raises(ValueError, match='alias'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_____________ test_json_actual_reader_overflow_refuses[population] _____________
+tests/test_rf7_consumers.py:61: in test_json_actual_reader_overflow_refuses
+    with pytest.raises(Exception):
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE Exception
+______________ test_json_actual_reader_overflow_refuses[adapter] _______________
+tests/test_rf7_consumers.py:65: in test_json_actual_reader_overflow_refuses
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+_______________ test_json_actual_reader_overflow_refuses[store] ________________
+tests/test_rf7_consumers.py:69: in test_json_actual_reader_overflow_refuses
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+______ test_fifo_refused_with_deadline[gnd.synth.provenance:_sha256_file] ______
+tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
+    result = subprocess.run([sys.executable, '-c', code], env={**os.environ, 'PYTHONPATH': str(root / 'src')}, capture_output=True, text=True, timeout=2, check=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:556: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1220: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:2153: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
+    raise TimeoutExpired(
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.synth.provenance import _sha256_file as digest\ntry:\n    digest(Path('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4458/test_fifo_refused_with_deadlin0/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
+_________ test_fifo_refused_with_deadline[gnd.measure.promote:_digest] _________
+tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
+    result = subprocess.run([sys.executable, '-c', code], env={**os.environ, 'PYTHONPATH': str(root / 'src')}, capture_output=True, text=True, timeout=2, check=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:556: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1220: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:2153: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
+    raise TimeoutExpired(
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.measure.promote import _digest as digest\ntry:\n    digest(Path('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4458/test_fifo_refused_with_deadlin1/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
+____ test_fifo_refused_with_deadline[gnd.transition:population_file_digest] ____
+tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
+    result = subprocess.run([sys.executable, '-c', code], env={**os.environ, 'PYTHONPATH': str(root / 'src')}, capture_output=True, text=True, timeout=2, check=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:556: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1220: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:2153: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
+    raise TimeoutExpired(
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.transition import population_file_digest as digest\ntry:\n    digest(Path('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4458/test_fifo_refused_with_deadlin2/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
+_______________ test_population_datetime_strict_and_synth_agree ________________
+tests/test_rf7_consumers.py:106: in test_population_datetime_strict_and_synth_agree
+    assert not _is_datetime(value)
+E   AssertionError: assert not True
+E    +  where True = <function _is_datetime at 0x10856cca0>('2024-02-29 00:00:00')
+_____________________ test_unknown_version_includes_eight ______________________
+tests/test_rf7_consumers.py:115: in test_unknown_version_includes_eight
+    assert 'or 8' in str(error.value)
+E   AssertionError: assert 'or 8' in '1 validation error for DataDrivenContract\nschema_version\n  Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [type...or, input_value=9, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error'
+E    +  where '1 validation error for DataDrivenContract\nschema_version\n  Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [type...or, input_value=9, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error' = str(1 validation error for DataDrivenContract\nschema_version\n  Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [type=li...rror, input_value=9, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error)
+E    +    where 1 validation error for DataDrivenContract\nschema_version\n  Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [type=li...rror, input_value=9, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error = <ExceptionInfo 1 validation error for DataDrivenContract\nschema_version\n  Input should be 1, 2, or 3, or 4, or 5, or 6...ut_value=9, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error tblen=2>.value
+=========================== short test summary info ============================
+FAILED tests/test_rf7_input_policy.py::test_json_refusal[{"x":1,"x":2}] - Mod...
+FAILED tests/test_rf7_input_policy.py::test_json_refusal[{"x":NaN}] - ModuleN...
+FAILED tests/test_rf7_input_policy.py::test_json_refusal[[Infinity]] - Module...
+FAILED tests/test_rf7_input_policy.py::test_json_refusal[[1e999]] - ModuleNot...
+FAILED tests/test_rf7_input_policy.py::test_json_refusal[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[0]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+FAILED tests/test_rf7_input_policy.py::test_json_acceptance_types_and_custom_hooks
+FAILED tests/test_rf7_input_policy.py::test_json_decoder_trailing_and_depth
+FAILED tests/test_rf7_input_policy.py::test_yaml_preconstruction_refusal[x: &a [1]\ny: *a-limits0]
+FAILED tests/test_rf7_input_policy.py::test_yaml_preconstruction_refusal[x: 1-limits1]
+FAILED tests/test_rf7_input_policy.py::test_yaml_preconstruction_refusal[x: [1, 2]-limits2]
+FAILED tests/test_rf7_input_policy.py::test_yaml_preconstruction_refusal[x: [[1]]-limits3]
+FAILED tests/test_rf7_input_policy.py::test_yaml_accepted_quote_and_limits - ...
+FAILED tests/test_rf7_input_policy.py::test_datetime_accepted[2024-02-29T00:00:00Z]
+FAILED tests/test_rf7_input_policy.py::test_datetime_accepted[2024-02-29T00:00]
+FAILED tests/test_rf7_input_policy.py::test_datetime_accepted[2024-02-29T00:00:00.123456+01:30]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[20240229T000000]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[2024-02-29 00:00:00]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[2024-02-29t00:00:00z]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[2024-02-29T00:00:00+0130]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[2024-02-29T00:00:00+01:99]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[2024-02-30T00:00:00Z]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[2024-02-29T00:00:00.1234567Z]
+FAILED tests/test_rf7_input_policy.py::test_datetime_refusal[\uff12\uff10\uff12\uff14-02-29T00:00:00Z]
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[./a] - Failed:...
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[a//b] - Failed...
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[a/./b] - Faile...
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[a\\b] - Failed...
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[ a] - Failed: ...
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[a ] - Failed: ...
+FAILED tests/test_rf7_consumers.py::test_path_spelling_refused[a/] - Failed: ...
+FAILED tests/test_rf7_consumers.py::test_path_parents_and_leaf_policy - Faile...
+FAILED tests/test_rf7_consumers.py::test_primitive_nonboolean_inheritance[1]
+FAILED tests/test_rf7_consumers.py::test_primitive_nonboolean_inheritance[yes]
+FAILED tests/test_rf7_consumers.py::test_primitive_nonboolean_inheritance[true]
+FAILED tests/test_rf7_consumers.py::test_yaml_alias_actual_reader_refuses[evolve]
+FAILED tests/test_rf7_consumers.py::test_yaml_alias_actual_reader_refuses[souffle]
+FAILED tests/test_rf7_consumers.py::test_json_actual_reader_overflow_refuses[population]
+FAILED tests/test_rf7_consumers.py::test_json_actual_reader_overflow_refuses[adapter]
+FAILED tests/test_rf7_consumers.py::test_json_actual_reader_overflow_refuses[store]
+FAILED tests/test_rf7_consumers.py::test_fifo_refused_with_deadline[gnd.synth.provenance:_sha256_file]
+FAILED tests/test_rf7_consumers.py::test_fifo_refused_with_deadline[gnd.measure.promote:_digest]
+FAILED tests/test_rf7_consumers.py::test_fifo_refused_with_deadline[gnd.transition:population_file_digest]
+FAILED tests/test_rf7_consumers.py::test_population_datetime_strict_and_synth_agree
+FAILED tests/test_rf7_consumers.py::test_unknown_version_includes_eight - Ass...
+44 failed, 4 passed in 8.00s
+
+Exit: 1

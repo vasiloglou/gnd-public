@@ -18,7 +18,8 @@ E = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF6'
 def runtime_baseline(subject):
     path = E / f'RF6b-{subject}-py{sys.version_info.major}{sys.version_info.minor}.json'
     if not path.exists():
-        assert sys.version_info[:2] == (3, 14)
+        if (sys.version_info.major, sys.version_info.minor) != (3, 14):
+            pytest.skip('No predecessor metadata baseline captured for this interpreter')
         path = E / f'RF6b-{subject}.json'
     return path
 
@@ -177,3 +178,10 @@ def test_split_metric_has_complete_homes_and_no_new_cycles():
 def test_original_module_documentation_is_preserved():
     for name, doc in json.loads((E / 'RF6b-module-docs.json').read_text()).items():
         assert importlib.import_module(name).__doc__ == doc
+
+
+def test_uncaptured_runtime_baseline_reports_unavailable(monkeypatch):
+    from types import SimpleNamespace
+    monkeypatch.setattr(sys, 'version_info', SimpleNamespace(major=99, minor=1))
+    with pytest.raises(pytest.skip.Exception, match='No predecessor metadata baseline'):
+        runtime_baseline('import-baseline')

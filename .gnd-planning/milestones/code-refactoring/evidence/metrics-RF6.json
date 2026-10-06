@@ -18202,7 +18202,7 @@
   {
    "lane": null,
    "layer": "model",
-   "lines": 181,
+   "lines": 186,
    "module": "gnd.model_index",
    "path": "src/gnd/model_index.py"
   },
@@ -23315,19 +23315,19 @@
     "module": "gnd.model._validation"
    },
    {
-    "line": 95,
+    "line": 100,
     "module": "gnd.model_index"
    },
    {
-    "line": 99,
+    "line": 104,
     "module": "gnd.model_index"
    },
    {
-    "line": 107,
+    "line": 112,
     "module": "gnd.model_index"
    },
    {
-    "line": 131,
+    "line": 136,
     "module": "gnd.model_index"
    },
    {
@@ -23873,31 +23873,31 @@
     "module": "gnd.model._validation"
    },
    {
-    "line": 93,
+    "line": 98,
     "module": "gnd.model_index"
    },
    {
-    "line": 100,
+    "line": 105,
     "module": "gnd.model_index"
    },
    {
-    "line": 113,
+    "line": 118,
     "module": "gnd.model_index"
    },
    {
-    "line": 120,
+    "line": 125,
     "module": "gnd.model_index"
    },
    {
-    "line": 127,
+    "line": 132,
     "module": "gnd.model_index"
    },
    {
-    "line": 139,
+    "line": 144,
     "module": "gnd.model_index"
    },
    {
-    "line": 155,
+    "line": 160,
     "module": "gnd.model_index"
    },
    {
@@ -24262,7 +24262,7 @@
    "src/gnd/examples/**",
    "src/gnd/skills/**"
   ],
-  "line_count": 110632,
+  "line_count": 110637,
   "module_count": 220,
   "package": "src/gnd",
   "python": "3.14"
@@ -26512,21 +26512,21 @@
    {
     "api": "delattr",
     "file": "tests/test_rf6_packages.py",
-    "line": 62,
+    "line": 63,
     "resolved": true,
     "target": "gnd.model.semantic_validate"
    },
    {
     "api": "setattr",
     "file": "tests/test_rf6_packages.py",
-    "line": 91,
+    "line": 92,
     "resolved": false,
     "target": "validation._SEMANTIC_RULES"
    },
    {
     "api": "setattr",
     "file": "tests/test_rf6_packages.py",
-    "line": 97,
+    "line": 98,
     "resolved": false,
     "target": "core._check_dispatch"
    },

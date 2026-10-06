@@ -9173,9 +9173,9 @@
     {
       "path": "src/gnd/model_index.py",
       "kind": "adaptation",
-      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
-      "bytes": 7923,
-      "public_sha256": "5e363f35bd94c36838303a678359fb82df220badad2b4e54e70087dc99cf5f03",
+      "reason": "Delegated RF6b-cache query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 8176,
+      "public_sha256": "c802a0bf315d620db3c8335fc89ce1e335d9e0efc9a1743ff761764cf2b33d59",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "5e363f35bd94c36838303a678359fb82df220badad2b4e54e70087dc99cf5f03"
@@ -9213,9 +9213,9 @@
     {
       "path": "tests/test_rf6_index.py",
       "kind": "adaptation",
-      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
-      "bytes": 7384,
-      "public_sha256": "b9b9756d5bac0f23ace0de20529409d98928249272c215cc97116caed85e8f35",
+      "reason": "Delegated RF6b-cache query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 8699,
+      "public_sha256": "15f273f84906319794c9054879bee8b030c9f7da2e0a9d549588fe06147f42ef",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "b9b9756d5bac0f23ace0de20529409d98928249272c215cc97116caed85e8f35"
@@ -9403,9 +9403,9 @@
     {
       "path": "tests/test_rf6_packages.py",
       "kind": "adaptation",
-      "reason": "Delegated RF6b new refactoring home or focused control; no release identity claim.",
-      "bytes": 7656,
-      "public_sha256": "f9ddb5b4e04b46a0e7229842ca6795c83efb858f2c2931e8d29520259b31e309",
+      "reason": "Delegated RF6b-cache query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 8096,
+      "public_sha256": "03c4ad26086f7218eca6ea392af79f2fb5517133175ad063a72b9059ff4ecd09",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "f9ddb5b4e04b46a0e7229842ca6795c83efb858f2c2931e8d29520259b31e309"

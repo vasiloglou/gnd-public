@@ -181,3 +181,38 @@ def test_historical_query_aliases_keep_original_row_identity():
     for helper in (popvalidate._object_types_by_id, assemble._object_types_by_id,
                    poolfile._object_types_by_id):
         assert helper(model)['Code'] is model.object_types[0]
+
+
+@pytest.mark.parametrize('kind', ['dict', 'list'])
+def test_cyclic_metadata_takes_uncached_bounded_snapshot(kind):
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    code = '''
+from gnd.documents import Model
+from gnd.model_index import ModelIndex
+m = Model(version=1, object_types=[{'id': 'Code', 'kind': 'value', 'primitive': 'String'}],
+          fact_types=[{'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'Code'}]}])
+if KIND == 'dict':
+    m.source['cycle'] = m.source
+else:
+    cycle = []
+    cycle.append(cycle)
+    m.source['cycle'] = cycle
+old = ModelIndex.for_model(m)
+assert old.digest is None
+assert old.role_object_type('F', 'x') == 'Code'
+m.fact_types[0]['roles'][0]['object_type'] = 'Other'
+new = ModelIndex.for_model(m)
+assert new is not old and new.digest is None
+assert new.role_object_type('F', 'x') == 'Other'
+assert old.role_object_type('F', 'x') == 'Code'
+'''
+    code = code.replace('KIND', repr(kind))
+    root = Path(__file__).resolve().parents[1]
+    result = subprocess.run([sys.executable, '-c', code], cwd=root,
+                            env={**os.environ, 'PYTHONPATH': str(root / 'src')},
+                            capture_output=True, text=True, timeout=3, check=False)
+    assert result.returncode == 0, result.stdout + result.stderr

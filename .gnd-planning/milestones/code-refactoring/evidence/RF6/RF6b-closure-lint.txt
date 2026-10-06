@@ -1,0 +1,6 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/ruff check src/gnd/model_index.py tests/test_rf6_index.py tests/test_rf6_packages.py --output-format concise
+tests/test_rf6_index.py:215:14: PLW1510 `subprocess.run` without explicit `check` argument
+Found 1 error.
+
+Exit: 1

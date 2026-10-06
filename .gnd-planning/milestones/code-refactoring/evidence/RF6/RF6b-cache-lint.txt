@@ -1,0 +1,5 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m ruff check src/gnd/model_index.py tests/test_rf6_index.py tests/test_rf6_packages.py
+All checks passed!
+
+Exit: 0

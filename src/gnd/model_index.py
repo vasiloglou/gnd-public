@@ -56,8 +56,13 @@ class ModelIndex:
         document = model.model_dump(exclude={'warnings'}, warnings=False)
         try:
             pending = [document]
+            containers = set()
             while pending:
                 item = pending.pop()
+                if isinstance(item, (dict, list)):
+                    if id(item) in containers:
+                        raise TypeError('repeated container is not cacheable')
+                    containers.add(id(item))
                 if isinstance(item, dict):
                     if any(not isinstance(key, str) for key in item):
                         raise TypeError('non-string mapping key is not cacheable')

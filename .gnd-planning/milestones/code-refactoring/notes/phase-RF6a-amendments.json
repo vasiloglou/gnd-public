@@ -43,5 +43,14 @@
     "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A5-spec.md",
     "sha256": "f0b005d250642ec8a5bf8c61db3526e425305ffedb2b598fa3c9aa153fbc231f",
     "note": "Recorded before scanner-only repair; original numeric metric and target retained."
+  },
+  {
+    "id": "A6",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-06",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A6-spec.md",
+    "sha256": "a4bcf28c35ac026a0d7ad7b1403a976c3cf6186cabc01c5bad0c405efc7ab354",
+    "note": "Recorded before two reproduced test-only hardening fixes; review limit exhausted."
   }
 ]

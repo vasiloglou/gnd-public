@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_rf6_index.py",
+    "tests/test_rf6_registry.py",
+    "tests/test_rf6_moves.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_rf1_pin_harness.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 14.563566207885742
+}

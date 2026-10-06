@@ -1,0 +1,13 @@
+{
+  "subject_commit": "464d223",
+  "provider": "Codex",
+  "model": "gpt-6-sol",
+  "reasoning": "xhigh",
+  "sandbox": "read-only",
+  "transport": "stdin",
+  "authorization": "provider-review-authorization.json",
+  "prompt_sha256": "0c0ee528d4110fe9197975b9666ab1b809196d847929bbca8b50311dbaab5515",
+  "review_limit": "initial plus one repair per part",
+  "status": "complete",
+  "exit": 0
+}

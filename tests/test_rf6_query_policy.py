@@ -72,6 +72,7 @@ def test_policy_rejects_each_direction(damage):
 def test_literal_subscription_cannot_escape_direct_read_policy():
     policy = json.loads(POLICY.read_text())
     found = reads(sources())
+    assert_policy(found, policy)
     found.update(reads({'src/gnd/injected.py': 'def injected(model):\n    return model["fact_types"]\n'}))
     with pytest.raises(AssertionError):
         assert_policy(found, policy)
@@ -102,7 +103,13 @@ def dynamic_reads(all_sources):
 
 
 def assert_dynamic_inventory(found, rows):
-    assert found == Counter({tuple(row[:3]): row[3] for row in rows})
+    approved = Counter()
+    for row in rows:
+        assert len(row) == 4 and isinstance(row[3], int) and row[3] > 0
+        key = tuple(row[:3])
+        assert key not in approved
+        approved[key] = row[3]
+    assert found == approved
 
 
 def test_dynamic_candidate_inventory_is_complete_and_live():
@@ -121,3 +128,18 @@ def test_original_query_metric_remains_below_its_original_target():
     assert count == metric['current']
     assert count <= metric['ceiling'] < metric['baseline']
     assert (metric['ceiling'], metric['baseline']) == (310, 320)
+
+
+def test_subscription_negative_refuses_reverted_scanner(monkeypatch):
+    original = reads
+    monkeypatch.setitem(globals(), 'reads', lambda source: original(source, include_subscriptions=False))
+    with pytest.raises(AssertionError):
+        test_literal_subscription_cannot_escape_direct_read_policy()
+
+
+def test_dynamic_duplicate_inventory_row_is_refused():
+    rows = json.loads((POLICY.parent / 'dynamic-query-candidates.json').read_text())['rows']
+    found = dynamic_reads(sources())
+    assert_dynamic_inventory(found, rows)
+    with pytest.raises(AssertionError):
+        assert_dynamic_inventory(found, rows + [rows[0]])

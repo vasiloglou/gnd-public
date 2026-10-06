@@ -49,5 +49,17 @@
     "load_population",
     "bind_references"
   ],
-  "reason": "Imported module bindings remain importable; compatibility shims do not forward monkeypatch writes."
+  "reason": "Imported module bindings remain importable; compatibility shims do not forward monkeypatch writes.",
+  "defined_names": [
+    "_read",
+    "_entry",
+    "_model",
+    "_evaluate",
+    "_HIDDEN",
+    "_project",
+    "_feedback",
+    "reconstruct",
+    "_copy_files",
+    "run"
+  ]
 }

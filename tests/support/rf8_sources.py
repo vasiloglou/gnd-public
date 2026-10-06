@@ -24,6 +24,14 @@ class PredecessorBody(ast.NodeTransformer):
             return None  # New private cache: separately checked against ResumeState.
         return self.generic_visit(node)
 
+    def visit_If(self, node):
+        # Only the successful missing-contract empty-state cache reset is new.
+        test = 'not any(store._attempts_root.iterdir()) and not any(store._launches_root.iterdir())'
+        resets = ['store._best_identity = None', 'store._v7_best = None']
+        if ast.dump(node.test) == ast.dump(ast.parse(test, mode='eval').body) and [ast.unparse(n) for n in node.body[:2]] == resets:
+            node.body = node.body[2:]
+        return self.generic_visit(node)
+
     def visit_Attribute(self, node):
         original = _EXPRESSIONS.get(ast.unparse(node))
         return ast.parse(original, mode='eval').body if original else self.generic_visit(node)

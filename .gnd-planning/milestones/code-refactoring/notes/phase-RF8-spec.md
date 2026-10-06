@@ -198,3 +198,28 @@ This is a declared miss, not a claim that a move-count reduction makes newcode
 smaller. Moved4000/touched120/test1600/doc1600 ceilings, SCC0 and shim60 remain.
 Any later increase must be recorded before dependent work; no feature scope changes.
 The close table must list original650 and90 completion ceilings as missed.
+
+### A6 — Review evidence headroom and measurement correction
+Delegated approval(auto=true),2026-10-06, within RF8 auto authorization. Before
+review repairs,116 paths are retained; initial/repair review notes2, regression
+red/green streams4, repair prompt1, native3.11/3.13 repair streams4 and final
+record1 require at least128. Raise touched ceiling120 to140, leaving12 for
+focused affected gates and final byte bindings. Source1100/moved4000/tests1600/
+docs1600 and SCC0/shim60 stay fixed. This is another original estimate miss
+for milestone close, not increased product scope. Actual predecessor session_v7
+is976 lines (git show de4eed6:src/gnd/exp/session_v7.py | wc -l), not the937
+copied into the goal estimate. Original approved snapshot remains unchanged.
+
+### Review reproduction triage (before repairs)
+Potential R1: moved _HIDDEN sentinel is absent at the old session_v7 path;
+blocking SM2 compatibility. Potential R2: empty missing-contract reconstruction
+returns no identity without clearing an earlier cached identity/record; blocking
+new public accessor consistency. Add exact regressions first, retain red output;
+only reproduced cases will be fixed. Neither expands wire or controller policy.
+
+Repair-gate instrumentation findings: first review-green was4failed62passed.
+The sentinel test incorrectly supplied the sentinel as the hidden-reference set;
+the AST observer compared unparse spelling with/without parentheses. Corrected
+test uses an actual hidden reference and observer compares structural AST tests
+for only the exact successful empty branch. Production repairs did not change.
+Failed instrument output remains retained; final gate uses a separate name.

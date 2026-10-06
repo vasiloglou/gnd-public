@@ -269,6 +269,8 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
     contract_path = experiment / "session.contract.json"
     if not contract_path.is_file():
         if not any(store._attempts_root.iterdir()) and not any(store._launches_root.iterdir()):
+            store._best_identity = None
+            store._v7_best = None
             return ResumeState(1, None, (), 0.0, None, None)
         raise ValueError("retained run requires its bound contract")
     if contract.profile.judgments:

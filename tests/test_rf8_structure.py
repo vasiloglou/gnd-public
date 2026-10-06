@@ -93,4 +93,10 @@ def test_all_v7_predecessor_bindings_remain_importable():
     from gnd.exp import session_v7
     rows = json.loads((EVIDENCE / 'v7-bindings.json').read_text())
     assert len(rows['names']) == 47
-    assert all(hasattr(session_v7, name) for name in rows['names'])
+    assert all(hasattr(session_v7, name) for name in rows['names'] + rows['defined_names'])
+
+
+def test_v7_moved_sentinel_stays_importable():
+    from gnd.exp import session_replay, session_v7
+    assert session_v7._HIDDEN is session_replay._HIDDEN
+    assert session_v7._project({'constraint_ref': 'hidden'}, {'hidden'}) is session_v7._HIDDEN

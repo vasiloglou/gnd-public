@@ -1,0 +1,55 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf8_sessions.py tests/test_rf8_structure.py tests/test_exp_session_store.py tests/test_public_v72_reader_boundaries.py --tb=short
+..................FF..F..........................................F       [100%]
+=================================== FAILURES ===================================
+________________ test_unchanged_moved_bodies_and_shim_identity _________________
+tests/test_rf8_structure.py:67: in test_unchanged_moved_bodies_and_shim_identity
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']
+E   AssertionError: reconstruct
+E   assert '0e6d252e6191...4fae2864dc720' == 'c64b8360fa40...b7433952d8af4'
+E     
+E     - c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4
+E     + 0e6d252e61914ff1376ffe87c221844149566c2ad1e8d77bb724fae2864dc720
+______________________ test_reader_body_observer_can_fail ______________________
+tests/test_rf8_structure.py:79: in test_reader_body_observer_can_fail
+    assert hashlib.sha256(predecessor_body(copy.deepcopy(node)).encode()).hexdigest() == row['ast_sha256']
+E   AssertionError: assert '0e6d252e6191...4fae2864dc720' == 'c64b8360fa40...b7433952d8af4'
+E     
+E     - c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4
+E     + 0e6d252e61914ff1376ffe87c221844149566c2ad1e8d77bb724fae2864dc720
+___________________ test_v7_moved_sentinel_stays_importable ____________________
+tests/test_rf8_structure.py:102: in test_v7_moved_sentinel_stays_importable
+    assert session_v7._project({}, session_v7._HIDDEN) == {}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/exp/session_replay.py:166: in _project
+    if node.get("constraint_ref") in hidden:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: argument of type 'object' is not a container or iterable
+______ test_reader_decisions_remain_independent_of_producer_declarations _______
+tests/test_public_v72_reader_boundaries.py:41: in test_reader_decisions_remain_independent_of_producer_declarations
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row["ast_sha256"]
+E   AssertionError: assert '0e6d252e6191...4fae2864dc720' == 'c64b8360fa40...b7433952d8af4'
+E     
+E     - c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4
+E     + 0e6d252e61914ff1376ffe87c221844149566c2ad1e8d77bb724fae2864dc720
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  <worktree>/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_rf8_structure.py::test_unchanged_moved_bodies_and_shim_identity
+FAILED tests/test_rf8_structure.py::test_reader_body_observer_can_fail - Asse...
+FAILED tests/test_rf8_structure.py::test_v7_moved_sentinel_stays_importable
+FAILED tests/test_public_v72_reader_boundaries.py::test_reader_decisions_remain_independent_of_producer_declarations
+4 failed, 62 passed, 1 warning in 4.25s
+
+Exit: 1

@@ -151,3 +151,17 @@ def test_best_identity_matches_real_reconstruction(version, tmp_path, monkeypatc
     assert store.best_record().attempt_index == identity.attempt_index
     import hashlib
     assert hashlib.sha256((run / f'attempts/{identity.attempt_index:04d}/attempt.json').read_bytes()).hexdigest() == identity.attempt_manifest_sha256
+
+
+@pytest.mark.parametrize('version', [7, 8])
+def test_empty_reconstruction_clears_previous_best(version, tmp_path):
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import BestAttemptIdentity, SessionStore
+    store = SessionStore(tmp_path / 'runs' / 'empty', run_id='empty', contract_id='empty')
+    store._best_identity = BestAttemptIdentity(
+        attempt_index=1, attempt_manifest_sha256='a' * 64, candidate_sha256='b' * 64)
+    store._v7_best = (object(), 'a' * 64)
+    state = reconstruct(store, DataDrivenContract.model_construct(schema_version=version))
+    assert state.best_attempt_identity is None
+    assert store.best_identity() is None
+    assert store.best_record() is None

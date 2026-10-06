@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf1_cli_pins.py",
+    "tests/test_rf1_semantic_pins.py",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_rf1_session_pins.py",
+    "--tb=short",
+    "-x"
+  ],
+  "exit": 0,
+  "seconds": 53.22766709327698
+}

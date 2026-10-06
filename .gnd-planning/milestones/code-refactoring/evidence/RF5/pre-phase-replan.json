@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-05",
+  "authorization": "process-phase RF5 auto",
+  "mark": "delegated approval (auto=true)",
+  "subject": "RF5 execution re-plan before implementation under plan section6 drift condition",
+  "prior_original_misses": {
+    "RF3_nonrelocated": [
+      1987,
+      700
+    ],
+    "RF4_nonrelocated": [
+      3971,
+      2200
+    ],
+    "RF4_touched": [
+      249,
+      130
+    ],
+    "RF4_docs": [
+      578,
+      180
+    ],
+    "RF4_tests": [
+      3515,
+      1800
+    ]
+  },
+  "decision": "Treat consecutive budget misses as triggering the drift condition. Continue RF5 only under a newly measured bounded execution plan; no normative milestone-plan edit. Preserve original missed limits in close ledger. One RF5 phase with dependency-coherent move units, at most initial plus one repair review.",
+  "new_targets": {
+    "cli_lines": 1500,
+    "touched_files": 320,
+    "moved_production_lines": 12000,
+    "nonrelocated_production_lines": 4000,
+    "test_code_and_data_added": 3000,
+    "non_evidence_documentation_added": 1500
+  },
+  "basis": "cli9056 lines at29915d9; 1111 measured selected consumer nodes in25 files, 28 CLI patches; estimated7500 relocated definition lines and1600 relocated parser/routing lines."
+}

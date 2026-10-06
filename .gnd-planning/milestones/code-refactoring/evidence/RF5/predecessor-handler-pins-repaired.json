@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf5_handler_pins.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 2.271697998046875
+}

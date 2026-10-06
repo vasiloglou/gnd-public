@@ -1,0 +1,18 @@
+{
+  "source_base": "29915d9",
+  "cases": 43,
+  "files": [
+    {
+      "path": "tests/fixtures/rf5-handlers/README.md",
+      "sha256": "93e0bdec2c7f9e6caacf422d743426b18fdbb64837310d4d11f491e392732056"
+    },
+    {
+      "path": "tests/fixtures/rf5-handlers/answers.json",
+      "sha256": "e0b102dbf32f255bd3a0a7f80422c47e194329e9479a2cd078027d264bc3f411"
+    },
+    {
+      "path": "tests/fixtures/rf5-handlers/cases.json",
+      "sha256": "96fd27a47dccd17c23ccf03da1e2111b1e67f9dd230cf78b3d0f13a61921e9c2"
+    }
+  ]
+}

@@ -1,0 +1,2996 @@
+{
+  "tests/fixtures/checker/misc.orm.yaml|tests/fixtures/checker/population.misc_pass.yaml": {
+    "population_ref": "tests/fixtures/checker/population.misc_pass.yaml",
+    "population_sha256": "94a4323207e1ee60c988903cf9f3a7cf950d09b1d58f7192f6b475f6299640fe",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 4,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[task_scores].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[task_has_points].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[task_logged_on].constraints[0]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "unchecked"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 4,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[task_scores].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[task_has_points].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[task_logged_on].constraints[0]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "unchecked"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/misc.orm.yaml|tests/fixtures/checker/population.misc_fail.yaml": {
+    "population_ref": "tests/fixtures/checker/population.misc_fail.yaml",
+    "population_sha256": "21143e2ab9bcf5b621b4f4fdeb5b32b9580bb57349068dc00289b09810d1d399",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[task_scores].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[task_has_points].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[task_logged_on].constraints[0]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "unchecked"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[task_scores].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[task_has_points].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[task_logged_on].constraints[0]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "unchecked"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "unchecked"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/ring.orm.yaml|tests/fixtures/checker/population.ring_pass.yaml": {
+    "population_ref": "tests/fixtures/checker/population.ring_pass.yaml",
+    "population_sha256": "00490bdf2b232cc07841d3a212ddf4b9e5240abdf10cf1287e611461590bf364",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[rel_irreflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_antisymmetric].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_acyclic].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_acyclic_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_symmetric].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_irreflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_purely_reflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_reflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_transitive].constraints[0]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[rel_irreflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_antisymmetric].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_acyclic].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_acyclic_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_symmetric].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_irreflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_intransitive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_purely_reflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_reflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_transitive].constraints[0]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/ring.orm.yaml|tests/fixtures/checker/population.ring_fail.yaml": {
+    "population_ref": "tests/fixtures/checker/population.ring_fail.yaml",
+    "population_sha256": "970cc363b70edbc6072624d2896fa95f211cf0b2960e1d8ac7c4e8a84dc89abd",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[rel_irreflexive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_antisymmetric].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_acyclic].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_acyclic_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_symmetric].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_irreflexive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_purely_reflexive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_reflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_transitive].constraints[0]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[rel_irreflexive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_antisymmetric].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_acyclic].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_asymmetric_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_acyclic_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_symmetric].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_irreflexive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_symmetric_intransitive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_purely_reflexive].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[rel_reflexive].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[rel_transitive].constraints[0]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/setfam.orm.yaml|tests/fixtures/checker/population.setfam_pass.yaml": {
+    "population_ref": "tests/fixtures/checker/population.setfam_pass.yaml",
+    "population_sha256": "6d04fd78e183e9bc33ed31a2b27478d5fb95614bcaa6defe765057b6823a0088",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/setfam.orm.yaml|tests/fixtures/checker/population.setfam_fail.yaml": {
+    "population_ref": "tests/fixtures/checker/population.setfam_fail.yaml",
+    "population_sha256": "08f1134e6875f2cc48e18b6f6894f06b7b620a569a014a4213d5c863bacfda6e",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/setfam.orm.yaml|tests/fixtures/checker/population.empty.yaml": {
+    "population_ref": "tests/fixtures/checker/population.empty.yaml",
+    "population_sha256": "97ac9168b974e1632316e1e6272aeb6b187be8030b1bb636b1638d526b82ebbc",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 2,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "vacuous"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 2,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "vacuous"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/setfam.orm.yaml|tests/fixtures/checker/population.coverage_omission.yaml": {
+    "population_ref": "tests/fixtures/checker/population.coverage_omission.yaml",
+    "population_sha256": "c16398817baaf191bf2c038d8ddc2a9d9dd03902a3e542bc8131755bfcf34826",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 2,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 2,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/setfam.orm.yaml|tests/fixtures/checker/population.covers_none.yaml": {
+    "population_ref": "tests/fixtures/checker/population.covers_none.yaml",
+    "population_sha256": "e3dbe2439bbe6be87680bce4ef6906124d0fd0f11f9d552f09b054a3dd41b77b",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 2,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "vacuous"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 2,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "vacuous"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "tests/fixtures/checker/setfam.orm.yaml|tests/fixtures/checker/population.precedence.yaml": {
+    "population_ref": "tests/fixtures/checker/population.precedence.yaml",
+    "population_sha256": "ce24c177ad3a085132879d832561f07e97941219e7e72d61b842df28f6a5fd1d",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "vacuous"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": true,
+      "verdicts": [
+        {
+          "ref": "fact_types[booking_by_person].constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "fact_types[booking_by_person].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[booking_of_room].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "fact_types[person_takes_course].constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "vacuous"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "vacuous"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml|src/gnd/examples/bookrec/seed.population.json": {
+    "population_ref": "src/gnd/examples/bookrec/seed.population.json",
+    "population_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml|src/gnd/examples/bookrec/adult-for-minor.population.json": {
+    "population_ref": "src/gnd/examples/bookrec/adult-for-minor.population.json",
+    "population_sha256": "e81573a5fa8c352f9a6696834de1cf7c3b6e76c488bc47f62e6a8596b99ef143",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml|src/gnd/examples/bookrec/already-read.population.json": {
+    "population_ref": "src/gnd/examples/bookrec/already-read.population.json",
+    "population_sha256": "0452dea591233c7dd3a189815abe66f0449addf5cf194132e202e72cf2ce4218",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml|src/gnd/examples/bookrec/genre-warning.population.json": {
+    "population_ref": "src/gnd/examples/bookrec/genre-warning.population.json",
+    "population_sha256": "f182c9a14cf384c40ed079186b865c887fcde9fe413930b80c05d99d91e5eb3a",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "warning"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "warning"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/bookrec/complete.orm.yaml|src/gnd/examples/bookrec/complete.population.json": {
+    "population_ref": "src/gnd/examples/bookrec/complete.population.json",
+    "population_sha256": "489c3ceaaa194f034fb997cdb0709e8040669b90dc9138ce6cfa642bc3ac0d46",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:book_is_blocked_for",
+          "verdict": "pass"
+        },
+        {
+          "ref": "derivation:book_is_eligible",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[book_has_genre].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[book_has_genre].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:book_is_blocked_for",
+          "verdict": "pass"
+        },
+        {
+          "ref": "derivation:book_is_eligible",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/expense/model.orm.json|src/gnd/examples/expense/seed.population.json": {
+    "population_ref": "src/gnd/examples/expense/seed.population.json",
+    "population_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/expense/model.orm.json|src/gnd/examples/expense/approved.population.json": {
+    "population_ref": "src/gnd/examples/expense/approved.population.json",
+    "population_sha256": "20b9084755c800bf3cd7aae280cddc071ce26c5cb1ffacaeecfbdc32a048e9f0",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/expense/model.orm.json|src/gnd/examples/expense/invalid-chain.population.json": {
+    "population_ref": "src/gnd/examples/expense/invalid-chain.population.json",
+    "population_sha256": "f72267d7d18f6fdd29a6f676b7d8ed5a555c0a2fdef8e74831e0aedf0173e312",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/expense/model.orm.json|src/gnd/examples/expense/invalid-meal.population.json": {
+    "population_ref": "src/gnd/examples/expense/invalid-meal.population.json",
+    "population_sha256": "1f85a8d9708f93446f81ac89abb7a76fe726c5944c55160e3735cc57e8e8b891",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/expense/currency.orm.json|src/gnd/examples/expense/currency.population.json": {
+    "population_ref": "src/gnd/examples/expense/currency.population.json",
+    "population_sha256": "47e86d8a4ad0a7233929f1a047afa0a5a81de154d55c5baf57a2eb5f143a5b38",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[12]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[12]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/expense/currency.orm.json|src/gnd/examples/expense/currency-missing.population.json": {
+    "population_ref": "src/gnd/examples/expense/currency-missing.population.json",
+    "population_sha256": "fe74784f419c6a7154187ad44fa715860da4c933b08e5322d7c617ddef15b580",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[12]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_amount].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_in_category].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_is_approved].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_approved_by_chain].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[expense_has_currency].constraints[1]",
+          "verdict": "fail"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[2]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[3]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[4]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[5]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[6]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[7]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[8]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[9]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[10]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[11]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[12]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": []
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/dispatch/model.orm.json|src/gnd/examples/dispatch/seed.pop.json": {
+    "population_ref": "src/gnd/examples/dispatch/seed.pop.json",
+    "population_sha256": "3a1171da63ebec6a48573a37e275fd9534aa00cef4558bd7e186686a8c7ba3af",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[dispatch_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[dispatch_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:dispatch_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[dispatch_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[dispatch_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:dispatch_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/dispatch/model.orm.json|src/gnd/examples/dispatch/repaired.pop.json": {
+    "population_ref": "src/gnd/examples/dispatch/repaired.pop.json",
+    "population_sha256": "bfadb1f4193b1ea86d546eb8470c229d76cc439ade98aaa96529c64622190326",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[dispatch_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[dispatch_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:dispatch_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[dispatch_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[dispatch_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:dispatch_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/release/model.orm.json|src/gnd/examples/release/seed.pop.json": {
+    "population_ref": "src/gnd/examples/release/seed.pop.json",
+    "population_sha256": "2143462dd98000c1c88195eec3469ef37e74c091f47e7691693f6b263d1ee284",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[release_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[release_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:release_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "b": {
+      "state": "checked",
+      "band": 1,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[release_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[release_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "fail"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:release_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  },
+  "src/gnd/examples/release/model.orm.json|src/gnd/examples/release/repaired.pop.json": {
+    "population_ref": "src/gnd/examples/release/repaired.pop.json",
+    "population_sha256": "42543697a1576e8354acf17338579b2463fbdad0607ad68e28d168731f770e83",
+    "origin": "provided",
+    "a": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[release_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[release_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:release_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "b": {
+      "state": "checked",
+      "band": 0,
+      "has_vacuous": false,
+      "verdicts": [
+        {
+          "ref": "fact_types[release_request].constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "fact_types[release_request].constraints[1]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[0]",
+          "verdict": "pass"
+        },
+        {
+          "ref": "constraints[1]",
+          "verdict": "pass"
+        }
+      ],
+      "derivation_verdicts": [
+        {
+          "ref": "derivation:release_reachable",
+          "verdict": "pass"
+        }
+      ]
+    },
+    "a_to_b": [],
+    "b_to_a": [],
+    "derivations": []
+  }
+}

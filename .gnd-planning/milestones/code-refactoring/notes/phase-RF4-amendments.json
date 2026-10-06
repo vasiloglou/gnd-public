@@ -1,0 +1,18 @@
+[
+  {
+    "id": "A1",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "sha256": "412bab5a2ff20d9f67a110aab3d6755f16e9dd5e932e5ec6e2c7545d3a0cb767",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A1-spec.md"
+  },
+  {
+    "id": "A2",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "date": "2026-10-05",
+    "sha256": "daebbc75134e8c665dc2ee74ce79aa5019f1abf3d8835b0e484991757149207b",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A2-spec.md"
+  }
+]

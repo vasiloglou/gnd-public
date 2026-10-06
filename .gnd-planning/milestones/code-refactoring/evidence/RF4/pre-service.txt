@@ -1,0 +1,16 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_lean_export_successors.py tests/test_public_souffle_successors.py tests/test_public_souffle_input_contract.py tests/test_public_optional_value_witness.py --tb=short
+.............................F..                                         [100%]
+=================================== FAILURES ===================================
+___________ test_exited_group_cleanup_cannot_replace_output_refusal ____________
+tests/test_public_souffle_successors.py:243: in test_exited_group_cleanup_cannot_replace_output_refusal
+    assert (result["exit_code"], result["reason"]) == (4, "tool-error")
+E   AssertionError: assert (0, None) == (4, 'tool-error')
+E     
+E     At index 0 diff: 0 != 4
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_public_souffle_successors.py::test_exited_group_cleanup_cannot_replace_output_refusal
+1 failed, 31 passed, 11 deselected in 3.16s
+
+Exit: 1

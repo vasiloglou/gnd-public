@@ -1,0 +1,263 @@
+{
+  "subject": "d440b2e37449ef46647d18c491c46d9bb8d3e851",
+  "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python .gnd-planning/milestones/code-refactoring/evidence/RF9/reproductions.py",
+  "primary_contract_equality": {
+    "source": "src/gnd/exp/session_contract.py:1085",
+    "expected": "serialization preserves equality of two equal valid frozen contracts",
+    "observed": {
+      "RF7 predecessor": {
+        "equal_before": true,
+        "equal_after_serializing_one": true,
+        "equal_after_serializing_both": true,
+        "serialized_bytes_equal": true
+      },
+      "RF8 final": {
+        "equal_before": true,
+        "equal_after_serializing_one": false,
+        "equal_after_serializing_both": true,
+        "serialized_bytes_equal": true
+      }
+    },
+    "comparison_boundary": "isolated predecessor contract module with current unchanged dependency interfaces; not full historical-suite execution"
+  },
+  "A_annotation_resolution": {
+    "_content_digest": {
+      "baseline_resolves": true,
+      "current_error": "name 'Population' is not defined"
+    },
+    "_model_digest": {
+      "baseline_resolves": true,
+      "current_error": "name 'Model' is not defined"
+    }
+  },
+  "D_literal_getattr_inventory": {
+    "injected_read_count_delta": 0,
+    "injected_dynamic_count_delta": 0,
+    "both_policy_assertions_passed": true,
+    "existing_omitted_reads": [
+      {
+        "path": "src/gnd/synth/guarded.py",
+        "line": 184,
+        "expression": "getattr(model, 'fact_types', None)",
+        "same_expression_in_base": true
+      },
+      {
+        "path": "src/gnd/conformance/structural.py",
+        "line": 792,
+        "expression": "getattr(model, 'fact_types', None)",
+        "same_expression_in_base": true
+      },
+      {
+        "path": "src/gnd/conformance/structural.py",
+        "line": 275,
+        "expression": "getattr(model, 'fact_types', ())",
+        "same_expression_in_base": true
+      },
+      {
+        "path": "src/gnd/conformance/architecture.py",
+        "line": 431,
+        "expression": "getattr(model, 'fact_types', ())",
+        "same_expression_in_base": true
+      }
+    ]
+  },
+  "D_early_cache_observer": {
+    "raw_ast_changed": true,
+    "recorded_hash": "c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4",
+    "early_cache_assignment_hash": "c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4",
+    "unrelated_assignment_detected": true,
+    "scope": "moved-body predicate only; no claim that every test accepts this mutant"
+  },
+  "D_offline_import_guard": {
+    "mutated_source_visited": 1,
+    "generation_scan_passed": true,
+    "literal_import_sibling_detected": true,
+    "regex_identical_to_base": true,
+    "network_executed": false,
+    "classification": "pre-existing source-owned test debt"
+  },
+  "B_parent_package_edges": {
+    "hidden_lane_to_parent_edges": [
+      {
+        "from": "gnd.codegen.service",
+        "to": "gnd.commands",
+        "source": "src/gnd/codegen/service.py",
+        "line": 7
+      },
+      {
+        "from": "gnd.exp.cli_service",
+        "to": "gnd.commands",
+        "source": "src/gnd/exp/cli_service.py",
+        "line": 10
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.commands",
+        "source": "src/gnd/export/verification_service.py",
+        "line": 11
+      },
+      {
+        "from": "gnd.extract.service",
+        "to": "gnd.commands",
+        "source": "src/gnd/extract/service.py",
+        "line": 10
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.commands",
+        "source": "src/gnd/fidelity/doccheck_service.py",
+        "line": 10
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.commands",
+        "source": "src/gnd/fidelity/service.py",
+        "line": 10
+      },
+      {
+        "from": "gnd.review.service",
+        "to": "gnd.commands",
+        "source": "src/gnd/review/service.py",
+        "line": 11
+      }
+    ],
+    "fresh_codegen_import_loads_entry_parent": true,
+    "reported_wrong_way_edges": 0,
+    "parent_initializer_only_docstring": true,
+    "consequence": "incomplete runtime-edge guarantee; no current command failure demonstrated"
+  },
+  "C_terminal_acceptance": {
+    "genuine_run_exit": 15,
+    "genuine_disposition": "stagnation",
+    "no_best_gate_crash": {
+      "outer_empty_run_findings": [
+        "unrecorded-launch",
+        "unaccepted-session"
+      ],
+      "boundary": "direct declared-case helper; outer work gate refuses this empty-launch fixture",
+      "current": "AttributeError: 'NoneType' object has no attribute 'attempt_index'",
+      "pre_refactor": "TypeError: cannot unpack non-iterable NoneType object"
+    },
+    "best_attempt_meets_contract": false,
+    "original_gate_findings": [
+      "unaccepted-session"
+    ],
+    "tampered_fields": [
+      "disposition",
+      "terminal_reason"
+    ],
+    "current_gate_findings_after_tamper": [],
+    "pre_refactor_close_gate_findings_after_tamper": [],
+    "invalid_extra_reason_field_refused": true,
+    "comparison_boundary": "old close module with current compatibility dependencies; original and final replay omit disposition revalidation",
+    "classification": "pre-existing acceptance integrity defect; not an RF8-introduced regression"
+  },
+  "B_architecture_comparison": {
+    "base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "head": "d440b2e37449ef46647d18c491c46d9bb8d3e851",
+    "instrument": "current tools/gnd_arch.py with each source revision own layer map",
+    "before": {
+      "modules": 148,
+      "runtime_sccs": [
+        [
+          "gnd.api",
+          "gnd.diff"
+        ],
+        [
+          "gnd.assurance",
+          "gnd.assurance_claims",
+          "gnd.assurance_evidence",
+          "gnd.assurance_inheritance"
+        ],
+        [
+          "gnd.checker",
+          "gnd.correspondence",
+          "gnd.extraction_scope",
+          "gnd.model",
+          "gnd.population",
+          "gnd.popvalidate",
+          "gnd.proof_bridge",
+          "gnd.references",
+          "gnd.semantic_adapter",
+          "gnd.semantic_registry",
+          "gnd.semantic_spec",
+          "gnd.temporal_guarded",
+          "gnd.terms",
+          "gnd.transition"
+        ],
+        [
+          "gnd.exp.session",
+          "gnd.exp.session_eval",
+          "gnd.exp.session_judgments",
+          "gnd.exp.session_patch",
+          "gnd.exp.session_store",
+          "gnd.exp.session_v7",
+          "gnd.exp.tests_runner"
+        ],
+        [
+          "gnd.synth.assemble",
+          "gnd.synth.mutate"
+        ]
+      ],
+      "module_only_sccs": [],
+      "wrong_way_edges": 27,
+      "entry_violations": null,
+      "private_import_count": 242,
+      "ast_identical_groups": 15,
+      "largest_modules": [
+        {
+          "module": "gnd.cli",
+          "lines": 9088
+        },
+        {
+          "module": "gnd.model",
+          "lines": 5157
+        },
+        {
+          "module": "gnd.checker",
+          "lines": 5143
+        },
+        {
+          "module": "gnd.exp.session_store",
+          "lines": 3023
+        },
+        {
+          "module": "gnd.exp.session_eval",
+          "lines": 2698
+        }
+      ]
+    },
+    "after": {
+      "modules": 227,
+      "runtime_sccs": [],
+      "module_only_sccs": [],
+      "wrong_way_edges": 0,
+      "entry_violations": 0,
+      "private_import_count": 670,
+      "ast_identical_groups": 12,
+      "largest_modules": [
+        {
+          "module": "gnd.model._validation",
+          "lines": 4890
+        },
+        {
+          "module": "gnd.extensions",
+          "lines": 2763
+        },
+        {
+          "module": "gnd.exp.session_eval",
+          "lines": 2695
+        },
+        {
+          "module": "gnd.semantic_spec",
+          "lines": 2588
+        },
+        {
+          "module": "gnd.synth.boundary",
+          "lines": 2376
+        }
+      ]
+    },
+    "boundary": "explicit AST edges only; implicit parent execution omitted; private count includes compatibility imports and duplicate groups are heuristic candidates"
+  }
+}

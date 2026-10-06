@@ -87,3 +87,33 @@ source/graph predicates; runtime findings need a reproducer or remain unverified
 Four views can share blind spots. Focused probes cannot establish untested platform,
 timing, installed-package or release behavior. Review-only phase has no production
 implementation step; subsequent repair work needs an explicit user instruction.
+
+## Operational retry,2026-10-06
+Area C initial execution exited1 on provider capacity before a final assessment.
+One retry completes that same initial reading on unchanged source; it is not a
+second review round or a repair review. The retry prompt retains the last progress
+hypothesis as unverified and asks for independent confirmation. The owner-approved
+four review areas, source, provider/payload scope and production boundaries stay
+fixed. If this retry also fails, RF9-C1 remains incomplete rather than claiming a
+fourth review. Other findings and local reproductions can still be retained.
+
+## Review findings and instrument observations
+
+All four area returns are retained; Area C's one capacity retry exited0. The
+primary reproduced and triaged RF9-F1–F9 in phase-RF9-review.md. F7's direct helper
+crash is confirmed, but the primary empty-launch fixture is refused by the outer
+work gate; no full close-command traceback is claimed. F1 is a real temporary
+session work-gate counterexample. F2 is an actual focused pytest failure under
+the approved RF7 behavior. No production or test repair ran.
+
+Instrument corrections were made only in RF9 evidence: fixed-wire result field
+terminal_reason replaced an invalid draft reason field; a draft _SessionRun
+constructor keyword was corrected; attempts without matching launches correctly
+refused replay, and empty launches correctly refused the outer work gate. The
+architecture comparison initially used the final map on an older module set
+(correctly refused), then wrongly assumed the predecessor had an entry-point
+policy key. Final measurement uses each revision's own map and records absent
+baseline policy as null. These failed probes are instrument observations, not
+product findings or fabricated earlier passing checks. Evidence-script lint
+initially found import ordering, print formatting and intentional fixed-revision
+exec uses; final scripts are lint-clean with narrowly explained exec annotations.

@@ -1,11 +1,11 @@
 """RF9 current graph and frozen-source checks; no production mutations."""
 import ast
-import importlib
 import hashlib
+import importlib
 import json
-from pathlib import Path
 import runpy
 import subprocess
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[5]
 OUT = Path(__file__).parent
@@ -46,5 +46,7 @@ result = {'subject': 'd440b2e37449ef46647d18c491c46d9bb8d3e851',
           'source_unchanged': True, 'predecessor_bindings': bindings,
           'largest_modules': sorted(metrics['modules'], key=lambda row: row.get('lines', row.get('loc', 0)), reverse=True)[:10]}
 (OUT / 'local-checks.json').write_text(json.dumps(result, indent=2) + '\n')
-print('Graph: %d modules, zero SCC/wrong-way/entry violations; %d frozen controls unchanged; production unchanged.' % (len(metrics['modules']), len(frozen)))
-print('Bindings: %d definitions/constants in %d selected modules remain importable; existence only.' % (sum(r['checked'] for r in bindings), len(bindings)))
+print(f"Graph: {len(metrics['modules'])} modules, zero explicit SCC/wrong-way/entry violations; "
+      f"{len(frozen)} frozen controls unchanged; production unchanged.")
+print(f"Bindings: {sum(r['checked'] for r in bindings)} definitions/constants in "
+      f"{len(bindings)} selected modules remain importable; existence only.")

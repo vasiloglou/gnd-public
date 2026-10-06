@@ -1,0 +1,18 @@
+Command: PYTHONDONTWRITEBYTECODE=1 .venv/bin/python .gnd-planning/milestones/code-refactoring/evidence/RF9/reproductions.py
+Exit: 0
+Structured output: reproductions.json; counterexamples reproduced, not product acceptance.
+
+Command: .venv/bin/ruff check .gnd-planning/milestones/code-refactoring/evidence/RF9/reproductions.py .gnd-planning/milestones/code-refactoring/evidence/RF9/local_checks.py --output-format concise
+All checks passed!
+Exit: 0
+
+Command: git diff --check
+Exit: 0
+
+Command: git diff d440b2e -- src tests tools
+Exit: 0
+
+Final local_checks.py rerun exit0: 227 modules; zero explicit SCC/wrong-way/entry violations; 432 frozen controls unchanged; 625 retained direct bindings in 12 modules.
+
+Budget: 24/25 touched paths; 395/1000 probe lines; 752/1500 added non-evidence prose lines.
+Scope: all touched paths are RF9 planning/evidence/record paths; unrelated untracked .agents/ excluded.

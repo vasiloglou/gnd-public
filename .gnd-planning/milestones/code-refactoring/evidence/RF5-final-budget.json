@@ -1,0 +1,21 @@
+{
+  "source_base": "29915d9",
+  "verified_source_commit": "6a57d4e20260b72e0245aedbb0195fbfd4643e6d",
+  "measured": {
+    "touched_files": 211,
+    "non_evidence_doc_added": 564,
+    "python_test_added": 334,
+    "test_data_added": 703,
+    "test_total_added": 1037,
+    "nonrelocated_production": 2023,
+    "moved_production": 8141
+  },
+  "approved_limits": {
+    "touched_files": 320,
+    "non_evidence_doc_added": 1500,
+    "test_total_added": 3000,
+    "nonrelocated_production": 4000,
+    "moved_production": 12000
+  },
+  "disposition": "Within RF5 pre-approved limits; prior original misses retained in pre-phase re-plan."
+}

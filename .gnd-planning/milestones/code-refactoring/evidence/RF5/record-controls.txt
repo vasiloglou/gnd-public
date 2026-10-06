@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_development_scaffold.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py
+...............................................                          [100%]
+47 passed, 1 deselected in 4.40s
+
+Exit: 0

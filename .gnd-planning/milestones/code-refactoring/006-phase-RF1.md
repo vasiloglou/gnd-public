@@ -204,6 +204,11 @@ questions. Dispositions: [phase-RF1-codex-review.md](notes/phase-RF1-codex-revie
   supplies the source-base nested artifact directory-identity refusal pin and its
   observed disabling control before filesystem routing. Other owed families
   retain their named owners; RF1's original boundary remains unchanged.
+  RF5 discharge annotation (2026-10-05): [010-phase-RF5.md](010-phase-RF5.md)
+  supplies 43 original-source handler observations, including the 25 owed
+  command surfaces, with 43 effective disabling controls before routing.
+  These selected leaf observations do not establish every internal branch.
+  RF6 import-path responsibilities and RF1's original boundary remain standing.
 - **RF1-OQ2 → RF8 spec gate:** resume through the CLI refuses for v2, v3, v7
   and v8 after a completed run's result is removed (F12). This is pinned as
   found; RF8 should decide whether it is intended.

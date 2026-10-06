@@ -1,6 +1,6 @@
 {
   "initial_source_head": "d8dd49d",
-  "verified_source_head": "d8dd49d",
+  "verified_source_head": "6a57d4e",
   "initial_findings": 2,
   "classification": "both hardening of phase-owned instruments",
   "initial_reproduction": "review-regressions-pre-fix.txt, 4failed before any fix",
@@ -12,11 +12,15 @@
   "repair_regressions": 4,
   "repair_controls": 426,
   "blocking_remaining": 0,
-  "repair_review": "pending",
+  "repair_review": "complete, no new reproduced findings",
   "repair_gate_names": [
     "review-repair-controls",
     "review-repair-py311",
     "review-repair-py313",
     "review-repair-lint"
-  ]
+  ],
+  "repair_findings": 0,
+  "total_review_rounds": 2,
+  "stop": "two-review limit exhausted; no third review",
+  "production_unchanged": true
 }

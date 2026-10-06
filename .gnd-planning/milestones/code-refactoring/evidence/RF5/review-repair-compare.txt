@@ -1,0 +1,4 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python tools/gnd_arch.py compare 29915d9 6a57d4e --out .gnd-planning/milestones/code-refactoring/evidence/RF5/repair-source-compare.json
+
+Exit: 0

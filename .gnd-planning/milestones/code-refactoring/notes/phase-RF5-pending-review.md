@@ -53,3 +53,7 @@ The43successor observations establish selected accepting/refusal leaves, not eve
 ## Open questions
 
 RF6 package/query responsibilities, RF7 strictness/safe-filesystem successor questions, RF8 session SCC/resume/version meanings retain named owners. RF1 meta-node exemptions, RF3 SCC scope wording, RF4 filesystem/shared-checking wording and RF5's newly supplied entry predicate are reconciled at milestone close. RF-D5 owns shim/private alias retirement. Source-owned authority/import-walk/helper-tail questions remain source-owned. RF1's original boundary stays standing when its owed RF5 surface observation clause is annotated by this later record.
+
+## Final status -- 2026-10-05
+
+The explicit provider authorization, independent review and current phase record resolve the earlier pending state. See [010-phase-RF5.md](../010-phase-RF5.md) for current claims, dispositions, gate evidence and limits. This note preserves the earlier history.

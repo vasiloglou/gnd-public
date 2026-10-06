@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 
 from gnd.admission_validation import constraint_annotations, validate_reference_transport
-from gnd.agent_cli import InvocationStatus
+from gnd.agents import InvocationStatus
 from gnd.artifacts import (
     ArtifactError,
     canonical_json_bytes,
@@ -97,7 +97,7 @@ def _evaluate(case, raw, process_exit, snapshot, experiment, digest, contract_sh
             contract_sha256=contract_sha,
         )
     model, refs = _model(case, experiment)
-    from gnd.report import current_payload_schema_version
+    from gnd.payloads import current_payload_schema_version
     from gnd.terms import uses_temporal
 
     version = (

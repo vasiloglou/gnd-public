@@ -20,8 +20,8 @@ arch = importlib.util.module_from_spec(_SPEC)
 sys.modules.setdefault("gnd_arch_rf1", arch)
 _SPEC.loader.exec_module(arch)
 
-# D4 (a): edges leaving these layers are strict xfail now; lanes -> entry joins at RF4.
-SCOPE = ("model", "checking", "semantics")
+# RF4 widens the ratchet to every layer; no expected failures remain.
+SCOPE = ("infrastructure", "model", "checking", "semantics", "lanes", "entry")
 # The 23 wrong-way module pairs measured in metrics-RF0.json (27 edges), with the
 # phase expected to remove each.
 KNOWN_PAIRS = {
@@ -73,8 +73,7 @@ def _pairs(metrics: dict) -> set[tuple[str, str]]:
     "pair",
     [
         pytest.param(pair, id=f"{pair[0]}->{pair[1]}",
-                     marks=() if KNOWN_PAIRS[pair] == "RF3" else pytest.mark.xfail(
-                         strict=True, reason=f"{pair[0]} -> {pair[1]}: {KNOWN_PAIRS[pair]} removes"))
+)
         for pair in _in_scope()
     ],
 )
@@ -94,8 +93,8 @@ def test_layer_scope():
     modules = _layer_map()["modules"]
     expected = sorted(pair for pair in KNOWN_PAIRS if modules[pair[0]]["layer"] in SCOPE)
     assert _in_scope() == expected
-    assert len(expected) == 16
-    assert {modules[a]["layer"] for a, _b in KNOWN_PAIRS} - set(SCOPE) == {"lanes"}
+    assert len(expected) == 23
+    assert {modules[a]["layer"] for a, _b in KNOWN_PAIRS} - set(SCOPE) == set()
 
 
 def test_layer_ratchet_detects_a_new_pair(tmp_path):

@@ -295,3 +295,14 @@ original consumers and the new existing homes (artifacts, model, exits).
 
 | gnd.model.structured_derivation_ids | gnd.documents.structured_derivation_ids | RF3 | Alias; same object; RF-D5 retirement |
 | gnd.model.MAX_YAML_EVENTS | gnd.documents.MAX_YAML_EVENTS | RF3 | Alias; same object; RF-D5 retirement |
+
+## RF4 -- peripheral homes
+
+The exact per-name old/new paths are in [RF4 move inventory](../evidence/RF4/moves.json).
+Its identity gate checks every listed name; public spellings strip the leading
+underscore, except _json uses decode_json and __all__ uses compat_all.
+Installer filesystem closure moves to safefs; artifact/domain variants retain
+canonical defining homes and are exposed through distinct public seams.
+Agent runner/adapter, assurance, oracle, payload and export/witness service
+aliases retain predecessor objects and historical serialized qualifications.
+Retirement follows RF-D5: first public release after RF6 plus separate approval.

@@ -66,3 +66,8 @@ public effective_view. Descriptor registration lives in branches. Retain moved
 names as explicit identity aliases in the milestone shim inventory; patch the
 defining home or actual public lookup, and preserve source-scan visitation.
 Shim retirement follows RF-D5 in the approved refactoring plan.
+
+RF4 peripheral homes: safefs provides public filesystem seams without merging
+variants; process owns bounded execution, agents owns trusted adapter selection.
+The synthesis oracle and ordered assurance package retain historical imports.
+Update actual patch lookup owners and include new homes in source-scan coverage.

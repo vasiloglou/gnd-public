@@ -40,7 +40,7 @@ from pydantic import (
     model_validator,
 )
 
-from gnd.agent_cli import AgentAdapterId, InvocationResult
+from gnd.agents import AgentAdapterId, InvocationResult
 from gnd.artifacts import (
     ArtifactError,
     LeafSnapshot,
@@ -78,7 +78,10 @@ from gnd.exp.session_eval import (
     validate_transition_payload,
     validate_verifier_payload,
 )
-from gnd.report import MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS, PAYLOAD_SCHEMA_VERSION
+from gnd.payloads import (
+    MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS,
+    PAYLOAD_SCHEMA_VERSION,
+)
 
 __all__ = [
     "MAX_SESSION_RESULT_BYTES",
@@ -2385,7 +2388,7 @@ class SessionStore:
         except (KeyError, TypeError) as error:
             raise ValueError(f"{attempt_relative} lacks its stream evidence index") from error
         if not isinstance(invocation_document, dict):
-            raise ValueError(  # noqa: TRY004
+            raise ValueError(  # noqa: TRY004 -- preserve predecessor refusal contract
                 f"{attempt_relative} invocation must be an object"
             )
         stdout_bytes = self._read_evidence_leaf(
@@ -2909,13 +2912,13 @@ class SessionStore:
             if not isinstance(best_document["schema_version"], int) or isinstance(
                 best_document["schema_version"], bool
             ):
-                raise ValueError(  # noqa: TRY004 - persisted evidence is invalid
+                raise ValueError(  # noqa: TRY004 -- preserve predecessor refusal contract
                     "best pointer schema version must be an integer"
                 )
             if not isinstance(best_document["attempt"], int) or isinstance(
                 best_document["attempt"], bool
             ):
-                raise ValueError(  # noqa: TRY004 - persisted evidence is invalid
+                raise ValueError(  # noqa: TRY004 -- preserve predecessor refusal contract
                     "best pointer attempt must be an integer"
                 )
             try:

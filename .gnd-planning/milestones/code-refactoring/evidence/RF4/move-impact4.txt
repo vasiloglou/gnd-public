@@ -1,0 +1,22 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_install.py tests/test_doctor_uninstall.py tests/test_review_fixes.py tests/test_artifacts.py tests/test_agent_cli.py tests/test_v63_phase2_cache.py tests/test_public_assurance_inheritance.py tests/test_public_assurance_feedback.py tests/test_synth_mutate.py tests/test_synth_boundary.py tests/test_synth_conforming.py tests/test_synth_expectation_independence.py tests/test_synth_false_pass_quarantine.py tests/test_synth_oracle_value_range.py tests/test_synth_tagged_comparison.py tests/test_codegen_emit.py tests/test_codegen_force.py tests/test_codegen_manifest.py --tb=short -x
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 37%]
+........................................................................ [ 46%]
+........................................................................ [ 55%]
+........................................................................ [ 64%]
+.........................................F
+=================================== FAILURES ===================================
+__________ test_boundary_and_mutation_share_normative_scalar_identity __________
+tests/test_synth_conforming.py:994: in test_boundary_and_mutation_share_normative_scalar_identity
+    for key in (boundary._key, mutate._key):
+                               ^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.mutate' has no attribute '_key'
+=========================== short test summary info ============================
+FAILED tests/test_synth_conforming.py::test_boundary_and_mutation_share_normative_scalar_identity
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 545 passed in 75.83s (0:01:15)
+
+Exit: 1

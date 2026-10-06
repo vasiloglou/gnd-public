@@ -13,7 +13,8 @@ from unittest.mock import patch
 
 from support.rf1_pins import assert_golden, canonical, golden_path, minor_tag
 
-from gnd import api, artifacts, assurance
+import gnd
+from gnd import artifacts, assurance, checking_service
 from gnd.assurance_evidence import production_identity
 from gnd.exp import session
 
@@ -54,7 +55,7 @@ def capture_mint(records):
 
 def child_capture(destination):
     records = []
-    api._mint_execution = capture_mint(records)
+    checking_service._mint_execution = capture_mint(records)
     # Flush records only after the real CLI evaluation has completed.
     return records
 
@@ -64,7 +65,7 @@ def install_capture(monkeypatch):
     original = session.run_bounded_process
     temporary = tempfile.TemporaryDirectory(prefix="rf2-mint-inputs-")
     destination = Path(temporary.name) / "mint.jsonl"
-    source_root = str(Path(assurance.__file__).resolve().parents[1])
+    source_root = str(Path(gnd.__file__).resolve().parents[1])
     tests_root = str(ROOT / "tests")
 
     async def run(argv, **kwargs):

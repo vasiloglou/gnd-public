@@ -1,0 +1,28 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_codegen_force.py tests/test_codegen_manifest.py tests/test_public_lean_export_successors.py tests/test_public_souffle_successors.py tests/test_public_souffle_input_contract.py tests/test_public_optional_value_witness.py tests/test_rf4_peripheral.py -k not graph --tb=short -x
+..........................................................F
+=================================== FAILURES ===================================
+_ test_fresh_cli_no_clobber_publication_preserves_a_raced_root[raced-empty-absent] _
+tests/test_codegen_force.py:783: in test_fresh_cli_no_clobber_publication_preserves_a_raced_root
+    assert main(["codegen", str(FULL_VOCABULARY), "--out", str(out)]) == EXIT_COLLISION
+E   AssertionError: assert 0 == 11
+E    +  where 0 = main(['codegen', '<worktree>/tests/fix.../nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-4316/test_fresh_cli_no_clobber_publ0/project'])
+----------------------------- Captured stdout call -----------------------------
+generated project for <worktree>/tests/fixtures/models/full_vocabulary.orm.yaml -> <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4316/test_fresh_cli_no_clobber_publ0/project
+  full_vocabulary/__init__.py [derived] created
+  full_vocabulary/tools.py [derived] created
+  artifacts/full_vocabulary.projection.schema.json [derived] created
+  artifacts/full_vocabulary.verbalization.txt [derived] created
+  artifacts/full_vocabulary.applicable.json [derived] created
+  artifacts/full_vocabulary.artifacts.json [derived] created
+  SKILL.md [derived] created
+  architecture.contract.yaml [extension] created
+  test_architecture_smoke_full_vocabulary.py [extension] created
+  references/gnd-full-vocabulary-notes.md [extension] created
+  pyproject.toml [extension] created
+=========================== short test summary info ============================
+FAILED tests/test_codegen_force.py::test_fresh_cli_no_clobber_publication_preserves_a_raced_root[raced-empty-absent]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 58 passed, 20 deselected in 3.73s
+
+Exit: 1

@@ -14,5 +14,37 @@
     "date": "2026-10-05",
     "sha256": "daebbc75134e8c665dc2ee74ce79aa5019f1abf3d8835b0e484991757149207b",
     "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A2-spec.md"
+  },
+  {
+    "id": "A3",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "date": "2026-10-05",
+    "sha256": "5b0466cd769a52c003a478f40f34ab83f58585e308d60d6a58dd475ec551b2fa",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A3-spec.md"
+  },
+  {
+    "id": "A4",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "date": "2026-10-05",
+    "sha256": "90a2e871200b586c9c9978c252e6bdd84e6dc966e76a90ef5fc6db56c54668e5",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A4-spec.md"
+  },
+  {
+    "id": "A5",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "sha256": "275f524a766be5a1d98eb23856a47dd9747d606cb2919b6951f5e0abc6303551",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A5-spec.md"
+  },
+  {
+    "id": "A6",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "sha256": "83a3359217660704a1ced710f32cce337d0ebecd32bda5ccfb2dfb54f2454a9e",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A6-spec.md"
   }
 ]

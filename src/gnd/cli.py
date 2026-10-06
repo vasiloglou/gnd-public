@@ -548,7 +548,7 @@ def _cmd_coverage(
     except ModelValidationError as error:
         _print_issues(error.issues)
         return 3
-    except Exception as error:  # noqa: BLE001 - model load failures are ill-formed
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: {error}")
         return 3
 
@@ -885,7 +885,7 @@ def _cmd_diff(
     except OSError as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return EXIT_IO
-    except Exception as error:  # noqa: BLE001 - CLI must map projector faults to exit 70
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"INTERNAL ERROR: {error}", file=sys.stderr)
         return EXIT_INTERNAL
     if output_format == "json":
@@ -950,7 +950,7 @@ def _cmd_rai_import(
     except RaiImportError as error:
         print(error, file=sys.stderr)
         return 3
-    except Exception as error:  # noqa: BLE001 - preserve the non-band internal exit
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"INTERNAL ERROR: {type(error).__name__}: {error}", file=sys.stderr)
         return EXIT_INTERNAL
     print(f"IMPORTED {model_path} -> {output_dir}")
@@ -977,7 +977,7 @@ def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool 
         payload = build_batch_payload(result)
         try:
             batch_model = load_model(model_path)
-        except Exception:  # noqa: BLE001 - the batch result already owns model failures
+        except Exception:  # noqa: BLE001 -- preserve predecessor refusal contract
             batch_model = None
         if batch_model is not None:
             from gnd.redaction import RedactionPolicy, project_output
@@ -1008,7 +1008,7 @@ def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool 
     except BatchInternalError as error:
         print(f"INTERNAL ERROR: {error}", file=sys.stderr)
         return EXIT_INTERNAL
-    except Exception as error:  # noqa: BLE001 - serializer/schema defects are internal
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"INTERNAL ERROR: {type(error).__name__}: {error}", file=sys.stderr)
         return EXIT_INTERNAL
 
@@ -1404,7 +1404,7 @@ def _cmd_verify(
                 print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
             _print_issues(error.issues)
         return emit(3, issues=error.issues, warnings=error.warnings)
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         if output_format != "json" and not active_redaction():
             print(f"ERROR: {error}")
         return emit(3, error=error)
@@ -1431,7 +1431,7 @@ def _cmd_verify(
                 print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
             _print_issues(error.issues)
         return emit(3, issues=error.issues, warnings=warnings)
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         if output_format != "json" and not active_redaction():
             print(f"ERROR: {error}")
         return emit(3, error=error)
@@ -1506,7 +1506,7 @@ def _cmd_verify(
             exit_code = _band(report)
     except AnchorError as error:
         return emit(3, error=error)
-    except Exception as error:  # noqa: BLE001 - a checker bug must never emit a band code
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         if output_format != "json" and not active_redaction():
             print(f"INTERNAL ERROR: {type(error).__name__}: {error}")
         return emit(EXIT_INTERNAL, error=error)
@@ -1628,7 +1628,7 @@ def _cmd_extract(model_path: str, out_dir: str) -> int:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         _print_issues(error.issues)
         return 3
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: {error}")
         return 3
 
@@ -1777,7 +1777,7 @@ def _cmd_export_pyrel(
     except ExportInputError as error:
         print(f"invalid model: {error}", file=sys.stderr)
         return 3
-    except Exception as error:  # noqa: BLE001 -- CLI operational boundary
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"export failed: {error}", file=sys.stderr)
         return EXIT_INTERNAL
     try:
@@ -1785,7 +1785,7 @@ def _cmd_export_pyrel(
     except FileExistsError as error:
         print(f"output exists: {error}", file=sys.stderr)
         return EXIT_COLLISION
-    except Exception as error:  # noqa: BLE001 -- publication operational boundary
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"output failure: {error}", file=sys.stderr)
         return EXIT_INTERNAL
     print(f"Exported PyRel program to {out_path}")
@@ -1883,7 +1883,7 @@ def _cmd_codegen(model_path: str, out_dir: str, *, force: bool = False) -> int:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         _print_issues(error.issues)
         return 3
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: {error}")
         return 3
 
@@ -3078,7 +3078,7 @@ def _evolve_service_exit(error: Exception) -> int:
 
     from pydantic import ValidationError
 
-    from gnd.install import InstallError, InstallPathError
+    from gnd.safefs import InstallError, InstallPathError
 
     cause: BaseException | None = error
     while cause is not None:
@@ -3210,7 +3210,8 @@ def _evolve_publish_preview(
     data: bytes,
 ) -> None:
     from gnd.artifacts import ArtifactError, read_regular_file_bytes
-    from gnd.install import InstallError, InstallPathError, LeafIdentity, _atomic_write
+    from gnd.safefs import InstallError, InstallPathError, LeafIdentity
+    from gnd.safefs import atomic_write as _atomic_write
 
     try:
         existing = read_regular_file_bytes(
@@ -3275,7 +3276,7 @@ def _evolve_error_exit(error: Exception) -> int:
         EvolutionOperationsGatedError,
         EvolutionReadOnlyCompatibilityError,
     )
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     if isinstance(error, _EvolutionCLIError):
         return error.exit_code
@@ -3379,7 +3380,7 @@ def _cmd_evolve_preview(
         _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
         _evolve_emit_claim(preview, output_format, stage="preview")
         return 0
-    except Exception as error:  # noqa: BLE001 - closed public exit mapping
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return _evolve_fail(error, stage="preview")
 
 
@@ -3501,7 +3502,7 @@ def _cmd_evolve_apply(
             )
         pending = service.apply(accepted)
         return _evolve_finish_apply(service, pending, output_format)
-    except Exception as error:  # noqa: BLE001 - closed public exit mapping
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return _evolve_fail(error, stage="apply")
 
 
@@ -3544,7 +3545,7 @@ def _cmd_evolve_finalize(
         record = service.finalize(pending)
         _evolve_emit_claim(record, output_format, stage="finalize")
         return record.conformance_exit_code
-    except Exception as error:  # noqa: BLE001 - closed public exit mapping
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return _evolve_fail(error, stage="finalize")
 
 
@@ -3588,7 +3589,7 @@ def _cmd_doccheck(model_path: str, manifest_path: str, artifacts_dir: str) -> in
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         _print_issues(error.issues)
         return 3
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: {error}")
         return 3
 
@@ -3690,7 +3691,7 @@ def _cmd_doccheck(model_path: str, manifest_path: str, artifacts_dir: str) -> in
     except PopulationValidationError as error:
         _print_issues(error.issues)
         return 3
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: {error}")
         return 3
 
@@ -3931,7 +3932,7 @@ def _cmd_fidelity(
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         _print_issues(error.issues)
         return 3
-    except Exception as error:  # noqa: BLE001 - load errors map to band 3, no traceback
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: {error}")
         return 3
 
@@ -4156,7 +4157,7 @@ def _cmd_fidelity(
                 )
             )
             continue
-        except Exception as error:  # noqa: BLE001 - load errors are case failures
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             outcomes.append(
                 CaseOutcome(name, "failed", reason=f"a population failed to load: {error}")
             )
@@ -4436,7 +4437,7 @@ def _cmd_review_panel(
     except (OSError, ValueError) as error:
         print(f"IO ERROR: review evidence could not be published: {error}")
         return EXIT_IO
-    except Exception as error:  # noqa: BLE001 - CLI boundary maps defects to EX_SOFTWARE
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"INTERNAL ERROR: {type(error).__name__}: {error}")
         return EXIT_INTERNAL
 
@@ -4536,7 +4537,7 @@ def _cmd_review_finalize(run_dir: str, synthesis_path: str, out_path: str) -> in
     except OSError as error:
         print(f"IO ERROR: synthesis {synthesis_file} could not be read: {error}")
         return EXIT_IO
-    except Exception as error:  # noqa: BLE001 - untrusted document, closed validation
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"ERROR: panel synthesis failed closed validation: {error}")
         return 3
 
@@ -4703,7 +4704,7 @@ def _cmd_exp_init(
         read_session_contract,
     )
     from gnd.exp.spec import ExperimentSpec
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
     from gnd.synth.paths import safe_output_path
 
     frontmatter: dict[str, Any] = {
@@ -5189,7 +5190,7 @@ def _cmd_exp_run(
 ) -> int:
     """Bridge one validated data-driven experiment into ``run_session`` once."""
 
-    from gnd.agent_cli import AgentAdapterId, AgentCLIError
+    from gnd.agents import AgentAdapterId, AgentCLIError
     from gnd.artifacts import canonical_json_bytes
     from gnd.declared_adapter import invoke_declared_adapter
     from gnd.exp.adapter_policy import AdapterPolicyError, read_adapter_policy
@@ -5352,7 +5353,7 @@ def _cmd_exp_run(
         except (OSError, ValueError) as error:
             print(f"IO ERROR: tests-mode session could not be published: {error}")
             return EXIT_IO
-        except Exception as error:  # noqa: BLE001 - CLI boundary maps defects to EX_SOFTWARE
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             print(f"INTERNAL ERROR: {type(error).__name__}: {error}")
             return EXIT_INTERNAL
 
@@ -5432,7 +5433,7 @@ def _cmd_exp_run(
     except (OSError, ValueError) as error:
         print(f"IO ERROR: data-driven session could not be published: {error}")
         return EXIT_IO
-    except Exception as error:  # noqa: BLE001 - CLI boundary maps defects to EX_SOFTWARE
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         print(f"INTERNAL ERROR: {type(error).__name__}: {error}")
         return EXIT_INTERNAL
 
@@ -5965,7 +5966,7 @@ def _emit_boundary_corpus(
         )
         try:
             pop_abs = _paths.safe_output_path(out_root, pop_rel)
-        except Exception as error:  # noqa: BLE001
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             return fail(EXIT_IO, f"refused output path for {case.constraint_ref}: {error}")
 
         try:
@@ -6007,7 +6008,7 @@ def _emit_boundary_corpus(
                     json.dumps(mismatch.discrepancies, indent=2) + "\n", encoding="utf-8"
                 )
                 pop_abs.unlink(missing_ok=True)
-            except Exception as error:  # noqa: BLE001
+            except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                 return fail(EXIT_IO, f"could not write quarantine: {error}")
             try:
                 quarantine_path = abort_quarantine(q_abs)
@@ -6052,7 +6053,7 @@ def _emit_boundary_corpus(
                 baseline_seed=baseline_seed_value,
             )
             sidecar_abs = _prov.write_sidecar(sidecar, pop_abs)
-        except Exception as error:  # noqa: BLE001 - sidecar failures are I/O failures
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             return fail(EXIT_IO, f"could not write sidecar for {pop_abs}: {error}")
         written.append(
             {
@@ -6255,7 +6256,7 @@ def _cmd_synth(
                     )
                 ]
             )
-    except Exception as error:  # noqa: BLE001 - model load errors map to band 3
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return fail(3, f"{model_path}: {error}")
 
     structured = structured_derivation_ids(model)
@@ -6299,7 +6300,7 @@ def _cmd_synth(
             pool = _poolfile.build_faker_pool(model, Random(pool_seed), size_per_type=8)
     except _poolfile.PoolValidationError as error:
         return fail(EXIT_GENERATOR, f"pool rejected:\n{error}")
-    except Exception as error:  # noqa: BLE001 - a pool build/read failure is a generator failure
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return fail(EXIT_GENERATOR, f"pool could not be prepared: {error}")
 
     try:
@@ -6307,7 +6308,7 @@ def _cmd_synth(
         pool_abs = _paths.safe_output_path(out_root, pool_rel)
         pool_abs.parent.mkdir(parents=True, exist_ok=True)
         _poolfile.write_pool(pool, pool_abs)
-    except Exception as error:  # noqa: BLE001 - a write/traversal refusal is an IO failure
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return fail(EXIT_IO, f"could not materialise the pool: {error}")
 
     provenance = pool.provenance or {}
@@ -6385,7 +6386,7 @@ def _cmd_synth(
             (q_abs.with_suffix(".discrepancy.json")).write_text(
                 json.dumps(disc.discrepancies, indent=2) + "\n", encoding="utf-8"
             )
-        except Exception as error:  # noqa: BLE001
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             return fail(EXIT_IO, f"could not write quarantine: {error}")
         try:
             quarantine_path = abort_quarantine(q_abs)
@@ -6441,14 +6442,14 @@ def _cmd_synth(
                     json.dumps(assembly.doc, indent=2, ensure_ascii=False) + "\n",
                     encoding="utf-8",
                 )
-            except Exception as error:  # noqa: BLE001
+            except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                 return fail(EXIT_IO, f"could not write population: {error}")
 
             # Re-admit the EMITTED file (exit 5 on rejection) — a structurally
             # invalid population contributes zero verdicts and must be loud.
             try:
                 population = load_population(str(pop_abs), model=model)
-            except Exception as error:  # noqa: BLE001
+            except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                 return fail(EXIT_GENERATOR, f"emitted population failed re-admission: {error}")
             report = check(model, population)
 
@@ -6462,7 +6463,7 @@ def _cmd_synth(
                     case_kind="conforming",
                 )
                 sidecar_abs = _prov.write_sidecar(sidecar, pop_abs)
-            except Exception as error:  # noqa: BLE001 - sidecar failures are I/O failures
+            except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                 return fail(EXIT_IO, f"could not write sidecar for {pop_abs}: {error}")
             written.append(
                 {
@@ -6509,7 +6510,7 @@ def _cmd_synth(
                 baseline_report = check(model, load_population(temp_path, model=model))
             finally:
                 Path(temp_path).unlink(missing_ok=True)
-        except Exception as error:  # noqa: BLE001
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             raise _BaselineFailure(
                 fail(EXIT_GENERATOR, f"baseline failed re-admission: {error}")
             ) from None
@@ -6535,7 +6536,7 @@ def _cmd_synth(
             )
             try:
                 pop_abs = _paths.safe_output_path(out_root, pop_rel)
-            except Exception as error:  # noqa: BLE001
+            except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                 return fail(EXIT_IO, f"refused output path for {ref}: {error}")
             try:
                 case = _mutate.emit_violating(
@@ -6585,7 +6586,7 @@ def _cmd_synth(
                         json.dumps(mismatch.discrepancies, indent=2) + "\n", encoding="utf-8"
                     )
                     pop_abs.unlink(missing_ok=True)  # retained under quarantine/, not corpus
-                except Exception as error:  # noqa: BLE001
+                except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                     return fail(EXIT_IO, f"could not write quarantine: {error}")
                 try:
                     quarantine_path = abort_quarantine(q_abs)
@@ -6628,7 +6629,7 @@ def _cmd_synth(
                     not_derivable=stand_downs or None,
                 )
                 sidecar_abs = _prov.write_sidecar(sidecar, pop_abs)
-            except Exception as error:  # noqa: BLE001 - sidecar failures are I/O failures
+            except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                 return fail(EXIT_IO, f"could not write sidecar for {pop_abs}: {error}")
             written.append(
                 {
@@ -6909,7 +6910,7 @@ def _cmd_measure(
         from gnd.terms import require_non_temporal
 
         require_non_temporal(model, "measure")
-    except Exception as error:  # noqa: BLE001 - model load errors map to band 3
+    except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return fail(3, f"{model_path}: {error}")
     policy = _redaction.RedactionPolicy.from_model(model)
 
@@ -7007,7 +7008,7 @@ def _cmd_measure(
             if str(pool_abs) not in pool_sha_cache:
                 pool_sha_cache[str(pool_abs)] = _poolfile.load_pool(pool_abs, model).sha256
             recomputed_pool_sha = pool_sha_cache[str(pool_abs)]
-        except Exception as error:  # noqa: BLE001 - a pool read/validate failure is a binding failure
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             return fail(3, f"C6 pool binding failed for {pop_path}: {error}")
         if recomputed_pool_sha != sidecar.pool_sha256:
             return fail(
@@ -7022,7 +7023,7 @@ def _cmd_measure(
         # score (T-02-19).
         try:
             population = load_population(str(pop_path), model=model)
-        except Exception as error:  # noqa: BLE001 - a re-admission failure is a generator failure
+        except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
             return fail(EXIT_GENERATOR, f"population {pop_path} failed to load: {error}")
         report = check(model, population)
         observed_by_ref = {verdict.constraint_ref: verdict.verdict for verdict in report.verdicts}

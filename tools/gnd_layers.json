@@ -1,8 +1,12 @@
 {
   "allow_list": [],
   "declared_clean": [
-    "entry",
-    "infrastructure"
+    "infrastructure",
+    "model",
+    "checking",
+    "semantics",
+    "lanes",
+    "entry"
   ],
   "excluded": [
     "src/gnd/examples/**",
@@ -78,6 +82,9 @@
     "gnd.agent_cli": {
       "layer": "infrastructure"
     },
+    "gnd.agents": {
+      "layer": "infrastructure"
+    },
     "gnd.anchor_identity": {
       "layer": "infrastructure"
     },
@@ -100,6 +107,24 @@
       "layer": "infrastructure"
     },
     "gnd.assurance": {
+      "layer": "semantics"
+    },
+    "gnd.assurance._wire": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.claims": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.core": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.evidence": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.inheritance": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.transport": {
       "layer": "semantics"
     },
     "gnd.assurance_claims": {
@@ -125,6 +150,9 @@
     },
     "gnd.checker": {
       "layer": "checking"
+    },
+    "gnd.checking_service": {
+      "layer": "semantics"
     },
     "gnd.cli": {
       "layer": "entry"
@@ -319,6 +347,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.service": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.souffle": {
       "lane": "export",
       "layer": "lanes"
@@ -437,11 +469,17 @@
     "gnd.patterns": {
       "layer": "model"
     },
+    "gnd.payloads": {
+      "layer": "semantics"
+    },
     "gnd.population": {
       "layer": "model"
     },
     "gnd.popvalidate": {
       "layer": "model"
+    },
+    "gnd.process": {
+      "layer": "infrastructure"
     },
     "gnd.proof_bridge": {
       "layer": "checking"
@@ -510,6 +548,9 @@
       "lane": "review",
       "layer": "lanes"
     },
+    "gnd.safefs": {
+      "layer": "infrastructure"
+    },
     "gnd.semantic_adapter": {
       "layer": "checking"
     },
@@ -557,6 +598,22 @@
       "layer": "lanes"
     },
     "gnd.synth.mutate": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle.constructive": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle.mutations": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle.state": {
       "lane": "synth",
       "layer": "lanes"
     },
@@ -628,6 +685,10 @@
       "layer": "lanes"
     },
     "gnd.witness.producer": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.service": {
       "lane": "witness",
       "layer": "lanes"
     },

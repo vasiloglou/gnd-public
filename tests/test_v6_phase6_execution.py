@@ -134,7 +134,7 @@ def test_a_registered_but_unexplained_consumer_event_invalidates_scope():
 
 
 def test_unreadable_producer_identity_withholds_evidence_but_preserves_scope(monkeypatch):
-    from gnd import assurance_evidence
+    from gnd.assurance import evidence as assurance_evidence
 
     def unavailable():
         raise OSError("source unavailable")

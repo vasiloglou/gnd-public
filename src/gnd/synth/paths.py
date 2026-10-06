@@ -21,7 +21,9 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from gnd.install import safe_destination
+from gnd.safefs import (
+    safe_destination,
+)
 
 __all__ = ["safe_output_path", "slug"]
 

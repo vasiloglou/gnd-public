@@ -8,7 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from gnd import api, artifacts, checker, diff
+from gnd import artifacts, checker, diff
 from gnd.model import load_model
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,7 +19,7 @@ CASES = json.loads((ROOT / 'tests/fixtures/rf1-pins/cases.json').read_text())['c
 def test_directory_identity_refuses_enumeration_change(tmp_path, monkeypatch):
     """RF1 owed nested comparator: stable control then changed stat must refuse."""
     (tmp_path / 'leaf').write_bytes(b'pinned')
-    arguments = dict(label='RF4 pin', max_entries=10, max_bytes=100)
+    arguments = {'label': 'RF4 pin', 'max_entries': 10, 'max_bytes': 100}
     assert artifacts.tree_sha256_from_directory(tmp_path, **arguments)
     real_listdir, real_fstat = os.listdir, os.fstat
     enumerated = False
@@ -96,8 +96,7 @@ def test_directory_identity_pin_detects_disabled_comparator(tmp_path, monkeypatc
             node.body = [ast.Return(ast.Tuple(elts=[], ctx=ast.Load()))]
     ast.fix_missing_locations(tree)
     namespace = dict(artifacts.tree_sha256_from_directory.__globals__)
-    exec(compile(tree, '<RF4-negative-control>', 'exec'), namespace)
+    exec(compile(tree, '<RF4-negative-control>', 'exec'), namespace)  # noqa: S102 -- test-owned AST mutant
     monkeypatch.setattr(artifacts, 'tree_sha256_from_directory', namespace['tree_sha256_from_directory'])
-    with pytest.MonkeyPatch.context() as control_patch:
-        with pytest.raises(pytest.fail.Exception, match='DID NOT RAISE'):
-            test_directory_identity_refuses_enumeration_change(tmp_path, control_patch)
+    with pytest.MonkeyPatch.context() as control_patch, pytest.raises(pytest.fail.Exception, match='DID NOT RAISE'):
+        test_directory_identity_refuses_enumeration_change(tmp_path, control_patch)

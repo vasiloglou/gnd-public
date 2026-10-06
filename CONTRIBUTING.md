@@ -56,3 +56,9 @@ Patch the defining module for moved algorithms and the actual public lookup seam
 for consumer wrappers. Move tests pin alias identity and source-scan coverage;
 retirement follows the approved plan's RF-D5 gate. Current source changes make
 old release evidence unavailable until its separately selected controls run.
+
+Peripheral dependency homes are public filesystem seams in safefs, the bounded
+runner in process, trusted adapters in agents, and the independent synth oracle
+package. Assurance follows _wire, core, inheritance, claims, evidence dependency
+order; transport carries receipts. Payload assembly lives in payloads, and
+export/witness services own their thin API wrappers. Old imports remain aliases.

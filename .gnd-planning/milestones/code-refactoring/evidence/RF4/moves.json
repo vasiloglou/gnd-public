@@ -1,0 +1,3025 @@
+{
+  "names": [
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "FILE_MODE",
+      "body_sha256": "9c73466951fd594ca31426c184558b1fbbf2a5663bdae9706b42179e2941e779"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "InstallError",
+      "body_sha256": "b42e57a4bdf925e4386ee05610119bb79de450cc0cb679ab2005779ae095801b"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "InstallPathError",
+      "body_sha256": "c734b96ba5ad1197173e5261c0c2352c9bdc269499848660809ac95929be4604"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_reject_unsafe_relpath",
+      "body_sha256": "55b02875453557c4fbc87614a6454dd6e7163e5a5e8fde0bf0b8a64be98f772f"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "safe_destination",
+      "body_sha256": "082cdd7888d62d551d373f2e5ed98969a050efda2fe1dc3c6921812cc0074bc5"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "ANCHORED_MUTATION",
+      "body_sha256": "7dac362a9854f9af5e5972358f24d5bbc6df0ee6495a7409e67b59461bf900f3"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_O_DESCEND",
+      "body_sha256": "9aec08f0fd796a57840ccf56332a80b3732aeb3956638b11d6a4833e32cad52b"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_descend",
+      "body_sha256": "39058a13d93309b6327d66e8c4a3b9662479beba1698471e9a06b8f177580237"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_temp_name",
+      "body_sha256": "3e3a3f2b07110f74425a9700f94631fdf054d197f927503bdc4f94645245d516"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_NO_REPLACE_CONFLICT_ERRNOS",
+      "body_sha256": "30fe4b483307f1a343c928ea5ee51331f69a150b5f2601dd3a6c4f5be2b091bf"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_rename_noreplace",
+      "body_sha256": "4f3688fa58ff7dde234a7054751af8a4c816818c2cf84ec213e01283b3620266"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "LeafIdentity",
+      "body_sha256": "d6cf77f0db3b83c6463d9254df57fce1da7bf3fc97dac768cff75b66a98f64b7"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_matches_leaf",
+      "body_sha256": "dfdd80fc9718d9dc09d700febe87c2da421bbf1dfc6411a348a89e0d2e346598"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_replace_staged_leaf",
+      "body_sha256": "42feb9d64b135c0cec9ca9c0c1af0cc729194496c02d993b05685a9e302aa303"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_fdopen_owned",
+      "body_sha256": "7556c68f47500f6970af75ea216b133121af28edfab51b93fb82be057dcddcb2"
+    },
+    {
+      "old": "gnd.install",
+      "new": "gnd.safefs",
+      "name": "_atomic_write",
+      "body_sha256": "ee913ce151ea7d4863642a7139fda3cda5503d4c1bde7b3a88d0ef12a8f441a8"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_READ_SIZE",
+      "body_sha256": "466660067fe941bdc92ff8fafbeddf310e057959bd7f8e1dd7f6b3b50ad97ed9"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_MIN_POST_KILL_REAP_DRAIN_SECONDS",
+      "body_sha256": "cd8d496ba75fa7989eec0d5f7048ae34a8923de781dff99c3af8c4af37329afd"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "EnvironmentFact",
+      "body_sha256": "cef3c8c77e485217b75e4308c7df95d5bf546f6de7bdd92e684f293e504891dd"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "ProcessLimits",
+      "body_sha256": "beae4ba2f9544e8b0319bfb252cc7f12176146a6ce3eb8be10bc15f935908204"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "BoundedProcessResult",
+      "body_sha256": "ddcea158cc8e5d3f5a5796efeb8529632ce622a675dd6cb09b01e3d5793d5e4b"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_RetentionBudget",
+      "body_sha256": "8cf6c59d20c1b7393f9ff442798294acdb53ac9ab4959b290ec55a3adb2d6257"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_DrainState",
+      "body_sha256": "4f9862378e15c544cb86865f232f175d5939301417a6b9c4560ae7530e70a35a"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_drain",
+      "body_sha256": "5b1134e04eafcaf225d12778ee6debbb95225e8f56e1e44717d008d71442d7e6"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_write_stdin",
+      "body_sha256": "0d62cd1bc397e641651a8909b176a102e18426943f45621424609f2564a22d31"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_signal_group",
+      "body_sha256": "a86a8c9c159280e884d5062dad4321b15bb2244571fd1fb3079306223c4d8227"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_group_exists",
+      "body_sha256": "10105040c2c643745806a764b3211bdf1096d561e915f1ea117623fca62ed189"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_wait_group_gone",
+      "body_sha256": "9e1eefc45b957fd01f7aacd28852c858d63a84b9042313e8f86a0b2a949a5ce3"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_wait_cleanup_targets",
+      "body_sha256": "8b40178ce268a40257da0d1a2aba467047b8ac84d4c7f892ad2f82a506b471dd"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_stop_process_group",
+      "body_sha256": "1f042f28361c44976582296488abb0acc294c5683dbd212d89230c81743fd399"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_argv_digest",
+      "body_sha256": "f5567fbfb14195cba02493da2548189d0d26db5489d0a95ae7011fdf8bd07bb9"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_environment_facts",
+      "body_sha256": "28269d31a57b2ea6e5aa752952d2136d3bd0a4b9e570a9cfa8fa436e12ceb409"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_sensitive_values",
+      "body_sha256": "ecdfc0d6af24e715c4c98bfa21176b9be8975cb38aa2abef6ed4bd5b52afb09c"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_suffix_prefix_overlap",
+      "body_sha256": "b888bfc4ac68812fdf84a9bf706c45f6b38ed12691ee4c079819af0bacde97fe"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_redact",
+      "body_sha256": "18e315a529d247b5c9db49f76140ba4d8f46143d760ebdff8dca4de59c5eb946"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "_result",
+      "body_sha256": "9963d23fc14b5075f487f16e01bd4b1b25ca281f1ed60f0f95e8ae332bfb1f50"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "run_bounded_process",
+      "body_sha256": "75739148d54bd2dbc9e0828ec786ab71ed226b398ff6e23153c0241b3c190c40"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "__all__",
+      "body_sha256": "620ef743ee4b0ba6d935b9d1a0d505a6329d150b5af08df7c7071e3f4e45de40"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "DEFAULT_OUTPUT_LIMIT_BYTES",
+      "body_sha256": "280ce457aacfeff411fc28502d505013ae7a1071c0f6ca67e1a00904819241c5"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "DEFAULT_PROMPT_LIMIT_BYTES",
+      "body_sha256": "f36428eaf2a6e334c33113020c129654456c67d3802fad3c7aba2900c49dbfe5"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "VERSION_OUTPUT_LIMIT_BYTES",
+      "body_sha256": "a0da9dde0e428627aa0521971c3a07daffbce8b1d66c12974f9e22f5486f7b99"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "VERSION_TIMEOUT_SECONDS",
+      "body_sha256": "8339347ee8b0d6a1ea99f10ee9999ecfb72efa673a24cbf93b6f5c1eb9e6dbb9"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "AgentAdapterId",
+      "body_sha256": "cdaf7c71dc163f23ab2c938edfb75dc0e8794de12ccd9a34f2a9fd99b5594c38"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "InvocationStatus",
+      "body_sha256": "e95ea5cf98b844c094b41a55f5ba62d5dc7cada6d8d66582d62b85fd7f47e114"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "AgentCLIError",
+      "body_sha256": "f129a56d5c1300796f8eb9c3b6bc17f16616972146890e5846356da81df424e3"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "InvocationResult",
+      "body_sha256": "638fbadcd297c5ce04e89507fae220673ad4cdaf796de7780dd6f4f493e149c6"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "build_agent_argv",
+      "body_sha256": "11bc42d6a50b04237eb8a008b3a1c4728d7aeb36f61b5fc43ca6c75ef8a85be2"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "_private_environment",
+      "body_sha256": "3554d0a1e94d5e83974123c114da82a6998a6f90ec4535d91c85c34d29526319"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "_validate_feedback",
+      "body_sha256": "b4790bdd8f06b2c7793deb99debcc8fb332a151adf6a11fefa90a998b591347f"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "invoke_agent",
+      "body_sha256": "67e202d709c3d546e28b27950356ef4b79f91caaf9aa2c63edc4dc78518117a8"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance._wire",
+      "name": "CorrespondenceDigests",
+      "body_sha256": "73107445bb2872c8f48c7aeafa10714c9cbea51638685413c63d4248692f27c1"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "MAX_DOCUMENT_BYTES",
+      "body_sha256": "a4c1ba91cde4c3539ada718c1b85d5ff2da5414935361bb79d0da6a7f3b6bd06"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "MAX_BUNDLE_BYTES",
+      "body_sha256": "e57cc5f745da68e55efb131979ba8d29257c968158bf4fffb2cc33e02e125263"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "MAX_FILES",
+      "body_sha256": "9904e24778aff8a3fa29ccd9c0c59619488dda572a4db97eeed4414c4dd49f93"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "MAX_DEPTH",
+      "body_sha256": "bdb993d564d44eb14791b51631e1c7abb9fca4b370c32af5df137ab88432fa5e"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "MAX_ROSTER_DIRECTORIES",
+      "body_sha256": "85236764887376c15f30002640d885c3677abe3956b2526ea7232004cfcb6e82"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "RUNTIME_DEPENDENCIES",
+      "body_sha256": "bc165f67972911e04d9a88467c72cce795801b69be66c1037dc264628c10ed7c"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "enforce_bundle_limits",
+      "body_sha256": "b12b65de8e588cd12bc27b0578ef5e79a53a0b88ceb96a954435aa657c0fc9d3"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_pairs",
+      "body_sha256": "4cf74d354e9c8bca6b8950929a4418054200b101d09161e9a4d16df6b432cde6"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_finite",
+      "body_sha256": "00c9df44dbf9046e5de7d752612fd3ccef5406a20bb00cd1e5d3c219f422c750"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_constant",
+      "body_sha256": "ec49770f2a25961ba8e8328c300e142da9fac26b1761195e93d18270e4387ac1"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_integer",
+      "body_sha256": "787cb209f5aca9eec8fad5efaa5cdaf35f82cfac1b3af2e8318fcbf50d700dbd"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_json",
+      "body_sha256": "c967ccc3c5dcaeac5bd1743e3832f80104b59bc0f0ccaf66d1658dbb772a2aae"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_read",
+      "body_sha256": "852801791034ebff4685fa5f385e5939561f8ca5ba8d176f533a4e4857b78459"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_children",
+      "body_sha256": "abace0ebb1fac4bbbc7f54d514f66aa6ad70cdbdb1545b1ac50b52134b99a18a"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_relative",
+      "body_sha256": "47aa574b51a94d0ca1d2e418640ed6a66212eb3cf8f86b5fc4a0c44f3fa33c3d"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_sorted_strings",
+      "body_sha256": "b3b217737f3aee7aaa3c2b13903041b78611a742cf70aea65240798d4615b17f"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "dependency_identity",
+      "body_sha256": "652ef894fead2a7876076231757b85d24a616945a8697d17f28992bc9576a27d"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "production_roster",
+      "body_sha256": "476bce23563dc2dc7ef317c908e0213704db42251ff701008fd2d83fe1a08a8e"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "roster_digest",
+      "body_sha256": "00c71da57a85c9ade75eafccf01be26f6736b06d024a067d92ea9e75cb046d4c"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "production_identity",
+      "body_sha256": "e67f4935bf2551c3bdc383b2010cc49910382dd282ffbfb53ad3b535ca465d49"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "runtime_identity",
+      "body_sha256": "840276f017f0029035ef8033a08958d98b85664a780b8301b8c64217ea7786af"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "AuthenticatedAssuranceEvidence",
+      "body_sha256": "d897688e80656dc43d79974aed58c83078fc236b26d942e193eea930415d4742"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "_capability",
+      "body_sha256": "8922d245858d5f958403f0771ec5aec6bf5c4932b99f1086b7763c35d9fe0f58"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance._wire",
+      "name": "_closed",
+      "body_sha256": "68e73dc9edc1d1b4eb38ddf4aef3ccfc14cf880008b7064070ecde1fa5bc7bb5"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance._wire",
+      "name": "_strings",
+      "body_sha256": "f761dffff430025a74dfa6ddeeb7f2e219082e0131d3f918546e218b43e2b354"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "COUNTS",
+      "body_sha256": "e277e3a436be1a7d763ff0448e2b4b63d68181b19ae4defbc6feb263880b3d7e"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "PHASE5_SUCCESSOR_OBSERVATIONS",
+      "body_sha256": "da601ffc24a5ee39681c9e04fef6523d04ad988d5c0888a125d7daa3b5c8984c"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "PHASE5_RETIRED_MUTATIONS",
+      "body_sha256": "47f49727ae075eafebe07502e35160304520e1b8df25106a3a21a2f8f7aae998"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "CLAIM_FAMILY",
+      "body_sha256": "34e6d0919ba41cf1252dbdeabc265a8a01711fd53928bef5f8d0e21c33642743"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "RESULT_FIELDS",
+      "body_sha256": "b6ea83f04269e5069f24d8458ec76d9fe62371d3660a699e2834118af6c078d8"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "CORRESPONDENCE_FIELDS",
+      "body_sha256": "fd58ec09a7c845bf9b9e439530919b8831664e2a1d1ec0bd136d71942e6b6bdf"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "_canonical",
+      "body_sha256": "1c409184de3ce658d46baa1a331990bff9882084d89472153a0bbce3865419f7"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "_index",
+      "body_sha256": "f4179c246c31761bc21bcfa2570233965da4b5659f9fbea4fc7a401b2b16efc4"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "_phase3_output",
+      "body_sha256": "faeb00f1a50b72bd8509506a462754c1ab7027bbf3b16c1d1330b8924b96712d"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "compare_observations",
+      "body_sha256": "da9514f6d2aaea73eb2b016143bb82885f06126c81120b6b05a49ca6acdcd87a"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "_Documents",
+      "body_sha256": "a778f1a7fd9a8aa9377b9b51216bc3e0e8ac0208126b84b9ec34af77c34ff0d8"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "_exports",
+      "body_sha256": "b970556246f8061c89b271cb7014fb66d4c7fe9ead6b724ce629c24ea90095a1"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "_mathematical_basis",
+      "body_sha256": "888cfa86c1e9f79795387c5e38798a61080e60f419c45da622a41c2f75777a3b"
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "validate_result",
+      "body_sha256": "3f76156866dbc31022d4750bd8f53c1d55f58dde7cbd6f65a0776d02f7ba2c05"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance.claims",
+      "name": "INPUT_FIELDS",
+      "body_sha256": "e600c22ca7211897acd2cd63c2235764e833dfdb5f19eeac3ad75abc34a06e8e"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance.claims",
+      "name": "RESULT_FIELDS",
+      "body_sha256": "4f975603cf32f79e17f765a27461c3576434751465d6e20ed61ad6ce8f636d8b"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance.claims",
+      "name": "OUTPUT_NODES",
+      "body_sha256": "337488adabee2e1e76d22320d2b9efb3ad533022fb0baea0357da648a677cb2d"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance.claims",
+      "name": "_validate_inputs",
+      "body_sha256": "2f2389cb28fc5ac48ed66d830ea423e26039ae6d2e97d6689de64e3fd8771deb"
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance.claims",
+      "name": "validate_claim_graph",
+      "body_sha256": "6f3859e127952c6d9b6d26cb5322aacb1c11646adfbd6dc6c04d7990d2147f60"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_load",
+      "body_sha256": "24bd16b1eae8c0279b28b30fb02e934918b0dc79ae79cc8d613ee4a2a2e80a79"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_CacheFingerprint",
+      "body_sha256": "5b050cecf6bb6ac2d58d03d1298978d764a84cdb6d8d58e5acccdf943db90830"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_CacheEntry",
+      "body_sha256": "aa766959b4bd53459d4104e060583afc1f1697dd6f77e7b45fc972e1ef7ceb05"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_assurance_cache",
+      "body_sha256": "2d9bd59e1fdcb4600e22b12de3875fb39c67b78107ab4e3d8fb889f754106cee"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_FINGERPRINT_ERRORS",
+      "body_sha256": "cea51e25e0fec99f8c4c746044ead7b4d25e68fb6bb0ac8bc6a103ba80b0713b"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_stat_identity",
+      "body_sha256": "a7e4427d593319234a80f6ecd1bced5484a5773c62efb93ed683abecf910b862"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_bundle_census",
+      "body_sha256": "cc6d413ef6cac9436506f9000bbfafb669a0f57576c1fa9d26866c1f98796c60"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_fingerprint",
+      "body_sha256": "a5645c6d440bef42733d68860e3d2b503d4b545dc0dd9248e4f59bf506a310cc"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_try_fingerprint",
+      "body_sha256": "ef330b2f935df1f299074fa137b763e5995f2128eb9805248190ac107f45cfaf"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_preflight_read_inputs",
+      "body_sha256": "447a399a510481db5bfb57cc3c1aef85c575eded25c47661241cf21d4e9374d1"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_cached_load",
+      "body_sha256": "775bfc253a35ea6ce491323fcc05d0e28a76b5120f1dfbcea59aa673ce8f876e"
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "load_assurance_evidence",
+      "body_sha256": "ccf899118a6246783cce5b389dd2a1b042cc2ceee9a4672ab39f159ff341934a"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "_PENDING",
+      "body_sha256": "5a2b8b9cafd8b71adcb8055071295c89f3c08ee561a84892629b8c000ccee2ce"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "_PATH_ENV",
+      "body_sha256": "568f68af60ccf3040be7230fa87efe870c98343ce2193a2270a0775acf6a4070"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "_NONCE_ENV",
+      "body_sha256": "cb01ffc57f11364444a3b440517fc72f195aecb902715ad0f29ad4cf07987666"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "producer_identity",
+      "body_sha256": "fd4c0926c2080fd612d64bd0342d2da2f68d4ebff104215ba777ec4668651535"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "prepare_execution",
+      "body_sha256": "16b75a4cbb2aefb909755bcb563fe44436ff606d0bc158f41654f98ce94b4b14"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "emit_receipt",
+      "body_sha256": "83467cbe7efa78d32a8d18582a7de3b02b16da81d756afbed8e1e8bf585d195e"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "VerifiedPayload",
+      "body_sha256": "979e6846d6bfea8a465e27079ea08c1b161d3359323899aa244f1ea2687a7eeb"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "consume_receipt",
+      "body_sha256": "96980888ef733b6bd38d0395364a9e28667e85860a907a4cee84fe1ed10b3c6f"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "bind_verified_execution",
+      "body_sha256": "524b7194be77103ece86d170e5bdd14c59616aea3eabb7ed3b351d2428fce4bd"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "ArchivedExecution",
+      "body_sha256": "03f2c564bd44c37913bd24b804e836505f92dfa4374750885230cf25b082b4c7"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "ArchivedProcessReceipt",
+      "body_sha256": "7a526259c81778b66d6cd8c65ba8a4ee86da4cec8703e057c96c908743d1533e"
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "ArchivedAssuranceReceipt",
+      "body_sha256": "9b95055296d650b61f735ab355d7313a110eb29ca783b2fc1d529f1af23fdf27"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "GeneratorError",
+      "body_sha256": "a1dff62a36b5551f772892db2036c9ef12e97ed886760aff7a6b919065cb2795"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_TermGenerationUnavailable",
+      "body_sha256": "98fd661a6a5a394b9b74c08bea7cfb38f820437fd2c3c733312443af7c7f5e1f"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "CheckerWitnessDiscrepancy",
+      "body_sha256": "cf5a84fec204014342461fd4ace28abd4f00c4a28c43463f11f60303534215ed"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "Assembly",
+      "body_sha256": "b5f6404e8d0a2afdd1504695ab991e38a3bb1889b985e4ce95bad564262b4df0"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "ExpectedStateData",
+      "body_sha256": "17ced06e1f4bfdb67877b31114b43d26b12c8ac4ce6f28ffd9c8ee8dcee820af"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_object_types_by_id",
+      "body_sha256": "023c0bfd5720cf502b44917300732bbb5e2da621538ee79100057b9448c4b988"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_role_object",
+      "body_sha256": "0decf28368ff56f7765c9d18046a14df38aec130197805e63c4c45bf421e1731"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_direct_subtypes",
+      "body_sha256": "4fc7d4f9264fec6a59d08cd480456b0e67ff84f4c17f2bb4974bd03c833397aa"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_descendants",
+      "body_sha256": "7faaf5eb5711909bc0f5d7d3b45b5510cb45194def62094db6e48845232c1269"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_denoting_types",
+      "body_sha256": "e49953ae569f9fbff85ed3eafb9237f18d79a4fc44b5e29e68bc894a50e5e8fe"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_universe",
+      "body_sha256": "3bc404cf674ad3da234e721c8cb9d3e2940053fff65bce16e8c634615e4d0e21"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_project",
+      "body_sha256": "f8af7cbff17e0b54dea53482a80b4f882a64d406d11012da9de04017672c1e11"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_join",
+      "body_sha256": "cd45b55dd4e9bc4a01b1d0522e8bf1e197afd7d633430240a031c2c031041a90"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_seq_tuples",
+      "body_sha256": "473c5b0e05250985eae78aff8fb6675561b23842646d7e03f09f840db05ade77"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_CHAIN_COMPATIBLE",
+      "body_sha256": "f58e38d69a764f6bda554f999f0ae6f6f6a7889a5a926bff8a6fa50a6ceb5ede"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_EXTERNAL_UNIQUENESS_SEARCH_CAP",
+      "body_sha256": "cd683b646188410387ee95fe1c6f99370ca4733471b130c602618d5db7e36224"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_ring_satisfied",
+      "body_sha256": "5cd0b3554ddd277023fb0f6e909cef7a9a660e9bb25b2fba8d4e086515af4a68"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_ring_component_ok",
+      "body_sha256": "83d432518fed407625c4e3e4281543dd5191a8d00c0d92acf3f25fb511cd3187"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_acyclic",
+      "body_sha256": "e3b487f99820e8ac1d92ce0a45573e4b65107cf44186b679b9cebc8b3c05707e"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_TEMPORAL_PRIMITIVES",
+      "body_sha256": "f37ecd91d8af2154ef0630f2dc3e0ebfaf9dff1b7909b1a6fae886d6d4af52a4"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_ordered_pair",
+      "body_sha256": "352ebad649b11933d4e79ba8f8225d6a0cc5b910bd6710eb9f16e8aea07060e0"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_instant_pair",
+      "body_sha256": "5cfe6908f4ec21176229a0f7c504d35de168fcf2e8b50f153544b63246f66020"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_in_range",
+      "body_sha256": "d26d15511a3e3d82b180069123fba40559d5f3d9eeef0ff1df71bcdde6407cb5"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_range_union_claim",
+      "body_sha256": "93fe1e6efb1ee209423afbb963f43a5e0467ae4c3bf65c464599c58c5b0896a4"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_value_witness",
+      "body_sha256": "db2406c07123630a5c052613eba38c2221a853168821fed932bc909df6601c74"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_comparison_literal",
+      "body_sha256": "cc81d3d2ac348f1f8672e7f480f20bbab1b401ca2a43b9227dc57fccae7c10b6"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_witness",
+      "body_sha256": "15d010dc084125f9f32008369202300cc9f8d66188c9f18516427f2145de731a"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_compare_scalar",
+      "body_sha256": "59be3b1112b624132633ba302d5f0885895862560721b5c1b6fd7ca780b8fdd4"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_kind",
+      "body_sha256": "32789b76a2ddab373dc24abc3b2c8aaef13ce17c899e4d9862457fbd54f7073f"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_identity_unique",
+      "body_sha256": "d9b8af1ce2d6603c8aa61e9f95547176862f8513ed6598cb2014aa6d8dcc77d7"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_is_external_entity",
+      "body_sha256": "68857426ee3369514b017fc5fe494cc7c5154c89d12ca90c757836a561e876ea"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_fact_type_constraints",
+      "body_sha256": "6b756d90351bc0f32146dc560861ea43edeb8086a6be7817442242cf9b7f8901"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_Builder",
+      "body_sha256": "f7d5ebdf643d5eb657d6941824498a592ee0adf3d9cbe96c59be0fc69bbb6cd3"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_join_scoped_sequences",
+      "body_sha256": "cb6f7987c1923c924d4648521a1e9b31eb30bcafe3fa983ec749325bd8e6dfb4"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "assert_non_degenerate",
+      "body_sha256": "a5ecd94ce7a18afd3ba70ef4ccff33b1f25496bac14c7215d8d37c1f8416aeea"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "measure_distinct_ratios",
+      "body_sha256": "2a798cadcab2beefe1765433701556880050107654b4cc9430b2456afa228ab8"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_constraint_iter_with_ref",
+      "body_sha256": "aaeda17d66c2a9c5ae7bb65957162df08a2a0b75789ac71434249ef48d9fa9bb"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_AMPLIFICATION_CEILING",
+      "body_sha256": "1135905380fbcc65c8d355dfb497db358406539ed45bfc7750073a2cdc16b643"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_OBJECT_SCOPED",
+      "body_sha256": "f0b6c7af7792420870a74e4b7287c680dfd360c1c77e4ed3e9d5ec1950cfb780"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_MANDATORY_RELEVANT",
+      "body_sha256": "d65b5ec83745a73d75a56de47f3491d9f5720e9b346418983f36e5f075ca159b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_SKIP",
+      "body_sha256": "831413b237be74d0bf7b0652478c3872a027bf51e20d70af7f9624268024c98b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_resolve",
+      "body_sha256": "cd7a9257444ad536bb010d429e6d8b5bc4bbe08afa62e10bfb5c8ea44aba3525"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_ft_by_id",
+      "body_sha256": "d0b3cc3b67b863272698160896ab403ecd9656b0d59d3b083a3493714fc7dac9"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_facts_of",
+      "body_sha256": "1431ac13ad79a3411bd737b9cbf28cf99e4c2cc34107546161b66adc9646e147"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_is_entity",
+      "body_sha256": "1c6dd6a502d443c4004e326051a8508dc5b9ba3bbe27e922d9c9a2be8bc5c502"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_existing_members",
+      "body_sha256": "0ad61b0ed1f7f85faa045a1df83a17f0f69732372376d6ce1836eff9a7c94a2b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_fresh_identifier",
+      "body_sha256": "734b3405770dadb5474472337897b7f56afb65040f68d385be94264a3c34142e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_value_spec_for",
+      "body_sha256": "bf17966a42728e50e987a586a5631bd9358ea20155643b85d211a18fa736712e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_valid_value",
+      "body_sha256": "4f30aee87bee16de8a98642ef962cffbb6bda8ef1a0be91c8b7d6790ea2a8e61"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_out_of_spec_value",
+      "body_sha256": "85c471475640a910dac6dfc4edadf4a3885889205738ab8b194ddb3d8cd8519d"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_enforce_value_comparisons",
+      "body_sha256": "03ed371218387ca710ac2d3ab6ed39fbd90d7069d50030ad6c200f1d5cd922f4"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_complete_row",
+      "body_sha256": "4314de6926566cd6042325b56a3674686c80c96bb1779a1693520eff2c597339"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_scope_fts",
+      "body_sha256": "d55c7c6c75582abe8a73ba4637f82b5436810ccb789eb0ca586652ac4eeee559"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_JOIN_QUANTIFIER",
+      "body_sha256": "ea7e5b5e7a0e04f742090b0929845eea3dc9433378981d0f05c874fca2a5f1a3"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_subject_sequences",
+      "body_sha256": "6ce6cf17c64639ade0da922012bfaa31ab9026a72a3645f17b0bd7be38b7a3ae"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_join_vacuous",
+      "body_sha256": "01376ca1d684ee5e1515289accedda05401069cf38c75c9725c4a11705116dd2"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_subtype_partition_witness",
+      "body_sha256": "0551ca5e5aaf32928efccddc553b71fabff309de68790278746e305e4d1c21e6"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_witness_ext",
+      "body_sha256": "3dfa86916baefe34d6552923a0600a67ba36f0979ce211a49bc955e750cfe57b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_guarded_atoms_have_derived_source",
+      "body_sha256": "e9942dc0bf3f057ee3b6f72bd216bb28ddfc5a5701dc85851992a571e8afa6f8"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_guarded_exists_has_derived_source",
+      "body_sha256": "b9ae95bbf36c83c35427b1ee002eb3deaee46c7aaf7d7bb381ecbe02a8c3969c"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "expected_state",
+      "body_sha256": "257ef716097c1b96c748a6a5d6f316648bb7f1c1f3587cc14678aab81ff8b07e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "predict_violations",
+      "body_sha256": "4b35bcea2cc3083d2aea6135abb16fcf00c67ca056e1d58e92c0b014c13e17c0"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "__all__",
+      "body_sha256": "6f99da018f0ec4cb30d5e758018352761c4f3e25f93b38235246289c075008e6"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Mutation",
+      "body_sha256": "da495a0768e86b04061abc321f5f02012453a264ee95cc282732d67fd3636fdd"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_Template",
+      "body_sha256": "d19da0f772a51e205e5b1082bbeda17ab96d6aa36005c4041027fc382208b2c9"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_duplicate_covered",
+      "body_sha256": "090dccdc6c56c2abfa046d3490a738c777f0ea9575ff218eee30174f2e43f356"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_duplicate_covered",
+      "body_sha256": "a0ae821087c1fc1384bb30497460c3865d9cb0326cc90caf1601eb7d1b3ce757"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_exact_duplicate",
+      "body_sha256": "0d74d873c4e4d0e6e0ddde985f24302835958a23351f6a9de9bbb5b45f4afd62"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_exact_duplicate",
+      "body_sha256": "e86497c780885e42202f0a3c54566abaa57e513bad7691bc116d499d421b9135"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_duplicate_joined",
+      "body_sha256": "f8972c1a9d8ca483ab5444903858df9697bf1312db0b4d514fc709c0909cc75d"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_duplicate_joined",
+      "body_sha256": "ed1662626556c86db015c1f58cd76b1a105807cccb27f8712b93e669f3befd25"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_mandatory_role_type",
+      "body_sha256": "8802c444f848cd3c0fcd78ba5198124e063cfa8bd12eef4e6cc4902195e77785"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_roster_add",
+      "body_sha256": "46d5542a0cc2be1910d30fa4f54ac2a616d6403044104fd6ff4bea516b519243"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_roster_add",
+      "body_sha256": "87521b58e07087abb9569a5b33b02ab9912479c34483261bab23904aed408653"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_other_ft_with_role",
+      "body_sha256": "d53925bc6080456a0bcc73383e9110fcb282a5e712c04d1ecffdf288f7ef77fe"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_new_entity_plays",
+      "body_sha256": "5c7e02f9ff057ef51c9bf5ceeab07f490760133f2bba698c693115c519a8ea0f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_new_entity_plays",
+      "body_sha256": "5535cbf51b623f57a224ac10f30f506319d2255cadb23242ab926f7419d784cd"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_pick_disjunctive_member",
+      "body_sha256": "6c7fabb1dc83855d41432f2459265f7729cec5167dcef5b650bcad34eec3862b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_remove_disjunctive",
+      "body_sha256": "251426320ee83a3333a75c7945667073ba014ade9e97083ff47e86af04797c28"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_remove_disjunctive",
+      "body_sha256": "a713291de81c56a9a7666ace4316310eef866d75d0e5c04404a211c81489f8f1"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_internal_frequency_groups",
+      "body_sha256": "6b3f672bcd2b511ba4328e1a049ff8913a0c4f1cb142b53eb6550654f0b874b0"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_frequency_min_gate",
+      "body_sha256": "52f36761459128a3de3a7ef7a2fb04e81f624e71339e58f9dbe82893af5979e2"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_drop_from_group",
+      "body_sha256": "93bbf6be9c551d3d45377330399c7381a204c8e38e62f022a57757ede2c62ddb"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_remove_one_from_min_group",
+      "body_sha256": "e4c58734aa4ddeff00dba802754bffa2f86ee0a0093fbd5232701406d3073a6f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_drop_from_group",
+      "body_sha256": "f4999d09a3bfdd761bd07b68814a9dbdca27c596c56570d24bc69c5e2c120b4f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_remove_last_covering",
+      "body_sha256": "086ba902b8a8dcb83ed0bd6ebfed056cb2b12afa5554a49b1c60a895f13725d4"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_add_past_ceiling",
+      "body_sha256": "5defc4b0ef08d34bbdf56031081ccae866c872488575520fbb52c00037fcd42f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_add_past_ceiling",
+      "body_sha256": "c788a11fe4e78e9c6c310e5b0689edc021b076ef298e919c9ea6fd57b844e4fe"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_drop_joined_below_min",
+      "body_sha256": "3464c1197476ad443f15b2eb35e419c54126fcc2291afa6208ad6ec76a6bef78"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_drop_joined_below_min",
+      "body_sha256": "e2826e7182cdfdd5f971a8ded756cdc73e1470c3ecc6d8f4da5618aab614e300"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_ring_components_of",
+      "body_sha256": "6d2d002bfef7fc7ab31a928c70c6b009e16162d6dfefd2d3b253d1b0d2d22257"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_ring_edges",
+      "body_sha256": "cb357e2313a7348bfa9baaf4817f285af5d73c2976e3a9cafad7c5daf8982b9c"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_ring_gate",
+      "body_sha256": "90360aa7ad215e45c2037dec7f1e7de1a3caaa03b417914287fd47851494bd68"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_close_3_cycle",
+      "body_sha256": "f7c98184c7962d0c8603e70a4943960c9660431788d990f34c0b7926d15932b4"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_close_3_cycle",
+      "body_sha256": "2765040a24aae8a3b7a2bdc1e441d3bad1a19e6edc133b3a2fdbe5d902b27018"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_close_2_cycle",
+      "body_sha256": "82539f778ad1bf9e265cc006790db7f6db4f3af2a863e6c52a1166ee527470b6"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_close_2_cycle",
+      "body_sha256": "dd88c5753bd24878f4a9dd0e70caca7e816a18b35e0f28ea7e4f40c7773674a5"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_add_self_loop",
+      "body_sha256": "bc4037f7fef97bf7e870382138710dccf5f45c42a9b79a2dc41bba91dc4e83d8"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_add_self_loop",
+      "body_sha256": "ecefecdc202a69701479f657644a8b76f925920972112ed5dff48e127ce9b84f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_value_occurrence",
+      "body_sha256": "f69248318ea3b3173f1db52af0259779e9c9a2f7c6bbdb2c7f3b38d29a392add"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_edit_out_of_range",
+      "body_sha256": "d05f97762a7996435368d158f837745fccc85d1a86396d425c1cdd31902781fb"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_edit_out_of_range",
+      "body_sha256": "47b565482001e1596a6a9989b452084416a8d0b73881daa39afdfdf75373378c"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_governed_ft_with_entity_role",
+      "body_sha256": "339875885fa1b5a7a37246ca9c6fed8c4b40e7cbe814aa625764a24286028f18"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_add_out_of_range_new_entity",
+      "body_sha256": "87c975658aebedc0b8c19440722dc8bbfc7f8b56e617da451b2dcf59785de935"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_add_out_of_range_new_entity",
+      "body_sha256": "4a0d2f113e0ec61d880171c734409579dfc2d137a93fb3bd819f88df388e5829"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_introduce_distinct",
+      "body_sha256": "8a6f1522405df07e34583613b5852fde4594cca600b4fb520d958c04c335ac87"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_introduce_distinct",
+      "body_sha256": "958e9db70268611e9f3f315d092321b9bf1545af672db064d6fa2d42a33326de"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_uniqueness_conflict",
+      "body_sha256": "7ce4a1c742c55dae26cc537740b53e35edb3cd85abb2cb3ae55aa1e389011c0e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_subset_candidate",
+      "body_sha256": "d8410f3333b331862caefa12a4e63287d6b13b6c9eefcd301cf8cc94ea4b1203"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_add_missing_subset",
+      "body_sha256": "22d8fdd5015ab5db75ca4a6315f19b4c307b27b1da06862ca7c131bf9e45bd4b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_add_missing_subset",
+      "body_sha256": "1a0bf68ad7404d8507cc6faf27dbedf2abb702664e268736696e70474e236b6e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_equality_side_removal",
+      "body_sha256": "4a965e22273bbbc195548a51a75d5ce5e66aeb9c17c710a14096d19e6bce1fe6"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_remove_equality_side",
+      "body_sha256": "ee9fde9b224e91d0f73c8fff37a3f14f976ff66fca0127a0c6b522b1198c8b7e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_remove_equality_side",
+      "body_sha256": "355bd75a77743cebc798352ac2a6349260d89deafdf0e2f630c1ce3bfa2903d4"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_add_overlap",
+      "body_sha256": "7d81b8cf9ad89efc2bacbaee54fa983848643e3ec2bdc9347acfc5823bac3412"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_add_overlap",
+      "body_sha256": "869fa3702cc57551bdc2c0ff9fc2f76f53c45abc9d0d02da0dd1edac645588b4"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_xor_single_role",
+      "body_sha256": "959dc04b1e318947d053237d0ab71604c0c3941c3e743b1f4fd162ac08ddb6f1"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_XOR_MULTIROLE_MECHANISM",
+      "body_sha256": "7c3e0f11d7d6bc0330340a28d08e8270f1ffede8c084fc47e8024fc4f7eac368"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_xor_player_sets",
+      "body_sha256": "df0c69c6e31b41600061b87865102341d5f19eac15f42ba7e073be78421c6e5c"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_play_both",
+      "body_sha256": "93d9efd7e1f84fbf9306605b4761fb765b1008ac7061b820ac5ca917c82726cb"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_play_both",
+      "body_sha256": "51ab73ef29575a39e6b30964f30b3d5173a49b4740524d603eee1adb64f0f153"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_pick_xor_removable",
+      "body_sha256": "6570b1247cf5bdb305b8d0595fa793bf05426a5a4d5738fc63b92a54d932c2f1"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_play_neither",
+      "body_sha256": "e89ac2933c5caa4cdf5714b45678232fbbfe4c54e000dc6881976d9d274b7868"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_play_neither",
+      "body_sha256": "a692ab6338eb9c635f85497da164070a54eeba32445114a98df49e91881387c9"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_invertible_fact",
+      "body_sha256": "bb00dab8cad7c79784992e8322d0f9e874217d9cae3e29b4ddbb9c61efe7c6a0"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_invert_vc",
+      "body_sha256": "e99c9405725b119140d404489fb71a5f1d34afc33895d3d2ac9fe7a75bd44ebb"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_invert_vc",
+      "body_sha256": "50592ac18350d012c27dae57e323b538d9466ec1505c017df7491679c41fd02d"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_place_two_subtypes",
+      "body_sha256": "80410870a411eda909250a0c623af7959b3121674848ed581f3a40d38649c13f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_place_two_subtypes",
+      "body_sha256": "c19475f2007ba473233e57bc0ac92b113c09d4dee1902c617c03542401814b0e"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_subtype_assertions",
+      "body_sha256": "1c0bb39bc4cd0eb2f61a374f07b2ac81e1c71311c169c5ca016db4d0fc5ca980"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_remove_all_subtypes",
+      "body_sha256": "d6c142513143fb14f70fec378431e0923c068905e120a69b0714ac32296dd891"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_remove_all_subtypes",
+      "body_sha256": "a0808b4f2cb6c891d8945a04b28edb9e63f2ab4459125f598d7593dea4109146"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_coverage_target_ft",
+      "body_sha256": "f144ce26f00bdbe575673f38c8d8f09ea1faadaedd1ca190ada1153b1079ffa2"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_drop_covers",
+      "body_sha256": "2ea53465ad36c90f17ac78c33ae162d6996b177d6c769302a8ed19c4743cfb76"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_drop_covers",
+      "body_sha256": "43e50a565af831a81e89694992045d056b90da2659be7f062800959212afb97f"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "first_implemented_inline_ref",
+      "body_sha256": "c7a56e21ba8c5110232bed2ded2255dfcac42b5e2d8ac05b3cd481a5a4307060"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_empty_ft",
+      "body_sha256": "630247dee0330d0fed2a96cc80c9c4c243a1111a7601c6a0269ad8f690641914"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_empty_ft",
+      "body_sha256": "7824700111cb074eddab3e10c4c72ed8c15af59268d24bd9ad6a9874b7bdf8a2"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_exists_atom_safe_for_removal",
+      "body_sha256": "4e98f5d762845b57b72e17153e1fb292d9a326d8e8019fb9bcb1a74dfaf78314"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_applies_remove_exists_witness",
+      "body_sha256": "8008f075dd1a30b9b38908525b389f0a8de2c1c982f42c8110dba2a0acde8f9b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_apply_remove_exists_witness",
+      "body_sha256": "5b7c291d379edd86d2c3eca531a6ea63e8710f1ac3e4d237a591532a6c2d6132"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "OPERATORS",
+      "body_sha256": "9fddb95087c279019e15b0c208a85a6af04c43a6dfd442b03a0dffc5925734ab"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_templates_for",
+      "body_sha256": "c15d9bf67fbcc78468958682637f62e6290dde8558d757b7f8d7bebcfbbd1f4a"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "operators_for",
+      "body_sha256": "cd3109bb024d851db4ac09675f20b703c0d1435259e81873aab73d9a233bf047"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "enumerate_violating",
+      "body_sha256": "41f0b4fb14ea8c88e0bb1333d7541299da3d328560637df2c36a3fbe72443d32"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "family_coverage",
+      "body_sha256": "d7c8ba0dd5d0a40831f4a71d0440487336703894037020b400742f6447c5417b"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "compare_observed",
+      "body_sha256": "17c6960bc68b265fbc6354b56c4f41f0a9e675e45403ddfacb09e6aab4e1c71a"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "PredictionMismatch",
+      "body_sha256": "14d3f14b313c921ffca13ffe9adde33df502d4a4764eebe83f7c0f9b613aa33c"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "ViolatingCase",
+      "body_sha256": "0af67ccd85ed96dc03fbb04871e99cca0b13b4a26cf24d090fe2e2004b986aa1"
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "emit_violating",
+      "body_sha256": "728a6cd1263670de159a0ae8d8e98be112f5835774d66d43be2c42bf28d31434"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "BASE_PAYLOAD_SCHEMA_VERSION",
+      "body_sha256": "fd6d5e155b2f7de86b7b7280dafc486645bedd5d1b317b9747ef0a7455e1f933"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "DERIVATION_PAYLOAD_SCHEMA_VERSION",
+      "body_sha256": "5792dbf7a79a19ca201a5a53171d1c4eccf096bf5c0f4a62530021240e29330c"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "MODEL_BOUND_BASE_PAYLOAD_SCHEMA_VERSION",
+      "body_sha256": "ae349c0d3883ed119f6d729af8286c0c664c7d98393aab77951afab91d60959d"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "MODEL_BOUND_DERIVATION_PAYLOAD_SCHEMA_VERSION",
+      "body_sha256": "f0774e54c43b23821015823fc16006395a007cdc3a357afb6bbe98de2ba95bca"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "PAYLOAD_SCHEMA_VERSION",
+      "body_sha256": "9d2b40e593ec1c513b956f6bfc5a11ae54e330bb94e090e10b03eeac9d00b18f"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "ReportSchemaVersion",
+      "body_sha256": "04f59c66cc3bec0f402f78a1804aed4585e8820e39bee41d7fa650ff61c94fe2"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS",
+      "body_sha256": "2e3794c7340204df998da7e77047fafd7a52e95a68899a1b4830c22005cf5825"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "DERIVATION_PAYLOAD_SCHEMA_VERSIONS",
+      "body_sha256": "d30c30497e83a08a5740f8128571bbb1a450b6be921cceabc66f0a3e36a1a335"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "MAX_POPULATION_ISSUES",
+      "body_sha256": "a490c9643d74a4f60b16b64732f1ab3418e3c1b66c4903630d20aa59ce4bf6a8"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_OUTCOMES",
+      "body_sha256": "9e45ab80ca8d527acdfa31361185601f0712fd2d92272abbb71da40e11f8fbca"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_EMPTY_COUNTS",
+      "body_sha256": "121c680ec9d5c6b0b4a7587315e29ed93691498071efaba95da68625330105bd"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_error_record",
+      "body_sha256": "ba05109de3611a0f3f469c6caa00c18c54fc1db70cfe38b7bb5378e768f24a12"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_issue_records",
+      "body_sha256": "af0d33db3c5e0cf23f122fab9ac693477fe21790588bf64faeddaef8f420509f"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "payload_schema_version",
+      "body_sha256": "8ae2b17ae8a8bbecb6f96bccbca2b572e75fc33dfa18bbf2ce035428a426566c"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "model_bound_payload_schema_version",
+      "body_sha256": "fdc3e788a265377bf6602f79baefeebac9d5a953d266bff5b50c3decc5c03443"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_base_payload",
+      "body_sha256": "373ca360d9ee0bdcae0dcbd311ca686ed7b7c5b92d881b076ec40072af819694"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_plain_containers",
+      "body_sha256": "27aa7f1943a21671c1c7f0e836ddbf4e238cc9d735c9ea024dd23c48ea02cf20"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_serializable_verdicts",
+      "body_sha256": "fcaf8571564d6755720243091f1207a9b4e894e0bfa78b66eeac9ad90d4b7c50"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "build_check_payload",
+      "body_sha256": "7ced4c6801f02a587d52ff783922c32f8d4e080bb2ca2c7a55a9b8b2c53dd6db"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "build_verify_payload",
+      "body_sha256": "3051c748315823c5fe552513b976ee4b018625628500b1d0622960deed30a1e1"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "_serializable_transition_document",
+      "body_sha256": "6f7a47889af072df6f0cbd7ea9f8ee9767077cdc6487ffc7d4f3f27952344c42"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "build_transition_payload",
+      "body_sha256": "673e2f220e2d7e19af1c42da462d16bbd5f701a9dd39d4766e2da69a271f5646"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "build_plan_transition_payload",
+      "body_sha256": "d92fc7ac1117e88d34cf6b6ee29903aa2deb1c8eb4a38a2b4724cc1331efa61b"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "build_validate_payload",
+      "body_sha256": "bb0a2fe698e6ffc100bfcb86f5456dada5cb6f4346d7ec122b2cc8420655555d"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "NonJsonValueError",
+      "body_sha256": "c44cf172047eb0dd6c1285e493fc5d538004adfe9f10cfc75ca18254c7a169f4"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "render_json",
+      "body_sha256": "237baff739be349c0568f03ee616df62399d52d7c0bb27ca417b8d4eebd53cf3"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "emit",
+      "body_sha256": "e350e2cba07e0b6592c6e06119f4fcb91b0fdb1dbea0620c5cd6bd51740fa153"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "legacy_report_projection",
+      "body_sha256": "b1bff9c2b71aa3630ab39fd8e9c352dffccfc7c82b3a63fae1e62f64575a715d"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "CurrentReportVersion",
+      "body_sha256": "f6b5b3e5c12e1502d35a330bba9959823924f80eae8d408ede00586c55b989d8"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "current_payload_schema_version",
+      "body_sha256": "f518af5fafadb0da45668e65ed74cf7c79f1bab0db03690bf57c10d66ba5f704"
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "requested_check_schema_version",
+      "body_sha256": "e8fac272185f233f1cb0510ea2068e19faa83437b50a02d5d9eb0f060a61a78a"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "export_souffle",
+      "body_sha256": "689ccf8592913f56985d3ad2ce8c89760880d8a39e1a1c778fcedb46886e12cf"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "verify_souffle",
+      "body_sha256": "ed3f8503047a96280bf4f1d0f56be9c212461942ed28b9f2fbae5a01d0f4fadd"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "run_souffle",
+      "body_sha256": "da5be5dd8f635918de5f6b60137b742286acbf3a0d1ccfbf063e6d8eeaa4f725"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "souffle_witness",
+      "body_sha256": "789c1b7d03c151e5b6291309a5a377e8babd348176dc352438c6ba85c95bce76"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "export_lean",
+      "body_sha256": "4fe2111c54d4f7ee9ec79e840accd4ef9be52cc7772bacf5c9b6029d8a2f1ddb"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "verify_lean",
+      "body_sha256": "d64e3322c482d1aca489dd9bdb8780fa49ab9ea7ad0a3fc636b717a7d6dd3f48"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.export.service",
+      "name": "compile_lean",
+      "body_sha256": "f4e24b47765120ce01828760d953cc7a5929f9cbacef10cc83ba1f769df275fa"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.witness.service",
+      "name": "_witness_inputs",
+      "body_sha256": "84a89104b0151653ca469c5a3ae6481774a131bfaf7fe19fb473b40333acd3fb"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.witness.service",
+      "name": "witness",
+      "body_sha256": "b9946c6b2a7a02666be618d89c3f03c7b1f880d316f50414c5113ff29477fbf8"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.witness.service",
+      "name": "replay",
+      "body_sha256": "a5dbb2ed99a9a8612c26a94b6a4b75fb7088bb12cb93adbc634675685c9cdc90"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_witness_map",
+      "body_sha256": "52dcc9f47863c168e4fa5eb74b4e7885c326a3bd48e3f99215f0032de92cfabc"
+    },
+    {
+      "old": "gnd.synth.assemble",
+      "new": "gnd.synth.oracle.constructive",
+      "name": "_alethic_refs",
+      "body_sha256": "443d69da945a08c0cb7d814acd40a7090610b3f8ffb9ca3beac1222122266de1"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "SemanticDecision",
+      "body_sha256": "a216b428d3c77527bf3fc2624ed15c7ed728b885b5e3c64014bced4270357f75"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AssuranceLevel",
+      "body_sha256": "6a7504f457263bc3a1eeed14ee6d8b6de4f2a5131166ffd64fbbd594ff019250"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "ExtractionRoute",
+      "body_sha256": "e1066b15c5798230e2dd17cb4143a3369474d6beaac20e828e06718f5a3e2a7f"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "PHASE2_TRUST_ASSUMPTIONS",
+      "body_sha256": "4b233d2d833b3f90ee6de605ae8cc15a63393c2fe1cbe8a5e3068668c0ac0442"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "CorrespondenceEvidence",
+      "body_sha256": "a5b2000de1b0923a996d87fa82740e4662d1f2ca13abeff94562342d91b67517"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "ValidatedScopeWalk",
+      "body_sha256": "5994debdea6679b51f94709a035dcda52cc1d7e82659974a6067e0867bc52a95"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AssuranceBlock",
+      "body_sha256": "e200b579e2e9a67c4cb34242d0fb72f4506d050c8027a1009897e8341363d22a"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_unique_sorted",
+      "body_sha256": "dbe2c2ca2ad74486dfc0cb1fd74a9c249d4b7096caf19df2b26d7f1522e1a101"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_sorted_set",
+      "body_sha256": "5b38f5465d74d04295f6b489e823beafa1ed59102079e5d12fc57375a1bc8732"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_currency_valid",
+      "body_sha256": "82d7bc312fc3182f4082691c7fd8e211b35002ed5bc21f6c2f2be39a7862332a"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_phase3_target",
+      "body_sha256": "0bc8e647f23a936e5a713486dd5f7b3694229c05300f64393f7d56e951468d65"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "phase3_scope_ids",
+      "body_sha256": "a350e8b3ec1262d63eef8d372c15572cb46d825891cad61e6b42fe2a5deb4cec"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "walk_snapshot_scope",
+      "body_sha256": "a2a327d82cb6e7962da8f787f1add03070d458976feaf4d9ef637fa96cca3e5d"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "certify_snapshot",
+      "body_sha256": "fa7d9ac32ac9c56f8780d4b6821822380b47514146029b92f03622b6bcf4845a"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AssuranceSurface",
+      "body_sha256": "f8134ad1431904ecccc7856e24d8a02d831e8aa1c3c784ead446709d242cf785"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AssuranceConsumer",
+      "body_sha256": "9ec44d82e86861634dc0ecff0901a08501379af1bc800df7f7ed72b6baf4703c"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "assurance_prerequisites",
+      "body_sha256": "ceed66a290180b057e25f8358d0222f32d66544a1a0fd2db92ea9062519337fd"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_assurance_outcome",
+      "body_sha256": "f141f7979bc0af9d128d722944719463766c5b4453d04f32d90806c236fe1282"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_assurance_policy",
+      "body_sha256": "a7683cf8f444c2b893cd3a9d6e755921945286d99270707891503bcd775bb91c"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AssuranceBlockV1",
+      "body_sha256": "b9cbd10d4c3f7f17b1226e7c8f08b34928aea8724793517c18c410557b5d26c4"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "semantic_decision_for_band",
+      "body_sha256": "932cbf1dfa8135542335f23b9f2fe8aad5340eaf3a7f1c43069c215d4f49cfec"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AuthenticatedExecution",
+      "body_sha256": "d763e57428fcc4e42e5f480a17dea9ed13a10f3037f9f958da4c5cdf4ed0c854"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AssuranceScope",
+      "body_sha256": "43493acee7e5042f4aa331bf1ec4d2cfc96d207bcde8311693799c0d5afbbdc5"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_internal_value",
+      "body_sha256": "519b5af068c84b81784059809b443aeae87858702fffa8357609917f973d197c"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_mint_execution",
+      "body_sha256": "82e2ba0b3fcac414676f0c931052eee417092e1519abfee3385615f37a117c4b"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "_result_obligation",
+      "body_sha256": "a3ea59df92ef2137a8fedc0424e43ab7c5c801a1f88809753208b36f2fa82edd"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "derive_assurance_scope",
+      "body_sha256": "af725c3d4bd9fb2bb70b613b4df6f1c67f3bbdddb34d156f4a6aa3738aae16ea"
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "certify_result",
+      "body_sha256": "2146170f1924388f8b8a87bbf834b664de4b6049eb880ff8419ed1b619237540"
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "asyncio",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "hashlib",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "math",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "os",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "shutil",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "signal",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "stat",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "time",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "Mapping",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "dataclass",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "field",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "StrEnum",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "Path",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "MappingProxyType",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "Literal",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "BaseModel",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "ConfigDict",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "Field",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.process",
+      "name": "field_validator",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.agent_cli",
+      "new": "gnd.agents",
+      "name": "model_validator",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "json",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "math",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "Mapping",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "files",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "Any",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "Literal",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "TypeAdapter",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "transition_kernel",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "AssuranceBlockV1",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "semantic_decision_for_band",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "record_branch",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "CheckReport",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "Model",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "ValidationIssue",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "structured_derivation_ids",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.report",
+      "new": "gnd.payloads",
+      "name": "load_report_schema",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "dataclass",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "Literal",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "semantic_spec",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "is_sha256_hex",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "AdaptedSnapshot",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "SnapshotDecision",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "REGISTRY",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "Branch",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "is_registered",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance",
+      "new": "gnd.assurance.core",
+      "name": "record_branch",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "json",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "math",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "os",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "platform",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "stat",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "sys",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "dataclass",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "metadata",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "resources",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "Path",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "PurePosixPath",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "Any",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "jsonschema",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "_sha",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance._wire",
+      "name": "CorrespondenceDigests",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_evidence",
+      "new": "gnd.assurance.evidence",
+      "name": "REGISTRY",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_claims",
+      "new": "gnd.assurance.claims",
+      "name": "PurePosixPath",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "ast",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "json",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_inheritance",
+      "new": "gnd.assurance.inheritance",
+      "name": "re",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "hashlib",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "json",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "os",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "ContextVar",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "asdict",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "Path",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "Any",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "Literal",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "BaseModel",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "ConfigDict",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "Field",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "model_validator",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "AuthenticatedExecution",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "_internal_value",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "MAX_DOCUMENT_BYTES",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "_json",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.assurance_transport",
+      "new": "gnd.assurance.transport",
+      "name": "_read",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "copy",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "itertools",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "json",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Callable",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Mapping",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "dataclass",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Path",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Random",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Any",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "popvalidate",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "positional_constraint_ref",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_RING_COMPONENTS",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_RING_VARIANTS",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "IMPLEMENTED_FAMILIES",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "CheckReport",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "check",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "Model",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "structured_derivation_ids",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "PopulationValidationError",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "load_population",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "ExpectedStateData",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "GeneratorError",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_compare_scalar",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_constraint_iter_with_ref",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_direct_subtypes",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_key",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_role_object",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_seq_tuples",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_tuple_key",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_universe",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_witness",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_UNTYPEABLE",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_normalize_comparison_operands",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_role_literal_operands",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_guarded_antecedent_bindings",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_guarded_exists_witness",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "_guarded_exists_shape_supported",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_has_private_exists_sources",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "_guarded_modular_repair_plan",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.mutations",
+      "name": "ExpectedState",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "EmptyValueDomain",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "constraint_accepts",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "draw_value_for_constraints",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "governing_value_constraints",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.synth.mutate",
+      "new": "gnd.synth.oracle.state",
+      "name": "make_value",
+      "kind": "imported-binding",
+      "body_sha256": null
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_RunResult",
+      "body_sha256": "af26fbe241d717bfa0001eb9434fb0fbd4edbc28697b83b7936e3b00a105f113"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_path",
+      "body_sha256": "4004f492c1d7a767e29a0c0407033bd8f7f50411c62a5cd911b2d8f5b4cc6a7c"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_resolve_model",
+      "body_sha256": "50205d5eecef1e555912944af23d244df36f0f7e9cd588315d5897f8333432c5"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_resolve_population",
+      "body_sha256": "42ccc70980f1ef12600bd38fc918df15fddd11672a42aa363a6d5a4517135c58"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_finalize",
+      "body_sha256": "4436bbbecca7cd386e17c34f05dfcc406e7f1035ca41eb727711f619a657bc47"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_certify_assurance",
+      "body_sha256": "05eda578c3a4146dc27872de387a90c9d5553670f414bedbd61fa23ffe3e1d5e"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_run_check_raw",
+      "body_sha256": "1f7966d9162405936ae14bd69e71357a0f287db7ee374cc33e3e56a167282faa"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_projection_failure_base",
+      "body_sha256": "2f55ec51170dc0419134e29d475638c61b348c992adbef7fdfa5bd5b38b5817f"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_project_result",
+      "body_sha256": "22002dfc3dd43e2fb7544782776e410347b4251942c305cd5d1dfdd56da6de07"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_reference_wrap",
+      "body_sha256": "b402e2683cb9b1bf95e375d3c7980ec2b5d3c5e504c99c5a4a540784559ce47c"
+    },
+    {
+      "old": "gnd.api",
+      "new": "gnd.checking_service",
+      "name": "_run_check",
+      "body_sha256": "6d0c03fa9472f87be344ff17b4ad2e9ad0f932b33b9c5a062b8a4e4ae1526899"
+    }
+  ],
+  "new_modules": [
+    "gnd.agents",
+    "gnd.assurance._wire",
+    "gnd.assurance.claims",
+    "gnd.assurance.core",
+    "gnd.assurance.evidence",
+    "gnd.assurance.inheritance",
+    "gnd.assurance.transport",
+    "gnd.export.service",
+    "gnd.payloads",
+    "gnd.process",
+    "gnd.safefs",
+    "gnd.synth.oracle",
+    "gnd.synth.oracle.constructive",
+    "gnd.synth.oracle.mutations",
+    "gnd.synth.oracle.state",
+    "gnd.witness.service",
+    "gnd.checking_service"
+  ]
+}

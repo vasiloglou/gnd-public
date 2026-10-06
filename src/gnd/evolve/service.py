@@ -24,9 +24,16 @@ from gnd.artifacts import (
 )
 from gnd.conformance.report import canonical as canonical_conformance
 from gnd.conformance.service import run_conformance
-from gnd.install import InstallError, LeafIdentity, _atomic_write, safe_destination
 from gnd.model import ModelLoadError, ModelValidationError, load_model
 from gnd.model_verbalization import render_model_verbalization
+from gnd.safefs import (
+    InstallError,
+    LeafIdentity,
+    safe_destination,
+)
+from gnd.safefs import (
+    atomic_write as _atomic_write,
+)
 
 from .models import (
     EVOLUTION_READ_ONLY_PENDING,

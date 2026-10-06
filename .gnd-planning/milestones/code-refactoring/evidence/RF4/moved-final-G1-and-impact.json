@@ -1,0 +1,30 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf1_cli_pins.py",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_rf1_semantic_pins.py",
+    "tests/test_rf1_agent_cli_pins.py",
+    "tests/test_rf1_session_pins.py",
+    "tests/test_rf1_pin_harness.py",
+    "tests/test_codegen_force.py",
+    "tests/test_codegen_manifest.py",
+    "tests/test_public_lean_export_successors.py",
+    "tests/test_public_souffle_successors.py",
+    "tests/test_public_souffle_input_contract.py",
+    "tests/test_public_optional_value_witness.py",
+    "tests/test_rf4_peripheral.py",
+    "tests/test_rf4_premove.py",
+    "-k",
+    "not graph",
+    "--tb=short",
+    "-x"
+  ],
+  "exit": 0,
+  "seconds": 84.84063410758972
+}

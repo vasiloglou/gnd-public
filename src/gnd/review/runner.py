@@ -28,7 +28,6 @@ from pydantic import (
     model_validator,
 )
 
-from gnd.agent_cli import BoundedProcessResult, EnvironmentFact
 from gnd.artifacts import (
     ArtifactError,
     canonical_json_bytes,
@@ -36,6 +35,7 @@ from gnd.artifacts import (
     publish_directory_once,
     read_regular_bounded,
 )
+from gnd.process import BoundedProcessResult, EnvironmentFact
 from gnd.review.adapters import (
     REVIEWER_IDS,
     AdapterAttempt,

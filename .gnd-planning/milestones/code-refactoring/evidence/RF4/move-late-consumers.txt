@@ -1,0 +1,16 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_synth_conforming.py tests/test_synth_expectation_independence.py tests/test_synth_oracle_value_range.py tests/test_synth_tagged_comparison.py tests/test_codegen_emit.py tests/test_codegen_force.py tests/test_codegen_manifest.py tests/test_rf4_peripheral.py -k not graph --tb=short -x
+........................................................................ [  7%]
+...........................F
+=================================== FAILURES ===================================
+__________ test_boundary_and_mutation_share_normative_scalar_identity __________
+tests/test_synth_conforming.py:994: in test_boundary_and_mutation_share_normative_scalar_identity
+    for key in (boundary._key, mutate._key):
+                               ^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.mutate' has no attribute '_key'
+=========================== short test summary info ============================
+FAILED tests/test_synth_conforming.py::test_boundary_and_mutation_share_normative_scalar_identity
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 99 passed, 8 deselected in 14.81s
+
+Exit: 1

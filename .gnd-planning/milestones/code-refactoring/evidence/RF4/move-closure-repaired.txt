@@ -1,0 +1,22 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_v63_phase2_cache.py tests/test_synth_mutate.py tests/test_synth_false_pass_quarantine.py tests/test_synth_external_uniqueness.py tests/test_rf1_pin_harness.py --tb=short -x
+........................................................................ [ 47%]
+...................F
+=================================== FAILURES ===================================
+___________ test_external_search_groups_match_independent_join_order ___________
+tests/test_synth_external_uniqueness.py:48: in test_external_search_groups_match_independent_join_order
+    builder.construct()
+src/gnd/synth/oracle/constructive.py:982: in construct
+    self._coordinate_external_uniqueness()
+src/gnd/synth/oracle/constructive.py:1179: in _coordinate_external_uniqueness
+    self._coordinate_external_component(component)
+src/gnd/synth/oracle/constructive.py:1219: in _coordinate_external_component
+    baseline = _witness_map(self.model, original_doc, self.children)
+               ^^^^^^^^^^^^
+E   NameError: name '_witness_map' is not defined
+=========================== short test summary info ============================
+FAILED tests/test_synth_external_uniqueness.py::test_external_search_groups_match_independent_join_order
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 91 passed in 22.79s
+
+Exit: 1

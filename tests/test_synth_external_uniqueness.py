@@ -14,6 +14,7 @@ from gnd.cli import main
 from gnd.model import load_model
 from gnd.synth import assemble as assemble_module
 from gnd.synth.assemble import CheckerWitnessDiscrepancy, GeneratorError, assemble_conforming
+from gnd.synth.oracle import constructive as constructive_module
 from gnd.synth.poolfile import build_faker_pool
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -147,6 +148,7 @@ def test_mandatory_candidate_validation_never_mutates_live_facts(monkeypatch):
             raise RuntimeError('injected witness failure')
         return real_witness_map(*args, **kwargs)
     monkeypatch.setattr(assemble_module, '_witness_map', exploding_witness_map)
+    monkeypatch.setattr(constructive_module, '_witness_map', exploding_witness_map)
     fact_type = next(ft for ft in model.fact_types if ft['id'] == 'cover_matches_slot')
     with pytest.raises(RuntimeError, match='injected witness failure'):
         builder._mandatory_completion(fact_type, {'cover': row['cover']}, 'fact_types[cover_matches_slot].constraints[2]')
@@ -163,7 +165,7 @@ def test_nonjoining_rows_do_not_spend_external_search_cap(monkeypatch):
     for row in cell_rows:
         row['slot'] = builder.work['slot'][0]
     scenario_rows.extend({'link': f'nonjoining-{index}', 'group': builder.work['group'][0]} for index in range(20))
-    monkeypatch.setattr(assemble_module, '_EXTERNAL_UNIQUENESS_SEARCH_CAP', 30)
+    monkeypatch.setattr(constructive_module, '_EXTERNAL_UNIQUENESS_SEARCH_CAP', 30)
     builder._coordinate_external_uniqueness()
     doc = {'facts': builder.facts, 'instances': {}}
     constraint = model.constraints[0]
@@ -186,7 +188,7 @@ def test_mandatory_domain_exhaustion_names_constraint_and_reason():
     assert 'repair oscillated' not in message
 
 def test_external_search_cap_has_distinct_reason(monkeypatch):
-    monkeypatch.setattr(assemble_module, '_EXTERNAL_UNIQUENESS_SEARCH_CAP', 1, raising=False)
+    monkeypatch.setattr(constructive_module, '_EXTERNAL_UNIQUENESS_SEARCH_CAP', 1, raising=False)
     with pytest.raises(GeneratorError, match='external-uniqueness-search-cap') as caught:
         assemble_conforming(_model('external-pair'), 12, model_ref='external-pair.orm.yaml')
     message = str(caught.value)
@@ -210,6 +212,7 @@ def test_mixed_false_fail_quarantines_before_repair(monkeypatch):
         return witnesses
     monkeypatch.setattr(assemble_module, 'check', mixed_check)
     monkeypatch.setattr(assemble_module, '_witness_map', mixed_witnesses)
+    monkeypatch.setattr(constructive_module, '_witness_map', mixed_witnesses)
     monkeypatch.setattr(assemble_module, '_repair', lambda *_args: pytest.fail('repair ran before checker disagreement quarantine'))
     with pytest.raises(CheckerWitnessDiscrepancy):
         assemble_conforming(model, 1, model_ref='setfam.orm.yaml')
@@ -231,6 +234,7 @@ def test_mixed_false_pass_quarantines_before_repair(monkeypatch):
         return witnesses
     monkeypatch.setattr(assemble_module, 'check', mixed_check)
     monkeypatch.setattr(assemble_module, '_witness_map', mixed_witnesses)
+    monkeypatch.setattr(constructive_module, '_witness_map', mixed_witnesses)
     monkeypatch.setattr(assemble_module, '_repair', lambda *_args: pytest.fail('repair ran before checker disagreement quarantine'))
     with pytest.raises(CheckerWitnessDiscrepancy):
         assemble_conforming(model, 1, model_ref='setfam.orm.yaml')

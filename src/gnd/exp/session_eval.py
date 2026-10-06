@@ -20,7 +20,7 @@ from pydantic import (
 )
 
 from gnd import checker
-from gnd.agent_cli import InvocationResult
+from gnd.agents import InvocationResult
 from gnd.artifacts import (
     Sha256,
     canonical_json_text,
@@ -38,7 +38,7 @@ from gnd.exp.session_contract import (
     WalkAcceptance,
 )
 from gnd.exp.tests_runner import TestsAcceptanceFeedback
-from gnd.report import (
+from gnd.payloads import (
     DERIVATION_PAYLOAD_SCHEMA_VERSIONS,
     MAX_POPULATION_ISSUES,
     PAYLOAD_SCHEMA_VERSION,

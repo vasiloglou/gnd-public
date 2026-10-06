@@ -13,6 +13,9 @@ from typing import Literal
 
 from gnd import semantic_spec
 from gnd.artifacts import is_sha256_hex
+from gnd.assurance._wire import (
+    CorrespondenceDigests as CorrespondenceDigests,  # noqa: PLC0414 -- compatibility surface
+)
 from gnd.correspondence import AdaptedSnapshot, SnapshotDecision
 from gnd.semantic_registry import REGISTRY, Branch, is_registered, record_branch
 
@@ -31,13 +34,6 @@ PHASE2_TRUST_ASSUMPTIONS = (
 )
 
 
-@dataclass(frozen=True, slots=True)
-class CorrespondenceDigests:
-    scope_digest: str
-    semantics_digest: str
-    production_roster_digest: str
-    proof_digest: str
-    toolchain_digest: str
 
 
 @dataclass(frozen=True, slots=True, init=False)
@@ -416,7 +412,7 @@ def _mint_execution(
     import hashlib
 
     from gnd import artifacts, checker, transition
-    from gnd.assurance_evidence import production_identity
+    from gnd.assurance._wire import production_identity
     from gnd.model import structured_derivation_ids
 
     snapshots = result.embedded_reports() if steps is not None else [result]
@@ -551,7 +547,7 @@ def derive_assurance_scope(
 def certify_result(
     execution: AuthenticatedExecution, *, scope: AssuranceScope, evidence
 ) -> AssuranceBlockV1:
-    from gnd.assurance_evidence import AuthenticatedAssuranceEvidence
+    from gnd.assurance._wire import AuthenticatedAssuranceEvidence
 
     if type(execution) is not AuthenticatedExecution or type(scope) is not AssuranceScope:
         raise TypeError("certification requires execution and scope capabilities")
@@ -594,3 +590,38 @@ def certify_result(
         uncovered_applicable_scope_ids=tuple(sorted(scope.applicable_scope_ids - covered)),
         assumptions=evidence.assumptions if available else (),
     )
+
+
+CorrespondenceEvidence.__module__ = 'gnd.assurance'
+ValidatedScopeWalk.__module__ = 'gnd.assurance'
+AssuranceBlock.__module__ = 'gnd.assurance'
+_unique_sorted.__module__ = 'gnd.assurance'
+_sorted_set.__module__ = 'gnd.assurance'
+_currency_valid.__module__ = 'gnd.assurance'
+_phase3_target.__module__ = 'gnd.assurance'
+phase3_scope_ids.__module__ = 'gnd.assurance'
+walk_snapshot_scope.__module__ = 'gnd.assurance'
+certify_snapshot.__module__ = 'gnd.assurance'
+assurance_prerequisites.__module__ = 'gnd.assurance'
+_assurance_outcome.__module__ = 'gnd.assurance'
+_assurance_policy.__module__ = 'gnd.assurance'
+AssuranceBlockV1.__module__ = 'gnd.assurance'
+semantic_decision_for_band.__module__ = 'gnd.assurance'
+AuthenticatedExecution.__module__ = 'gnd.assurance'
+AssuranceScope.__module__ = 'gnd.assurance'
+_internal_value.__module__ = 'gnd.assurance'
+_mint_execution.__module__ = 'gnd.assurance'
+_result_obligation.__module__ = 'gnd.assurance'
+derive_assurance_scope.__module__ = 'gnd.assurance'
+certify_result.__module__ = 'gnd.assurance'
+
+# Public dependency and compatibility spellings; same predecessor objects.
+assurance_outcome = _assurance_outcome
+assurance_policy = _assurance_policy
+currency_valid = _currency_valid
+internal_value = _internal_value
+mint_execution = _mint_execution
+phase3_target = _phase3_target
+result_obligation = _result_obligation
+sorted_set = _sorted_set
+unique_sorted = _unique_sorted

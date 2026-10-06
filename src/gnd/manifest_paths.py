@@ -19,7 +19,8 @@ def manifest_path_issue(field: str, value: str, rule_id: str) -> ValidationIssue
     single implementation of the lexical rules: a future correction here cannot
     land in one lane and miss the other.
     """
-    from gnd.install import InstallPathError, _reject_unsafe_relpath
+    from gnd.safefs import InstallPathError
+    from gnd.safefs import reject_unsafe_relpath as _reject_unsafe_relpath
 
     try:
         _reject_unsafe_relpath(value, source=f"{field} in manifest")

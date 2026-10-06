@@ -16,15 +16,13 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Literal
 
-from gnd.agent_cli import (
+from gnd.agents import (
     AgentAdapterId,
     AgentCLIError,
     InvocationResult,
     InvocationStatus,
-    ProcessLimits,
     build_agent_argv,
     invoke_agent,
-    run_bounded_process,
 )
 from gnd.exp.adapter_policy import ResolvedAdapterPolicy
 from gnd.exp.declared_invocation import (
@@ -73,7 +71,11 @@ from gnd.exp.session_store import (
     StagedCandidate,
     WalkFloorResult,
 )
-from gnd.report import DERIVATION_PAYLOAD_SCHEMA_VERSIONS, PAYLOAD_SCHEMA_VERSION
+from gnd.payloads import (
+    DERIVATION_PAYLOAD_SCHEMA_VERSIONS,
+    PAYLOAD_SCHEMA_VERSION,
+)
+from gnd.process import ProcessLimits, run_bounded_process
 
 __all__ = [
     "case_payload_versions",
@@ -607,8 +609,8 @@ def case_payload_versions(
     :func:`payload_schema_version`.
     """
 
+    from gnd.payloads import current_payload_schema_version
     from gnd.redaction import RedactionPolicy
-    from gnd.report import current_payload_schema_version
 
     versions: dict[str, int] = {}
     for case, model in _case_models(contract, experiment_root):
@@ -1278,7 +1280,7 @@ async def run_session(
                         staged=staged,
                     )
                     raise
-                except Exception as error:  # noqa: BLE001 - injected verifier boundary
+                except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                     if verifier_failure is None:
                         verifier_failure = (
                             f"case {case.case_id} verifier raised {type(error).__name__}"
@@ -1359,7 +1361,7 @@ async def run_session(
                 except VerifierPayloadError as error:
                     if verifier_failure is None:
                         verifier_failure = f"case {case.case_id}: {'; '.join(error.issues)}"
-                except Exception as error:  # noqa: BLE001 - untrusted verifier boundary
+                except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                     raw_payloads.pop(case.case_id, None)
                     if verifier_failure is None:
                         verifier_failure = (

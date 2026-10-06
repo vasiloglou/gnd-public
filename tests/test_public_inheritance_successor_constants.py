@@ -1,4 +1,4 @@
-from gnd import assurance_inheritance as inheritance
+from gnd.assurance import inheritance as inheritance  # noqa: PLC0414 -- compatibility surface
 
 SUCCESSORS = {
     "P5-024": {

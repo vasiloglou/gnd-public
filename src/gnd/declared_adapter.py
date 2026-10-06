@@ -20,13 +20,7 @@ import time
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from urllib.parse import urlsplit
 
-from gnd.agent_cli import (
-    AgentCLIError,
-    BoundedProcessResult,
-    InvocationStatus,
-    ProcessLimits,
-    run_bounded_process,
-)
+from gnd.agents import AgentCLIError, InvocationStatus
 from gnd.artifacts import canonical_json_bytes, reject_json_constant, reject_json_duplicate_pairs
 from gnd.exp.adapter_policy import (
     CommandAdapterPolicy,
@@ -34,6 +28,7 @@ from gnd.exp.adapter_policy import (
     ResolvedAdapterPolicy,
 )
 from gnd.exp.declared_invocation import DeclaredInvocationResult, declared_effective_prompt
+from gnd.process import BoundedProcessResult, ProcessLimits, run_bounded_process
 
 __all__ = [
     "MAX_BUNDLE_FILES",

@@ -10,7 +10,7 @@ from public_release_fixture import publish, synthetic_release
 
 import gnd
 from gnd import api
-from gnd import assurance_evidence as reader
+from gnd.assurance import evidence as reader
 
 FIXTURES = Path(sys.argv[1]).resolve()
 CASE = sys.argv[2]

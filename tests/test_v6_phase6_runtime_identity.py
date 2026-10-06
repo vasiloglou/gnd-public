@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from gnd import assurance_evidence as evidence
+from gnd.assurance import evidence as evidence  # noqa: PLC0414 -- compatibility surface
 
 
 def distribution_at(base: Path):

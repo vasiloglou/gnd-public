@@ -287,7 +287,8 @@ def write_manifest(root: str | Path, manifest: CodegenManifest) -> Path:
     ``_cmd_extract``'s load-bearing index-last ordering, so a crashed run never
     leaves a manifest describing files that do not exist.
     """
-    from gnd.install import _atomic_write, safe_destination
+    from gnd.safefs import atomic_write as _atomic_write
+    from gnd.safefs import safe_destination
 
     root_path = Path(root)
     destination = safe_destination(root_path, MANIFEST_FILENAME)

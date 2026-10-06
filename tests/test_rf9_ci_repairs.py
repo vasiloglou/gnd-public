@@ -237,3 +237,20 @@ def test_portable_ast_dump_keeps_nonempty_fields(before, after):
 
     from support.rf8_sources import portable_dump
     assert portable_dump(ast.parse(before)) != portable_dump(ast.parse(after))
+
+
+@pytest.mark.parametrize('fence', ['```python title=example.py', '~~~python title=example.py', '    ignored\n   ````PYTHON title=example.py'])
+def test_review_titled_python_fence_detects_multiline_import(monkeypatch, fence):
+    from pathlib import Path
+    import test_measure_offline as scans
+
+    closing = '~~~' if fence.startswith('~') else '````'
+    actual = Path.read_text
+    def dirty(path, *args, **kwargs):
+        source = actual(path, *args, **kwargs)
+        if path == scans.MODEL_EVOLVE_SKILL_FILES[0]:
+            source += '\n' + fence + '\nfrom requests import (\n    get,\n)\n' + closing + '\n'
+        return source
+    monkeypatch.setattr(Path, 'read_text', dirty)
+    with pytest.raises(AssertionError):
+        scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()

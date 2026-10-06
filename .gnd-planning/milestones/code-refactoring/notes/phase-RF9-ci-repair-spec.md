@@ -168,3 +168,14 @@ checks. These are bounded tool repairs; all167 IDs/expected-red meanings remain.
 No production bytes changed after733389d. The completed full733389d CI will remain
 bound to that snapshot; the final reviewed observer snapshot receives its own
 current verification, with any required full replay explicitly identified.
+
+Native initial assessment of ed188dd completed exit0 after explicit provider
+transmission authorization. The first default gpt-6.1-sol attempt failed before
+assessment; retry used the same gpt-6-sol/xhigh harness as earlier RF9 reviews.
+R1 is hardening within the selected Markdown import guard: a titled Python fence
+with multiline from-import passes. Three exact variants (backticks, tildes and
+indented/uppercase/longer fences) are reproduced RED before repair. Replace the
+bare-language regex with a small line reader that respects matching fence kind/
+length and the first info-string language token. Whole Python bodies remain strict
+AST. No Markdown rendering/library or production change is added. Select the
+one substantive repair assessment already declared and authorized; no third run.

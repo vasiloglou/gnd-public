@@ -1,0 +1,17 @@
+Retained output edited to replace absolute machine paths.
+............F........................................................... [ 73%]
+..........................                                               [100%]
+=================================== FAILURES ===================================
+_______________ test_legacy_non_model_query_shapes_keep_results ________________
+tests/test_rf6_index.py:127: in test_legacy_non_model_query_shapes_keep_results
+    assert universe.fact_type_by_id(raw, 'F') is raw.fact_types[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/universe.py:224: in _fact_type_by_id
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model_index.py:55: in for_model
+    raise TypeError('ModelIndex requires a Model')
+E   TypeError: ModelIndex requires a Model
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_legacy_non_model_query_shapes_keep_results
+1 failed, 97 passed in 12.53s

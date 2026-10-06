@@ -1,0 +1,16 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_checker_families.py tests/test_public_semantic_adapter.py tests/test_rf3_core.py tests/test_reference_universe.py tests/test_subtype_universe.py tests/test_ring_frozen.py tests/test_vacuity.py tests/test_rf6_index.py tests/test_rf6_registry.py tests/test_rf6_moves.py tests/test_rf6_query_policy.py tests/test_rf1_pin_harness.py tests/test_rf1_layering.py --deselect=tests/test_rf3_core.py::test_full_current_and_original_core --tb=short
+........................................................................ [  9%]
+........................................................................ [ 19%]
+........................................................................ [ 29%]
+........................................................................ [ 38%]
+........................................................................ [ 48%]
+........................................................................ [ 58%]
+........................................................................ [ 67%]
+........................................................................ [ 77%]
+........................................................................ [ 87%]
+........................................................................ [ 96%]
+........................                                                 [100%]
+744 passed, 1 deselected in 53.23s
+
+Exit: 0

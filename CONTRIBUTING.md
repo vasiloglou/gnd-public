@@ -62,3 +62,18 @@ runner in process, trusted adapters in agents, and the independent synth oracle
 package. Assurance follows _wire, core, inheritance, claims, evidence dependency
 order; transport carries receipts. Payload assembly lives in payloads, and
 export/witness services own their thin API wrappers. Old imports remain aliases.
+
+### Model query and constraint family homes
+
+Use gnd.model_index.ModelIndex.for_model(model) for detached model queries. Each
+request keys a bounded snapshot cache by current full model content, with unsafe
+canonical shapes bypassing the cache. Keep the existing strict/truthy primitive
+policy explicit. Raw serialization and deliberately retained domain traversal
+sites are individually listed in the RF6 query policy; additions need a reason
+and a current behavior control.
+
+Constraint adaptation, evaluation, witness projection, presentation, scope and
+shape selection use gnd.constraint_families.FAMILIES. Keep shared refusal and
+vacuity precedence outside family-specific algorithms. The production branch
+evidence registry remains a separate inventory. Preserve every historical import
+shim until a separately approved retirement after the first release following RF6.

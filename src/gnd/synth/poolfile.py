@@ -41,6 +41,7 @@ from typing import Any
 
 from gnd import popvalidate
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.synth.identity import scalar_identity
 from gnd.synth.value_domain import (
     EmptyValueDomain,
@@ -174,16 +175,12 @@ def _load_pool_schema() -> dict[str, Any]:
 
 
 def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:
-    return {
-        str(ot.get("id")): ot
-        for ot in model.object_types or []
-        if ot.get("id") is not None
-    }
+    return ModelIndex.object_map(model)
 
 
 def _iter_all_constraints(model: Model):
     """Yield ``(fact_type_id | None, constraint)`` for every active constraint."""
-    for fact_type in model.fact_types or []:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
         ftid = fact_type.get("id")
         for constraint in fact_type.get("constraints") or []:
             yield ftid, constraint

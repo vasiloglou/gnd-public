@@ -280,6 +280,9 @@
       "lane": "conformance",
       "layer": "lanes"
     },
+    "gnd.constraint_families": {
+      "layer": "infrastructure"
+    },
     "gnd.correspondence": {
       "layer": "checking"
     },
@@ -560,6 +563,9 @@
       "layer": "model"
     },
     "gnd.model_identity": {
+      "layer": "model"
+    },
+    "gnd.model_index": {
       "layer": "model"
     },
     "gnd.model_queries": {

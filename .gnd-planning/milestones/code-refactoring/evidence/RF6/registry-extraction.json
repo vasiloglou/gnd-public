@@ -1,0 +1,80 @@
+{
+  "adapter": {
+    "value-comparison": "_family_adapt_value_comparison",
+    "guarded": "_family_adapt_guarded",
+    "textual": "_family_adapt_textual"
+  },
+  "evaluator": {
+    "mandatory": "_family_result_mandatory",
+    "mandatory-disjunctive": "_family_result_mandatory_disjunctive",
+    "value": "_family_result_value",
+    "uniqueness": "_family_result_uniqueness",
+    "frequency": "_family_result_frequency",
+    "ring": "_family_result_ring",
+    "subset": "_family_result_subset",
+    "equality": "_family_result_equality",
+    "exclusion": "_family_result_exclusion",
+    "exclusive-or": "_family_result_exclusive_or",
+    "value-comparison": "_family_result_value_comparison",
+    "cardinality": "_family_result_cardinality",
+    "subtype-partition": "_family_result_subtype_partition",
+    "guarded": "_family_result_guarded"
+  },
+  "message": {
+    "ring": "_family_message_ring",
+    "mandatory": "_family_message_mandatory",
+    "mandatory-disjunctive": "_family_message_mandatory_disjunctive",
+    "uniqueness": "_family_message_uniqueness",
+    "value": "_family_message_value",
+    "frequency": "_family_message_frequency",
+    "subset": "_family_message_subset",
+    "equality": "_family_message_subset",
+    "exclusion": "_family_message_subset",
+    "exclusive-or": "_family_message_exclusive_or",
+    "value-comparison": "_family_message_value_comparison",
+    "cardinality": "_family_message_cardinality",
+    "subtype-partition": "_family_message_subtype_partition",
+    "guarded": "_family_message_guarded"
+  },
+  "implemented": {
+    "anchored": "_family_implemented_anchored",
+    "uniqueness": "_family_implemented_uniqueness",
+    "mandatory": "_family_implemented_mandatory",
+    "value": "_family_implemented_value",
+    "mandatory-disjunctive": "_family_implemented_mandatory_disjunctive",
+    "frequency": "_family_implemented_frequency",
+    "subset": "_family_implemented_subset",
+    "equality": "_family_implemented_equality",
+    "exclusion": "_family_implemented_equality",
+    "exclusive-or": "_family_implemented_exclusive_or",
+    "ring": "_family_implemented_ring",
+    "value-comparison": "_family_implemented_value_comparison",
+    "guarded": "_family_implemented_guarded",
+    "subtype-partition": "_family_implemented_subtype_partition",
+    "cardinality": "_family_implemented_cardinality"
+  },
+  "scope": {
+    "guarded": "_family_scope_guarded",
+    "value": "_family_scope_value",
+    "cardinality": "_family_scope_value",
+    "subtype-partition": "_family_scope_subtype_partition"
+  },
+  "families": [
+    "anchored",
+    "cardinality",
+    "equality",
+    "exclusion",
+    "exclusive-or",
+    "frequency",
+    "guarded",
+    "mandatory",
+    "mandatory-disjunctive",
+    "ring",
+    "subset",
+    "subtype-partition",
+    "textual",
+    "uniqueness",
+    "value",
+    "value-comparison"
+  ]
+}

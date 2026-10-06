@@ -1,0 +1,26 @@
+Retained output edited to replace machine paths.
+........................................................................ [ 13%]
+........................................................................ [ 26%]
+........................................................................ [ 39%]
+........................................................................ [ 52%]
+........................................................................ [ 65%]
+.......................F................................................ [ 78%]
+........................................................................ [ 91%]
+................................................                         [100%]
+=================================== FAILURES ===================================
+____________________ test_the_ring_call_site_keys_its_pairs ____________________
+tests/test_synth_conforming.py:439: in test_the_ring_call_site_keys_its_pairs
+    assert _witness(constraint, fact_type, doc, model, {}) is True, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/constructive.py:559: in _witness
+    role_obj = _role_object(model)
+               ^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/constructive.py:106: in _role_object
+    return ModelIndex.for_model(model).role_object_types()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model_index.py:55: in for_model
+    raise TypeError('ModelIndex requires a Model')
+E   TypeError: ModelIndex requires a Model
+=========================== short test summary info ============================
+FAILED tests/test_synth_conforming.py::test_the_ring_call_site_keys_its_pairs
+1 failed, 551 passed, 1 deselected in 199.54s (0:03:19)

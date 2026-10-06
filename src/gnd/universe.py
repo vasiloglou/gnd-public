@@ -3,9 +3,13 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from contextvars import ContextVar
-from typing import Any, Literal
+from typing import Any, Literal  # noqa: F401 -- compatibility export
 
 from gnd.atoms import atom_has_bind
+from gnd.constraint_families import FAMILIES, resolve_hook
+from gnd.documents import Model
+from gnd.model_index import ModelIndex
+from gnd.model_queries import _identifying_id, _identifying_primitive, _resolve_reference
 
 
 def _fact_type_roles(doc: dict[str, Any]) -> dict[str, set[str]]:
@@ -21,11 +25,10 @@ def _fact_type_roles(doc: dict[str, Any]) -> dict[str, set[str]]:
     }
 
 
-from gnd.model_queries import _resolved_primitive  # noqa: F401 -- compatibility export
-
-
-from gnd.model_queries import _supertype_parents  # noqa: F401 -- compatibility export
-
+from gnd.model_queries import (
+    _resolved_primitive,
+    _supertype_parents,
+)
 
 _DERIVATION_TERM_CACHE: ContextVar[dict | None] = ContextVar("gnd_intake_term_issues", default=None)
 
@@ -47,22 +50,11 @@ resolved_primitive.__qualname__ = "_resolved_primitive"
 supertype_parents = _supertype_parents
 
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: F401 -- compatibility export
 
 
 def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:
-    return {
-        str(ot.get("id")): ot for ot in model.object_types or [] if ot.get("id") is not None
-    }
-
-
-from gnd.model_queries import _identifying_primitive  # noqa: F401 -- compatibility export
-
-
-from gnd.model_queries import _identifying_id  # noqa: F401 -- compatibility export
-
-
-from gnd.model_queries import _resolve_reference  # noqa: F401 -- compatibility export
+    return ModelIndex.object_map(model)
 
 
 def resolve_reference_value_type(object_type_id: str, model: Model) -> str | None:
@@ -118,8 +110,7 @@ def resolve_primitive(object_type_id: str, model: Model) -> str | None:
     return primitive_for(str(object_type_id), _object_types_by_id(model), variant="strict")
 
 
-from gnd.model_queries import primitive_for  # noqa: F401 -- compatibility export
-
+from gnd.model_queries import primitive_for
 
 identifying_id = _identifying_id
 identifying_primitive = _identifying_primitive
@@ -171,75 +162,10 @@ _RING_VARIANTS = {
 
 
 def _is_implemented(constraint: dict[str, Any], fact_type: dict[str, Any] | None) -> bool:
-    constraint_type = constraint.get("type")
-    if constraint_type not in IMPLEMENTED_FAMILIES:
+    entry = FAMILIES.get(constraint.get("type"))
+    if entry is None or not entry.implemented:
         return False
-    if constraint_type == "anchored":
-        return fact_type is not None
-    if constraint_type == "uniqueness":
-        if fact_type is not None:
-            return isinstance(constraint.get("roles"), list)
-        return constraint.get("scope") == "external" and bool(constraint.get("role_refs"))
-    if constraint_type == "mandatory":
-        return fact_type is not None and constraint.get("role") is not None
-    if constraint_type == "value":
-        forms = [key for key in ("allowed", "range", "ranges") if constraint.get(key) is not None]
-        return constraint.get("object_type") is not None and len(forms) == 1
-    if constraint_type == "mandatory-disjunctive":
-        return bool(constraint.get("role_refs"))
-    if constraint_type == "frequency":
-        return bool(constraint.get("bound")) and (
-            bool(constraint.get("roles")) or bool(constraint.get("role_refs"))
-        )
-    if constraint_type == "subset":
-        return bool(constraint.get("subset_role_seq")) and bool(constraint.get("superset_role_seq"))
-    if constraint_type in ("equality", "exclusion"):
-        return bool(constraint.get("role_seq_a")) and bool(constraint.get("role_seq_b"))
-    if constraint_type == "exclusive-or":
-        return bool(constraint.get("role_seqs"))
-    if constraint_type == "ring":
-        return fact_type is not None and constraint.get("variant") in _RING_VARIANTS
-    if constraint_type == "value-comparison":
-        return (
-            constraint.get("operator") is not None
-            and constraint.get("role_a") is not None
-            and constraint.get("role_b") is not None
-        )
-    if constraint_type == "guarded":
-        antecedent = constraint.get("antecedent")
-        consequent = constraint.get("consequent")
-        exists = consequent.get("exists") if isinstance(consequent, Mapping) else None
-        exists_atoms = exists.get("atoms") if isinstance(exists, Mapping) else None
-        return (
-            isinstance(antecedent, list)
-            and bool(antecedent)
-            and all(atom_has_bind(atom) for atom in antecedent)
-            and isinstance(consequent, dict)
-            and sum(key in consequent for key in ("comparison", "atom", "absence", "exists")) == 1
-            and all(
-                isinstance(consequent.get(key), dict)
-                for key in ("comparison", "atom", "absence", "exists")
-                if key in consequent
-            )
-            and (
-                "exists" not in consequent
-                or (
-                    isinstance(exists_atoms, list)
-                    and bool(exists_atoms)
-                    and all(atom_has_bind(atom) for atom in exists_atoms)
-                )
-            )
-        )
-    if constraint_type == "subtype-partition":
-        return constraint.get("supertype") is not None and bool(constraint.get("subtypes"))
-    # cardinality
-    if not constraint.get("bound"):
-        return False
-    if constraint.get("scope") == "object":
-        return constraint.get("object_type") is not None and constraint.get("role_ref") is None
-    if constraint.get("scope") == "role":
-        return constraint.get("role_ref") is not None and constraint.get("object_type") is None
-    return False
+    return resolve_hook(entry.shape, globals())(constraint, fact_type)
 
 
 def _constraint_role_refs(constraint: dict[str, Any]):
@@ -265,57 +191,29 @@ def _constraint_role_refs(constraint: dict[str, Any]):
 
 
 def _scope_fact_types(
-    constraint: dict[str, Any],
-    constraint_type: str,
-    model: Model,
+    constraint: dict[str, Any], constraint_type: str, model: Model,
     fact_type: dict[str, Any] | None,
 ) -> list[str]:
-    """The fact types a constraint ranges over (for vacuity detection)."""
+    """Shared host/reference precedence followed by a registered scope hook."""
     if fact_type is not None:
         return [str(fact_type.get("id"))]
-    if constraint_type == "guarded":
-        antecedent = constraint.get("antecedent")
-        if not isinstance(antecedent, list):
-            return []
-        referenced = [
-            str(atom.get("fact_type"))
-            for atom in antecedent
-            if isinstance(atom, dict) and atom.get("fact_type") is not None
-        ]
-        return list(dict.fromkeys(referenced))
+    entry = FAMILIES.get(constraint_type)
+    if entry is not None and entry.scope_before_refs:
+        return resolve_hook(entry.scope, globals())(constraint, constraint_type, model, fact_type)
     referenced = [str(ref.get("fact_type")) for ref in _constraint_role_refs(constraint)]
     if referenced:
         return list(dict.fromkeys(referenced))
-    if constraint_type in ("value", "cardinality"):
-        target = constraint.get("object_type")
-        return [
-            str(ft.get("id"))
-            for ft in model.fact_types
-            if any(role.get("object_type") == target for role in ft.get("roles") or [])
-        ]
-    if constraint_type == "subtype-partition":
-        targets = {constraint.get("supertype"), *(constraint.get("subtypes") or [])}
-        return [
-            str(ft.get("id"))
-            for ft in model.fact_types
-            if any(role.get("object_type") in targets for role in ft.get("roles") or [])
-        ]
-    return []
+    if entry is None:
+        return []
+    return resolve_hook(entry.scope, globals())(constraint, constraint_type, model, fact_type)
 
 
 def _fact_type_by_id(model: Model, fact_type_id: str) -> dict[str, Any] | None:
-    for fact_type in model.fact_types:
-        if str(fact_type.get("id")) == fact_type_id:
-            return fact_type
-    return None
+    return ModelIndex.legacy_fact_type(model, fact_type_id)
 
 
 def _role_object_type(model: Model, fact_type_id: str, role_name: str) -> str | None:
-    fact_type = _fact_type_by_id(model, fact_type_id)
-    for role in (fact_type or {}).get("roles") or []:
-        if role.get("role_name") == role_name:
-            return str(role.get("object_type"))
-    return None
+    return ModelIndex.legacy_role_type(model, fact_type_id, role_name)
 
 
 def _descendant_closure(object_type_id: str, model: Model) -> set[str]:
@@ -434,7 +332,7 @@ def _instance_values_of(object_type_id: str, model: Model, population: Populatio
     values: list[Any] = []
     for collected_id in [object_type_id, *sorted(collected - {object_type_id})]:
         values.extend(population.instances.get(collected_id, []))
-    for fact_type in model.fact_types:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
         typed_roles = [
             role.get("role_name")
             for role in fact_type.get("roles") or []
@@ -483,7 +381,6 @@ scope_fact_types = _scope_fact_types
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from gnd.documents import Model
     from gnd.population import Population
 
 _fact_type_roles.__module__ = 'gnd.model'
@@ -523,3 +420,130 @@ _instance_values_of.__module__ = 'gnd.checker'
 _kind_of.__module__ = 'gnd.checker'
 
 _instances_of.__module__ = 'gnd.checker'
+
+def _family_implemented_anchored(constraint, fact_type):
+    return fact_type is not None
+
+
+def _family_implemented_uniqueness(constraint, fact_type):
+    if fact_type is not None:
+        return isinstance(constraint.get("roles"), list)
+    return constraint.get("scope") == "external" and bool(constraint.get("role_refs"))
+
+
+def _family_implemented_mandatory(constraint, fact_type):
+    return fact_type is not None and constraint.get("role") is not None
+
+
+def _family_implemented_value(constraint, fact_type):
+    forms = [key for key in ("allowed", "range", "ranges") if constraint.get(key) is not None]
+    return constraint.get("object_type") is not None and len(forms) == 1
+
+
+def _family_implemented_mandatory_disjunctive(constraint, fact_type):
+    return bool(constraint.get("role_refs"))
+
+
+def _family_implemented_frequency(constraint, fact_type):
+    return bool(constraint.get("bound")) and (
+        bool(constraint.get("roles")) or bool(constraint.get("role_refs"))
+    )
+
+
+def _family_implemented_subset(constraint, fact_type):
+    return bool(constraint.get("subset_role_seq")) and bool(constraint.get("superset_role_seq"))
+
+
+def _family_implemented_equality(constraint, fact_type):
+    return bool(constraint.get("role_seq_a")) and bool(constraint.get("role_seq_b"))
+
+
+def _family_implemented_exclusive_or(constraint, fact_type):
+    return bool(constraint.get("role_seqs"))
+
+
+def _family_implemented_ring(constraint, fact_type):
+    return fact_type is not None and constraint.get("variant") in _RING_VARIANTS
+
+
+def _family_implemented_value_comparison(constraint, fact_type):
+    return (
+        constraint.get("operator") is not None
+        and constraint.get("role_a") is not None
+        and constraint.get("role_b") is not None
+    )
+
+
+def _family_implemented_guarded(constraint, fact_type):
+    antecedent = constraint.get("antecedent")
+    consequent = constraint.get("consequent")
+    exists = consequent.get("exists") if isinstance(consequent, Mapping) else None
+    exists_atoms = exists.get("atoms") if isinstance(exists, Mapping) else None
+    return (
+        isinstance(antecedent, list)
+        and bool(antecedent)
+        and all(atom_has_bind(atom) for atom in antecedent)
+        and isinstance(consequent, dict)
+        and sum(key in consequent for key in ("comparison", "atom", "absence", "exists")) == 1
+        and all(
+            isinstance(consequent.get(key), dict)
+            for key in ("comparison", "atom", "absence", "exists")
+            if key in consequent
+        )
+        and (
+            "exists" not in consequent
+            or (
+                isinstance(exists_atoms, list)
+                and bool(exists_atoms)
+                and all(atom_has_bind(atom) for atom in exists_atoms)
+            )
+        )
+    )
+
+
+def _family_implemented_subtype_partition(constraint, fact_type):
+    return constraint.get("supertype") is not None and bool(constraint.get("subtypes"))
+
+
+def _family_implemented_cardinality(constraint, fact_type):
+    if not constraint.get("bound"):
+        return False
+    if constraint.get("scope") == "object":
+        return constraint.get("object_type") is not None and constraint.get("role_ref") is None
+    if constraint.get("scope") == "role":
+        return constraint.get("role_ref") is not None and constraint.get("object_type") is None
+    return False
+
+
+def _family_scope_guarded(constraint, constraint_type, model, fact_type):
+    antecedent = constraint.get("antecedent")
+    if not isinstance(antecedent, list):
+        return []
+    referenced = [
+        str(atom.get("fact_type"))
+        for atom in antecedent
+        if isinstance(atom, dict) and atom.get("fact_type") is not None
+    ]
+    return list(dict.fromkeys(referenced))
+
+
+def _family_scope_value(constraint, constraint_type, model, fact_type):
+    target = constraint.get("object_type")
+    return ModelIndex.scope_facts(model, (target,))
+
+
+def _family_scope_subtype_partition(constraint, constraint_type, model, fact_type):
+    targets = {constraint.get("supertype"), *(constraint.get("subtypes") or [])}
+    return ModelIndex.scope_facts(model, targets)
+
+
+def _family_scope_empty(constraint, constraint_type, model, fact_type):
+    return []
+
+
+def _family_shape_false(constraint, fact_type):
+    return False
+
+
+def _family_shape_true(constraint, fact_type):
+    return True

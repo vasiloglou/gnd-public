@@ -12,6 +12,7 @@ from gnd import checker as checker_module
 from gnd import popvalidate
 from gnd.address import positional_constraint_ref
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.population import Population
 from gnd.synth.comparison import (
     normalize_operands as _normalize_comparison_operands,
@@ -98,19 +99,11 @@ class ExpectedStateData:
 
 
 def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:
-    return {str(ot.get("id")): ot for ot in model.object_types or [] if ot.get("id") is not None}
+    return ModelIndex.object_map(model)
 
 
 def _role_object(model: Model) -> dict[str, dict[str, str]]:
-    return {
-        str(ft.get("id")): {
-            str(role.get("role_name")): str(role.get("object_type"))
-            for role in ft.get("roles") or []
-            if role.get("role_name") is not None and role.get("object_type") is not None
-        }
-        for ft in model.fact_types or []
-        if ft.get("id") is not None
-    }
+    return ModelIndex.role_map(model)
 
 
 def _direct_subtypes(model: Model) -> dict[str, set[str]]:

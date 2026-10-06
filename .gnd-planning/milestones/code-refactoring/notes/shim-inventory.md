@@ -315,3 +315,5 @@ Retirement follows RF-D5: first public release after RF6 plus separate approval.
 | gnd.universe._identifying_id | gnd.model_queries._identifying_id | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
 | gnd.universe._resolve_reference | gnd.model_queries._resolve_reference | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
 | gnd.universe.primitive_for | gnd.model_queries.primitive_for | RF6a | First public release after RF6 and separate retirement approval; original historical metadata retained |
+
+| gnd.synth.value_domain._in_range | gnd.synth.value_domain.in_range | RF6a RF-D8/D10 | First public release after RF6 plus separate retirement approval; unchanged algorithm and metadata |

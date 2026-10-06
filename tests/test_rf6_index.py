@@ -51,7 +51,7 @@ def test_cache_equal_models_detached_views_and_canonical_refs():
     rows[0][1]['role'] = 'broken'
     assert q.role_object_type('F', 'x') == 'Child'
     assert q.primitive('Code', variant='strict') == 'String'
-    assert list(q.iter_constraints())[0][1]['role'] == 'x'
+    assert next(q.iter_constraints())[1]['role'] == 'x'
     assert m.fact_types[0]['roles']
     with pytest.raises((AttributeError, TypeError)):
         q.digest = 'changed'
@@ -109,3 +109,75 @@ def test_large_index_work_is_bounded():
     assert q.role_object_type('F4999', 'x') == 'Code'
     assert len(list(q.iter_constraints())) == 2
     assert time.monotonic() - started < 5
+
+
+def test_non_string_keys_do_not_alias_string_key_cache():
+    integer_key = built()
+    integer_key.source[1] = 'value'
+    string_key = built()
+    string_key.source['1'] = 'value'
+    assert index(integer_key) is not index(string_key)
+    assert index(integer_key).digest is None
+
+
+def test_legacy_non_model_query_shapes_keep_results():
+    from types import SimpleNamespace
+
+    from gnd import universe
+    raw = SimpleNamespace(fact_types=[{'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'T'}]}])
+    assert universe.fact_type_by_id(raw, 'F') is raw.fact_types[0]
+    assert universe.role_object_type(raw, 'F', 'x') == 'T'
+
+
+def test_range_public_name_keeps_old_callable_and_answers():
+    from gnd.synth import value_domain
+    assert value_domain.in_range is value_domain._in_range
+    assert value_domain.in_range.__name__ == '_in_range'
+    assert value_domain.in_range(3, {'min': 3, 'max': 3})
+    assert not value_domain.in_range(3, {'min': 3, 'min_inclusive': False})
+    assert not value_domain.in_range('x', {'min': 3})
+
+
+def test_shared_maps_keep_non_model_and_malformed_model_shapes():
+    from types import SimpleNamespace
+
+    from gnd import popvalidate, universe
+    from gnd.synth import assemble, poolfile
+    raw = SimpleNamespace(object_types=[{'id': 'T'}],
+                          fact_types=[{'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'T'}]}])
+    for helper in (popvalidate._role_object_types, assemble._role_object):
+        assert helper(raw) == {'F': {'x': 'T'}}
+    for helper in (popvalidate._object_types_by_id, assemble._object_types_by_id,
+                   poolfile._object_types_by_id):
+        assert helper(raw) == {'T': {'id': 'T'}}
+        malformed = Model.model_construct(version=1, object_types=[None], fact_types=[])
+        with pytest.raises(AttributeError):
+            helper(malformed)
+    assert universe.scope_fact_types({'object_type': []}, 'value', built(), None) == []
+
+
+@pytest.mark.parametrize('site', ['popvalidate', 'assemble', 'poolfile'])
+def test_malformed_model_object_map_retains_predecessor_error(site):
+    from gnd import popvalidate
+    from gnd.synth import assemble, poolfile
+    helper = {'popvalidate': popvalidate._object_types_by_id,
+              'assemble': assemble._object_types_by_id,
+              'poolfile': poolfile._object_types_by_id}[site]
+    malformed = Model.model_construct(version=1, object_types=[None], fact_types=[])
+    with pytest.raises(AttributeError):
+        helper(malformed)
+
+
+def test_raw_scope_unhashable_target_retains_empty_result():
+    from gnd import universe
+    assert universe.scope_fact_types({'object_type': []}, 'value', built(), None) == []
+
+
+def test_historical_query_aliases_keep_original_row_identity():
+    from gnd import popvalidate, universe
+    from gnd.synth import assemble, poolfile
+    model = built()
+    assert universe.fact_type_by_id(model, 'F') is model.fact_types[0]
+    for helper in (popvalidate._object_types_by_id, assemble._object_types_by_id,
+                   poolfile._object_types_by_id):
+        assert helper(model)['Code'] is model.object_types[0]

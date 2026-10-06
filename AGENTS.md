@@ -71,3 +71,12 @@ RF4 peripheral homes: safefs provides public filesystem seams without merging
 variants; process owns bounded execution, agents owns trusted adapter selection.
 The synthesis oracle and ordered assurance package retain historical imports.
 Update actual patch lookup owners and include new homes in source-scan coverage.
+
+## Model queries and family dispatch
+
+Prefer the read-only gnd.model_index.ModelIndex snapshot for shared model queries
+and preserve the caller's explicit primitive resolver variant. The exact RF6
+query exceptions are live, counted entries rather than blanket module waivers.
+Register family hooks in gnd.constraint_families.FAMILIES; keep common refusal
+order and existing branch evidence identities. Preserve old import shims until
+the separately approved retirement trigger.

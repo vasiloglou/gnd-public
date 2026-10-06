@@ -1,0 +1,13 @@
+Retained output edited to replace absolute machine paths.
+TRY004 Prefer `TypeError` exception for invalid type
+  --> src/gnd/model_index.py:66:21
+   |
+64 |                     pending.extend(item.values())
+65 |                 elif isinstance(item, tuple):
+66 |                     raise ValueError('non-JSON tuple is not cacheable')
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+67 |                 elif isinstance(item, list):
+68 |                     pending.extend(item)
+   |
+
+Found 1 error.

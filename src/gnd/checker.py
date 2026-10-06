@@ -47,6 +47,7 @@ from gnd.branches import (
     record_branch,
     time_relative_operand,
 )
+from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.documents import Model
 from gnd.errors import UnvalidatedPopulationError
 from gnd.extensions import (
@@ -258,6 +259,7 @@ from gnd.model import (
     derivation_strata,  # noqa: F401 -- compatibility export
     iter_derivation_clauses,  # noqa: F401 -- compatibility export
 )
+from gnd.model_index import ModelIndex
 from gnd.population import Population
 from gnd.proof_bridge import adapt_phase1_slice, phase1_refusal_reason
 from gnd.proof_kernel import MAX_SLICE_CONSTRAINTS, SliceInput, SliceVerdict, phase1_decide
@@ -517,33 +519,11 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
     refusal_rows: list[tuple[str, str]] = []
     aliases: dict[str, str] = {}
 
-    for fact_type in model.fact_types:
-        for index, constraint in enumerate(fact_type.get("constraints") or []):
-            ref = positional_constraint_ref(str(fact_type.get("id")), index)
-            constraint_inputs[ref] = (constraint, fact_type)
-            _observe_phase1_compatibility(
-                constraint,
-                ref,
-                model,
-                constraint_population,
-                fact_type,
-                trace_rows,
-                refusal_rows,
-                aliases,
-            )
-
-    for index, constraint in enumerate(model.constraints):
-        ref = positional_constraint_ref(None, index)
-        constraint_inputs[ref] = (constraint, None)
+    for ref, constraint, fact_type in ModelIndex.for_model(model).iter_constraints():
+        constraint_inputs[ref] = (constraint, fact_type)
         _observe_phase1_compatibility(
-            constraint,
-            ref,
-            model,
-            constraint_population,
-            None,
-            trace_rows,
-            refusal_rows,
-            aliases,
+            constraint, ref, model, constraint_population, fact_type,
+            trace_rows, refusal_rows, aliases,
         )
 
     from gnd.correspondence import correspond_snapshot, project_snapshot
@@ -619,7 +599,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
             ),
             facts=len(population.facts.get(str(fact_type.get("id")), [])),
         )
-        for fact_type in model.fact_types
+        for fact_type in ModelIndex.for_model(model).iter_fact_types()
     }
     return CheckReport(
         verdicts=verdicts,
@@ -661,11 +641,10 @@ def _observe_phase1_compatibility(
 
 
 def _plain_projected_witness(constraint_type: str, witness: Sequence[Any]) -> list[Any]:
-    """Translate the uniform semantic witness into the existing public shapes."""
-    rows = [dict(row) if isinstance(row, dict) else list(row) for row in witness]
-    if constraint_type in {"mandatory", "mandatory-disjunctive", "value", "cardinality"}:
-        return [row[0] for row in rows]
-    return rows
+    """Translate the registered family witness into its public shape."""
+    entry = FAMILIES.get(constraint_type)
+    hook = entry.witness if entry else '_row_projected_witness'
+    return resolve_hook(hook, globals())(witness)
 
 
 def _correspondence_message(
@@ -899,185 +878,11 @@ def _correspondence_message(
             "guarded",
         )
         return verbalize.guarded_zero_bindings_message(kind)
-    if family == "ring":
-        variant = str(constraint.get("variant"))
-        return verbalize.ring_message(
-            variant,
-            str((fact_type or {}).get("id")),
-            [(variant, tuple(row)) for row in witness] if violated else [],
-        )
-    if family == "mandatory":
-        role = str(constraint.get("role"))
-        object_type = _role_object_type(model, str((fact_type or {}).get("id")), role) or role
-        return verbalize.mandatory_message(
-            object_type, role, str((fact_type or {}).get("id")), witness if violated else []
-        )
-    if family == "mandatory-disjunctive":
-        refs = list(constraint.get("role_refs") or [])
-        first = refs[0] if refs else {}
-        object_type = (
-            _role_object_type(model, str(first.get("fact_type")), str(first.get("role")))
-            or "object"
-        )
-        return verbalize.mandatory_disjunctive_message(
-            object_type, _ref_labels(refs), witness if violated else []
-        )
-    if family == "uniqueness":
-        if fact_type is not None:
-            roles = [str(row) for row in constraint.get("roles") or []]
-            groups = _identity_counts(
-                tuple(fact[role] for role in roles)
-                for fact in population.facts.get(str(fact_type.get("id")), [])
-                if all(role in fact for role in roles)
-            )
-            offending = [(tuple(value), count) for value, count in groups.values() if count > 1]
-            return verbalize.uniqueness_message(roles, str(fact_type.get("id")), offending)
-        refs = list(constraint.get("role_refs") or [])
-        groups = _identity_counts(_join_rows(model, population, refs))
-        offending = [(tuple(value), count) for value, count in groups.values() if count > 1]
-        return verbalize.uniqueness_external_message(_ref_labels(refs), offending)
-    if family == "value":
-        subject = str(constraint.get("object_type"))
-        offending = witness if violated else []
-        if constraint.get("allowed") is not None:
-            return verbalize.value_enum_message(
-                subject, list(constraint.get("allowed") or []), offending
-            )
-        if constraint.get("ranges") is not None:
-            return verbalize.value_ranges_message(
-                subject, list(constraint.get("ranges") or []), offending
-            )
-        bounds = constraint.get("range") or {}
-        return verbalize.value_range_message(
-            subject, bounds.get("min"), bounds.get("max"), offending
-        )
-    if family == "frequency":
-        bound = constraint.get("bound") or {}
-        if fact_type is not None:
-            roles = [str(row) for row in constraint.get("roles") or []]
-            values = _project(population, str(fact_type.get("id")), roles)
-            subject = f"{', '.join(roles)} in {fact_type.get('id')}"
-        else:
-            refs = list(constraint.get("role_refs") or [])
-            values = _join_rows(model, population, refs)
-            subject = ", ".join(_ref_labels(refs))
-        groups = _identity_counts(values)
-        keys = {_identity_key(tuple(row)) for row in witness}
-        offending = [
-            (tuple(value), count) for identity, (value, count) in groups.items() if identity in keys
-        ]
-        return verbalize.frequency_message(subject, bound.get("min"), bound.get("max"), offending)
-    if family in {"subset", "equality", "exclusion"}:
-        seq_a = list(
-            constraint.get("subset_role_seq")
-            if family == "subset"
-            else constraint.get("role_seq_a") or []
-        )
-        seq_b = list(
-            constraint.get("superset_role_seq")
-            if family == "subset"
-            else constraint.get("role_seq_b") or []
-        )
-        tuples = [tuple(row) for row in witness] if violated else []
-        if family == "subset":
-            return verbalize.subset_message(_ref_labels(seq_a), _ref_labels(seq_b), tuples)
-        if family == "exclusion":
-            return verbalize.exclusion_message(_ref_labels(seq_a), _ref_labels(seq_b), tuples)
-        actual_a = _IdentitySet(_role_seq_tuples(model, population, seq_a))
-        only_a = [row for row in tuples if row in actual_a]
-        only_b = [row for row in tuples if row not in actual_a]
-        return verbalize.equality_message(_ref_labels(seq_a), _ref_labels(seq_b), only_a, only_b)
-    if family == "exclusive-or":
-        sequences = [list(row or []) for row in constraint.get("role_seqs") or []]
-        labels = [", ".join(_ref_labels(row)) for row in sequences]
-        if all(len(row) == 1 for row in sequences):
-            refs = [row[0] for row in sequences]
-            first = refs[0] if refs else {}
-            object_type = (
-                _role_object_type(model, str(first.get("fact_type")), str(first.get("role")))
-                or "object"
-            )
-            populations = [
-                _IdentitySet(_role_seq_tuples(model, population, row)) for row in sequences
-            ]
-            both: list[Any] = []
-            neither: list[Any] = []
-            for row in witness if violated else []:
-                value = row[0] if isinstance(row, list) and len(row) == 1 else row
-                if sum((value,) in values for values in populations) > 1:
-                    both.append(value)
-                else:
-                    neither.append(value)
-            return verbalize.exclusive_or_message(object_type, labels, both, neither)
-        return verbalize.exclusive_or_exclusion_violated_message(
-            labels, [tuple(row) for row in witness]
-        )
-    if family == "value-comparison":
-        left = constraint.get("role_a")
-        right = constraint.get("role_b")
-        labels = _ref_labels([left, right]) if isinstance(left, dict) else [str(left), str(right)]
-        return verbalize.value_comparison_message(
-            labels[0],
-            str(constraint.get("operator")),
-            labels[1],
-            [tuple(row) for row in witness] if violated else [],
-        )
-    if family == "cardinality":
-        bounds = constraint.get("bound") or {}
-        if constraint.get("scope") == "object":
-            object_type = str(constraint.get("object_type"))
-            subject = f"{object_type} instance"
-            count = len(_instances_of(object_type, model, population))
-        else:
-            role_ref = constraint.get("role_ref") or {}
-            fact_type_id = str(role_ref.get("fact_type"))
-            role_name = str(role_ref.get("role"))
-            subject = f"distinct player of {fact_type_id}.{role_name}"
-            count = len(_IdentitySet(_project(population, fact_type_id, [role_name])))
-        return verbalize.cardinality_message(
-            subject, bounds.get("min"), bounds.get("max"), count, violated
-        )
-    if family == "subtype-partition":
-        subtypes = [str(row) for row in constraint.get("subtypes") or []]
-        member_sets = {subtype: _instances_of(subtype, model, population) for subtype in subtypes}
-        values = [row[0] for row in witness] if violated else []
-        both = [
-            value
-            for value in values
-            if constraint.get("exclusive")
-            and sum(value in members for members in member_sets.values()) > 1
-        ]
-        neither = [value for value in values if value not in both]
-        return verbalize.subtype_partition_message(
-            str(constraint.get("supertype")),
-            subtypes,
-            both,
-            neither,
-        )
-    if family == "guarded":
-        kind = next(
-            (
-                key
-                for key in ("comparison", "atom", "absence", "exists")
-                if key in (constraint.get("consequent") or {})
-            ),
-            "consequent",
-        )
-        from gnd.terms import is_temporal_node, temporal_nodes
-
-        if any(is_temporal_node(node) for _, node in temporal_nodes(constraint.get("consequent"))):
-            return verbalize.temporal_guarded_message(kind, witness if violated else [])
-        bindings = _guarded_bindings(list(constraint.get("antecedent") or []), population)
-        if model.reference_populations and len(bindings) > 100_000:
-            from gnd.correspondence import ReferenceJoinLimit
-
-            raise ReferenceJoinLimit("binding producer escaped reference work budget")
-        return verbalize.guarded_message(kind, len(bindings), witness if violated else [])
-    return verbalize.constraint_message(
-        family,
-        verdict,
-        fact_type_id=str((fact_type or {}).get("id")) or None,
-        detail=(f"witness={witness!r}" if witness else ""),
+    entry = FAMILIES.get(family)
+    hook = entry.message if entry else '_family_message_default'
+    return resolve_hook(hook, globals())(
+        constraint, fact_type, finding, witness, model, population,
+        family, verdict, scope_id, violated,
     )
 
 
@@ -2026,7 +1831,7 @@ def _record_aggregate_guarded_outcomes(model: Model, verdicts: Sequence[Constrai
     """Trace guarded verdicts whose antecedent reads an aggregate head."""
     aggregate_heads = {
         str(fact_type.get("id"))
-        for fact_type in model.fact_types
+        for fact_type in ModelIndex.for_model(model).iter_fact_types()
         if isinstance((rule := fact_type.get("derivation_rule")), dict)
         and isinstance(rule.get("aggregate"), dict)
     }
@@ -2048,7 +1853,7 @@ def _partial_constraint_report(
     model: Model, population: Population, report: CheckReport,
 ) -> CheckReport:
     if not extension_core.PARTIAL_OPAQUE.get() or not model.constraints and not any(
-        fact_type.get("constraints") for fact_type in model.fact_types
+        fact_type.get("constraints") for fact_type in ModelIndex.for_model(model).iter_fact_types()
     ):
         return report
     calculated = extension_core.evaluate_stratified_extensions(
@@ -2062,7 +1867,7 @@ def _partial_constraint_report(
     if not uncertain_heads:
         return report
     by_ref: dict[str, tuple[dict[str, Any], dict[str, Any] | None]] = {}
-    for fact_type in model.fact_types:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
         for index, constraint in enumerate(fact_type.get("constraints") or []):
             by_ref[positional_constraint_ref(str(fact_type.get("id")), index)] = (constraint, fact_type)
     for index, constraint in enumerate(model.constraints):
@@ -2153,7 +1958,7 @@ def _check_dispatch(model: Model, population: Population) -> CheckReport:
     effective_view = extension_core.constraint_view_dispatch(model, population, calculated.extensions)
     replacements: dict[str, ConstraintVerdict] = {}
     report_verdicts = {verdict.constraint_ref: verdict for verdict in report.verdicts}
-    for fact_type in model.fact_types:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
         for index, constraint in enumerate(fact_type.get("constraints") or []):
             ref = positional_constraint_ref(str(fact_type.get("id")), index)
             dependency = next(
@@ -2260,7 +2065,7 @@ def _anchored_verdicts(
 
     obligations = [
         (fact_type, index, constraint)
-        for fact_type in model.fact_types
+        for fact_type in ModelIndex.for_model(model).iter_fact_types()
         for index, constraint in enumerate(fact_type.get("constraints") or [])
         if constraint.get("type") == "anchored"
     ]
@@ -2446,3 +2251,219 @@ def check_with_anchors_partial(
 
 
 effective_view = extension_core.effective_view
+
+def _family_message_ring(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    variant = str(constraint.get("variant"))
+    return verbalize.ring_message(
+        variant,
+        str((fact_type or {}).get("id")),
+        [(variant, tuple(row)) for row in witness] if violated else [],
+    )
+
+
+def _family_message_mandatory(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    role = str(constraint.get("role"))
+    object_type = _role_object_type(model, str((fact_type or {}).get("id")), role) or role
+    return verbalize.mandatory_message(
+        object_type, role, str((fact_type or {}).get("id")), witness if violated else []
+    )
+
+
+def _family_message_mandatory_disjunctive(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    refs = list(constraint.get("role_refs") or [])
+    first = refs[0] if refs else {}
+    object_type = (
+        _role_object_type(model, str(first.get("fact_type")), str(first.get("role")))
+        or "object"
+    )
+    return verbalize.mandatory_disjunctive_message(
+        object_type, _ref_labels(refs), witness if violated else []
+    )
+
+
+def _family_message_uniqueness(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    if fact_type is not None:
+        roles = [str(row) for row in constraint.get("roles") or []]
+        groups = _identity_counts(
+            tuple(fact[role] for role in roles)
+            for fact in population.facts.get(str(fact_type.get("id")), [])
+            if all(role in fact for role in roles)
+        )
+        offending = [(tuple(value), count) for value, count in groups.values() if count > 1]
+        return verbalize.uniqueness_message(roles, str(fact_type.get("id")), offending)
+    refs = list(constraint.get("role_refs") or [])
+    groups = _identity_counts(_join_rows(model, population, refs))
+    offending = [(tuple(value), count) for value, count in groups.values() if count > 1]
+    return verbalize.uniqueness_external_message(_ref_labels(refs), offending)
+
+
+def _family_message_value(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    subject = str(constraint.get("object_type"))
+    offending = witness if violated else []
+    if constraint.get("allowed") is not None:
+        return verbalize.value_enum_message(
+            subject, list(constraint.get("allowed") or []), offending
+        )
+    if constraint.get("ranges") is not None:
+        return verbalize.value_ranges_message(
+            subject, list(constraint.get("ranges") or []), offending
+        )
+    bounds = constraint.get("range") or {}
+    return verbalize.value_range_message(
+        subject, bounds.get("min"), bounds.get("max"), offending
+    )
+
+
+def _family_message_frequency(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    bound = constraint.get("bound") or {}
+    if fact_type is not None:
+        roles = [str(row) for row in constraint.get("roles") or []]
+        values = _project(population, str(fact_type.get("id")), roles)
+        subject = f"{', '.join(roles)} in {fact_type.get('id')}"
+    else:
+        refs = list(constraint.get("role_refs") or [])
+        values = _join_rows(model, population, refs)
+        subject = ", ".join(_ref_labels(refs))
+    groups = _identity_counts(values)
+    keys = {_identity_key(tuple(row)) for row in witness}
+    offending = [
+        (tuple(value), count) for identity, (value, count) in groups.items() if identity in keys
+    ]
+    return verbalize.frequency_message(subject, bound.get("min"), bound.get("max"), offending)
+
+
+def _family_message_subset(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    seq_a = list(
+        constraint.get("subset_role_seq")
+        if family == "subset"
+        else constraint.get("role_seq_a") or []
+    )
+    seq_b = list(
+        constraint.get("superset_role_seq")
+        if family == "subset"
+        else constraint.get("role_seq_b") or []
+    )
+    tuples = [tuple(row) for row in witness] if violated else []
+    if family == "subset":
+        return verbalize.subset_message(_ref_labels(seq_a), _ref_labels(seq_b), tuples)
+    if family == "exclusion":
+        return verbalize.exclusion_message(_ref_labels(seq_a), _ref_labels(seq_b), tuples)
+    actual_a = _IdentitySet(_role_seq_tuples(model, population, seq_a))
+    only_a = [row for row in tuples if row in actual_a]
+    only_b = [row for row in tuples if row not in actual_a]
+    return verbalize.equality_message(_ref_labels(seq_a), _ref_labels(seq_b), only_a, only_b)
+
+
+def _family_message_exclusive_or(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    sequences = [list(row or []) for row in constraint.get("role_seqs") or []]
+    labels = [", ".join(_ref_labels(row)) for row in sequences]
+    if all(len(row) == 1 for row in sequences):
+        refs = [row[0] for row in sequences]
+        first = refs[0] if refs else {}
+        object_type = (
+            _role_object_type(model, str(first.get("fact_type")), str(first.get("role")))
+            or "object"
+        )
+        populations = [
+            _IdentitySet(_role_seq_tuples(model, population, row)) for row in sequences
+        ]
+        both: list[Any] = []
+        neither: list[Any] = []
+        for row in witness if violated else []:
+            value = row[0] if isinstance(row, list) and len(row) == 1 else row
+            if sum((value,) in values for values in populations) > 1:
+                both.append(value)
+            else:
+                neither.append(value)
+        return verbalize.exclusive_or_message(object_type, labels, both, neither)
+    return verbalize.exclusive_or_exclusion_violated_message(
+        labels, [tuple(row) for row in witness]
+    )
+
+
+def _family_message_value_comparison(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    left = constraint.get("role_a")
+    right = constraint.get("role_b")
+    labels = _ref_labels([left, right]) if isinstance(left, dict) else [str(left), str(right)]
+    return verbalize.value_comparison_message(
+        labels[0],
+        str(constraint.get("operator")),
+        labels[1],
+        [tuple(row) for row in witness] if violated else [],
+    )
+
+
+def _family_message_cardinality(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    bounds = constraint.get("bound") or {}
+    if constraint.get("scope") == "object":
+        object_type = str(constraint.get("object_type"))
+        subject = f"{object_type} instance"
+        count = len(_instances_of(object_type, model, population))
+    else:
+        role_ref = constraint.get("role_ref") or {}
+        fact_type_id = str(role_ref.get("fact_type"))
+        role_name = str(role_ref.get("role"))
+        subject = f"distinct player of {fact_type_id}.{role_name}"
+        count = len(_IdentitySet(_project(population, fact_type_id, [role_name])))
+    return verbalize.cardinality_message(
+        subject, bounds.get("min"), bounds.get("max"), count, violated
+    )
+
+
+def _family_message_subtype_partition(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    subtypes = [str(row) for row in constraint.get("subtypes") or []]
+    member_sets = {subtype: _instances_of(subtype, model, population) for subtype in subtypes}
+    values = [row[0] for row in witness] if violated else []
+    both = [
+        value
+        for value in values
+        if constraint.get("exclusive")
+        and sum(value in members for members in member_sets.values()) > 1
+    ]
+    neither = [value for value in values if value not in both]
+    return verbalize.subtype_partition_message(
+        str(constraint.get("supertype")),
+        subtypes,
+        both,
+        neither,
+    )
+
+
+def _family_message_guarded(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
+    kind = next(
+        (
+            key
+            for key in ("comparison", "atom", "absence", "exists")
+            if key in (constraint.get("consequent") or {})
+        ),
+        "consequent",
+    )
+    from gnd.terms import is_temporal_node, temporal_nodes
+
+    if any(is_temporal_node(node) for _, node in temporal_nodes(constraint.get("consequent"))):
+        return verbalize.temporal_guarded_message(kind, witness if violated else [])
+    bindings = _guarded_bindings(list(constraint.get("antecedent") or []), population)
+    if model.reference_populations and len(bindings) > 100_000:
+        from gnd.correspondence import ReferenceJoinLimit
+
+        raise ReferenceJoinLimit("binding producer escaped reference work budget")
+    return verbalize.guarded_message(kind, len(bindings), witness if violated else [])
+
+
+def _flat_projected_witness(witness):
+    rows = [dict(row) if isinstance(row, dict) else list(row) for row in witness]
+    return [row[0] for row in rows]
+
+
+def _row_projected_witness(witness):
+    return [dict(row) if isinstance(row, dict) else list(row) for row in witness]
+
+
+def _family_message_default(
+    constraint, fact_type, finding, witness, model, population,
+    family, verdict, scope_id, violated,
+):
+    return verbalize.constraint_message(
+        family, verdict, fact_type_id=str((fact_type or {}).get('id')) or None,
+        detail=(f'witness={witness!r}' if witness else ''),
+    )

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "A1",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-05",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A1-spec.md",
+    "sha256": "787bd2641a08f907d5a3764127d4421ae0705b7361ce57b71ed3f3dcd5db1ccd",
+    "note": "Artifact snapshot reconstructed from the unchanged append-only spec prefix; no claim that snapshot creation preceded prototype work."
+  },
+  {
+    "id": "A2",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-05",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A2-spec.md",
+    "sha256": "d820bfbf580c29dc5039b292665a3b1737a80593c56bb6fee74789ac6b575a6b",
+    "note": "Artifact snapshot reconstructed from the unchanged append-only spec prefix; no claim that snapshot creation preceded prototype work."
+  },
+  {
+    "id": "A3",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-05",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A3-spec.md",
+    "sha256": "2476d640ef29597b379ef43c16cf118952f8a8d42d1c17aa2d293b9ee4dd6621",
+    "note": "Artifact snapshot reconstructed from the unchanged append-only spec prefix; no claim that snapshot creation preceded prototype work."
+  },
+  {
+    "id": "A4",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-05",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/A4-spec.md",
+    "sha256": "125b9916bf1587e14d567550310c29f4fad21d6337d18ce025cc63bdc2bc7253",
+    "note": "Artifact snapshot reconstructed from the unchanged append-only spec prefix; no claim that snapshot creation preceded prototype work."
+  }
+]

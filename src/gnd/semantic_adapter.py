@@ -19,6 +19,7 @@ from gnd.address import positional_constraint_ref
 from gnd.applicability import applicable_scope_ids
 from gnd.atoms import atom_bind, atom_has_bind
 from gnd.branches import REGISTRY, constraint_variant, record_branch, time_relative_operand
+from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.documents import Model
 from gnd.errors import UnvalidatedPopulationError
 from gnd.model import (
@@ -408,7 +409,7 @@ def adapt_constraint(
             family=family,
             modality=(candidate_modality if candidate_modality in ("alethic", "deontic") else ""),
         )
-        if family not in _FAMILIES:
+        if family not in FAMILIES:
             raise _Refused("unregistered-family")
         modality = _text(source.get("modality"))
         if modality not in ("alethic", "deontic"):
@@ -470,112 +471,9 @@ def adapt_constraint(
             if len(ranges) == 1:
                 lo, hi, left, right = ranges[0]
                 base = replace(base, minimum=lo, maximum=hi, flags=(*base.flags[:2], left, right))
-        if family == "value-comparison":
-            operator = _text(source.get("operator"))
-            if operator not in (*_ORDERING, "=", "!="):
-                raise _ShapeError("unknown comparison operator")
-            left, right = source["role_a"], source["role_b"]
-            first = _operand(left, model, fact_type)
-            second = _operand(right, model, fact_type, first.primitive)
-            if first.kind == "literal":
-                first = _operand(left, model, fact_type, second.primitive)
-            clock = time_relative_operand(source, fact_type)
-            if clock is not None:
-                if left == clock:
-                    first = replace(first, kind="clock")
-                else:
-                    second = replace(second, kind="clock")
-            base = replace(
-                base,
-                operator=operator,
-                operands=(first, second),
-                literal=next(
-                    (item.literal for item in (first, second) if item.kind == "literal"), None
-                ),
-            )
-        if family == "guarded":
-            atoms = tuple(_atom(value, model) for value in _list(source.get("antecedent")))
-            consequent = _mapping(source.get("consequent"))
-            kinds = tuple(
-                key for key in ("comparison", "atom", "absence", "exists") if key in consequent
-            )
-            if len(kinds) != 1 or not atoms:
-                raise _ShapeError("a guarded constraint needs one consequent")
-            kind = kinds[0]
-            base = replace(base, consequent_kind=kind, antecedent=atoms)
-            if kind not in {"comparison", "exists"}:
-                base = replace(base, consequent=(_atom(consequent[kind], model),))
-            elif kind == "comparison":
-                comparison = _mapping(consequent[kind])
-                primitives = {}
-                for atom in atoms:
-                    for _, term in atom.bindings:
-                        if term.kind == "variable":
-                            primitives.setdefault(term.variable, term.primitive)
-                terms = tuple(comparison[key] for key in ("left", "right"))
-                operands = []
-                for index, term in enumerate(terms):
-                    own = primitives.get(term, "") if isinstance(term, str) else ""
-                    other = terms[1 - index]
-                    other_primitive = primitives.get(other, "") if isinstance(other, str) else ""
-                    # A bound variable keeps its role's primitive, even when
-                    # untyped. Only literals borrow the other operand's type.
-                    is_bound = isinstance(term, str) and term in primitives
-                    converted = _guarded_term(
-                        term,
-                        primitives,
-                        own if is_bound else other_primitive,
-                    )
-                    if (
-                        converted.kind == "literal"
-                        and not converted.tagged
-                        and isinstance(other, str)
-                        and other in primitives
-                    ):
-                        parsed = scalar_values.literal(term, other_primitive or None, legacy=False)
-                        valid = parsed is not scalar_values.INVALID_LITERAL
-                        converted = replace(
-                            converted,
-                            literal=(
-                                canonical_scalar(parsed, other_primitive or None)
-                                or _scalar(parsed, None)
-                            )
-                            if valid
-                            else None,
-                            valid=valid,
-                        )
-                    operands.append(converted)
-                operator = _text(comparison.get("operator"))
-                if operator not in (*_ORDERING, "=", "!="):
-                    raise _ShapeError("unknown comparison operator")
-                base = replace(base, operator=operator, operands=tuple(operands))
-            else:
-                exists = _mapping(consequent[kind])
-                exists_atoms = tuple(_atom(value, model) for value in _list(exists.get("atoms")))
-                primitives = {}
-                for atom in (*atoms, *exists_atoms):
-                    for _, term in atom.bindings:
-                        if term.kind == "variable":
-                            primitives.setdefault(term.variable, term.primitive)
-                where_rows = []
-                where_value = exists.get("where")
-                where_comparisons = [] if where_value is None else _list(where_value)
-                for comparison_value in where_comparisons:
-                    comparison = _mapping(comparison_value)
-                    operator = _text(comparison.get("operator"))
-                    if operator not in (*_ORDERING, "=", "!="):
-                        raise _ShapeError("unknown exists where operator")
-                    left = _guarded_term(comparison.get("left"), primitives)
-                    right = _guarded_term(comparison.get("right"), primitives)
-                    where_rows.append((operator, left, right))
-                base = replace(
-                    base,
-                    exists_atoms=exists_atoms,
-                    exists_where=tuple(where_rows),
-                )
-        if family == "textual":
-            base = replace(base, expression=_text(source.get("expression", "")))
-        elif not universe.is_implemented(source, fact_type):
+        entry = FAMILIES[family]
+        base = resolve_hook(entry.adapter, globals())(base, source, model, fact_type)
+        if entry.implemented and not universe.is_implemented(source, fact_type):
             raise _ShapeError("constraint has no implemented shape")
         base = replace(
             base,
@@ -1057,3 +955,120 @@ def correspondence_scope(
     """Fail closed when any admitted value needed by the snapshot was refused."""
     refusals = adapted.observation.refusals
     return ("refused" if refusals else "in-scope", refusals)
+
+def _family_adapt_value_comparison(base, source, model, fact_type):
+    operator = _text(source.get("operator"))
+    if operator not in (*_ORDERING, "=", "!="):
+        raise _ShapeError("unknown comparison operator")
+    left, right = source["role_a"], source["role_b"]
+    first = _operand(left, model, fact_type)
+    second = _operand(right, model, fact_type, first.primitive)
+    if first.kind == "literal":
+        first = _operand(left, model, fact_type, second.primitive)
+    clock = time_relative_operand(source, fact_type)
+    if clock is not None:
+        if left == clock:
+            first = replace(first, kind="clock")
+        else:
+            second = replace(second, kind="clock")
+    base = replace(
+        base,
+        operator=operator,
+        operands=(first, second),
+        literal=next(
+            (item.literal for item in (first, second) if item.kind == "literal"), None
+        ),
+    )
+    return base
+
+
+def _family_adapt_guarded(base, source, model, fact_type):
+    atoms = tuple(_atom(value, model) for value in _list(source.get("antecedent")))
+    consequent = _mapping(source.get("consequent"))
+    kinds = tuple(
+        key for key in ("comparison", "atom", "absence", "exists") if key in consequent
+    )
+    if len(kinds) != 1 or not atoms:
+        raise _ShapeError("a guarded constraint needs one consequent")
+    kind = kinds[0]
+    base = replace(base, consequent_kind=kind, antecedent=atoms)
+    if kind not in {"comparison", "exists"}:
+        base = replace(base, consequent=(_atom(consequent[kind], model),))
+    elif kind == "comparison":
+        comparison = _mapping(consequent[kind])
+        primitives = {}
+        for atom in atoms:
+            for _, term in atom.bindings:
+                if term.kind == "variable":
+                    primitives.setdefault(term.variable, term.primitive)
+        terms = tuple(comparison[key] for key in ("left", "right"))
+        operands = []
+        for index, term in enumerate(terms):
+            own = primitives.get(term, "") if isinstance(term, str) else ""
+            other = terms[1 - index]
+            other_primitive = primitives.get(other, "") if isinstance(other, str) else ""
+            # A bound variable keeps its role's primitive, even when
+            # untyped. Only literals borrow the other operand's type.
+            is_bound = isinstance(term, str) and term in primitives
+            converted = _guarded_term(
+                term,
+                primitives,
+                own if is_bound else other_primitive,
+            )
+            if (
+                converted.kind == "literal"
+                and not converted.tagged
+                and isinstance(other, str)
+                and other in primitives
+            ):
+                parsed = scalar_values.literal(term, other_primitive or None, legacy=False)
+                valid = parsed is not scalar_values.INVALID_LITERAL
+                converted = replace(
+                    converted,
+                    literal=(
+                        canonical_scalar(parsed, other_primitive or None)
+                        or _scalar(parsed, None)
+                    )
+                    if valid
+                    else None,
+                    valid=valid,
+                )
+            operands.append(converted)
+        operator = _text(comparison.get("operator"))
+        if operator not in (*_ORDERING, "=", "!="):
+            raise _ShapeError("unknown comparison operator")
+        base = replace(base, operator=operator, operands=tuple(operands))
+    else:
+        exists = _mapping(consequent[kind])
+        exists_atoms = tuple(_atom(value, model) for value in _list(exists.get("atoms")))
+        primitives = {}
+        for atom in (*atoms, *exists_atoms):
+            for _, term in atom.bindings:
+                if term.kind == "variable":
+                    primitives.setdefault(term.variable, term.primitive)
+        where_rows = []
+        where_value = exists.get("where")
+        where_comparisons = [] if where_value is None else _list(where_value)
+        for comparison_value in where_comparisons:
+            comparison = _mapping(comparison_value)
+            operator = _text(comparison.get("operator"))
+            if operator not in (*_ORDERING, "=", "!="):
+                raise _ShapeError("unknown exists where operator")
+            left = _guarded_term(comparison.get("left"), primitives)
+            right = _guarded_term(comparison.get("right"), primitives)
+            where_rows.append((operator, left, right))
+        base = replace(
+            base,
+            exists_atoms=exists_atoms,
+            exists_where=tuple(where_rows),
+        )
+    return base
+
+
+def _family_adapt_textual(base, source, model, fact_type):
+    base = replace(base, expression=_text(source.get("expression", "")))
+    return base
+
+
+def _family_adapt_identity(base, source, model, fact_type):
+    return base

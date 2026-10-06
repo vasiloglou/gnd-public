@@ -12,6 +12,7 @@ from random import Random
 from typing import Any
 
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.synth.identity import scalar_identity
 from gnd.synth.values import make_value
 
@@ -21,7 +22,7 @@ class EmptyValueDomain(ValueError):
 
 
 def _iter_constraints(model: Model):
-    for fact_type in model.fact_types or []:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
         for constraint in fact_type.get("constraints") or []:
             yield constraint
     for constraint in model.constraints or []:
@@ -69,7 +70,7 @@ def _ranges(constraint: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
-def _in_range(value: Any, value_range: dict[str, Any]) -> bool:
+def in_range(value: Any, value_range: dict[str, Any]) -> bool:
     low = value_range.get("min")
     high = value_range.get("max")
     try:
@@ -96,7 +97,7 @@ def constraint_accepts(value: Any, constraint: dict[str, Any]) -> bool:
         allowed_keys = {scalar_identity(member) for member in allowed}
         return scalar_identity(value) in allowed_keys
     ranges = _ranges(constraint)
-    return bool(ranges) and any(_in_range(value, value_range) for value_range in ranges)
+    return bool(ranges) and any(in_range(value, value_range) for value_range in ranges)
 
 
 def value_satisfies_all(value: Any, constraints: list[dict[str, Any]]) -> bool:
@@ -185,3 +186,9 @@ def draw_value_for_constraints(
     raise EmptyValueDomain(
         "could not draw a value from the governing constraint intersection"
     )
+
+# RF-D8/D10: retain the historical import and metadata until separate retirement.
+in_range.__module__ = "gnd.synth.value_domain"
+in_range.__name__ = "_in_range"
+in_range.__qualname__ = "_in_range"
+_in_range = in_range

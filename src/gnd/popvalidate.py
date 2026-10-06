@@ -70,8 +70,8 @@ from gnd import verbalize
 from gnd.documents import Model
 from gnd.errors import ValidationIssue
 from gnd.extraction_scope import fact_type_scope
+from gnd.model_index import ModelIndex
 from gnd.terms import valid_duration
-from gnd.universe import fact_type_roles as _fact_type_roles
 from gnd.universe import (
     identifying_id as _identifying_id,  # noqa: F401 -- compatibility export
 )
@@ -94,7 +94,7 @@ from gnd.universe import (
 
 def _declared_fact_type_roles(model: Model) -> dict[str, set[str]]:
     """fact_type id -> declared role_names, reusing the model loader's helper."""
-    return _fact_type_roles({"fact_types": model.fact_types})
+    return ModelIndex.for_model(model).fact_type_roles()
 
 
 def _declared_object_type_ids(model: Model) -> set[str]:
@@ -104,16 +104,8 @@ def _declared_object_type_ids(model: Model) -> set[str]:
 
 
 def _role_object_types(model: Model) -> dict[str, dict[str, str]]:
-    """fact_type id -> {role_name: object_type id}."""
-    return {
-        str(ft.get("id")): {
-            str(role.get("role_name")): str(role.get("object_type"))
-            for role in ft.get("roles") or []
-            if role.get("role_name") is not None and role.get("object_type") is not None
-        }
-        for ft in model.fact_types or []
-        if ft.get("id") is not None
-    }
+    """Historical role-map shape from the shared read-only query index."""
+    return ModelIndex.role_map(model)
 
 
 def _covers(doc: dict[str, Any]) -> list[Any]:

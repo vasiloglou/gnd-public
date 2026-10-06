@@ -173,8 +173,8 @@
    ],
    "file": "src/gnd/synth/poolfile.py",
    "id": "M-HELP-canonical-json-gnd-synth-poolfile-canonical-bytes",
-   "new": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON \u2014 the hash input.\n",
-   "old": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON \u2014 the hash input.\n"
+   "new": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON — the hash input.\n",
+   "old": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON — the hash input.\n"
   },
   {
    "expect_red": [
@@ -254,8 +254,8 @@
    ],
    "file": "src/gnd/universe.py",
    "id": "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id",
-   "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
-   "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {\n"
+   "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n"
   },
   {
    "expect_red": [
@@ -263,8 +263,8 @@
    ],
    "file": "src/gnd/popvalidate.py",
    "id": "M-HELP-identical-candidate-gnd-popvalidate-role-object-types",
-   "new": "def _role_object_types(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"fact_type id -> {role_name: object_type id}.\"\"\"\n",
-   "old": "def _role_object_types(model: Model) -> dict[str, dict[str, str]]:\n    \"\"\"fact_type id -> {role_name: object_type id}.\"\"\"\n"
+   "new": "def _role_object_types(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def _role_object_types(model: Model) -> dict[str, dict[str, str]]:\n"
   },
   {
    "expect_red": [
@@ -272,8 +272,8 @@
    ],
    "file": "src/gnd/synth/oracle/constructive.py",
    "id": "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id",
-   "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n",
-   "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n"
+   "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n"
   },
   {
    "expect_red": [
@@ -281,8 +281,8 @@
    ],
    "file": "src/gnd/synth/oracle/constructive.py",
    "id": "M-HELP-identical-candidate-gnd-synth-assemble-role-object",
-   "new": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
-   "old": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    return {\n"
+   "new": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n"
   },
   {
    "expect_red": [
@@ -290,8 +290,8 @@
    ],
    "file": "src/gnd/synth/poolfile.py",
    "id": "M-HELP-identical-candidate-gnd-synth-poolfile-object-types-by-id",
-   "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
-   "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {\n"
+   "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n",
+   "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n"
   },
   {
    "expect_red": [
@@ -932,7 +932,7 @@
    "expect_red": [
     "tests/test_rf1_semantic_pins.py::test_resolver"
    ],
-   "file": "src/gnd/universe.py",
+   "file": "src/gnd/model_queries.py",
    "id": "M-SEM-resolver-is-true",
    "new": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\"):",
    "old": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\") is True:"

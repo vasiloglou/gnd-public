@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any, Literal
 
+
 def _resolved_primitive(
     object_type_id: str,
     object_types: dict[str, dict[str, Any]],

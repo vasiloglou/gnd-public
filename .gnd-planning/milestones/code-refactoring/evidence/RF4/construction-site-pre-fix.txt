@@ -1,0 +1,17 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf4_review_regressions.py -k transition_source --tb=short
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_transition_source_guard_visits_the_defining_payload_module ________
+tests/test_rf4_review_regressions.py:86: in test_transition_source_guard_visits_the_defining_payload_module
+    guards.test_transition_assurance_delegation_is_an_exact_static_site(census.inventory(ROOT))
+tests/test_public_construction_site_guards.py:27: in test_transition_assurance_delegation_is_an_exact_static_site
+    assert source.count(selector) == 1
+E   assert 0 == 1
+E    +  where 0 = <built-in method count of str object at 0x9c2dd7800>('_assurance_surface="transition"')
+E    +    where <built-in method count of str object at 0x9c2dd7800> = 'from __future__ import annotations\n\n"""Compatibility payload assembly exports."""\n\n\nfrom gnd.payloads import (\n...nd.payloads import (\n    transition_kernel as transition_kernel,  # noqa: PLC0414 -- historical imported binding\n)\n'.count
+=========================== short test summary info ============================
+FAILED tests/test_rf4_review_regressions.py::test_transition_source_guard_visits_the_defining_payload_module
+1 failed, 25 deselected in 0.55s
+
+Exit: 1

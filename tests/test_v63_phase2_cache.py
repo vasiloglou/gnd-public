@@ -185,7 +185,7 @@ def test_phase2_branch(case_id: str, tmp_path: Path, monkeypatch: pytest.MonkeyP
 
     if case_id in {"C18", "C19", "C20"}:
         if case_id != "C19":
-            with (package / "assurance.py").open("ab") as stream:
+            with (package / "assurance/core.py").open("ab") as stream:
                 stream.write(b"\n# phase 2 roster change\n")
         if case_id == "C20":
             _flip_first(bundle / "result.json")

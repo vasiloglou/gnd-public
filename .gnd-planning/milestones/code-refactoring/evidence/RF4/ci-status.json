@@ -1,0 +1,13 @@
+{
+  "observed_commit": "c61dd7b289c91dfb59e40ac17707f22e358dcfee",
+  "run_url": "https://github.com/vasiloglou/gnd-public/actions/runs/37398518236",
+  "jobs_not_started": [
+    "candidate",
+    "regression (macos-latest, 3.13)",
+    "regression (ubuntu-latest, 3.11)",
+    "phase2"
+  ],
+  "installed": "skipped",
+  "annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+  "claim": "Infrastructure refusal, no current remote test or installed-candidate verdict."
+}

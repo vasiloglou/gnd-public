@@ -1,10 +1,21 @@
 {
   "date": "2026-10-05",
-  "status": "awaiting explicit RF4 Codex provider authorization",
+  "status": "explicit RF4 Codex provider authorization received",
   "reviewed_subject": "RF4 base387aada througha775f62",
   "command": "codex exec --ephemeral --model gpt-6-sol --config model_reasoning_effort=xhigh --sandbox read-only --color never --skip-git-repo-check --output-last-message <temporary-root>/RF4-review-output.md - < notes/phase-RF4-codex-prompt.txt",
   "outcome": "Rejected before execution by automatic approval review; no prompt/source was transmitted by this command.",
   "reason": "RF4 auto authorizes the review goal but does not explicitly authorize sending this RF4 payload to the external Codex provider.",
   "pending_question": "Authorize sending the RF4 review prompt and inspected repository source/diff to the Codex provider?",
-  "review_limit": 2
+  "review_limit": 2,
+  "authorization": "User replied approved to the pending question authorizing RF4 prompt and inspected source/diff transmission to the Codex provider, 2026-10-05.",
+  "initial_review": {
+    "model": "gpt-6-sol",
+    "effort": "xhigh",
+    "sandbox": "read-only",
+    "status": "complete",
+    "source_commit": "a775f62",
+    "exit": 0,
+    "findings": 3,
+    "retained_output": ".gnd-planning/milestones/code-refactoring/notes/phase-RF4-codex-review.md"
+  }
 }

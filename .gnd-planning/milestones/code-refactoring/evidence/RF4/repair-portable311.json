@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/private/tmp/rf2-py311/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf4_review_regressions.py",
+    "tests/test_public_construction_site_guards.py",
+    "tests/test_v63_phase2_cache.py",
+    "--tb=short",
+    "-x"
+  ],
+  "exit": 0,
+  "seconds": 22.39828085899353
+}

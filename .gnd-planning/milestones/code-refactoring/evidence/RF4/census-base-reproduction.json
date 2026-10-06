@@ -1,0 +1,9 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "import sys; from pathlib import Path; p=Path(\"/private/tmp/rf4-census-base-path\").read_text(); sys.path.insert(0,p+\"/tests\"); import public_site_census; public_site_census.inventory(Path(p))"
+  ],
+  "exit": 1,
+  "seconds": 0.5109009742736816
+}

@@ -11,3 +11,7 @@ Committed comparison:11914added−7982moved=3932nonrelocated production lines, b
 Independent Codex review was rejected before execution by automatic approval review: phase auto approval did not explicitly authorize sending RF4 prompt and inspected source/diff to the external Codex provider. The specific authorization question is pending; there is no reviewer opinion yet. Review bound remains initial+one repair, with reproduction/triage/red regression required.
 
 One reviewer is one reviewer. No broad replay, certification, source-owned discharge, release publication, installed/Linux verdict, shim retirement or phase-completion claim. RF5/RF6/RF7/RF8 and milestone-close carryovers retain their owners.
+
+## Status update -- 2026-10-05
+
+The owner explicitly authorized RF4 prompt/source transmission. Initial Codex review completed with three findings retained verbatim in phase-RF4-codex-review.md. Independent observed-red controls and before-fix triage are retained; twenty bindings are restored and identity/source guards now follow defining homes. Repair-controls:1126 passed; current repair cases:81 passed on eachPython3.11/3.13; explicit changed-path Ruff passes. RF4 remains pending the one bounded repair review and completion record. Earlier pending-authorization language above describes the prior state, not the current state.

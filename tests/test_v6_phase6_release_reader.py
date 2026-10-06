@@ -121,13 +121,13 @@ def test_a_current_complete_release_can_authenticate_without_claiming_coverage(t
 def test_dirty_release_is_rejected_at_its_identity_boundary(tmp_path, mutation):
     package, manifest = synthetic_release(tmp_path)
     if mutation == "source":
-        with (package / "assurance.py").open("a") as stream:
+        with (package / "assurance/core.py").open("a") as stream:
             stream.write("\n# changed\n")
     elif mutation == "missing-source":
-        (package / "assurance.py").unlink()
+        (package / "assurance/core.py").unlink()
     elif mutation == "omitted-roster":
         manifest["files"] = [
-            r for r in manifest["files"] if r["address"]["path"] != "src/gnd/assurance.py"
+            r for r in manifest["files"] if r["address"]["path"] != "src/gnd/assurance/core.py"
         ]
     elif mutation == "extra-source":
         (package / "added.py").write_text("extra = True\n")

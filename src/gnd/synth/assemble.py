@@ -55,19 +55,39 @@ re-implementation.
 from __future__ import annotations
 
 import json
+import math  # noqa: F401 -- historical compatibility binding
 import tempfile
 from collections.abc import Callable
+from dataclasses import (
+    dataclass,  # noqa: F401 -- historical compatibility binding
+    field,  # noqa: F401 -- historical compatibility binding
+)
+from datetime import (
+    date,  # noqa: F401 -- historical compatibility binding
+    datetime,  # noqa: F401 -- historical compatibility binding
+)
+from itertools import product  # noqa: F401 -- historical compatibility binding
 from pathlib import Path
 from random import Random
 from typing import Any
 
+from gnd import checker as checker_module  # noqa: F401 -- historical compatibility binding
 from gnd import popvalidate
 from gnd.address import positional_constraint_ref
 from gnd.checker import check, structured_extension_view
 from gnd.model import Model
 from gnd.population import Population, PopulationValidationError, load_population
+from gnd.synth.comparison import (
+    normalize_operands as _normalize_comparison_operands,  # noqa: F401 -- historical compatibility binding
+)
+from gnd.synth.comparison import (
+    role_literal_operands as _role_literal_operands,  # noqa: F401 -- historical compatibility binding
+)
 from gnd.synth.guarded import (
     antecedent_bindings as _exists_antecedent_bindings,
+)
+from gnd.synth.guarded import (
+    exists_witness as _exists_witness,  # noqa: F401 -- historical compatibility binding
 )
 from gnd.synth.guarded import (
     has_private_exists_sources as _has_private_exists_sources,
@@ -194,7 +214,13 @@ from gnd.synth.oracle.constructive import (
 from gnd.synth.oracle.constructive import (
     witness_map as _witness_map,
 )
+from gnd.synth.pool import EntityPool  # noqa: F401 -- historical compatibility binding
 from gnd.synth.poolfile import Pool, build_faker_pool
+from gnd.synth.value_domain import (
+    EmptyValueDomain,  # noqa: F401 -- historical compatibility binding
+    draw_value_for_constraints,  # noqa: F401 -- historical compatibility binding
+    governing_value_constraints,  # noqa: F401 -- historical compatibility binding
+)
 
 __all__ = [
     "Assembly",

@@ -14,14 +14,14 @@ def static_sites():
 
 
 def test_static_inventory_excludes_installed_assurance_copies(static_sites):
-    assert any(site.path == "src/gnd/report.py" for site in static_sites)
+    assert any(site.path == "src/gnd/payloads.py" for site in static_sites)
     assert not any(
         site.path.startswith("src/gnd/_assurance_evidence/") for site in static_sites
     )
 
 
 def test_transition_assurance_delegation_is_an_exact_static_site(static_sites):
-    path = "src/gnd/report.py"
+    path = "src/gnd/payloads.py"
     source = (ROOT / path).read_text()
     selector = '_assurance_surface="transition"'
     assert source.count(selector) == 1
@@ -109,3 +109,16 @@ def test_an_unregistered_producer_owner_is_detected(static_sites, owned_sites):
         item.startswith("unregistered-owner:gnd.semantic_adapter.unexpected_producer:")
         for item in audit(changed, owned_sites, registry.REGISTRY)
     )
+
+
+def test_relocated_payload_producer_keeps_its_registered_owner(static_sites):
+    from gnd import payloads, report
+
+    assert report.build_check_payload is payloads.build_check_payload
+    with capture_sites(ROOT, static_sites, registry.REGISTRY) as trace:
+        payload = report.build_check_payload(3, "missing-model", "missing-population")
+    identity = "report:check:n-a:envelope-only"
+    assert payload["exit_code"] == 3
+    site, = trace.observed[identity]
+    assert site.path == "src/gnd/payloads.py"
+    assert site.owner == "gnd.report.build_check_payload"

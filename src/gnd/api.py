@@ -93,6 +93,7 @@ from gnd.model import (
 )
 from gnd.population import (
     Population,
+    PopulationLoadError,  # noqa: F401 -- historical compatibility binding
     PopulationValidationError,
     load_population,  # noqa: F401 -- historical compatibility binding
 )
@@ -642,7 +643,7 @@ def _run_verbalize(
         read_regular_path,
         validate_anchor_sidecar,
     )
-    from gnd.population import PopulationLoadError
+    from gnd.population import PopulationLoadError  # noqa: F811 -- local compatibility binding
     from gnd.redaction import RedactionProjectionError
     from gnd.verbalize_population import (
         PopulationVerbalizationError,
@@ -772,7 +773,10 @@ def judgments(
         redact_policy,
     )
     from gnd.model import ModelLoadError, ModelValidationError, load_model_bytes
-    from gnd.population import PopulationLoadError, load_population_bytes
+    from gnd.population import (  # noqa: F811 -- local compatibility binding
+        PopulationLoadError,
+        load_population_bytes,
+    )
     from gnd.references import bind_references
 
     result = {

@@ -61,17 +61,25 @@ pre-existing skill.
 
 from __future__ import annotations
 
+import ctypes  # noqa: F401 -- historical compatibility binding
+import errno  # noqa: F401 -- historical compatibility binding
+import hashlib  # noqa: F401 -- historical compatibility binding
 import json
 import os
 import shutil
 import stat
 import sys
+import tempfile  # noqa: F401 -- historical compatibility binding
 from collections.abc import Iterable, Iterator
 from contextlib import suppress
 from datetime import UTC, datetime
 from importlib.resources import files
 from importlib.resources.abc import Traversable
-from pathlib import Path, PurePosixPath
+from pathlib import (
+    Path,
+    PurePosixPath,
+    PureWindowsPath,  # noqa: F401 -- historical compatibility binding
+)
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError

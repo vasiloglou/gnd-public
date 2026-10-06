@@ -151,8 +151,14 @@ _FORWARDERS = {
 }
 
 
+def _owner(module: str, name: str) -> str:
+    """Resolve defining modules to the unchanged semantic registry identities."""
+    module = {"gnd.payloads": "gnd.report", "gnd.extensions": "gnd.checker"}.get(module, module)
+    return module + "." + name
+
+
 def _aggregate_revalidation(frame) -> bool:
-    owner = frame.f_globals.get("__name__", "") + "." + frame.f_code.co_qualname
+    owner = _owner(frame.f_globals.get("__name__", ""), frame.f_code.co_qualname)
     if _FORWARDERS.get(owner) != "self.scope_id":
         return False
     caller = frame.f_back
@@ -220,7 +226,7 @@ def inventory(root: Path, *, replacements: dict[str, str] | None = None) -> tupl
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
                 names = (*names, node.name)
             if isinstance(node, ast.Call) and (arguments := _scope_arguments(node)):
-                owner = ".".join((module, *names))
+                owner = _owner(module, ".".join(names))
                 expected = _FORWARDERS.get(owner)
                 if (
                     expected is not None
@@ -255,13 +261,12 @@ class ExecutionSites(set):
         frame = sys._getframe(1)  # record_branch calls the current trace recipient
         assert frame.f_code is semantic_registry.record_branch.__code__
         row = self.registry[scope_id]
-        module, name = row.production_owner.rsplit(".", 1)
         frame = frame.f_back
         if frame is not None and _aggregate_revalidation(frame):
             self.forwarded += 1
             return
         while frame is not None:
-            if frame.f_globals.get("__name__") == module and frame.f_code.co_name == name:
+            if _owner(frame.f_globals.get("__name__", ""), frame.f_code.co_name) == row.production_owner:
                 relative = (
                     Path(frame.f_code.co_filename).resolve().relative_to(self.root).as_posix()
                 )

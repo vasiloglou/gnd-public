@@ -1,0 +1,15 @@
+Command: PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_rf9_repairs.py::test_contract_serialization_and_copy_preserve_equality --tb=short -p no:cacheprovider
+Source:26dbff6
+Sanitization: absolute worktree/home prefixes replaced by placeholders.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_contract_serialization_and_copy_preserve_equality ____________
+tests/test_rf9_repairs.py:83: in test_contract_serialization_and_copy_preserve_equality
+    assert first == second
+E   assert DataDrivenCon... ranking=None) == DataDrivenCon... ranking=None)
+E     
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_contract_serialization_and_copy_preserve_equality
+1 failed in 0.19s
+Exit:1

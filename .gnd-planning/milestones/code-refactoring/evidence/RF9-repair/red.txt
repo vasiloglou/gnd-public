@@ -1,0 +1,233 @@
+Command: PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_rf9_repairs.py tests/test_rf6_index.py::test_lookup_closure_variants_and_missing --tb=short -p no:cacheprovider
+Source:26dbff6
+Sanitization: absolute worktree/home prefixes replaced by placeholders.
+FFFFFFFFFFFFFFFFFFFFFFF                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_forged_terminal_acceptance_is_refused __________________
+tests/test_rf9_repairs.py:54: in test_forged_terminal_acceptance_is_refused
+    assert close._work_findings(spec, spec_path), 'forged acceptance opened the work gate'
+E   AssertionError: forged acceptance opened the work gate
+E   assert []
+E    +  where [] = <function _work_findings at 0x10af8ddd0>(ExperimentSpec(id='EXP-714-corpus', kind='work', title='EXP-714-corpus', questions=[Question(id='Q1', text='Does the declared candidate meet the frozen relation?')], follows=[], covers=[], covers_exemption=None, model=None, project=None), PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-4523/test_forged_terminal_acceptanc0/v7/experiment/EXP-714-corpus/SPEC.md'))
+E    +    where <function _work_findings at 0x10af8ddd0> = <module 'gnd.exp.close' from '<worktree>/src/gnd/exp/close.py'>._work_findings
+---------------------------- Captured stdout setup -----------------------------
+CREATED /private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-4523/test_forged_terminal_acceptanc0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+________________ test_missing_best_is_a_finding_not_a_traceback ________________
+tests/test_rf9_repairs.py:66: in test_missing_best_is_a_finding_not_a_traceback
+    findings = close._declared_case_findings(
+src/gnd/exp/close.py:969: in _declared_case_findings
+    f"attempts/{record.attempt_index:04d}/attempt.json", cap=10 * 1024 * 1024
+                ^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'attempt_index'
+---------------------------- Captured stdout setup -----------------------------
+CREATED /private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-4523/test_missing_best_is_a_finding0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+____________ test_contract_serialization_and_copy_preserve_equality ____________
+tests/test_rf9_repairs.py:77: in test_contract_serialization_and_copy_preserve_equality
+    parsed = DataDrivenContract.model_validate(_v2_exact_contract_document())
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: _v2_exact_contract_document() missing 1 required positional argument: 'root'
+____ test_population_digest_annotations_resolve[_content_digest-Population] ____
+tests/test_rf9_repairs.py:101: in test_population_digest_annotations_resolve
+    assert get_type_hints(getattr(population, name)) == {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/typing.py:2437: in get_type_hints
+    value = _eval_type(value, globalns, localns, (), format=format, owner=obj, prefer_fwd_module=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/typing.py:461: in _eval_type
+    return evaluate_forward_ref(t, globals=globalns, locals=localns,
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/typing.py:1000: in evaluate_forward_ref
+    value = forward_ref.evaluate(globals=globals, locals=locals,
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/annotationlib.py:201: in evaluate
+    raise NameError(_NAME_ERROR_MSG.format(name=arg), name=arg)
+E   NameError: name 'Population' is not defined
+_______ test_population_digest_annotations_resolve[_model_digest-Model] ________
+tests/test_rf9_repairs.py:101: in test_population_digest_annotations_resolve
+    assert get_type_hints(getattr(population, name)) == {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/typing.py:2437: in get_type_hints
+    value = _eval_type(value, globalns, localns, (), format=format, owner=obj, prefer_fwd_module=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/typing.py:461: in _eval_type
+    return evaluate_forward_ref(t, globals=globalns, locals=localns,
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/typing.py:1000: in evaluate_forward_ref
+    value = forward_ref.evaluate(globals=globals, locals=locals,
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/annotationlib.py:201: in evaluate
+    raise NameError(_NAME_ERROR_MSG.format(name=arg), name=arg)
+E   NameError: name 'Model' is not defined
+______ test_literal_getattr_is_visible_to_exact_query_policy[fact_types] _______
+tests/test_rf9_repairs.py:115: in test_literal_getattr_is_visible_to_exact_query_policy
+    assert sum(dirty.values()) == 1
+E   assert 0 == 1
+E    +  where 0 = sum(dict_values([]))
+E    +    where dict_values([]) = <built-in method values of Counter object at 0x10b34f020>()
+E    +      where <built-in method values of Counter object at 0x10b34f020> = Counter().values
+_________ test_literal_getattr_is_visible_to_exact_query_policy[roles] _________
+tests/test_rf9_repairs.py:115: in test_literal_getattr_is_visible_to_exact_query_policy
+    assert sum(dirty.values()) == 1
+E   assert 0 == 1
+E    +  where 0 = sum(dict_values([]))
+E    +    where dict_values([]) = <built-in method values of Counter object at 0x10a0fb790>()
+E    +      where <built-in method values of Counter object at 0x10a0fb790> = Counter().values
+____ test_early_or_repeated_cache_write_cannot_hide_in_body_observer[early] ____
+tests/test_rf9_repairs.py:142: in test_early_or_repeated_cache_write_cannot_hide_in_body_observer
+    assert observed != expected
+E   AssertionError: assert 'c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4' != 'c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4'
+__ test_early_or_repeated_cache_write_cannot_hide_in_body_observer[duplicate] __
+tests/test_rf9_repairs.py:142: in test_early_or_repeated_cache_write_cannot_hide_in_body_observer
+    assert observed != expected
+E   AssertionError: assert 'c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4' != 'c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4'
+____ test_early_or_repeated_cache_write_cannot_hide_in_body_observer[moved] ____
+tests/test_rf9_repairs.py:142: in test_early_or_repeated_cache_write_cannot_hide_in_body_observer
+    assert observed != expected
+E   AssertionError: assert 'c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4' != 'c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4'
+__ test_lane_service_import_does_not_initialize_commands[gnd.codegen.service] __
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.codegen.service'); assert "gnd.commands" not in sys.modules
+E                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+__ test_lane_service_import_does_not_initialize_commands[gnd.exp.cli_service] __
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.exp.cli_service'); assert "gnd.commands" not in sys.modules
+E                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+_ test_lane_service_import_does_not_initialize_commands[gnd.export.verification_service] _
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.export.verification_service'); assert "gnd.commands" not in sys.modules
+E                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+__ test_lane_service_import_does_not_initialize_commands[gnd.extract.service] __
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.extract.service'); assert "gnd.commands" not in sys.modules
+E                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+_ test_lane_service_import_does_not_initialize_commands[gnd.fidelity.doccheck_service] _
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.fidelity.doccheck_service'); assert "gnd.commands" not in sys.modules
+E                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+_ test_lane_service_import_does_not_initialize_commands[gnd.fidelity.service] __
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.fidelity.service'); assert "gnd.commands" not in sys.modules
+E                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+__ test_lane_service_import_does_not_initialize_commands[gnd.review.service] ___
+tests/test_rf9_repairs.py:154: in test_lane_service_import_does_not_initialize_commands
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 1, in <module>
+E         import importlib,sys; importlib.import_module('gnd.review.service'); assert "gnd.commands" not in sys.modules
+E                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n').returncode
+__________ test_architecture_observes_implicit_parent_layer_violation __________
+tests/test_rf9_repairs.py:165: in test_architecture_observes_implicit_parent_layer_violation
+    metrics = arch['measure'](root, map_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/gnd_arch.py:641: in measure
+    layer_map = load_layer_map(layers_path)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/gnd_arch.py:103: in load_layer_map
+    _validate_layer_map(data)
+tools/gnd_arch.py:156: in _validate_layer_map
+    _require(entry.get("lane") in lanes, f"{module}: lanes-layer module needs a known lane")
+tools/gnd_arch.py:109: in _require
+    raise _invalid(f"layer map: {message}")
+E   <run_path>.ToolError: layer map: gnd.lane: lanes-layer module needs a known lane
+___ test_offline_scan_detects_import_spellings[from urllib import request\n] ___
+tests/test_rf9_repairs.py:179: in test_offline_scan_detects_import_spellings
+    assert guard._forbidden_hit(source, guard._NETWORK_LIBS) == ['urllib.request']
+E   AssertionError: assert [] == ['urllib.request']
+E     
+E     Right contains one more item: 'urllib.request'
+E     Use -v to get more diff
+_ test_offline_scan_detects_import_spellings[from urllib import request as r\n] _
+tests/test_rf9_repairs.py:179: in test_offline_scan_detects_import_spellings
+    assert guard._forbidden_hit(source, guard._NETWORK_LIBS) == ['urllib.request']
+E   AssertionError: assert [] == ['urllib.request']
+E     
+E     Right contains one more item: 'urllib.request'
+E     Use -v to get more diff
+_ test_offline_scan_detects_import_spellings[import math, urllib.request as r\n] _
+tests/test_rf9_repairs.py:179: in test_offline_scan_detects_import_spellings
+    assert guard._forbidden_hit(source, guard._NETWORK_LIBS) == ['urllib.request']
+E   AssertionError: assert [] == ['urllib.request']
+E     
+E     Right contains one more item: 'urllib.request'
+E     Use -v to get more diff
+________ test_generation_closure_rejects_from_import_in_actual_runtime _________
+tests/test_rf9_repairs.py:197: in test_generation_closure_rejects_from_import_in_actual_runtime
+    with pytest.raises(AssertionError, match='network library'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+___________________ test_lookup_closure_variants_and_missing ___________________
+tests/test_rf6_index.py:36: in test_lookup_closure_variants_and_missing
+    assert q.primitive('Child', variant='truthy') == 'String'
+E   AssertionError: assert None == 'String'
+E    +  where None = primitive('Child', variant='truthy')
+E    +    where primitive = ModelIndex(digest='be951cb5e4e782c3f57b9275877077330c71b537bdb1ed35b7a2a8c5d7ba011b').primitive
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_forged_terminal_acceptance_is_refused
+FAILED tests/test_rf9_repairs.py::test_missing_best_is_a_finding_not_a_traceback
+FAILED tests/test_rf9_repairs.py::test_contract_serialization_and_copy_preserve_equality
+FAILED tests/test_rf9_repairs.py::test_population_digest_annotations_resolve[_content_digest-Population]
+FAILED tests/test_rf9_repairs.py::test_population_digest_annotations_resolve[_model_digest-Model]
+FAILED tests/test_rf9_repairs.py::test_literal_getattr_is_visible_to_exact_query_policy[fact_types]
+FAILED tests/test_rf9_repairs.py::test_literal_getattr_is_visible_to_exact_query_policy[roles]
+FAILED tests/test_rf9_repairs.py::test_early_or_repeated_cache_write_cannot_hide_in_body_observer[early]
+FAILED tests/test_rf9_repairs.py::test_early_or_repeated_cache_write_cannot_hide_in_body_observer[duplicate]
+FAILED tests/test_rf9_repairs.py::test_early_or_repeated_cache_write_cannot_hide_in_body_observer[moved]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.codegen.service]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.exp.cli_service]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.export.verification_service]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.extract.service]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.fidelity.doccheck_service]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.fidelity.service]
+FAILED tests/test_rf9_repairs.py::test_lane_service_import_does_not_initialize_commands[gnd.review.service]
+FAILED tests/test_rf9_repairs.py::test_architecture_observes_implicit_parent_layer_violation
+FAILED tests/test_rf9_repairs.py::test_offline_scan_detects_import_spellings[from urllib import request\n]
+FAILED tests/test_rf9_repairs.py::test_offline_scan_detects_import_spellings[from urllib import request as r\n]
+FAILED tests/test_rf9_repairs.py::test_offline_scan_detects_import_spellings[import math, urllib.request as r\n]
+FAILED tests/test_rf9_repairs.py::test_generation_closure_rejects_from_import_in_actual_runtime
+FAILED tests/test_rf6_index.py::test_lookup_closure_variants_and_missing - As...
+23 failed in 4.14s
+Exit:1

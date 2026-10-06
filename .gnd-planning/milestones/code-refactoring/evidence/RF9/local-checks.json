@@ -1,0 +1,1678 @@
+{
+  "subject": "d440b2e37449ef46647d18c491c46d9bb8d3e851",
+  "module_count": 227,
+  "sccs": {
+    "runtime": [],
+    "module_only": []
+  },
+  "layering": {
+    "wrong_way": [],
+    "cross_lane": [
+      {
+        "from": "gnd.codegen.docstrings",
+        "to": "gnd.extract.vocabulary",
+        "kind": "module",
+        "line": 42,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.exp.frontmatter",
+        "kind": "module",
+        "line": 99,
+        "from_lane": "codegen",
+        "to_lane": "exp"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.bundle",
+        "kind": "module",
+        "line": 100,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.projection",
+        "kind": "module",
+        "line": 101,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.refscheme",
+        "kind": "module",
+        "line": 102,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.vocabulary",
+        "kind": "module",
+        "line": 103,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.synth.paths",
+        "kind": "module",
+        "line": 105,
+        "from_lane": "codegen",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.codegen.manifest",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 81,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.service",
+        "to": "gnd.extract.projection",
+        "kind": "lazy",
+        "line": 107,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.conformance.architecture",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 40,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.currency",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 51,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.integrity",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 42,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.integrity",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 55,
+        "from_lane": "conformance",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.conformance.report",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 51,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.service",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 18,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen.emit",
+        "kind": "module",
+        "line": 98,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen.identifiers",
+        "kind": "module",
+        "line": 99,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 100,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.extract.bundle",
+        "kind": "module",
+        "line": 103,
+        "from_lane": "conformance",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.evolve.service",
+        "to": "gnd.conformance.report",
+        "kind": "module",
+        "line": 26,
+        "from_lane": "evolve",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.evolve.service",
+        "to": "gnd.conformance.service",
+        "kind": "module",
+        "line": 27,
+        "from_lane": "evolve",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.cli_service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 92,
+        "from_lane": "exp",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance.integrity",
+        "kind": "lazy",
+        "line": 419,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance.report",
+        "kind": "lazy",
+        "line": 420,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance.service",
+        "kind": "lazy",
+        "line": 421,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.paths",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 37,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 287,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 338,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session_contract",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 43,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session_patch",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 11,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.lean",
+        "to": "gnd.witness.io",
+        "kind": "module",
+        "line": 9,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.lean",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 10,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.service",
+        "to": "gnd.witness.io",
+        "kind": "lazy",
+        "line": 39,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.service",
+        "to": "gnd.witness.types",
+        "kind": "lazy",
+        "line": 40,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle",
+        "to": "gnd.witness.io",
+        "kind": "module",
+        "line": 19,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 20,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.io",
+        "kind": "module",
+        "line": 18,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.io",
+        "kind": "lazy",
+        "line": 551,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.kernel",
+        "kind": "module",
+        "line": 19,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 20,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 21,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.anchors",
+        "kind": "lazy",
+        "line": 299,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.anchors",
+        "kind": "lazy",
+        "line": 492,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 64,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.service",
+        "kind": "module",
+        "line": 19,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 70,
+        "from_lane": "export",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.extract.bundle",
+        "to": "gnd.synth.paths",
+        "kind": "module",
+        "line": 39,
+        "from_lane": "extract",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.extract.service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 104,
+        "from_lane": "extract",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.identity",
+        "kind": "lazy",
+        "line": 38,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 39,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.refscheme",
+        "kind": "lazy",
+        "line": 44,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.service",
+        "kind": "module",
+        "line": 12,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.match",
+        "to": "gnd.extract.identity",
+        "kind": "module",
+        "line": 58,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 67,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract.refscheme",
+        "kind": "lazy",
+        "line": 73,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract.service",
+        "kind": "module",
+        "line": 12,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 82,
+        "from_lane": "fidelity",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 81,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 105,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 199,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.boundary",
+        "kind": "lazy",
+        "line": 106,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.boundary",
+        "kind": "lazy",
+        "line": 252,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.comparison",
+        "kind": "module",
+        "line": 41,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.frontier",
+        "kind": "module",
+        "line": 42,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 43,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.promote",
+        "to": "gnd.synth.paths",
+        "kind": "module",
+        "line": 48,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.promote",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 49,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 183,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth.frontier",
+        "kind": "lazy",
+        "line": 415,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 44,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.score",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 44,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 449,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth.corpus_service",
+        "kind": "module",
+        "line": 15,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth.poolfile",
+        "kind": "lazy",
+        "line": 51,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth.provenance",
+        "kind": "lazy",
+        "line": 52,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.truth",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 37,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.recovery.service",
+        "to": "gnd.evolve.cli_service",
+        "kind": "module",
+        "line": 11,
+        "from_lane": "recovery",
+        "to_lane": "evolve"
+      }
+    ],
+    "clean_layers": [
+      "checking",
+      "entry",
+      "infrastructure",
+      "lanes",
+      "model",
+      "semantics"
+    ]
+  },
+  "entrypoints": {
+    "scope": [
+      "gnd.cli",
+      "gnd.commands.checking",
+      "gnd.commands.codegen",
+      "gnd.commands.conformance",
+      "gnd.commands.doccheck",
+      "gnd.commands.evolve",
+      "gnd.commands.exp",
+      "gnd.commands.export",
+      "gnd.commands.extract",
+      "gnd.commands.fidelity",
+      "gnd.commands.judgments",
+      "gnd.commands.lifecycle",
+      "gnd.commands.measure",
+      "gnd.commands.recovery",
+      "gnd.commands.review",
+      "gnd.commands.solve",
+      "gnd.commands.synth",
+      "gnd.commands.verify",
+      "gnd.commands.witness"
+    ],
+    "violations": [],
+    "exceptions": [
+      {
+        "source": "gnd.cli",
+        "target": "gnd",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.api",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.checker",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.install",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.model",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.population",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.report",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.review.constants",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.semantic_registry",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.solve",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.transition",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.verbalize",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.api",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.assurance_transport",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.batch",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.checker",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.coverage",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.diff",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.model",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.rai_import",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.redaction",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.report",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.verbalize",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.agents",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.artifacts",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.declared_adapter",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.adapter_policy",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.close",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.session",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.session_contract",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.session_store",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.spec",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.tests_runner",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.emit",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.lean_cli",
+        "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.pyrel_runtime",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.souffle_cli",
+        "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+      },
+      {
+        "source": "gnd.commands.judgments",
+        "target": "gnd.api",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.judgments",
+        "target": "gnd.artifacts",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.lifecycle",
+        "target": "gnd.install",
+        "reason": "Lifecycle command boundary invokes the existing installer and its refusal classes; not an import from a domain lane."
+      },
+      {
+        "source": "gnd.commands.review",
+        "target": "gnd.review.runner",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.solve",
+        "target": "gnd.solve",
+        "reason": "Solve command boundary delegates to the existing control-plane station walker and its parser labels."
+      },
+      {
+        "source": "gnd.commands.witness",
+        "target": "gnd.witness.cli",
+        "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.input_policy",
+        "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.input_policy",
+        "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
+      }
+    ]
+  },
+  "frozen_controls": 432,
+  "source_unchanged": true,
+  "predecessor_bindings": [
+    {
+      "module": "gnd.model",
+      "checked": 179,
+      "names": [
+        "AggregateAnalysis",
+        "DeonticNote",
+        "DerivationClassification",
+        "DerivationEdge",
+        "DerivationStability",
+        "IMPORTED_PROVENANCE_FIELDS",
+        "MAX_MODEL_BYTES",
+        "MAX_YAML_EVENTS",
+        "Model",
+        "ModelLoadError",
+        "ModelValidationError",
+        "NEVER_MECHANICAL_FAMILIES",
+        "ValidationIssue",
+        "_DERIVATION_ARM_KEYS",
+        "_DERIVATION_ATOM_VISITS",
+        "_DERIVATION_CLASSIFICATION_WORK",
+        "_DERIVATION_RULE_KEYS",
+        "_DERIVATION_TERM_CACHE",
+        "_DERIVATION_WORK",
+        "_NUMERIC_PRIMITIVES",
+        "_PLACEHOLDER",
+        "_REPORTED_PARAMETER_LIMIT",
+        "_ROLE_SEQ_FIELDS",
+        "_SEMANTIC_RULES",
+        "_aggregate_issues",
+        "_aggregate_variables",
+        "_ancestor_closure",
+        "_atom_reference_issues",
+        "_attach_compiled_obligations",
+        "_constraint_role_seqs",
+        "_derivation_atoms",
+        "_derivation_bind",
+        "_derivation_components",
+        "_derivation_cycles",
+        "_derivation_dependency_closures",
+        "_derivation_head_term_issues",
+        "_derivation_id",
+        "_derivation_positive_variables",
+        "_derivation_rule_hint",
+        "_derivation_scope_variables",
+        "_derivation_variable",
+        "_derivation_variable_primitives",
+        "_effect_index",
+        "_fact_type_roles",
+        "_filter_derivation_term_issues",
+        "_guarded_literal_kinds_compatible",
+        "_guarded_literal_matches_primitive",
+        "_guarded_nested_function_variables",
+        "_guarded_primitives_compatible",
+        "_has_literal",
+        "_internal_uniqueness_keys",
+        "_is_structured_rule",
+        "_iter_constraints",
+        "_iter_guarded_atoms",
+        "_iter_guarded_consequent_terms",
+        "_iter_guarded_constraints",
+        "_iter_operation_atoms",
+        "_iter_operation_obligations",
+        "_iter_operation_terms",
+        "_iter_operations",
+        "_iter_provenance_bearing",
+        "_iter_role_refs",
+        "_iter_structured_fact_derivations",
+        "_joining_sequences",
+        "_layer1_structural",
+        "_load_meta_schema",
+        "_load_model_no_follow",
+        "_operation_parameters",
+        "_primitive_maps",
+        "_provenance_bearing_label",
+        "_range_endpoints_valid",
+        "_resolved_primitive",
+        "_role_object_types",
+        "_roles_by_variable",
+        "_rule_aggregate_as_not_fresh",
+        "_rule_aggregate_function",
+        "_rule_aggregate_head_needs_round",
+        "_rule_aggregate_head_scope",
+        "_rule_aggregate_input_type",
+        "_rule_aggregate_of_unbound",
+        "_rule_aggregate_over_duplicate",
+        "_rule_aggregate_over_unbound",
+        "_rule_aggregate_shape",
+        "_rule_aggregate_where_scope",
+        "_rule_anchored_role_and_recogniser",
+        "_rule_count_bound_order",
+        "_rule_cross_ref",
+        "_rule_depends_on",
+        "_rule_derivation_body_component_unused",
+        "_rule_derivation_dynamic_dependency_incomplete",
+        "_rule_derivation_effect_on_derived",
+        "_rule_derivation_effect_on_semiderived",
+        "_rule_derivation_float_head_unquantized",
+        "_rule_derivation_head_needs_round",
+        "_rule_derivation_head_role_claim",
+        "_rule_derivation_head_term_type",
+        "_rule_derivation_head_unbound",
+        "_rule_derivation_negate_unbound",
+        "_rule_derivation_opaque_dependency",
+        "_rule_derivation_role_claim",
+        "_rule_derivation_rule_shape",
+        "_rule_derivation_structured_on_object_type",
+        "_rule_derivation_term_ref",
+        "_rule_derivation_term_type",
+        "_rule_derivation_term_unbound",
+        "_rule_derivation_unstratified",
+        "_rule_disjunctive_subject_type",
+        "_rule_external_ref_uc",
+        "_rule_fact_type_arity",
+        "_rule_guarded_comparison_type",
+        "_rule_guarded_consequent_ground",
+        "_rule_guarded_exists_range",
+        "_rule_guarded_exists_where_bound",
+        "_rule_guarded_exists_where_type",
+        "_rule_guarded_role_claim",
+        "_rule_guarded_term_ref",
+        "_rule_id_unique",
+        "_rule_imported_confirmed_reviewed",
+        "_rule_imported_provenance",
+        "_rule_join_anchor_unambiguous",
+        "_rule_modality_policy",
+        "_rule_op_atom_ref",
+        "_rule_op_create_param",
+        "_rule_op_create_ref_mode",
+        "_rule_op_dynamic_functional",
+        "_rule_op_dynamic_untouched",
+        "_rule_op_effect_ground",
+        "_rule_op_modality_policy",
+        "_rule_op_obligation_ids_distinct",
+        "_rule_op_param_names_distinct",
+        "_rule_op_param_ref",
+        "_rule_op_reading_placeholders",
+        "_rule_op_term_ref",
+        "_rule_op_term_type_compat",
+        "_rule_partition_asserts_something",
+        "_rule_reading_placeholders",
+        "_rule_reference_value_type",
+        "_rule_ring_binary",
+        "_rule_role_names_distinct",
+        "_rule_role_ref",
+        "_rule_role_seq_arity",
+        "_rule_role_seq_type_compat",
+        "_rule_status_source",
+        "_rule_string_ref",
+        "_rule_subtype_ref",
+        "_rule_temporal_language",
+        "_rule_term_argument_type",
+        "_rule_term_comparison_type",
+        "_rule_term_depth_budget",
+        "_rule_term_function_arity",
+        "_rule_term_function_name",
+        "_rule_term_node_budget",
+        "_rule_term_non_finite_number",
+        "_rule_term_shape",
+        "_rule_term_unbound",
+        "_rule_textual_alethic",
+        "_rule_value_range_order",
+        "_rule_value_range_type",
+        "_safe_key",
+        "_supertype_parents",
+        "_temporal_literal_valid",
+        "_variable_name",
+        "_variables_in",
+        "analyze_aggregate",
+        "analyze_declared_aggregate",
+        "body_components",
+        "compile_operation",
+        "derivation_classifications",
+        "derivation_dependencies",
+        "derivation_dependency_closure",
+        "derivation_dependency_edges",
+        "derivation_strata",
+        "dynamic_subject_is_functional",
+        "iter_derivation_clauses",
+        "load_model",
+        "load_model_bytes",
+        "semantic_validate",
+        "structured_derivation_ids",
+        "yaml_stream_guard_error"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.checker",
+      "checked": 151,
+      "names": [
+        "CheckReport",
+        "ConstraintVerdict",
+        "CoverageEntry",
+        "DERIVATION_REASON_CODES",
+        "DerivationFinding",
+        "DerivationKind",
+        "DerivationReason",
+        "DerivationVerdict",
+        "DynamicRefreshWork",
+        "EXACT_DERIVATION_REASON_CODES",
+        "ExtensionCalculator",
+        "FactPath",
+        "IMPLEMENTED_FAMILIES",
+        "IdentityCodecVersion",
+        "JoinAmbiguousError",
+        "JoinDisconnectedError",
+        "Phase1Trace",
+        "RelationUnavailable",
+        "RowLineage",
+        "Scalar",
+        "StructuredExtensionView",
+        "UnvalidatedPopulationError",
+        "VariableResolver",
+        "Verdict",
+        "_COMPARATORS",
+        "_ExactExtensionResult",
+        "_ExactExtensions",
+        "_ExactJoinWork",
+        "_ExtensionResult",
+        "_FactView",
+        "_FixpointJoinWork",
+        "_INVALID_LITERAL",
+        "_IdentitySet",
+        "_JOIN_SUBJECT_SEQS",
+        "_JoinSubjectRow",
+        "_JoinWork",
+        "_MANDATORY_RELEVANT",
+        "_OBJECT_TYPE_SCOPED",
+        "_PARTIAL_OPAQUE",
+        "_PHASE3_LEGACY_CHECK",
+        "_PHASE3_LEGACY_CONSTRAINT_VIEW",
+        "_PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+        "_PartialExtensions",
+        "_PartialTermFailure",
+        "_REFERENCE_PRESENTATION_WORK",
+        "_RING_COMPONENTS",
+        "_RING_VARIANTS",
+        "_RuledFactView",
+        "_TypedRelation",
+        "_WITNESS_TRACE",
+        "_Wildcard",
+        "_aggregate_bindings",
+        "_aggregate_identity_token",
+        "_anchored_verdicts",
+        "_apply_negation",
+        "_base_relations",
+        "_binding_lineages",
+        "_check_dispatch",
+        "_clause_bindings",
+        "_compare",
+        "_compatibility_trace",
+        "_component_atoms",
+        "_component_product",
+        "_constraint_role_refs",
+        "_constraint_view",
+        "_constraint_view_dispatch",
+        "_correspondence_message",
+        "_count_term_work",
+        "_denoting_types",
+        "_derivation_obligation",
+        "_descendant_closure",
+        "_dfs_cycle",
+        "_evaluate_derivations",
+        "_evaluate_derivations_dispatch",
+        "_evaluate_stratified_extensions",
+        "_exact_derivation_obligation",
+        "_exact_extension_calculator",
+        "_extension_fact_map",
+        "_fact_type_by_id",
+        "_find_cycle",
+        "_guarded_atom_index",
+        "_guarded_bindings",
+        "_guarded_ground_atom",
+        "_guarded_term_failure",
+        "_guarded_variable",
+        "_guarded_variable_primitives",
+        "_identity_counts",
+        "_identity_key",
+        "_identity_token",
+        "_in_range",
+        "_instance_values_of",
+        "_instances_of",
+        "_is_implemented",
+        "_join_rows",
+        "_joined_atom_candidates",
+        "_joined_bindings",
+        "_joining_subject_sequences",
+        "_kind_of",
+        "_literal",
+        "_model_uses_exact_derivations",
+        "_no_joined_rows_message",
+        "_no_observable_subjects_message",
+        "_observe_phase1_compatibility",
+        "_orderable",
+        "_partial_binding_shape",
+        "_partial_bindings",
+        "_partial_clause_rows",
+        "_partial_compatible",
+        "_partial_constraint_report",
+        "_partial_merge",
+        "_partial_negation",
+        "_partial_row_facts",
+        "_partial_token",
+        "_plain_projected_witness",
+        "_project",
+        "_project_extension",
+        "_project_lineage",
+        "_public_refresh_work",
+        "_python_extension_calculator",
+        "_record_aggregate_guarded_outcomes",
+        "_ref_labels",
+        "_relation_facts",
+        "_relation_roles",
+        "_require_joinable",
+        "_requires_fixpoint",
+        "_ring_component_violations",
+        "_role_object_type",
+        "_role_seq_tuples",
+        "_rows_by_identity",
+        "_rows_from_facts",
+        "_rule_uses_exact_terms",
+        "_scalar_primitive_compatible",
+        "_scope_fact_types",
+        "_symbolic_value",
+        "_term_unavailable_constraint_verdict",
+        "_typed_comparison_values",
+        "_vacuity_message",
+        "_value_comparison_message_inputs",
+        "_violation_verdict",
+        "_witness",
+        "_witness_charge",
+        "_witness_row",
+        "band",
+        "check",
+        "check_partial",
+        "check_with_anchors",
+        "check_with_anchors_partial",
+        "derivation_claims_against",
+        "exact_extension_envelope",
+        "structured_extension_facts",
+        "structured_extension_view"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.agent_cli",
+      "checked": 33,
+      "names": [
+        "AgentAdapterId",
+        "AgentCLIError",
+        "BoundedProcessResult",
+        "DEFAULT_OUTPUT_LIMIT_BYTES",
+        "DEFAULT_PROMPT_LIMIT_BYTES",
+        "EnvironmentFact",
+        "InvocationResult",
+        "InvocationStatus",
+        "ProcessLimits",
+        "VERSION_OUTPUT_LIMIT_BYTES",
+        "VERSION_TIMEOUT_SECONDS",
+        "_DrainState",
+        "_MIN_POST_KILL_REAP_DRAIN_SECONDS",
+        "_READ_SIZE",
+        "_RetentionBudget",
+        "_argv_digest",
+        "_drain",
+        "_environment_facts",
+        "_group_exists",
+        "_private_environment",
+        "_redact",
+        "_result",
+        "_sensitive_values",
+        "_signal_group",
+        "_stop_process_group",
+        "_suffix_prefix_overlap",
+        "_validate_feedback",
+        "_wait_cleanup_targets",
+        "_wait_group_gone",
+        "_write_stdin",
+        "build_agent_argv",
+        "invoke_agent",
+        "run_bounded_process"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.assurance",
+      "checked": 29,
+      "names": [
+        "AssuranceBlock",
+        "AssuranceBlockV1",
+        "AssuranceConsumer",
+        "AssuranceLevel",
+        "AssuranceScope",
+        "AssuranceSurface",
+        "AuthenticatedExecution",
+        "CorrespondenceDigests",
+        "CorrespondenceEvidence",
+        "ExtractionRoute",
+        "PHASE2_TRUST_ASSUMPTIONS",
+        "SemanticDecision",
+        "ValidatedScopeWalk",
+        "_assurance_outcome",
+        "_assurance_policy",
+        "_currency_valid",
+        "_internal_value",
+        "_mint_execution",
+        "_phase3_target",
+        "_result_obligation",
+        "_sorted_set",
+        "_unique_sorted",
+        "assurance_prerequisites",
+        "certify_result",
+        "certify_snapshot",
+        "derive_assurance_scope",
+        "phase3_scope_ids",
+        "semantic_decision_for_band",
+        "walk_snapshot_scope"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.assurance_claims",
+      "checked": 7,
+      "names": [
+        "INPUT_FIELDS",
+        "OUTPUT_NODES",
+        "RESULT_FIELDS",
+        "_closed",
+        "_strings",
+        "_validate_inputs",
+        "validate_claim_graph"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.assurance_evidence",
+      "checked": 36,
+      "names": [
+        "AuthenticatedAssuranceEvidence",
+        "MAX_BUNDLE_BYTES",
+        "MAX_DEPTH",
+        "MAX_DOCUMENT_BYTES",
+        "MAX_FILES",
+        "MAX_ROSTER_DIRECTORIES",
+        "RUNTIME_DEPENDENCIES",
+        "_CacheEntry",
+        "_CacheFingerprint",
+        "_FINGERPRINT_ERRORS",
+        "_assurance_cache",
+        "_bundle_census",
+        "_cached_load",
+        "_capability",
+        "_children",
+        "_constant",
+        "_fingerprint",
+        "_finite",
+        "_integer",
+        "_json",
+        "_load",
+        "_pairs",
+        "_preflight_read_inputs",
+        "_read",
+        "_relative",
+        "_sha",
+        "_sorted_strings",
+        "_stat_identity",
+        "_try_fingerprint",
+        "dependency_identity",
+        "enforce_bundle_limits",
+        "load_assurance_evidence",
+        "production_identity",
+        "production_roster",
+        "roster_digest",
+        "runtime_identity"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.assurance_inheritance",
+      "checked": 14,
+      "names": [
+        "CLAIM_FAMILY",
+        "CORRESPONDENCE_FIELDS",
+        "COUNTS",
+        "PHASE5_RETIRED_MUTATIONS",
+        "PHASE5_SUCCESSOR_OBSERVATIONS",
+        "RESULT_FIELDS",
+        "_Documents",
+        "_canonical",
+        "_exports",
+        "_index",
+        "_mathematical_basis",
+        "_phase3_output",
+        "compare_observations",
+        "validate_result"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.assurance_transport",
+      "checked": 12,
+      "names": [
+        "ArchivedAssuranceReceipt",
+        "ArchivedExecution",
+        "ArchivedProcessReceipt",
+        "VerifiedPayload",
+        "_NONCE_ENV",
+        "_PATH_ENV",
+        "_PENDING",
+        "bind_verified_execution",
+        "consume_receipt",
+        "emit_receipt",
+        "prepare_execution",
+        "producer_identity"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.exp.session",
+      "checked": 28,
+      "names": [
+        "DeclaredSessionInvoker",
+        "InvocationEvidence",
+        "SessionInvoker",
+        "Verifier",
+        "_Disposition",
+        "_PublishedAttempt",
+        "_VERIFIER_FAILURE_REASON",
+        "_agent_failure_reason",
+        "_budget_reason",
+        "_case_models",
+        "_copy_bound_model",
+        "_decide_disposition",
+        "_declared_evidence_complete",
+        "_discard_unpublished_stage",
+        "_effective_agent_prompt",
+        "_effective_policy_sha256",
+        "_expected_invocation_argv",
+        "_has_verifier_harness_failure",
+        "_policy_bound_prompt",
+        "_publish_current_attempt",
+        "_required_evidence_complete",
+        "_validated_declared_invocation_proof",
+        "_validated_invocation_proof",
+        "case_payload_versions",
+        "case_redaction",
+        "run_gnd_verifier",
+        "run_session",
+        "verifier_environment"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.exp.session_store",
+      "checked": 77,
+      "names": [
+        "ASSURANCE_EVIDENCE_SCHEMA_VERSION",
+        "AcceptanceMode",
+        "AttemptRecord",
+        "BestAttemptIdentity",
+        "CandidateEdit",
+        "CandidateFile",
+        "CandidateInventory",
+        "DECLARED_ADAPTER_EVIDENCE_SCHEMA_VERSION",
+        "DECLARED_LAUNCH_SCHEMA_VERSION",
+        "DERIVATION_EVIDENCE_SCHEMA_VERSION",
+        "DIRECTORY_MODE",
+        "DeclaredLaunchIntent",
+        "EVIDENCE_SCHEMA_VERSION",
+        "EvidenceFile",
+        "FILE_MODE",
+        "FIXED_STORE_SCHEMA_VERSION",
+        "JudgmentEvidence",
+        "LEGACY_EVIDENCE_SCHEMA_VERSION",
+        "LaunchIntent",
+        "LegacyAcceptanceMode",
+        "MAX_CANDIDATE_DEPTH",
+        "MAX_CANDIDATE_FILES",
+        "MAX_CANDIDATE_FILE_BYTES",
+        "MAX_CANDIDATE_TOTAL_BYTES",
+        "MAX_RETAINED_STREAM_BYTES",
+        "MAX_SESSION_RESULT_BYTES",
+        "MAX_VERIFIER_PAYLOAD_BYTES",
+        "NonEmptyString",
+        "REDACTION_EVIDENCE_SCHEMA_VERSION",
+        "REDACTION_RESULT_SCHEMA_VERSION",
+        "RankingObservation",
+        "RecurrencePair",
+        "ResumeState",
+        "SNAPSHOT_EXECUTABLE_FILE_MODE",
+        "SNAPSHOT_FILE_MODE",
+        "SessionOutcome",
+        "SessionResult",
+        "SessionStore",
+        "Sha256",
+        "StagedCandidate",
+        "TRANSITION_EVIDENCE_SCHEMA_VERSION",
+        "TRANSITION_RESULT_SCHEMA_VERSION",
+        "VerifierPayloadEvidence",
+        "WALK_FLOOR_EVIDENCE_SCHEMA_VERSION",
+        "WALK_FLOOR_RESULT_SCHEMA_VERSION",
+        "WalkFloorResult",
+        "_AttemptRecordBase",
+        "_AttemptRecordV1",
+        "_AttemptRecordV10",
+        "_AttemptRecordV2",
+        "_AttemptRecordV3",
+        "_AttemptRecordV4",
+        "_AttemptRecordV5",
+        "_AttemptRecordV6",
+        "_AttemptRecordV7",
+        "_AttemptRecordV8",
+        "_AttemptRecordV9",
+        "_CollectedFile",
+        "_DeclaredLaunchIntentV2",
+        "_DeclaredLaunchIntentV3",
+        "_DeclaredLaunchIntentV4",
+        "_SessionResultBase",
+        "_SessionResultV1",
+        "_SessionResultV2",
+        "_SessionResultV3",
+        "_SessionResultV4",
+        "_SessionResultV5",
+        "_SessionResultV6",
+        "_SessionResultV7",
+        "_classify",
+        "_collect_candidate",
+        "_create_evidence_parent",
+        "_evidence_entry",
+        "_retained_wire",
+        "_strict_object_bytes",
+        "_version_validation_error",
+        "_write_new_file"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.exp.session_v7",
+      "checked": 10,
+      "names": [
+        "_HIDDEN",
+        "_copy_files",
+        "_entry",
+        "_evaluate",
+        "_feedback",
+        "_model",
+        "_project",
+        "_read",
+        "reconstruct",
+        "run"
+      ],
+      "missing": []
+    },
+    {
+      "module": "gnd.artifacts",
+      "checked": 49,
+      "names": [
+        "ArtifactError",
+        "ArtifactIdentityError",
+        "DEFAULT_MAX_DEPTH",
+        "DEFAULT_MAX_FILES",
+        "DEFAULT_MAX_FILE_BYTES",
+        "DEFAULT_MAX_TOTAL_BYTES",
+        "DIRECTORY_MODE",
+        "FILE_MODE",
+        "LeafSnapshot",
+        "NonEmptyString",
+        "Sha256",
+        "TrackedRegularEntry",
+        "TrackedSymlinkEntry",
+        "TrackedTreeEntry",
+        "TreeFile",
+        "TreeInventory",
+        "_LEAF_IDENTITY_FIELDS",
+        "_bounded",
+        "_clear_directory_fd",
+        "_create_parent",
+        "_create_parent_at",
+        "_descend",
+        "_exchange_paths_atomic",
+        "_inventory_tree_fd",
+        "_leaf_at_fd",
+        "_mkdir_directory_once",
+        "_open_root",
+        "_read_fd",
+        "_read_regular_bounded_fd",
+        "_safe_fs_coordinate",
+        "_safe_parts",
+        "_unlink_leaf_at",
+        "_write_new_file",
+        "_write_new_file_at",
+        "canonical_json_bytes",
+        "canonical_json_text",
+        "inventory_tree",
+        "publish_directory_once",
+        "publish_leaf_atomic",
+        "read_regular_bounded",
+        "read_regular_bounded_at",
+        "read_regular_file_bytes",
+        "readlink_at",
+        "remove_regular_if_unchanged",
+        "sha256_hex",
+        "snapshot_tracked_roster",
+        "stat_leaf_at",
+        "tree_sha256_from_directory",
+        "tree_sha256_from_inventory"
+      ],
+      "missing": []
+    }
+  ],
+  "largest_modules": [
+    {
+      "module": "gnd.model._validation",
+      "path": "src/gnd/model/_validation.py",
+      "lines": 4890,
+      "layer": "model",
+      "lane": null
+    },
+    {
+      "module": "gnd.extensions",
+      "path": "src/gnd/extensions.py",
+      "lines": 2763,
+      "layer": "checking",
+      "lane": null
+    },
+    {
+      "module": "gnd.exp.session_eval",
+      "path": "src/gnd/exp/session_eval.py",
+      "lines": 2695,
+      "layer": "lanes",
+      "lane": "exp"
+    },
+    {
+      "module": "gnd.semantic_spec",
+      "path": "src/gnd/semantic_spec.py",
+      "lines": 2588,
+      "layer": "model",
+      "lane": null
+    },
+    {
+      "module": "gnd.synth.boundary",
+      "path": "src/gnd/synth/boundary.py",
+      "lines": 2376,
+      "layer": "lanes",
+      "lane": "synth"
+    },
+    {
+      "module": "gnd.checker._core",
+      "path": "src/gnd/checker/_core.py",
+      "lines": 2365,
+      "layer": "checking",
+      "lane": null
+    },
+    {
+      "module": "gnd.transition",
+      "path": "src/gnd/transition.py",
+      "lines": 2158,
+      "layer": "semantics",
+      "lane": null
+    },
+    {
+      "module": "gnd.exp.session_store",
+      "path": "src/gnd/exp/session_store.py",
+      "lines": 2009,
+      "layer": "lanes",
+      "lane": "exp"
+    },
+    {
+      "module": "gnd.evolve.service",
+      "path": "src/gnd/evolve/service.py",
+      "lines": 1980,
+      "layer": "lanes",
+      "lane": "evolve"
+    },
+    {
+      "module": "gnd.exp.session_contract",
+      "path": "src/gnd/exp/session_contract.py",
+      "lines": 1862,
+      "layer": "lanes",
+      "lane": "exp"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "initial_attempt": "native reviewer A",
+  "status": "rejected before launch; awaiting explicit RF9 payload/destination authorization",
+  "reason": "RF9 review approval did not explicitly authorize repository source/diff transmission to Codex; prior RF8 approval does not extend",
+  "launched_reviewers": 0
+}

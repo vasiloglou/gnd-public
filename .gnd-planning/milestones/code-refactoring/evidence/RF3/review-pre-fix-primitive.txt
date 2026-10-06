@@ -1,0 +1,26 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_adapter_primitive_controls.py --tb=short
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_inline_untyped_role_preserves_the_typed_sibling_fallback[String-z-pass] _
+tests/test_public_adapter_primitive_controls.py:44: in test_inline_untyped_role_preserves_the_typed_sibling_fallback
+    observed = adapter.checker.check(model, population).verdicts[0]
+               ^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.semantic_adapter' has no attribute 'checker'
+_ test_inline_untyped_role_preserves_the_typed_sibling_fallback[Number-2-unchecked] _
+tests/test_public_adapter_primitive_controls.py:44: in test_inline_untyped_role_preserves_the_typed_sibling_fallback
+    observed = adapter.checker.check(model, population).verdicts[0]
+               ^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.semantic_adapter' has no attribute 'checker'
+______________ test_guarded_variables_retain_their_own_primitives ______________
+tests/test_public_adapter_primitive_controls.py:77: in test_guarded_variables_retain_their_own_primitives
+    assert adapter.checker.check(model, population).verdicts[0].verdict == "pass"
+           ^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.semantic_adapter' has no attribute 'checker'
+=========================== short test summary info ============================
+FAILED tests/test_public_adapter_primitive_controls.py::test_inline_untyped_role_preserves_the_typed_sibling_fallback[String-z-pass]
+FAILED tests/test_public_adapter_primitive_controls.py::test_inline_untyped_role_preserves_the_typed_sibling_fallback[Number-2-unchecked]
+FAILED tests/test_public_adapter_primitive_controls.py::test_guarded_variables_retain_their_own_primitives
+3 failed in 0.09s
+
+Exit: 1

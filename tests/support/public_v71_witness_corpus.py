@@ -197,7 +197,7 @@ def baseline(b: dict) -> None:
 
 
 def no_evaluator(monkeypatch) -> None:
-    from gnd import checker, terms
+    from gnd import checker, extensions, terms
 
     def forbidden(*args, **kwargs):
         raise AssertionError("replay invoked a production evaluator/comparison primitive")
@@ -214,9 +214,14 @@ def no_evaluator(monkeypatch) -> None:
     ):
         if hasattr(checker, name):
             monkeypatch.setattr(checker, name, forbidden)
+        for target in (name, name.removeprefix("_")):
+            if hasattr(extensions, target):
+                monkeypatch.setattr(extensions, target, forbidden)
     for name in ("evaluate_term", "guarded_operand_evaluator", "materialize_scalar"):
         if hasattr(terms, name):
             monkeypatch.setattr(terms, name, forbidden)
+        if hasattr(extensions, name):
+            monkeypatch.setattr(extensions, name, forbidden)
 
 
 def comparison(b: dict, parameters: dict) -> None:

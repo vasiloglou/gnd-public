@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf3_review_regressions.py",
+    "tests/test_v6_phase2_adapter_mutations.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.8616518974304199
+}

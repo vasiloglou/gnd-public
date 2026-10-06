@@ -133,3 +133,15 @@ G2 first controls exposed test-instrument assumptions: Branch uses production_ow
 ### F7/A7 — unloaded inference scanner successor
 
 The routing patch suite reproduced two stale assertions that the witness import closure must include checker. It now includes universe and terms, with the checker backedge removed. Inspection also found the frozen packed inventory’s details filter recognizes checker/terms/producer but cannot recognize extensions. Delegated amendment (auto=true), 2026-10-05: leave the packed bytes and answers unchanged; add an explicit RF3 successor scanner over the actual original graph that widens details to extensions and recognizes both original private names and public aliases. Retain the original predecessor result separately. Require actual visitation of every new home, direct and transitive planted imports through checker and extensions (private/public), and an absent-home refusal. Correct the live closure assertion to universe/terms; this is a source-location instrument change, not a behavioral golden change.
+
+
+### F8/A8 — independently reproduced review findings, 2026-10-05
+
+The owner explicitly approved sending the RF3 prompt and inspected source/diff to the Codex provider. The native supported gpt-6-sol/xhigh read-only reviewer returned two findings, retained verbatim (declared machine-path substitutions) in phase-RF3-codex-review.md. One reviewer is one reviewer; this is not a panel opinion.
+
+| Finding | Reproduction before repair | MVP disposition and authorized repair |
+|---|---|---|
+| R1 stale adapter.checker lookup | review-pre-fix-guards: dependency-graph mutation control fails AttributeError; review-pre-fix-primitive: three unchanged primitive tests fail AttributeError, while review-base-primitive proves all three pass against RF3 base | Blocking SM2: retarget checker.check and moved extensions calculator/obligation at actual lookup sites, keeping inputs/assertions/mutation ids and outcomes unchanged. |
+| R2 blind witness evaluator guards | review-pre-fix-guards: both no_evaluator helpers fail to intercept a real effective_view calculator; eighteen direct old/public calculator/term lookup controls also fail | Hardening required by SM2/SM3: retain old checker/terms sentinels and additionally patch the defining extensions globals and public aliases, including borrowed term globals. No proof semantics repair or broad replay. |
+
+Delegated approval (auto=true), process-phase RF3 auto: A8 expands focused impact closure to test_rf3_review_regressions.py, test_v6_phase2_adapter_mutations.py, test_public_adapter_primitive_controls.py and the existing affected witness/adapter controls. Each regression is already red against the pre-fix bytes; retain logs. Preserve all approved expected answers, frozen packed corpus, the 28 adapter mutant stimuli/expected nodes, production source, budgets and prior boundaries. The three adjacent primitive failures are the same independently reproduced lookup defect. One bounded repair review will inspect only these fixes and neighbours, as D8 already declared.

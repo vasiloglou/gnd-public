@@ -68,16 +68,21 @@ def produce(b: dict) -> dict:
     return api.witness(b['root'] / 'model.orm.yaml', b['root'] / 'candidate.pop.json', b['root'] / 'targets.json', reference_root=b['root'])
 
 def no_evaluator(monkeypatch) -> None:
-    from gnd import checker, terms
+    from gnd import checker, extensions, terms
 
     def forbidden(*args, **kwargs):
         raise AssertionError('replay invoked a production evaluator/comparison primitive')
     for name in ('check', 'structured_extension_view', 'structured_extension_facts', '_python_extension_calculator', '_exact_extension_calculator', '_evaluate_stratified_extensions', '_compare', '_typed_comparison_values'):
         if hasattr(checker, name):
             monkeypatch.setattr(checker, name, forbidden)
+        for target in (name, name.removeprefix("_")):
+            if hasattr(extensions, target):
+                monkeypatch.setattr(extensions, target, forbidden)
     for name in ('evaluate_term', 'guarded_operand_evaluator', 'materialize_scalar'):
         if hasattr(terms, name):
             monkeypatch.setattr(terms, name, forbidden)
+        if hasattr(extensions, name):
+            monkeypatch.setattr(extensions, name, forbidden)
 
 def comparison(b: dict, parameters: dict) -> None:
     primitive = parameters['primitive']

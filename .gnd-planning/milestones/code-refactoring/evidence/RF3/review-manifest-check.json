@@ -1,0 +1,10 @@
+{
+  "changed_test_paths": [
+    "tests/support/public_adapter_mutation_controls.py",
+    "tests/support/public_v71_witness_corpus.py",
+    "tests/support/v71_witness_cases.py",
+    "tests/test_public_adapter_primitive_controls.py"
+  ],
+  "changed_curated_rows": [],
+  "action": "No additional manifest adaptation; the original 26-row RF3 production adaptation is unchanged."
+}

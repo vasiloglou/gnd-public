@@ -60,5 +60,17 @@
     "sha256": "e337073ca5b36b15c8a6e5a51166b0cd81ee318ed918cc251c060acdb0df42f9",
     "ruling": "Frozen inference inventory retained; explicit current-source successor covers extensions/public aliases and actual-home visitation, old checker closure assertion moves to universe.",
     "retained_artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF3-approval-snapshots/A7.md"
+  },
+  {
+    "date": "2026-10-05",
+    "authorization": "process-phase RF3 auto",
+    "mark": "delegated approval (auto=true)",
+    "amendments": [
+      "A8"
+    ],
+    "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+    "sha256": "c0f621501e41b172b0852e358eef58fb1c2cbd10ae8e35d3a9b4d62e2a5f6da6",
+    "retained_artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF3-approval-snapshots/A8.md",
+    "ruling": "After independent red reproduction, accept R1 blocking and R2 hardening; retarget actual lookup sites preserving stimuli and expected answers, add observed-effect regressions and focused affected-consumer closure."
   }
 ]

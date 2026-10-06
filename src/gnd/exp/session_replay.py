@@ -485,6 +485,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
             != (None if identity is None else identity.attempt_manifest_sha256)
             or terminal.best_candidate_sha256
             != (None if identity is None else identity.candidate_sha256)
+            or terminal.referenced_evidence_digests.get("attempt_manifest_sha256") != _sha(raw)
             or ((terminal.disposition == "accepted") != (operator.disposition == "accepted"))
             or (terminal.disposition == "accepted"
                 and not contract_accepts(contract, record.evaluation))

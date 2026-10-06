@@ -194,3 +194,22 @@ reached the earlier terminal-integrity refusal; the new accessor case exercises
 the close guard itself. These are test-only coverage successors, not new scope or
 production changes beyond R1. Their original26dbff6 failure and current passing
 controls are retained. No broader replay or third assessment is selected.
+
+## Final native assessment and local R3 repair
+
+The one bounded repair assessment of b8d7e1f completed exit0, confirming R1/R2 and
+finding no R1-introduced regression. Its further hardening inference R3 is
+reproduced: the named terminal attempt_manifest_sha256 reference is not checked.
+Three actual accepted custom-ranked sessions (best1 failed, final2 accepted) with
+wrong, missing or best-instead-of-final references all fail the refusal regression
+on the exact b8d7e1f production, before this edit. The chosen MVP disposition is
+hardening within F1 terminal evidence integrity. Bind that named reference to the
+actual final canonical attempt bytes, not the separately ranked best; preserve
+cache publication order. No schema/producer or other-reference policy changes.
+
+The two-assessment convergence budget is exhausted. This one-clause repair has
+local RED/GREEN and adjacent replay/store/close/judgment/body/hash/manifest controls;
+it does not carry a third native opinion. The two retained assessments continue
+to name their inspected bytes. Other/free-prose terminal metadata is not claimed
+fully rederived by the selected integrity checks. No broader suite, review loop,
+source-owned handoff or certification is inferred.

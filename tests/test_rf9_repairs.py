@@ -395,3 +395,46 @@ def test_offline_relative_import_cannot_climb_above_package():
 
     with pytest.raises(ValueError, match='climbs above'):
         guard._imports('from ... import escape', package='gnd.exp')
+
+
+@pytest.mark.parametrize('damage', ['wrong', 'missing', 'best-instead-of-final'])
+def test_terminal_final_attempt_reference_is_bound(damage, tmp_path, monkeypatch):
+    from test_rf1_session_pins import _contract, build_v7, run_main
+
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.exp import close
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import SessionStore
+    from gnd.exp.spec import read_spec
+
+    monkeypatch.setenv('PATH', str(ROOT / '.venv/bin') + os.pathsep + os.environ['PATH'])
+    built = build_v7(tmp_path, monkeypatch)
+    spec_path = built.root / 'SPEC.md'
+    spec_path.write_text(spec_path.read_text().replace('kind: data-driven', 'kind: work'))
+    path = built.root / 'session.contract.json'
+    contract_doc = json.loads(path.read_text())
+    contract_doc['ranking'] = [{'metric': 'accepted_required_cases', 'direction': 'min'}]
+    path.write_text(json.dumps(contract_doc))
+    assert run_main(built.argv, cwd=tmp_path).returncode == 0
+    contract = _contract(built)
+    run = built.root / 'runs/run-0001'
+    result_path = run / 'result.json'
+    result = json.loads(result_path.read_text())
+    assert result['disposition'] == 'accepted' and result['best_attempt'] == 1
+    final_digest = hashlib.sha256((run / 'attempts/0002/attempt.json').read_bytes()).hexdigest()
+    assert result['referenced_evidence_digests']['attempt_manifest_sha256'] == final_digest
+    assert final_digest != result['best_attempt_manifest_sha256']
+    store = SessionStore(run, run_id=run.name, contract_id=contract.experiment_id)
+    reconstruct(store, contract, allow_terminal=True)
+    before = store.best_identity()
+    assert close._work_findings(read_spec(spec_path), spec_path) == []
+    if damage == 'missing':
+        result['referenced_evidence_digests'].pop('attempt_manifest_sha256')
+    else:
+        result['referenced_evidence_digests']['attempt_manifest_sha256'] = (
+            'f' * 64 if damage == 'wrong' else result['best_attempt_manifest_sha256'])
+    result_path.write_bytes(canonical_json_bytes(result))
+    with pytest.raises(ValueError, match='terminal result differs'):
+        reconstruct(store, contract, allow_terminal=True)
+    assert store.best_identity() == before
+    assert close._work_findings(read_spec(spec_path), spec_path)

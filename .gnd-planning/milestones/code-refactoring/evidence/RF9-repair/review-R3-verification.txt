@@ -1,0 +1,75 @@
+Edited evidence: home/worktree/operator-temp prefixes sanitized; remaining stdout/stderr spacing preserved.
+R3 RED source matches b8d7e1f exactly (git diff b8d7e1f -- src empty before edit).
+
+Command: PATH="$PWD/.venv/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_rf9_repairs.py::test_terminal_final_attempt_reference_is_bound --tb=short -p no:cacheprovider
+Exit: 1
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________ test_terminal_final_attempt_reference_is_bound[wrong] _____________
+tests/test_rf9_repairs.py:437: in test_terminal_final_attempt_reference_is_bound
+    with pytest.raises(ValueError, match='terminal result differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+----------------------------- Captured stdout call -----------------------------
+CREATED <pytest-temp>/pytest-4551/test_terminal_final_attempt_re0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+___________ test_terminal_final_attempt_reference_is_bound[missing] ____________
+tests/test_rf9_repairs.py:437: in test_terminal_final_attempt_reference_is_bound
+    with pytest.raises(ValueError, match='terminal result differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+----------------------------- Captured stdout call -----------------------------
+CREATED <pytest-temp>/pytest-4551/test_terminal_final_attempt_re1/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+____ test_terminal_final_attempt_reference_is_bound[best-instead-of-final] _____
+tests/test_rf9_repairs.py:437: in test_terminal_final_attempt_reference_is_bound
+    with pytest.raises(ValueError, match='terminal result differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+----------------------------- Captured stdout call -----------------------------
+CREATED <pytest-temp>/pytest-4551/test_terminal_final_attempt_re2/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_terminal_final_attempt_reference_is_bound[wrong]
+FAILED tests/test_rf9_repairs.py::test_terminal_final_attempt_reference_is_bound[missing]
+FAILED tests/test_rf9_repairs.py::test_terminal_final_attempt_reference_is_bound[best-instead-of-final]
+3 failed in 2.73s
+
+Command: PATH="$PWD/.venv/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_rf9_repairs.py tests/test_rf8_structure.py tests/test_rf8_sessions.py tests/test_exp_close_work_gate.py tests/test_exp_close.py tests/test_exp_session_store.py tests/test_v71_phase4_successors.py tests/test_public_v71_judgment_successor_guards.py --tb=short -p no:cacheprovider
+Exit: 0
+........................................................................ [ 28%]
+........................................................................ [ 56%]
+........................................................................ [ 84%]
+.........................................                                [100%]
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  <worktree>/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+257 passed, 1 warning in 28.67s
+
+Command: env -u LANG -u LC_ALL -u TERM PATH="$PWD/.venv/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q 'tests/test_rf1_session_pins.py::test_session_fresh[7]' 'tests/test_rf1_session_pins.py::test_session_fresh[8]' 'tests/test_rf1_session_pins.py::test_session_resume[7]' 'tests/test_rf1_session_pins.py::test_session_resume[8]' 'tests/test_rf1_session_pins.py::test_session_reconstruct[7]' 'tests/test_rf1_session_pins.py::test_session_reconstruct[8]' --tb=short -p no:cacheprovider
+Exit: 0
+......                                                                   [100%]
+6 passed in 5.41s
+
+Command: PYTHONDONTWRITEBYTECODE=1 .venv/bin/python .gnd-planning/milestones/code-refactoring/evidence/RF9-repair/metadata_checks.py
+Exit: 0
+432 frozen controls unchanged; 25 output aliases and exact body move; 228 modules; zero explicit runtime/module SCCs, wrong-way/entry violations and allowances; 18 exact target adaptations.
+Implicit package-parent edges: 4087; structural combined SCCs: 7 (diagnostic, no zero-cycle claim).
+
+Command: .venv/bin/ruff check src/gnd/exp/session_replay.py tests/test_rf9_repairs.py
+Exit: 0
+All checks passed!
+
+Command: git diff --check 26dbff6 -- src tests tools
+Exit:0
+Output:(empty)

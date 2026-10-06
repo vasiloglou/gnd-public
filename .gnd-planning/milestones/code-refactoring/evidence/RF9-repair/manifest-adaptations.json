@@ -343,8 +343,8 @@
       "path": "src/gnd/exp/session_replay.py",
       "kind": "adaptation",
       "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
-      "bytes": 23080,
-      "public_sha256": "64138901062c357e878afa7ef670b6ea4962e2d0789283d9f4d6bf396ffc35d3",
+      "bytes": 23176,
+      "public_sha256": "680be236c9320eefc5287f834da7f5f7ac141efd6c89a698b34c3f7c051317a6",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "ae90b5aa0ae8ae2bc5f035c2e37366c5b9470dfb053315846bf05b30216f7557"

@@ -6,7 +6,10 @@ on:
 permissions:
   contents: read
 jobs:
+  # Owner-requested CI suppression for PR #10 while GitHub billing blocks job startup.
+  # CI remains enabled for every other pull request and pushes to main.
   candidate:
+    if: github.event_name != 'pull_request' || github.event.pull_request.number != 10
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
@@ -42,6 +45,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
   regression:
+    if: github.event_name != 'pull_request' || github.event.pull_request.number != 10
     strategy:
       fail-fast: false
       matrix:
@@ -70,6 +74,7 @@ jobs:
         run: uv run pytest -q -raP tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py tests/test_v70_phase3_successors.py --tb=short
       - run: uv run pytest -q -ra --tb=short
   installed:
+    if: github.event_name != 'pull_request' || github.event.pull_request.number != 10
     needs: candidate
     strategy:
       fail-fast: false
@@ -102,7 +107,7 @@ jobs:
   phase2:
     name: phase2
     needs: [candidate, regression, installed]
-    if: always()
+    if: always() && (github.event_name != 'pull_request' || github.event.pull_request.number != 10)
     runs-on: ubuntu-latest
     steps:
       - name: Require every acceptance job

@@ -57,5 +57,6 @@
     "evidence": "review-R3-verification.txt",
     "regression": "tests/test_rf9_repairs.py::test_terminal_final_attempt_reference_is_bound",
     "limit": "named final-attempt reference only; no third independent assessment on this clause"
-  }
+  },
+  "final_local_source_commit": "21487ab1711fb7781d106deefd40243666d904b4"
 }

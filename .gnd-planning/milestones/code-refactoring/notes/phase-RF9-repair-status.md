@@ -50,3 +50,13 @@ questions and shim retirement remain with their existing owners. The seven
 combined package-initialization SCCs are diagnostics, not a zero-cycle result.
 No broad replay, source-owned transfer, certification, milestone close, release,
 merge or publication is established by these repairs.
+
+## Checkpoint discharge — 2026-10-06
+
+The owner explicitly approved the pending transmission. Native initial and one
+bounded repair assessment both completed exit0; their findings, reproduction and
+dispositions are bound by016-phase-RF9-repair.md. R1 was repaired and independently
+reassessed; R2 was scope-qualified. Final-assessment R3 was reproduced and repaired
+with local current-byte controls after the two-assessment budget was exhausted.
+The earlier pending text above remains a historical checkpoint. Source21487ab
+contains the final code; no third assessment, merge or certification ran.

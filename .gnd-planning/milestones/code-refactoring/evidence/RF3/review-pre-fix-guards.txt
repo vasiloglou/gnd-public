@@ -1,0 +1,126 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_review_regressions.py tests/test_v6_phase2_adapter_mutations.py --tb=short
+FFFFFFFFFFFFFFFFFFFFF..................F..........                       [100%]
+=================================== FAILURES ===================================
+____________ test_adapter_dependency_control_reaches_its_assertions ____________
+tests/test_rf3_review_regressions.py:18: in test_adapter_dependency_control_reaches_its_assertions
+    public_adapter_mutation_controls.test_dependency_graph_and_bare_dollar_literal_are_preserved(monkeypatch)
+tests/support/public_adapter_mutation_controls.py:189: in test_dependency_graph_and_bare_dollar_literal_are_preserved
+    monkeypatch.setattr(adapter.checker, name, forbidden)
+                        ^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.semantic_adapter' has no attribute 'checker'
+_ test_replay_guard_blocks_the_defining_effective_view_calculator[support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:27: in test_replay_guard_blocks_the_defining_effective_view_calculator
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_the_defining_effective_view_calculator[support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:27: in test_replay_guard_blocks_the_defining_effective_view_calculator
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_observes_every_moved_lookup[_python_extension_calculator-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _python_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[_python_extension_calculator-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _python_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[python_extension_calculator-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _python_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[python_extension_calculator-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _python_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[_exact_extension_calculator-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _exact_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[_exact_extension_calculator-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _exact_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[exact_extension_calculator-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _exact_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[exact_extension_calculator-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _exact_extension_calculator() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[_evaluate_stratified_extensions-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _evaluate_stratified_extensions() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[_evaluate_stratified_extensions-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _evaluate_stratified_extensions() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[evaluate_stratified_extensions-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _evaluate_stratified_extensions() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[evaluate_stratified_extensions-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: _evaluate_stratified_extensions() missing 2 required positional arguments: 'model' and 'relations'
+_ test_replay_guard_observes_every_moved_lookup[structured_extension_view-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: structured_extension_view() missing 2 required positional arguments: 'model' and 'population'
+_ test_replay_guard_observes_every_moved_lookup[structured_extension_view-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: structured_extension_view() missing 2 required positional arguments: 'model' and 'population'
+_ test_replay_guard_observes_every_moved_lookup[evaluate_term-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: evaluate_term() missing 2 required positional arguments: 'term' and 'binding'
+_ test_replay_guard_observes_every_moved_lookup[evaluate_term-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: evaluate_term() missing 2 required positional arguments: 'term' and 'binding'
+_ test_replay_guard_observes_every_moved_lookup[materialize_scalar-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: materialize_scalar() missing 1 required positional argument: 'value'
+_ test_replay_guard_observes_every_moved_lookup[materialize_scalar-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:41: in test_replay_guard_observes_every_moved_lookup
+    getattr(extensions, name)()
+E   TypeError: materialize_scalar() missing 1 required positional argument: 'value'
+___ test_each_dimension_has_a_failing_single_source_mutant[dependency-graph] ___
+tests/test_v6_phase2_adapter_mutations.py:209: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:189: in test_dependency_graph_and_bare_dollar_literal_are_preserved
+    monkeypatch.setattr(adapter.checker, name, forbidden)
+                        ^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.semantic_adapter' has no attribute 'checker'
+=========================== short test summary info ============================
+FAILED tests/test_rf3_review_regressions.py::test_adapter_dependency_control_reaches_its_assertions
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_the_defining_effective_view_calculator[support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_the_defining_effective_view_calculator[support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[_python_extension_calculator-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[_python_extension_calculator-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[python_extension_calculator-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[python_extension_calculator-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[_exact_extension_calculator-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[_exact_extension_calculator-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[exact_extension_calculator-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[exact_extension_calculator-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[_evaluate_stratified_extensions-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[_evaluate_stratified_extensions-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[evaluate_stratified_extensions-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[evaluate_stratified_extensions-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[structured_extension_view-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[structured_extension_view-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[evaluate_term-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[evaluate_term-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[materialize_scalar-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_observes_every_moved_lookup[materialize_scalar-support.public_v71_witness_corpus]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[dependency-graph]
+22 failed, 28 passed in 0.65s
+
+Exit: 1

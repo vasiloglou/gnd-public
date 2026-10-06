@@ -1,0 +1,99 @@
+Retained intermediate output; operator paths sanitized. Findings and corrections are in the spec; this is not the final gate.
+........................................................................ [  7%]
+........................................................................ [ 15%]
+........................................................................ [ 22%]
+........................................................................ [ 30%]
+........................................................................ [ 37%]
+........................................................................ [ 45%]
+...........................................................FF........... [ 52%]
+...............................F........................................ [ 60%]
+........FF...........F.................................................. [ 68%]
+........................................................................ [ 75%]
+...........................F............................................ [ 83%]
+........................................................................ [ 90%]
+.....................................................FF...F............. [ 98%]
+................                                                         [100%]
+=================================== FAILURES ===================================
+_ test_moved_algorithm_preserves_base_body[gnd.install:_reject_unsafe_relpath] _
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert '715b9c3fb623...bc0a1ed7169eb' == '04085603b2c3...16661d618102d'
+E     
+E     - 04085603b2c33f2cbb696562b10db558f3e09cb1cb04b54f78716661d618102d
+E     + 715b9c3fb623132a638dd41de68f484dff5562e75b9d137bd2dbc0a1ed7169eb
+____ test_moved_algorithm_preserves_base_body[gnd.install:safe_destination] ____
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert '171bc5588655...732e4147f0448' == '162a225bdd38...269593227ff0b'
+E     
+E     - 162a225bdd38fc55aafa04df5d0e1cf86225d9868380a200e20269593227ff0b
+E     + 171bc55886550a6afddb666cb51eea5c57ebe8812c701908d27732e4147f0448
+____ test_moved_algorithm_preserves_base_body[gnd.assurance_evidence:_json] ____
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert 'c6359156e616...80eb540fb5d9a' == '458fd06eb63b...56d3f5d597a25'
+E     
+E     - 458fd06eb63b6bfc420b31e1963d449f3104373641d2c6ca95356d3f5d597a25
+E     + c6359156e61693abc675656a93ddd8fcc68c3199d29b0c9959380eb540fb5d9a
+_ test_moved_algorithm_preserves_base_body[gnd.synth.assemble:_object_types_by_id] _
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert '63451047d77f...5f430191e3cfe' == 'a1b10cf2b628...f23bb443aa823'
+E     
+E     - a1b10cf2b628dbd759f96c1908ece0f9fcb96e48fd93088f665f23bb443aa823
+E     + 63451047d77fde6700660a8b1dab54a5fadc80882408cc903495f430191e3cfe
+__ test_moved_algorithm_preserves_base_body[gnd.synth.assemble:_role_object] ___
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert '3557d8ceb9d9...cd0c317ee3e8a' == 'a9a2e855682b...3a7d517fd3164'
+E     
+E     - a9a2e855682b9ced12fc54e0907790f6adf41989760c704ec5c3a7d517fd3164
+E     + 3557d8ceb9d9466a3cbd015aa3b3592bc13cf99203eda0412cccd0c317ee3e8a
+__ test_moved_algorithm_preserves_base_body[gnd.synth.assemble:_instant_pair] __
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert 'a56ca6a2c4fe...691eb694c373e' == 'e9947c37e4f4...1aa19d4f2d714'
+E     
+E     - e9947c37e4f43e1c6d6878078b9fbc6f492a8683e43422adef91aa19d4f2d714
+E     + a56ca6a2c4fe0e63b7ea66cd49a6a50761e45fac683769807b3691eb694c373e
+______ test_moved_algorithm_preserves_base_body[gnd.api:_witness_inputs] _______
+tests/test_rf4_peripheral.py:141: in test_moved_algorithm_preserves_base_body
+    assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+E   AssertionError: assert '26770bcf0b26...8cc744cd56d60' == '7ba2ee83bd89...01e38f2414f88'
+E     
+E     - 7ba2ee83bd89dff1e002ffd32d642520a2b1f133a70ba0bc4fb01e38f2414f88
+E     + 26770bcf0b26eae6862f574eeea26f3cee90f7ab3aa090658228cc744cd56d60
+________________ test_unchanged_moved_bodies_and_shim_identity _________________
+tests/test_rf8_structure.py:70: in test_unchanged_moved_bodies_and_shim_identity
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']
+E   AssertionError: _evidence_entry
+E   assert 'b946700269b3...6e675d30baa94' == '2c0cae3b6f0b...c2210f87d8840'
+E     
+E     - 2c0cae3b6f0b4cd0629c0d32d92d763d1dac274d2fa6fa8444dc2210f87d8840
+E     + b946700269b3f0202048125743725a014d771bddd4831f6575f6e675d30baa94
+______________________ test_reader_body_observer_can_fail ______________________
+tests/test_rf8_structure.py:85: in test_reader_body_observer_can_fail
+    assert hashlib.sha256(predecessor_body(copy.deepcopy(node)).encode()).hexdigest() == row['ast_sha256']
+E   AssertionError: assert 'e918b9856690...d0626f850ef46' == '9774ebd87118...e9439dc708eae'
+E     
+E     - 9774ebd87118345e936d2f4751b028bc88844c4feb4c534da99e9439dc708eae
+E     + e918b985669014bafd212c722e9eaccfc9e12f371083c36cd1dd0626f850ef46
+______ test_reader_decisions_remain_independent_of_producer_declarations _______
+tests/test_public_v72_reader_boundaries.py:41: in test_reader_decisions_remain_independent_of_producer_declarations
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == reader_expected(row)
+E   AssertionError: assert 'e918b9856690...d0626f850ef46' == '9774ebd87118...e9439dc708eae'
+E     
+E     - 9774ebd87118345e936d2f4751b028bc88844c4feb4c534da99e9439dc708eae
+E     + e918b985669014bafd212c722e9eaccfc9e12f371083c36cd1dd0626f850ef46
+=========================== short test summary info ============================
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.install:_reject_unsafe_relpath]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.install:safe_destination]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.assurance_evidence:_json]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.synth.assemble:_object_types_by_id]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.synth.assemble:_role_object]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.synth.assemble:_instant_pair]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_witness_inputs]
+FAILED tests/test_rf8_structure.py::test_unchanged_moved_bodies_and_shim_identity
+FAILED tests/test_rf8_structure.py::test_reader_body_observer_can_fail - Asse...
+FAILED tests/test_public_v72_reader_boundaries.py::test_reader_decisions_remain_independent_of_producer_declarations
+10 failed, 942 passed in 13.21s

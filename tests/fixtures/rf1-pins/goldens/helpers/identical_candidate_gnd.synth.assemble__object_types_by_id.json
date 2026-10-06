@@ -1,0 +1,1127 @@
+{
+ "observed": {
+  "src/gnd/examples/approvals/model.orm.yaml": {
+   "ok": {
+    "approver": {
+     "id": "approver",
+     "kind": "entity",
+     "name": "Approver",
+     "reference": {
+      "mode": "popular",
+      "value_type": "approver_name"
+     }
+    },
+    "approver_name": {
+     "id": "approver_name",
+     "kind": "value",
+     "name": "ApproverName",
+     "primitive": "String"
+    },
+    "expense": {
+     "id": "expense",
+     "kind": "entity",
+     "name": "Expense",
+     "reference": {
+      "mode": "popular",
+      "value_type": "expense_id"
+     }
+    },
+    "expense_id": {
+     "id": "expense_id",
+     "kind": "value",
+     "name": "ExpenseId",
+     "primitive": "Integer"
+    },
+    "expense_status": {
+     "id": "expense_status",
+     "kind": "value",
+     "name": "ExpenseStatus",
+     "primitive": "String"
+    },
+    "paid_on": {
+     "id": "paid_on",
+     "kind": "value",
+     "name": "PaidOn",
+     "primitive": "Date"
+    },
+    "reimbursement_amount": {
+     "id": "reimbursement_amount",
+     "kind": "value",
+     "name": "ReimbursementAmount",
+     "primitive": "Integer"
+    },
+    "submission_id": {
+     "id": "submission_id",
+     "kind": "value",
+     "name": "SubmissionId",
+     "primitive": "String"
+    },
+    "workday_submission": {
+     "id": "workday_submission",
+     "kind": "entity",
+     "name": "WorkdaySubmission",
+     "reference": {
+      "mode": "popular",
+      "value_type": "submission_id"
+     }
+    }
+   }
+  },
+  "src/gnd/examples/bookrec/complete.orm.yaml": {
+   "ok": {
+    "book": {
+     "id": "book",
+     "kind": "entity",
+     "name": "Book",
+     "reference": {
+      "mode": "popular",
+      "value_type": "book_id"
+     }
+    },
+    "book_id": {
+     "id": "book_id",
+     "kind": "value",
+     "name": "BookId",
+     "primitive": "String"
+    },
+    "genre": {
+     "id": "genre",
+     "kind": "value",
+     "name": "Genre",
+     "primitive": "String"
+    },
+    "user": {
+     "id": "user",
+     "kind": "entity",
+     "name": "User",
+     "reference": {
+      "mode": "popular",
+      "value_type": "user_id"
+     }
+    },
+    "user_id": {
+     "id": "user_id",
+     "kind": "value",
+     "name": "UserId",
+     "primitive": "String"
+    }
+   }
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml": {
+   "ok": {
+    "book": {
+     "id": "book",
+     "kind": "entity",
+     "name": "Book",
+     "reference": {
+      "mode": "popular",
+      "value_type": "book_id"
+     }
+    },
+    "book_id": {
+     "id": "book_id",
+     "kind": "value",
+     "name": "BookId",
+     "primitive": "String"
+    },
+    "genre": {
+     "id": "genre",
+     "kind": "value",
+     "name": "Genre",
+     "primitive": "String"
+    },
+    "user": {
+     "id": "user",
+     "kind": "entity",
+     "name": "User",
+     "reference": {
+      "mode": "popular",
+      "value_type": "user_id"
+     }
+    },
+    "user_id": {
+     "id": "user_id",
+     "kind": "value",
+     "name": "UserId",
+     "primitive": "String"
+    }
+   }
+  },
+  "src/gnd/examples/bookrec/strict.orm.yaml": {
+   "ok": {
+    "book": {
+     "id": "book",
+     "kind": "entity",
+     "name": "Book",
+     "reference": {
+      "mode": "popular",
+      "value_type": "book_id"
+     }
+    },
+    "book_id": {
+     "id": "book_id",
+     "kind": "value",
+     "name": "BookId",
+     "primitive": "String"
+    },
+    "genre": {
+     "id": "genre",
+     "kind": "value",
+     "name": "Genre",
+     "primitive": "String"
+    },
+    "user": {
+     "id": "user",
+     "kind": "entity",
+     "name": "User",
+     "reference": {
+      "mode": "popular",
+      "value_type": "user_id"
+     }
+    },
+    "user_id": {
+     "id": "user_id",
+     "kind": "value",
+     "name": "UserId",
+     "primitive": "String"
+    }
+   }
+  },
+  "src/gnd/examples/dispatch/model.orm.json": {
+   "ok": {
+    "dispatch_type_day": {
+     "id": "dispatch_type_day",
+     "kind": "value",
+     "name": "CalendarDay",
+     "primitive": "Date"
+    },
+    "dispatch_type_days": {
+     "id": "dispatch_type_days",
+     "kind": "value",
+     "name": "ShippingWindow",
+     "primitive": "Duration"
+    },
+    "dispatch_type_flag": {
+     "id": "dispatch_type_flag",
+     "kind": "value",
+     "name": "Approved",
+     "primitive": "Boolean"
+    },
+    "dispatch_type_job": {
+     "id": "dispatch_type_job",
+     "kind": "value",
+     "name": "Shipment",
+     "primitive": "String"
+    },
+    "dispatch_type_metric": {
+     "id": "dispatch_type_metric",
+     "kind": "value",
+     "name": "Quantity",
+     "primitive": "Integer"
+    },
+    "dispatch_type_node": {
+     "id": "dispatch_type_node",
+     "kind": "value",
+     "name": "Warehouse",
+     "primitive": "String"
+    }
+   }
+  },
+  "src/gnd/examples/expense/currency.orm.json": {
+   "ok": {
+    "amount": {
+     "id": "amount",
+     "kind": "value",
+     "name": "Amount",
+     "primitive": "Integer"
+    },
+    "category": {
+     "id": "category",
+     "kind": "value",
+     "name": "Category",
+     "primitive": "String"
+    },
+    "chain": {
+     "id": "chain",
+     "kind": "value",
+     "name": "Chain",
+     "primitive": "String"
+    },
+    "currency": {
+     "id": "currency",
+     "kind": "value",
+     "name": "Currency",
+     "primitive": "String"
+    },
+    "employee": {
+     "id": "employee",
+     "kind": "value",
+     "name": "Employee",
+     "primitive": "String"
+    },
+    "expense": {
+     "id": "expense",
+     "kind": "entity",
+     "name": "Expense",
+     "reference": {
+      "mode": "popular",
+      "value_type": "expense_id"
+     }
+    },
+    "expense_id": {
+     "id": "expense_id",
+     "kind": "value",
+     "name": "ExpenseId",
+     "primitive": "Integer"
+    }
+   }
+  },
+  "src/gnd/examples/expense/model.orm.json": {
+   "ok": {
+    "amount": {
+     "id": "amount",
+     "kind": "value",
+     "name": "Amount",
+     "primitive": "Integer"
+    },
+    "category": {
+     "id": "category",
+     "kind": "value",
+     "name": "Category",
+     "primitive": "String"
+    },
+    "chain": {
+     "id": "chain",
+     "kind": "value",
+     "name": "Chain",
+     "primitive": "String"
+    },
+    "employee": {
+     "id": "employee",
+     "kind": "value",
+     "name": "Employee",
+     "primitive": "String"
+    },
+    "expense": {
+     "id": "expense",
+     "kind": "entity",
+     "name": "Expense",
+     "reference": {
+      "mode": "popular",
+      "value_type": "expense_id"
+     }
+    },
+    "expense_id": {
+     "id": "expense_id",
+     "kind": "value",
+     "name": "ExpenseId",
+     "primitive": "Integer"
+    }
+   }
+  },
+  "src/gnd/examples/release/model.orm.json": {
+   "ok": {
+    "release_type_day": {
+     "id": "release_type_day",
+     "kind": "value",
+     "name": "CalendarDay",
+     "primitive": "Date"
+    },
+    "release_type_days": {
+     "id": "release_type_days",
+     "kind": "value",
+     "name": "ReleaseWindow",
+     "primitive": "Duration"
+    },
+    "release_type_flag": {
+     "id": "release_type_flag",
+     "kind": "value",
+     "name": "Approved",
+     "primitive": "Boolean"
+    },
+    "release_type_job": {
+     "id": "release_type_job",
+     "kind": "value",
+     "name": "Release",
+     "primitive": "String"
+    },
+    "release_type_metric": {
+     "id": "release_type_metric",
+     "kind": "value",
+     "name": "Priority",
+     "primitive": "Integer"
+    },
+    "release_type_node": {
+     "id": "release_type_node",
+     "kind": "value",
+     "name": "Service",
+     "primitive": "String"
+    }
+   }
+  },
+  "tests/fixtures/checker/misc.orm.yaml": {
+   "ok": {
+    "car": {
+     "derivation": "asserted",
+     "id": "car",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "Car",
+     "subtype_of": [
+      "vehicle"
+     ]
+    },
+    "gadget": {
+     "id": "gadget",
+     "kind": "entity",
+     "name": "Gadget",
+     "reference": {
+      "mode": "popular",
+      "value_type": "gadget_id"
+     }
+    },
+    "gadget_id": {
+     "id": "gadget_id",
+     "kind": "value",
+     "name": "GadgetId",
+     "primitive": "Integer"
+    },
+    "glabel": {
+     "id": "glabel",
+     "kind": "value",
+     "name": "GLabel",
+     "primitive": "String"
+    },
+    "plate": {
+     "id": "plate",
+     "kind": "value",
+     "name": "Plate",
+     "primitive": "String"
+    },
+    "score": {
+     "id": "score",
+     "kind": "value",
+     "name": "Score",
+     "primitive": "Integer"
+    },
+    "stamp": {
+     "id": "stamp",
+     "kind": "value",
+     "name": "Stamp",
+     "primitive": "Date"
+    },
+    "task": {
+     "id": "task",
+     "kind": "entity",
+     "name": "Task",
+     "reference": {
+      "mode": "popular",
+      "value_type": "task_id"
+     }
+    },
+    "task_id": {
+     "id": "task_id",
+     "kind": "value",
+     "name": "TaskId",
+     "primitive": "Integer"
+    },
+    "truck": {
+     "derivation": "asserted",
+     "id": "truck",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "Truck",
+     "subtype_of": [
+      "vehicle"
+     ]
+    },
+    "vehicle": {
+     "id": "vehicle",
+     "kind": "entity",
+     "name": "Vehicle",
+     "reference": {
+      "mode": "popular",
+      "value_type": "vehicle_id"
+     }
+    },
+    "vehicle_id": {
+     "id": "vehicle_id",
+     "kind": "value",
+     "name": "VehicleId",
+     "primitive": "Integer"
+    },
+    "widget": {
+     "derivation": "derived",
+     "derivation_rule": "Each Widget is a Gadget that whirs.",
+     "id": "widget",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "Widget",
+     "storage": "computed",
+     "subtype_of": [
+      "gadget"
+     ]
+    }
+   }
+  },
+  "tests/fixtures/checker/ring.orm.yaml": {
+   "ok": {
+    "node": {
+     "id": "node",
+     "kind": "entity",
+     "name": "Node",
+     "reference": {
+      "mode": "popular",
+      "value_type": "node_id"
+     }
+    },
+    "node_id": {
+     "id": "node_id",
+     "kind": "value",
+     "name": "NodeId",
+     "primitive": "Integer"
+    }
+   }
+  },
+  "tests/fixtures/checker/setfam.orm.yaml": {
+   "ok": {
+    "booking": {
+     "id": "booking",
+     "kind": "entity",
+     "name": "Booking",
+     "reference": {
+      "mode": "external"
+     }
+    },
+    "course": {
+     "id": "course",
+     "kind": "entity",
+     "name": "Course",
+     "reference": {
+      "mode": "popular",
+      "value_type": "course_code"
+     }
+    },
+    "course_code": {
+     "id": "course_code",
+     "kind": "value",
+     "name": "CourseCode",
+     "primitive": "String"
+    },
+    "person": {
+     "id": "person",
+     "kind": "entity",
+     "name": "Person",
+     "reference": {
+      "mode": "popular",
+      "value_type": "person_id"
+     }
+    },
+    "person_id": {
+     "id": "person_id",
+     "kind": "value",
+     "name": "PersonId",
+     "primitive": "Integer"
+    },
+    "room": {
+     "id": "room",
+     "kind": "entity",
+     "name": "Room",
+     "reference": {
+      "mode": "popular",
+      "value_type": "room_code"
+     }
+    },
+    "room_code": {
+     "id": "room_code",
+     "kind": "value",
+     "name": "RoomCode",
+     "primitive": "String"
+    },
+    "seats": {
+     "id": "seats",
+     "kind": "value",
+     "name": "Seats",
+     "primitive": "Integer"
+    }
+   }
+  },
+  "tests/fixtures/models/dispatch.orm.yaml": {
+   "ok": {
+    "courier": {
+     "id": "courier",
+     "kind": "entity",
+     "name": "Courier",
+     "provenance": {
+      "origin": "fixture"
+     },
+     "reference": {
+      "mode": "popular",
+      "value_type": "courier_id"
+     }
+    },
+    "courier_id": {
+     "id": "courier_id",
+     "kind": "value",
+     "name": "CourierId",
+     "primitive": "Integer"
+    },
+    "courier_name": {
+     "id": "courier_name",
+     "kind": "value",
+     "name": "CourierName",
+     "primitive": "String"
+    },
+    "delivery": {
+     "id": "delivery",
+     "kind": "entity",
+     "name": "Delivery",
+     "reference": {
+      "mode": "external"
+     }
+    },
+    "depot": {
+     "id": "depot",
+     "kind": "entity",
+     "name": "Depot",
+     "reference": {
+      "mode": "popular",
+      "value_type": "depot_code"
+     }
+    },
+    "depot_code": {
+     "id": "depot_code",
+     "kind": "value",
+     "name": "DepotCode",
+     "primitive": "String"
+    },
+    "parcel": {
+     "id": "parcel",
+     "kind": "entity",
+     "name": "Parcel",
+     "reference": {
+      "mode": "popular",
+      "value_type": "parcel_code"
+     }
+    },
+    "parcel_code": {
+     "id": "parcel_code",
+     "kind": "value",
+     "name": "ParcelCode",
+     "primitive": "String"
+    },
+    "parcel_status": {
+     "id": "parcel_status",
+     "kind": "value",
+     "name": "ParcelStatus",
+     "primitive": "String"
+    },
+    "route": {
+     "id": "route",
+     "kind": "entity",
+     "name": "Route",
+     "reference": {
+      "mode": "general",
+      "value_type": "route_name"
+     }
+    },
+    "route_name": {
+     "id": "route_name",
+     "kind": "value",
+     "name": "RouteName",
+     "primitive": "String"
+    },
+    "stop_count": {
+     "id": "stop_count",
+     "kind": "value",
+     "name": "StopCount",
+     "primitive": "Integer"
+    },
+    "weight_kg": {
+     "id": "weight_kg",
+     "kind": "value",
+     "name": "WeightKg",
+     "primitive": "Integer"
+    }
+   }
+  },
+  "tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "ok": {
+    "assignment": {
+     "id": "assignment",
+     "kind": "entity",
+     "name": "Assignment",
+     "reference": {
+      "mode": "external"
+     }
+    },
+    "calendar_date": {
+     "id": "calendar_date",
+     "kind": "value",
+     "name": "CalendarDate",
+     "primitive": "Date"
+    },
+    "contractor_employee": {
+     "derivation": "derived",
+     "derivation_rule": "Each ContractorEmployee is an Employee who is not full-time and not part-time.",
+     "id": "contractor_employee",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "ContractorEmployee",
+     "storage": "computed",
+     "subtype_of": [
+      "employee"
+     ]
+    },
+    "department": {
+     "id": "department",
+     "kind": "entity",
+     "name": "Department",
+     "reference": {
+      "mode": "popular",
+      "value_type": "department_code"
+     }
+    },
+    "department_code": {
+     "id": "department_code",
+     "kind": "value",
+     "name": "DepartmentCode",
+     "primitive": "String"
+    },
+    "employee": {
+     "id": "employee",
+     "kind": "entity",
+     "name": "Employee",
+     "provenance": {
+      "origin": "fixture"
+     },
+     "reference": {
+      "mode": "popular",
+      "value_type": "employee_id"
+     }
+    },
+    "employee_id": {
+     "id": "employee_id",
+     "kind": "value",
+     "name": "EmployeeId",
+     "primitive": "Integer"
+    },
+    "employee_name": {
+     "id": "employee_name",
+     "kind": "value",
+     "name": "EmployeeName",
+     "primitive": "String"
+    },
+    "gender": {
+     "id": "gender",
+     "kind": "value",
+     "name": "Gender",
+     "primitive": "String"
+    },
+    "hours": {
+     "id": "hours",
+     "kind": "value",
+     "name": "Hours",
+     "primitive": "Integer"
+    },
+    "permanent_employee": {
+     "derivation": "asserted",
+     "id": "permanent_employee",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "PermanentEmployee",
+     "subtype_of": [
+      "employee"
+     ]
+    },
+    "project": {
+     "id": "project",
+     "kind": "entity",
+     "name": "Project",
+     "reference": {
+      "mode": "general",
+      "value_type": "project_name"
+     }
+    },
+    "project_name": {
+     "id": "project_name",
+     "kind": "value",
+     "name": "ProjectName",
+     "primitive": "String"
+    },
+    "salary": {
+     "id": "salary",
+     "kind": "entity",
+     "name": "Salary",
+     "reference": {
+      "measure_type": "Money",
+      "mode": "unit-based",
+      "unit": "USD"
+     }
+    }
+   }
+  },
+  "tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "ok": {
+    "amount": {
+     "id": "amount",
+     "kind": "value",
+     "name": "Amount",
+     "primitive": "Integer"
+    },
+    "category": {
+     "id": "category",
+     "kind": "value",
+     "name": "Category",
+     "primitive": "String"
+    },
+    "expense": {
+     "id": "expense",
+     "kind": "entity",
+     "name": "Expense",
+     "reference": {
+      "mode": "popular",
+      "value_type": "expense_id"
+     }
+    },
+    "expense_id": {
+     "id": "expense_id",
+     "kind": "value",
+     "name": "ExpenseId",
+     "primitive": "Integer"
+    },
+    "status": {
+     "id": "status",
+     "kind": "value",
+     "name": "Status",
+     "primitive": "String"
+    }
+   }
+  },
+  "tests/fixtures/models/keywords.orm.yaml": {
+   "ok": {
+    "class": {
+     "id": "class",
+     "kind": "entity",
+     "name": "Class",
+     "provenance": {
+      "origin": "fixture"
+     },
+     "reference": {
+      "mode": "popular",
+      "value_type": "pass"
+     }
+    },
+    "del": {
+     "id": "del",
+     "kind": "value",
+     "name": "DelCode",
+     "primitive": "Integer"
+    },
+    "lambda": {
+     "id": "lambda",
+     "kind": "entity",
+     "name": "Lambda",
+     "reference": {
+      "mode": "popular",
+      "value_type": "del"
+     }
+    },
+    "match": {
+     "id": "match",
+     "kind": "value",
+     "name": "MatchLabel",
+     "primitive": "String"
+    },
+    "pass": {
+     "id": "pass",
+     "kind": "value",
+     "name": "PassCode",
+     "primitive": "String"
+    },
+    "type": {
+     "id": "type",
+     "kind": "value",
+     "name": "TypeLabel",
+     "primitive": "String"
+    }
+   }
+  },
+  "tests/fixtures/models/library.orm.yaml": {
+   "ok": {
+    "borrower": {
+     "id": "borrower",
+     "kind": "entity",
+     "name": "Borrower",
+     "provenance": {
+      "origin": "fixture"
+     },
+     "reference": {
+      "mode": "general",
+      "value_type": "card_number"
+     }
+    },
+    "borrower_name": {
+     "id": "borrower_name",
+     "kind": "value",
+     "name": "BorrowerName",
+     "primitive": "String"
+    },
+    "branch": {
+     "id": "branch",
+     "kind": "entity",
+     "name": "Branch",
+     "reference": {
+      "mode": "popular",
+      "value_type": "branch_code"
+     }
+    },
+    "branch_code": {
+     "id": "branch_code",
+     "kind": "value",
+     "name": "BranchCode",
+     "primitive": "String"
+    },
+    "calendar_day": {
+     "id": "calendar_day",
+     "kind": "value",
+     "name": "CalendarDay",
+     "primitive": "Date"
+    },
+    "card_number": {
+     "id": "card_number",
+     "kind": "value",
+     "name": "CardNumber",
+     "primitive": "String"
+    },
+    "circulating_copy": {
+     "derivation": "asserted",
+     "id": "circulating_copy",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "CirculatingCopy",
+     "subtype_of": [
+      "copy"
+     ]
+    },
+    "copy": {
+     "id": "copy",
+     "kind": "entity",
+     "name": "Copy",
+     "reference": {
+      "mode": "external"
+     }
+    },
+    "fine_amount": {
+     "id": "fine_amount",
+     "kind": "value",
+     "name": "FineAmount",
+     "primitive": "Number"
+    },
+    "genre": {
+     "id": "genre",
+     "kind": "value",
+     "name": "Genre",
+     "primitive": "String"
+    },
+    "isbn": {
+     "id": "isbn",
+     "kind": "value",
+     "name": "Isbn",
+     "primitive": "String"
+    },
+    "librarian": {
+     "id": "librarian",
+     "kind": "entity",
+     "name": "Librarian",
+     "reference": {
+      "mode": "popular",
+      "value_type": "staff_number"
+     }
+    },
+    "loan_period": {
+     "id": "loan_period",
+     "kind": "entity",
+     "name": "LoanPeriod",
+     "reference": {
+      "measure_type": "Duration",
+      "mode": "unit-based",
+      "unit": "day"
+     }
+    },
+    "publication_year": {
+     "id": "publication_year",
+     "kind": "value",
+     "name": "PublicationYear",
+     "primitive": "Integer"
+    },
+    "reference_copy": {
+     "derivation": "derived",
+     "derivation_rule": "Each ReferenceCopy is a Copy that is not a CirculatingCopy.",
+     "id": "reference_copy",
+     "inherits_reference": true,
+     "kind": "entity",
+     "name": "ReferenceCopy",
+     "storage": "computed",
+     "subtype_of": [
+      "copy"
+     ]
+    },
+    "shelf_mark": {
+     "id": "shelf_mark",
+     "kind": "value",
+     "name": "ShelfMark",
+     "primitive": "String"
+    },
+    "staff_number": {
+     "id": "staff_number",
+     "kind": "value",
+     "name": "StaffNumber",
+     "primitive": "Integer"
+    },
+    "title": {
+     "id": "title",
+     "kind": "entity",
+     "name": "Title",
+     "reference": {
+      "mode": "popular",
+      "value_type": "isbn"
+     }
+    }
+   }
+  },
+  "tests/fixtures/models/v2_operations.orm.yaml": {
+   "ok": {
+    "effort": {
+     "id": "effort",
+     "kind": "entity",
+     "name": "Effort",
+     "reference": {
+      "measure_type": "Duration",
+      "mode": "unit-based",
+      "unit": "h"
+     }
+    },
+    "note": {
+     "id": "note",
+     "kind": "entity",
+     "name": "Note",
+     "reference": {
+      "mode": "popular",
+      "value_type": "note_id"
+     }
+    },
+    "note_id": {
+     "id": "note_id",
+     "kind": "value",
+     "name": "NoteId",
+     "primitive": "String"
+    },
+    "priority": {
+     "id": "priority",
+     "kind": "value",
+     "name": "Priority",
+     "primitive": "Integer"
+    },
+    "reviewer": {
+     "id": "reviewer",
+     "kind": "entity",
+     "name": "Reviewer",
+     "reference": {
+      "mode": "popular",
+      "value_type": "reviewer_id"
+     }
+    },
+    "reviewer_id": {
+     "id": "reviewer_id",
+     "kind": "value",
+     "name": "ReviewerId",
+     "primitive": "String"
+    },
+    "work_item": {
+     "id": "work_item",
+     "kind": "entity",
+     "name": "WorkItem",
+     "reference": {
+      "mode": "popular",
+      "value_type": "work_item_id"
+     }
+    },
+    "work_item_id": {
+     "id": "work_item_id",
+     "kind": "value",
+     "name": "WorkItemId",
+     "primitive": "String"
+    },
+    "work_state": {
+     "id": "work_state",
+     "kind": "value",
+     "name": "WorkState",
+     "primitive": "String"
+    }
+   }
+  },
+  "tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "ok": {
+    "approval_chain": {
+     "id": "approval_chain",
+     "kind": "entity",
+     "name": "ApprovalChain",
+     "reference": {
+      "mode": "popular",
+      "value_type": "chain_id"
+     }
+    },
+    "chain_id": {
+     "id": "chain_id",
+     "kind": "value",
+     "name": "ChainId",
+     "primitive": "String"
+    },
+    "expense": {
+     "id": "expense",
+     "kind": "entity",
+     "name": "Expense",
+     "reference": {
+      "mode": "popular",
+      "value_type": "expense_id"
+     }
+    },
+    "expense_id": {
+     "id": "expense_id",
+     "kind": "value",
+     "name": "ExpenseId",
+     "primitive": "Integer"
+    },
+    "expense_status": {
+     "id": "expense_status",
+     "kind": "value",
+     "name": "ExpenseStatus",
+     "primitive": "String"
+    },
+    "submission_id": {
+     "id": "submission_id",
+     "kind": "value",
+     "name": "SubmissionId",
+     "primitive": "String"
+    },
+    "threshold_eur": {
+     "id": "threshold_eur",
+     "kind": "value",
+     "name": "ThresholdEur",
+     "primitive": "Integer"
+    },
+    "workday_submission": {
+     "id": "workday_submission",
+     "kind": "entity",
+     "name": "WorkdaySubmission",
+     "reference": {
+      "mode": "popular",
+      "value_type": "submission_id"
+     }
+    }
+   }
+  }
+ },
+ "site": "identical_candidate|gnd.synth.assemble:_object_types_by_id"
+}

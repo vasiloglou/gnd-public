@@ -2,7 +2,7 @@
 
 import json
 
-from gnd import api
+from gnd.export import service as api
 
 
 def add_parsers(targets):

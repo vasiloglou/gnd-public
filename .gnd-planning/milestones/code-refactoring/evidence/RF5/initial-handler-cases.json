@@ -1,0 +1,453 @@
+[
+  {
+    "id": "witness",
+    "argv": [
+      "witness",
+      "missing",
+      "missing",
+      "--targets",
+      "missing"
+    ],
+    "target": "gnd.witness.cli.run"
+  },
+  {
+    "id": "replay",
+    "argv": [
+      "replay",
+      "missing",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.witness.cli.run"
+  },
+  {
+    "id": "witness-view",
+    "argv": [
+      "witness-view",
+      "missing"
+    ],
+    "target": "gnd.witness.cli.run"
+  },
+  {
+    "id": "import rai-orm",
+    "argv": [
+      "import",
+      "rai-orm",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_rai_import"
+  },
+  {
+    "id": "validate",
+    "argv": [
+      "validate",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_validate"
+  },
+  {
+    "id": "diff",
+    "argv": [
+      "diff",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_diff"
+  },
+  {
+    "id": "coverage",
+    "argv": [
+      "coverage",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_coverage"
+  },
+  {
+    "id": "check",
+    "argv": [
+      "check",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_check"
+  },
+  {
+    "id": "verbalize population",
+    "argv": [
+      "verbalize",
+      "population",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_verbalize_population"
+  },
+  {
+    "id": "verify",
+    "argv": [
+      "verify",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_verify"
+  },
+  {
+    "id": "synth",
+    "argv": [
+      "synth",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_synth"
+  },
+  {
+    "id": "measure",
+    "argv": [
+      "measure",
+      "missing",
+      "--populations",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_measure"
+  },
+  {
+    "id": "extract",
+    "argv": [
+      "extract",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_extract"
+  },
+  {
+    "id": "export souffle",
+    "argv": [
+      "export",
+      "souffle",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.export.souffle_cli.run"
+  },
+  {
+    "id": "export souffle-verify",
+    "argv": [
+      "export",
+      "souffle-verify",
+      "missing"
+    ],
+    "target": "gnd.export.souffle_cli.run"
+  },
+  {
+    "id": "export souffle-run",
+    "argv": [
+      "export",
+      "souffle-run",
+      "missing"
+    ],
+    "target": "gnd.export.souffle_cli.run"
+  },
+  {
+    "id": "export souffle-witness",
+    "argv": [
+      "export",
+      "souffle-witness",
+      "missing",
+      "--targets",
+      "missing"
+    ],
+    "target": "gnd.export.souffle_cli.run"
+  },
+  {
+    "id": "export lean",
+    "argv": [
+      "export",
+      "lean",
+      "missing",
+      "missing",
+      "--toolchain",
+      "missing"
+    ],
+    "target": "gnd.export.lean_cli.run"
+  },
+  {
+    "id": "export lean-verify",
+    "argv": [
+      "export",
+      "lean-verify",
+      "missing"
+    ],
+    "target": "gnd.export.souffle_cli.run"
+  },
+  {
+    "id": "export lean-compile",
+    "argv": [
+      "export",
+      "lean-compile",
+      "missing"
+    ],
+    "target": "gnd.export.souffle_cli.run"
+  },
+  {
+    "id": "export pyrel",
+    "argv": [
+      "export",
+      "pyrel",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_export_pyrel"
+  },
+  {
+    "id": "codegen",
+    "argv": [
+      "codegen",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_codegen"
+  },
+  {
+    "id": "conformance",
+    "argv": [
+      "conformance",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_conformance"
+  },
+  {
+    "id": "recovery inventory",
+    "argv": [
+      "recovery",
+      "inventory",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_recovery_inventory"
+  },
+  {
+    "id": "recovery verify",
+    "argv": [
+      "recovery",
+      "verify",
+      "missing",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_recovery_verify"
+  },
+  {
+    "id": "evolve preview",
+    "argv": [
+      "evolve",
+      "preview",
+      "missing",
+      "missing",
+      "--workspace",
+      "missing",
+      "--records",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_evolve_preview"
+  },
+  {
+    "id": "evolve apply",
+    "argv": [
+      "evolve",
+      "apply",
+      "missing",
+      "missing",
+      "--preview",
+      "missing",
+      "--workspace",
+      "missing",
+      "--records",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_evolve_apply"
+  },
+  {
+    "id": "evolve finalize",
+    "argv": [
+      "evolve",
+      "finalize",
+      "missing",
+      "missing",
+      "--workspace",
+      "missing",
+      "--records",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_evolve_finalize"
+  },
+  {
+    "id": "doccheck",
+    "argv": [
+      "doccheck",
+      "missing",
+      "missing",
+      "--artifacts",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_doccheck"
+  },
+  {
+    "id": "fidelity",
+    "argv": [
+      "fidelity",
+      "missing",
+      "--cases",
+      "missing",
+      "--artifacts",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_fidelity"
+  },
+  {
+    "id": "review panel",
+    "argv": [
+      "review",
+      "panel",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_review_panel"
+  },
+  {
+    "id": "review panel-light",
+    "argv": [
+      "review",
+      "panel-light",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_review_panel"
+  },
+  {
+    "id": "review finalize",
+    "argv": [
+      "review",
+      "finalize",
+      "missing",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_review_finalize"
+  },
+  {
+    "id": "exp init",
+    "argv": [
+      "exp",
+      "init",
+      "missing",
+      "--out",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_exp_init"
+  },
+  {
+    "id": "exp validate",
+    "argv": [
+      "exp",
+      "validate",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_exp_validate"
+  },
+  {
+    "id": "exp author-expectation",
+    "argv": [
+      "exp",
+      "author-expectation",
+      "missing",
+      "--case",
+      "missing",
+      "--output-id",
+      "missing",
+      "--candidate-path",
+      "missing",
+      "--from",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_exp_author_expectation"
+  },
+  {
+    "id": "exp run",
+    "argv": [
+      "exp",
+      "run",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_exp_run"
+  },
+  {
+    "id": "exp close",
+    "argv": [
+      "exp",
+      "close",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_exp_close"
+  },
+  {
+    "id": "solve",
+    "argv": [
+      "solve",
+      "missing",
+      "--workspace",
+      "missing"
+    ],
+    "target": "gnd.cli._cmd_solve"
+  },
+  {
+    "id": "install",
+    "argv": [
+      "install",
+      "--claude",
+      "--user"
+    ],
+    "target": "gnd.cli._cmd_install"
+  },
+  {
+    "id": "doctor",
+    "argv": [
+      "doctor",
+      "--claude"
+    ],
+    "target": "gnd.cli._cmd_doctor"
+  },
+  {
+    "id": "uninstall",
+    "argv": [
+      "uninstall",
+      "--claude",
+      "--user"
+    ],
+    "target": "gnd.cli._cmd_uninstall"
+  },
+  {
+    "id": "judgments check",
+    "argv": [
+      "judgments",
+      "check",
+      "missing",
+      "missing",
+      "--policy",
+      "missing",
+      "--receipts",
+      "missing",
+      "--trusted-root",
+      "missing"
+    ],
+    "target": "gnd.api.judgments"
+  }
+]

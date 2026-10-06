@@ -1,0 +1,55 @@
+{
+ "observed": {
+  "decimal": {
+   "message": "non-finite or unsupported vocabulary scalar",
+   "raises": "builtins.ValueError"
+  },
+  "empty-object": {
+   "ok": {
+    "hex": "7b7d"
+   }
+  },
+  "infinity": {
+   "message": "non-finite or unsupported vocabulary scalar",
+   "raises": "builtins.ValueError"
+  },
+  "int-key": {
+   "message": "non-string vocabulary key",
+   "raises": "builtins.ValueError"
+  },
+  "large-float": {
+   "ok": {
+    "hex": "31652b3136"
+   }
+  },
+  "nan": {
+   "message": "non-finite or unsupported vocabulary scalar",
+   "raises": "builtins.ValueError"
+  },
+  "nested-ordering": {
+   "ok": {
+    "hex": "7b2261223a7b2263223a22c3bc222c2264223a5b322c315d7d2c2262223a317d"
+   }
+  },
+  "non-ascii-text": {
+   "ok": {
+    "hex": "22c3a9e280a8f09f988022"
+   }
+  },
+  "pydantic-model": {
+   "message": "non-finite or unsupported vocabulary scalar",
+   "raises": "builtins.ValueError"
+  },
+  "scalars": {
+   "ok": {
+    "hex": "5b6e756c6c2c747275652c302e302c2d302e305d"
+   }
+  },
+  "trailing-newline-string": {
+   "ok": {
+    "hex": "226c696e655c6e22"
+   }
+  }
+ },
+ "site": "canonical_json|gnd.extract.anchors:_canonical"
+}

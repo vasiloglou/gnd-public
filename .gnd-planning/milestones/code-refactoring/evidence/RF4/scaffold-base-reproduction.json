@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "/private/tmp/rf4-scaffold-base-lx66mu5x/tests/test_contributor_preparation.py::test_contributor_controls_reject[broken_reference]",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.44898200035095215
+}

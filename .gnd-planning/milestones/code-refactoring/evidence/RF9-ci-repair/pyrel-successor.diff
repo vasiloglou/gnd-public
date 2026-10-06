@@ -1,0 +1,57 @@
+--- f5a83186f7c2215ac2b2afb0a010c2294eaa433a
++++ current
+@@ -84,7 +84,7 @@
+         """Resolve an object type to a primitive, mirroring the loader's walk."""
+         seen: set[str] = set()
+ 
+-        def walk(oid: str) -> str | None:
++        def walk(oid: str, seen: set[str]) -> str | None:
+             if oid in seen or oid not in self.object_types:
+                 return None
+             seen.add(oid)
+@@ -93,14 +93,14 @@
+                 return ot.get("primitive")
+             reference = ot.get("reference") or {}
+             if reference.get("value_type"):
+-                return walk(reference["value_type"])
+-            if ot.get("inherits_reference"):
+-                found = {p for p in (walk(sup) for sup in ot.get("subtype_of", [])) if p}
++                return walk(reference["value_type"], seen)
++            if ot.get("inherits_reference") is True:
++                found = {p for p in (walk(sup, set(seen)) for sup in ot.get("subtype_of", [])) if p}
+                 if len(found) == 1:
+                     return found.pop()
+             return None
+ 
+-        return walk(ot_id)
++        return walk(ot_id, seen)
+ 
+     def descendants(self, ot_id: str) -> set[str]:
+         """The object type plus its transitive subtypes."""
+@@ -122,7 +122,7 @@
+         reference = ot.get("reference") or {}
+         if reference.get("value_type"):
+             return reference["value_type"]
+-        if ot.get("inherits_reference"):
++        if ot.get("inherits_reference") is True:
+             found = {v for v in (self.reference_value_type(sup) for sup in ot.get("subtype_of", []))
+                      if v}
+             if len(found) == 1:
+@@ -1045,7 +1045,7 @@
+             value_type = obj["reference"].get("value_type")
+             if not value_type or index.object_types[value_type]["kind"] != "value":
+                 raise ExportInputError("entity reference must name a value type")
+-        elif obj.get("inherits_reference"):
++        elif obj.get("inherits_reference") is True:
+             candidates = {resolve(sup) for sup in obj.get("subtype_of", [])}
+             if len(candidates) == 1:
+                 value_type = candidates.pop()
+@@ -1109,7 +1109,7 @@
+     # Independent implementation of the population format's ISO scalar grammar.
+     # Keep strings canonical for the compiler's lexical Date comparisons.
+     pattern = (r"\d{4}-\d{2}-\d{2}" if primitive == "Date" else
+-               r"\d{4}-\d{2}-\d{2}[Tt ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?([Zz]|[+-]\d{2}:?\d{2})?")
++               r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9](?:\.[0-9]{1,6})?)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])?')
+     if not isinstance(value, str) or re.fullmatch(pattern, value) is None:
+         return False
+     try:

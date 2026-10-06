@@ -360,7 +360,7 @@ def test_cwd_swap_between_check_and_spawn_cannot_redirect_child_writes(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    import gnd.agent_cli as agent_cli_module
+    import gnd.process as agent_cli_module
 
     program = _write_program(tmp_path / "program")
     checked = tmp_path / "checked"
@@ -403,7 +403,7 @@ def test_unproven_cleanup_is_a_distinct_closed_failure(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    import gnd.agent_cli as agent_cli_module
+    import gnd.process as agent_cli_module
 
     program = _write_program(tmp_path / "program")
     marker = tmp_path / "unproven-cleanup-survived"
@@ -439,7 +439,7 @@ def test_agent_wrapper_refuses_an_unproven_process_cleanup(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    import gnd.agent_cli as agent_cli_module
+    import gnd.agents as agent_cli_module
 
     executable = tmp_path / "codex"
     _write_fake_adapter(executable)

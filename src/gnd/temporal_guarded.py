@@ -200,7 +200,7 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
         return "unchecked", unknown, ()
     if not violations:
         return "pass", None, ()
-    from gnd.correspondence import _canonical_rows
+    from gnd.semantic_rows import canonical_rows as _canonical_rows
 
     witness = _canonical_rows(violations)
     return "warning" if constraint.modality == "deontic" else "fail", None, witness

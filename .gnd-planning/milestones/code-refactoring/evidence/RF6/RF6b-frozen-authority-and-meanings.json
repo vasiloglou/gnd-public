@@ -1,0 +1,21 @@
+{
+  "authority": [
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/units.json",
+      "sha256": "8a4d3a8b90c39ecac613af69723cc82ee75b8a1d8b70709a5481c31ab97c7650",
+      "unchanged_from": "a3f35a6"
+    },
+    {
+      "path": "tests/test_public_distribution.py",
+      "sha256": "7c658aeda10b80ff35b36abc1cc5854b87962f9fb6e44bc08ced08c8ad0cb677",
+      "unchanged_from": "a3f35a6"
+    }
+  ],
+  "original_mutation_ids_and_stimuli_answers": 167,
+  "file_only_adaptations": [
+    "M-HELP-yaml-guard-gnd-model-yaml-stream-guard-error",
+    "M-SEM-datetime-model-_temporal_literal_valid",
+    "M-SEM-datetime-checker-_typed_comparison_values",
+    "M-SEM-check-coverage-anchored"
+  ]
+}

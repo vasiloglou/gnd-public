@@ -51,11 +51,12 @@ import copy
 import json
 import math
 from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta  # noqa: F401 -- historical compatibility binding
 from pathlib import Path
 from random import Random
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 from gnd.checker import IMPLEMENTED_FAMILIES, CheckReport, check
 from gnd.model import Model
@@ -72,55 +73,149 @@ from gnd.synth.assemble import (
 from gnd.synth.comparison import _UNTYPEABLE
 from gnd.synth.comparison import normalize_operands as _normalize_comparison_operands
 from gnd.synth.comparison import role_literal_operands as _role_literal_operands
-from gnd.synth.mutate import (
-    _SKIP,
-    _applies_add_missing_subset,
-    _applies_add_overlap,
-    _applies_add_past_ceiling,
-    _applies_add_self_loop,
-    _applies_close_2_cycle,
-    _applies_close_3_cycle,
-    _applies_drop_covers,
-    _applies_duplicate_covered,
-    _applies_duplicate_joined,
-    _applies_exact_duplicate,
-    _applies_introduce_distinct,
-    _applies_new_entity_plays,
-    _applies_place_two_subtypes,
-    _applies_play_both,
-    _applies_play_neither,
-    _applies_remove_disjunctive,
-    _applies_roster_add,
-    _apply_add_missing_subset,
-    _apply_add_overlap,
-    _apply_add_past_ceiling,
-    _apply_add_self_loop,
-    _apply_close_2_cycle,
-    _apply_close_3_cycle,
-    _apply_drop_covers,
-    _apply_duplicate_covered,
-    _apply_duplicate_joined,
-    _apply_exact_duplicate,
-    _apply_introduce_distinct,
-    _apply_new_entity_plays,
-    _apply_place_two_subtypes,
-    _apply_play_both,
-    _apply_play_neither,
-    _apply_remove_disjunctive,
-    _apply_roster_add,
-    _complete_row,
-    _existing_members,
-    _facts_of,
-    _fresh_identifier,
-    _ft_by_id,
-    _internal_frequency_groups,
-    _resolve,
-    _ring_components_of,
-    _ring_edges,
-    _ring_gate,
-    _xor_player_sets,
-    _xor_single_role,
-    expected_state,
+from gnd.synth.oracle import (
+    SKIP as _SKIP,
+)
+from gnd.synth.oracle import (
+    applies_add_missing_subset as _applies_add_missing_subset,
+)
+from gnd.synth.oracle import (
+    applies_add_overlap as _applies_add_overlap,
+)
+from gnd.synth.oracle import (
+    applies_add_past_ceiling as _applies_add_past_ceiling,
+)
+from gnd.synth.oracle import (
+    applies_add_self_loop as _applies_add_self_loop,
+)
+from gnd.synth.oracle import (
+    applies_close_2_cycle as _applies_close_2_cycle,
+)
+from gnd.synth.oracle import (
+    applies_close_3_cycle as _applies_close_3_cycle,
+)
+from gnd.synth.oracle import (
+    applies_drop_covers as _applies_drop_covers,
+)
+from gnd.synth.oracle import (
+    applies_duplicate_covered as _applies_duplicate_covered,
+)
+from gnd.synth.oracle import (
+    applies_duplicate_joined as _applies_duplicate_joined,
+)
+from gnd.synth.oracle import (
+    applies_exact_duplicate as _applies_exact_duplicate,
+)
+from gnd.synth.oracle import (
+    applies_introduce_distinct as _applies_introduce_distinct,
+)
+from gnd.synth.oracle import (
+    applies_new_entity_plays as _applies_new_entity_plays,
+)
+from gnd.synth.oracle import (
+    applies_place_two_subtypes as _applies_place_two_subtypes,
+)
+from gnd.synth.oracle import (
+    applies_play_both as _applies_play_both,
+)
+from gnd.synth.oracle import (
+    applies_play_neither as _applies_play_neither,
+)
+from gnd.synth.oracle import (
+    applies_remove_disjunctive as _applies_remove_disjunctive,
+)
+from gnd.synth.oracle import (
+    applies_roster_add as _applies_roster_add,
+)
+from gnd.synth.oracle import (
+    apply_add_missing_subset as _apply_add_missing_subset,
+)
+from gnd.synth.oracle import (
+    apply_add_overlap as _apply_add_overlap,
+)
+from gnd.synth.oracle import (
+    apply_add_past_ceiling as _apply_add_past_ceiling,
+)
+from gnd.synth.oracle import (
+    apply_add_self_loop as _apply_add_self_loop,
+)
+from gnd.synth.oracle import (
+    apply_close_2_cycle as _apply_close_2_cycle,
+)
+from gnd.synth.oracle import (
+    apply_close_3_cycle as _apply_close_3_cycle,
+)
+from gnd.synth.oracle import (
+    apply_drop_covers as _apply_drop_covers,
+)
+from gnd.synth.oracle import (
+    apply_duplicate_covered as _apply_duplicate_covered,
+)
+from gnd.synth.oracle import (
+    apply_duplicate_joined as _apply_duplicate_joined,
+)
+from gnd.synth.oracle import (
+    apply_exact_duplicate as _apply_exact_duplicate,
+)
+from gnd.synth.oracle import (
+    apply_introduce_distinct as _apply_introduce_distinct,
+)
+from gnd.synth.oracle import (
+    apply_new_entity_plays as _apply_new_entity_plays,
+)
+from gnd.synth.oracle import (
+    apply_place_two_subtypes as _apply_place_two_subtypes,
+)
+from gnd.synth.oracle import (
+    apply_play_both as _apply_play_both,
+)
+from gnd.synth.oracle import (
+    apply_play_neither as _apply_play_neither,
+)
+from gnd.synth.oracle import (
+    apply_remove_disjunctive as _apply_remove_disjunctive,
+)
+from gnd.synth.oracle import (
+    apply_roster_add as _apply_roster_add,
+)
+from gnd.synth.oracle import (
+    complete_row as _complete_row,
+)
+from gnd.synth.oracle import (
+    existing_members as _existing_members,
+)
+from gnd.synth.oracle import (
+    expected_state as expected_state,  # noqa: PLC0414 -- compatibility surface
+)
+from gnd.synth.oracle import (
+    facts_of as _facts_of,
+)
+from gnd.synth.oracle import (
+    fresh_identifier as _fresh_identifier,
+)
+from gnd.synth.oracle import (
+    ft_by_id as _ft_by_id,
+)
+from gnd.synth.oracle import (
+    internal_frequency_groups as _internal_frequency_groups,
+)
+from gnd.synth.oracle import (
+    resolve as _resolve,
+)
+from gnd.synth.oracle import (
+    ring_components_of as _ring_components_of,
+)
+from gnd.synth.oracle import (
+    ring_edges as _ring_edges,
+)
+from gnd.synth.oracle import (
+    ring_gate as _ring_gate,
+)
+from gnd.synth.oracle import (
+    xor_player_sets as _xor_player_sets,
+)
+from gnd.synth.oracle import (
+    xor_single_role as _xor_single_role,
 )
 from gnd.synth.provenance import ExpectedState
 
@@ -252,7 +347,7 @@ def boundary_neighbour(value: Any, primitive: str | None, direction: int) -> tup
         epsilon = "P1D"
     elif name == "DateTime":
         try:
-            parsed = datetime.fromisoformat(str(value))
+            parsed = _rf7_input.parse_datetime(value)
         except ValueError as error:
             raise NoOrdering(f"{value!r} is not an ISO-8601 datetime bound") from error
         try:

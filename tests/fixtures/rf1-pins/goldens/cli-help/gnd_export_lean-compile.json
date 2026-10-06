@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd export lean-compile [-h] [--json] [--executable EXECUTABLE]\n                               [--elaborate-stubs]\n                               bundle\n\npositional arguments:\n  bundle\n\noptions:\n  -h, --help            show this help message and exit\n  --json\n  --executable EXECUTABLE\n  --elaborate-stubs\n",
+ "path": "gnd export lean-compile"
+}

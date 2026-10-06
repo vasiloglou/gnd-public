@@ -1,0 +1,4 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python tools/gnd_arch.py measure --out .gnd-planning/milestones/code-refactoring/evidence/metrics-RF5-repair.json
+
+Exit: 0

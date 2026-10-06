@@ -1,0 +1,2 @@
+Edited retained gate output: absolute worktree/home and operator temporary path prefixes sanitized; other output preserved.
+All checks passed!

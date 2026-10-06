@@ -8,6 +8,7 @@ from datetime import date
 from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
+from gnd import input_policy as _rf7_input
 from gnd.model import (
     ModelLoadError,
     ModelValidationError,
@@ -58,6 +59,7 @@ def parse(raw, fmt, limits=DEFAULT_LIMITS):
     )
     if fmt == "json":
         return witness_io.parse_wire(raw, limits=wl)
+    _rf7_input.guard_yaml(raw, max_bytes=limits.document_bytes, max_depth=limits.container_depth)
     y = YAML(typ="safe")
     y.allow_duplicate_keys = False
     doc = y.load(raw)

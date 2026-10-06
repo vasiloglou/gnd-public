@@ -1176,6 +1176,7 @@ def test_the_duplication_gate_fires_on_a_planted_redefinition(tmp_path: Path) ->
 # touch -- that inventory is recorded in 04-18-SUMMARY.md as measured, named,
 # deferred work rather than silently absorbed here.
 CONSOLIDATED_MODULES = (
+    "exp/session_records.py",
     "exp/session_store.py",
     "evolve/service.py",
     "recovery/inventory.py",

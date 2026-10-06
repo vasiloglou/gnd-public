@@ -33,7 +33,13 @@ from pydantic import (
 )
 from pydantic_core import PydanticCustomError
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import canonical_json_text
+from gnd.exp.session_profile import (
+    JUDGMENT_SESSION_CONTRACT_VERSION,
+    SessionProfile,
+    profile_for_version,
+)
 from gnd.extract.manifest import ManifestError, manifest_path_issue, open_manifest_relative_path
 from gnd.model import ModelLoadError, ModelValidationError, ValidationIssue, load_model
 
@@ -1005,7 +1011,7 @@ class _SessionCaseV8(_SessionCaseV7):
 
 
 class _DataDrivenContractV8(_DataDrivenContractV7):
-    schema_version: Literal[8]
+    schema_version: Literal[JUDGMENT_SESSION_CONTRACT_VERSION]
     cases: tuple[_SessionCaseV8, ...] = Field(min_length=1, max_length=MAX_SESSION_CASES)
 
     @model_validator(mode="after")
@@ -1031,6 +1037,18 @@ class _DataDrivenContractV8(_DataDrivenContractV7):
         return self
 
 
+_CONTRACT_READERS = {
+    LEGACY_SESSION_CONTRACT_VERSION: _DataDrivenContractV1,
+    V2_SESSION_CONTRACT_VERSION: _DataDrivenContractV2,
+    SESSION_CONTRACT_VERSION: _DataDrivenContractV3,
+    TRANSITION_SESSION_CONTRACT_VERSION: _DataDrivenContractV4,
+    WALK_SESSION_CONTRACT_VERSION: _DataDrivenContractV5,
+    DECLARED_ADAPTER_SESSION_CONTRACT_VERSION: _DataDrivenContractV6,
+    PATCH_SESSION_CONTRACT_VERSION: _DataDrivenContractV7,
+    JUDGMENT_SESSION_CONTRACT_VERSION: _DataDrivenContractV8,
+}
+
+
 class DataDrivenContract(BaseModel):
     """Version-dispatched contract normalized for the session runtime."""
 
@@ -1044,7 +1062,7 @@ class DataDrivenContract(BaseModel):
         WALK_SESSION_CONTRACT_VERSION,
         DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,
         PATCH_SESSION_CONTRACT_VERSION,
-        8,
+        JUDGMENT_SESSION_CONTRACT_VERSION,
     ]
     experiment_id: NonEmptyString
     max_attempts: int = Field(gt=0)
@@ -1054,6 +1072,14 @@ class DataDrivenContract(BaseModel):
     candidate_edits: CandidateEdits | None = None
     ranking: tuple[RankingMetric, ...] | None = None
 
+    @property
+    def profile(self) -> SessionProfile:
+        """Runtime-only shared capabilities; selection never mutates model equality."""
+        profile = profile_for_version(self.schema_version)
+        if profile is None:
+            raise ValueError("unsupported session profile")
+        return profile
+
     @classmethod
     def model_validate(cls, obj: Any, *args: Any, **kwargs: Any) -> Self:
         """Dispatch the closed wire version before parsing either schema."""
@@ -1061,31 +1087,9 @@ class DataDrivenContract(BaseModel):
         if isinstance(obj, cls):
             return obj
         version = obj.get("schema_version") if isinstance(obj, dict) else None
-        reader: type[
-            _DataDrivenContractV1
-            | _DataDrivenContractV2
-            | _DataDrivenContractV3
-            | _DataDrivenContractV4
-            | _DataDrivenContractV5
-            | _DataDrivenContractV6
-            | _DataDrivenContractV7
-        ]
-        if version == LEGACY_SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV1
-        elif version == V2_SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV2
-        elif version == SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV3
-        elif version == TRANSITION_SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV4
-        elif version == WALK_SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV5
-        elif version == DECLARED_ADAPTER_SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV6
-        elif version == 8:
-            reader = _DataDrivenContractV8
-        elif version == PATCH_SESSION_CONTRACT_VERSION:
-            reader = _DataDrivenContractV7
+        profile = profile_for_version(version)
+        if profile is not None:
+            reader = _CONTRACT_READERS[profile.contract_version]
         else:
             raise ValidationError.from_exception_data(
                 cls.__name__,
@@ -1102,7 +1106,8 @@ class DataDrivenContract(BaseModel):
                                 f"{TRANSITION_SESSION_CONTRACT_VERSION}, or "
                                 f"{WALK_SESSION_CONTRACT_VERSION}, or "
                                 f"{DECLARED_ADAPTER_SESSION_CONTRACT_VERSION}, or "
-                                f"{PATCH_SESSION_CONTRACT_VERSION}"
+                                f"{PATCH_SESSION_CONTRACT_VERSION}, or "
+                                f"{JUDGMENT_SESSION_CONTRACT_VERSION}"
                             )
                         },
                     }
@@ -1146,10 +1151,10 @@ class DataDrivenContract(BaseModel):
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):
         document = handler(self)
-        if self.schema_version != 8:
+        if not self.profile.judgments:
             for case in document["cases"]:
                 case.pop("judgment_gate", None)
-        if self.schema_version not in {PATCH_SESSION_CONTRACT_VERSION, 8}:
+        if not self.profile.patch:
             document.pop("candidate_edits", None)
             document.pop("ranking", None)
             for case in document["cases"]:
@@ -1161,40 +1166,22 @@ class DataDrivenContract(BaseModel):
             for case in document["cases"]:
                 if case["reference_root"] is None:
                     case.pop("reference_root")
-        if self.schema_version not in {
-            DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,
-            PATCH_SESSION_CONTRACT_VERSION,
-            8,
-        }:
+        if not self.profile.declared_adapter:
             document.pop("adapter", None)
-        if self.schema_version == LEGACY_SESSION_CONTRACT_VERSION:
+        if self.profile.legacy:
             for case in document["cases"]:
                 case.pop("acceptance")
         else:
             for case in document["cases"]:
                 case.pop("expected_outputs")
                 if (
-                    self.schema_version
-                    in {
-                        SESSION_CONTRACT_VERSION,
-                        TRANSITION_SESSION_CONTRACT_VERSION,
-                        WALK_SESSION_CONTRACT_VERSION,
-                        DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,
-                        PATCH_SESSION_CONTRACT_VERSION,
-                        8,
-                    }
+                    self.profile.tests
                     and case["acceptance"]["mode"] == "tests"
                 ):
                     case.pop("inputs")
                     case.pop("verify")
                 if (
-                    self.schema_version
-                    not in {
-                        WALK_SESSION_CONTRACT_VERSION,
-                        DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,
-                        PATCH_SESSION_CONTRACT_VERSION,
-                        8,
-                    }
+                    not self.profile.walk
                     and case["acceptance"]["mode"] == "transition"
                 ):
                     case["acceptance"].pop("walk", None)
@@ -1274,8 +1261,8 @@ def _pydantic_issues(
 
 
 def _contract_json(raw):
-    document = json.loads(raw)
-    if isinstance(document, dict) and document.get("schema_version") in (7, 8):
+    document = _rf7_input.loads(raw)
+    if isinstance(document, dict) and (profile := profile_for_version(document.get("schema_version"))) is not None and profile.patch:
         from gnd.json_input import bounded_json
 
         document = bounded_json(
@@ -1333,11 +1320,11 @@ def _read_contract_document(path: Path, root: Path) -> object:
         text = raw.decode("utf-8")
         if (
             '"schema_version"' in text
-            and isinstance(document := json.loads(text), dict)
-            and document.get("schema_version") in (7, 8)
+            and isinstance(document := _rf7_input.loads(text), dict)
+            and (profile := profile_for_version(document.get("schema_version"))) is not None and profile.patch
         ):
             return _contract_json(text)
-        return json.loads(
+        return _rf7_input.loads(
             text,
             parse_constant=lambda token: (_ for _ in ()).throw(
                 ValueError(f"non-finite JSON number {token!r} is forbidden")
@@ -1692,7 +1679,7 @@ def read_session_contract(
                 raise SessionContractError("session model input could not be validated") from error
             if selected_model.reference_populations:
                 if (
-                    contract.schema_version not in {PATCH_SESSION_CONTRACT_VERSION, 8}
+                    not contract.profile.patch
                     or case.reference_root is None
                 ):
                     raise SessionContractError(
@@ -1757,10 +1744,7 @@ def read_session_contract(
             if model_path not in model_fact_types:
                 try:
                     model = load_model(root / model_path)
-                    if model.reference_populations and contract.schema_version not in {
-                        PATCH_SESSION_CONTRACT_VERSION,
-                        8,
-                    }:
+                    if model.reference_populations and not contract.profile.patch:
                         raise SessionContractError(
                             "session contracts do not support reference populations"
                         )
@@ -1800,10 +1784,7 @@ def read_session_contract(
                     loaded_models[model_path] = load_model(root / model_path)
                     if loaded_models[
                         model_path
-                    ].reference_populations and contract.schema_version not in {
-                        PATCH_SESSION_CONTRACT_VERSION,
-                        8,
-                    }:
+                    ].reference_populations and not contract.profile.patch:
                         raise SessionContractError(
                             "session contracts do not support reference populations"
                         )

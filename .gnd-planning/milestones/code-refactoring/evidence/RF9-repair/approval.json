@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-06",
+  "authorization": "you have my approval to fix the issues; continue",
+  "scope": "RF9-F1 through RF9-F9 repairs and focused verification, delivered through existing draft PR10",
+  "source_base": "26dbff6abe53d020d6a933e48d99915089f52054",
+  "spec_sha256": "5fcced202d5b8c5594cd2d54c912c296eb18976aeae41638a7df7b461a64f869",
+  "instrument": "executable regression siblings authored red before production; delegated corpus/spec decisions from named repair approval",
+  "limits": "no milestone close, source-owned authority transfer, certification, publication or merge"
+}

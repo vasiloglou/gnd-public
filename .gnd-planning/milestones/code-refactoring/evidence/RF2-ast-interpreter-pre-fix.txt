@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________ test_one_definition_per_promoted_group ____________________
+tests/test_rf2_helpers.py:66: in test_one_definition_per_promoted_group
+    assert_one_definition(sources)
+tests/test_rf2_helpers.py:60: in assert_one_definition
+    assert counts == dict.fromkeys(GROUPS, 1), counts
+E   AssertionError: {'f4d89086': 0, '2f5a20a1': 0, '5bebc70e': 0, 'd9f0cf8e': 0, ...}
+E   assert {'f4d89086': ...cf8e': 0, ...} == {'f4d89086': ...cf8e': 1, ...}
+E
+E     Differing items:
+E     {'f4d89086': 0} != {'f4d89086': 1}
+E     {'2f5a20a1': 0} != {'2f5a20a1': 1}
+E     {'d9f0cf8e': 0} != {'d9f0cf8e': 1}
+E     {'dcbdd645': 0} != {'dcbdd645': 1}
+E     {'5bebc70e': 0} != {'5bebc70e': 1}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_rf2_helpers.py::test_one_definition_per_promoted_group - As...
+1 failed in 1.22s

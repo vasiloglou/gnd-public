@@ -1,0 +1,373 @@
+{
+ "cli_admission_json": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/ring.orm.yaml",
+   "tests/fixtures/checker/population.ring_fail.yaml",
+   "--admission",
+   "--format",
+   "json"
+  ],
+  "exit": 1,
+  "stderr": "",
+  "stdout": "{\"schema_version\": 10, \"tool\": \"gnd\", \"command\": \"check\", \"outcome\": \"violated\", \"exit_code\": 1, \"acceptance_ready\": false, \"model\": \"tests/fixtures/checker/ring.orm.yaml\", \"model_digest\": \"sha256:bd3e6e3a0ef16ad1f94250074c411a0da6f6ab39f58d460b5fb209f178caf737\", \"population\": \"tests/fixtures/checker/population.ring_fail.yaml\", \"counts\": {\"pass\": 1, \"fail\": 12, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [{\"constraint_ref\": \"fact_types[rel_irreflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_irreflexive' is irreflexive \\u2014 violated: irreflexive broken by ('1', '1').\", \"offending_facts\": [{\"fact_type\": \"rel_irreflexive\", \"index\": 0}], \"reason_code\": null, \"witnesses\": [[1, 1]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_asymmetric].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_asymmetric' is asymmetric \\u2014 violated: asymmetric broken by ('1', '2'); asymmetric broken by ('2', '1').\", \"offending_facts\": [{\"fact_type\": \"rel_asymmetric\", \"index\": 0}, {\"fact_type\": \"rel_asymmetric\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2], [2, 1]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_intransitive' is intransitive \\u2014 violated: intransitive broken by ('1', '2', '3').\", \"offending_facts\": [{\"fact_type\": \"rel_intransitive\", \"index\": 0}, {\"fact_type\": \"rel_intransitive\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2, 3]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_antisymmetric].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_antisymmetric' is antisymmetric \\u2014 violated: antisymmetric broken by ('1', '2'); antisymmetric broken by ('2', '1').\", \"offending_facts\": [{\"fact_type\": \"rel_antisymmetric\", \"index\": 0}, {\"fact_type\": \"rel_antisymmetric\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2], [2, 1]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_acyclic].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_acyclic' is acyclic \\u2014 violated: cycle through '1' -> '2' -> '3' -> '1'.\", \"offending_facts\": [{\"fact_type\": \"rel_acyclic\", \"index\": 0}, {\"fact_type\": \"rel_acyclic\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2, 3, 1]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_asymmetric_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_asymmetric_intransitive' is asymmetric-intransitive \\u2014 violated: asymmetric-intransitive broken by ('1', '2'); asymmetric-intransitive broken by ('2', '1').\", \"offending_facts\": [{\"fact_type\": \"rel_asymmetric_intransitive\", \"index\": 0}, {\"fact_type\": \"rel_asymmetric_intransitive\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2], [2, 1]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_acyclic_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_acyclic_intransitive' is acyclic-intransitive \\u2014 violated: acyclic-intransitive broken by ('1', '2', '3').\", \"offending_facts\": [{\"fact_type\": \"rel_acyclic_intransitive\", \"index\": 0}, {\"fact_type\": \"rel_acyclic_intransitive\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2, 3]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_symmetric].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_symmetric' is symmetric \\u2014 violated: symmetric broken by ('1', '2').\", \"offending_facts\": [{\"fact_type\": \"rel_symmetric\", \"index\": 0}], \"reason_code\": null, \"witnesses\": [[1, 2]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_symmetric_irreflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_symmetric_irreflexive' is symmetric-irreflexive \\u2014 violated: symmetric-irreflexive broken by ('1', '1').\", \"offending_facts\": [{\"fact_type\": \"rel_symmetric_irreflexive\", \"index\": 0}], \"reason_code\": null, \"witnesses\": [[1, 1]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_symmetric_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_symmetric_intransitive' is symmetric-intransitive \\u2014 violated: symmetric-intransitive broken by ('1', '2').\", \"offending_facts\": [{\"fact_type\": \"rel_symmetric_intransitive\", \"index\": 0}], \"reason_code\": null, \"witnesses\": [[1, 2]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_purely_reflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_purely_reflexive' is purely-reflexive \\u2014 violated: purely-reflexive broken by ('1', '2').\", \"offending_facts\": [{\"fact_type\": \"rel_purely_reflexive\", \"index\": 0}], \"reason_code\": null, \"witnesses\": [[1, 2]], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_reflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"The relation 'rel_reflexive' is reflexive \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[rel_transitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_transitive' is transitive \\u2014 violated: transitive broken by ('1', '2', '3').\", \"offending_facts\": [{\"fact_type\": \"rel_transitive\", \"index\": 0}, {\"fact_type\": \"rel_transitive\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [[1, 2, 3]], \"refused_facts\": []}], \"derivations\": null, \"coverage\": {\"rel_irreflexive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_asymmetric\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_intransitive\": {\"declared\": \"declared\", \"facts\": 3}, \"rel_antisymmetric\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_acyclic\": {\"declared\": \"declared\", \"facts\": 3}, \"rel_asymmetric_intransitive\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_acyclic_intransitive\": {\"declared\": \"declared\", \"facts\": 3}, \"rel_symmetric\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_symmetric_irreflexive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_symmetric_intransitive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_purely_reflexive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_reflexive\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_transitive\": {\"declared\": \"declared\", \"facts\": 2}}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null, \"assurance\": {\"schema_version\": 1, \"semantic_decision\": \"refuse\", \"assurance_level\": \"none\", \"scope_digest\": null, \"semantics_digest\": null, \"production_roster_digest\": null, \"proof_digest\": null, \"toolchain_digest\": null, \"uncovered_applicable_scope_ids\": [\"applicability:adapter:n-a:boolean-in-numeric-role\", \"applicability:adapter:n-a:malformed-constraint\", \"applicability:adapter:n-a:non-finite-number\", \"applicability:adapter:n-a:unregistered-family\", \"applicability:adapter:n-a:unresolvable-role\", \"applicability:adapter:n-a:untyped-string-ordering\", \"applicability:implemented:n-a:family-unimplemented\", \"applicability:join:guarded:disconnected\", \"applicability:join:n-a:anchor-ambiguous\", \"applicability:join:n-a:disconnected\", \"applicability:refusal:n-a:evidence-not-current\", \"applicability:refusal:n-a:out-of-scope-cardinality\", \"applicability:refusal:n-a:out-of-scope-family\", \"applicability:vacuity:cardinality-object:no-observable-subjects\", \"applicability:vacuity:equality:zero-row-join\", \"applicability:vacuity:exclusion:zero-row-join\", \"applicability:vacuity:frequency-external:zero-row-join\", \"applicability:vacuity:guarded:empty-subject-any\", \"applicability:vacuity:n-a:coverage-omission\", \"applicability:vacuity:n-a:empty-subject-all\", \"applicability:vacuity:subtype-partition:no-observable-subjects\", \"applicability:vacuity:uniqueness-external:zero-row-join\", \"applicability:vacuity:value-comparison-cross:zero-row-join\", \"applicability:vacuity:value:no-observable-subjects\", \"composition:band:n-a:alethic-fail\", \"composition:band:n-a:alethic-unchecked\", \"composition:band:n-a:clean\", \"composition:band:n-a:deontic-unchecked-keeps-band\", \"composition:band:n-a:deontic-warning-keeps-band\", \"composition:band:n-a:fail-over-unchecked-over-vacuous\", \"composition:band:n-a:unchecked-over-vacuous\", \"composition:band:n-a:vacuous\", \"composition:band:n-a:vacuous-over-clean\", \"composition:band:phase1:alethic-fail\", \"composition:band:phase1:alethic-unchecked\", \"composition:band:phase1:clean\", \"composition:band:phase1:deontic-warning-keeps-band\", \"composition:band:phase1:fail-over-unchecked-over-vacuous\", \"composition:band:phase1:unchecked-over-vacuous\", \"composition:band:phase1:vacuous\", \"composition:band:phase1:vacuous-over-clean\", \"composition:verifier-verdict:n-a:fail\", \"composition:verifier-verdict:n-a:pass\", \"composition:verifier-verdict:n-a:unchecked\", \"composition:verifier-verdict:n-a:vacuous\", \"composition:verifier-verdict:n-a:warning\", \"report:check:n-a:counts\", \"report:check:n-a:coverage\", \"report:check:n-a:envelope-only\", \"report:check:n-a:incompatible-schema\", \"report:check:n-a:verdict-row\", \"report:check:phase1:acceptance\", \"report:check:phase1:band\", \"report:check:phase1:counts\", \"report:check:phase1:coverage\", \"report:check:phase1:verdict-row\", \"snapshot:ring:acyclic-intransitive:clean\", \"snapshot:ring:acyclic-intransitive:violated:alethic\", \"snapshot:ring:acyclic:clean\", \"snapshot:ring:acyclic:violated:alethic\", \"snapshot:ring:antisymmetric:clean\", \"snapshot:ring:antisymmetric:violated:alethic\", \"snapshot:ring:asymmetric-intransitive:clean\", \"snapshot:ring:asymmetric-intransitive:violated:alethic\", \"snapshot:ring:asymmetric:clean\", \"snapshot:ring:asymmetric:violated:alethic\", \"snapshot:ring:intransitive:clean\", \"snapshot:ring:intransitive:violated:alethic\", \"snapshot:ring:irreflexive:clean\", \"snapshot:ring:irreflexive:violated:alethic\", \"snapshot:ring:n-a:unchecked-ring-not-binary\", \"snapshot:ring:purely-reflexive:clean\", \"snapshot:ring:purely-reflexive:violated:alethic\", \"snapshot:ring:reflexive:clean\", \"snapshot:ring:reflexive:violated:alethic\", \"snapshot:ring:symmetric-intransitive:clean\", \"snapshot:ring:symmetric-intransitive:violated:alethic\", \"snapshot:ring:symmetric-irreflexive:clean\", \"snapshot:ring:symmetric-irreflexive:violated:alethic\", \"snapshot:ring:symmetric:clean\", \"snapshot:ring:symmetric:violated:alethic\", \"snapshot:ring:transitive:clean\", \"snapshot:ring:transitive:violated:alethic\"], \"assumptions\": []}, \"admission\": {\"admitted\": [{\"fact_ref\": {\"fact_type\": \"rel_acyclic\", \"index\": 2}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"rel_acyclic_intransitive\", \"index\": 2}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"rel_intransitive\", \"index\": 2}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"rel_reflexive\", \"index\": 0}, \"opaque_deps\": []}, {\"fact_ref\": {\"fact_type\": \"rel_reflexive\", \"index\": 1}, \"opaque_deps\": []}], \"blocked\": [{\"fact_ref\": {\"fact_type\": \"rel_acyclic\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_acyclic].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_acyclic\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_acyclic].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_acyclic_intransitive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_acyclic_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_acyclic_intransitive\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_acyclic_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_antisymmetric\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_antisymmetric].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_antisymmetric\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_antisymmetric].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_asymmetric\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_asymmetric].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_asymmetric\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_asymmetric].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_asymmetric_intransitive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_asymmetric_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_asymmetric_intransitive\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_asymmetric_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_intransitive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_intransitive\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_irreflexive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_irreflexive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_purely_reflexive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_purely_reflexive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_symmetric\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_symmetric].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_symmetric_intransitive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_symmetric_intransitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_symmetric_irreflexive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_symmetric_irreflexive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_transitive\", \"index\": 0}, \"blocked_by\": [\"fact_types[rel_transitive].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"rel_transitive\", \"index\": 1}, \"blocked_by\": [\"fact_types[rel_transitive].constraints[0]\"]}]}}\n"
+ },
+ "cli_json": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/ring.orm.yaml",
+   "tests/fixtures/checker/population.ring_fail.yaml",
+   "--format",
+   "json"
+  ],
+  "exit": 1,
+  "stderr": "",
+  "stdout": "{\"schema_version\": 7, \"tool\": \"gnd\", \"command\": \"check\", \"outcome\": \"violated\", \"exit_code\": 1, \"acceptance_ready\": false, \"model\": \"tests/fixtures/checker/ring.orm.yaml\", \"model_digest\": \"sha256:bd3e6e3a0ef16ad1f94250074c411a0da6f6ab39f58d460b5fb209f178caf737\", \"population\": \"tests/fixtures/checker/population.ring_fail.yaml\", \"counts\": {\"pass\": 1, \"fail\": 12, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [{\"constraint_ref\": \"fact_types[rel_irreflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_irreflexive' is irreflexive \\u2014 violated: irreflexive broken by ('1', '1').\", \"offending_facts\": [[1, 1]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_asymmetric].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_asymmetric' is asymmetric \\u2014 violated: asymmetric broken by ('1', '2'); asymmetric broken by ('2', '1').\", \"offending_facts\": [[1, 2], [2, 1]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_intransitive' is intransitive \\u2014 violated: intransitive broken by ('1', '2', '3').\", \"offending_facts\": [[1, 2, 3]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_antisymmetric].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_antisymmetric' is antisymmetric \\u2014 violated: antisymmetric broken by ('1', '2'); antisymmetric broken by ('2', '1').\", \"offending_facts\": [[1, 2], [2, 1]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_acyclic].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_acyclic' is acyclic \\u2014 violated: cycle through '1' -> '2' -> '3' -> '1'.\", \"offending_facts\": [[1, 2, 3, 1]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_asymmetric_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_asymmetric_intransitive' is asymmetric-intransitive \\u2014 violated: asymmetric-intransitive broken by ('1', '2'); asymmetric-intransitive broken by ('2', '1').\", \"offending_facts\": [[1, 2], [2, 1]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_acyclic_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_acyclic_intransitive' is acyclic-intransitive \\u2014 violated: acyclic-intransitive broken by ('1', '2', '3').\", \"offending_facts\": [[1, 2, 3]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_symmetric].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_symmetric' is symmetric \\u2014 violated: symmetric broken by ('1', '2').\", \"offending_facts\": [[1, 2]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_symmetric_irreflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_symmetric_irreflexive' is symmetric-irreflexive \\u2014 violated: symmetric-irreflexive broken by ('1', '1').\", \"offending_facts\": [[1, 1]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_symmetric_intransitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_symmetric_intransitive' is symmetric-intransitive \\u2014 violated: symmetric-intransitive broken by ('1', '2').\", \"offending_facts\": [[1, 2]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_purely_reflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_purely_reflexive' is purely-reflexive \\u2014 violated: purely-reflexive broken by ('1', '2').\", \"offending_facts\": [[1, 2]], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_reflexive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"The relation 'rel_reflexive' is reflexive \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[rel_transitive].constraints[0]\", \"constraint_type\": \"ring\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"The relation 'rel_transitive' is transitive \\u2014 violated: transitive broken by ('1', '2', '3').\", \"offending_facts\": [[1, 2, 3]], \"reason_code\": null}], \"derivations\": null, \"coverage\": {\"rel_irreflexive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_asymmetric\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_intransitive\": {\"declared\": \"declared\", \"facts\": 3}, \"rel_antisymmetric\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_acyclic\": {\"declared\": \"declared\", \"facts\": 3}, \"rel_asymmetric_intransitive\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_acyclic_intransitive\": {\"declared\": \"declared\", \"facts\": 3}, \"rel_symmetric\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_symmetric_irreflexive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_symmetric_intransitive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_purely_reflexive\": {\"declared\": \"declared\", \"facts\": 1}, \"rel_reflexive\": {\"declared\": \"declared\", \"facts\": 2}, \"rel_transitive\": {\"declared\": \"declared\", \"facts\": 2}}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null, \"assurance\": {\"schema_version\": 1, \"semantic_decision\": \"refuse\", \"assurance_level\": \"none\", \"scope_digest\": null, \"semantics_digest\": null, \"production_roster_digest\": null, \"proof_digest\": null, \"toolchain_digest\": null, \"uncovered_applicable_scope_ids\": [\"applicability:adapter:n-a:boolean-in-numeric-role\", \"applicability:adapter:n-a:malformed-constraint\", \"applicability:adapter:n-a:non-finite-number\", \"applicability:adapter:n-a:unregistered-family\", \"applicability:adapter:n-a:unresolvable-role\", \"applicability:adapter:n-a:untyped-string-ordering\", \"applicability:implemented:n-a:family-unimplemented\", \"applicability:join:guarded:disconnected\", \"applicability:join:n-a:anchor-ambiguous\", \"applicability:join:n-a:disconnected\", \"applicability:refusal:n-a:evidence-not-current\", \"applicability:refusal:n-a:out-of-scope-cardinality\", \"applicability:refusal:n-a:out-of-scope-family\", \"applicability:vacuity:cardinality-object:no-observable-subjects\", \"applicability:vacuity:equality:zero-row-join\", \"applicability:vacuity:exclusion:zero-row-join\", \"applicability:vacuity:frequency-external:zero-row-join\", \"applicability:vacuity:guarded:empty-subject-any\", \"applicability:vacuity:n-a:coverage-omission\", \"applicability:vacuity:n-a:empty-subject-all\", \"applicability:vacuity:subtype-partition:no-observable-subjects\", \"applicability:vacuity:uniqueness-external:zero-row-join\", \"applicability:vacuity:value-comparison-cross:zero-row-join\", \"applicability:vacuity:value:no-observable-subjects\", \"composition:band:n-a:alethic-fail\", \"composition:band:n-a:alethic-unchecked\", \"composition:band:n-a:clean\", \"composition:band:n-a:deontic-unchecked-keeps-band\", \"composition:band:n-a:deontic-warning-keeps-band\", \"composition:band:n-a:fail-over-unchecked-over-vacuous\", \"composition:band:n-a:unchecked-over-vacuous\", \"composition:band:n-a:vacuous\", \"composition:band:n-a:vacuous-over-clean\", \"composition:band:phase1:alethic-fail\", \"composition:band:phase1:alethic-unchecked\", \"composition:band:phase1:clean\", \"composition:band:phase1:deontic-warning-keeps-band\", \"composition:band:phase1:fail-over-unchecked-over-vacuous\", \"composition:band:phase1:unchecked-over-vacuous\", \"composition:band:phase1:vacuous\", \"composition:band:phase1:vacuous-over-clean\", \"composition:verifier-verdict:n-a:fail\", \"composition:verifier-verdict:n-a:pass\", \"composition:verifier-verdict:n-a:unchecked\", \"composition:verifier-verdict:n-a:vacuous\", \"composition:verifier-verdict:n-a:warning\", \"report:check:n-a:counts\", \"report:check:n-a:coverage\", \"report:check:n-a:envelope-only\", \"report:check:n-a:incompatible-schema\", \"report:check:n-a:verdict-row\", \"report:check:phase1:acceptance\", \"report:check:phase1:band\", \"report:check:phase1:counts\", \"report:check:phase1:coverage\", \"report:check:phase1:verdict-row\", \"snapshot:ring:acyclic-intransitive:clean\", \"snapshot:ring:acyclic-intransitive:violated:alethic\", \"snapshot:ring:acyclic:clean\", \"snapshot:ring:acyclic:violated:alethic\", \"snapshot:ring:antisymmetric:clean\", \"snapshot:ring:antisymmetric:violated:alethic\", \"snapshot:ring:asymmetric-intransitive:clean\", \"snapshot:ring:asymmetric-intransitive:violated:alethic\", \"snapshot:ring:asymmetric:clean\", \"snapshot:ring:asymmetric:violated:alethic\", \"snapshot:ring:intransitive:clean\", \"snapshot:ring:intransitive:violated:alethic\", \"snapshot:ring:irreflexive:clean\", \"snapshot:ring:irreflexive:violated:alethic\", \"snapshot:ring:n-a:unchecked-ring-not-binary\", \"snapshot:ring:purely-reflexive:clean\", \"snapshot:ring:purely-reflexive:violated:alethic\", \"snapshot:ring:reflexive:clean\", \"snapshot:ring:reflexive:violated:alethic\", \"snapshot:ring:symmetric-intransitive:clean\", \"snapshot:ring:symmetric-intransitive:violated:alethic\", \"snapshot:ring:symmetric-irreflexive:clean\", \"snapshot:ring:symmetric-irreflexive:violated:alethic\", \"snapshot:ring:symmetric:clean\", \"snapshot:ring:symmetric:violated:alethic\", \"snapshot:ring:transitive:clean\", \"snapshot:ring:transitive:violated:alethic\"], \"assumptions\": []}}\n"
+ },
+ "cli_text": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/ring.orm.yaml",
+   "tests/fixtures/checker/population.ring_fail.yaml"
+  ],
+  "exit": 1,
+  "stderr": "",
+  "stdout": "BLOCKING (alethic)\n  [fail] fact_types[rel_irreflexive].constraints[0]: The relation 'rel_irreflexive' is irreflexive — violated: irreflexive broken by ('1', '1').\n  [fail] fact_types[rel_asymmetric].constraints[0]: The relation 'rel_asymmetric' is asymmetric — violated: asymmetric broken by ('1', '2'); asymmetric broken by ('2', '1').\n  [fail] fact_types[rel_intransitive].constraints[0]: The relation 'rel_intransitive' is intransitive — violated: intransitive broken by ('1', '2', '3').\n  [fail] fact_types[rel_antisymmetric].constraints[0]: The relation 'rel_antisymmetric' is antisymmetric — violated: antisymmetric broken by ('1', '2'); antisymmetric broken by ('2', '1').\n  [fail] fact_types[rel_acyclic].constraints[0]: The relation 'rel_acyclic' is acyclic — violated: cycle through '1' -> '2' -> '3' -> '1'.\n  [fail] fact_types[rel_asymmetric_intransitive].constraints[0]: The relation 'rel_asymmetric_intransitive' is asymmetric-intransitive — violated: asymmetric-intransitive broken by ('1', '2'); asymmetric-intransitive broken by ('2', '1').\n  [fail] fact_types[rel_acyclic_intransitive].constraints[0]: The relation 'rel_acyclic_intransitive' is acyclic-intransitive — violated: acyclic-intransitive broken by ('1', '2', '3').\n  [fail] fact_types[rel_symmetric].constraints[0]: The relation 'rel_symmetric' is symmetric — violated: symmetric broken by ('1', '2').\n  [fail] fact_types[rel_symmetric_irreflexive].constraints[0]: The relation 'rel_symmetric_irreflexive' is symmetric-irreflexive — violated: symmetric-irreflexive broken by ('1', '1').\n  [fail] fact_types[rel_symmetric_intransitive].constraints[0]: The relation 'rel_symmetric_intransitive' is symmetric-intransitive — violated: symmetric-intransitive broken by ('1', '2').\n  [fail] fact_types[rel_purely_reflexive].constraints[0]: The relation 'rel_purely_reflexive' is purely-reflexive — violated: purely-reflexive broken by ('1', '2').\n  [fail] fact_types[rel_transitive].constraints[0]: The relation 'rel_transitive' is transitive — violated: transitive broken by ('1', '2', '3').\nADVISORY (deontic)\n  (none)\npass=1 fail=12 warning=0 unchecked=0 vacuous=0\nCOVERAGE\n  rel_irreflexive: declared, facts=1\n  rel_asymmetric: declared, facts=2\n  rel_intransitive: declared, facts=3\n  rel_antisymmetric: declared, facts=2\n  rel_acyclic: declared, facts=3\n  rel_asymmetric_intransitive: declared, facts=2\n  rel_acyclic_intransitive: declared, facts=3\n  rel_symmetric: declared, facts=1\n  rel_symmetric_irreflexive: declared, facts=1\n  rel_symmetric_intransitive: declared, facts=1\n  rel_purely_reflexive: declared, facts=1\n  rel_reflexive: declared, facts=2\n  rel_transitive: declared, facts=2\n"
+ },
+ "in_process": {
+  "ok": {
+   "excluded": [
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:irreflexive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:asymmetric:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:intransitive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:antisymmetric:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:acyclic:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:asymmetric-intransitive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:acyclic-intransitive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:symmetric:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:symmetric-irreflexive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:symmetric-intransitive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:purely-reflexive:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:reflexive:clean"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:ring:transitive:violated:alethic"
+    }
+   ],
+   "wire": {
+    "coverage": {
+     "rel_acyclic": {
+      "declared": "declared",
+      "facts": 3
+     },
+     "rel_acyclic_intransitive": {
+      "declared": "declared",
+      "facts": 3
+     },
+     "rel_antisymmetric": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "rel_asymmetric": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "rel_asymmetric_intransitive": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "rel_intransitive": {
+      "declared": "declared",
+      "facts": 3
+     },
+     "rel_irreflexive": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "rel_purely_reflexive": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "rel_reflexive": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "rel_symmetric": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "rel_symmetric_intransitive": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "rel_symmetric_irreflexive": {
+      "declared": "declared",
+      "facts": 1
+     },
+     "rel_transitive": {
+      "declared": "declared",
+      "facts": 2
+     }
+    },
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[rel_irreflexive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_irreflexive' is irreflexive — violated: irreflexive broken by ('1', '1').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        1
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_asymmetric].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_asymmetric' is asymmetric — violated: asymmetric broken by ('1', '2'); asymmetric broken by ('2', '1').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_intransitive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_intransitive' is intransitive — violated: intransitive broken by ('1', '2', '3').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2,
+        3
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_antisymmetric].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_antisymmetric' is antisymmetric — violated: antisymmetric broken by ('1', '2'); antisymmetric broken by ('2', '1').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_acyclic].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_acyclic' is acyclic — violated: cycle through '1' -> '2' -> '3' -> '1'.",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2,
+        3,
+        1
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_asymmetric_intransitive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_asymmetric_intransitive' is asymmetric-intransitive — violated: asymmetric-intransitive broken by ('1', '2'); asymmetric-intransitive broken by ('2', '1').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        1
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_acyclic_intransitive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_acyclic_intransitive' is acyclic-intransitive — violated: acyclic-intransitive broken by ('1', '2', '3').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2,
+        3
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_symmetric].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_symmetric' is symmetric — violated: symmetric broken by ('1', '2').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_symmetric_irreflexive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_symmetric_irreflexive' is symmetric-irreflexive — violated: symmetric-irreflexive broken by ('1', '1').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        1
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_symmetric_intransitive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_symmetric_intransitive' is symmetric-intransitive — violated: symmetric-intransitive broken by ('1', '2').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_purely_reflexive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_purely_reflexive' is purely-reflexive — violated: purely-reflexive broken by ('1', '2').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[rel_reflexive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_reflexive' is reflexive — satisfied.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "pass"
+     },
+     {
+      "constraint_ref": "fact_types[rel_transitive].constraints[0]",
+      "constraint_type": "ring",
+      "message": "The relation 'rel_transitive' is transitive — violated: transitive broken by ('1', '2', '3').",
+      "modality": "alethic",
+      "offending_facts": [
+       [
+        1,
+        2,
+        3
+       ]
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     }
+    ]
+   }
+  }
+ }
+}

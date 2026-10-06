@@ -1,0 +1,2342 @@
+[
+  {
+    "module": "gnd.model",
+    "name": "annotations",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "TYPE_CHECKING",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "json",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "math",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "re",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "Mapping",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "dataclass",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "UTC",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "date",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "datetime",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "files",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "Path",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "Any",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "Literal",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "Draft202012Validator",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "YAML",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "verbalize",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "atom_bind",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "atom_has_bind",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DeonticNote",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "Model",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ModelLoadError",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ModelValidationError",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ValidationIssue",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "issues_from_validation_error",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DEFAULT_LIMITS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "FLOAT_FUNCTION_ARITY",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "NUMERIC_PRIMITIVES",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "analyze_term",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "is_function_term",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "term_variables",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_DERIVATION_TERM_CACHE",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_fact_type_roles",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_resolved_primitive",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_supertype_parents",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "configure_comment_scanner",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_PLACEHOLDER",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "MAX_MODEL_BYTES",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "MAX_YAML_EVENTS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "yaml_stream_guard_error",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "structured_derivation_ids",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_load_meta_schema",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_DERIVATION_ARM_KEYS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_rule_hint",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_layer1_structural",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_constraints",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_role_refs",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_id_unique",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_cross_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_depends_on",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_reading_placeholders",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_fact_type_arity",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_names_distinct",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_subtype_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_external_ref_uc",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_reference_value_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_temporal_literal_valid",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_NUMERIC_PRIMITIVES",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_range_endpoints_valid",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_value_range_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_value_range_order",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_count_bound_order",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_status_source",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_string_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_ancestor_closure",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_ring_binary",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_ROLE_SEQ_FIELDS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_constraint_role_seqs",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_joining_sequences",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_join_anchor_unambiguous",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_role_object_types",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_seq_arity",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_seq_type_compat",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_disjunctive_subject_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_partition_asserts_something",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "NEVER_MECHANICAL_FAMILIES",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_anchored_role_and_recogniser",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_textual_alethic",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_modality_policy",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operations",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_operation_parameters",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operation_obligations",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operation_atoms",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operation_terms",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_variable_name",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_param_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_param_names_distinct",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_REPORTED_PARAMETER_LIMIT",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_reading_placeholders",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_atom_reference_issues",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_atom_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_term_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_term_type_compat",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_effect_ground",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_create_param",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_create_ref_mode",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_obligation_ids_distinct",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "IMPORTED_PROVENANCE_FIELDS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_provenance_bearing",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_provenance_bearing_label",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_imported_provenance",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_imported_confirmed_reviewed",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_internal_uniqueness_keys",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "dynamic_subject_is_functional",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_dynamic_functional",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_dynamic_untouched",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_modality_policy",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_guarded_constraints",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_guarded_atoms",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_guarded_consequent_terms",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_term_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_role_claim",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_consequent_ground",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_nested_function_variables",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_exists_range",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_exists_where_bound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_primitives_compatible",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_literal_matches_primitive",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_literal_kinds_compatible",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_comparison_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_exists_where_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_DERIVATION_RULE_KEYS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "iter_derivation_clauses",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_is_structured_rule",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_structured_fact_derivations",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_DERIVATION_ATOM_VISITS",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_DERIVATION_WORK",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_DERIVATION_CLASSIFICATION_WORK",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_atoms",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_safe_key",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_id",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_bind",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_variable",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_positive_variables",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_aggregate_variables",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "AggregateAnalysis",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "analyze_aggregate",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_scope_variables",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_primitive_maps",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_variable_primitives",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "analyze_declared_aggregate",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "body_components",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_dependencies",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DerivationEdge",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_dependency_edges",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DerivationStability",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DerivationClassification",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_dependency_closure",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_dependency_closures",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_classifications",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_components",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_strata",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_term_ref",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_rule_shape",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_aggregate_issues",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_shape",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_function",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_of_unbound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_over_unbound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_over_duplicate",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_as_not_fresh",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_input_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_where_scope",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_head_scope",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_head_needs_round",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_structured_on_object_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_effect_on_derived",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_effect_on_semiderived",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_dynamic_dependency_incomplete",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_role_claim",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_role_claim",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_head_term_issues",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_filter_derivation_term_issues",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_function_name",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_function_arity",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_argument_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_non_finite_number",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_node_budget",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_depth_budget",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_shape",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_unbound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_term_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_needs_round",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_float_head_unquantized",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_term_unbound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_comparison_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_unbound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_negate_unbound",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_body_component_unused",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_term_type",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_opaque_dependency",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_cycles",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_unstratified",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_temporal_language",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_SEMANTIC_RULES",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "semantic_validate",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model_bytes",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_load_model_no_follow",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_effect_index",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_variables_in",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_roles_by_variable",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_has_literal",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "compile_operation",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_attach_compiled_obligations",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "hashlib",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "os",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "weakref",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "contextmanager",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "artifacts",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "reference_model_digest",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "MAX_BYTES",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "MAX_SET_BYTES",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "MAX_ENTRIES",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_TOKEN",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_BOUND",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_COMBINED",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ReferenceInputError",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ReferenceOrigin",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "OccurrenceOrigin",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "BoundReferenceContext",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "BoundPopulationView",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "validate_reference_structure",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_relative",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "retained_root",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "validate_declarations",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_bind_at",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "bind_references",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "resolve_context",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "bind_population",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "candidate_fact_count",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "is_bound_population",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "BOUND",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "COMBINED",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "TOKEN",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "bind_at",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "relative",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "annotations",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "math",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Iterable",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Mapping",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Sequence",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "dataclass",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "replace",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "UTC",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "date",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "datetime",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "CycleError",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "TopologicalSorter",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "MappingProxyType",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Any",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Literal",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "NamedTuple",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Protocol",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "BaseModel",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Field",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "ValidationInfo",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "model_validator",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "extension_core",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "verbalize",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "derivation_address",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "positional_constraint_ref",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "atom_bind",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "atom_has_bind",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "UnregisteredBranchError",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "branch",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "constraint_variant",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "record_branch",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "time_relative_operand",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "FAMILIES",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "resolve_hook",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Model",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "UnvalidatedPopulationError",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DERIVATION_REASON_CODES",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "EXACT_DERIVATION_REASON_CODES",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DerivationFinding",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DerivationKind",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DerivationReason",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DerivationVerdict",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DynamicRefreshWork",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "ExtensionCalculator",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "FactPath",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "IdentityCodecVersion",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "JoinDisconnectedError",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "RelationUnavailable",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "RowLineage",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Scalar",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "StructuredExtensionView",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "VariableResolver",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "constraint_view_legacy",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "derivation_claims_against",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "evaluate_derivations_legacy",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "exact_extension_envelope",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "structured_extension_view",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_PARTIAL_OPAQUE",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_PHASE3_LEGACY_CONSTRAINT_VIEW",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_REFERENCE_PRESENTATION_WORK",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_WITNESS_TRACE",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ExactExtensionResult",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ExactExtensions",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ExactJoinWork",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ExtensionResult",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_FixpointJoinWork",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_JoinWork",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_PartialExtensions",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_PartialTermFailure",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_RuledFactView",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_TypedRelation",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_Wildcard",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_aggregate_bindings",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_aggregate_identity_token",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_apply_negation",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_base_relations",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_binding_lineages",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_clause_bindings",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_component_atoms",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_component_product",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_constraint_view",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_constraint_view_dispatch",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_count_term_work",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_derivation_obligation",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_evaluate_derivations",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_evaluate_derivations_dispatch",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_evaluate_stratified_extensions",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_exact_derivation_obligation",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_exact_extension_calculator",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_extension_fact_map",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_identity_token",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_joined_atom_candidates",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_joined_bindings",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_model_uses_exact_derivations",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_binding_shape",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_bindings",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_clause_rows",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_compatible",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_merge",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_negation",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_row_facts",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_token",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_project_extension",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_project_lineage",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_public_refresh_work",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_python_extension_calculator",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_relation_facts",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_relation_roles",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_requires_fixpoint",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_rows_by_identity",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_rows_from_facts",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_rule_uses_exact_terms",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_scalar_primitive_compatible",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_symbolic_value",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_witness",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_witness_charge",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_witness_row",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "AggregateAnalysis",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "BoundReferenceContext",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_derivation_variable",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "analyze_declared_aggregate",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "body_components",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "derivation_classifications",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "derivation_dependencies",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "derivation_strata",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "iter_derivation_clauses",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "ModelIndex",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Population",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "adapt_phase1_slice",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "phase1_refusal_reason",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "MAX_SLICE_CONSTRAINTS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "SliceInput",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "SliceVerdict",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "phase1_decide",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "DEFAULT_LIMITS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "compare_terms",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "evaluate_term",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "is_function_term",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "materialize_scalar",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "term_variables",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "IMPLEMENTED_FAMILIES",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "resolve_primitive",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "resolve_reference_value_type",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_RING_VARIANTS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_constraint_role_refs",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_denoting_types",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_descendant_closure",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_fact_type_by_id",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_instance_values_of",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_instances_of",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_is_implemented",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_kind_of",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_role_object_type",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_scope_fact_types",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_INVALID_LITERAL",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_IdentitySet",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_identity_key",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_literal",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Verdict",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_RING_COMPONENTS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "ConstraintVerdict",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "CoverageEntry",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Phase1Trace",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "CheckReport",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "band",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_legacy",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_observe_phase1_compatibility",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_plain_projected_witness",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_correspondence_message",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_value_comparison_message_inputs",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_compatibility_trace",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_OBJECT_TYPE_SCOPED",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_no_observable_subjects_message",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_JoinSubjectRow",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_JOIN_SUBJECT_SEQS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_joining_subject_sequences",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_no_joined_rows_message",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_MANDATORY_RELEVANT",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_vacuity_message",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "JoinAmbiguousError",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_project",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_identity_counts",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_join_rows",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_require_joinable",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_role_seq_tuples",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ref_labels",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_violation_verdict",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_orderable",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_in_range",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_find_cycle",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_dfs_cycle",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ring_component_violations",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_COMPARATORS",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_typed_comparison_values",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_compare",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_variable",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_FactView",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_bindings",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "structured_extension_facts",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_variable_primitives",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_ground_atom",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_atom_index",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_PHASE3_LEGACY_CHECK",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_term_failure",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_term_unavailable_constraint_verdict",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_record_aggregate_guarded_outcomes",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_constraint_report",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_check_dispatch",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_anchored_verdicts",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_with_anchors",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_partial",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_with_anchors_partial",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "effective_view",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_ring",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_mandatory",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_mandatory_disjunctive",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_uniqueness",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_value",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_frequency",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_subset",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_exclusive_or",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_value_comparison",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_cardinality",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_subtype_partition",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_guarded",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_flat_projected_witness",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_row_projected_witness",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_default",
+    "home": "gnd.checker._core"
+  }
+]

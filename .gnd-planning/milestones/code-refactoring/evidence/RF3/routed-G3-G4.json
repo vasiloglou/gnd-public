@@ -1,0 +1,31 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_checker_families.py",
+    "tests/test_model_validation.py",
+    "tests/test_model_v2.py",
+    "tests/test_population_load.py",
+    "tests/test_model_guarded.py",
+    "tests/test_derivation_rule.py",
+    "tests/test_derivation_covers.py",
+    "tests/test_public_semantic_adapter.py",
+    "tests/test_public_semantic_applicability.py",
+    "tests/test_public_derivation_evaluator_controls.py",
+    "tests/test_reference_population_corpus.py",
+    "tests/test_transition_corpus.py",
+    "tests/test_transition_report.py",
+    "tests/test_transition_mapping_totality.py",
+    "tests/test_model_verbalization.py",
+    "tests/test_measure_offline.py",
+    "tests/test_extract_manifest.py",
+    "tests/test_v70_phase1_adversarial.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 65.85137295722961
+}

@@ -1,0 +1,16 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf8_sessions.py tests/test_rf8_structure.py tests/test_public_v72_reader_boundaries.py tests/test_v71_phase4_successors.py --tb=short
+.............F..................................                         [100%]
+=================================== FAILURES ===================================
+_________________ test_v7_is_only_compatibility_strategy_hooks _________________
+tests/test_rf8_structure.py:50: in test_v7_is_only_compatibility_strategy_hooks
+    assert len(source.splitlines()) <= 60
+E   assert 142 <= 60
+E    +  where 142 = len(['"""Compatibility strategy hooks for version-7/8 session execution."""', 'import asyncio as asyncio  # noqa: F401 -- ...pfile as tempfile  # noqa: F401 -- historical binding', 'import time as time  # noqa: F401 -- historical binding', ...])
+E    +    where ['"""Compatibility strategy hooks for version-7/8 session execution."""', 'import asyncio as asyncio  # noqa: F401 -- ...pfile as tempfile  # noqa: F401 -- historical binding', 'import time as time  # noqa: F401 -- historical binding', ...] = <built-in method splitlines of str object at 0xc75d1d000>()
+E    +      where <built-in method splitlines of str object at 0xc75d1d000> = '"""Compatibility strategy hooks for version-7/8 session execution."""\nimport asyncio as asyncio  # noqa: F401 -- his...rom gnd.references import (\n    bind_references as bind_references,  # noqa: F401, PLC0414 -- historical binding\n)\n'.splitlines
+=========================== short test summary info ============================
+FAILED tests/test_rf8_structure.py::test_v7_is_only_compatibility_strategy_hooks
+1 failed, 47 passed in 12.02s
+
+Exit: 1

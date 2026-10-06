@@ -1,0 +1,19 @@
+{
+  "base": "a3f35a6",
+  "verified_source_commit": "60559aa916d0c156c9de791a110bfc9a2eaa97f3",
+  "touched_files": 169,
+  "test_data_added": 280,
+  "non_evidence_docs_added": 1055,
+  "moved_production_lines_upper_bound": 7854,
+  "verified_verbatim_definition_lines": 6608,
+  "production_added": 8695,
+  "nonrelocated_production_lines_upper_bound": 2087,
+  "ceilings": {
+    "touched_files": 170,
+    "test_data_added": 3000,
+    "non_evidence_docs_added": 1500,
+    "moved_production_lines": 9500,
+    "nonrelocated_production_lines": 2500
+  },
+  "method": "git diff --no-renames --numstat plus new files, excluding pre-existing .agents; full record/review metadata included. Old7854 module lines upper-bound moved lines; subtract only232 sha-verified definition lines from all production additions."
+}

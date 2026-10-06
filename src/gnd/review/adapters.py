@@ -21,7 +21,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
-from gnd.agent_cli import BoundedProcessResult, ProcessLimits, run_bounded_process
+from gnd.process import BoundedProcessResult, ProcessLimits, run_bounded_process
 
 __all__ = [
     "REVIEWER_IDS",

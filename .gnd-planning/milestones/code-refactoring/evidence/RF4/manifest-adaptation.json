@@ -1,0 +1,1234 @@
+[
+  {
+    "path": "AGENTS.md",
+    "before": {
+      "path": "AGENTS.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF3 D6 bounded core refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 4317,
+      "public_sha256": "d6444e4288ae753633c94f2b06c13c811ccaf874fc15dc2471fd87ae05d69f3d",
+      "mode": 420,
+      "baseline_sha256": "db3e24b35d15cc6f997e65ebb2666142d1c0e306721d06d44e00306fe2f1b8ea"
+    },
+    "after": {
+      "path": "AGENTS.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 4636,
+      "public_sha256": "16986afc848c69dc78b56d6ae971f019e8a29c019160f9614862dc62d4345a32",
+      "mode": 420,
+      "baseline_sha256": "db3e24b35d15cc6f997e65ebb2666142d1c0e306721d06d44e00306fe2f1b8ea"
+    }
+  },
+  {
+    "path": "CONTRIBUTING.md",
+    "before": {
+      "path": "CONTRIBUTING.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF3 D6 bounded core refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 3347,
+      "public_sha256": "e7c1cfec04adca6f48f4501c53ceb05b8b1be82ea3be756c2f22f84bdbac8308",
+      "mode": 420,
+      "baseline_sha256": "bf00c14334b5822a495c22f57c02a10f77adc49d27f63dff0bdbdfe137a6f2b4"
+    },
+    "after": {
+      "path": "CONTRIBUTING.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 3744,
+      "public_sha256": "fca2c9cb3e7b92bbb6bbd07ae93f80e96636590b49ff9ff03ead2126219b10a2",
+      "mode": 420,
+      "baseline_sha256": "bf00c14334b5822a495c22f57c02a10f77adc49d27f63dff0bdbdfe137a6f2b4"
+    }
+  },
+  {
+    "path": "src/gnd/agent_cli.py",
+    "before": {
+      "path": "src/gnd/agent_cli.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 37005,
+      "public_sha256": "6ec28bf6fca52124279c5a850678bb93dadfa9158cad87d74b3e6fdeae46d1aa",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/agent_cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6ec28bf6fca52124279c5a850678bb93dadfa9158cad87d74b3e6fdeae46d1aa"
+    },
+    "after": {
+      "path": "src/gnd/agent_cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 5652,
+      "public_sha256": "e94fe702043b744a24975b8aef0502507abd6778e33956a6b8adc5e3998453e4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/agent_cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6ec28bf6fca52124279c5a850678bb93dadfa9158cad87d74b3e6fdeae46d1aa"
+    }
+  },
+  {
+    "path": "src/gnd/api.py",
+    "before": {
+      "path": "src/gnd/api.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 55918,
+      "public_sha256": "cf6af945352ccca5db074e6f44b17acdc04f1e63c92dcc9f1217a2a1013e5d81",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/api.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0a2c0393004c2727d0ba88cd574643b64ab80e55104fe0aa9711ccfd4097c9af"
+    },
+    "after": {
+      "path": "src/gnd/api.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 31327,
+      "public_sha256": "50a8c4a227d6f9772707f984b89eab394dfbb6b09e1804a6ef2c95207c9130ed",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/api.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0a2c0393004c2727d0ba88cd574643b64ab80e55104fe0aa9711ccfd4097c9af"
+    }
+  },
+  {
+    "path": "src/gnd/assurance.py",
+    "before": {
+      "path": "src/gnd/assurance.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 23131,
+      "public_sha256": "0349a7ea230496649ede29817e5967d4eb5e2d4382b7b4029779fd37d3a16927",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "e21148dc30072b01834c285292e736ca2186258e88b1a0e0e3da7032ac3a8a30"
+    },
+    "after": null
+  },
+  {
+    "path": "src/gnd/assurance_claims.py",
+    "before": {
+      "path": "src/gnd/assurance_claims.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 12148,
+      "public_sha256": "6e5c14f998dfe043b308aaff6d2aa753dc9bbd8b2a4239898c0a3c69fcd3a609",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_claims.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6e5c14f998dfe043b308aaff6d2aa753dc9bbd8b2a4239898c0a3c69fcd3a609"
+    },
+    "after": {
+      "path": "src/gnd/assurance_claims.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 1012,
+      "public_sha256": "982d107a436addbaea38b7c2f7ce8fe24c00797a4a2fe0fa2515785443d358ee",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_claims.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6e5c14f998dfe043b308aaff6d2aa753dc9bbd8b2a4239898c0a3c69fcd3a609"
+    }
+  },
+  {
+    "path": "src/gnd/assurance_evidence.py",
+    "before": {
+      "path": "src/gnd/assurance_evidence.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 23523,
+      "public_sha256": "1427576e1b48b05d0f43535fff54f2a4a08d2163b66c852bbd00d5d2f799f1ec",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_evidence.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0dd672f28b9ca0a763746f9e0ee262cd88fc409c02c3ffe7efe63fc57663159e"
+    },
+    "after": {
+      "path": "src/gnd/assurance_evidence.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 5845,
+      "public_sha256": "cbce88de21c8f3426147723af48d288eb691b1fe5aeef063b89ae8684c7fd8b6",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_evidence.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0dd672f28b9ca0a763746f9e0ee262cd88fc409c02c3ffe7efe63fc57663159e"
+    }
+  },
+  {
+    "path": "src/gnd/assurance_inheritance.py",
+    "before": {
+      "path": "src/gnd/assurance_inheritance.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 22062,
+      "public_sha256": "cf6648f6a73c7ba6d7adb570050bd665d7a098873a6dca90efcdd2f50bed7a1c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_inheritance.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "cf6648f6a73c7ba6d7adb570050bd665d7a098873a6dca90efcdd2f50bed7a1c"
+    },
+    "after": {
+      "path": "src/gnd/assurance_inheritance.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 2129,
+      "public_sha256": "f4b1df9c5a9cb4dad64ec19374a658b8cc44b2d259f7d01f77f34808ec66fa96",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_inheritance.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "cf6648f6a73c7ba6d7adb570050bd665d7a098873a6dca90efcdd2f50bed7a1c"
+    }
+  },
+  {
+    "path": "src/gnd/assurance_transport.py",
+    "before": {
+      "path": "src/gnd/assurance_transport.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 8034,
+      "public_sha256": "495d2e8c1f557f20f80b8b1292ba5036682f13cc1e1364bc1daef8ad40eeb9e7",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_transport.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "495d2e8c1f557f20f80b8b1292ba5036682f13cc1e1364bc1daef8ad40eeb9e7"
+    },
+    "after": {
+      "path": "src/gnd/assurance_transport.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 3519,
+      "public_sha256": "dd5c1c28c27bcba36d24aff78edea182f3489fe4406129c01c99ab9456bcd20e",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/assurance_transport.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "495d2e8c1f557f20f80b8b1292ba5036682f13cc1e1364bc1daef8ad40eeb9e7"
+    }
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "before": {
+      "path": "src/gnd/cli.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 384488,
+      "public_sha256": "8f11b133cb0b5d1c2acd674412df185edf634d04bd23a970479633aaa59affe0",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "963b7838aaa60bf89fd4eb80eb443837b8a19e5ba8b9136dff93dede20e77724"
+    },
+    "after": {
+      "path": "src/gnd/cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 384895,
+      "public_sha256": "cbb5a32c1c315d43fc89c9e04a37f9f4a03a83e12d5cbe7799052b333b877e97",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "963b7838aaa60bf89fd4eb80eb443837b8a19e5ba8b9136dff93dede20e77724"
+    }
+  },
+  {
+    "path": "src/gnd/codegen/emit.py",
+    "before": {
+      "path": "src/gnd/codegen/emit.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 59245,
+      "public_sha256": "64afb543ca929ac26abf3ad4b112cd5c9e94c4bb03bd44b7dc25911d5b959857",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/codegen/emit.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "64afb543ca929ac26abf3ad4b112cd5c9e94c4bb03bd44b7dc25911d5b959857"
+    },
+    "after": {
+      "path": "src/gnd/codegen/emit.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 59677,
+      "public_sha256": "a7555d67c1ecafba7a9a2c5a287a5b4a00d3a0cfe7a6c1388f9fa293ce53608c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/codegen/emit.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "64afb543ca929ac26abf3ad4b112cd5c9e94c4bb03bd44b7dc25911d5b959857"
+    }
+  },
+  {
+    "path": "src/gnd/codegen/manifest.py",
+    "before": {
+      "path": "src/gnd/codegen/manifest.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 17372,
+      "public_sha256": "846805d2ee74b798ea1e053fc97634be48050b3423a86d1d3fd3c000a6ce69e8",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/codegen/manifest.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "846805d2ee74b798ea1e053fc97634be48050b3423a86d1d3fd3c000a6ce69e8"
+    },
+    "after": {
+      "path": "src/gnd/codegen/manifest.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 17413,
+      "public_sha256": "b6429f6928d7142ba4c70b3c5c7a2250574d68dceeaaf4f691e086d0fdb0b775",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/codegen/manifest.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "846805d2ee74b798ea1e053fc97634be48050b3423a86d1d3fd3c000a6ce69e8"
+    }
+  },
+  {
+    "path": "src/gnd/codegen/plan.py",
+    "before": {
+      "path": "src/gnd/codegen/plan.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 39141,
+      "public_sha256": "a2a73e7faf9cec911eb75fafc413ba39b940bc22b5289fe5ad4e5c016cb42660",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/codegen/plan.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "a2a73e7faf9cec911eb75fafc413ba39b940bc22b5289fe5ad4e5c016cb42660"
+    },
+    "after": {
+      "path": "src/gnd/codegen/plan.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 39204,
+      "public_sha256": "c72c30f792dbb071bfbf5e753f7c0919ef22935a0bd22fdab9d0567d2c224cab",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/codegen/plan.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "a2a73e7faf9cec911eb75fafc413ba39b940bc22b5289fe5ad4e5c016cb42660"
+    }
+  },
+  {
+    "path": "src/gnd/declared_adapter.py",
+    "before": {
+      "path": "src/gnd/declared_adapter.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 27109,
+      "public_sha256": "c481334cece4745dd52d9ab43c98b6db2247a346ba3adef683b2f2ac238c6e82",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/declared_adapter.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "cb192cb4da069d36027920fed7aa813c33c34244ad64bcb326c486ebe369936b"
+    },
+    "after": {
+      "path": "src/gnd/declared_adapter.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 27104,
+      "public_sha256": "89c463ff33f6a69e9305da7ff8d0d021a62eb7a2a5138673746d05ba0672c29b",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/declared_adapter.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "cb192cb4da069d36027920fed7aa813c33c34244ad64bcb326c486ebe369936b"
+    }
+  },
+  {
+    "path": "src/gnd/diff.py",
+    "before": {
+      "path": "src/gnd/diff.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 19234,
+      "public_sha256": "0d56c218bb7d7c56593c973109a9193b8ca632cdfa137158a25e1df8fabe5189",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/diff.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "67762cc812200aa80b57b5da8228afcee9d771040ab91ccf2b3dd3966961710e"
+    },
+    "after": {
+      "path": "src/gnd/diff.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 19339,
+      "public_sha256": "54157d19bfeb7d19d2dc2984aef12e1781216ceba8aba4ffaab3b7efcb007b61",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/diff.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "67762cc812200aa80b57b5da8228afcee9d771040ab91ccf2b3dd3966961710e"
+    }
+  },
+  {
+    "path": "src/gnd/evolve/service.py",
+    "before": {
+      "path": "src/gnd/evolve/service.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 82110,
+      "public_sha256": "55a54fd13a40d1e21348a936f57b9773208b282a386c55fbf08b603971a021d3",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/evolve/service.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "55a54fd13a40d1e21348a936f57b9773208b282a386c55fbf08b603971a021d3"
+    },
+    "after": {
+      "path": "src/gnd/evolve/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 82173,
+      "public_sha256": "e3105b2b8299c42d3e649e6cc94db40b476d5e22a926029d77df52223bb48c9f",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/evolve/service.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "55a54fd13a40d1e21348a936f57b9773208b282a386c55fbf08b603971a021d3"
+    }
+  },
+  {
+    "path": "src/gnd/exp/declared_invocation.py",
+    "before": {
+      "path": "src/gnd/exp/declared_invocation.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 4873,
+      "public_sha256": "c06878449ca0569e6a6f14204e0d263b5fa4dfa518a3d511bd0f8468b555e8d7",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/declared_invocation.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "c06878449ca0569e6a6f14204e0d263b5fa4dfa518a3d511bd0f8468b555e8d7"
+    },
+    "after": {
+      "path": "src/gnd/exp/declared_invocation.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 4893,
+      "public_sha256": "72d524e030264e833361a64b15315bd2d7ca3697c56702fb224953cd45ca4f27",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/declared_invocation.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "c06878449ca0569e6a6f14204e0d263b5fa4dfa518a3d511bd0f8468b555e8d7"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session.py",
+    "before": {
+      "path": "src/gnd/exp/session.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 59296,
+      "public_sha256": "6f944a7ffed92f5daa5ec6ff7a438b919678627a17594433135ccdb1cc57e858",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6f944a7ffed92f5daa5ec6ff7a438b919678627a17594433135ccdb1cc57e858"
+    },
+    "after": {
+      "path": "src/gnd/exp/session.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 59348,
+      "public_sha256": "85031e88c0a0b1ecd69167e26433959b49d05f33e793024d3178c9d4a8da0ea3",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6f944a7ffed92f5daa5ec6ff7a438b919678627a17594433135ccdb1cc57e858"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_eval.py",
+    "before": {
+      "path": "src/gnd/exp/session_eval.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 105590,
+      "public_sha256": "42a71939bd6f5555c7c3760da86b8c24b1c4824191402828eb9d2d1bc3819508",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_eval.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "225e78b9ba5556c3c6303111afbd3c172f4ad9540e2d1f4a87085dcb27108a09"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_eval.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 105589,
+      "public_sha256": "c20817c9f46f65bea23baabbc50a7279464ddf60a62ff22b61b4466f9ce13434",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_eval.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "225e78b9ba5556c3c6303111afbd3c172f4ad9540e2d1f4a87085dcb27108a09"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_store.py",
+    "before": {
+      "path": "src/gnd/exp/session_store.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 128884,
+      "public_sha256": "e7c7fd0bbbbafc25923136c41183b33aeec3f9633c5ba64661452d2b9c8190a1",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_store.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "7bd8b3d8dba43e6c7f360c962fa656ea3ce0cf29776f5481684590eefba02a25"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_store.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 128955,
+      "public_sha256": "5fad8cf8acc690a3c630e6e016df558c3e3cc858235a2d3f030e419454863edb",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_store.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "7bd8b3d8dba43e6c7f360c962fa656ea3ce0cf29776f5481684590eefba02a25"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_v7.py",
+    "before": {
+      "path": "src/gnd/exp/session_v7.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 42928,
+      "public_sha256": "0e9c04a84d2f3dcd3d788360286ae7fa2cecc8ef9991e80d9b37aa56dd871b88",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_v7.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0e9c04a84d2f3dcd3d788360286ae7fa2cecc8ef9991e80d9b37aa56dd871b88"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_v7.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 42959,
+      "public_sha256": "59c533065f5e50d89f7b9b6d02019b10cd82945fc5118c26fbc5c408e41d0c2f",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_v7.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0e9c04a84d2f3dcd3d788360286ae7fa2cecc8ef9991e80d9b37aa56dd871b88"
+    }
+  },
+  {
+    "path": "src/gnd/exp/tests_runner.py",
+    "before": {
+      "path": "src/gnd/exp/tests_runner.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 40731,
+      "public_sha256": "56a7fce7e46a2f1b63c8cdf2bebf5065c69fa16b5d6a7d30e9901a557dd3685d",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/tests_runner.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "56a7fce7e46a2f1b63c8cdf2bebf5065c69fa16b5d6a7d30e9901a557dd3685d"
+    },
+    "after": {
+      "path": "src/gnd/exp/tests_runner.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 40729,
+      "public_sha256": "b6cdaaad1cb632db4e673c30488a28829ccf8125cb50b33114f7ce27a867a3d4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/tests_runner.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "56a7fce7e46a2f1b63c8cdf2bebf5065c69fa16b5d6a7d30e9901a557dd3685d"
+    }
+  },
+  {
+    "path": "src/gnd/export/lean_cli.py",
+    "before": {
+      "path": "src/gnd/export/lean_cli.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 1499,
+      "public_sha256": "6286005476af2c01bcffac2e6140dfe54afc577a27a71790393ceed61579913f",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/export/lean_cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6286005476af2c01bcffac2e6140dfe54afc577a27a71790393ceed61579913f"
+    },
+    "after": {
+      "path": "src/gnd/export/lean_cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 1517,
+      "public_sha256": "068aa1f25232b6a4f1907917c638afc492213c853d044183daea15c88b8220f6",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/export/lean_cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6286005476af2c01bcffac2e6140dfe54afc577a27a71790393ceed61579913f"
+    }
+  },
+  {
+    "path": "src/gnd/export/souffle_cli.py",
+    "before": {
+      "path": "src/gnd/export/souffle_cli.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 1681,
+      "public_sha256": "8f87b856dc0a0b706faf6c117433a43f3a4047ff06cc1e2e5cc4ba383dcc3a11",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/export/souffle_cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "8f87b856dc0a0b706faf6c117433a43f3a4047ff06cc1e2e5cc4ba383dcc3a11"
+    },
+    "after": {
+      "path": "src/gnd/export/souffle_cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 1699,
+      "public_sha256": "c8151a73f4e36b10be8d074f1fff027d0aeb05dfc770619ad61897796f17181a",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/export/souffle_cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "8f87b856dc0a0b706faf6c117433a43f3a4047ff06cc1e2e5cc4ba383dcc3a11"
+    }
+  },
+  {
+    "path": "src/gnd/install.py",
+    "before": {
+      "path": "src/gnd/install.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 95297,
+      "public_sha256": "a30f3dbb5c37e6649985caa20769840c126fae6666836d0dfb7160b1ce7d9259",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/install.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "729896d4ec66827bd46426e4cf59389983622696094f3653c9dcf2133a77644a"
+    },
+    "after": {
+      "path": "src/gnd/install.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 79668,
+      "public_sha256": "3bd7b3253f126bf0175c085eec14628683ecd2a6a85e193ffc76d6d3f968b80a",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/install.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "729896d4ec66827bd46426e4cf59389983622696094f3653c9dcf2133a77644a"
+    }
+  },
+  {
+    "path": "src/gnd/report.py",
+    "before": {
+      "path": "src/gnd/report.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF3 D6 bounded core refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 31768,
+      "public_sha256": "f7baa12c6225f3ae39210296929d34a68676f5b87af87b984ddde8ca2f124a08",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/report.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "b6872bf3c84bcc1e660b45b25db0219b943356d42b9d01939ddbd98961afb342"
+    },
+    "after": {
+      "path": "src/gnd/report.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 5696,
+      "public_sha256": "a24c223e972a9234fccc33e2526a6586b0fbb6c988e737d22f7d1359da34fa7c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/report.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "b6872bf3c84bcc1e660b45b25db0219b943356d42b9d01939ddbd98961afb342"
+    }
+  },
+  {
+    "path": "src/gnd/review/adapters.py",
+    "before": {
+      "path": "src/gnd/review/adapters.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 20385,
+      "public_sha256": "8ff87f5469956e18509ce9426ceb571ce2087adf960b636c95c8ff8a0a854ccb",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/review/adapters.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "8ff87f5469956e18509ce9426ceb571ce2087adf960b636c95c8ff8a0a854ccb"
+    },
+    "after": {
+      "path": "src/gnd/review/adapters.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 20383,
+      "public_sha256": "2276e3ad7e0042535a0371b9e86dbd4c11ee1efb291d85a69afef33a976162e7",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/review/adapters.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "8ff87f5469956e18509ce9426ceb571ce2087adf960b636c95c8ff8a0a854ccb"
+    }
+  },
+  {
+    "path": "src/gnd/review/runner.py",
+    "before": {
+      "path": "src/gnd/review/runner.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 69020,
+      "public_sha256": "7d3a02dacf540f81f7f12f97e76635a26397f8b454a3c5358376b8da23ed4ac4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/review/runner.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "7d3a02dacf540f81f7f12f97e76635a26397f8b454a3c5358376b8da23ed4ac4"
+    },
+    "after": {
+      "path": "src/gnd/review/runner.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 69018,
+      "public_sha256": "666193552467548d9d1e591fef64743874b2a0ca56ccd26da447ae9bdccff33e",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/review/runner.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "7d3a02dacf540f81f7f12f97e76635a26397f8b454a3c5358376b8da23ed4ac4"
+    }
+  },
+  {
+    "path": "src/gnd/synth/assemble.py",
+    "before": {
+      "path": "src/gnd/synth/assemble.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 99799,
+      "public_sha256": "88feb46eb10611cdc2ec8026b6ac21dd54ea35b2fae8d5bfb2bca10ec2c74164",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/assemble.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "07227b1690dc5757e4727cb693a36636c9457678c9fff7e8d07c8a43e15b3193"
+    },
+    "after": {
+      "path": "src/gnd/synth/assemble.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 33740,
+      "public_sha256": "7b85482aa89bc32d212591cb92dba081fff9a04c69af4a1dfa82b4e8c25353f7",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/assemble.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "07227b1690dc5757e4727cb693a36636c9457678c9fff7e8d07c8a43e15b3193"
+    }
+  },
+  {
+    "path": "src/gnd/synth/boundary.py",
+    "before": {
+      "path": "src/gnd/synth/boundary.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 93281,
+      "public_sha256": "a7d1d3012a0fb3b8ccbfe3b540e504084953a1a84ce2bb051696ecf897afb16d",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/boundary.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "a7d1d3012a0fb3b8ccbfe3b540e504084953a1a84ce2bb051696ecf897afb16d"
+    },
+    "after": {
+      "path": "src/gnd/synth/boundary.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 95969,
+      "public_sha256": "2e17ec8a8baabedeabba8f76e5abf555ee61ddfbd627257bd93acdcc89e4af43",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/boundary.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "a7d1d3012a0fb3b8ccbfe3b540e504084953a1a84ce2bb051696ecf897afb16d"
+    }
+  },
+  {
+    "path": "src/gnd/synth/mutate.py",
+    "before": {
+      "path": "src/gnd/synth/mutate.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 96326,
+      "public_sha256": "d5f69b4ddf6f1a4c8ea0ffff0052c738af6da2da95fa4ba5b46e058cc02e6bd2",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/mutate.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "98a008a82dd44a80aa3b2c9646e4d33a32123ac95b350634111baba06f5d7d82"
+    },
+    "after": {
+      "path": "src/gnd/synth/mutate.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 20635,
+      "public_sha256": "ba4c8b85257d52a70897e36ca373a61a021236ed1c36002b76ca82a002412e8c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/mutate.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "98a008a82dd44a80aa3b2c9646e4d33a32123ac95b350634111baba06f5d7d82"
+    }
+  },
+  {
+    "path": "src/gnd/synth/paths.py",
+    "before": {
+      "path": "src/gnd/synth/paths.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 2661,
+      "public_sha256": "fe580aa0b08abd88939cd585b4e2c540d5de549d66753afa508a8df3ba9e3127",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/paths.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "fe580aa0b08abd88939cd585b4e2c540d5de549d66753afa508a8df3ba9e3127"
+    },
+    "after": {
+      "path": "src/gnd/synth/paths.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 2669,
+      "public_sha256": "56b0f49e3a73ad4fb1a5ff613a6acc7ce73226bc8dd51c9a67bf467c3d511775",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/paths.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "fe580aa0b08abd88939cd585b4e2c540d5de549d66753afa508a8df3ba9e3127"
+    }
+  },
+  {
+    "path": "src/gnd/witness/cli.py",
+    "before": {
+      "path": "src/gnd/witness/cli.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 2746,
+      "public_sha256": "e09cd18a080ce19ee675299e4c7567a577df6f83d7394c7ea4ad64e4b556bd20",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/witness/cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "e09cd18a080ce19ee675299e4c7567a577df6f83d7394c7ea4ad64e4b556bd20"
+    },
+    "after": {
+      "path": "src/gnd/witness/cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 2765,
+      "public_sha256": "0f06dd6c8c45e5056465107e9ee3ee2fbf92f1822832e426dbd3d13239eeba55",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/witness/cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "e09cd18a080ce19ee675299e4c7567a577df6f83d7394c7ea4ad64e4b556bd20"
+    }
+  },
+  {
+    "path": "tests/support/public_probe.py",
+    "before": {
+      "path": "tests/support/public_probe.py",
+      "kind": "authored",
+      "reason": "approved bounded P2 test/corpus successor",
+      "bytes": 5688,
+      "public_sha256": "f6af666730899ba8529ea4aa186ee98c331323a0e8596fbf17f226824daeb94b",
+      "mode": 420,
+      "baseline_sha256": null
+    },
+    "after": {
+      "path": "tests/support/public_probe.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 5688,
+      "public_sha256": "15b884d76d313d7fcd40b808dcf693751a02a1f3a39e461b7e9f1ab006a75f0a",
+      "mode": 420,
+      "baseline_sha256": null
+    }
+  },
+  {
+    "path": "tests/test_agent_cli.py",
+    "before": {
+      "path": "tests/test_agent_cli.py",
+      "kind": "adaptation",
+      "reason": "Comments/docstrings removed and import groups/unused imports normalized. Exact original Python process fixture,50ms timeout,200ms grace,<400ms elapsed and all23 original process controls restored. Prior shell fixture and accidental omission of three neighboring controls superseded; no timing success claimed until supported CI.",
+      "baseline_sha256": "2b58beefdfe5cc6617adf4d11db0de503848439f3e5e7841709db926f8661f1d",
+      "public_sha256": "91e0c766d38bf18c45aaf403153e24b99c0b248876f636a9f5844e7586567bb0",
+      "bytes": 29002,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_agent_cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "2b58beefdfe5cc6617adf4d11db0de503848439f3e5e7841709db926f8661f1d",
+      "public_sha256": "eeaa0bf4f08a2c2f37b49339a05a99e5c1ea45628240218e7dc657a3b339ad1d",
+      "bytes": 29474,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_codegen_force.py",
+    "before": {
+      "path": "tests/test_codegen_force.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "public_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "bytes": 68000,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_codegen_force.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "5543268717ea09755c5fa7034cbefeecc18d6cae6e65c4cca3625537d4fa06eb",
+      "public_sha256": "077c7db7a57a82205351265db5f83e1cd2e3844424a4477478d3e669bf9052d9",
+      "bytes": 67992,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_report_json.py",
+    "before": {
+      "path": "tests/test_report_json.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "public_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "bytes": 30758,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_report_json.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "95c2af5fc8f68032b8e9a0dfbdfd87b81a14d06e81247855bb1a3e0c69aadb1c",
+      "public_sha256": "af1fa8a4334ff97fc0ca8fde80b24bfc2afad784d135a6a0296574499a3c29d9",
+      "bytes": 30791,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_synth_false_pass_quarantine.py",
+    "before": {
+      "path": "tests/test_synth_false_pass_quarantine.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "0b71dfbc86136f7971cf30415eae58bfe3a6313e017f43a20ee914c0e89be42a",
+      "public_sha256": "0b71dfbc86136f7971cf30415eae58bfe3a6313e017f43a20ee914c0e89be42a",
+      "bytes": 7349,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_synth_false_pass_quarantine.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "0b71dfbc86136f7971cf30415eae58bfe3a6313e017f43a20ee914c0e89be42a",
+      "public_sha256": "77a31cceb8de91a4112c65cb7caff3dea6ff4ba70bbf5478301e1937714796f1",
+      "bytes": 7643,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_synth_mutate.py",
+    "before": {
+      "path": "tests/test_synth_mutate.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "a77efd2b2e13fa3c82a7403fe24257eea93f0d17af34b87f58e8a11dc646acf9",
+      "public_sha256": "a77efd2b2e13fa3c82a7403fe24257eea93f0d17af34b87f58e8a11dc646acf9",
+      "bytes": 34898,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_synth_mutate.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "a77efd2b2e13fa3c82a7403fe24257eea93f0d17af34b87f58e8a11dc646acf9",
+      "public_sha256": "31aaff483fda1f9bd6402b8327649cc57333e5a462e21e5a4dc250ed3a09542c",
+      "bytes": 34918,
+      "mode": 420
+    }
+  },
+  {
+    "path": "src/gnd/agents.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/agents.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 16364,
+      "public_sha256": "08e19a668c69a860f12b7aa20e50710d0db12b66a22ffb120b409b0a5b48155a",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "08e19a668c69a860f12b7aa20e50710d0db12b66a22ffb120b409b0a5b48155a"
+    }
+  },
+  {
+    "path": "src/gnd/assurance/__init__.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/assurance/__init__.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 3384,
+      "public_sha256": "dab17c7cc9e4a0cc51032e89af4d790d973a729a381327105221a74625cbc354",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "dab17c7cc9e4a0cc51032e89af4d790d973a729a381327105221a74625cbc354"
+    }
+  },
+  {
+    "path": "src/gnd/assurance/_wire.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/assurance/_wire.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 11576,
+      "public_sha256": "a6dab49d12be55406be09a0aaf3e8436c1bbd6718a37ef829598673a16978a95",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a6dab49d12be55406be09a0aaf3e8436c1bbd6718a37ef829598673a16978a95"
+    }
+  },
+  {
+    "path": "src/gnd/assurance/claims.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/assurance/claims.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 12166,
+      "public_sha256": "0d526513f57dc6c85806ef932e8cc059ae7318c7d60ca916d17cf82aeb3bbb37",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "0d526513f57dc6c85806ef932e8cc059ae7318c7d60ca916d17cf82aeb3bbb37"
+    }
+  },
+  {
+    "path": "src/gnd/assurance/evidence.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/assurance/evidence.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 17404,
+      "public_sha256": "6c88ec04fac5cd64e0175e501b98617d99508e4bb502bdaf99fe91e24fd8eb99",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "6c88ec04fac5cd64e0175e501b98617d99508e4bb502bdaf99fe91e24fd8eb99"
+    }
+  },
+  {
+    "path": "src/gnd/assurance/inheritance.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/assurance/inheritance.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 22889,
+      "public_sha256": "0169f712cd554d4e72e76cae6b607a5702fc7e962e5f3c56c0be0f61b5808548",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "0169f712cd554d4e72e76cae6b607a5702fc7e962e5f3c56c0be0f61b5808548"
+    }
+  },
+  {
+    "path": "src/gnd/assurance/transport.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/assurance/transport.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 8983,
+      "public_sha256": "abfbc133343fea9f17216de595c13b313a918222f68219a9edc15d20d16d786c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "abfbc133343fea9f17216de595c13b313a918222f68219a9edc15d20d16d786c"
+    }
+  },
+  {
+    "path": "src/gnd/checking_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/checking_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 23133,
+      "public_sha256": "e2f3c65af519895670a37f785498f24b895c8faf12b2253663cb3339b9e98242",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "e2f3c65af519895670a37f785498f24b895c8faf12b2253663cb3339b9e98242"
+    }
+  },
+  {
+    "path": "src/gnd/export/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/export/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 3727,
+      "public_sha256": "25504845410d10d54e6c9ff2f66c44b0af72182c0a52cb353f14d538d63e6237",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "25504845410d10d54e6c9ff2f66c44b0af72182c0a52cb353f14d538d63e6237"
+    }
+  },
+  {
+    "path": "src/gnd/payloads.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/payloads.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 33095,
+      "public_sha256": "b68700914da3ca576b1833bb7deb73394a9ad6bbd6e302d347d814cf07a76ef7",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "b68700914da3ca576b1833bb7deb73394a9ad6bbd6e302d347d814cf07a76ef7"
+    }
+  },
+  {
+    "path": "src/gnd/process.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/process.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 23107,
+      "public_sha256": "f27268a203c5f9f77f7bf50107f0cedbdad1ccbceaf5651ca42b985d1fb5d0cd",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "f27268a203c5f9f77f7bf50107f0cedbdad1ccbceaf5651ca42b985d1fb5d0cd"
+    }
+  },
+  {
+    "path": "src/gnd/safefs.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/safefs.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 20184,
+      "public_sha256": "76afa2e97094e957d98bbc305ba40a5ab1151d37e0e711e6a966e8a8c766c9be",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "76afa2e97094e957d98bbc305ba40a5ab1151d37e0e711e6a966e8a8c766c9be"
+    }
+  },
+  {
+    "path": "src/gnd/synth/oracle/__init__.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/synth/oracle/__init__.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 4387,
+      "public_sha256": "437aa6fce688e1183e11cca6fa0ad4d5ed32bdc1e736753479215c61bb8c1841",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "437aa6fce688e1183e11cca6fa0ad4d5ed32bdc1e736753479215c61bb8c1841"
+    }
+  },
+  {
+    "path": "src/gnd/synth/oracle/constructive.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 75544,
+      "public_sha256": "fc54df86d72636bdcb3be5285aa634c7c5789f8435e402227f71b9b410cdd196",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "fc54df86d72636bdcb3be5285aa634c7c5789f8435e402227f71b9b410cdd196"
+    }
+  },
+  {
+    "path": "src/gnd/synth/oracle/mutations.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 74347,
+      "public_sha256": "c46cf1ea1ec27622396eb75980313d23ad4a42edf3ef0db96d910c4aad331b05",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "c46cf1ea1ec27622396eb75980313d23ad4a42edf3ef0db96d910c4aad331b05"
+    }
+  },
+  {
+    "path": "src/gnd/synth/oracle/state.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/synth/oracle/state.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 28973,
+      "public_sha256": "a6dbdbbb9a0e2b6f5269e7dd1a7db07d6d85fad68b04b3654b13add356c12b69",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a6dbdbbb9a0e2b6f5269e7dd1a7db07d6d85fad68b04b3654b13add356c12b69"
+    }
+  },
+  {
+    "path": "src/gnd/witness/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/witness/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 3774,
+      "public_sha256": "8a4de9b69b3e04d56526c19ede875bd4834d890791c806321ee4b01584cfb9d4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "8a4de9b69b3e04d56526c19ede875bd4834d890791c806321ee4b01584cfb9d4"
+    }
+  }
+]

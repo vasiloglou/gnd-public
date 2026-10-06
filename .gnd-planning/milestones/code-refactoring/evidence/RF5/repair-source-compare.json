@@ -1,0 +1,265 @@
+{
+ "base": "29915d9f7651151d3a6f3c169764c7c84ab0110d",
+ "files": [
+  {
+   "added": 3,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/checking_service.py",
+   "removed": 0
+  },
+  {
+   "added": 514,
+   "moved_in": 0,
+   "moved_out": 8141,
+   "path": "src/gnd/cli.py",
+   "removed": 8903
+  },
+  {
+   "added": 326,
+   "moved_in": 297,
+   "moved_out": 0,
+   "path": "src/gnd/codegen/service.py",
+   "removed": 0
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/commands/__init__.py",
+   "removed": 0
+  },
+  {
+   "added": 72,
+   "moved_in": 50,
+   "moved_out": 0,
+   "path": "src/gnd/commands/_arguments.py",
+   "removed": 0
+  },
+  {
+   "added": 322,
+   "moved_in": 264,
+   "moved_out": 0,
+   "path": "src/gnd/commands/_output.py",
+   "removed": 0
+  },
+  {
+   "added": 700,
+   "moved_in": 574,
+   "moved_out": 0,
+   "path": "src/gnd/commands/checking.py",
+   "removed": 0
+  },
+  {
+   "added": 72,
+   "moved_in": 46,
+   "moved_out": 0,
+   "path": "src/gnd/commands/codegen.py",
+   "removed": 0
+  },
+  {
+   "added": 78,
+   "moved_in": 51,
+   "moved_out": 0,
+   "path": "src/gnd/commands/conformance.py",
+   "removed": 0
+  },
+  {
+   "added": 60,
+   "moved_in": 34,
+   "moved_out": 0,
+   "path": "src/gnd/commands/doccheck.py",
+   "removed": 0
+  },
+  {
+   "added": 156,
+   "moved_in": 125,
+   "moved_out": 0,
+   "path": "src/gnd/commands/evolve.py",
+   "removed": 0
+  },
+  {
+   "added": 672,
+   "moved_in": 577,
+   "moved_out": 0,
+   "path": "src/gnd/commands/exp.py",
+   "removed": 0
+  },
+  {
+   "added": 85,
+   "moved_in": 48,
+   "moved_out": 0,
+   "path": "src/gnd/commands/export.py",
+   "removed": 0
+  },
+  {
+   "added": 51,
+   "moved_in": 25,
+   "moved_out": 0,
+   "path": "src/gnd/commands/extract.py",
+   "removed": 0
+  },
+  {
+   "added": 72,
+   "moved_in": 45,
+   "moved_out": 0,
+   "path": "src/gnd/commands/fidelity.py",
+   "removed": 0
+  },
+  {
+   "added": 54,
+   "moved_in": 30,
+   "moved_out": 0,
+   "path": "src/gnd/commands/judgments.py",
+   "removed": 0
+  },
+  {
+   "added": 581,
+   "moved_in": 475,
+   "moved_out": 0,
+   "path": "src/gnd/commands/lifecycle.py",
+   "removed": 0
+  },
+  {
+   "added": 73,
+   "moved_in": 46,
+   "moved_out": 0,
+   "path": "src/gnd/commands/measure.py",
+   "removed": 0
+  },
+  {
+   "added": 164,
+   "moved_in": 135,
+   "moved_out": 0,
+   "path": "src/gnd/commands/recovery.py",
+   "removed": 0
+  },
+  {
+   "added": 213,
+   "moved_in": 170,
+   "moved_out": 0,
+   "path": "src/gnd/commands/review.py",
+   "removed": 0
+  },
+  {
+   "added": 257,
+   "moved_in": 214,
+   "moved_out": 0,
+   "path": "src/gnd/commands/solve.py",
+   "removed": 0
+  },
+  {
+   "added": 104,
+   "moved_in": 77,
+   "moved_out": 0,
+   "path": "src/gnd/commands/synth.py",
+   "removed": 0
+  },
+  {
+   "added": 107,
+   "moved_in": 79,
+   "moved_out": 0,
+   "path": "src/gnd/commands/verify.py",
+   "removed": 0
+  },
+  {
+   "added": 32,
+   "moved_in": 5,
+   "moved_out": 0,
+   "path": "src/gnd/commands/witness.py",
+   "removed": 0
+  },
+  {
+   "added": 48,
+   "moved_in": 36,
+   "moved_out": 0,
+   "path": "src/gnd/conformance/cli_service.py",
+   "removed": 0
+  },
+  {
+   "added": 726,
+   "moved_in": 646,
+   "moved_out": 0,
+   "path": "src/gnd/evolve/cli_service.py",
+   "removed": 0
+  },
+  {
+   "added": 500,
+   "moved_in": 439,
+   "moved_out": 0,
+   "path": "src/gnd/exp/cli_service.py",
+   "removed": 0
+  },
+  {
+   "added": 535,
+   "moved_in": 490,
+   "moved_out": 0,
+   "path": "src/gnd/export/verification_service.py",
+   "removed": 0
+  },
+  {
+   "added": 225,
+   "moved_in": 186,
+   "moved_out": 0,
+   "path": "src/gnd/extract/service.py",
+   "removed": 0
+  },
+  {
+   "added": 324,
+   "moved_in": 285,
+   "moved_out": 0,
+   "path": "src/gnd/fidelity/doccheck_service.py",
+   "removed": 0
+  },
+  {
+   "added": 403,
+   "moved_in": 352,
+   "moved_out": 0,
+   "path": "src/gnd/fidelity/service.py",
+   "removed": 0
+  },
+  {
+   "added": 494,
+   "moved_in": 440,
+   "moved_out": 0,
+   "path": "src/gnd/measure/service.py",
+   "removed": 0
+  },
+  {
+   "added": 632,
+   "moved_in": 559,
+   "moved_out": 0,
+   "path": "src/gnd/recovery/service.py",
+   "removed": 0
+  },
+  {
+   "added": 333,
+   "moved_in": 288,
+   "moved_out": 0,
+   "path": "src/gnd/review/service.py",
+   "removed": 0
+  },
+  {
+   "added": 387,
+   "moved_in": 340,
+   "moved_out": 0,
+   "path": "src/gnd/synth/corpus_service.py",
+   "removed": 0
+  },
+  {
+   "added": 788,
+   "moved_in": 713,
+   "moved_out": 0,
+   "path": "src/gnd/synth/service.py",
+   "removed": 0
+  }
+ ],
+ "head": "6a57d4e20260b72e0245aedbb0195fbfd4643e6d",
+ "schema_version": 1,
+ "totals": {
+  "added": 10164,
+  "moved_in": 8141,
+  "moved_out": 8141,
+  "removed": 8903
+ }
+}

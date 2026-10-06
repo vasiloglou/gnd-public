@@ -1,0 +1,24 @@
+{
+ "observed": {
+  "alias": {
+   "ok": "YAML document '<tmp>/alias.yaml' uses an anchor/alias ('*x') — aliases are rejected for untrusted input (alias-amplification defense, T-01-02)"
+  },
+  "anchor-only": {
+   "ok": null
+  },
+  "invalid": {
+   "message": "while parsing a flow sequence\n  in \"<tmp>/invalid.yaml\", line 1, column 4\nexpected ',' or ']', but got '<stream end>'\n  in \"<tmp>/invalid.yaml\", line 2, column 1",
+   "raises": "ruamel.yaml.parser.ParserError"
+  },
+  "large-stream": {
+   "ok": null
+  },
+  "mapping": {
+   "ok": null
+  },
+  "two-documents": {
+   "ok": null
+  }
+ },
+ "site": "yaml_guard|gnd.model:yaml_stream_guard_error"
+}

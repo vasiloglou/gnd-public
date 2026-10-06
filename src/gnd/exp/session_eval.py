@@ -20,8 +20,14 @@ from pydantic import (
 )
 
 from gnd import checker
-from gnd.agent_cli import InvocationResult
-from gnd.artifacts import canonical_json_text
+from gnd import input_policy as _rf7_input
+from gnd.agents import InvocationResult
+from gnd.artifacts import (
+    Sha256,
+    canonical_json_text,
+    reject_json_constant,
+    reject_json_duplicate_pairs_result,
+)
 from gnd.checker import CheckReport
 from gnd.exp.session_contract import (
     ConstraintSatisfactionAcceptance,
@@ -33,7 +39,7 @@ from gnd.exp.session_contract import (
     WalkAcceptance,
 )
 from gnd.exp.tests_runner import TestsAcceptanceFeedback
-from gnd.report import (
+from gnd.payloads import (
     DERIVATION_PAYLOAD_SCHEMA_VERSIONS,
     MAX_POPULATION_ISSUES,
     PAYLOAD_SCHEMA_VERSION,
@@ -104,7 +110,7 @@ TRANSITION_FEEDBACK_SCHEMA_VERSION = 5
 REDACTION_FEEDBACK_SCHEMA_VERSION = 6
 WALK_FLOOR_FEEDBACK_SCHEMA_VERSION = 7
 
-Sha256 = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
+
 NonEmptyString = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 MachineToken = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9-]{0,127}$")]
 MachineIdentifier = Annotated[
@@ -1312,7 +1318,7 @@ class AttemptFeedback(BaseModel):
         """
         if isinstance(json_data, bytearray):
             json_data = bytes(json_data)
-        return cls.model_validate(json.loads(json_data), *args, **kwargs)
+        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_validator(mode="after")
     def _ordered_current_case_sets(self) -> Self:
@@ -1376,20 +1382,11 @@ def _strict_object(raw: bytes) -> dict[str, Any]:
     except UnicodeDecodeError as error:
         raise VerifierPayloadError([f"payload is not UTF-8: {error}"]) from error
 
-    def reject_constant(token: str) -> None:
-        raise ValueError(f"non-finite JSON number {token!r} is forbidden")
 
-    def reject_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-        result: dict[str, Any] = {}
-        for key, value in pairs:
-            if key in result:
-                raise ValueError(f"duplicate JSON key {key!r}")
-            result[key] = value
-        return result
 
-    decoder = json.JSONDecoder(
-        parse_constant=reject_constant,
-        object_pairs_hook=reject_duplicate_pairs,
+    decoder = _rf7_input.JSONDecoder(
+        parse_constant=reject_json_constant,
+        object_pairs_hook=reject_json_duplicate_pairs_result,
     )
     try:
         payload, end = decoder.raw_decode(text.lstrip())
@@ -2120,7 +2117,7 @@ def best_key(
 ) -> tuple[int, ...]:
     """Return the locked ascending rank from the shared case decision seam."""
 
-    if contract.schema_version in {7, 8} and contract.ranking:
+    if contract.profile.patch and contract.ranking:
         pairs = tuple(
             item
             for row in ranking_observations(contract, attempt)

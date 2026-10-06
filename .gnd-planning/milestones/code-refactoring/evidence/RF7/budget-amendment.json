@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-06",
+  "authorization": "RF7 auto delegation persists for bounded amendments and corpus changes; owner explicitly authorized phase and review",
+  "measured_touched_files": 183,
+  "original_touched_file_ceiling": 180,
+  "amended_touched_file_ceiling": 210,
+  "remaining_artifact_allowance": 27,
+  "reason": "Retain mandated independent-review red/green/native and original/repair evidence separately; production scope unchanged",
+  "other_ceilings_unchanged": true,
+  "spec_sha256": "487ebcc066eb6d5080b3e84596b586f248ef50e12a44bf41423ad65d3566bc7e"
+}

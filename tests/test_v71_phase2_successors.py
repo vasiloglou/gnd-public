@@ -1,6 +1,8 @@
+
 import shutil
 from pathlib import Path
 
+import gnd.checker._core as checker_core
 from gnd import api
 from gnd.model import load_model_bytes
 
@@ -79,7 +81,7 @@ def test_deontic_dirty_presentation_producer_cannot_return_clean(tmp_path, monke
 
     def dirty_bindings(*args, **kwargs):
         return original(*args, **kwargs) * 100001
-    monkeypatch.setattr(checker, '_guarded_bindings', dirty_bindings)
+    monkeypatch.setattr(checker_core, '_guarded_bindings', dirty_bindings)
     report = api.check(bundle['root'] / 'model.orm.yaml', bundle['root'] / 'candidate.pop.json')
     assert report['exit_code'] == 4
 
@@ -102,7 +104,7 @@ def test_deontic_dirty_presentation_admission_retains_provenance(tmp_path, monke
 
     def dirty_bindings(*args, **kwargs):
         return original(*args, **kwargs) * 100001
-    monkeypatch.setattr(checker, '_guarded_bindings', dirty_bindings)
+    monkeypatch.setattr(checker_core, '_guarded_bindings', dirty_bindings)
     report = api.check(bundle['root'] / 'model.orm.yaml', bundle['root'] / 'candidate.pop.json', admission=True)
     assert report['exit_code'] == 4
     assert len(report['report']['admission']['blocked']) == 2

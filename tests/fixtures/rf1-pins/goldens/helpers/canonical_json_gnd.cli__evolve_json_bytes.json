@@ -1,0 +1,50 @@
+{
+ "observed": {
+  "decimal": {
+   "message": "'decimal.Decimal' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "empty-object": {
+   "message": "'dict' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "infinity": {
+   "message": "'float' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "int-key": {
+   "message": "'dict' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "large-float": {
+   "message": "'float' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "nan": {
+   "message": "'float' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "nested-ordering": {
+   "message": "'dict' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "non-ascii-text": {
+   "message": "'str' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "pydantic-model": {
+   "ok": {
+    "hex": "7b0a202022636f756e74223a20322c0a2020226e616d65223a2022c3a9220a7d0a"
+   }
+  },
+  "scalars": {
+   "message": "'list' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  },
+  "trailing-newline-string": {
+   "message": "'str' object has no attribute 'model_dump'",
+   "raises": "builtins.AttributeError"
+  }
+ },
+ "site": "canonical_json|gnd.cli:_evolve_json_bytes"
+}

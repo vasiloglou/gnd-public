@@ -1,0 +1,92 @@
+{
+ "ok": {
+  "constraints[0]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[1]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[2]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[3]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[4]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[5]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[6]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[7]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[8]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "constraints[9]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  },
+  "fact_types[person_takes_course].constraints[0]": {
+   "data": {
+    "expected_verdict": "fail",
+    "ground_truth": "violated",
+    "reason": null
+   },
+   "model": "ExpectedState"
+  }
+ }
+}

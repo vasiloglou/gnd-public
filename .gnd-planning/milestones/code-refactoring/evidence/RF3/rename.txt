@@ -1,0 +1,20 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_pin_harness.py tests/test_rf2_instrument.py tests/test_rf2_digest_predicate.py tests/test_rf2_helpers.py tests/test_rf2_pre_move_pins.py tests/test_rf2_review_regressions.py --tb=short
+........................................................................ [ 15%]
+........................................................................ [ 31%]
+........................................................................ [ 47%]
+........................................................................ [ 63%]
+........................................................................ [ 79%]
+........................................................................ [ 95%]
+........F.............                                                   [100%]
+=================================== FAILURES ===================================
+______________ test_shim_inventory_covers_moves_and_patch_effects ______________
+tests/test_rf2_helpers.py:200: in test_shim_inventory_covers_moves_and_patch_effects
+    assert len(rows) == 34
+E   AssertionError: assert 37 == 34
+E    +  where 37 = len([[' gnd.conformance.report.canonical ', ' gnd.artifacts.canonical_report_text ', ' RF2 ', ' RF-D5 '], [' gnd.coverage....ts.sha256_hex ', ' RF2 ', ' RF-D5 '], [' gnd.install._sha256 ', ' gnd.artifacts.sha256_hex ', ' RF2 ', ' RF-D5 '], ...])
+=========================== short test summary info ============================
+FAILED tests/test_rf2_helpers.py::test_shim_inventory_covers_moves_and_patch_effects
+1 failed, 453 passed in 67.57s (0:01:07)
+
+Exit: 1

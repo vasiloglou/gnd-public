@@ -1,0 +1,49 @@
+{
+  "base": "8ff996f7cf0d17bb08f539bca1f4a116ed839fec",
+  "head": "c9efd6651656d655ddd8b1a31b85a1b5a79ded6b",
+  "module_count": 162,
+  "original_core_private_base": 64,
+  "original_core_private_head": 20,
+  "all_private_base": 242,
+  "all_private_head": 198,
+  "wrong_way_base": 27,
+  "wrong_way_head": 8,
+  "source_files": 38,
+  "moved_lines": 5948,
+  "added_nonrelocated": 1987,
+  "handwritten_test_added": 509,
+  "non_evidence_files": 62,
+  "skill_citations": 9,
+  "sccs": [
+    [
+      "gnd.api",
+      "gnd.diff"
+    ],
+    [
+      "gnd.assurance",
+      "gnd.assurance_claims",
+      "gnd.assurance_evidence",
+      "gnd.assurance_inheritance"
+    ],
+    [
+      "gnd.exp.session",
+      "gnd.exp.session_eval",
+      "gnd.exp.session_judgments",
+      "gnd.exp.session_patch",
+      "gnd.exp.session_store",
+      "gnd.exp.session_v7",
+      "gnd.exp.tests_runner"
+    ],
+    [
+      "gnd.synth.assemble",
+      "gnd.synth.mutate"
+    ]
+  ],
+  "ceilings": {
+    "source_files": 90,
+    "moved_lines": 10000,
+    "added_nonrelocated": 2200,
+    "handwritten_test_added": 1600,
+    "non_evidence_files": 150
+  }
+}

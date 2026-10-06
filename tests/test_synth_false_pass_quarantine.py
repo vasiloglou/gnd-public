@@ -168,8 +168,11 @@ def test_both_directions_share_one_retention_path():
     import inspect
 
     from gnd.synth import assemble
+    from gnd.synth.oracle import constructive
 
-    source = inspect.getsource(assemble)
+    scanned = {assemble, constructive}
+    assert {assemble.assemble_conforming.__globals__["__name__"], assemble.CheckerWitnessDiscrepancy.__init__.__globals__["__name__"]} <= {module.__name__ for module in scanned}
+    source = "\n".join(inspect.getsource(module) for module in scanned)
     assert "candidate-false-pass" in source
     assert "candidate-false-fail" in source
     assert "yet the checker reports no alethic" not in source, (

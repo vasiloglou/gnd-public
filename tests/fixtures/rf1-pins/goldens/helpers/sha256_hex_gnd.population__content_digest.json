@@ -1,0 +1,80 @@
+{
+ "observed": {
+  "src/gnd/examples/bookrec/adult-for-minor.population.json": {
+   "ok": "05ffd74512bffd8852b0a7a510275a6e55a9d737a0bd42f3481694921cc4ee9f"
+  },
+  "src/gnd/examples/bookrec/already-read.population.json": {
+   "ok": "3693d237d35964b0fb74936b0c79b9d802f5265d3b4589a8b71890f2100b3a6f"
+  },
+  "src/gnd/examples/bookrec/complete.population.json": {
+   "ok": "656770fff80e8ac475c4fca9f1ba11a2224d736f293a40db45380fcf82019a7c"
+  },
+  "src/gnd/examples/bookrec/genre-warning.population.json": {
+   "ok": "2bacd959e1a57499ea3694fbcdd31888e9f251c54fef0a4438c93aba348b89c0"
+  },
+  "src/gnd/examples/bookrec/seed.population.json": {
+   "ok": "9e2194a26cc3ccc88dc3a6392efa0e4f5afd96e073c28bf5977ac71922aecee1"
+  },
+  "src/gnd/examples/dispatch/repaired.pop.json": {
+   "ok": "12b3fc5772b5970fefaa859071abb73b17eff5abf72c929038179e623dc2caaa"
+  },
+  "src/gnd/examples/dispatch/seed.pop.json": {
+   "ok": "d74bcede01ede2737439643682e74e7f3aafd48861dafac96488b0d23d2754ba"
+  },
+  "src/gnd/examples/expense/approved.population.json": {
+   "ok": "409f1745673d1c29e45033585aea1e8ba6739c5584c8b62dc5844d54392aaf7e"
+  },
+  "src/gnd/examples/expense/currency-missing.population.json": {
+   "ok": "a33b66496a035f4f81b333eca8a5d6ab746ee15605dbf4302df692a7cac9aaa5"
+  },
+  "src/gnd/examples/expense/currency.population.json": {
+   "ok": "fdb77365600a9e40363adff0bb346888a2d51320297ff9bc42a798bd3f632c95"
+  },
+  "src/gnd/examples/expense/invalid-chain.population.json": {
+   "ok": "252e21edc627bb70588a7c938ffae8ce93f3e8d09796a68bb96ce8a11b0ab6fc"
+  },
+  "src/gnd/examples/expense/invalid-meal.population.json": {
+   "ok": "4da73a14f630052fab206d31b5c91a005b9265ca50640d564697a53cc2debaef"
+  },
+  "src/gnd/examples/expense/seed.population.json": {
+   "ok": "b681fd9e864e83b487fb6d46909d486ea0712856375bc808738d3b8e73d12ba0"
+  },
+  "src/gnd/examples/release/repaired.pop.json": {
+   "ok": "fbabb2abe52c65062ee58585cf9aa9f243971a2062a1021aead8ab752dfcc8f9"
+  },
+  "src/gnd/examples/release/seed.pop.json": {
+   "ok": "d2171f86b138d34247dc746d2f06d9335dc0cb681251b35bbffffa0f9c895b98"
+  },
+  "tests/fixtures/checker/population.coverage_omission.yaml": {
+   "ok": "437fb9f28b8f2087332346500bf1b16be80ef6b24d74d1702519930c932130c0"
+  },
+  "tests/fixtures/checker/population.covers_none.yaml": {
+   "ok": "095c332c28d91cc6a345820e90bb0cfeb2d3a59c7b7c0a7817a7bb31e4d2671b"
+  },
+  "tests/fixtures/checker/population.empty.yaml": {
+   "ok": "715f79797ad5a3d797101eccd050c390ecddb31a550d2388407b004294c85368"
+  },
+  "tests/fixtures/checker/population.misc_fail.yaml": {
+   "ok": "fc2eb4b517d313c6e006463cc44b488b25a97ea7b851862fe1f469a82325d8aa"
+  },
+  "tests/fixtures/checker/population.misc_pass.yaml": {
+   "ok": "d74e4f17d2d789c8adc8d7856002ef54dc74c650ef32de0d6923d7e5911f2514"
+  },
+  "tests/fixtures/checker/population.precedence.yaml": {
+   "ok": "4060b0fdaf665389c33cbb06bf7150d50efc0f388d1c4a7d260a40d854726c45"
+  },
+  "tests/fixtures/checker/population.ring_fail.yaml": {
+   "ok": "0d40b04b3d16ea3365e2ab5e52bca060be4ae50114a338fe8c395f792bac7ce7"
+  },
+  "tests/fixtures/checker/population.ring_pass.yaml": {
+   "ok": "161bd64399efa47f70a92ff26e25701ab8469e390ac636646b6ea1c37d7567bd"
+  },
+  "tests/fixtures/checker/population.setfam_fail.yaml": {
+   "ok": "ef892a45c49da49e7882b2ec17cc786b475e405707fc052d0a0d53ff1b6dae4b"
+  },
+  "tests/fixtures/checker/population.setfam_pass.yaml": {
+   "ok": "36f11e86dca9917d25fb0cfba3aff46f39a4a7fae2367a3f93e625ddaaca08f5"
+  }
+ },
+ "site": "sha256_hex|gnd.population:_content_digest"
+}

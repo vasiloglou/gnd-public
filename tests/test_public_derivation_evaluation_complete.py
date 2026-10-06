@@ -26,8 +26,10 @@ import pytest
 from jsonschema import Draft202012Validator
 from test_public_derivation_parity_corpus import ANSWER_KEY, CORPUS
 
+import gnd.checker._core as checker_core
 from gnd import checker
 from gnd import cli as cli_module
+from gnd import extensions as extension_core
 from gnd.address import derivation_address, fact_type_address, parse_address
 from gnd.checker import (
     CheckReport,
@@ -41,7 +43,9 @@ from gnd.checker import (
     _TypedRelation,
     band,
 )
+from gnd.commands import checking as checking_commands
 from gnd.exp.session_eval import VerifierPayloadError, validate_verifier_payload
+from gnd.export import verification_service
 from gnd.model import ModelValidationError, load_model
 from gnd.population import PopulationValidationError, load_population
 from gnd.report import (
@@ -236,7 +240,8 @@ def _assert_wire(case: dict[str, Any]) -> None:
         output = io.StringIO()
         with pytest.MonkeyPatch.context() as mutation:
             mutation.setattr(cli_module.api_module.checker_module, "check", injected_failure)
-            mutation.setattr(cli_module, "check", injected_failure)
+            mutation.setattr(checking_commands, "check", injected_failure)
+            mutation.setattr(verification_service, "check", injected_failure)
             with contextlib.redirect_stdout(output):
                 if branch == "wire:v4-check-internal":
                     exit_code = cli_module._cmd_check(
@@ -544,7 +549,7 @@ def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyP
         target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
         target_model, target_population = _loaded(target_case)
         calls: list[str] = []
-        original_evaluate = checker._evaluate_derivations
+        original_evaluate = extension_core.evaluate_derivations
         original_message = checker._correspondence_message
 
         def traced_evaluate(*args: Any, **kwargs: Any):
@@ -557,8 +562,8 @@ def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyP
             calls.append(f"constraint:{args[2].constraint_id}")
             return original_message(*args, **kwargs)
 
-        monkeypatch.setattr(checker, "_evaluate_derivations", traced_evaluate)
-        monkeypatch.setattr(checker, "_correspondence_message", traced_message)
+        monkeypatch.setattr(extension_core, "evaluate_derivations", traced_evaluate)
+        monkeypatch.setattr(checker_core, "_correspondence_message", traced_message)
         report = checker.check(target_model, target_population)
         constraint_calls = [event for event in calls if event.startswith("constraint:")]
         assert len(constraint_calls) == len(report.verdicts) == 1

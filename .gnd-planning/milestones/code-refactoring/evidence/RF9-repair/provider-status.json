@@ -1,0 +1,62 @@
+{
+  "status": "two bounded native assessments completed; R3 reproduced and locally repaired, no third assessment",
+  "implementation_commit": "f5979caaaa9385faa2ad44ba10364ddb9e5d561e",
+  "initial_auto_review_rejection": {
+    "executed": false,
+    "action": "native RF9 repair independent review",
+    "reason": "Source and repair diff transmission to Codex provider was rejected because the existing repair approval did not explicitly name this payload and destination."
+  },
+  "authorization_requested": "bounded prompt and inspected source/diff to Codex provider with existing native authentication; initial review and at most one substantive repair review",
+  "credentials": "no environment file read; native authentication only",
+  "assessment_count": 2,
+  "reviewed_commit": "ef0fe9f09edf5c170e5103b926a0539fa4be97a4",
+  "subsequent_authorization": {
+    "date": "2026-10-06",
+    "user_reply": "approved",
+    "scope": "RF9-repair bounded prompt and inspected source/diff to Codex provider using native authentication; initial review and at most one substantive repair review"
+  },
+  "initial_execution": {
+    "command": "codex exec --ephemeral --model gpt-6-sol --config model_reasoning_effort='\"xhigh\"' --sandbox read-only --color never --skip-git-repo-check --output-last-message /private/tmp/rf9-repair-review-final.txt - < .gnd-planning/milestones/code-refactoring/evidence/RF9-repair/review-prompt.txt > /private/tmp/rf9-repair-review-run.txt 2>&1",
+    "exit": 0,
+    "reviewed_commit": "ef0fe9f09edf5c170e5103b926a0539fa4be97a4",
+    "return": "notes/phase-RF9-repair-codex-review.md",
+    "findings": 2
+  },
+  "R1": {
+    "class": "hardening",
+    "status": "reproduced red on ef0fe9f, bidirectional terminal/operator acceptance repaired",
+    "red": "review-R1-red.txt",
+    "green": "review-R1-green.txt",
+    "regression": "tests/test_rf9_repairs.py::test_accepted_terminal_cannot_be_downgraded"
+  },
+  "R2": {
+    "class": "completeness",
+    "status": "literal working-tree gate scope qualified in place; retained log whitespace preserved; source/test/tool full-phase check recorded separately",
+    "command": "git diff --check 26dbff6 ef0fe9f",
+    "exit": 2,
+    "output": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/compat-impact.txt:297: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/compat-impact.txt:306: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/compat-impact.txt:315: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct.txt:24: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct.txt:31: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct.txt:39: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct.txt:46: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct.txt:52: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/equality-red.txt:11: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:94: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:105: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:116: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:127: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:138: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:149: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:160: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:181: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:188: trailing whitespace.\n+E     \n.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt:195: trailing whitespace.\n+E     \n"
+  },
+  "repair_review_subject": "b8d7e1fc4fbeada6936dcd453523603d04e68600",
+  "repair_execution": {
+    "command": "codex exec --ephemeral --model gpt-6-sol --config model_reasoning_effort='\"xhigh\"' --sandbox read-only --color never --skip-git-repo-check --output-last-message /private/tmp/rf9-repair-review2-final.txt - < .gnd-planning/milestones/code-refactoring/evidence/RF9-repair/repair-review-prompt.txt > /private/tmp/rf9-repair-review2-run.txt 2>&1",
+    "exit": 0,
+    "reviewed_commit": "b8d7e1fc4fbeada6936dcd453523603d04e68600",
+    "return": "notes/phase-RF9-repair-codex-repair-review.md",
+    "findings": 1
+  },
+  "R3": {
+    "class": "hardening",
+    "status": "reproduced on b8d7e1f then locally repaired; native convergence budget exhausted",
+    "cases": [
+      "wrong",
+      "missing",
+      "best-instead-of-final"
+    ],
+    "red": "3 failed in 2.73s",
+    "green": "257 passed, 1 warning in 28.67s",
+    "evidence": "review-R3-verification.txt",
+    "regression": "tests/test_rf9_repairs.py::test_terminal_final_attempt_reference_is_bound",
+    "limit": "named final-attempt reference only; no third independent assessment on this clause"
+  },
+  "final_local_source_commit": "21487ab1711fb7781d106deefd40243666d904b4"
+}

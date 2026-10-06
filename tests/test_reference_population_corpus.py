@@ -23,7 +23,8 @@ import pytest
 from jsonschema import Draft202012Validator, ValidationError
 from ruamel.yaml import YAML
 
-from gnd import api
+import gnd.checker._core as checker_core
+from gnd import api, extensions
 from gnd.model import load_model
 from gnd.population import Population, load_population
 
@@ -431,7 +432,7 @@ def _run(case: dict[str, Any], b: dict[str, Any], monkeypatch: pytest.MonkeyPatc
             def forbidden(*args: Any, **kwargs: Any) -> Any:
                 pytest.fail("domain evaluator invoked before ownership refusal")
 
-            monkeypatch.setattr(checker, "_evaluate_derivations", forbidden)
+            monkeypatch.setattr(extensions, "evaluate_derivations", forbidden)
             return _check(b)["exit_code"]
         if n == "declaration-before-file":
             refs.append({**deepcopy(refs[0]), "id": "second"})
@@ -997,7 +998,7 @@ def _run(case: dict[str, Any], b: dict[str, Any], monkeypatch: pytest.MonkeyPatc
                 return list(bindings) * 100_001
 
             _join_input(b, 1)
-            monkeypatch.setattr(checker, "_guarded_bindings", dirty_bindings)
+            monkeypatch.setattr(checker_core, "_guarded_bindings", dirty_bindings)
             assert _check(b)["exit_code"] == 4, "uncharged binding expansion escaped the work limit"
         return 0
     if branch == "B23":

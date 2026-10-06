@@ -1,0 +1,350 @@
+{
+ "build_expectations": {
+  "ok": {
+   "fact_types[rel_acyclic].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_acyclic_intransitive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_antisymmetric].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_asymmetric].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_asymmetric_intransitive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_intransitive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_irreflexive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_purely_reflexive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_reflexive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_symmetric].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_symmetric_intransitive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_symmetric_irreflexive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   },
+   "fact_types[rel_transitive].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  }
+ },
+ "expected_state": {
+  "fact_types[rel_acyclic].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_acyclic_intransitive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_antisymmetric].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_asymmetric].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_asymmetric_intransitive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_intransitive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_irreflexive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_purely_reflexive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_reflexive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_symmetric].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_symmetric_intransitive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_symmetric_irreflexive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[rel_transitive].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    }
+   }
+  }
+ },
+ "predict_boundary": {
+  "ok": {
+   "fact_types[rel_acyclic].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_acyclic_intransitive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_antisymmetric].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_asymmetric].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_asymmetric_intransitive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_intransitive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_irreflexive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_purely_reflexive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_reflexive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_symmetric].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_symmetric_intransitive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_symmetric_irreflexive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[rel_transitive].constraints[0]": {
+    "data": {
+     "expected_verdict": "fail",
+     "ground_truth": "violated",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   }
+  }
+ }
+}

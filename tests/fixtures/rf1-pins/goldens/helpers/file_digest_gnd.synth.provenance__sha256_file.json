@@ -1,0 +1,22 @@
+{
+ "observed": {
+  "dir": {
+   "message": "[Errno 21] Is a directory: '<tmp>/files/dir'",
+   "raises": "builtins.IsADirectoryError"
+  },
+  "empty": {
+   "ok": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "link": {
+   "ok": "e669a3e2d6d0fe70c8a20b73fce2d427c6fbd70add1b94b9094f19d0e5049a90"
+  },
+  "missing": {
+   "message": "[Errno 2] No such file or directory: '<tmp>/files/missing'",
+   "raises": "builtins.FileNotFoundError"
+  },
+  "regular": {
+   "ok": "e669a3e2d6d0fe70c8a20b73fce2d427c6fbd70add1b94b9094f19d0e5049a90"
+  }
+ },
+ "site": "file_digest|gnd.synth.provenance:_sha256_file"
+}

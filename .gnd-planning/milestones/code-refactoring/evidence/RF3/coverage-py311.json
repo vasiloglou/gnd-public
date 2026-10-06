@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/private/tmp/rf2-py311/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf3_core.py::test_resolver_reference_modes",
+    "tests/test_rf3_core.py::test_plain_view_preserves_population_identity",
+    "tests/test_rf3_core.py::test_analysis_reaches_the_shared_validation_cache",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 0.4830012321472168
+}

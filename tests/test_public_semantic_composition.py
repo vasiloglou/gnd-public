@@ -139,8 +139,8 @@ def test_shared_applicability_cases_hit_the_exact_resolution_stage(
         (
             "P2-046",
             "snapshot_family_result",
-            'if constraint.family == "ring":',
-            "if False:",
+            "entry = FAMILIES.get(constraint.family)",
+            'entry = None if constraint.family == "ring" else FAMILIES.get(constraint.family)',
         ),
     ],
     ids=[

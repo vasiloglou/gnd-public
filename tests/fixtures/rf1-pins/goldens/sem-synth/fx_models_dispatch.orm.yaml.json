@@ -1,0 +1,779 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/models/dispatch.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 0,
+ "files": {
+  "boundary/constraints-0.empty-all-scope-fact-types.json": {
+   "bytes": 2716,
+   "sha256": "4d0bd9253aa592057e2c35e948157ec88314915796e5da423dca326f5cf59e06"
+  },
+  "boundary/constraints-0.empty-all-scope-fact-types.meta.json": {
+   "bytes": 12882,
+   "sha256": "6bbaa1e988c8293d2d7afcb3c312ed09567576bedb7b2e19a88622937e0edc7c"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-once.meta.json": {
+   "bytes": 12785,
+   "sha256": "0007344ecdfdb3f42c1dca0f00997d0f8e1d675fdaeacf120b296446ccc5916b"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-twice.json": {
+   "bytes": 3455,
+   "sha256": "97d18b01b64e38e1485278aed0e3152369839f0a878622acbba9d837604d06bc"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-twice.meta.json": {
+   "bytes": 12787,
+   "sha256": "8d7ad651fe1631215394ff4b45fe737f63aa7bbf06f8b93ba8dadc6000b3ffab"
+  },
+  "boundary/constraints-0.zero-row-join-disjoint-anchors.json": {
+   "bytes": 3282,
+   "sha256": "358f71e31b6837bc3ec033feaec89d94a6149bab728aadb5a3ca490bf92eb094"
+  },
+  "boundary/constraints-0.zero-row-join-disjoint-anchors.meta.json": {
+   "bytes": 12821,
+   "sha256": "b382d5d5ee3ba2d12ae0c4f59016026dcc9763779d7cc9bfc359b0f25a1947d0"
+  },
+  "boundary/constraints-0.zero-row-join-one-side-empty.json": {
+   "bytes": 3031,
+   "sha256": "5f513b79e7edbc4c755ec7bcdb6b736f75e4f6a76221a59c5eec5e5064c626d6"
+  },
+  "boundary/constraints-0.zero-row-join-one-side-empty.meta.json": {
+   "bytes": 12836,
+   "sha256": "2913d0e8d207d266a80b9fdba3b5fe9b586197e9f27f6345daa7aebd4902f3ab"
+  },
+  "boundary/constraints-1.empty-all-scope-fact-types.json": {
+   "bytes": 3032,
+   "sha256": "763d6835a8fc8851e02b9fdc620496eed5947eadeae37d22affdae8db36413d1"
+  },
+  "boundary/constraints-1.empty-all-scope-fact-types.meta.json": {
+   "bytes": 12841,
+   "sha256": "ddf9924684f61c143e5e8fabc36b4150d33a9af18febd87d445277f0659c16fc"
+  },
+  "boundary/constraints-1.empty-object-scope.json": {
+   "bytes": 3061,
+   "sha256": "42a4189857aa395f154597bcca046df5a980f8db31f95fe8fb7b188e3bfb775a"
+  },
+  "boundary/constraints-1.empty-object-scope.meta.json": {
+   "bytes": 12825,
+   "sha256": "f71eaf7ea9436b19f89c2b868e0a59b08baa08a3e3af89381860c6bc138db6a4"
+  },
+  "boundary/constraints-1.enum-member-delivered.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/constraints-1.enum-member-delivered.meta.json": {
+   "bytes": 12778,
+   "sha256": "3d44046db3d94c9f6eb8378784ed4ec86f417b9b3b65f226e576e634f2945d45"
+  },
+  "boundary/constraints-1.enum-member-in-transit.json": {
+   "bytes": 3289,
+   "sha256": "e90955b0c5c01e81fa2551db9fbb4b4a06234936c0350dae3b5ece1487cbbf69"
+  },
+  "boundary/constraints-1.enum-member-in-transit.meta.json": {
+   "bytes": 12781,
+   "sha256": "26ced3765a2ed2d55eee1bce52ce87ede0f3cdc6baee7138b50c9a4f984458bb"
+  },
+  "boundary/constraints-1.enum-member-pending.json": {
+   "bytes": 3286,
+   "sha256": "6083aec6c18b1b8e726656d7bba12313f27fd300730dacd46b255e8782364cf2"
+  },
+  "boundary/constraints-1.enum-member-pending.meta.json": {
+   "bytes": 12776,
+   "sha256": "9f9aa87fadf6e3e3948afae943222938858e6a10c7330e3017f4a885c7c79f5e"
+  },
+  "boundary/constraints-1.enum-member-returned.json": {
+   "bytes": 3287,
+   "sha256": "c84d790a25448b50e1f7dc12e364095d619788a5d7fb6d21f4fa14cc68439a47"
+  },
+  "boundary/constraints-1.enum-member-returned.meta.json": {
+   "bytes": 12778,
+   "sha256": "5925cbce4305ad662f24ee5ac372fa655036f29c85d13c76b3748c9437a102d2"
+  },
+  "boundary/constraints-1.enum-non-member.json": {
+   "bytes": 3291,
+   "sha256": "4a762422ec8052424cb2c66a892f367bbc9ff14590a121b268e7779c0a46572f"
+  },
+  "boundary/constraints-1.enum-non-member.meta.json": {
+   "bytes": 12776,
+   "sha256": "510d7d3c3834c0054025e6a5caa0689c41a54f57463c16383791c98ab7ec12c6"
+  },
+  "boundary/constraints-2.empty-all-scope-fact-types.json": {
+   "bytes": 3061,
+   "sha256": "5d584b8818a9e4ef0a4082b4cac50754b6914c39610603c68e966a33cac20792"
+  },
+  "boundary/constraints-2.empty-all-scope-fact-types.meta.json": {
+   "bytes": 12842,
+   "sha256": "a3259294ea9df3bee108d514607418c19980c84a1f1edb1d18373f1e85e7b671"
+  },
+  "boundary/constraints-2.empty-object-scope.json": {
+   "bytes": 3090,
+   "sha256": "3b10b53ece61f0d171b5626f4af88f835701c3d39d2521a563f3f956c987ada2"
+  },
+  "boundary/constraints-2.empty-object-scope.meta.json": {
+   "bytes": 12825,
+   "sha256": "bb94bcbdf84d33dcfefb8c289a5e2e262d0883e82897b4783a8c03b84082b148"
+  },
+  "boundary/constraints-2.range-max-inside.json": {
+   "bytes": 3289,
+   "sha256": "5bf248cad8cb02cbf40ed141d3d303eadedbe9bb376f20fe6226553b61cd38b0"
+  },
+  "boundary/constraints-2.range-max-inside.meta.json": {
+   "bytes": 12770,
+   "sha256": "6aaaf98e5f92ffe9333dee96cb2228bdd6fe5dbfd81e045ce8bad5c4e8355381"
+  },
+  "boundary/constraints-2.range-max-outside.json": {
+   "bytes": 3289,
+   "sha256": "ed2124324bc52ba8b2eb19056f798d0009d4c5b7eea1fcb9e7a3ca2423f595df"
+  },
+  "boundary/constraints-2.range-max-outside.meta.json": {
+   "bytes": 12777,
+   "sha256": "a520b1d080d4c6ffab6d4eb5bdd6e587e4b895b12935f25c0927ae689e1f4104"
+  },
+  "boundary/constraints-2.range-min-inside.json": {
+   "bytes": 3288,
+   "sha256": "1695afb7a8d335f46f616b07e64dbc7a74708005ca0c27df3152881fb5c1f716"
+  },
+  "boundary/constraints-2.range-min-inside.meta.json": {
+   "bytes": 12769,
+   "sha256": "a9b0b32a9bd9bff0e5bdacad3302e6053836ecab85bf99e770918b8550bec341"
+  },
+  "boundary/constraints-2.range-min-outside.json": {
+   "bytes": 3289,
+   "sha256": "52501541c0f8b6ca5ca23bfed2e434864df5d9828839c5266bba0350b6d40f20"
+  },
+  "boundary/constraints-2.range-min-outside.meta.json": {
+   "bytes": 12776,
+   "sha256": "48918b5226dc7d404c2fd4ba65a4385a5fcf469301fa3647407a697ba81b4963"
+  },
+  "boundary/constraints-3.empty-all-scope-fact-types.json": {
+   "bytes": 3124,
+   "sha256": "2093d3a305a140d7c34a14155aad01a7a4d71a1bad7b667a1d6f3ab23930136d"
+  },
+  "boundary/constraints-3.empty-all-scope-fact-types.meta.json": {
+   "bytes": 12816,
+   "sha256": "338a065f2d5dca04da4d99adfe5f284a1a3d0e277f95a3e26bd5dbc969b3a939"
+  },
+  "boundary/constraints-3.one-overlapping-tuple.json": {
+   "bytes": 3366,
+   "sha256": "62202232bd957bea3153df0d0c11b28860f7f728a8d81672833becdc282e25a7"
+  },
+  "boundary/constraints-3.one-overlapping-tuple.meta.json": {
+   "bytes": 12786,
+   "sha256": "71b3e0f85295fe76a0a1f1ae72f824f7619ccf345142153905be4bc83f848218"
+  },
+  "boundary/fact_types-courier_based_at_depot-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3040,
+   "sha256": "ce8677e92fd5edcd508d15e16f5dcce9544c441c891fbaefb73835407af2556c"
+  },
+  "boundary/fact_types-courier_based_at_depot-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12875,
+   "sha256": "b6a34f5eede33eacc2d9fd9311944a69b2b2dacdc0bdcda691141538863a0433"
+  },
+  "boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12845,
+   "sha256": "67dcdb5ca1385b59b706a8f3a740a7d7ae07cda98b3478efdda3878f5ee3fb4b"
+  },
+  "boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-twice.json": {
+   "bytes": 3356,
+   "sha256": "7e66e6385c7c73a0aed58adbcee8cdddc9f122fe9bd4dda4162f4f7c79123f27"
+  },
+  "boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12831,
+   "sha256": "521b52ee247114d4aacddfd340e3fb987d5c9d1e84400e0454901e67e6e9745a"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3041,
+   "sha256": "20a324564b109adfeeb75e55e58b7ddcdc8f7f517b76992ddf131976b36db004"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12889,
+   "sha256": "37dead4ccae540730f5cb593e8c454a7a586f7a0750b146074bbac8054349862"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12842,
+   "sha256": "6d80da46d74a676667258b999cf9851a9c43ba6268e475b35fd0d979327ec1c9"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-0.occurs-twice.json": {
+   "bytes": 3361,
+   "sha256": "a93399ddd1818789ce0a8d51bb487a3641ddd3d551c34279b76b048a3a0e64ec"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12828,
+   "sha256": "23eef0935f1232c46aec58efca8f694c97fbcff2856e99fbfb3b5dc39edb4f3e"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.empty-host-fact-type.json": {
+   "bytes": 3041,
+   "sha256": "20a324564b109adfeeb75e55e58b7ddcdc8f7f517b76992ddf131976b36db004"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.empty-host-fact-type.meta.json": {
+   "bytes": 12890,
+   "sha256": "d7a14602da6d72f52da5d6d3086fd4af9ccb304042da9a3d0783d0d7ecc58d53"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.group-at-max.json": {
+   "bytes": 3434,
+   "sha256": "74af78837c69948ff14b2020bafcf08f39603f3b4f1ac8214ca699257853a10b"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.group-at-max.meta.json": {
+   "bytes": 12830,
+   "sha256": "3871e4abb283df56fbaa92352e8de37c5b6c8c32a74df75cdbe39d914ab818bd"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.group-at-min.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.group-at-min.meta.json": {
+   "bytes": 12828,
+   "sha256": "1f736db59899faeaaedcc0783ccd4cc9e524f3a1b1fe418c7f6ecf04b1e3aa0e"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.group-past-max.json": {
+   "bytes": 3507,
+   "sha256": "bbb1940884bc14a712a8aa71f3c865f35ac672e1231ce6e1c42c5f1127205e69"
+  },
+  "boundary/fact_types-courier_drives_route-.constraints-1.group-past-max.meta.json": {
+   "bytes": 12835,
+   "sha256": "5669e7e6cbee39cd7af94a7bdd33e04a8c2dbc751b30875a6904c52d5ff30416"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3054,
+   "sha256": "f80ebdfa2cd483c3d2c05948b81c7c08cd6dd9e3cf4907a71a9b477e8c9bad96"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12889,
+   "sha256": "621e6919e687ff952dc4f87849422a89ff792a439bfe824dd2a70e8637e9fe6b"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12833,
+   "sha256": "04493f410cb4543e4e3f68f46cbbe91dd77879cee548f5d8ee4bbb5920c7a96b"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-0.occurs-twice.json": {
+   "bytes": 3354,
+   "sha256": "3c60bfbb7b52258579dce39d7448121a7517b2a72b699fc4ab463062e12f39d6"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12820,
+   "sha256": "913f28b4d2a66058d394cbc5a2bb4d85e62198e66b5bc0fdfd09b3b5002d4e75"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-1.coverage-omission.json": {
+   "bytes": 3262,
+   "sha256": "7d12324775cf69158970bec5af3b351f5bf1a21b5a8d2907a187a03e00ce2c35"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 12857,
+   "sha256": "00746da868bb27d796d22497b7b2faed58175ed526f53797b32953ce598d539e"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 12858,
+   "sha256": "3c589f6ce1779f4f7e3805dae4f3c73324f2073ccfa02a51dd5907b9b415b7c2"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 3327,
+   "sha256": "325074a7cd985045a1beef6eecd87fe9055bf55a9499a50d93140ebb243c7d69"
+  },
+  "boundary/fact_types-courier_has_name-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 12865,
+   "sha256": "af94d26bd8a817d25b39fe1a89aa86ccb41d1e4bbc4df67b6689250f14c9c5e2"
+  },
+  "boundary/fact_types-delivery_by_courier-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3001,
+   "sha256": "b8a7936e05ff0a58709666be45654980e446802c02555e398deb2b955b7e6dca"
+  },
+  "boundary/fact_types-delivery_by_courier-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12869,
+   "sha256": "9b4635cedcaa4967c91863ed4b2caf33ff29cbb133ed353dccafc2bb71a8aae7"
+  },
+  "boundary/fact_types-delivery_by_courier-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-delivery_by_courier-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12839,
+   "sha256": "4c9246e86bf678af75f78f5d56009d77103f67e4659bad0c4c4ef6b5b4eece42"
+  },
+  "boundary/fact_types-delivery_by_courier-.constraints-0.occurs-twice.json": {
+   "bytes": 3372,
+   "sha256": "30c5c2f2f4ad4936b16858d0e55f30b7aecd3002c745504189ceed65010ff3e4"
+  },
+  "boundary/fact_types-delivery_by_courier-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12826,
+   "sha256": "716f561077633af23c6c779c680ad1e8544d71f2efa8757bf5b555d5e99ac544"
+  },
+  "boundary/fact_types-delivery_has_stop_count-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3003,
+   "sha256": "0195a97edf2507e4ff794ebb4cc6aac51275e2dbd9ef732a6f6db51583e37473"
+  },
+  "boundary/fact_types-delivery_has_stop_count-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12877,
+   "sha256": "d66cc51c0c3b3a8e956bc94e2de72af22d89be231d9d2ca2078051347e79cbc8"
+  },
+  "boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12846,
+   "sha256": "aa9d7c76fae2a982fec317e1b92a0fac90dfb18fe1dd2ac3bcad09a39ff5914f"
+  },
+  "boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-twice.json": {
+   "bytes": 3370,
+   "sha256": "cb39ffb7864c012cd83e7730a791be3f2e0211d12e2bd0020a634f78f91c5d53"
+  },
+  "boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12834,
+   "sha256": "15115ba1bd7150c12cbed6eaa77d612e4b930abbe678e249c0c20c0c259d4189"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3002,
+   "sha256": "b8eb8cdefb04d66d2c247bacdc178e2e19407c696d292e279f6295d84351c792"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12909,
+   "sha256": "52c9144378e04e3083f6d06de70977d8526c826bff1a9aec357000aebc8b403b"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12838,
+   "sha256": "4e4c001148500e42087ff86baca5fc7dbb74a61d07605311bb002c35d606ec81"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-twice.json": {
+   "bytes": 3370,
+   "sha256": "da8db94011eb520df275e54f9625a76b0a5ed290d99b59ca0d8ebe3b6ef295eb"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12823,
+   "sha256": "ad703ff37b48b5f1e89c7df98be766d300c41457325b312c361c72286c3d376d"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-1.coverage-omission.json": {
+   "bytes": 3260,
+   "sha256": "3963a9dbe625d4838fcbfae774f83c4c6ed8b6b1f34340556a4fa7267c2ce609"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 12862,
+   "sha256": "7914e03b0c29aa71be287e1af3a52f0834948d7d65ba21fb7dd13242eefb494b"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 12861,
+   "sha256": "1a918ab288b8bc64c009f969f8e7e07cbe53b701a93093a7e6c6e6245c9ddb4a"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 3339,
+   "sha256": "ab443325b84701fbd39fde8d47697b7e43f8b9b4ddb2d3fb90eeeb45952902ec"
+  },
+  "boundary/fact_types-delivery_of_parcel-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 12869,
+   "sha256": "5bb0cf97ecf7955162efb72fac1606322053c37b244fbe68d87a13932048eb42"
+  },
+  "boundary/fact_types-delivery_on_route-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3002,
+   "sha256": "d04644c47b4ec2104eb4a14e2e5cd0bd01d181a0f03f6d3004a87d129eb73f4c"
+  },
+  "boundary/fact_types-delivery_on_route-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12880,
+   "sha256": "ee31046062991eb5fb487f64da30de6182783b23f2aa87e8847c46d45f8e4fe6"
+  },
+  "boundary/fact_types-delivery_on_route-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-delivery_on_route-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12835,
+   "sha256": "8acfd465ed49738ad8b3254ed567acb0ae54ae177441bfeb3943e4273ad1e97c"
+  },
+  "boundary/fact_types-delivery_on_route-.constraints-0.occurs-twice.json": {
+   "bytes": 3375,
+   "sha256": "e34d8444a43e6979ab3cc319b3608549292880e04389afd69ef81a07d0101ef1"
+  },
+  "boundary/fact_types-delivery_on_route-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12821,
+   "sha256": "cb615074e2631b379c7dc3fd406685923bfce25fae080a0b4f543949551e2c5b"
+  },
+  "boundary/fact_types-parcel_has_status-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3032,
+   "sha256": "763d6835a8fc8851e02b9fdc620496eed5947eadeae37d22affdae8db36413d1"
+  },
+  "boundary/fact_types-parcel_has_status-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12890,
+   "sha256": "6eb31da0bde91207bfcb2cfbae7e9d5e29a32471b37cfda78720089ab7ce01c8"
+  },
+  "boundary/fact_types-parcel_has_status-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-parcel_has_status-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12836,
+   "sha256": "5523f236c1ad6f393cd97c780433b64f9070d55cb27b09ef8c6e59021ba63e05"
+  },
+  "boundary/fact_types-parcel_has_status-.constraints-0.occurs-twice.json": {
+   "bytes": 3363,
+   "sha256": "5b500fe87e5c3bf2b9ec2bd02164b1a5136dc04b94c2f9b7a18c9f3c062a9dc0"
+  },
+  "boundary/fact_types-parcel_has_status-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12822,
+   "sha256": "e0f1aabc87df977706bdf92c950b7c1113b63c569f6c561255341fc0b50def49"
+  },
+  "boundary/fact_types-parcel_has_weight-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3061,
+   "sha256": "5d584b8818a9e4ef0a4082b4cac50754b6914c39610603c68e966a33cac20792"
+  },
+  "boundary/fact_types-parcel_has_weight-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12890,
+   "sha256": "a2593b2503e8e6828fed3e986d8f70b785d54aac51b17ad5e1a4353f25786726"
+  },
+  "boundary/fact_types-parcel_has_weight-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-parcel_has_weight-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12835,
+   "sha256": "680994f41f1da35d1cec5351d7de8b9173e701bbe4b03bd23d18cc313065b2e2"
+  },
+  "boundary/fact_types-parcel_has_weight-.constraints-0.occurs-twice.json": {
+   "bytes": 3354,
+   "sha256": "cbeba7955c2fd343ea5dc62874396dbffe0f2c7b8a6471eeb220de9cf8dd987d"
+  },
+  "boundary/fact_types-parcel_has_weight-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12822,
+   "sha256": "61c18a9d9c9068e116d44147bf4b445ad1cf83ea8e16621bbfe1b68a850cb99b"
+  },
+  "boundary/fact_types-route_starts_at_depot-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3037,
+   "sha256": "710dc9257d79dae10379b09967f9e434b5bed197ce36969b15f237b846469e28"
+  },
+  "boundary/fact_types-route_starts_at_depot-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 12873,
+   "sha256": "fbe299f050da012ab4f41d8f4311dd738ef644676f15355b1b1a2f94095bc6bb"
+  },
+  "boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 3288,
+   "sha256": "7f8e0290bcd98315f61db1909907a798ac000febba927c958d8d170a4e98163a"
+  },
+  "boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 12843,
+   "sha256": "f9d75dc76a0b50ed1559d5a1024cb624cad6213d48083f77763dfb4d877f5cfd"
+  },
+  "boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-twice.json": {
+   "bytes": 3357,
+   "sha256": "ca0153482b181a9d255a48ec4da47f4421189c314ffc085e94bff098b79c03c5"
+  },
+  "boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 12829,
+   "sha256": "8d94f9401c07084a17f93b399ee40746021da496f34139c380936bae03a21814"
+  },
+  "conforming/dispatch.orm.conforming.seed0.json": {
+   "bytes": 3290,
+   "sha256": "af2c79226967a3732353bcd15d98d81440d5bc5805a37bdc3d98e328e235a7ea"
+  },
+  "conforming/dispatch.orm.conforming.seed0.meta.json": {
+   "bytes": 12725,
+   "sha256": "6cedece1f9af5b86647c5960ef059dd64765e8b53a46e81c5103a7a885b6115c"
+  },
+  "conforming/pool.1506b8253f204af6.pool.json": {
+   "bytes": 2076,
+   "sha256": "5d17409ffdff962417354eedffb3a366c51ae2f7c7476bdb5fab3249431a11af"
+  },
+  "index.json": {
+   "bytes": 63491,
+   "sha256": "dff9a8e8004297f1514de2e34ec812c308bdbed362c3f4244c1343215732c2b3"
+  },
+  "violating/constraints-0.duplicate-joined-tuple.json": {
+   "bytes": 3456,
+   "sha256": "2a4e40637321d758f94763f66889e07f2ad2a307de4f9a1ea5a3743e3f1abae3"
+  },
+  "violating/constraints-0.duplicate-joined-tuple.meta.json": {
+   "bytes": 12810,
+   "sha256": "9b80b55d9212f64ae8b4ebb6c13028a08ab89127b792799d400f3102080bc28a"
+  },
+  "violating/constraints-1.add-fact-with-out-of-range-new-entity.json": {
+   "bytes": 3374,
+   "sha256": "c9d767e3dbb7c9fe65a7c5fd165e98765432cf0b4f715d7c911fe349500ce419"
+  },
+  "violating/constraints-1.add-fact-with-out-of-range-new-entity.meta.json": {
+   "bytes": 12839,
+   "sha256": "34f73e88122d6a457e687265a46747833fe77ee70e75f1aac55bd2cc8afa32fa"
+  },
+  "violating/constraints-1.edit-value-out-of-range.json": {
+   "bytes": 3292,
+   "sha256": "bcdf542b4d4be5f0f24a32ea6ea335fdb3e0d740ca1c55f7f979dc01fad3c3f3"
+  },
+  "violating/constraints-1.edit-value-out-of-range.meta.json": {
+   "bytes": 12812,
+   "sha256": "74c6c7e1e358c379943f133b9ae896e069fbb1a8877c6b4d89e67ccb2a171be5"
+  },
+  "violating/constraints-2.add-fact-with-out-of-range-new-entity.json": {
+   "bytes": 3362,
+   "sha256": "e60ce2fda00d043f27ddffa597aad8846318ca0a0dd9a427b167ff53cf6c6391"
+  },
+  "violating/constraints-2.add-fact-with-out-of-range-new-entity.meta.json": {
+   "bytes": 12843,
+   "sha256": "7b477d86d1f8e40f893fa83ecdce24a241ee42f6da447da82f93fb4d4f3afaaa"
+  },
+  "violating/constraints-2.edit-value-out-of-range.json": {
+   "bytes": 3290,
+   "sha256": "adc6e3496fd37c0585a688fbbde0e495e4b34f8f64b7b11e924a492ae02df623"
+  },
+  "violating/constraints-2.edit-value-out-of-range.meta.json": {
+   "bytes": 12815,
+   "sha256": "a6a0c496326fc9207980efc5ca151834d8c8af9e6abc58bd2b7cc090b7e76adc"
+  },
+  "violating/constraints-3.add-overlapping-tuple.json": {
+   "bytes": 3367,
+   "sha256": "03e6601cc84248021ef313c2f20119f8d0d28336929dc6a8f571b2f5ca64956c"
+  },
+  "violating/constraints-3.add-overlapping-tuple.meta.json": {
+   "bytes": 12812,
+   "sha256": "3f808d861a58fcff6d26c42d9482f3396720c1dae45c82e0dcabd68a6e4eba5e"
+  },
+  "violating/fact_types-courier_based_at_depot-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3357,
+   "sha256": "ae7703351f90fae9f948a281601e0e4220081c31eacb4cd3043d540856afb675"
+  },
+  "violating/fact_types-courier_based_at_depot-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12963,
+   "sha256": "b03325d4ee368477a4ccf170507ff9816cf62bf9cb514529561b4f25940d72b4"
+  },
+  "violating/fact_types-courier_based_at_depot-.constraints-0.empty-fact-type.json": {
+   "bytes": 3041,
+   "sha256": "fde336850a348e166897e876cb7b1a351cc1695dcfd91850995c4f16580f71cd"
+  },
+  "violating/fact_types-courier_based_at_depot-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12956,
+   "sha256": "5f3cd95be5e9bbcacaf6fd8e8335b24b5dc0d49a3f251bb96a0b669b53723f2a"
+  },
+  "violating/fact_types-courier_drives_route-.constraints-0.empty-fact-type.json": {
+   "bytes": 3042,
+   "sha256": "f4c6f002ea43c05f77aca5c8945ec20b6af01b192b379c911e0145a0b0d6a0b2"
+  },
+  "violating/fact_types-courier_drives_route-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 13024,
+   "sha256": "0b42bd0853bdee3e0ec6d3aab566ec59034e066b0b89ce34cfa5f8da1d8252e1"
+  },
+  "violating/fact_types-courier_drives_route-.constraints-0.exact-duplicate-row.json": {
+   "bytes": 3362,
+   "sha256": "4d56e3674c634c2c53194990e8323c24e598ce4fc72f2d03a037ad342dee075f"
+  },
+  "violating/fact_types-courier_drives_route-.constraints-0.exact-duplicate-row.meta.json": {
+   "bytes": 12937,
+   "sha256": "3076d188e416fb41616b0224aa9540212d780f68b84a51623d18275d53a3f2bc"
+  },
+  "violating/fact_types-courier_drives_route-.constraints-1.add-facts-past-ceiling.json": {
+   "bytes": 3508,
+   "sha256": "7bd3d7415ab014ec7049802b58401dff8595720efdf47e3f3c29a4472d4c20b6"
+  },
+  "violating/fact_types-courier_drives_route-.constraints-1.add-facts-past-ceiling.meta.json": {
+   "bytes": 12994,
+   "sha256": "23e374622d3a837438a548d833d089509676a46ae14206d83f28273e8893c088"
+  },
+  "violating/fact_types-courier_has_name-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3358,
+   "sha256": "0e5c0fa34c3f1c3cc2d7d635f78b8e20a111d165861158de4211e99937e7db70"
+  },
+  "violating/fact_types-courier_has_name-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12938,
+   "sha256": "e77d1a5d2354bc08d90b9007837ed56770233a6c144b5678ec41ebba6c7ee242"
+  },
+  "violating/fact_types-courier_has_name-.constraints-0.empty-fact-type.json": {
+   "bytes": 3055,
+   "sha256": "b0c79733825d06b161fd4f2359d594c17a676f27990d12e41d751c4d27db512d"
+  },
+  "violating/fact_types-courier_has_name-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 13011,
+   "sha256": "b20233837c56cde4b2834595357839c7752f7f4499a60af07191a1653938bc05"
+  },
+  "violating/fact_types-courier_has_name-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 3263,
+   "sha256": "f7241c2014704fe9d2ca4cb2de901a3d6fcfb4682a591e0b5af8f8304e897203"
+  },
+  "violating/fact_types-courier_has_name-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 12955,
+   "sha256": "79b2e69db1c3a004aa1240950d8069eebf580873754b9d896b72ff23b131714c"
+  },
+  "violating/fact_types-courier_has_name-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 3360,
+   "sha256": "9a3328692213af6d396499d60de369d7057cfc3732584f84a323d4074871e344"
+  },
+  "violating/fact_types-courier_has_name-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 12925,
+   "sha256": "8783b7d3b2e2d12b9ec26edbb2e52fe08ac17fb378da8e6b9d07a6d24686e19b"
+  },
+  "violating/fact_types-courier_has_name-.constraints-1.roster-add-instance.json": {
+   "bytes": 3328,
+   "sha256": "2df515a686dd79218c37b014854ebe934b2e8805332c51969ebb767180362303"
+  },
+  "violating/fact_types-courier_has_name-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 12919,
+   "sha256": "768bce0e528fb3f5af5a98cf18d3a19295f48c4181fa59c670dc4e5db58e00f8"
+  },
+  "violating/fact_types-delivery_by_courier-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3373,
+   "sha256": "46b15e76c18b2dfe4fd1dcf54fd36e219824a17047b64eafaacc6207a360e605"
+  },
+  "violating/fact_types-delivery_by_courier-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12951,
+   "sha256": "7958ada148aca98d1bcfdf4ae41d5aa7fb64eebf79ef3c487c0fb21da704803f"
+  },
+  "violating/fact_types-delivery_by_courier-.constraints-0.empty-fact-type.json": {
+   "bytes": 3002,
+   "sha256": "2c313122fd4069eb5564ec595fd94a942c443c1ca08a23c4855e44fd5ebc23c9"
+  },
+  "violating/fact_types-delivery_by_courier-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12944,
+   "sha256": "81a78a8185f8b2f998303ecad7cf5257e294d0d0bd881b57f9d490254bdbf874"
+  },
+  "violating/fact_types-delivery_has_stop_count-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3371,
+   "sha256": "24da1e6bef153d9f1e3d748e3f9259c695a8861292d02bd18d1b9c4e48b9ff1f"
+  },
+  "violating/fact_types-delivery_has_stop_count-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12966,
+   "sha256": "98b7003a3b52afea666d7cf7cf87e2e3f8add70e98ecf6194c40884ccb993819"
+  },
+  "violating/fact_types-delivery_has_stop_count-.constraints-0.empty-fact-type.json": {
+   "bytes": 3004,
+   "sha256": "525aad4fcbc99321893e2c684a156dac728c3148be0e6c16516806be48693f0e"
+  },
+  "violating/fact_types-delivery_has_stop_count-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12960,
+   "sha256": "b99fee678e31393a941616a490a9be6c2f6c98929bfb06e7083f09529e373295"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3371,
+   "sha256": "311fb9ccbba3f1081907294a881bb1a743b7cbfb9a5d7d98d312607bf74a3b4b"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12947,
+   "sha256": "20813344bb4873b780bdd4a1bd132da8a2175caacaf9c52a7582cd8a121f3dd3"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-0.empty-fact-type.json": {
+   "bytes": 3003,
+   "sha256": "092a0d51baaa7bc90df159ff848250bb3cfceb5ae3f7fae0641493a1003266dc"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 13060,
+   "sha256": "2228b7a38ef4e37cde876b53a929948ee07e37714049e046a2f22482416b0127"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 3261,
+   "sha256": "e60d728cef5dc6f81735c6036e3887dd7c9b86a58e4665b08008bebfaabb40ab"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 12964,
+   "sha256": "7ed0bb4c7f0a695b1655a9e368403c9f6605bbf6515182b56310c7b96b04870c"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 3374,
+   "sha256": "47d76e86c68c86b48c192de6c25222d666f04d1ebffbb6e847d19e2c46e0096d"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 12932,
+   "sha256": "7da65e27b9f10f3374284120f1daae0f46937945c1e4c97aa176591072794c26"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-1.roster-add-instance.json": {
+   "bytes": 3340,
+   "sha256": "1daf48ff48b62996358bb4d3e6afbb9eebbefea8b55ae9207cfad938b3f14a03"
+  },
+  "violating/fact_types-delivery_of_parcel-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 12928,
+   "sha256": "e6050959632159782d489cfbb6ba0a016279cb576eb9b8f6dffe54fb6209f9c1"
+  },
+  "violating/fact_types-delivery_on_route-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3376,
+   "sha256": "5b4382e4ad7436bc2154547d3b89f24e921590cbf1b7f322d8f8954aa643dba4"
+  },
+  "violating/fact_types-delivery_on_route-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12943,
+   "sha256": "efbf95a6f41a4cad08d1287caf540b4b003ebde801545b4d81636cdf52048feb"
+  },
+  "violating/fact_types-delivery_on_route-.constraints-0.empty-fact-type.json": {
+   "bytes": 3003,
+   "sha256": "65576c2145322c6f18611c7fc6379a4a335451be9fc3d31267416b8d60e274ec"
+  },
+  "violating/fact_types-delivery_on_route-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12975,
+   "sha256": "741df036a6f32a47d69365964a18d48f9d8cd4b2abaaac90f1214476081ed09e"
+  },
+  "violating/fact_types-parcel_has_status-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3366,
+   "sha256": "c881323a1599fc57238b219f98516e15b5a3825e9995948d996d49641f1eb935"
+  },
+  "violating/fact_types-parcel_has_status-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12943,
+   "sha256": "45bd69b9d10807531d8bcee229a609e479e24a5a234e3de4b633173194d7c8ca"
+  },
+  "violating/fact_types-parcel_has_status-.constraints-0.empty-fact-type.json": {
+   "bytes": 3033,
+   "sha256": "7eac23af2d591c4072c32e9b70451b25b5c8faa14143d1ce813ea8c5f4cfa619"
+  },
+  "violating/fact_types-parcel_has_status-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12985,
+   "sha256": "97aa45cfae81255b06aa7d0cc9f596f5998e2445afe9162082111e8e2fa2e1bc"
+  },
+  "violating/fact_types-parcel_has_weight-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3356,
+   "sha256": "e1a784fe75ed6706b54ee3494e36a905a8c74673980a4e9c005b19f075db6766"
+  },
+  "violating/fact_types-parcel_has_weight-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12943,
+   "sha256": "6b50184e098ef1ec18849c28350c5b9a7cbca842255f29870b25a6d07a0c8fb6"
+  },
+  "violating/fact_types-parcel_has_weight-.constraints-0.empty-fact-type.json": {
+   "bytes": 3062,
+   "sha256": "eee47179e22c28f08f84048b7f2779221384fbd9061224b2843459492f9e1e50"
+  },
+  "violating/fact_types-parcel_has_weight-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12985,
+   "sha256": "e0364c54d2546eff8055244cc8966eab58369250e388593a91916232d39b35e4"
+  },
+  "violating/fact_types-route_starts_at_depot-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 3358,
+   "sha256": "a6bf5110e022ad6e61638d67aa76ed84a701444a8784475364f32a07eca1705a"
+  },
+  "violating/fact_types-route_starts_at_depot-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 12958,
+   "sha256": "e65955eb293a01bfb29b4cfa86a79f73c5bd5bbe0bbb3221406e3e8bfe0f04f3"
+  },
+  "violating/fact_types-route_starts_at_depot-.constraints-0.empty-fact-type.json": {
+   "bytes": 3038,
+   "sha256": "955a306059cf95f4d2ffe6089411076d76d5152bd2ac7fe262af0814498f6af0"
+  },
+  "violating/fact_types-route_starts_at_depot-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 12953,
+   "sha256": "bed9a82b8e2010039a8553e011f8de52ba22cf374aa6ef6807750bd237606b12"
+  }
+ },
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 0, \"out\": \"<tmp>/synth\", \"class\": \"all\", \"pool\": \"conforming/pool.1506b8253f204af6.pool.json\", \"pool_sha256\": \"1506b8253f204af6f24b7bc209eaaa1de6f9461edc4bd057206a0bfff83cbe2f\", \"populations\": [{\"population\": \"<tmp>/synth/conforming/dispatch.orm.conforming.seed0.json\", \"sidecar\": \"<tmp>/synth/conforming/dispatch.orm.conforming.seed0.meta.json\", \"seed\": 0, \"band\": 0, \"class\": \"conforming\", \"case_kind\": \"conforming\"}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 9723130730321746946, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[courier_has_name].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-0.occurs-twice.meta.json\", \"seed\": 11036521459271796234, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[courier_has_name].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 10107467794780397744, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[courier_has_name].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 9052906962028060681, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[courier_has_name].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 9943953018072697213, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_based_at_depot-.constraints-0.occurs-twice.meta.json\", \"seed\": 4700047665768323883, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 5162504078592860888, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-route_starts_at_depot-.constraints-0.occurs-twice.meta.json\", \"seed\": 1999086400339607149, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 10529179945570722025, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[courier_drives_route].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-0.occurs-twice.meta.json\", \"seed\": 18138556746668068656, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[courier_drives_route].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.group-at-min.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.group-at-min.meta.json\", \"seed\": 10202028872742786342, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-at-min\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[courier_drives_route].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.group-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.group-at-max.meta.json\", \"seed\": 6401254546258622833, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 fact\", \"target\": \"fact_types[courier_drives_route].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.group-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.group-past-max.meta.json\", \"seed\": 18031521205341112304, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 fact\", \"target\": \"fact_types[courier_drives_route].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-parcel_has_weight-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-parcel_has_weight-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 4936343861390600396, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[parcel_has_weight].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-parcel_has_weight-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-parcel_has_weight-.constraints-0.occurs-twice.meta.json\", \"seed\": 12823656968144049091, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[parcel_has_weight].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-parcel_has_status-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-parcel_has_status-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 16204185931836280655, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[parcel_has_status].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-parcel_has_status-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-parcel_has_status-.constraints-0.occurs-twice.meta.json\", \"seed\": 13614566726558985260, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[parcel_has_status].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 13909626411153543165, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-0.occurs-twice.meta.json\", \"seed\": 9310021196390376054, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 8221035260179858667, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 4278852918128053321, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_on_route-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_on_route-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 8360711887375699315, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[delivery_on_route].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_on_route-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_on_route-.constraints-0.occurs-twice.meta.json\", \"seed\": 5264946317974878625, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[delivery_on_route].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_by_courier-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_by_courier-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 1597765874463681073, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[delivery_by_courier].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_by_courier-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_by_courier-.constraints-0.occurs-twice.meta.json\", \"seed\": 14456304925161580282, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[delivery_by_courier].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 888052241464506463, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_has_stop_count-.constraints-0.occurs-twice.meta.json\", \"seed\": 10218044311648709508, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-once.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-once.meta.json\", \"seed\": 5132488731341359946, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"joined-tuple-occurs-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-twice.meta.json\", \"seed\": 3460504716610958137, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"joined-tuple-occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.enum-member-pending.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.enum-member-pending.meta.json\", \"seed\": 11662215199413167852, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-pending\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.enum-member-in-transit.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.enum-member-in-transit.meta.json\", \"seed\": 9154538179507389937, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-in-transit\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.enum-member-delivered.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.enum-member-delivered.meta.json\", \"seed\": 133313212432305228, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-delivered\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.enum-member-returned.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.enum-member-returned.meta.json\", \"seed\": 16816904441236387983, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-returned\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.enum-non-member.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.enum-non-member.meta.json\", \"seed\": 10515425824359160353, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-non-member\", \"boundary_side\": \"outside\", \"epsilon\": \"membership\", \"target\": \"constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.range-min-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.range-min-inside.meta.json\", \"seed\": 4621339645027965165, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.range-min-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.range-min-outside.meta.json\", \"seed\": 4579924365196836382, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[2]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.range-max-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.range-max-inside.meta.json\", \"seed\": 13925068011711519846, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.range-max-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.range-max-outside.meta.json\", \"seed\": 10354536392506149114, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[2]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.one-overlapping-tuple.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.one-overlapping-tuple.meta.json\", \"seed\": 11933768033772959508, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-overlapping-tuple\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 4297718412597827673, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[courier_has_name].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_has_name-.constraints-1.coverage-omission.meta.json\", \"seed\": 5752477566897404596, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[courier_has_name].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_based_at_depot-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_based_at_depot-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 14352955689832946341, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-route_starts_at_depot-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-route_starts_at_depot-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 14651692743272775950, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 4681780714729738748, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[courier_drives_route].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-courier_drives_route-.constraints-1.empty-host-fact-type.meta.json\", \"seed\": 17946668741339826494, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[courier_drives_route].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-parcel_has_weight-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-parcel_has_weight-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 13444808493911079833, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[parcel_has_weight].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-parcel_has_status-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-parcel_has_status-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 18039786752680427124, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[parcel_has_status].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 6428259411360277655, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_of_parcel-.constraints-1.coverage-omission.meta.json\", \"seed\": 10528812561442103975, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_on_route-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_on_route-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 5571313623593092653, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[delivery_on_route].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_by_courier-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_by_courier-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 16028522425669036670, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[delivery_by_courier].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-delivery_has_stop_count-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-delivery_has_stop_count-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 15209768347282296675, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.empty-all-scope-fact-types.meta.json\", \"seed\": 12363959012902464596, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-one-side-empty.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-one-side-empty.meta.json\", \"seed\": 8850204058202897207, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-one-side-empty\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-disjoint-anchors.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-disjoint-anchors.meta.json\", \"seed\": 11817587347432254217, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-disjoint-anchors\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.empty-object-scope.meta.json\", \"seed\": 7503937623656808440, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.empty-all-scope-fact-types.meta.json\", \"seed\": 3162061762949607995, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.empty-object-scope.meta.json\", \"seed\": 7325333080203450223, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.empty-all-scope-fact-types.meta.json\", \"seed\": 18186129374485612671, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.empty-all-scope-fact-types.meta.json\", \"seed\": 5345179257351776655, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 2528273542868665786, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[courier_has_name].constraints[0]\", \"violates_target\": \"fact_types[courier_has_name].constraints[0]\", \"violates\": [\"fact_types[courier_has_name].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-0.empty-fact-type.meta.json\", \"seed\": 5844082930028677736, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[courier_has_name].constraints[0]\", \"violates_target\": \"fact_types[courier_has_name].constraints[0]\", \"violates\": [\"fact_types[courier_has_name].constraints[0]\", \"fact_types[courier_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-1.roster-add-instance.meta.json\", \"seed\": 363641447336355105, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[courier_has_name].constraints[1]\", \"violates_target\": \"fact_types[courier_has_name].constraints[1]\", \"violates\": [\"fact_types[courier_has_name].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 13053773633836958556, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[courier_has_name].constraints[1]\", \"violates_target\": \"fact_types[courier_has_name].constraints[1]\", \"violates\": [\"fact_types[courier_has_name].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_has_name-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 1195484873337394325, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[courier_has_name].constraints[1]\", \"violates_target\": \"fact_types[courier_has_name].constraints[1]\", \"violates\": [\"fact_types[courier_has_name].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_based_at_depot-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_based_at_depot-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 15519882989936776258, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"violates_target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"violates\": [\"fact_types[courier_based_at_depot].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_based_at_depot-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_based_at_depot-.constraints-0.empty-fact-type.meta.json\", \"seed\": 4118654636755895873, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"violates_target\": \"fact_types[courier_based_at_depot].constraints[0]\", \"violates\": [\"fact_types[courier_based_at_depot].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-route_starts_at_depot-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-route_starts_at_depot-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 4124546948744998097, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"violates_target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"violates\": [\"fact_types[route_starts_at_depot].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-route_starts_at_depot-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-route_starts_at_depot-.constraints-0.empty-fact-type.meta.json\", \"seed\": 13135341872927316271, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"violates_target\": \"fact_types[route_starts_at_depot].constraints[0]\", \"violates\": [\"fact_types[route_starts_at_depot].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_drives_route-.constraints-0.exact-duplicate-row.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_drives_route-.constraints-0.exact-duplicate-row.meta.json\", \"seed\": 14717734102599163408, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"exact-duplicate-row\", \"target\": \"fact_types[courier_drives_route].constraints[0]\", \"violates_target\": \"fact_types[courier_drives_route].constraints[0]\", \"violates\": [\"fact_types[courier_drives_route].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_drives_route-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_drives_route-.constraints-0.empty-fact-type.meta.json\", \"seed\": 12313301314758956654, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[courier_drives_route].constraints[0]\", \"violates_target\": \"fact_types[courier_drives_route].constraints[0]\", \"violates\": [\"fact_types[courier_drives_route].constraints[0]\", \"fact_types[courier_drives_route].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-courier_drives_route-.constraints-1.add-facts-past-ceiling.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-courier_drives_route-.constraints-1.add-facts-past-ceiling.meta.json\", \"seed\": 12406987329544210927, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-facts-past-ceiling\", \"target\": \"fact_types[courier_drives_route].constraints[1]\", \"violates_target\": \"fact_types[courier_drives_route].constraints[1]\", \"violates\": [\"fact_types[courier_drives_route].constraints[1]\", \"fact_types[courier_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-parcel_has_weight-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-parcel_has_weight-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 12229662413588653080, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[parcel_has_weight].constraints[0]\", \"violates_target\": \"fact_types[parcel_has_weight].constraints[0]\", \"violates\": [\"fact_types[parcel_has_weight].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-parcel_has_weight-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-parcel_has_weight-.constraints-0.empty-fact-type.meta.json\", \"seed\": 12766636061290419934, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[parcel_has_weight].constraints[0]\", \"violates_target\": \"fact_types[parcel_has_weight].constraints[0]\", \"violates\": [\"constraints[2]\", \"fact_types[parcel_has_weight].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-parcel_has_status-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-parcel_has_status-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 14688981048675754112, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[parcel_has_status].constraints[0]\", \"violates_target\": \"fact_types[parcel_has_status].constraints[0]\", \"violates\": [\"fact_types[parcel_has_status].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-parcel_has_status-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-parcel_has_status-.constraints-0.empty-fact-type.meta.json\", \"seed\": 12158972067482086259, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[parcel_has_status].constraints[0]\", \"violates_target\": \"fact_types[parcel_has_status].constraints[0]\", \"violates\": [\"constraints[1]\", \"fact_types[parcel_has_status].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 13029496314897789346, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"violates_target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"violates\": [\"fact_types[delivery_of_parcel].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-0.empty-fact-type.meta.json\", \"seed\": 15356219173089517005, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"violates_target\": \"fact_types[delivery_of_parcel].constraints[0]\", \"violates\": [\"constraints[0]\", \"fact_types[delivery_of_parcel].constraints[0]\", \"fact_types[delivery_of_parcel].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-1.roster-add-instance.meta.json\", \"seed\": 4591088531184680213, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"violates_target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"violates\": [\"fact_types[delivery_of_parcel].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 4444382308300173331, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"violates_target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"violates\": [\"fact_types[delivery_of_parcel].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_of_parcel-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 18344343826209872354, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"violates_target\": \"fact_types[delivery_of_parcel].constraints[1]\", \"violates\": [\"fact_types[delivery_of_parcel].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_on_route-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_on_route-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 14530650646362155758, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[delivery_on_route].constraints[0]\", \"violates_target\": \"fact_types[delivery_on_route].constraints[0]\", \"violates\": [\"fact_types[delivery_on_route].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_on_route-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_on_route-.constraints-0.empty-fact-type.meta.json\", \"seed\": 8550564897059964962, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[delivery_on_route].constraints[0]\", \"violates_target\": \"fact_types[delivery_on_route].constraints[0]\", \"violates\": [\"constraints[0]\", \"fact_types[delivery_on_route].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_by_courier-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_by_courier-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 15291515199481510994, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[delivery_by_courier].constraints[0]\", \"violates_target\": \"fact_types[delivery_by_courier].constraints[0]\", \"violates\": [\"fact_types[delivery_by_courier].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_by_courier-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_by_courier-.constraints-0.empty-fact-type.meta.json\", \"seed\": 4726916372784632892, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[delivery_by_courier].constraints[0]\", \"violates_target\": \"fact_types[delivery_by_courier].constraints[0]\", \"violates\": [\"fact_types[delivery_by_courier].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_has_stop_count-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_has_stop_count-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 3067221022187624790, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"violates_target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"violates\": [\"fact_types[delivery_has_stop_count].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-delivery_has_stop_count-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-delivery_has_stop_count-.constraints-0.empty-fact-type.meta.json\", \"seed\": 4366966040703809996, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"violates_target\": \"fact_types[delivery_has_stop_count].constraints[0]\", \"violates\": [\"fact_types[delivery_has_stop_count].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-0.duplicate-joined-tuple.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-0.duplicate-joined-tuple.meta.json\", \"seed\": 9149530522194353631, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-joined-tuple\", \"target\": \"constraints[0]\", \"violates_target\": \"constraints[0]\", \"violates\": [\"constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-1.edit-value-out-of-range.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-1.edit-value-out-of-range.meta.json\", \"seed\": 8420921938064925003, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"edit-value-out-of-range\", \"target\": \"constraints[1]\", \"violates_target\": \"constraints[1]\", \"violates\": [\"constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-1.add-fact-with-out-of-range-new-entity.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-1.add-fact-with-out-of-range-new-entity.meta.json\", \"seed\": 187864017278147467, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-fact-with-out-of-range-new-entity\", \"target\": \"constraints[1]\", \"violates_target\": \"constraints[1]\", \"violates\": [\"constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-2.edit-value-out-of-range.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-2.edit-value-out-of-range.meta.json\", \"seed\": 6499954303889609508, \"band\": 0, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"edit-value-out-of-range\", \"target\": \"constraints[2]\", \"violates_target\": \"constraints[2]\", \"violates\": [\"constraints[2]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-2.add-fact-with-out-of-range-new-entity.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-2.add-fact-with-out-of-range-new-entity.meta.json\", \"seed\": 3673102529939230923, \"band\": 0, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-fact-with-out-of-range-new-entity\", \"target\": \"constraints[2]\", \"violates_target\": \"constraints[2]\", \"violates\": [\"constraints[2]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-3.add-overlapping-tuple.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-3.add-overlapping-tuple.meta.json\", \"seed\": 17860689834763200000, \"band\": 0, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-overlapping-tuple\", \"target\": \"constraints[3]\", \"violates_target\": \"constraints[3]\", \"violates\": [\"constraints[3]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}], \"not_derivable\": [{\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:bound-type-mismatch\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:bound-type-mismatch\", \"mechanism\": \"band-4 route `bound-type-mismatch` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:derived-unknown\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:derived-unknown\", \"mechanism\": \"band-4 route `derived-unknown` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:family-unimplemented\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:family-unimplemented\", \"mechanism\": \"band-4 route `family-unimplemented` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-anchor-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-anchor-ambiguous\", \"mechanism\": \"band-4 route `join-anchor-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-disconnected\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-disconnected\", \"mechanism\": \"band-4 route `join-disconnected` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:literal-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:literal-type-ambiguous\", \"mechanism\": \"band-4 route `literal-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:no-reference-clock\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:no-reference-clock\", \"mechanism\": \"band-4 route `no-reference-clock` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:partition-asserts-nothing\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:partition-asserts-nothing\", \"mechanism\": \"band-4 route `partition-asserts-nothing` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:reference-join-work-limit\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:reference-join-work-limit\", \"mechanism\": \"band-4 route `reference-join-work-limit` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:ring-not-binary\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:ring-not-binary\", \"mechanism\": \"band-4 route `ring-not-binary` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:role-unresolved\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:role-unresolved\", \"mechanism\": \"band-4 route `role-unresolved` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subject-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subject-type-ambiguous\", \"mechanism\": \"band-4 route `subject-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subtype-derivation-only\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subtype-derivation-only\", \"mechanism\": \"band-4 route `subtype-derivation-only` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:textual-not-mechanical\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:textual-not-mechanical\", \"mechanism\": \"band-4 route `textual-not-mechanical` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:values-not-comparable\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:values-not-comparable\", \"mechanism\": \"band-4 route `values-not-comparable` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:xor-disjunctive-undefined\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:xor-disjunctive-undefined\", \"mechanism\": \"band-4 route `xor-disjunctive-undefined` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"constraints[3]\", \"family\": \"exclusion\", \"operator\": \"boundary:inside\", \"case_kind\": \"boundary\", \"side\": \"inside\", \"mechanism\": \"side A yields 3 row(s) and side B 0; with one side empty the constraint is trivially satisfied, which is a vacuity case, not the exclusion frontier\"}, {\"constraint_ref\": \"fact_types[courier_drives_route].constraints[1]\", \"family\": \"frequency\", \"operator\": \"boundary:min-outside\", \"case_kind\": \"boundary\", \"side\": \"min-outside\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group has size 0, which means the group does not OCCUR, and a non-occurring group is satisfied \\u2014 emitting the case would manufacture a violating label the checker correctly passes (a fabricated false pass)\"}, {\"constraint_ref\": \"fact_types[courier_drives_route].constraints[1]\", \"family\": \"frequency\", \"operator\": \"drop-fact-from-group\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group does not occur, so the lower boundary is unreachable by deletion\"}, {\"constraint_ref\": \"fact_types[courier_drives_route].constraints[1]\", \"family\": \"frequency\", \"operator\": \"remove-fact-from-last-covering-group\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group does not occur, so the lower boundary is unreachable by deletion\"}, {\"constraint_ref\": \"fact_types[courier_has_name].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"fact_types[delivery_of_parcel].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}], \"isolating_cases\": 26, \"set_attributed_cases\": 7, \"isolating_fraction\": 0.7878787878787878}\n"
+}

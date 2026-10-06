@@ -1,0 +1,5 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/ruff check src/gnd/export/pyrel_runtime.py src/gnd/input_policy.py src/gnd/model/__init__.py src/gnd/model_queries.py src/gnd/synth/provenance.py src/gnd/input_policy.py tests/support/rf7_pins.py tests/test_rf7_structure.py --output-format concise
+All checks passed!
+
+Exit: 0

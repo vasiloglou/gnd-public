@@ -1,0 +1,15 @@
+{
+ "observed": {
+  "empty": {
+   "ok": [
+    "schema $: {} is not valid under any of the given schemas"
+   ]
+  },
+  "wrong-types": {
+   "ok": [
+    "schema $: {'schema_version': 'x', 'verdicts': 3} is not valid under any of the given schemas"
+   ]
+  }
+ },
+ "site": "validation_issues|gnd.exp.session_eval:_schema_issues"
+}

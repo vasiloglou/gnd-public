@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "src/gnd/exp/session_v7.py",
+    "src/gnd/exp/session_replay.py",
+    "tests/support/rf8_sources.py",
+    "tests/test_rf8_sessions.py",
+    "tests/test_rf8_structure.py",
+    "--output-format",
+    "concise"
+  ],
+  "exit": 0,
+  "seconds": 0.05034685134887695
+}

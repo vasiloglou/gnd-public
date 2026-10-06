@@ -1,0 +1,478 @@
+[
+  {
+    "path": "src/gnd/exp/close.py",
+    "before": {
+      "path": "src/gnd/exp/close.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
+      "bytes": 63667,
+      "public_sha256": "9d92dba7d24e36e1ac67f7c795e3b27ab3f11d5c7b9cb927155ddec547ad9267",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/close.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "d4d5a5f6699fb33a93c95f035d5fc437b10b5be7d6cac0810e8b3fc0204fe64f"
+    },
+    "after": {
+      "path": "src/gnd/exp/close.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 63662,
+      "public_sha256": "cdbf9bbb78f8c6c2f692c0298c2fea09d088a293e9fbc0241ddc8e7fcb7105ec",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/close.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "d4d5a5f6699fb33a93c95f035d5fc437b10b5be7d6cac0810e8b3fc0204fe64f"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session.py",
+    "before": {
+      "path": "src/gnd/exp/session.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 59348,
+      "public_sha256": "85031e88c0a0b1ecd69167e26433959b49d05f33e793024d3178c9d4a8da0ea3",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6f944a7ffed92f5daa5ec6ff7a438b919678627a17594433135ccdb1cc57e858"
+    },
+    "after": {
+      "path": "src/gnd/exp/session.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 51674,
+      "public_sha256": "fa1229dbd41bb3bc7be0c9bff3e8490a9856c146cc2e47f10cf25c82a4dd7b9e",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "6f944a7ffed92f5daa5ec6ff7a438b919678627a17594433135ccdb1cc57e858"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_contract.py",
+    "before": {
+      "path": "src/gnd/exp/session_contract.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
+      "bytes": 72291,
+      "public_sha256": "2c7ef58a0147720893e0bbcfa22dc8e19a3dc6d9ea4dfd96ac9c16aee6e371e2",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_contract.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "ef8ce5733ea5e6b87c8573540cf83e75e1a19c7d63ad39373786d1eee5ad6f7d"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_contract.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 71721,
+      "public_sha256": "c5b5ac2b9b8994e7f984829289d90bda325668f4f5e5855a644bfe4e9023ec84",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_contract.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "ef8ce5733ea5e6b87c8573540cf83e75e1a19c7d63ad39373786d1eee5ad6f7d"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_eval.py",
+    "before": {
+      "path": "src/gnd/exp/session_eval.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
+      "bytes": 105644,
+      "public_sha256": "ff0dccce8edb22b780737fa7eb366e269e4a7361d83d52d28e428ee5e94d3481",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_eval.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "225e78b9ba5556c3c6303111afbd3c172f4ad9540e2d1f4a87085dcb27108a09"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_eval.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 105633,
+      "public_sha256": "5731ee21bd17b0062c3bfb367323e36b92e880490ded38c71fef99c2c6f3bd4b",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_eval.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "225e78b9ba5556c3c6303111afbd3c172f4ad9540e2d1f4a87085dcb27108a09"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_judgments.py",
+    "before": {
+      "path": "src/gnd/exp/session_judgments.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 6694,
+      "public_sha256": "816c8f76dfb5bf5a4840abfe5468ee375e0dad3a773b77fefb14f56f0c652f1c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_judgments.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "816c8f76dfb5bf5a4840abfe5468ee375e0dad3a773b77fefb14f56f0c652f1c"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_judgments.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 6696,
+      "public_sha256": "89ea960f36d4b182431b3c195adeeb1d14f6e04b71bd20382df6b03bb033c437",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_judgments.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "816c8f76dfb5bf5a4840abfe5468ee375e0dad3a773b77fefb14f56f0c652f1c"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_patch.py",
+    "before": {
+      "path": "src/gnd/exp/session_patch.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF2 D7 bounded helper refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 10101,
+      "public_sha256": "c6b607cb5dc1b5ea1f45148d65dc12dbd165df88899b3d28185dbabcdff8be3d",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_patch.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "2f89b1abf74f5da9d47cc55768c3fc13a92fe7b67f08f6df5155b4fcd8c92f2d"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_patch.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 10103,
+      "public_sha256": "0cba429fee0cdfb01bf056de020531f30ba8776e85e44bd8d778f3081a5a460c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_patch.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "2f89b1abf74f5da9d47cc55768c3fc13a92fe7b67f08f6df5155b4fcd8c92f2d"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_store.py",
+    "before": {
+      "path": "src/gnd/exp/session_store.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
+      "bytes": 129028,
+      "public_sha256": "2d14dc1efdc827eb94bfba45e37c931f8df969af2c2f2f235768ff4070546289",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_store.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "7bd8b3d8dba43e6c7f360c962fa656ea3ce0cf29776f5481684590eefba02a25"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_store.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 92367,
+      "public_sha256": "a9bf60e73f84eac00b412c5c51599ba08de6d96303de7f45b5a8886ade421b0e",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_store.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "7bd8b3d8dba43e6c7f360c962fa656ea3ce0cf29776f5481684590eefba02a25"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_v7.py",
+    "before": {
+      "path": "src/gnd/exp/session_v7.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
+      "bytes": 43076,
+      "public_sha256": "9b5b299b74e5589654bf860c8b674405634bbb3b8e849c6b478337afa5add503",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_v7.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0e9c04a84d2f3dcd3d788360286ae7fa2cecc8ef9991e80d9b37aa56dd871b88"
+    },
+    "after": {
+      "path": "src/gnd/exp/session_v7.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 5976,
+      "public_sha256": "0b4f18e6daf4c6a0476bd36dad6327f85be88fd0db693311fb510c8dfe72ce45",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/session_v7.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "0e9c04a84d2f3dcd3d788360286ae7fa2cecc8ef9991e80d9b37aa56dd871b88"
+    }
+  },
+  {
+    "path": "src/gnd/exp/tests_runner.py",
+    "before": {
+      "path": "src/gnd/exp/tests_runner.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 40729,
+      "public_sha256": "b6cdaaad1cb632db4e673c30488a28829ccf8125cb50b33114f7ce27a867a3d4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/tests_runner.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "56a7fce7e46a2f1b63c8cdf2bebf5065c69fa16b5d6a7d30e9901a557dd3685d"
+    },
+    "after": {
+      "path": "src/gnd/exp/tests_runner.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 40741,
+      "public_sha256": "33b02cf6754daaeb1f16707dab08a6ab71d56aab06efd00d8a9bcf76f8a152f9",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/exp/tests_runner.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "56a7fce7e46a2f1b63c8cdf2bebf5065c69fa16b5d6a7d30e9901a557dd3685d"
+    }
+  },
+  {
+    "path": "tests/test_artifacts.py",
+    "before": {
+      "path": "tests/test_artifacts.py",
+      "kind": "adaptation",
+      "reason": "Exclude the unresolved retained duplicate-inventory case and its private historical roster; preserve the other 37 independently current primitive controls.",
+      "baseline_sha256": "1acac3ab4f483e761d89ddc513750ddabbfef7c06bdc48919d0b38ea3ec439b1",
+      "public_sha256": "764b502a65e32077f8e640ac3f1f7e06ba730c25620a6ba70baa0e804382e7c6",
+      "bytes": 53403,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_artifacts.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "baseline_sha256": "1acac3ab4f483e761d89ddc513750ddabbfef7c06bdc48919d0b38ea3ec439b1",
+      "public_sha256": "18273d1a949f17e859a4596e9787317046e15e3cbc8134e8a1b166c52296afd4",
+      "bytes": 54832,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_exp_session_evidence_compat.py",
+    "before": {
+      "path": "tests/test_exp_session_evidence_compat.py",
+      "kind": "adaptation",
+      "reason": "Comments/docstrings removed; exact selected original assertions/helpers/decorators/global branches unchanged. Explicit private retained-help/incident/evidence roots excluded and remain unresolved; no skipped-success claim.",
+      "baseline_sha256": "42898847c53167ec1891f6533a369b8cf62b27b351cadeb9929b518756487a81",
+      "public_sha256": "cfb9092514642c83c9e1c8472cf5027b7df7a1c845ba7a213db1728115de8f94",
+      "bytes": 876,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_exp_session_evidence_compat.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "baseline_sha256": "42898847c53167ec1891f6533a369b8cf62b27b351cadeb9929b518756487a81",
+      "public_sha256": "166f04e534f5879c824251c09bcc5813260ec336beb85d0330b04f2b32c73188",
+      "bytes": 910,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_rf6_query_policy.py",
+    "before": {
+      "path": "tests/test_rf6_query_policy.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
+      "bytes": 6641,
+      "public_sha256": "e6a30bcbe1c769e574e455b00f158612b83f5426454091cee1d1d04f5a2c0121",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9"
+    },
+    "after": {
+      "path": "tests/test_rf6_query_policy.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
+      "bytes": 6641,
+      "public_sha256": "ca895ef59e3088431d23d62e6733d91e3ea8592055db9c62aef49ba9a3e3119f",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_control.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/session_control.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 11440,
+      "public_sha256": "07e5fee609aa52579f11383661c3fb66d50ace75f3757570e13a46d2af351eb5",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "07e5fee609aa52579f11383661c3fb66d50ace75f3757570e13a46d2af351eb5"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_environment.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/session_environment.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 501,
+      "public_sha256": "434dd3c2e6905455f533f4e1fade7275a1b70cba4f106dcec027decb5fdaf0d0",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "434dd3c2e6905455f533f4e1fade7275a1b70cba4f106dcec027decb5fdaf0d0"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_profile.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/session_profile.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 2248,
+      "public_sha256": "a7d19007ee7b2c26199bbf101f87d6163d928c5b9549b9c6ca638744f58edf6d",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a7d19007ee7b2c26199bbf101f87d6163d928c5b9549b9c6ca638744f58edf6d"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_records.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/session_records.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 53341,
+      "public_sha256": "66effaf2d9a469408120bd5356d7b084f3e02c66a4a9b8d44ec99a96b1a17910",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "66effaf2d9a469408120bd5356d7b084f3e02c66a4a9b8d44ec99a96b1a17910"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_replay.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/session_replay.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 22120,
+      "public_sha256": "ae90b5aa0ae8ae2bc5f035c2e37366c5b9470dfb053315846bf05b30216f7557",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "ae90b5aa0ae8ae2bc5f035c2e37366c5b9470dfb053315846bf05b30216f7557"
+    }
+  },
+  {
+    "path": "src/gnd/exp/session_runtime.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/session_runtime.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 23117,
+      "public_sha256": "fab7def65c678f59b0c3dfc93628470d285b7bdd21143196ed3d18cafef60a97",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "fab7def65c678f59b0c3dfc93628470d285b7bdd21143196ed3d18cafef60a97"
+    }
+  },
+  {
+    "path": "tests/support/rf8_sources.py",
+    "before": null,
+    "after": {
+      "path": "tests/support/rf8_sources.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 1888,
+      "public_sha256": "a892ea135601cabefde59193b626427683d66cc252eab856df85852ce3c470cd",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a892ea135601cabefde59193b626427683d66cc252eab856df85852ce3c470cd"
+    }
+  },
+  {
+    "path": "tests/test_public_payload_alias_sites.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_public_payload_alias_sites.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 2151,
+      "public_sha256": "6311fc233e79aa274955c367c2e4dc1f2a17ae9e78c4ff758fd9122384a24eb4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "6311fc233e79aa274955c367c2e4dc1f2a17ae9e78c4ff758fd9122384a24eb4"
+    }
+  },
+  {
+    "path": "tests/test_public_v72_reader_boundaries.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_public_v72_reader_boundaries.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 2421,
+      "public_sha256": "eab8ff8a4fcff50887e80006c48d8f3e71c106eae022abafcd406cb989ed9746",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "eab8ff8a4fcff50887e80006c48d8f3e71c106eae022abafcd406cb989ed9746"
+    }
+  },
+  {
+    "path": "tests/test_rf8_sessions.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf8_sessions.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 7896,
+      "public_sha256": "272ed3cf168c3b6ce0182109c5c3a07cc9fbecda68b69520b66d3fd2fe8b1f48",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "272ed3cf168c3b6ce0182109c5c3a07cc9fbecda68b69520b66d3fd2fe8b1f48"
+    }
+  },
+  {
+    "path": "tests/test_rf8_structure.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf8_structure.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 4937,
+      "public_sha256": "fcfc70ccdb8f95464966cd963ed2514cf9f56a5f8ec662bf98f3c6bf632144cc",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "fcfc70ccdb8f95464966cd963ed2514cf9f56a5f8ec662bf98f3c6bf632144cc"
+    }
+  },
+  {
+    "path": "tests/test_v71_phase4_successors.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_v71_phase4_successors.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
+      "bytes": 22657,
+      "public_sha256": "a61bac83ef00b05c9988dc0e51803ebc275121c82d9b4b70cbdd82fb773ae6a4",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a61bac83ef00b05c9988dc0e51803ebc275121c82d9b4b70cbdd82fb773ae6a4"
+    }
+  }
+]

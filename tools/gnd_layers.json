@@ -1,168 +1,874 @@
-{"schema_version": 1,
- "excluded": ["src/gnd/examples/**", "src/gnd/skills/**"],
- "layers": [{"name": "infrastructure", "rank": 0}, {"name": "model", "rank": 1}, {"name": "checking", "rank": 2}, {"name": "semantics", "rank": 3}, {"name": "lanes", "rank": 4}, {"name": "entry", "rank": 5}],
- "lanes": ["codegen", "conformance", "evolve", "exp", "export", "extract", "fidelity", "measure", "recovery", "review", "synth", "witness"],
- "modules": {
-  "gnd": {"layer": "infrastructure"},
-  "gnd.__main__": {"layer": "entry"},
-  "gnd.address": {"layer": "infrastructure"},
-  "gnd.admission": {"layer": "semantics"},
-  "gnd.admission_validation": {"layer": "semantics"},
-  "gnd.agent_cli": {"layer": "infrastructure"},
-  "gnd.api": {"layer": "entry"},
-  "gnd.architecture": {"layer": "infrastructure"},
-  "gnd.archsmoke": {"layer": "entry"},
-  "gnd.artifacts": {"layer": "infrastructure"},
-  "gnd.assurance": {"layer": "semantics"},
-  "gnd.assurance_claims": {"layer": "semantics"},
-  "gnd.assurance_evidence": {"layer": "semantics"},
-  "gnd.assurance_inheritance": {"layer": "semantics"},
-  "gnd.assurance_transport": {"layer": "semantics"},
-  "gnd.atoms": {"layer": "infrastructure"},
-  "gnd.batch": {"layer": "entry"},
-  "gnd.checker": {"layer": "checking"},
-  "gnd.cli": {"layer": "entry"},
-  "gnd.codegen": {"lane": "codegen", "layer": "lanes"},
-  "gnd.codegen.docstrings": {"lane": "codegen", "layer": "lanes"},
-  "gnd.codegen.emit": {"lane": "codegen", "layer": "lanes"},
-  "gnd.codegen.identifiers": {"lane": "codegen", "layer": "lanes"},
-  "gnd.codegen.manifest": {"lane": "codegen", "layer": "lanes"},
-  "gnd.codegen.plan": {"lane": "codegen", "layer": "lanes"},
-  "gnd.conformance": {"lane": "conformance", "layer": "lanes"},
-  "gnd.conformance.architecture": {"lane": "conformance", "layer": "lanes"},
-  "gnd.conformance.currency": {"lane": "conformance", "layer": "lanes"},
-  "gnd.conformance.integrity": {"lane": "conformance", "layer": "lanes"},
-  "gnd.conformance.report": {"lane": "conformance", "layer": "lanes"},
-  "gnd.conformance.service": {"lane": "conformance", "layer": "lanes"},
-  "gnd.conformance.structural": {"lane": "conformance", "layer": "lanes"},
-  "gnd.correspondence": {"layer": "semantics"},
-  "gnd.coverage": {"layer": "entry"},
-  "gnd.declared_adapter": {"lane": "exp", "layer": "lanes"},
-  "gnd.diff": {"layer": "entry"},
-  "gnd.evolve": {"lane": "evolve", "layer": "lanes"},
-  "gnd.evolve.models": {"lane": "evolve", "layer": "lanes"},
-  "gnd.evolve.service": {"lane": "evolve", "layer": "lanes"},
-  "gnd.exits": {"layer": "infrastructure"},
-  "gnd.exp": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.adapter_policy": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.close": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.conclusions": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.declared_invocation": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.expectation_author": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.frontmatter": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.junit": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.paths": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session_contract": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session_eval": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session_judgments": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session_patch": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session_store": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.session_v7": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.spec": {"lane": "exp", "layer": "lanes"},
-  "gnd.exp.tests_runner": {"lane": "exp", "layer": "lanes"},
-  "gnd.export": {"lane": "export", "layer": "lanes"},
-  "gnd.export.emit": {"lane": "export", "layer": "lanes"},
-  "gnd.export.lean": {"lane": "export", "layer": "lanes"},
-  "gnd.export.lean_cli": {"lane": "export", "layer": "lanes"},
-  "gnd.export.lean_io": {"lane": "export", "layer": "lanes"},
-  "gnd.export.lean_runtime": {"lane": "export", "layer": "lanes"},
-  "gnd.export.lean_types": {"lane": "export", "layer": "lanes"},
-  "gnd.export.pyrel_runtime": {"lane": "export", "layer": "lanes"},
-  "gnd.export.souffle": {"lane": "export", "layer": "lanes"},
-  "gnd.export.souffle_cli": {"lane": "export", "layer": "lanes"},
-  "gnd.export.souffle_io": {"lane": "export", "layer": "lanes"},
-  "gnd.export.souffle_runtime": {"lane": "export", "layer": "lanes"},
-  "gnd.export.souffle_types": {"lane": "export", "layer": "lanes"},
-  "gnd.extract": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.anchors": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.bundle": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.identity": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.manifest": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.projection": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.refscheme": {"lane": "extract", "layer": "lanes"},
-  "gnd.extract.vocabulary": {"lane": "extract", "layer": "lanes"},
-  "gnd.extraction_scope": {"layer": "model"},
-  "gnd.fidelity": {"lane": "fidelity", "layer": "lanes"},
-  "gnd.fidelity.match": {"lane": "fidelity", "layer": "lanes"},
-  "gnd.fidelity.report": {"lane": "fidelity", "layer": "lanes"},
-  "gnd.install": {"layer": "infrastructure"},
-  "gnd.json_input": {"layer": "infrastructure"},
-  "gnd.judgments": {"layer": "semantics"},
-  "gnd.measure": {"lane": "measure", "layer": "lanes"},
-  "gnd.measure.coverage": {"lane": "measure", "layer": "lanes"},
-  "gnd.measure.promote": {"lane": "measure", "layer": "lanes"},
-  "gnd.measure.report": {"lane": "measure", "layer": "lanes"},
-  "gnd.measure.score": {"lane": "measure", "layer": "lanes"},
-  "gnd.measure.truth": {"lane": "measure", "layer": "lanes"},
-  "gnd.model": {"layer": "model"},
-  "gnd.model_identity": {"layer": "model"},
-  "gnd.model_verbalization": {"layer": "checking"},
-  "gnd.patterns": {"layer": "model"},
-  "gnd.population": {"layer": "model"},
-  "gnd.popvalidate": {"layer": "model"},
-  "gnd.proof_bridge": {"layer": "semantics"},
-  "gnd.proof_currency": {"layer": "semantics"},
-  "gnd.proof_kernel": {"layer": "semantics"},
-  "gnd.rai_import": {"layer": "entry"},
-  "gnd.recovery": {"lane": "recovery", "layer": "lanes"},
-  "gnd.recovery.inventory": {"lane": "recovery", "layer": "lanes"},
-  "gnd.recovery.report": {"lane": "recovery", "layer": "lanes"},
-  "gnd.recovery.verify": {"lane": "recovery", "layer": "lanes"},
-  "gnd.redaction": {"layer": "semantics"},
-  "gnd.references": {"layer": "model"},
-  "gnd.report": {"layer": "entry"},
-  "gnd.review": {"lane": "review", "layer": "lanes"},
-  "gnd.review.adapters": {"lane": "review", "layer": "lanes"},
-  "gnd.review.constants": {"lane": "review", "layer": "lanes"},
-  "gnd.review.report": {"lane": "review", "layer": "lanes"},
-  "gnd.review.request": {"lane": "review", "layer": "lanes"},
-  "gnd.review.runner": {"lane": "review", "layer": "lanes"},
-  "gnd.semantic_adapter": {"layer": "semantics"},
-  "gnd.semantic_ir": {"layer": "semantics"},
-  "gnd.semantic_registry": {"layer": "semantics"},
-  "gnd.semantic_spec": {"layer": "semantics"},
-  "gnd.solve": {"layer": "entry"},
-  "gnd.synth": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.assemble": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.boundary": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.comparison": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.frontier": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.guarded": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.identity": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.mutate": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.paths": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.pool": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.poolfile": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.provenance": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.value_domain": {"lane": "synth", "layer": "lanes"},
-  "gnd.synth.values": {"lane": "synth", "layer": "lanes"},
-  "gnd.temporal_guarded": {"layer": "semantics"},
-  "gnd.terms": {"layer": "model"},
-  "gnd.transition": {"layer": "semantics"},
-  "gnd.transition_kernel": {"layer": "semantics"},
-  "gnd.verbalize": {"layer": "checking"},
-  "gnd.verbalize_population": {"layer": "checking"},
-  "gnd.witness": {"lane": "witness", "layer": "lanes"},
-  "gnd.witness.cli": {"lane": "witness", "layer": "lanes"},
-  "gnd.witness.io": {"lane": "witness", "layer": "lanes"},
-  "gnd.witness.kernel": {"lane": "witness", "layer": "lanes"},
-  "gnd.witness.producer": {"lane": "witness", "layer": "lanes"},
-  "gnd.witness.types": {"lane": "witness", "layer": "lanes"},
-  "gnd.witness.view": {"lane": "witness", "layer": "lanes"},
-  "gnd.yaml_comments": {"layer": "infrastructure"}
- },
- "declared_clean": ["entry", "infrastructure"],
- "allow_list": [],
- "helper_patterns": {
-  "canonical_json": "^_?(canonical|canonical_json|canonical_bytes|canonical_json_bytes|canonical_json_text|json_bytes|evolve_json_bytes|canonical_payload)$",
-  "file_digest": "^_?(sha256_file|digest_regular_path|tree_sha256|population_file_digest|final_record_file_sha256)$",
-  "iso_datetime": "^_?(parse_datetime|is_datetime)$",
-  "model_digest": "^_?(model_digest|reference_model_digest)$",
-  "safe_filesystem": "^_?(descend|open_root|same_inode|atomic_write|safe_destination|reject_unsafe_relpath|write_new|write_new_file|write_new_file_at|unsafe_project_path|evolve_reject_unsafe_spelling)$",
-  "sha256_hex": "^_?(sha256|sha|sha256_hex|digest|digest_text|content_digest)$",
-  "strict_json": "^_?(strict_json|strict_json_object|strict_object|strict_object_bytes|strict_document|read_json_document)$",
-  "validation_issues": "^_?(validation_issues|pydantic_issues|schema_issues)$",
-  "yaml_guard": "^_?(load_yaml|load_yaml_static|preflight_yaml|yaml_stream_guard_error)$"
- }
+{
+  "allow_list": [],
+  "declared_clean": [
+    "infrastructure",
+    "model",
+    "checking",
+    "semantics",
+    "lanes",
+    "entry"
+  ],
+  "excluded": [
+    "src/gnd/examples/**",
+    "src/gnd/skills/**"
+  ],
+  "helper_patterns": {
+    "canonical_json": "^_?(canonical|canonical_json|canonical_bytes|canonical_json_bytes|canonical_json_text|json_bytes|evolve_json_bytes|canonical_payload)$",
+    "file_digest": "^_?(sha256_file|digest_regular_path|tree_sha256|population_file_digest|final_record_file_sha256)$",
+    "iso_datetime": "^_?(parse_datetime|is_datetime)$",
+    "model_digest": "^_?(model_digest|reference_model_digest)$",
+    "safe_filesystem": "^_?(descend|open_root|same_inode|atomic_write|safe_destination|reject_unsafe_relpath|write_new|write_new_file|write_new_file_at|unsafe_project_path|evolve_reject_unsafe_spelling)$",
+    "sha256_hex": "^_?(sha256|sha|sha256_hex|digest|digest_text|content_digest)$",
+    "strict_json": "^_?(strict_json|strict_json_object|strict_object|strict_object_bytes|strict_document|read_json_document)$",
+    "validation_issues": "^_?(validation_issues|pydantic_issues|schema_issues)$",
+    "yaml_guard": "^_?(load_yaml|load_yaml_static|preflight_yaml|yaml_stream_guard_error)$"
+  },
+  "lanes": [
+    "codegen",
+    "conformance",
+    "evolve",
+    "exp",
+    "export",
+    "extract",
+    "fidelity",
+    "measure",
+    "recovery",
+    "review",
+    "synth",
+    "witness"
+  ],
+  "layers": [
+    {
+      "name": "infrastructure",
+      "rank": 0
+    },
+    {
+      "name": "model",
+      "rank": 1
+    },
+    {
+      "name": "checking",
+      "rank": 2
+    },
+    {
+      "name": "semantics",
+      "rank": 3
+    },
+    {
+      "name": "lanes",
+      "rank": 4
+    },
+    {
+      "name": "entry",
+      "rank": 5
+    }
+  ],
+  "modules": {
+    "gnd": {
+      "layer": "infrastructure"
+    },
+    "gnd.__main__": {
+      "layer": "entry"
+    },
+    "gnd.address": {
+      "layer": "infrastructure"
+    },
+    "gnd.admission": {
+      "layer": "semantics"
+    },
+    "gnd.admission_validation": {
+      "layer": "semantics"
+    },
+    "gnd.agent_cli": {
+      "layer": "infrastructure"
+    },
+    "gnd.agents": {
+      "layer": "infrastructure"
+    },
+    "gnd.anchor_identity": {
+      "layer": "infrastructure"
+    },
+    "gnd.anchors": {
+      "layer": "infrastructure"
+    },
+    "gnd.api": {
+      "layer": "entry"
+    },
+    "gnd.applicability": {
+      "layer": "checking"
+    },
+    "gnd.architecture": {
+      "layer": "infrastructure"
+    },
+    "gnd.archsmoke": {
+      "layer": "entry"
+    },
+    "gnd.artifacts": {
+      "layer": "infrastructure"
+    },
+    "gnd.assurance": {
+      "layer": "semantics"
+    },
+    "gnd.assurance._wire": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.claims": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.core": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.evidence": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.inheritance": {
+      "layer": "semantics"
+    },
+    "gnd.assurance.transport": {
+      "layer": "semantics"
+    },
+    "gnd.assurance_claims": {
+      "layer": "semantics"
+    },
+    "gnd.assurance_evidence": {
+      "layer": "semantics"
+    },
+    "gnd.assurance_inheritance": {
+      "layer": "semantics"
+    },
+    "gnd.assurance_transport": {
+      "layer": "semantics"
+    },
+    "gnd.atoms": {
+      "layer": "infrastructure"
+    },
+    "gnd.batch": {
+      "layer": "entry"
+    },
+    "gnd.branches": {
+      "layer": "model"
+    },
+    "gnd.checker": {
+      "layer": "checking"
+    },
+    "gnd.checker._core": {
+      "layer": "checking"
+    },
+    "gnd.checker._reports": {
+      "layer": "checking"
+    },
+    "gnd.checking_service": {
+      "layer": "semantics"
+    },
+    "gnd.cli": {
+      "layer": "entry"
+    },
+    "gnd.codegen": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.codegen.docstrings": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.codegen.emit": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.codegen.identifiers": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.codegen.manifest": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.codegen.plan": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.codegen.service": {
+      "lane": "codegen",
+      "layer": "lanes"
+    },
+    "gnd.commands": {
+      "layer": "entry"
+    },
+    "gnd.commands._arguments": {
+      "layer": "infrastructure"
+    },
+    "gnd.commands._output": {
+      "layer": "semantics"
+    },
+    "gnd.commands.checking": {
+      "layer": "entry"
+    },
+    "gnd.commands.codegen": {
+      "layer": "entry"
+    },
+    "gnd.commands.conformance": {
+      "layer": "entry"
+    },
+    "gnd.commands.doccheck": {
+      "layer": "entry"
+    },
+    "gnd.commands.evolve": {
+      "layer": "entry"
+    },
+    "gnd.commands.exp": {
+      "layer": "entry"
+    },
+    "gnd.commands.export": {
+      "layer": "entry"
+    },
+    "gnd.commands.extract": {
+      "layer": "entry"
+    },
+    "gnd.commands.fidelity": {
+      "layer": "entry"
+    },
+    "gnd.commands.judgments": {
+      "layer": "entry"
+    },
+    "gnd.commands.lifecycle": {
+      "layer": "entry"
+    },
+    "gnd.commands.measure": {
+      "layer": "entry"
+    },
+    "gnd.commands.recovery": {
+      "layer": "entry"
+    },
+    "gnd.commands.review": {
+      "layer": "entry"
+    },
+    "gnd.commands.solve": {
+      "layer": "entry"
+    },
+    "gnd.commands.synth": {
+      "layer": "entry"
+    },
+    "gnd.commands.verify": {
+      "layer": "entry"
+    },
+    "gnd.commands.witness": {
+      "layer": "entry"
+    },
+    "gnd.conformance": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.architecture": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.cli_service": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.currency": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.integrity": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.report": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.service": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.conformance.structural": {
+      "lane": "conformance",
+      "layer": "lanes"
+    },
+    "gnd.constraint_families": {
+      "layer": "infrastructure"
+    },
+    "gnd.correspondence": {
+      "layer": "checking"
+    },
+    "gnd.coverage": {
+      "layer": "entry"
+    },
+    "gnd.declared_adapter": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.diff": {
+      "layer": "entry"
+    },
+    "gnd.documents": {
+      "layer": "model"
+    },
+    "gnd.errors": {
+      "layer": "infrastructure"
+    },
+    "gnd.evolve": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
+    "gnd.evolve.cli_service": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
+    "gnd.evolve.models": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
+    "gnd.evolve.service": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
+    "gnd.exits": {
+      "layer": "infrastructure"
+    },
+    "gnd.exp": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.adapter_policy": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.cli_service": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.close": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.conclusions": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.declared_invocation": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.expectation_author": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.frontmatter": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.junit": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.paths": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_contract": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_eval": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_judgments": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_patch": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_store": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_v7": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.spec": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.tests_runner": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.export": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.emit": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.lean": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.lean_cli": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.lean_io": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.lean_runtime": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.lean_types": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.pyrel_runtime": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.service": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.souffle": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.souffle_cli": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.souffle_io": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.souffle_runtime": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.souffle_types": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.verification_service": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.extensions": {
+      "layer": "checking"
+    },
+    "gnd.extract": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.anchors": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.bundle": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.identity": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.manifest": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.projection": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.refscheme": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.service": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.vocabulary": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extraction_scope": {
+      "layer": "model"
+    },
+    "gnd.fidelity": {
+      "lane": "fidelity",
+      "layer": "lanes"
+    },
+    "gnd.fidelity.doccheck_service": {
+      "lane": "fidelity",
+      "layer": "lanes"
+    },
+    "gnd.fidelity.match": {
+      "lane": "fidelity",
+      "layer": "lanes"
+    },
+    "gnd.fidelity.report": {
+      "lane": "fidelity",
+      "layer": "lanes"
+    },
+    "gnd.fidelity.service": {
+      "lane": "fidelity",
+      "layer": "lanes"
+    },
+    "gnd.install": {
+      "layer": "infrastructure"
+    },
+    "gnd.json_input": {
+      "layer": "infrastructure"
+    },
+    "gnd.judgments": {
+      "layer": "semantics"
+    },
+    "gnd.manifest_paths": {
+      "layer": "infrastructure"
+    },
+    "gnd.measure": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.coverage": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.promote": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.report": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.score": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.service": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.truth": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.model": {
+      "layer": "model"
+    },
+    "gnd.model._operations": {
+      "layer": "model"
+    },
+    "gnd.model._validation": {
+      "layer": "model"
+    },
+    "gnd.model_identity": {
+      "layer": "model"
+    },
+    "gnd.model_index": {
+      "layer": "model"
+    },
+    "gnd.model_queries": {
+      "layer": "model"
+    },
+    "gnd.model_verbalization": {
+      "layer": "checking"
+    },
+    "gnd.patterns": {
+      "layer": "model"
+    },
+    "gnd.output": {
+      "layer": "semantics"
+    },
+    "gnd.payloads": {
+      "layer": "semantics"
+    },
+    "gnd.population": {
+      "layer": "model"
+    },
+    "gnd.popvalidate": {
+      "layer": "model"
+    },
+    "gnd.process": {
+      "layer": "infrastructure"
+    },
+    "gnd.proof_bridge": {
+      "layer": "checking"
+    },
+    "gnd.proof_currency": {
+      "layer": "semantics"
+    },
+    "gnd.proof_kernel": {
+      "layer": "infrastructure"
+    },
+    "gnd.rai_import": {
+      "layer": "entry"
+    },
+    "gnd.recovery": {
+      "lane": "recovery",
+      "layer": "lanes"
+    },
+    "gnd.recovery.inventory": {
+      "lane": "recovery",
+      "layer": "lanes"
+    },
+    "gnd.recovery.report": {
+      "lane": "recovery",
+      "layer": "lanes"
+    },
+    "gnd.recovery.service": {
+      "lane": "recovery",
+      "layer": "lanes"
+    },
+    "gnd.recovery.verify": {
+      "lane": "recovery",
+      "layer": "lanes"
+    },
+    "gnd.redaction": {
+      "layer": "checking"
+    },
+    "gnd.references": {
+      "layer": "model"
+    },
+    "gnd.refscheme": {
+      "layer": "model"
+    },
+    "gnd.report": {
+      "layer": "entry"
+    },
+    "gnd.report_schema": {
+      "layer": "infrastructure"
+    },
+    "gnd.review": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.review.adapters": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.review.constants": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.review.report": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.review.request": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.review.runner": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.review.service": {
+      "lane": "review",
+      "layer": "lanes"
+    },
+    "gnd.safefs": {
+      "layer": "infrastructure"
+    },
+    "gnd.semantic_adapter": {
+      "layer": "checking"
+    },
+    "gnd.semantic_ir": {
+      "layer": "infrastructure"
+    },
+    "gnd.semantic_registry": {
+      "layer": "semantics"
+    },
+    "gnd.semantic_rows": {
+      "layer": "checking"
+    },
+    "gnd.semantic_spec": {
+      "layer": "model"
+    },
+    "gnd.solve": {
+      "layer": "entry"
+    },
+    "gnd.synth": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.assemble": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.boundary": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.comparison": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.corpus_service": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.frontier": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.guarded": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.identity": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.mutate": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle.constructive": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle.mutations": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.oracle.state": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.paths": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.pool": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.poolfile": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.provenance": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.service": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.value_domain": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.values": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.temporal_guarded": {
+      "layer": "checking"
+    },
+    "gnd.terms": {
+      "layer": "model"
+    },
+    "gnd.transition": {
+      "layer": "semantics"
+    },
+    "gnd.transition_kernel": {
+      "layer": "semantics"
+    },
+    "gnd.universe": {
+      "layer": "model"
+    },
+    "gnd.values": {
+      "layer": "model"
+    },
+    "gnd.verbalize": {
+      "layer": "infrastructure"
+    },
+    "gnd.verbalize_population": {
+      "layer": "checking"
+    },
+    "gnd.vocabulary": {
+      "layer": "model"
+    },
+    "gnd.witness": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.cli": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.io": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.kernel": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.producer": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.service": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.types": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.witness.view": {
+      "lane": "witness",
+      "layer": "lanes"
+    },
+    "gnd.yaml_comments": {
+      "layer": "infrastructure"
+    },
+    "gnd.input_policy": {
+      "layer": "infrastructure"
+    },
+    "gnd.exp.session_records": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_environment": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_control": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_replay": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_runtime": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_profile": {
+      "lane": "exp",
+      "layer": "lanes"
+    }
+  },
+  "schema_version": 1
 }

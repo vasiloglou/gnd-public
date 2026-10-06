@@ -28,7 +28,7 @@ from pydantic import (
     model_validator,
 )
 
-from gnd.agent_cli import BoundedProcessResult, EnvironmentFact
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import (
     ArtifactError,
     canonical_json_bytes,
@@ -36,6 +36,7 @@ from gnd.artifacts import (
     publish_directory_once,
     read_regular_bounded,
 )
+from gnd.process import BoundedProcessResult, EnvironmentFact
 from gnd.review.adapters import (
     REVIEWER_IDS,
     AdapterAttempt,
@@ -731,7 +732,7 @@ def _strict_json(raw: bytes, *, subject: str) -> Mapping[str, Any]:
         raise ValueError(f"non-finite JSON constant {value}")
 
     try:
-        document = json.loads(text, object_pairs_hook=pairs, parse_constant=constant)
+        document = _rf7_input.loads(text, object_pairs_hook=pairs, parse_constant=constant)
     except (json.JSONDecodeError, ValueError) as error:
         raise ReviewRunError(f"{subject} is invalid JSON: {error}") from error
     if not isinstance(document, dict):

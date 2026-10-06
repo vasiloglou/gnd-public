@@ -1,0 +1,118 @@
+{
+ "base": "de4eed6ec143fdf03a39ab7a64b95a4e4013d24a",
+ "files": [
+  {
+   "added": 3,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/close.py",
+   "removed": 3
+  },
+  {
+   "added": 72,
+   "moved_in": 15,
+   "moved_out": 235,
+   "path": "src/gnd/exp/session.py",
+   "removed": 309
+  },
+  {
+   "added": 48,
+   "moved_in": 2,
+   "moved_out": 11,
+   "path": "src/gnd/exp/session_contract.py",
+   "removed": 63
+  },
+  {
+   "added": 310,
+   "moved_in": 232,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_control.py",
+   "removed": 0
+  },
+  {
+   "added": 20,
+   "moved_in": 8,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_environment.py",
+   "removed": 0
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_eval.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_judgments.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_patch.py",
+   "removed": 1
+  },
+  {
+   "added": 58,
+   "moved_in": 2,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_profile.py",
+   "removed": 0
+  },
+  {
+   "added": 1370,
+   "moved_in": 1099,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_records.py",
+   "removed": 0
+  },
+  {
+   "added": 527,
+   "moved_in": 469,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_replay.py",
+   "removed": 0
+  },
+  {
+   "added": 515,
+   "moved_in": 416,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_runtime.py",
+   "removed": 0
+  },
+  {
+   "added": 263,
+   "moved_in": 0,
+   "moved_out": 1080,
+   "path": "src/gnd/exp/session_store.py",
+   "removed": 1275
+  },
+  {
+   "added": 58,
+   "moved_in": 0,
+   "moved_out": 917,
+   "path": "src/gnd/exp/session_v7.py",
+   "removed": 976
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/tests_runner.py",
+   "removed": 1
+  }
+ ],
+ "head": "5bd3ea2fcda859c3528d4a419d2fdf487fe39fe7",
+ "schema_version": 1,
+ "totals": {
+  "added": 3248,
+  "moved_in": 2243,
+  "moved_out": 2243,
+  "removed": 2630
+ }
+}

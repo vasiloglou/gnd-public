@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "synth",
+  "src/gnd/examples/expense/currency.orm.json",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 5,
+ "files": null,
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 5, \"error\": \"generator invariant failed at seed 0: assembled population failed re-admission (load_population): population validation failed: $.facts.expense_approved_by_chain[0]: Fact 0 of 'expense_approved_by_chain' omits role 'chain'; an instance of 'expense_approved_by_chain' fills all 2 of its roles ('chain', 'expense'). A fact missing a role is not a partial fact (population:missing-role). \\u2014 a structurally-invalid population contributes zero verdicts and must be loud (exit 5).\"}\n"
+}

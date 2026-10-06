@@ -1,0 +1,140 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_review_regressions.py -k captured_default --tb=short
+FFFFFFFFFFFFFFFFFFFFFF                                                   [100%]
+=================================== FAILURES ===================================
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-evaluate_derivations_legacy-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-evaluate_derivations_legacy-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations_dispatch-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations_dispatch-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_legacy-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_legacy-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations_dispatch-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations_dispatch-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_dispatch-support.v71_witness_cases] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_dispatch-support.public_v71_witness_corpus] _
+tests/test_rf3_review_regressions.py:63: in test_replay_guard_blocks_captured_default_calculators
+    with pytest.raises(AssertionError, match='replay invoked'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-evaluate_derivations_legacy-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-evaluate_derivations_legacy-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations_dispatch-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.checker-_evaluate_derivations_dispatch-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_legacy-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_legacy-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-PHASE3_LEGACY_EVALUATE_DERIVATIONS-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations_dispatch-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-_evaluate_derivations_dispatch-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations-support.public_v71_witness_corpus]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_dispatch-support.v71_witness_cases]
+FAILED tests/test_rf3_review_regressions.py::test_replay_guard_blocks_captured_default_calculators[gnd.extensions-evaluate_derivations_dispatch-support.public_v71_witness_corpus]
+22 failed, 21 deselected in 0.20s
+
+Exit: 1

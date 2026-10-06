@@ -1,0 +1,30 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "src/gnd/model",
+    "src/gnd/checker",
+    "tests/test_rf6_packages.py",
+    "tests/test_atom_bind.py",
+    "tests/test_codegen_manifest.py",
+    "tests/test_measure_offline.py",
+    "tests/test_public_derivation_evaluation_complete.py",
+    "tests/test_public_derivation_evaluator_controls.py",
+    "tests/test_public_derivation_parity_local.py",
+    "tests/test_public_kernel_production.py",
+    "tests/test_public_registry_runtime.py",
+    "tests/test_reference_population_corpus.py",
+    "tests/test_rf2_helpers.py",
+    "tests/test_rf2_review_regressions.py",
+    "tests/test_rf3_core.py",
+    "tests/test_rf6_moves.py",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_v2_offline.py",
+    "tests/test_v71_phase2_successors.py",
+    "tests/test_v71_phase3_successors.py",
+    "--output-format",
+    "concise"
+  ],
+  "exit": 0,
+  "seconds": 0.04626274108886719
+}

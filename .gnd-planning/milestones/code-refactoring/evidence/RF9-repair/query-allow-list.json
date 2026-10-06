@@ -1,0 +1,2016 @@
+{
+  "baseline": 375,
+  "ceiling": 365,
+  "original_attribute_get_metric": {
+    "baseline": 320,
+    "ceiling": 310,
+    "current": 299
+  },
+  "literal_subscription_metric": {
+    "baseline": 51,
+    "current": 51
+  },
+  "rows": [
+    {
+      "path": "src/gnd/admission.py",
+      "owner": "_verdict_refs",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_verdict_refs retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "owner": "build_admission",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "build_admission retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "owner": "build_admission",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "build_admission retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
+      "expression": "fact_type['roles']",
+      "count": 1,
+      "reason": "_validate retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
+      "expression": "ft['roles']",
+      "count": 1,
+      "reason": "_validate retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "_validate retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "constraint_annotations",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "constraint_annotations retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "bind_anchors",
+      "expression": "fact_key['roles']",
+      "count": 1,
+      "reason": "bind_anchors retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "bind_anchors",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "bind_anchors retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "bind_anchors",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "bind_anchors retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "parse_anchor_sidecar",
+      "expression": "fact_key['roles']",
+      "count": 3,
+      "reason": "parse_anchor_sidecar retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "vocabulary_digest",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "vocabulary_digest retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "vocabulary_digest",
+      "expression": "model['fact_types']",
+      "count": 1,
+      "reason": "vocabulary_digest retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/api.py",
+      "owner": "_run_transition_raw",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_run_transition_raw retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "applicable_scope_ids retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "count": 13,
+      "reason": "applicable_scope_ids retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/branches.py",
+      "owner": "constraint_variant",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "constraint_variant retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/branches.py",
+      "owner": "time_relative_operand",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "time_relative_operand retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_anchored_verdicts",
+      "expression": "fact_type.get('roles')",
+      "count": 2,
+      "reason": "_anchored_verdicts retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_anchored_verdicts",
+      "expression": "record['fact_key']['roles']",
+      "count": 3,
+      "reason": "_anchored_verdicts retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_correspondence_message",
+      "expression": "(fact_type or {}).get('roles')",
+      "count": 1,
+      "reason": "_correspondence_message selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_family_message_frequency",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_family_message_frequency selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_family_message_uniqueness",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_family_message_uniqueness selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_join_rows",
+      "expression": "(fact_type or {}).get('roles')",
+      "count": 1,
+      "reason": "_join_rows selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_partial_constraint_report",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_partial_constraint_report selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_partial_constraint_report",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_partial_constraint_report retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_partial_constraint_report",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_partial_constraint_report retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_partial_constraint_report",
+      "expression": "next((ft for ft in model.fact_types if ft.get('id') == head)).get('roles')",
+      "count": 1,
+      "reason": "_partial_constraint_report retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_require_joinable",
+      "expression": "(fact_type or {}).get('roles')",
+      "count": 2,
+      "reason": "_require_joinable selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "owner": "_value_comparison_message_inputs",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_value_comparison_message_inputs retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "owner": "_run_check_raw",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_run_check_raw retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/codegen/docstrings.py",
+      "owner": "tool_docstring",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "tool_docstring retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "_constructor_fact_types",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_constructor_fact_types retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "render_skill_document",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "render_skill_document retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "render_skill_document",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "render_skill_document retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "render_tools_module",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "render_tools_module retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/conformance/architecture.py",
+      "owner": "check_architecture",
+      "expression": "getattr(model, 'fact_types', ())",
+      "count": 1,
+      "reason": "Literal getattr retains the pre-existing optional/non-Model traversal fallback. RF9-repair inventories this exact read; routing it requires separately pinned consumer semantics."
+    },
+    {
+      "path": "src/gnd/conformance/structural.py",
+      "owner": "check_structural",
+      "expression": "getattr(model, 'fact_types', None)",
+      "count": 1,
+      "reason": "Literal getattr retains the pre-existing optional/non-Model traversal fallback. RF9-repair inventories this exact read; routing it requires separately pinned consumer semantics."
+    },
+    {
+      "path": "src/gnd/conformance/structural.py",
+      "owner": "expected_surface",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "expected_surface retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/conformance/structural.py",
+      "owner": "expected_surface",
+      "expression": "getattr(model, 'fact_types', ())",
+      "count": 1,
+      "reason": "Literal getattr retains the pre-existing optional/non-Model traversal fallback. RF9-repair inventories this exact read; routing it requires separately pinned consumer semantics."
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_indexed_guarded_bindings",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "_indexed_guarded_bindings retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_indexed_guarded_exists_verdict",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "_indexed_guarded_exists_verdict retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_indexed_guarded_verdict",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "_indexed_guarded_verdict retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_inline_uniqueness_result",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "_inline_uniqueness_result retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "evaluate_snapshot",
+      "expression": "adapted.snapshot.fact_types",
+      "count": 2,
+      "reason": "evaluate_snapshot retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/coverage.py",
+      "owner": "_element_universe",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_element_universe retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_constraints",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_constraints retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_derivation_rows",
+      "expression": "fact['roles']",
+      "count": 1,
+      "reason": "_derivation_rows retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_derivation_rows",
+      "expression": "model_a.fact_types",
+      "count": 1,
+      "reason": "_derivation_rows retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_derivation_rows",
+      "expression": "model_b.fact_types",
+      "count": 1,
+      "reason": "_derivation_rows retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_implies",
+      "expression": "left.get('roles')",
+      "count": 1,
+      "reason": "_implies retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_implies",
+      "expression": "right.get('roles')",
+      "count": 1,
+      "reason": "_implies selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_structured",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_structured retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/documents.py",
+      "owner": "structured_derivation_ids",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "structured_derivation_ids retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_constraints",
+      "expression": "document.get('fact_types')",
+      "count": 1,
+      "reason": "_constraints retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_find_fact",
+      "expression": "document.get('fact_types')",
+      "count": 1,
+      "reason": "_find_fact retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_find_role",
+      "expression": "_find_fact(document, locator.fact_type_id).get('roles')",
+      "count": 1,
+      "reason": "_find_role selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_operation_target",
+      "expression": "_find_fact(document, locator.fact_type_id).get('roles')",
+      "count": 1,
+      "reason": "_operation_target selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_surface_index",
+      "expression": "document.get('fact_types')",
+      "count": 1,
+      "reason": "_surface_index retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_surface_index",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_surface_index retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "owner": "read_session_contract",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "read_session_contract retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "__init__",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "__init__ retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "__init__",
+      "expression": "f['roles']",
+      "count": 1,
+      "reason": "__init__ retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "__init__",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "__init__ emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "classify",
+      "expression": "c.get('roles')",
+      "count": 1,
+      "reason": "classify selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "classify",
+      "expression": "f['roles']",
+      "count": 1,
+      "reason": "classify retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "constraints",
+      "expression": "md['fact_types']",
+      "count": 1,
+      "reason": "constraints retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "family",
+      "expression": "c['roles']",
+      "count": 1,
+      "reason": "family retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "roles",
+      "expression": "self.facts[i]['roles']",
+      "count": 1,
+      "reason": "roles retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "__init__",
+      "expression": "doc.get('fact_types', [])",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_admit_model",
+      "expression": "document.get('fact_types')",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_admit_model",
+      "expression": "fact.get('roles')",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_constraint_entries",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_define_fact_relations",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_frequency",
+      "expression": "constraint.get('roles', [])",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_uniqueness",
+      "expression": "constraint.get('roles', [])",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "admit_population",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "roles",
+      "expression": "self.fact_types",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "roles",
+      "expression": "self.fact_types[ft_id].get('roles', [])",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "universe_values",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "Standalone copied runtime/emitted format: preserve no-GND-import boundary (RF2-OQ2; export-format successor)."
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "admit retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
+      "expression": "model.fact_types",
+      "count": 4,
+      "reason": "admit emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "render_souffle",
+      "expression": "ft['roles']",
+      "count": 1,
+      "reason": "render_souffle retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "render_souffle",
+      "expression": "model.fact_types",
+      "count": 3,
+      "reason": "render_souffle emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "extensions",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "extensions retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "extensions",
+      "expression": "relation['roles']",
+      "count": 2,
+      "reason": "extensions retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "map_proof",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "map_proof retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "visit",
+      "expression": "relation['roles']",
+      "count": 4,
+      "reason": "visit retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_base_relations",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_base_relations retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_constraint_view_dispatch",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_constraint_view_dispatch retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_derivations_dispatch",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "_evaluate_derivations_dispatch retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_stratified_extensions",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_evaluate_stratified_extensions retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_stratified_extensions",
+      "expression": "fact_types[head_id].get('roles')",
+      "count": 1,
+      "reason": "_evaluate_stratified_extensions selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_stratified_extensions",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_evaluate_stratified_extensions retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_exact_extension_calculator",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_exact_extension_calculator retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_exact_extension_calculator",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_exact_extension_calculator retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_model_uses_exact_derivations",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_model_uses_exact_derivations retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_partial_clause_rows",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_partial_clause_rows retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_project_extension",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_project_extension retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_project_lineage",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_project_lineage retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_python_extension_calculator",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_python_extension_calculator retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_relation_roles",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_relation_roles retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_requires_fixpoint",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_requires_fixpoint retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "constraint_view_legacy",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "constraint_view_legacy retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "derivation_claims_against",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "derivation_claims_against retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "effective_view",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "effective_view retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "evaluate_derivations_legacy",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "evaluate_derivations_legacy retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "exact_extension_envelope",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "exact_extension_envelope retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "structured_extension_view",
+      "expression": "model.fact_types",
+      "count": 5,
+      "reason": "structured_extension_view retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "owner": "_build_projection",
+      "expression": "declaration['fact_types']",
+      "count": 1,
+      "reason": "_build_projection retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "owner": "_build_projection",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_build_projection retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "owner": "_build_projection",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_build_projection retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/extraction_scope.py",
+      "owner": "fact_type_scope",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "fact_type_scope retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "owner": "_cmd_doccheck",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "_cmd_doccheck retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "owner": "role_object_types",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "role_object_types retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "owner": "role_object_types",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "role_object_types retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "owner": "__init__",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "__init__ retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "owner": "__init__",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "__init__ retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "owner": "__init__",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "__init__ retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/fidelity/report.py",
+      "owner": "build_fidelity_payload",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "build_fidelity_payload retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "owner": "_cmd_fidelity",
+      "expression": "applicable['fact_types']",
+      "count": 1,
+      "reason": "_cmd_fidelity retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/judgments.py",
+      "owner": "evaluate_judgments",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "evaluate_judgments retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/measure/coverage.py",
+      "owner": "shape",
+      "expression": "(ft or {}).get('roles')",
+      "count": 2,
+      "reason": "shape selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/measure/report.py",
+      "owner": "build_measurement_report",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "build_measurement_report retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "owner": "_cmd_measure",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_cmd_measure retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/measure/truth.py",
+      "owner": "resolve_constraint_ref",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "resolve_constraint_ref retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "_constraint_cnl",
+      "expression": "item.get('roles')",
+      "count": 2,
+      "reason": "_constraint_cnl selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "_fact_type_cnl",
+      "expression": "item.get('roles')",
+      "count": 1,
+      "reason": "_fact_type_cnl selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "render_model_verbalization",
+      "expression": "declaration['fact_types']",
+      "count": 1,
+      "reason": "render_model_verbalization retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "render_model_verbalization",
+      "expression": "item.get('roles')",
+      "count": 1,
+      "reason": "render_model_verbalization selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "render_model_verbalization",
+      "expression": "loaded.fact_types",
+      "count": 1,
+      "reason": "render_model_verbalization emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_rule_anchored_empty_string",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_rule_anchored_empty_string retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_rule_anchored_empty_string",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_rule_anchored_empty_string retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/proof_bridge.py",
+      "owner": "_candidate_slice",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_candidate_slice selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/proof_bridge.py",
+      "owner": "_role_object_type",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_role_object_type retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_all_constraints",
+      "expression": "document.get('fact_types')",
+      "count": 1,
+      "reason": "_all_constraints retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_guard_dialect_shape",
+      "expression": "document['fact_types']",
+      "count": 1,
+      "reason": "_guard_dialect_shape retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_guard_dialect_shape",
+      "expression": "fact.get('roles')",
+      "count": 1,
+      "reason": "_guard_dialect_shape selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_guard_dialect_shape",
+      "expression": "fact['roles']",
+      "count": 1,
+      "reason": "_guard_dialect_shape retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_rewrite_reference_node",
+      "expression": "node.get('roles')",
+      "count": 1,
+      "reason": "_rewrite_reference_node selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_rewrite_reference_node",
+      "expression": "node['roles']",
+      "count": 1,
+      "reason": "_rewrite_reference_node retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "document['fact_types']",
+      "count": 3,
+      "reason": "plan_rai_import retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "fact.get('roles')",
+      "count": 1,
+      "reason": "plan_rai_import selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "fact['roles']",
+      "count": 2,
+      "reason": "plan_rai_import retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "target.get('roles')",
+      "count": 1,
+      "reason": "plan_rai_import selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "owner": "_expected_model_elements",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_expected_model_elements retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "owner": "_expected_model_elements",
+      "expression": "model.get('fact_types')",
+      "count": 1,
+      "reason": "_expected_model_elements retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "fact_type.get('roles')",
+      "count": 2,
+      "reason": "from_model emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "model.fact_types",
+      "count": 4,
+      "reason": "from_model emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "project_output",
+      "expression": "row.get('roles')",
+      "count": 1,
+      "reason": "project_output emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "project_output",
+      "expression": "row['roles']",
+      "count": 2,
+      "reason": "project_output retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "render_text_header",
+      "expression": "row.get('roles', ())",
+      "count": 1,
+      "reason": "render_text_header emits or inventories declared document structure; preserve original raw ordering, metadata and representation boundary."
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "_anchors_on",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_anchors_on retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "_fact_types_by_id",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_fact_types_by_id retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "_referenced_object_type",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_referenced_object_type retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "applicable_set",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "applicable_set retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "applicable_set",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "applicable_set retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "_operand",
+      "expression": "fact_type.get('roles', [])",
+      "count": 1,
+      "reason": "_operand retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_constraint",
+      "expression": "source['roles']",
+      "count": 1,
+      "reason": "adapt_constraint retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "adapt_snapshot retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot",
+      "expression": "source.get('roles', [])",
+      "count": 1,
+      "reason": "adapt_snapshot retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot_observed",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "adapt_snapshot_observed retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot_observed",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "adapt_snapshot_observed retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "exclusive_or_result",
+      "expression": "snapshot.fact_types",
+      "count": 2,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "fact_projection_rows",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "guarded_atom_state",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "guarded_bindings",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "mandatory_cursor",
+      "expression": "snapshot.fact_types",
+      "count": 2,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "mandatory_disjunctive_cursor",
+      "expression": "snapshot.fact_types",
+      "count": 2,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "ring_result",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "role_sequence_rows",
+      "expression": "snapshot.fact_types",
+      "count": 2,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "sequence_join_reason",
+      "expression": "snapshot.fact_types",
+      "count": 2,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "snapshot_fact_index",
+      "expression": "snapshot.fact_types",
+      "count": 2,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "value_comparison_pairs",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "value_cursor",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "SnapshotIR fact_types are immutable semantic IR, a different representation from GND Model; retain proof/provider algorithm."
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/scripts/verify_migration.py",
+      "owner": "_load_model_surface",
+      "expression": "loaded.get('fact_types')",
+      "count": 1,
+      "reason": "_load_model_surface retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_materialize_structured_claims",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_materialize_structured_claims retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_repair_disjunctive",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_repair_disjunctive retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_repair_frequency",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_repair_frequency selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_repair_uniqueness",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_repair_uniqueness selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_seed_guarded_exists",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_seed_guarded_exists retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_seed_guarded_exists",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_seed_guarded_exists retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_derive_frequency",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_derive_frequency selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_reference_targets",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_reference_targets retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_reference_targets",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_reference_targets retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_value_target",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_value_target retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_value_target",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_value_target retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "owner": "normalize_operands",
+      "expression": "(target_ft or {}).get('roles')",
+      "count": 1,
+      "reason": "normalize_operands selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "owner": "normalize_operands",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "normalize_operands retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "owner": "normalize_operands",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "normalize_operands retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/frontier.py",
+      "owner": "frontier_codes_for",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "frontier_codes_for retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/guarded.py",
+      "owner": "has_private_exists_sources",
+      "expression": "getattr(model, 'fact_types', None)",
+      "count": 1,
+      "reason": "Literal getattr retains the pre-existing optional/non-Model traversal fallback. RF9-repair inventories this exact read; routing it requires separately pinned consumer semantics."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_claimed_fact_types",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_claimed_fact_types retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_claimed_fact_types",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_claimed_fact_types retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_close_mandatory",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_close_mandatory retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_collect_role_value_specs",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_collect_role_value_specs retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_collect_role_value_specs",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_collect_role_value_specs retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_complete_fact",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_complete_fact retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_constraint_iter_with_ref",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_constraint_iter_with_ref retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_coordinate_value_comparisons",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_coordinate_value_comparisons retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_entity_roles",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_entity_roles retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_external_uniqueness_components",
+      "expression": "(fact_types.get(ftid) or {}).get('roles')",
+      "count": 1,
+      "reason": "_external_uniqueness_components selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_external_uniqueness_components",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_external_uniqueness_components retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_externals",
+      "expression": "ft.get('roles')",
+      "count": 2,
+      "reason": "_generate_externals retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_externals",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_generate_externals retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_plain",
+      "expression": "c.get('roles')",
+      "count": 2,
+      "reason": "_generate_plain selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_ring",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_generate_ring retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_iter_constraints",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_iter_constraints retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_join_scoped_sequences",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_join_scoped_sequences retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_mandatory_completion",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_mandatory_completion selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_mandatory_completion",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_mandatory_completion retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_seed_one_join",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_seed_one_join retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_seed_one_join",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "_seed_one_join retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_universe",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_universe retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_value_roles",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_value_roles retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_witness",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_witness selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_witness",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_witness retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "construct",
+      "expression": "self.model.fact_types",
+      "count": 2,
+      "reason": "construct retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "doc",
+      "expression": "self.model.fact_types",
+      "count": 1,
+      "reason": "doc retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "measure_distinct_ratios",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "measure_distinct_ratios retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_add_past_ceiling",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_applies_add_past_ceiling selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_add_self_loop",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_applies_add_self_loop retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_drop_from_group",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_applies_drop_from_group selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_duplicate_covered",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_applies_duplicate_covered selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_duplicate_covered",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_applies_duplicate_covered retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_exact_duplicate",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_applies_exact_duplicate selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_exact_duplicate",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_applies_exact_duplicate retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_add_self_loop",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_apply_add_self_loop retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_duplicate_covered",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_apply_duplicate_covered selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_duplicate_covered",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_apply_duplicate_covered retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_duplicate_joined",
+      "expression": "(ft2 or {}).get('roles')",
+      "count": 1,
+      "reason": "_apply_duplicate_joined selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_exact_duplicate",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_apply_exact_duplicate retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_governed_ft_with_entity_role",
+      "expression": "ft.get('roles')",
+      "count": 2,
+      "reason": "_governed_ft_with_entity_role retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_governed_ft_with_entity_role",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_governed_ft_with_entity_role retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_internal_frequency_groups",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_internal_frequency_groups selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_other_ft_with_role",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_other_ft_with_role retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_other_ft_with_role",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_other_ft_with_role retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_ring_edges",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_ring_edges retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_ring_gate",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_ring_gate retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_uniqueness_conflict",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_uniqueness_conflict selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_value_occurrence",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_value_occurrence retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_value_occurrence",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_value_occurrence retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_complete_row",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_complete_row retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_ft_by_id",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_ft_by_id retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_guarded_atoms_have_derived_source",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_guarded_atoms_have_derived_source retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_scope_fts",
+      "expression": "f.get('roles')",
+      "count": 2,
+      "reason": "_scope_fts selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_scope_fts",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "_scope_fts retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/synth/poolfile.py",
+      "owner": "_distinctness_demand",
+      "expression": "constraint.get('roles')",
+      "count": 2,
+      "reason": "_distinctness_demand selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "owner": "_cmd_synth",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "_cmd_synth retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/temporal_guarded.py",
+      "owner": "evaluate_temporal_guard",
+      "expression": "snapshot.fact_types",
+      "count": 1,
+      "reason": "evaluate_temporal_guard retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/terms.py",
+      "owner": "uses_temporal",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "uses_temporal retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_derived_changes",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_derived_changes retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_dynamic_heads_for_step",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_dynamic_heads_for_step retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_effective_extension_state",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_effective_extension_state retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_derived_dynamic_rules",
+      "expression": "model.fact_types",
+      "count": 2,
+      "reason": "_evaluate_derived_dynamic_rules retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_derived_dynamic_rules",
+      "expression": "next((ft for ft in model.fact_types if ft.get('id') == subject_type)).get('roles')",
+      "count": 1,
+      "reason": "_evaluate_derived_dynamic_rules retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_step",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_evaluate_step retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_to_state",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_evaluate_to_state retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_instance_keys",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_instance_keys retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_instance_keys",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_instance_keys retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_unknown_precondition_verdicts",
+      "expression": "fact_types[head].get('roles')",
+      "count": 1,
+      "reason": "_unknown_precondition_verdicts selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_unknown_precondition_verdicts",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_unknown_precondition_verdicts retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "assert_dynamic_derivation_coverage",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "assert_dynamic_derivation_coverage retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_fact_type_roles",
+      "expression": "doc.get('fact_types')",
+      "count": 1,
+      "reason": "_fact_type_roles retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_fact_type_roles",
+      "expression": "ft.get('roles')",
+      "count": 1,
+      "reason": "_fact_type_roles retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_family_implemented_frequency",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_family_implemented_frequency selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_family_implemented_uniqueness",
+      "expression": "constraint.get('roles')",
+      "count": 1,
+      "reason": "_family_implemented_uniqueness selects raw constraint role fields, not model fact-type roles; preserve family/variant shape and refusal order."
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_instance_values_of",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "_instance_values_of retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/values.py",
+      "owner": "reference_model_digest",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "reference_model_digest retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_complete_binding",
+      "expression": "fact_type['roles']",
+      "count": 1,
+      "reason": "_complete_binding retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_excerpts",
+      "expression": "anchor['fact_key']['roles']",
+      "count": 1,
+      "reason": "_excerpts retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_project_rows",
+      "expression": "item['roles']",
+      "count": 1,
+      "reason": "_project_rows retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_project_rows",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_project_rows retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "render_witness",
+      "expression": "fact_type['roles']",
+      "count": 2,
+      "reason": "render_witness retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "render_witness",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "render_witness retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "verbalize_population",
+      "expression": "fact_type['roles']",
+      "count": 1,
+      "reason": "verbalize_population retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "verbalize_population",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "verbalize_population retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/vocabulary.py",
+      "owner": "render_verbalization",
+      "expression": "fact_type.get('roles')",
+      "count": 1,
+      "reason": "render_verbalization retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/vocabulary.py",
+      "owner": "render_verbalization",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "render_verbalization retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "intake",
+      "expression": "d['fact_types']",
+      "count": 1,
+      "reason": "intake retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "roster",
+      "expression": "ft['roles']",
+      "count": 1,
+      "reason": "roster retains this literal subscription over its existing raw document/constraint/IR representation; preserve selector errors, order and representation. Migration requires separately pinned model-query successor."
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "roster",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "roster retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "support_closure",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "support_closure retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "owner": "_replay_graph",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "_replay_graph retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    },
+    {
+      "path": "src/gnd/witness/producer.py",
+      "owner": "__init__",
+      "expression": "model.fact_types",
+      "count": 1,
+      "reason": "__init__ retains its existing domain traversal/selector semantics in this bounded primitive migration; replacing this specific expression requires separately pinned consumer routing in model-query successor. No claimed consolidation of this traversal."
+    }
+  ],
+  "literal_getattr_metric": {
+    "current": 4,
+    "expanded_baseline_addition": 4,
+    "meaning": "Four literal getattr expressions at the RF6 primitive-migration base and current source; historical attribute/get/subscription metrics remain identifiable"
+  },
+  "baseline_source": "523cdd1a2ae1ad6ea0e8ca092fe29629dd10607c"
+}

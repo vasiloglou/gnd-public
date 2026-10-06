@@ -70,7 +70,7 @@ from gnd.codegen.manifest import (
 )
 
 if TYPE_CHECKING:
-    from gnd.install import LeafIdentity
+    from gnd.safefs import LeafIdentity
 
 __all__ = [
     "FORCED_STATES",
@@ -429,7 +429,7 @@ class _LeafObservation:
 
 def _observe_leaf_at(root_fd: int, relpath: str) -> _LeafObservation:
     """Observe one leaf by descriptor, never by a check-then-pathname read."""
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     parts = PurePosixPath(relpath).parts
     directory_flags = (
@@ -548,7 +548,7 @@ def _observe_leaf(root: Path, relpath: str) -> _LeafObservation:
 
 def _open_codegen_root(root: Path) -> int:
     """Open one real output root without following a final symlink."""
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     flags = (
         os.O_RDONLY
@@ -578,7 +578,7 @@ def _bind_codegen_parent(root: Path) -> tuple[Path, tuple[str, ...], int]:
     The returned descriptor is owned by the caller. ``parts`` is the exact
     missing-or-final suffix to reach ``root`` from that parent.
     """
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     absolute = Path(os.path.abspath(root))
     candidate = absolute.parent
@@ -599,7 +599,7 @@ def _bind_codegen_parent(root: Path) -> tuple[Path, tuple[str, ...], int]:
 
 def _open_planned_absent_root(root: Path, plan: CodegenPlan) -> int:
     """Create a planned-absent root relative to its identity-bound parent."""
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     assert plan.root_parent_path is not None
     assert plan.root_parent_device is not None
@@ -656,7 +656,7 @@ def _open_planned_absent_root(root: Path, plan: CodegenPlan) -> int:
 
 def _assert_root_path_bound(root: Path, root_fd: int) -> None:
     """Require the public output pathname to still name ``root_fd``."""
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     expected = os.fstat(root_fd)
     try:
@@ -679,7 +679,7 @@ def _read_manifest_at(
     root_fd: int, root: Path
 ) -> tuple[CodegenManifest | None, LeafIdentity]:
     """Read the manifest and retain the identity of those exact bytes."""
-    from gnd.install import LeafIdentity
+    from gnd.safefs import LeafIdentity
 
     flags = (
         os.O_RDONLY
@@ -780,7 +780,7 @@ def _classify_observation(
 
 
 def _expected_identity(observation: _LeafObservation):
-    from gnd.install import LeafIdentity
+    from gnd.safefs import LeafIdentity
 
     if observation.kind == "absent":
         return LeafIdentity(kind="absent")
@@ -812,7 +812,7 @@ def apply_codegen(
     false by construction, which is the same trap ``install.apply`` documents
     for ``installed_at``.
     """
-    from gnd.install import InstallPathError
+    from gnd.safefs import InstallPathError
 
     root = Path(out_root)
     owned_fd = root_fd is None
@@ -885,7 +885,8 @@ def apply_codegen(
                         entries.append(previous_entry)
                     continue
                 try:
-                    from gnd.install import InstallError, _atomic_write
+                    from gnd.safefs import InstallError
+                    from gnd.safefs import atomic_write as _atomic_write
 
                     _atomic_write(
                         descriptor,
@@ -989,7 +990,7 @@ def apply_codegen(
         ).hexdigest()
         manifest_written = False
         if written or rendered:
-            from gnd.install import _atomic_write
+            from gnd.safefs import atomic_write as _atomic_write
 
             _atomic_write(
                 descriptor,

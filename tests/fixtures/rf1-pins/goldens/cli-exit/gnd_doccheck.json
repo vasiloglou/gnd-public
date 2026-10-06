@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd doccheck [-h] --artifacts ARTIFACTS model manifest\n\nDischarge the gnd-render-doc skill's obligations by CODE over the document\nmanifest (skill prose explains, validators discharge). Four obligations: (1)\nbinding — document_sha256, source_population_sha256 and applicable_sha256\nmatch the actual file bytes; (2) rendering — every role filler of every\nAPPLICABLE fact type in the source population is mentioned in the document\nunder lexical normalization, direct fillers as their value and composite\nfillers via their identifying component values; inapplicable fact types are\nexempt BY the published applicable-set artifact, never by leniency; (3)\ndistractors — at least one of each kind (out-of-model, near-miss-entity,\nabsent-fact), every distractor text present in the document, and every absent-\nfact distractor genuinely absent from the source population; (4) renderer\nidentity fields non-empty. Exits 0 when every obligation holds, 3 on any\nviolation (one line each), 64 on usage errors, 66 when the applicable-set\nartifact or any manifest-named file is missing (fail closed — an obligation\nthat cannot be checked is never skipped).\n\npositional arguments:\n  model                 path to the model file\n  manifest              path to the document manifest (paths resolve beside\n                        it)\n\noptions:\n  -h, --help            show this help message and exit\n  --artifacts ARTIFACTS\n                        the gnd extract bundle directory holding\n                        <stem>.applicable.json\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd doccheck [-h] --artifacts ARTIFACTS model manifest\ngnd doccheck: error: the following arguments are required: model, manifest, --artifacts\n",
+  "stdout": ""
+ }
+}

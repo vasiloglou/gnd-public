@@ -1,0 +1,35 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_rf1_cli_pins.py tests/test_rf1_layering.py tests/test_gnd_arch.py
+........................................................................ [ 13%]
+........................................................................ [ 27%]
+........................................................................ [ 40%]
+.............................................F.......................... [ 54%]
+........................................................................ [ 68%]
+........................................................................ [ 81%]
+........................................................................ [ 95%]
+.........................                                                [100%]
+=================================== FAILURES ===================================
+________________ test_all_parser_paths_receive_command_handlers ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bfb1fd0>
+
+    def test_all_parser_paths_receive_command_handlers(monkeypatch):
+        from test_rf1_cli_pins import _root, _walk
+        parsers = {}
+        _walk(_root(monkeypatch), ('gnd',), parsers)
+        assert len(parsers) == 52
+        for path, parser in parsers.items():
+            if path != 'gnd':
+>               assert callable(parser.get_default('handler')), path
+E               AssertionError: gnd import rai-orm
+E               assert False
+E                +  where False = callable(None)
+E                +    where None = get_default('handler')
+E                +      where get_default = _BandSafeParser(prog='gnd import rai-orm', usage=None, description=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True).get_default
+
+tests/test_rf5_commands.py:100: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf5_commands.py::test_all_parser_paths_receive_command_handlers
+1 failed, 528 passed in 8.23s
+
+Exit: 1

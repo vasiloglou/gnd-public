@@ -1,0 +1,7 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_development_scaffold.py tests/test_contributor_preparation.py tests/test_review_credential_launcher.py tests/test_measure_offline.py --tb=short -x
+........................................................................ [ 74%]
+.........................                                                [100%]
+97 passed, 1 deselected in 16.02s
+
+Exit: 0

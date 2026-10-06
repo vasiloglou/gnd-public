@@ -1,0 +1,3898 @@
+{
+  "base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+  "counts": {
+    "patch_sites": 464,
+    "private_test_import_sites": 609,
+    "runtime_reverse_import_closure": 115,
+    "skill_citation_sites": 9,
+    "source_scan_sites": 88,
+    "touched_modules": 28,
+    "unresolved_patch_sites": 73
+  },
+  "patch_sites": [
+    {
+      "api": "setattr",
+      "file": "tests/support/public_adapter_mutation_controls.py",
+      "line": 172,
+      "resolved": true,
+      "target": "gnd.semantic_adapter.checker._python_extension_calculator"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/support/public_adapter_mutation_controls.py",
+      "line": 188,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/support/public_v71_witness_corpus.py",
+      "line": 372,
+      "resolved": false,
+      "target": "<expression>.save"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/support/v71_phase4_full_runtime.py",
+      "line": 149,
+      "resolved": true,
+      "target": "gnd.artifacts.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_agent_cli.py",
+      "line": 381,
+      "resolved": true,
+      "target": "gnd.agent_cli.asyncio.create_subprocess_exec"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_agent_cli.py",
+      "line": 419,
+      "resolved": true,
+      "target": "gnd.agent_cli._stop_process_group"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_agent_cli.py",
+      "line": 460,
+      "resolved": true,
+      "target": "gnd.agent_cli.run_bounded_process"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_architecture_conformance.py",
+      "line": 171,
+      "resolved": true,
+      "target": "gnd.conformance.architecture.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_architecture_conformance.py",
+      "line": 176,
+      "resolved": true,
+      "target": "gnd.conformance.architecture.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_architecture_conformance.py",
+      "line": 197,
+      "resolved": true,
+      "target": "gnd.conformance.service.bind_project_root"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_architecture_conformance.py",
+      "line": 370,
+      "resolved": true,
+      "target": "gnd.conformance.architecture.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_architecture_conformance.py",
+      "line": 396,
+      "resolved": true,
+      "target": "gnd.conformance.architecture._resolved_expression"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_architecture_conformance.py",
+      "line": 430,
+      "resolved": true,
+      "target": "gnd.conformance.architecture.stat_leaf_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 126,
+      "resolved": true,
+      "target": "gnd.artifacts.os.fsencode"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 206,
+      "resolved": true,
+      "target": "gnd.artifacts._exchange_paths_atomic"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 227,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 351,
+      "resolved": true,
+      "target": "gnd.artifacts._mkdir_directory_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 388,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 425,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 460,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 834,
+      "resolved": true,
+      "target": "gnd.artifacts.os.listdir"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 864,
+      "resolved": true,
+      "target": "gnd.artifacts.os.listdir"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 895,
+      "resolved": true,
+      "target": "gnd.artifacts.os.listdir"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 927,
+      "resolved": true,
+      "target": "gnd.artifacts.os.listdir"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 953,
+      "resolved": true,
+      "target": "gnd.artifacts._open_root"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 1032,
+      "resolved": true,
+      "target": "gnd.artifacts.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 1033,
+      "resolved": true,
+      "target": "gnd.artifacts.os.fstat"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_artifacts.py",
+      "line": 1034,
+      "resolved": true,
+      "target": "gnd.artifacts.os.close"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_architecture.py",
+      "line": 136,
+      "resolved": true,
+      "target": "gnd.codegen.emit.parse_architecture_contract_bytes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_architecture.py",
+      "line": 147,
+      "resolved": true,
+      "target": "gnd.codegen.emit.render_architecture_contract"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 497,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 554,
+      "resolved": true,
+      "target": "gnd.install.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 599,
+      "resolved": true,
+      "target": "gnd.install._matches_leaf"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 741,
+      "resolved": true,
+      "target": "gnd.codegen.emit.write_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 781,
+      "resolved": true,
+      "target": "gnd.install._rename_noreplace"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 816,
+      "resolved": true,
+      "target": "gnd.codegen.emit._fsync_directory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 1263,
+      "resolved": true,
+      "target": "gnd.codegen.plan.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 1264,
+      "resolved": true,
+      "target": "gnd.codegen.plan.os.read"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 1445,
+      "resolved": true,
+      "target": "gnd.codegen.plan.apply_codegen"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 1572,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_force.py",
+      "line": 1621,
+      "resolved": true,
+      "target": "gnd.codegen.plan._observe_leaf_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 436,
+      "resolved": true,
+      "target": "gnd.codegen.emit._write_staged_file"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 497,
+      "resolved": true,
+      "target": "gnd.codegen.emit.os.fdopen"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 510,
+      "resolved": true,
+      "target": "gnd.codegen.emit.os.fsync"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 542,
+      "resolved": true,
+      "target": "gnd.codegen.emit.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 543,
+      "resolved": true,
+      "target": "gnd.codegen.emit.os.fdopen"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 587,
+      "resolved": true,
+      "target": "gnd.codegen.plan._bind_codegen_parent"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 588,
+      "resolved": true,
+      "target": "gnd.codegen.plan._open_codegen_root"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 590,
+      "resolved": true,
+      "target": "gnd.codegen.emit.os.dup"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 624,
+      "resolved": true,
+      "target": "gnd.codegen.emit._fsync_directory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_codegen_manifest.py",
+      "line": 662,
+      "resolved": true,
+      "target": "gnd.codegen.emit._fsync_directory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_drift.py",
+      "line": 660,
+      "resolved": true,
+      "target": "gnd.conformance.structural.expected_surface"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_drift.py",
+      "line": 705,
+      "resolved": true,
+      "target": "gnd.conformance.service.bind_project_root"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_drift.py",
+      "line": 754,
+      "resolved": true,
+      "target": "gnd.conformance.structural._stat_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_drift.py",
+      "line": 765,
+      "resolved": true,
+      "target": "gnd.conformance.structural.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_payload.py",
+      "line": 828,
+      "resolved": true,
+      "target": "gnd.conformance.integrity.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_payload.py",
+      "line": 834,
+      "resolved": true,
+      "target": "gnd.conformance.service.model_digest"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_payload.py",
+      "line": 904,
+      "resolved": true,
+      "target": "gnd.conformance.integrity.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_conformance_payload.py",
+      "line": 996,
+      "resolved": true,
+      "target": "gnd.conformance.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_coverage_cli.py",
+      "line": 58,
+      "resolved": true,
+      "target": "gnd.cli._BandSafeParser.parse_args"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_doctor_uninstall.py",
+      "line": 910,
+      "resolved": true,
+      "target": "gnd.install._unlink"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_documentation_tutorials.py",
+      "line": 51,
+      "resolved": false,
+      "target": "installed_docs.__file__"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_documentation_tutorials.py",
+      "line": 75,
+      "resolved": false,
+      "target": "installed_docs.subprocess.run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 282,
+      "resolved": true,
+      "target": "gnd.codegen.emit.emit_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 283,
+      "resolved": true,
+      "target": "gnd.codegen.emit.write_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 411,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_integrity"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 494,
+      "resolved": true,
+      "target": "gnd.conformance.service.bind_project_root"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 495,
+      "resolved": true,
+      "target": "gnd.evolve.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 546,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_integrity"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 737,
+      "resolved": true,
+      "target": "gnd.evolve.EvolutionService.preview"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 900,
+      "resolved": true,
+      "target": "gnd.evolve.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 904,
+      "resolved": true,
+      "target": "gnd.codegen.emit.emit_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 905,
+      "resolved": true,
+      "target": "gnd.codegen.emit.write_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 998,
+      "resolved": true,
+      "target": "gnd.evolve.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1014,
+      "resolved": true,
+      "target": "gnd.evolve.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1018,
+      "resolved": true,
+      "target": "gnd.evolve.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1029,
+      "resolved": false,
+      "target": "service._write_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1047,
+      "resolved": true,
+      "target": "gnd.evolve.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1082,
+      "resolved": false,
+      "target": "service._write_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1085,
+      "resolved": false,
+      "target": "service._write_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_evolution_conformance.py",
+      "line": 1299,
+      "resolved": true,
+      "target": "gnd.evolve.service.snapshot_tracked_roster"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_author_expectation.py",
+      "line": 160,
+      "resolved": true,
+      "target": "gnd.exp.expectation_author._scan_answer_copies"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_author_expectation.py",
+      "line": 186,
+      "resolved": true,
+      "target": "gnd.exp.expectation_author.read_session_contract"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_bands.py",
+      "line": 484,
+      "resolved": true,
+      "target": "gnd.cli.os.replace"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_bands.py",
+      "line": 489,
+      "resolved": true,
+      "target": "gnd.cli.os.replace"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_close_work_gate.py",
+      "line": 1071,
+      "resolved": true,
+      "target": "gnd.exp.session_store.MAX_SESSION_RESULT_BYTES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_close_work_gate.py",
+      "line": 1097,
+      "resolved": true,
+      "target": "gnd.exp.session_store.MAX_SESSION_RESULT_BYTES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1002,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_result"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1020,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_result"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1092,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_best"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1110,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_best"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1321,
+      "resolved": true,
+      "target": "gnd.exp.session.run_gnd_verifier"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1333,
+      "resolved": true,
+      "target": "gnd.exp.session.run_gnd_verifier"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1582,
+      "resolved": true,
+      "target": "gnd.exp.session.run_gnd_verifier"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_e2e.py",
+      "line": 1731,
+      "resolved": true,
+      "target": "gnd.exp.session.run_session"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_eval.py",
+      "line": 1333,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_eval.py",
+      "line": 1607,
+      "resolved": true,
+      "target": "gnd.exp.session.invoke_agent"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_recurrence.py",
+      "line": 577,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_result"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_recurrence.py",
+      "line": 591,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_result"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_recurrence.py",
+      "line": 638,
+      "resolved": true,
+      "target": "gnd.exp.session.SessionStore.publish_result"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_store.py",
+      "line": 946,
+      "resolved": false,
+      "target": "store._assert_store_layout"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_store.py",
+      "line": 991,
+      "resolved": false,
+      "target": "primary._load_attempt_for_resume_bound"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_exp_session_store.py",
+      "line": 1099,
+      "resolved": true,
+      "target": "gnd.exp.session_store.publish_directory_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_external_runtime_tutorials.py",
+      "line": 35,
+      "resolved": false,
+      "target": "runner.require_runtime"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_external_runtime_tutorials.py",
+      "line": 45,
+      "resolved": false,
+      "target": "runner.require_runtime"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_external_runtime_tutorials.py",
+      "line": 52,
+      "resolved": false,
+      "target": "runner.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_external_runtime_tutorials.py",
+      "line": 59,
+      "resolved": false,
+      "target": "runner.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_external_runtime_tutorials.py",
+      "line": 60,
+      "resolved": false,
+      "target": "runner.subprocess.run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_external_runtime_tutorials.py",
+      "line": 67,
+      "resolved": false,
+      "target": "runner.subprocess.run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_extract_cli.py",
+      "line": 91,
+      "resolved": true,
+      "target": "gnd.cli._extract_stem"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_extract_projection.py",
+      "line": 29,
+      "resolved": true,
+      "target": "gnd.extract.projection._build_projection"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_fidelity_match.py",
+      "line": 95,
+      "resolved": true,
+      "target": "gnd.fidelity.match._multiset_true_positives"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 278,
+      "resolved": true,
+      "target": "gnd.semantic_spec.guarded_atom_state"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 362,
+      "resolved": true,
+      "target": "gnd.semantic_spec.guarded_atom_state"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 364,
+      "resolved": true,
+      "target": "gnd.semantic_spec.guarded_atom_state"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 365,
+      "resolved": true,
+      "target": "gnd.semantic_spec.guarded_atom_state"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 437,
+      "resolved": false,
+      "target": "<expression>._performance_population"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 443,
+      "resolved": false,
+      "target": "<expression>.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_guarded_corpus.py",
+      "line": 460,
+      "resolved": false,
+      "target": "<expression>.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 646,
+      "resolved": true,
+      "target": "gnd.install.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 647,
+      "resolved": true,
+      "target": "gnd.install.os.fdopen"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 678,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 704,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 745,
+      "resolved": true,
+      "target": "gnd.install.iter_skill_files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 766,
+      "resolved": true,
+      "target": "gnd.install.iter_skill_files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 1220,
+      "resolved": true,
+      "target": "gnd.install.iter_skill_files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_install.py",
+      "line": 1343,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 78,
+      "resolved": true,
+      "target": "gnd.exp.junit._open_with_openat2"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 97,
+      "resolved": true,
+      "target": "gnd.exp.junit.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 98,
+      "resolved": true,
+      "target": "gnd.exp.junit.os.fstat"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 126,
+      "resolved": true,
+      "target": "gnd.exp.junit._open_with_openat2"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 142,
+      "resolved": true,
+      "target": "gnd.exp.junit._open_with_openat2"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 187,
+      "resolved": true,
+      "target": "gnd.exp.junit._parse_junit"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_junit_reader.py",
+      "line": 249,
+      "resolved": true,
+      "target": "gnd.exp.junit._parse_junit"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_coverage.py",
+      "line": 488,
+      "resolved": true,
+      "target": "gnd.measure.promote.expected_exit_for"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_coverage.py",
+      "line": 529,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_negative_control.py",
+      "line": 200,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_negative_control.py",
+      "line": 214,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_offline.py",
+      "line": 486,
+      "resolved": true,
+      "target": "gnd.measure.report.__file__"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_offline.py",
+      "line": 894,
+      "resolved": true,
+      "target": "gnd.cli.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_offline.py",
+      "line": 931,
+      "resolved": true,
+      "target": "gnd.cli.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_measure_score.py",
+      "line": 311,
+      "resolved": true,
+      "target": "gnd.measure.score.classify"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 862,
+      "resolved": true,
+      "target": "gnd.evolve.service._enforce_d12"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1138,
+      "resolved": true,
+      "target": "gnd.codegen.emit.emit_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1139,
+      "resolved": true,
+      "target": "gnd.codegen.emit.write_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1308,
+      "resolved": true,
+      "target": "gnd.artifacts.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1467,
+      "resolved": true,
+      "target": "gnd.artifacts.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1531,
+      "resolved": true,
+      "target": "gnd.evolve.EvolutionService.preview"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1591,
+      "resolved": true,
+      "target": "gnd.codegen.emit.emit_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_model_evolution.py",
+      "line": 1592,
+      "resolved": true,
+      "target": "gnd.codegen.emit.write_project"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_packaged_skills.py",
+      "line": 126,
+      "resolved": true,
+      "target": "gnd.version"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_poolfile.py",
+      "line": 463,
+      "resolved": true,
+      "target": "gnd.synth.poolfile._distinct_identifiers"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_poolfile.py",
+      "line": 477,
+      "resolved": true,
+      "target": "gnd.cli.load_model"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_provenance_in_report.py",
+      "line": 38,
+      "resolved": true,
+      "target": "gnd.measure.promote.band"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_acceptance_runner.py",
+      "line": 201,
+      "resolved": false,
+      "target": "runner.audit"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_adapter_derivation.py",
+      "line": 21,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_adapter_derivation.py",
+      "line": 44,
+      "resolved": true,
+      "target": "gnd.semantic_adapter.checker._python_extension_calculator"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_applicability_obligations.py",
+      "line": 65,
+      "resolved": true,
+      "target": "gnd.checker._derivation_obligation"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_architecture_service.py",
+      "line": 72,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_architecture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_architecture_service.py",
+      "line": 101,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_architecture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_architecture_service.py",
+      "line": 128,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_architecture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_architecture_service.py",
+      "line": 154,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_architecture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_architecture_service.py",
+      "line": 187,
+      "resolved": true,
+      "target": "gnd.conformance.service.check_architecture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_assurance_feedback.py",
+      "line": 109,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_assurance_feedback.py",
+      "line": 140,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_assurance_feedback_surfaces.py",
+      "line": 19,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_composition_digest_1.py",
+      "line": 16,
+      "resolved": true,
+      "target": "gnd.model._SEMANTIC_RULES"
+    },
+    {
+      "api": "patch.object",
+      "file": "tests/test_public_corpus_integration_support.py",
+      "line": 87,
+      "resolved": true,
+      "target": "gnd.cli.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_correspondence_runtime.py",
+      "line": 177,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_correspondence_runtime.py",
+      "line": 186,
+      "resolved": true,
+      "target": "gnd.checker._correspondence_message"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_cost_mutations.py",
+      "line": 97,
+      "resolved": true,
+      "target": "gnd.checker._joined_bindings"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_cost_mutations.py",
+      "line": 114,
+      "resolved": true,
+      "target": "gnd.checker._relation_facts"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_cost_mutations.py",
+      "line": 127,
+      "resolved": true,
+      "target": "gnd.checker.derivation_strata"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 238,
+      "resolved": true,
+      "target": "gnd.cli.api_module.checker_module.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 239,
+      "resolved": true,
+      "target": "gnd.cli.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 280,
+      "resolved": true,
+      "target": "gnd.cli.report_module.emit"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 560,
+      "resolved": true,
+      "target": "gnd.checker._evaluate_derivations"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 561,
+      "resolved": true,
+      "target": "gnd.checker._correspondence_message"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 167,
+      "resolved": true,
+      "target": "gnd.checker._derivation_obligation"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 190,
+      "resolved": true,
+      "target": "gnd.checker._derivation_obligation"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 220,
+      "resolved": true,
+      "target": "gnd.checker._component_atoms"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 229,
+      "resolved": true,
+      "target": "gnd.checker._component_atoms"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 242,
+      "resolved": true,
+      "target": "gnd.checker._evaluate_derivations"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 344,
+      "resolved": true,
+      "target": "gnd.checker._evaluate_derivations"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 345,
+      "resolved": true,
+      "target": "gnd.checker._correspondence_message"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_exact_scope_guards.py",
+      "line": 53,
+      "resolved": true,
+      "target": "gnd.api.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_kernel_production.py",
+      "line": 64,
+      "resolved": true,
+      "target": "gnd.checker._vacuity_message"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_kernel_production.py",
+      "line": 268,
+      "resolved": true,
+      "target": "gnd.proof_kernel._band_of"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_kernel_production.py",
+      "line": 269,
+      "resolved": true,
+      "target": "gnd.proof_bridge.public_witness"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_kernel_production.py",
+      "line": 288,
+      "resolved": true,
+      "target": "gnd.proof_bridge.adapt_phase1_slice"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_kernel_production.py",
+      "line": 289,
+      "resolved": true,
+      "target": "gnd.checker.adapt_phase1_slice"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_lean_export_successors.py",
+      "line": 192,
+      "resolved": true,
+      "target": "gnd.export.lean.Renderer.render"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_local_adapter_policy_regressions.py",
+      "line": 94,
+      "resolved": true,
+      "target": "gnd.declared_adapter.run_bounded_process"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_patch_publication_identity.py",
+      "line": 39,
+      "resolved": true,
+      "target": "gnd.exp.session_store.publish_directory_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_phase1_trace_refusals.py",
+      "line": 88,
+      "resolved": true,
+      "target": "gnd.proof_kernel.phase1_in_scope"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_plan_contract.py",
+      "line": 46,
+      "resolved": true,
+      "target": "gnd.transition.evaluate_plan"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_registry_runtime.py",
+      "line": 60,
+      "resolved": true,
+      "target": "gnd.cli.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_semantic_adapter.py",
+      "line": 30,
+      "resolved": false,
+      "target": "<expression>.ROOT"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_semantic_boundaries.py",
+      "line": 101,
+      "resolved": true,
+      "target": "gnd.api.diff"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_session_driver.py",
+      "line": 252,
+      "resolved": false,
+      "target": "driver._run_bounded"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_session_driver.py",
+      "line": 281,
+      "resolved": false,
+      "target": "driver._run_bounded"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_session_driver.py",
+      "line": 310,
+      "resolved": false,
+      "target": "driver._run_bounded"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_session_driver.py",
+      "line": 374,
+      "resolved": false,
+      "target": "driver.GND"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_session_wire_guards.py",
+      "line": 234,
+      "resolved": false,
+      "target": "<expression>.ROOT"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_souffle_successors.py",
+      "line": 161,
+      "resolved": true,
+      "target": "gnd.export.souffle_runtime.invoke"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_souffle_successors.py",
+      "line": 184,
+      "resolved": true,
+      "target": "gnd.export.souffle_runtime.replay_witness"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_souffle_successors.py",
+      "line": 229,
+      "resolved": true,
+      "target": "gnd.export.souffle_runtime.os.killpg"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_tests_mode_corpus.py",
+      "line": 542,
+      "resolved": true,
+      "target": "gnd.exp.tests_runner.os"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_tests_mode_corpus.py",
+      "line": 557,
+      "resolved": true,
+      "target": "gnd.exp.junit._read_result_bytes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_tests_mode_corpus.py",
+      "line": 559,
+      "resolved": true,
+      "target": "gnd.exp.junit.os"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_transition_api_guards.py",
+      "line": 77,
+      "resolved": false,
+      "target": "transition_module.evaluate"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_transition_contract.py",
+      "line": 180,
+      "resolved": true,
+      "target": "gnd.population.MAX_POPULATION_BYTES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v71_judgment_successor_guards.py",
+      "line": 89,
+      "resolved": true,
+      "target": "gnd.artifacts.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_ownership_direct.py",
+      "line": 76,
+      "resolved": true,
+      "target": "gnd.checker.check_partial"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_ownership_direct.py",
+      "line": 215,
+      "resolved": false,
+      "target": "<expression>.apply_candidate_patch"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_semantic_owners.py",
+      "line": 93,
+      "resolved": true,
+      "target": "gnd.checker._clause_bindings"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_semantic_owners.py",
+      "line": 126,
+      "resolved": true,
+      "target": "gnd.checker.compare_terms"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_semantic_owners.py",
+      "line": 160,
+      "resolved": true,
+      "target": "gnd.terms.compare_terms"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_session_staging.py",
+      "line": 70,
+      "resolved": false,
+      "target": "store.stage_candidate"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_session_staging.py",
+      "line": 109,
+      "resolved": true,
+      "target": "gnd.exp.session_store.publish_directory_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_public_v72_status.py",
+      "line": 338,
+      "resolved": false,
+      "target": "<expression>._evaluate"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_pyrel_export_boundaries.py",
+      "line": 83,
+      "resolved": true,
+      "target": "gnd.export.pyrel_runtime.MODEL_TEXT"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_pyrel_export_boundaries.py",
+      "line": 84,
+      "resolved": true,
+      "target": "gnd.export.pyrel_runtime.MODEL_NAME"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_pyrel_export_boundaries.py",
+      "line": 85,
+      "resolved": true,
+      "target": "gnd.export.pyrel_runtime.EXPORT_CONFIG"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 597,
+      "resolved": true,
+      "target": "gnd.cli._RECOVERY_DIRECTORY_NAME_OBSERVATION_CAP"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 787,
+      "resolved": true,
+      "target": "gnd.cli._recovery_require_existing_exclusion"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1006,
+      "resolved": true,
+      "target": "gnd.recovery.inventory.scan_recovery_scope"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1043,
+      "resolved": true,
+      "target": "gnd.recovery.inventory._open_real_directory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1090,
+      "resolved": true,
+      "target": "gnd.recovery.inventory._open_real_directory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1368,
+      "resolved": true,
+      "target": "gnd.recovery.verify._bind_real_directory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1425,
+      "resolved": true,
+      "target": "gnd.agent_cli.invoke_agent"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1426,
+      "resolved": true,
+      "target": "gnd.conformance.service.run_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1427,
+      "resolved": true,
+      "target": "gnd.exp.session.run_session"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1428,
+      "resolved": true,
+      "target": "gnd.cli.install_module.apply"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1429,
+      "resolved": true,
+      "target": "gnd.cli.install_module.remove"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1430,
+      "resolved": true,
+      "target": "gnd.cli._cmd_codegen"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1431,
+      "resolved": true,
+      "target": "gnd.cli._cmd_conformance"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_adversarial.py",
+      "line": 1432,
+      "resolved": true,
+      "target": "gnd.cli._cmd_exp_run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_inventory.py",
+      "line": 487,
+      "resolved": true,
+      "target": "gnd.recovery.inventory.MAX_ALIAS_EDGES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_inventory.py",
+      "line": 554,
+      "resolved": true,
+      "target": "gnd.recovery.inventory.MAX_OBSERVATIONS"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_inventory.py",
+      "line": 588,
+      "resolved": true,
+      "target": "gnd.recovery.inventory.os.open"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_report.py",
+      "line": 651,
+      "resolved": true,
+      "target": "gnd.recovery.verify.load_model"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_recovery_report.py",
+      "line": 755,
+      "resolved": true,
+      "target": "gnd.recovery.verify.scan_recovery_scope"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_reference_population_corpus.py",
+      "line": 434,
+      "resolved": true,
+      "target": "gnd.checker._evaluate_derivations"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_reference_population_corpus.py",
+      "line": 448,
+      "resolved": true,
+      "target": "gnd.artifacts.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_reference_population_corpus.py",
+      "line": 508,
+      "resolved": true,
+      "target": "gnd.model.load_model_bytes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_reference_population_corpus.py",
+      "line": 565,
+      "resolved": true,
+      "target": "gnd.artifacts.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_reference_population_corpus.py",
+      "line": 570,
+      "resolved": true,
+      "target": "gnd.artifacts.read_regular_bounded_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_reference_population_corpus.py",
+      "line": 1000,
+      "resolved": true,
+      "target": "gnd.checker._guarded_bindings"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_report_json.py",
+      "line": 353,
+      "resolved": true,
+      "target": "gnd.cli.api_module.load_population"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_report_json.py",
+      "line": 356,
+      "resolved": true,
+      "target": "gnd.cli.report_module.emit"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_report_json.py",
+      "line": 605,
+      "resolved": true,
+      "target": "gnd.cli.api_module.checker_module.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 117,
+      "resolved": false,
+      "target": "launcher.panel_environment"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 134,
+      "resolved": false,
+      "target": "launcher.urllib.request.build_opener"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 139,
+      "resolved": false,
+      "target": "launcher.os.execve"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 151,
+      "resolved": false,
+      "target": "launcher.urllib.request.build_opener"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 165,
+      "resolved": false,
+      "target": "launcher.urllib.request.build_opener"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 187,
+      "resolved": false,
+      "target": "launcher.panel_environment"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 193,
+      "resolved": false,
+      "target": "launcher.check_openrouter_auth"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 194,
+      "resolved": false,
+      "target": "launcher.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 202,
+      "resolved": false,
+      "target": "launcher.os.execve"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 217,
+      "resolved": false,
+      "target": "launcher.os.environ"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 218,
+      "resolved": false,
+      "target": "launcher.Path.home"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 219,
+      "resolved": false,
+      "target": "launcher.check_openrouter_auth"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 228,
+      "resolved": false,
+      "target": "launcher.os.environ"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 229,
+      "resolved": false,
+      "target": "launcher.check_openrouter_auth"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 291,
+      "resolved": false,
+      "target": "launcher.urllib.request.build_opener"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_credential_launcher.py",
+      "line": 301,
+      "resolved": false,
+      "target": "launcher.os.fstat"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 154,
+      "resolved": true,
+      "target": "gnd.install._unlink"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 184,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 534,
+      "resolved": true,
+      "target": "gnd.install.MAX_CLASSIFY_BYTES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 559,
+      "resolved": true,
+      "target": "gnd.install.MAX_MANIFEST_BYTES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 619,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 757,
+      "resolved": true,
+      "target": "gnd.install._atomic_write"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 779,
+      "resolved": true,
+      "target": "gnd.install._unlink"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_fixes.py",
+      "line": 911,
+      "resolved": true,
+      "target": "gnd.install.resolve_version"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_runner.py",
+      "line": 668,
+      "resolved": true,
+      "target": "gnd.review.runner.run_reviewer_adapter"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_runner.py",
+      "line": 1066,
+      "resolved": true,
+      "target": "gnd.review.adapters.run_bounded_process"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_runner.py",
+      "line": 1475,
+      "resolved": true,
+      "target": "gnd.review.runner.secrets.token_hex"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_runner.py",
+      "line": 1526,
+      "resolved": true,
+      "target": "gnd.review.runner.secrets.token_hex"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_review_runner.py",
+      "line": 1825,
+      "resolved": true,
+      "target": "gnd.review.runner.parse_reviewer_response_with_salvage"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_rf1_cli_pins.py",
+      "line": 39,
+      "resolved": true,
+      "target": "gnd.cli._BandSafeParser.parse_args"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_rf1_session_pins.py",
+      "line": 266,
+      "resolved": false,
+      "target": "module.main"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_rf1_session_pins.py",
+      "line": 271,
+      "resolved": false,
+      "target": "module.main"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_rf1_session_pins.py",
+      "line": 354,
+      "resolved": true,
+      "target": "gnd.cli._next_session_run_root"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_skeleton_e2e.py",
+      "line": 229,
+      "resolved": true,
+      "target": "gnd.cli.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 356,
+      "resolved": true,
+      "target": "gnd.solve.STATIONS"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 455,
+      "resolved": true,
+      "target": "gnd.solve.subprocess.Popen"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 583,
+      "resolved": true,
+      "target": "gnd.solve.STATIONS"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 584,
+      "resolved": true,
+      "target": "gnd.exits.SOLVE_CONTROL_PLANE_EXITS"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 780,
+      "resolved": true,
+      "target": "gnd.solve._allocate_walk_file"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 785,
+      "resolved": true,
+      "target": "gnd.solve._open_capture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 798,
+      "resolved": true,
+      "target": "gnd.solve._WalkLog.append"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 837,
+      "resolved": true,
+      "target": "gnd.solve.encode_record"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 900,
+      "resolved": true,
+      "target": "gnd.solve._scan_indices"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 935,
+      "resolved": true,
+      "target": "gnd.solve._scan_indices"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 991,
+      "resolved": true,
+      "target": "gnd.solve.run_walk"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 1026,
+      "resolved": true,
+      "target": "gnd.solve.run_walk"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 1115,
+      "resolved": true,
+      "target": "gnd.solve.encode_record"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 1212,
+      "resolved": true,
+      "target": "gnd.solve.run_walk"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 1252,
+      "resolved": true,
+      "target": "gnd.solve.run_walk"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_solve.py",
+      "line": 1304,
+      "resolved": true,
+      "target": "gnd.solve._open_capture"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_boundary.py",
+      "line": 184,
+      "resolved": true,
+      "target": "gnd.synth.boundary._serialise"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_boundary.py",
+      "line": 249,
+      "resolved": true,
+      "target": "gnd.synth.boundary.math.nextafter"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_boundary.py",
+      "line": 786,
+      "resolved": true,
+      "target": "gnd.synth.boundary.predict_boundary"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 221,
+      "resolved": true,
+      "target": "gnd.synth.assemble.assemble_conforming"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 483,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 493,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 524,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 554,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 760,
+      "resolved": true,
+      "target": "gnd.synth.assemble.assemble_conforming"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 795,
+      "resolved": true,
+      "target": "gnd.synth.boundary.emit_boundary"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_conforming.py",
+      "line": 825,
+      "resolved": true,
+      "target": "gnd.synth.provenance.write_sidecar"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_expectation_independence.py",
+      "line": 91,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_expectation_independence.py",
+      "line": 139,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_expectation_independence.py",
+      "line": 180,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 130,
+      "resolved": false,
+      "target": "builder._draw_value"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 149,
+      "resolved": true,
+      "target": "gnd.synth.assemble._witness_map"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 166,
+      "resolved": true,
+      "target": "gnd.synth.assemble._EXTERNAL_UNIQUENESS_SEARCH_CAP"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 189,
+      "resolved": true,
+      "target": "gnd.synth.assemble._EXTERNAL_UNIQUENESS_SEARCH_CAP"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 211,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 212,
+      "resolved": true,
+      "target": "gnd.synth.assemble._witness_map"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 213,
+      "resolved": true,
+      "target": "gnd.synth.assemble._repair"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 232,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 233,
+      "resolved": true,
+      "target": "gnd.synth.assemble._witness_map"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 234,
+      "resolved": true,
+      "target": "gnd.synth.assemble._repair"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 247,
+      "resolved": true,
+      "target": "gnd.synth.assemble._Builder.doc"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_external_uniqueness.py",
+      "line": 248,
+      "resolved": true,
+      "target": "gnd.synth.assemble._repair"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_false_pass_quarantine.py",
+      "line": 68,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_false_pass_quarantine.py",
+      "line": 69,
+      "resolved": true,
+      "target": "gnd.synth.assemble._Builder.doc"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_false_pass_quarantine.py",
+      "line": 158,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_synth_mutate.py",
+      "line": 799,
+      "resolved": true,
+      "target": "gnd.synth.mutate.predict_violations"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 100,
+      "resolved": false,
+      "target": "updater.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 101,
+      "resolved": false,
+      "target": "updater._text"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 102,
+      "resolved": false,
+      "target": "updater._npm_inventory"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 103,
+      "resolved": false,
+      "target": "updater._snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 108,
+      "resolved": false,
+      "target": "updater._apply"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 137,
+      "resolved": false,
+      "target": "updater._run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 138,
+      "resolved": false,
+      "target": "updater._https_bytes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 139,
+      "resolved": false,
+      "target": "updater.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 140,
+      "resolved": false,
+      "target": "updater._select_qwen_openrouter"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 191,
+      "resolved": false,
+      "target": "updater._run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 192,
+      "resolved": false,
+      "target": "updater._https_bytes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 193,
+      "resolved": false,
+      "target": "updater.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 209,
+      "resolved": false,
+      "target": "updater.NATIVE_KIMI_INSTALLER_SHA256"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 224,
+      "resolved": false,
+      "target": "updater.NATIVE_KIMI_INSTALLER_SHA256"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 244,
+      "resolved": false,
+      "target": "updater.NATIVE_KIMI_INSTALLER_SHA256"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 259,
+      "resolved": false,
+      "target": "updater.NATIVE_KIMI_INSTALLER_SHA256"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 285,
+      "resolved": false,
+      "target": "updater.NATIVE_KIMI_INSTALLER_SHA256"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 287,
+      "resolved": false,
+      "target": "updater._select_qwen_openrouter"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 308,
+      "resolved": false,
+      "target": "updater.NATIVE_KIMI_INSTALLER_SHA256"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 371,
+      "resolved": false,
+      "target": "updater.shutil.which"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 389,
+      "resolved": false,
+      "target": "updater._run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_update_review_harnesses.py",
+      "line": 396,
+      "resolved": false,
+      "target": "updater._run"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v51_phase2_extraction_scope.py",
+      "line": 53,
+      "resolved": false,
+      "target": "module.fact_type_scope"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 131,
+      "resolved": true,
+      "target": "gnd.batch.load_population"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 156,
+      "resolved": true,
+      "target": "gnd.batch.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 202,
+      "resolved": true,
+      "target": "gnd.batch.load_model"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 214,
+      "resolved": true,
+      "target": "gnd.batch.load_model"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 227,
+      "resolved": true,
+      "target": "gnd.batch.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 228,
+      "resolved": true,
+      "target": "gnd.batch.checker_band"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_batch.py",
+      "line": 233,
+      "resolved": true,
+      "target": "gnd.batch.load_population"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_import.py",
+      "line": 192,
+      "resolved": true,
+      "target": "gnd.rai_import.publish_directory_once"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_import.py",
+      "line": 246,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_import.py",
+      "line": 267,
+      "resolved": true,
+      "target": "gnd.artifacts._write_new_file_at"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase1_import.py",
+      "line": 268,
+      "resolved": true,
+      "target": "gnd.artifacts._clear_directory_fd"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase2_api.py",
+      "line": 120,
+      "resolved": false,
+      "target": "checker.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase4_projection.py",
+      "line": 171,
+      "resolved": false,
+      "target": "redaction.project_output"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase4_projection.py",
+      "line": 174,
+      "resolved": false,
+      "target": "api_redaction.project_output"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase4_projection.py",
+      "line": 176,
+      "resolved": true,
+      "target": "gnd.api.project_output"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase5_scaling.py",
+      "line": 39,
+      "resolved": true,
+      "target": "gnd.exp.session_eval._walk_scalar_key"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase6_review_regressions.py",
+      "line": 58,
+      "resolved": true,
+      "target": "gnd.declared_adapter.asyncio.open_connection"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase6_review_regressions.py",
+      "line": 81,
+      "resolved": true,
+      "target": "gnd.declared_adapter.asyncio.open_connection"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v61_phase6_review_regressions.py",
+      "line": 91,
+      "resolved": true,
+      "target": "gnd.declared_adapter.asyncio.open_connection"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_intermediate.py",
+      "line": 27,
+      "resolved": true,
+      "target": "gnd.transition._load_intermediate"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_mutations.py",
+      "line": 33,
+      "resolved": true,
+      "target": "gnd.transition.structured_extension_view"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_mutations.py",
+      "line": 42,
+      "resolved": true,
+      "target": "gnd.transition._compare_values"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_mutations.py",
+      "line": 49,
+      "resolved": true,
+      "target": "gnd.transition._derived_changes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_mutations.py",
+      "line": 57,
+      "resolved": true,
+      "target": "gnd.transition.derivation_claims_against"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_mutations.py",
+      "line": 68,
+      "resolved": true,
+      "target": "gnd.transition.assert_dynamic_derivation_coverage"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_mutations.py",
+      "line": 93,
+      "resolved": true,
+      "target": "gnd.transition._without_derivation_claims"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_order.py",
+      "line": 34,
+      "resolved": true,
+      "target": "gnd.transition.structured_extension_view"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_order.py",
+      "line": 35,
+      "resolved": true,
+      "target": "gnd.transition._derived_changes"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_order.py",
+      "line": 36,
+      "resolved": true,
+      "target": "gnd.transition._evaluate_derived_dynamic_rules"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase2_order.py",
+      "line": 37,
+      "resolved": true,
+      "target": "gnd.transition._load_intermediate"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase3_composition.py",
+      "line": 93,
+      "resolved": true,
+      "target": "gnd.transition.structured_extension_view"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase3_synth_measure.py",
+      "line": 70,
+      "resolved": true,
+      "target": "gnd.synth.assemble.structured_extension_view"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase3_synth_measure.py",
+      "line": 84,
+      "resolved": true,
+      "target": "gnd.synth.assemble.structured_extension_view"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase4_aggregate.py",
+      "line": 131,
+      "resolved": true,
+      "target": "gnd.checker._aggregate_identity_token"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase4_assurance.py",
+      "line": 106,
+      "resolved": true,
+      "target": "gnd.api.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v62_phase4_synth_measure.py",
+      "line": 123,
+      "resolved": true,
+      "target": "gnd.synth.assemble.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 37,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 38,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 112,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 113,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 127,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 128,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 145,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 146,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 161,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 162,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 178,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 179,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 202,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 203,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._read"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 222,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.runtime_identity"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 233,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 234,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 254,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._stat_identity"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 271,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.production_roster"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 290,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 291,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._fingerprint"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 292,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 309,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 310,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 329,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 330,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 336,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.MAX_ROSTER_DIRECTORIES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 396,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._bundle_census"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 452,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.MAX_FILES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 460,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.MAX_FILES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 477,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 522,
+      "resolved": true,
+      "target": "gnd.api.derive_assurance_scope"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 526,
+      "resolved": true,
+      "target": "gnd.api.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 531,
+      "resolved": true,
+      "target": "gnd.api.load_assurance_evidence"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 559,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 579,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._fingerprint"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 580,
+      "resolved": true,
+      "target": "gnd.assurance_evidence._load"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase2_cache.py",
+      "line": 655,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.MAX_FILES"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase4_helpers.py",
+      "line": 56,
+      "resolved": true,
+      "target": "gnd.cli.main"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase4_helpers.py",
+      "line": 109,
+      "resolved": true,
+      "target": "gnd.cli.main"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase4_helpers.py",
+      "line": 124,
+      "resolved": true,
+      "target": "gnd.cli.main"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v63_phase4_helpers.py",
+      "line": 179,
+      "resolved": true,
+      "target": "gnd.cli.main"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase2_applicability.py",
+      "line": 26,
+      "resolved": true,
+      "target": "gnd.checker.check"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase2_applicability.py",
+      "line": 27,
+      "resolved": true,
+      "target": "gnd.checker.phase1_decide"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase2_applicability.py",
+      "line": 28,
+      "resolved": true,
+      "target": "gnd.correspondence.evaluate_snapshot"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase2_direct_cursor.py",
+      "line": 67,
+      "resolved": true,
+      "target": "gnd.semantic_spec.value_occurrence_state"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase6_evidence_reader.py",
+      "line": 45,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.resources.files"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase6_execution.py",
+      "line": 142,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.production_identity"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase6_runtime_identity.py",
+      "line": 37,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.metadata.distribution"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase6_runtime_identity.py",
+      "line": 39,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.metadata.distribution"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v6_phase6_runtime_identity.py",
+      "line": 53,
+      "resolved": true,
+      "target": "gnd.assurance_evidence.metadata.distribution"
+    },
+    {
+      "api": "patch",
+      "file": "tests/test_v70_phase1_adversarial.py",
+      "line": 70,
+      "resolved": true,
+      "target": "gnd.extract.anchors.recognised_ranges"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v70_phase1_surfaces.py",
+      "line": 139,
+      "resolved": true,
+      "target": "gnd.extract.manifest.open_manifest_relative_path"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v70_phase3_successors.py",
+      "line": 164,
+      "resolved": true,
+      "target": "gnd.redaction.project_output"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v70_phase3_successors.py",
+      "line": 177,
+      "resolved": true,
+      "target": "gnd.admission.build_admission"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v70_phase5_adversarial.py",
+      "line": 64,
+      "resolved": true,
+      "target": "gnd.verbalize_population.project_output"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v70_phase5_adversarial.py",
+      "line": 73,
+      "resolved": true,
+      "target": "gnd.verbalize_population.project_output"
+    },
+    {
+      "api": "patch.object",
+      "file": "tests/test_v71_phase1_successors.py",
+      "line": 112,
+      "resolved": true,
+      "target": "gnd.semantic_spec.scalar_identical"
+    },
+    {
+      "api": "patch.object",
+      "file": "tests/test_v71_phase1_successors.py",
+      "line": 115,
+      "resolved": true,
+      "target": "gnd.temporal_guarded.evaluate_term"
+    },
+    {
+      "api": "patch.object",
+      "file": "tests/test_v71_phase1_successors.py",
+      "line": 253,
+      "resolved": true,
+      "target": "gnd.terms.date"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase2_successors.py",
+      "line": 82,
+      "resolved": true,
+      "target": "gnd.checker._guarded_bindings"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase2_successors.py",
+      "line": 105,
+      "resolved": true,
+      "target": "gnd.checker._guarded_bindings"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase3_successors.py",
+      "line": 28,
+      "resolved": true,
+      "target": "gnd.model._ancestor_closure"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase3_successors.py",
+      "line": 89,
+      "resolved": true,
+      "target": "gnd.model._derivation_head_term_issues"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase4_successors.py",
+      "line": 196,
+      "resolved": true,
+      "target": "gnd.exp.session_v7.publish_leaf_atomic"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase4_successors.py",
+      "line": 244,
+      "resolved": true,
+      "target": "gnd.admission.build_admission"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase4_successors.py",
+      "line": 323,
+      "resolved": true,
+      "target": "gnd.exp.session.run_gnd_verifier"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v71_phase4_successors.py",
+      "line": 414,
+      "resolved": true,
+      "target": "gnd.exp.session.run_gnd_verifier"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v72_phase4_json_input.py",
+      "line": 83,
+      "resolved": true,
+      "target": "gnd.json_input._refuse"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v72_phase5_session_mechanics.py",
+      "line": 41,
+      "resolved": true,
+      "target": "gnd.exp.session_store.os.fstat"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v72_phase5_session_mechanics.py",
+      "line": 72,
+      "resolved": true,
+      "target": "gnd.exp.session_store._exchange_paths_atomic"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v72_phase5_session_mechanics.py",
+      "line": 74,
+      "resolved": true,
+      "target": "gnd.exp.session_store._clear_directory_fd"
+    },
+    {
+      "api": "setattr",
+      "file": "tests/test_v72_phase5_session_mechanics.py",
+      "line": 104,
+      "resolved": true,
+      "target": "gnd.exp.session_store.os.fstat"
+    }
+  ],
+  "proposed_touched_modules": [
+    "gnd.artifacts",
+    "gnd.assurance_evidence",
+    "gnd.cli",
+    "gnd.conformance.currency",
+    "gnd.conformance.report",
+    "gnd.conformance.service",
+    "gnd.coverage",
+    "gnd.declared_adapter",
+    "gnd.diff",
+    "gnd.exits",
+    "gnd.exp.adapter_policy",
+    "gnd.exp.conclusions",
+    "gnd.exp.session_eval",
+    "gnd.exp.session_store",
+    "gnd.exp.spec",
+    "gnd.export.pyrel_runtime",
+    "gnd.extract.manifest",
+    "gnd.fidelity.report",
+    "gnd.install",
+    "gnd.measure.report",
+    "gnd.model",
+    "gnd.recovery.report",
+    "gnd.recovery.verify",
+    "gnd.review.request",
+    "gnd.synth.assemble",
+    "gnd.synth.mutate",
+    "gnd.synth.provenance",
+    "gnd.transition"
+  ],
+  "runtime_reverse_import_closure": [
+    "gnd.__main__",
+    "gnd.admission",
+    "gnd.admission_validation",
+    "gnd.api",
+    "gnd.architecture",
+    "gnd.archsmoke",
+    "gnd.artifacts",
+    "gnd.assurance",
+    "gnd.assurance_claims",
+    "gnd.assurance_evidence",
+    "gnd.assurance_inheritance",
+    "gnd.assurance_transport",
+    "gnd.batch",
+    "gnd.checker",
+    "gnd.cli",
+    "gnd.codegen.docstrings",
+    "gnd.codegen.emit",
+    "gnd.codegen.manifest",
+    "gnd.codegen.plan",
+    "gnd.conformance.architecture",
+    "gnd.conformance.currency",
+    "gnd.conformance.integrity",
+    "gnd.conformance.report",
+    "gnd.conformance.service",
+    "gnd.conformance.structural",
+    "gnd.correspondence",
+    "gnd.coverage",
+    "gnd.declared_adapter",
+    "gnd.diff",
+    "gnd.evolve",
+    "gnd.evolve.service",
+    "gnd.exits",
+    "gnd.exp.adapter_policy",
+    "gnd.exp.close",
+    "gnd.exp.conclusions",
+    "gnd.exp.expectation_author",
+    "gnd.exp.frontmatter",
+    "gnd.exp.paths",
+    "gnd.exp.session",
+    "gnd.exp.session_contract",
+    "gnd.exp.session_eval",
+    "gnd.exp.session_judgments",
+    "gnd.exp.session_patch",
+    "gnd.exp.session_store",
+    "gnd.exp.session_v7",
+    "gnd.exp.spec",
+    "gnd.exp.tests_runner",
+    "gnd.export.emit",
+    "gnd.export.lean",
+    "gnd.export.lean_cli",
+    "gnd.export.lean_io",
+    "gnd.export.lean_runtime",
+    "gnd.export.pyrel_runtime",
+    "gnd.export.souffle",
+    "gnd.export.souffle_cli",
+    "gnd.export.souffle_io",
+    "gnd.export.souffle_runtime",
+    "gnd.extract.anchors",
+    "gnd.extract.bundle",
+    "gnd.extract.manifest",
+    "gnd.extract.projection",
+    "gnd.extract.refscheme",
+    "gnd.extract.vocabulary",
+    "gnd.extraction_scope",
+    "gnd.fidelity.report",
+    "gnd.install",
+    "gnd.judgments",
+    "gnd.measure.coverage",
+    "gnd.measure.promote",
+    "gnd.measure.report",
+    "gnd.measure.score",
+    "gnd.measure.truth",
+    "gnd.model",
+    "gnd.model_verbalization",
+    "gnd.population",
+    "gnd.popvalidate",
+    "gnd.proof_bridge",
+    "gnd.proof_currency",
+    "gnd.rai_import",
+    "gnd.recovery",
+    "gnd.recovery.inventory",
+    "gnd.recovery.report",
+    "gnd.recovery.verify",
+    "gnd.redaction",
+    "gnd.references",
+    "gnd.report",
+    "gnd.review",
+    "gnd.review.report",
+    "gnd.review.request",
+    "gnd.review.runner",
+    "gnd.semantic_adapter",
+    "gnd.semantic_registry",
+    "gnd.semantic_spec",
+    "gnd.solve",
+    "gnd.synth.assemble",
+    "gnd.synth.boundary",
+    "gnd.synth.comparison",
+    "gnd.synth.frontier",
+    "gnd.synth.guarded",
+    "gnd.synth.mutate",
+    "gnd.synth.paths",
+    "gnd.synth.pool",
+    "gnd.synth.poolfile",
+    "gnd.synth.provenance",
+    "gnd.synth.value_domain",
+    "gnd.synth.values",
+    "gnd.temporal_guarded",
+    "gnd.terms",
+    "gnd.transition",
+    "gnd.verbalize_population",
+    "gnd.witness.cli",
+    "gnd.witness.io",
+    "gnd.witness.kernel",
+    "gnd.witness.producer",
+    "gnd.witness.view"
+  ],
+  "skill_citation_sites": [
+    {
+      "cites": "gnd.archsmoke",
+      "file": "src/gnd/skills/gnd-codegen/SKILL.md",
+      "line": 67
+    },
+    {
+      "cites": "gnd.archsmoke",
+      "file": "src/gnd/skills/gnd-codegen/references/architecture-contract.md",
+      "line": 109
+    },
+    {
+      "cites": "gnd.conformance",
+      "file": "src/gnd/skills/gnd-codegen/references/architecture-contract.md",
+      "line": 127
+    },
+    {
+      "cites": "src/gnd/model.py",
+      "file": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "line": 810
+    },
+    {
+      "cites": "gnd.extract.vocabulary",
+      "file": "src/gnd/skills/gnd-orm-core/references/verbalization-patterns.md",
+      "line": 55
+    },
+    {
+      "cites": "gnd.model_verbalization",
+      "file": "src/gnd/skills/gnd-orm-core/references/verbalization-patterns.md",
+      "line": 55
+    },
+    {
+      "cites": "src/gnd/review/adapters.py",
+      "file": "src/gnd/skills/gnd-update-review-panel/SKILL.md",
+      "line": 16
+    },
+    {
+      "cites": "src/gnd/review/adapters.py",
+      "file": "src/gnd/skills/gnd-update-review-panel/SKILL.md",
+      "line": 160
+    },
+    {
+      "cites": "src/gnd/review/adapters.py",
+      "file": "src/gnd/skills/gnd-update-review-panel/SKILL.md",
+      "line": 183
+    }
+  ],
+  "source_scan_sites": [
+    {
+      "file": "tests/support/public_pyrel_derivation_corpus.py",
+      "kind": "sys_modules",
+      "line": 45
+    },
+    {
+      "file": "tests/support/public_pyrel_derivation_isolation.py",
+      "kind": "sys_modules",
+      "line": 22
+    },
+    {
+      "file": "tests/support/public_v71_witness_corpus.py",
+      "kind": "sys_modules",
+      "line": 372
+    },
+    {
+      "file": "tests/support/public_v71_witness_corpus.py",
+      "kind": "getsource",
+      "line": 581
+    },
+    {
+      "file": "tests/test_acceptance_controls.py",
+      "kind": "getsource",
+      "line": 32
+    },
+    {
+      "file": "tests/test_agent_recordings.py",
+      "kind": "sys_modules",
+      "line": 76
+    },
+    {
+      "file": "tests/test_architecture_conformance.py",
+      "kind": "getsource",
+      "line": 296
+    },
+    {
+      "file": "tests/test_architecture_conformance.py",
+      "kind": "sys_modules",
+      "line": 460
+    },
+    {
+      "file": "tests/test_archsmoke.py",
+      "kind": "sys_modules",
+      "line": 221
+    },
+    {
+      "file": "tests/test_checker_families.py",
+      "kind": "getsource",
+      "line": 1741
+    },
+    {
+      "file": "tests/test_codegen_emit.py",
+      "kind": "getsource",
+      "line": 204
+    },
+    {
+      "file": "tests/test_codegen_emit.py",
+      "kind": "getsource",
+      "line": 488
+    },
+    {
+      "file": "tests/test_codegen_force.py",
+      "kind": "getsource",
+      "line": 1660
+    },
+    {
+      "file": "tests/test_codegen_manifest.py",
+      "kind": "cli_path",
+      "line": 77
+    },
+    {
+      "file": "tests/test_codegen_manifest.py",
+      "kind": "cli_path",
+      "line": 132
+    },
+    {
+      "file": "tests/test_codegen_manifest.py",
+      "kind": "cli_path",
+      "line": 784
+    },
+    {
+      "file": "tests/test_codegen_manifest.py",
+      "kind": "cli_path",
+      "line": 811
+    },
+    {
+      "file": "tests/test_conformance_drift.py",
+      "kind": "sys_modules",
+      "line": 382
+    },
+    {
+      "file": "tests/test_conformance_drift.py",
+      "kind": "sys_modules",
+      "line": 396
+    },
+    {
+      "file": "tests/test_conformance_structural.py",
+      "kind": "sys_modules",
+      "line": 1039
+    },
+    {
+      "file": "tests/test_coverage_cli.py",
+      "kind": "cli_path",
+      "line": 87
+    },
+    {
+      "file": "tests/test_coverage_cli.py",
+      "kind": "getsource",
+      "line": 117
+    },
+    {
+      "file": "tests/test_doctor_uninstall.py",
+      "kind": "getsource",
+      "line": 448
+    },
+    {
+      "file": "tests/test_exp_bands.py",
+      "kind": "cli_path",
+      "line": 343
+    },
+    {
+      "file": "tests/test_exp_bands.py",
+      "kind": "getsource",
+      "line": 629
+    },
+    {
+      "file": "tests/test_exp_bands.py",
+      "kind": "getsource",
+      "line": 634
+    },
+    {
+      "file": "tests/test_exp_close.py",
+      "kind": "getsource",
+      "line": 695
+    },
+    {
+      "file": "tests/test_exp_session_eval.py",
+      "kind": "getsource",
+      "line": 1210
+    },
+    {
+      "file": "tests/test_exp_session_eval.py",
+      "kind": "getsource",
+      "line": 1515
+    },
+    {
+      "file": "tests/test_exp_spec.py",
+      "kind": "getsource",
+      "line": 234
+    },
+    {
+      "file": "tests/test_exp_spec.py",
+      "kind": "getsource",
+      "line": 241
+    },
+    {
+      "file": "tests/test_exp_spec.py",
+      "kind": "getsource",
+      "line": 274
+    },
+    {
+      "file": "tests/test_exp_spec.py",
+      "kind": "getsource",
+      "line": 277
+    },
+    {
+      "file": "tests/test_expense_tutorial.py",
+      "kind": "cli_path",
+      "line": 49
+    },
+    {
+      "file": "tests/test_figures.py",
+      "kind": "sys_modules",
+      "line": 21
+    },
+    {
+      "file": "tests/test_gnd_arch.py",
+      "kind": "sys_modules",
+      "line": 21
+    },
+    {
+      "file": "tests/test_gnd_arch.py",
+      "kind": "sys_modules",
+      "line": 369
+    },
+    {
+      "file": "tests/test_gnd_arch.py",
+      "kind": "cli_path",
+      "line": 411
+    },
+    {
+      "file": "tests/test_gnd_arch.py",
+      "kind": "sys_modules",
+      "line": 412
+    },
+    {
+      "file": "tests/test_guarded_corpus.py",
+      "kind": "sys_modules",
+      "line": 437
+    },
+    {
+      "file": "tests/test_guarded_corpus.py",
+      "kind": "sys_modules",
+      "line": 443
+    },
+    {
+      "file": "tests/test_guarded_corpus.py",
+      "kind": "sys_modules",
+      "line": 460
+    },
+    {
+      "file": "tests/test_measure_offline.py",
+      "kind": "getsource",
+      "line": 430
+    },
+    {
+      "file": "tests/test_model_guarded.py",
+      "kind": "getsource",
+      "line": 333
+    },
+    {
+      "file": "tests/test_model_guarded.py",
+      "kind": "getsource",
+      "line": 335
+    },
+    {
+      "file": "tests/test_model_v2.py",
+      "kind": "getsource",
+      "line": 335
+    },
+    {
+      "file": "tests/test_model_v2.py",
+      "kind": "getsource",
+      "line": 484
+    },
+    {
+      "file": "tests/test_model_validation.py",
+      "kind": "getsource",
+      "line": 98
+    },
+    {
+      "file": "tests/test_public_assurance_feedback.py",
+      "kind": "sys_modules",
+      "line": 120
+    },
+    {
+      "file": "tests/test_public_book_runtime.py",
+      "kind": "cli_path",
+      "line": 650
+    },
+    {
+      "file": "tests/test_public_book_runtime.py",
+      "kind": "cli_path",
+      "line": 765
+    },
+    {
+      "file": "tests/test_public_collection.py",
+      "kind": "sys_modules",
+      "line": 38
+    },
+    {
+      "file": "tests/test_public_distribution.py",
+      "kind": "cli_path",
+      "line": 116
+    },
+    {
+      "file": "tests/test_public_generated_examples.py",
+      "kind": "cli_path",
+      "line": 41
+    },
+    {
+      "file": "tests/test_public_payload_alias_sites.py",
+      "kind": "cli_path",
+      "line": 46
+    },
+    {
+      "file": "tests/test_public_semantic_boundaries.py",
+      "kind": "getsource",
+      "line": 148
+    },
+    {
+      "file": "tests/test_public_session_driver.py",
+      "kind": "sys_modules",
+      "line": 37
+    },
+    {
+      "file": "tests/test_public_v71_full_judgments.py",
+      "kind": "sys_modules",
+      "line": 73
+    },
+    {
+      "file": "tests/test_public_v71_full_judgments.py",
+      "kind": "sys_modules",
+      "line": 74
+    },
+    {
+      "file": "tests/test_public_v71_full_judgments.py",
+      "kind": "sys_modules",
+      "line": 76
+    },
+    {
+      "file": "tests/test_public_v71_judgment_successor_guards.py",
+      "kind": "sys_modules",
+      "line": 22
+    },
+    {
+      "file": "tests/test_public_v71_phase4_corpus_integrity.py",
+      "kind": "sys_modules",
+      "line": 22
+    },
+    {
+      "file": "tests/test_public_v71_phase4_full_branches.py",
+      "kind": "sys_modules",
+      "line": 19
+    },
+    {
+      "file": "tests/test_public_v72_full_json_boundary.py",
+      "kind": "sys_modules",
+      "line": 42
+    },
+    {
+      "file": "tests/test_public_v72_ownership_direct.py",
+      "kind": "sys_modules",
+      "line": 215
+    },
+    {
+      "file": "tests/test_public_v72_status.py",
+      "kind": "sys_modules",
+      "line": 338
+    },
+    {
+      "file": "tests/test_release_acceptance.py",
+      "kind": "cli_path",
+      "line": 19
+    },
+    {
+      "file": "tests/test_review_bands.py",
+      "kind": "getsource",
+      "line": 335
+    },
+    {
+      "file": "tests/test_review_bands.py",
+      "kind": "getsource",
+      "line": 383
+    },
+    {
+      "file": "tests/test_review_bands.py",
+      "kind": "getsource",
+      "line": 390
+    },
+    {
+      "file": "tests/test_review_runner.py",
+      "kind": "getsource",
+      "line": 748
+    },
+    {
+      "file": "tests/test_review_runner.py",
+      "kind": "getsource",
+      "line": 1797
+    },
+    {
+      "file": "tests/test_rf1_layering.py",
+      "kind": "sys_modules",
+      "line": 20
+    },
+    {
+      "file": "tests/test_rf1_pin_harness.py",
+      "kind": "sys_modules",
+      "line": 33
+    },
+    {
+      "file": "tests/test_rf1_session_pins.py",
+      "kind": "sys_modules",
+      "line": 268
+    },
+    {
+      "file": "tests/test_solve.py",
+      "kind": "cli_path",
+      "line": 23
+    },
+    {
+      "file": "tests/test_synth_false_pass_quarantine.py",
+      "kind": "getsource",
+      "line": 172
+    },
+    {
+      "file": "tests/test_synth_false_pass_quarantine.py",
+      "kind": "getsource",
+      "line": 179
+    },
+    {
+      "file": "tests/test_synth_values.py",
+      "kind": "sys_modules",
+      "line": 399
+    },
+    {
+      "file": "tests/test_synth_values.py",
+      "kind": "sys_modules",
+      "line": 409
+    },
+    {
+      "file": "tests/test_update_review_harnesses.py",
+      "kind": "sys_modules",
+      "line": 25
+    },
+    {
+      "file": "tests/test_v6_phase2_adapter_mutations.py",
+      "kind": "getsource",
+      "line": 204
+    },
+    {
+      "file": "tests/test_v6_phase2_adapter_mutations.py",
+      "kind": "sys_modules",
+      "line": 211
+    },
+    {
+      "file": "tests/test_v6_phase2_direct_cursor.py",
+      "kind": "getsource",
+      "line": 100
+    },
+    {
+      "file": "tests/test_v6_phase2_value_helpers.py",
+      "kind": "getsource",
+      "line": 267
+    },
+    {
+      "file": "tests/test_v6_phase3_distribution.py",
+      "kind": "cli_path",
+      "line": 17
+    },
+    {
+      "file": "tests/test_v72_phase4_json_input.py",
+      "kind": "sys_modules",
+      "line": 92
+    },
+    {
+      "file": "tests/test_verify_cli.py",
+      "kind": "cli_path",
+      "line": 430
+    }
+  ]
+}

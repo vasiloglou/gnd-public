@@ -1,0 +1,12 @@
+Retained output edited to replace machine paths.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_historical_query_aliases_keep_original_row_identity ___________
+tests/test_rf6_index.py:179: in test_historical_query_aliases_keep_original_row_identity
+    assert universe.fact_type_by_id(model, 'F') is model.fact_types[0]
+E   AssertionError: assert {'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'Child'}], 'constraints': [{'type': 'mandatory', 'role': 'x'}]} is {'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'Child'}], 'constraints': [{'type': 'mandatory', 'role': 'x'}]}
+E    +  where {'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'Child'}], 'constraints': [{'type': 'mandatory', 'role': 'x'}]} = <function _fact_type_by_id at 0x10bea6770>(Model(version=1, model_id=None, source={}, object_types=[{'id': 'Code', 'kind': 'value', 'primitive': 'String'}, {'id'...'expression': 'hello'}], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[]), 'F')
+E    +    where <function _fact_type_by_id at 0x10bea6770> = <module 'gnd.universe' from '<worktree>/src/gnd/universe.py'>.fact_type_by_id
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_historical_query_aliases_keep_original_row_identity
+1 failed in 0.09s

@@ -109,6 +109,7 @@ def test_review_malformed_consumed_fields_are_rejected(change: str) -> None:
     ("Date", "2026-02-29"), ("Date", "20260904"),
     ("DateTime", "not-a-datetime"), ("DateTime", "2026-09-04T25:00"),
     ("DateTime", "2026-09-04"),
+    ("DateTime", "2026-09-04 12:30-0400"), ("DateTime", "2026-09-04t12:30z"),
 ])
 def test_review_invalid_temporal_population_is_rejected(primitive, value) -> None:
     from gnd.export.pyrel_runtime import admit_population
@@ -121,7 +122,7 @@ def test_review_invalid_temporal_population_is_rejected(primitive, value) -> Non
 
 @pytest.mark.parametrize("primitive,value", [
     ("Date", "2024-02-29"), ("DateTime", "2026-09-04T12:30:01.25Z"),
-    ("DateTime", "2026-09-04 12:30-0400"), ("DateTime", "2026-09-04t12:30z"),
+    ("DateTime", "2026-09-04T12:30-04:00"),
 ])
 def test_valid_temporal_population_remains_admitted(primitive, value) -> None:
     from gnd.export.pyrel_runtime import admit_population

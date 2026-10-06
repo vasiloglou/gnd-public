@@ -1,0 +1,42 @@
+{
+ "observed": {
+  "decimal": {
+   "message": "Object of type Decimal is not JSON serializable",
+   "raises": "builtins.TypeError"
+  },
+  "empty-object": {
+   "ok": "{}"
+  },
+  "infinity": {
+   "message": "Out of range float values are not JSON compliant: inf",
+   "raises": "builtins.ValueError"
+  },
+  "int-key": {
+   "ok": "{\"1\":\"int key\"}"
+  },
+  "large-float": {
+   "ok": "1e+16"
+  },
+  "nan": {
+   "message": "Out of range float values are not JSON compliant: nan",
+   "raises": "builtins.ValueError"
+  },
+  "nested-ordering": {
+   "ok": "{\"a\":{\"c\":\"ü\",\"d\":[2,1]},\"b\":1}"
+  },
+  "non-ascii-text": {
+   "ok": "\"é 😀\""
+  },
+  "pydantic-model": {
+   "message": "Object of type Rf1Sample is not JSON serializable",
+   "raises": "builtins.TypeError"
+  },
+  "scalars": {
+   "ok": "[null,true,0.0,-0.0]"
+  },
+  "trailing-newline-string": {
+   "ok": "\"line\\n\""
+  }
+ },
+ "site": "canonical_json|gnd.model_verbalization:_canonical"
+}

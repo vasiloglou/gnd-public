@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "tools/gnd_arch.py",
+    "compare",
+    "29915d9",
+    "a89358a",
+    "--out",
+    ".gnd-planning/milestones/code-refactoring/evidence/RF5/source-compare.json"
+  ],
+  "exit": 0,
+  "seconds": 0.07507085800170898
+}

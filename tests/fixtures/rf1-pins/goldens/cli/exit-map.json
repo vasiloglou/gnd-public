@@ -1,0 +1,89 @@
+{
+ "gnd.batch.BATCH_EXIT_PRECEDENCE": [
+  3,
+  1,
+  4,
+  2,
+  0
+ ],
+ "gnd.cli": {
+  "EXIT_CHECKER_DEFECT": 6,
+  "EXIT_COLLISION": 11,
+  "EXIT_DRIFT": 10,
+  "EXIT_EVOLUTION_OPERATIONS_GATED": 18,
+  "EXIT_EXPERIMENT_OPEN": 14,
+  "EXIT_GENERATOR": 5,
+  "EXIT_INTERNAL": 70,
+  "EXIT_IO": 74,
+  "EXIT_MODEL_CODE_DRIFT": 13,
+  "EXIT_NO_INPUT": 66,
+  "EXIT_NO_INSTALL": 12,
+  "EXIT_QUARANTINE": 6,
+  "EXIT_REVIEW_INCONCLUSIVE": 16,
+  "EXIT_SESSION_NOT_ACCEPTED": 15,
+  "EXIT_USAGE": 64,
+  "EXIT_WALK_HALTED": 17
+ },
+ "gnd.conformance.service": {
+  "_EXIT_ILL_FORMED": 3,
+  "_EXIT_IO": 74,
+  "_EXIT_MODEL_CODE_DRIFT": 13,
+  "_EXIT_NO_INPUT": 66
+ },
+ "gnd.evolve.models._CONFORMANCE_EXIT_PRECEDENCE": {
+  "<int>0": 0,
+  "<int>13": 1,
+  "<int>3": 2,
+  "<int>66": 3,
+  "<int>74": 4
+ },
+ "gnd.evolve.service._EXIT_PRECEDENCE": {
+  "<int>0": 0,
+  "<int>13": 1,
+  "<int>3": 2,
+  "<int>66": 3,
+  "<int>74": 4
+ },
+ "gnd.exits": {
+  "EXIT_EXPERIMENT_OPEN": 14,
+  "EXIT_INTERNAL": 70,
+  "EXIT_IO": 74,
+  "EXIT_NO_INPUT": 66,
+  "EXIT_USAGE": 64,
+  "EXIT_WALK_HALTED": 17
+ },
+ "gnd.exits.SOLVE_CONTROL_PLANE_EXITS": [
+  [
+   0,
+   "a completed walk or informational action"
+  ],
+  [
+   17,
+   "a walk that halted at a station"
+  ],
+  [
+   64,
+   "usage"
+  ],
+  [
+   66,
+   "a missing path"
+  ],
+  [
+   70,
+   "an internal defect"
+  ],
+  [
+   74,
+   "an I/O refusal"
+  ]
+ ],
+ "gnd.exp.session_eval.OUTCOME_BY_EXIT": {
+  "<int>0": "accepted",
+  "<int>1": "violated",
+  "<int>2": "inadequate",
+  "<int>3": "ill_formed",
+  "<int>4": "indeterminate",
+  "<int>70": "internal_error"
+ }
+}

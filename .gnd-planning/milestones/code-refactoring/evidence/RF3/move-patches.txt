@@ -1,0 +1,2203 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_derivation_evaluator_controls.py tests/test_public_adapter_derivation.py tests/test_public_applicability_obligations.py tests/test_public_derivation_cost_mutations.py tests/test_public_v72_semantic_owners.py tests/test_reference_population_corpus.py tests/test_rf3_moves.py --tb=short
+FF...F..F.F.....FFF....FFFFFFFFFFFFFFFFFFFFFFFFFFFF..........F..FF...... [ 21%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 42%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 64%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 85%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......                          [100%]
+=================================== FAILURES ===================================
+______________________ test_comparison_mutation_receipts _______________________
+tests/test_public_derivation_evaluator_controls.py:171: in test_comparison_mutation_receipts
+    assert band(checker.check(model, population)) == 0
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_counted_costs_are_separate_from_guarded_work _______________
+tests/test_public_derivation_evaluator_controls.py:203: in test_counted_costs_are_separate_from_guarded_work
+    checker.check(guarded_model, guarded_population)
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+________________ test_semiderived_surplus_cannot_satisfy_guard _________________
+tests/test_public_derivation_evaluator_controls.py:278: in test_semiderived_surplus_cannot_satisfy_guard
+    report = checker.check(model, population)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+________________ test_constraints_run_once_after_all_extensions ________________
+tests/test_public_derivation_evaluator_controls.py:347: in test_constraints_run_once_after_all_extensions
+    report = checker.check(model, population)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_________ test_dependency_graph_and_bare_dollar_literal_are_preserved __________
+tests/test_public_adapter_derivation.py:21: in test_dependency_graph_and_bare_dollar_literal_are_preserved
+    monkeypatch.setattr(extensions, name, forbidden)
+E   AttributeError: <module 'gnd.extensions' from '<worktree>/src/gnd/extensions.py'> has no attribute 'check'
+__ test_derivation_literal_patterns_keep_raw_identity[Number-True-1-boolean] ___
+tests/test_public_adapter_derivation.py:119: in test_derivation_literal_patterns_keep_raw_identity
+    report = extensions.check(model, population)
+             ^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.extensions' has no attribute 'check'
+_ test_derivation_literal_patterns_keep_raw_identity[Date-not-a-date-2026-09-07-string] _
+tests/test_public_adapter_derivation.py:119: in test_derivation_literal_patterns_keep_raw_identity
+    report = extensions.check(model, population)
+             ^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.extensions' has no attribute 'check'
+______ test_structured_effective_view_and_opaque_obligations_are_in_scope ______
+tests/test_public_applicability_obligations.py:71: in test_structured_effective_view_and_opaque_obligations_are_in_scope
+    checker.check(model, population)
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_calculator_join_compatibility[legacy-single] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_______________ test_calculator_join_compatibility[legacy-empty] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[legacy-duplicate] _____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[legacy-negation] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+___________ test_calculator_join_compatibility[legacy-clause-union] ____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[legacy-recursive] _____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_______________ test_calculator_join_compatibility[exact-single] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_______________ test_calculator_join_compatibility[exact-empty] ________________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[exact-duplicate] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_calculator_join_compatibility[exact-negation] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+____________ test_calculator_join_compatibility[exact-clause-union] ____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[exact-recursive] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[exact-exact-add] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[exact-aggregate] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+________________ test_calculator_join_compatibility[scc-single] ________________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+________________ test_calculator_join_compatibility[scc-empty] _________________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_calculator_join_compatibility[scc-duplicate] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_______________ test_calculator_join_compatibility[scc-negation] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_____________ test_calculator_join_compatibility[scc-clause-union] _____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_calculator_join_compatibility[scc-recursive] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_calculator_join_compatibility[scc-exact-add] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+______________ test_calculator_join_compatibility[scc-aggregate] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+_________ test_calculator_join_compatibility[join-exact-multiplicity] __________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+__________ test_calculator_join_compatibility[join-exact-empty-atoms] __________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+__________ test_calculator_join_compatibility[join-exact-empty-rows] ___________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+_____________ test_calculator_join_compatibility[join-exact-typed] _____________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+_________ test_calculator_join_compatibility[join-exact-disconnected] __________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+___________ test_calculator_join_compatibility[join-exact-reordered] ___________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+                                                                   ^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:139: in join
+    atoms, facts, variable_of=checker._derivation_variable, work=work
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.checker' has no attribute '_derivation_variable'
+_________________ test_shared_binding_mutant_is_discriminated __________________
+tests/test_public_v72_semantic_owners.py:97: in test_shared_binding_mutant_is_discriminated
+    observed = CHARACTERIZE.observe(row)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-ktduy06_/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2253: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1972: in _check_dispatch
+    model, population, check_legacy(model, population)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:341: in check_legacy
+    extensions, derivations = extensions.evaluate_derivations(model, population)
+                              ^^^^^^^^^^
+E   UnboundLocalError: cannot access local variable 'extensions' where it is not associated with a value
+___ test_replay_blocks_direct_and_transitive_production_inference[dispatch] ____
+tests/test_public_v72_semantic_owners.py:160: in test_replay_blocks_direct_and_transitive_production_inference
+    monkeypatch.setattr(checker, name, forbidden)
+E   AttributeError: <module 'gnd.checker' from '<worktree>/src/gnd/checker.py'> has no attribute 'compare_terms'
+____ test_replay_blocks_direct_and_transitive_production_inference[release] ____
+tests/test_public_v72_semantic_owners.py:160: in test_replay_blocks_direct_and_transitive_production_inference
+    monkeypatch.setattr(checker, name, forbidden)
+E   AttributeError: <module 'gnd.checker' from '<worktree>/src/gnd/checker.py'> has no attribute 'compare_terms'
+________________ test_phase2_corpus[B01-dispatch-catalog-join] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B01-release-catalog-join] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B02-dispatch-missing-item-alethic] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B02-release-missing-item-alethic] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B02-dispatch-missing-item-deontic] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B02-release-missing-item-deontic] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B03-dispatch-candidate-owned] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B03-release-candidate-owned] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B03-dispatch-candidate-owned-empty] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B03-release-candidate-owned-empty] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B03-dispatch-candidate-owned-mutated] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B03-release-candidate-owned-mutated] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________ test_phase2_corpus[B03-dispatch-candidate-owned-constructed] _________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________ test_phase2_corpus[B03-release-candidate-owned-constructed] __________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B04-dispatch-operation-assert] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B04-release-operation-assert] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B04-dispatch-operation-retract] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B04-release-operation-retract] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B04-dispatch-operation-read] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B04-release-operation-read] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-dispatch-duplicate-id] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-release-duplicate-id] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B05-dispatch-duplicate-owner] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B05-release-duplicate-owner] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B05-dispatch-overlapping-owners] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B05-release-overlapping-owners] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-dispatch-unknown-owner] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-release-unknown-owner] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-dispatch-derived-owner] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-release-derived-owner] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B05-dispatch-semiderived-owner] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B05-release-semiderived-owner] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-dispatch-missing-id] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B05-release-missing-id] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-dispatch-missing-path] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-release-missing-path] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B05-dispatch-missing-sha256] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-release-missing-sha256] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B05-dispatch-missing-fact_types] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B05-release-missing-fact_types] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-dispatch-extra-field] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-release-extra-field] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-dispatch-old-version] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-release-old-version] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-dispatch-hash-short] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B05-release-hash-short] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B05-dispatch-hash-uppercase] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-release-hash-uppercase] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-dispatch-hash-nonhex] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-release-hash-nonhex] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-dispatch-empty-owner] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B05-release-empty-owner] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-dispatch-id-over-limit] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B05-release-id-over-limit] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-dispatch-missing-file] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-release-missing-file] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-dispatch-stale-hash] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B06-release-stale-hash] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B06-dispatch-malformed-json] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-release-malformed-json] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B06-dispatch-malformed-yaml] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-release-malformed-yaml] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-dispatch-wrong-role] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B06-release-wrong-role] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-dispatch-wrong-type] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B06-release-wrong-type] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-dispatch-wrong-header] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-release-wrong-header] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B06-dispatch-undeclared-type] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B06-release-undeclared-type] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B06-dispatch-undeclared-empty-type] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B06-release-undeclared-empty-type] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B06-dispatch-transitive-include] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B06-release-transitive-include] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-dispatch-duplicate-key] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-release-duplicate-key] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________________ test_phase2_corpus[B06-dispatch-nan] _____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________________ test_phase2_corpus[B06-release-nan] ______________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-dispatch-giant-integer] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B06-release-giant-integer] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-dispatch-alias-cycle] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B06-release-alias-cycle] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B07-dispatch-path-absolute] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B07-release-path-absolute] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B07-dispatch-path-unc] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B07-release-path-unc] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-dispatch-path-drive] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B07-release-path-drive] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B07-dispatch-path-backslash] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B07-release-path-backslash] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B07-dispatch-path-dot] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B07-release-path-dot] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-dispatch-path-parent] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-release-path-parent] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B07-dispatch-path-empty-component] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B07-release-path-empty-component] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B07-dispatch-path-nul] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B07-release-path-nul] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B07-dispatch-path-depth-over] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B07-release-path-depth-over] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B07-dispatch-path-length-over] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B07-release-path-length-over] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B07-dispatch-symlink-root] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-release-symlink-root] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B07-dispatch-symlink-ancestor] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B07-release-symlink-ancestor] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B07-dispatch-symlink-leaf] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-release-symlink-leaf] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-dispatch-nested-path] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B07-release-nested-path] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________ test_phase2_corpus[B08-dispatch-refusal-before-evaluation] __________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________ test_phase2_corpus[B08-release-refusal-before-evaluation] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B08-dispatch-declaration-before-file] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B08-release-declaration-before-file] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________ test_phase2_corpus[B08-dispatch-reference-before-candidate] __________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________ test_phase2_corpus[B08-release-reference-before-candidate] __________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B09-dispatch-empty-candidate] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B09-release-empty-candidate] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B09-dispatch-empty-catalog] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B09-release-empty-catalog] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B09-dispatch-reference-nonvacuous] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B09-release-reference-nonvacuous] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B10-dispatch-reference-inflation] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B10-release-reference-inflation] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B10-dispatch-zero-candidate-floor] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B10-release-zero-candidate-floor] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B11-dispatch-model-swap] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B11-release-model-swap] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B11-dispatch-model-parent-swap] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B11-release-model-parent-swap] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B12-dispatch-reference-swap] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B12-release-reference-swap] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B12-dispatch-reference-root-swap] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B12-release-reference-root-swap] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B12-dispatch-reference-parent-swap] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B12-release-reference-parent-swap] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B12-dispatch-reference-inplace-write] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B12-release-reference-inplace-write] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B12-dispatch-fd-cleanup] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B12-release-fd-cleanup] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B13-dispatch-identity-updated-bytes] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B13-release-identity-updated-bytes] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B13-dispatch-identity-order] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B13-release-identity-order] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B13-dispatch-identity-path] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B13-release-identity-path] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B13-dispatch-identity-id] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B13-release-identity-id] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B13-dispatch-identity-owner] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B13-release-identity-owner] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B13-dispatch-legacy-digest] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B13-release-legacy-digest] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B14-dispatch-api-check] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B14-release-api-check] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B14-dispatch-api-validate] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B14-release-api-validate] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B14-dispatch-api-bound-context] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B14-release-api-bound-context] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B14-dispatch-api-missing-context] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B14-release-api-missing-context] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B14-dispatch-api-cwd] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B14-release-api-cwd] ____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________________ test_phase2_corpus[B14-dispatch-batch] ____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________________ test_phase2_corpus[B14-release-batch] _____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________________ test_phase2_corpus[B14-dispatch-diff] _____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________________ test_phase2_corpus[B14-release-diff] _____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B14-dispatch-transition] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B14-release-transition] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B15-dispatch-context-wrong-model] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B15-release-context-wrong-model] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B15-dispatch-context-forged] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B15-release-context-forged] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B15-dispatch-context-model-mutation] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B15-release-context-model-mutation] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________ test_phase2_corpus[B15-dispatch-context-snapshot-immutable] __________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________ test_phase2_corpus[B15-release-context-snapshot-immutable] __________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B16-dispatch-report-wrapper] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B16-release-report-wrapper] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B16-dispatch-report-dirty-control] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B16-release-report-dirty-control] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B16-dispatch-legacy-wire] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_________________ test_phase2_corpus[B16-release-legacy-wire] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B17-dispatch-multiple-origins] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B17-release-multiple-origins] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B17-dispatch-duplicate-origins] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B17-release-duplicate-origins] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B17-dispatch-candidate-admission] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B17-release-candidate-admission] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B18-dispatch-model-bytes-near] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B18-release-model-bytes-near] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B18-dispatch-model-bytes-over] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B18-release-model-bytes-over] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B18-dispatch-reference-bytes-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B18-release-reference-bytes-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B18-dispatch-reference-bytes-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B18-release-reference-bytes-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B18-dispatch-candidate-bytes-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B18-release-candidate-bytes-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B18-dispatch-candidate-bytes-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B18-release-candidate-bytes-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-file-count-near] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-release-file-count-near] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-file-count-over] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-release-file-count-over] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-set-bytes-near] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B19-release-set-bytes-near] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-set-bytes-over] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B19-release-set-bytes-over] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-row-count-near] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B19-release-row-count-near] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-row-count-over] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B19-release-row-count-over] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B19-dispatch-instance-count-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B19-release-instance-count-near] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B19-dispatch-instance-count-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B19-release-instance-count-over] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B19-dispatch-container-depth-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B19-release-container-depth-near] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B19-dispatch-container-depth-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B19-release-container-depth-over] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B19-dispatch-id-near] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________________ test_phase2_corpus[B19-release-id-near] ____________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-dispatch-path-depth-near] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B19-release-path-depth-near] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B20-dispatch-join-near] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B20-release-join-near] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B20-dispatch-join-over] __________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________________ test_phase2_corpus[B20-release-join-over] ___________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B20-dispatch-join-over-with-failure] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B20-release-join-over-with-failure] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B20-dispatch-join-over-deontic] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B20-release-join-over-deontic] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B21-dispatch-missing-safe-capability] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B21-release-missing-safe-capability] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B22-dispatch-reader-counter-control] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B22-release-reader-counter-control] ____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B22-dispatch-join-counter-control] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B22-release-join-counter-control] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B23-dispatch-synth-refusal] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+________________ test_phase2_corpus[B23-release-synth-refusal] _________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B23-dispatch-codegen-refusal] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B23-release-codegen-refusal] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B23-dispatch-session-refusal] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B23-release-session-refusal] ________________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B23-dispatch-conformance-drift] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B23-release-conformance-drift] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+__________ test_phase2_corpus[B23-dispatch-extract-owned-projection] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+___________ test_phase2_corpus[B23-release-extract-owned-projection] ___________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B23-dispatch-verbalize-ownership] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B23-release-verbalize-ownership] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+____________ test_phase2_corpus[B23-dispatch-diagnostic-redaction] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B23-release-diagnostic-redaction] _____________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_____________ test_phase2_corpus[B17-dispatch-derivation-origins] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B17-dispatch-anchored-origins] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+______________ test_phase2_corpus[B17-release-derivation-origins] ______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+_______________ test_phase2_corpus[B17-release-anchored-origins] _______________
+tests/test_reference_population_corpus.py:1173: in test_phase2_corpus
+    assert _check(b)["exit_code"] == 0, "reference join control is unavailable"
+E   AssertionError: reference join control is unavailable
+E   assert 70 == 0
+=========================== short test summary info ============================
+FAILED tests/test_public_derivation_evaluator_controls.py::test_comparison_mutation_receipts
+FAILED tests/test_public_derivation_evaluator_controls.py::test_counted_costs_are_separate_from_guarded_work
+FAILED tests/test_public_derivation_evaluator_controls.py::test_semiderived_surplus_cannot_satisfy_guard
+FAILED tests/test_public_derivation_evaluator_controls.py::test_constraints_run_once_after_all_extensions
+FAILED tests/test_public_adapter_derivation.py::test_dependency_graph_and_bare_dollar_literal_are_preserved
+FAILED tests/test_public_adapter_derivation.py::test_derivation_literal_patterns_keep_raw_identity[Number-True-1-boolean]
+FAILED tests/test_public_adapter_derivation.py::test_derivation_literal_patterns_keep_raw_identity[Date-not-a-date-2026-09-07-string]
+FAILED tests/test_public_applicability_obligations.py::test_structured_effective_view_and_opaque_obligations_are_in_scope
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[legacy-single]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[legacy-empty]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[legacy-duplicate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[legacy-negation]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[legacy-clause-union]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[legacy-recursive]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-single]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-empty]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-duplicate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-negation]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-clause-union]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-recursive]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-exact-add]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-aggregate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-single]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-empty]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-duplicate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-negation]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-clause-union]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-recursive]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-exact-add]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-aggregate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-multiplicity]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-empty-atoms]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-empty-rows]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-typed]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-disconnected]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[join-exact-reordered]
+FAILED tests/test_public_v72_semantic_owners.py::test_shared_binding_mutant_is_discriminated
+FAILED tests/test_public_v72_semantic_owners.py::test_replay_blocks_direct_and_transitive_production_inference[dispatch]
+FAILED tests/test_public_v72_semantic_owners.py::test_replay_blocks_direct_and_transitive_production_inference[release]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B01-dispatch-catalog-join]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B01-release-catalog-join]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B02-dispatch-missing-item-alethic]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B02-release-missing-item-alethic]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B02-dispatch-missing-item-deontic]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B02-release-missing-item-deontic]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-dispatch-candidate-owned]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-release-candidate-owned]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-dispatch-candidate-owned-empty]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-release-candidate-owned-empty]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-dispatch-candidate-owned-mutated]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-release-candidate-owned-mutated]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-dispatch-candidate-owned-constructed]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B03-release-candidate-owned-constructed]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B04-dispatch-operation-assert]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B04-release-operation-assert]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B04-dispatch-operation-retract]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B04-release-operation-retract]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B04-dispatch-operation-read]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B04-release-operation-read]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-duplicate-id]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-duplicate-id]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-duplicate-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-duplicate-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-overlapping-owners]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-overlapping-owners]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-unknown-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-unknown-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-derived-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-derived-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-semiderived-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-semiderived-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-missing-id]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-missing-id]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-missing-path]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-missing-path]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-missing-sha256]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-missing-sha256]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-missing-fact_types]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-missing-fact_types]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-extra-field]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-extra-field]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-old-version]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-old-version]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-hash-short]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-hash-short]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-hash-uppercase]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-hash-uppercase]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-hash-nonhex]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-hash-nonhex]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-empty-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-empty-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-dispatch-id-over-limit]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B05-release-id-over-limit]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-missing-file]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-missing-file]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-stale-hash]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-stale-hash]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-malformed-json]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-malformed-json]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-malformed-yaml]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-malformed-yaml]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-wrong-role]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-wrong-role]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-wrong-type]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-wrong-type]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-wrong-header]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-wrong-header]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-undeclared-type]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-undeclared-type]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-undeclared-empty-type]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-undeclared-empty-type]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-transitive-include]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-transitive-include]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-duplicate-key]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-duplicate-key]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-nan]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-nan]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-giant-integer]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-giant-integer]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-dispatch-alias-cycle]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B06-release-alias-cycle]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-absolute]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-absolute]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-unc]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-unc]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-drive]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-drive]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-backslash]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-backslash]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-dot]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-dot]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-parent]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-parent]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-empty-component]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-empty-component]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-nul]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-nul]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-depth-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-depth-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-path-length-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-path-length-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-symlink-root]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-symlink-root]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-symlink-ancestor]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-symlink-ancestor]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-symlink-leaf]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-symlink-leaf]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-dispatch-nested-path]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B07-release-nested-path]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B08-dispatch-refusal-before-evaluation]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B08-release-refusal-before-evaluation]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B08-dispatch-declaration-before-file]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B08-release-declaration-before-file]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B08-dispatch-reference-before-candidate]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B08-release-reference-before-candidate]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B09-dispatch-empty-candidate]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B09-release-empty-candidate]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B09-dispatch-empty-catalog]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B09-release-empty-catalog]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B09-dispatch-reference-nonvacuous]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B09-release-reference-nonvacuous]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B10-dispatch-reference-inflation]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B10-release-reference-inflation]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B10-dispatch-zero-candidate-floor]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B10-release-zero-candidate-floor]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B11-dispatch-model-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B11-release-model-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B11-dispatch-model-parent-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B11-release-model-parent-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-dispatch-reference-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-release-reference-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-dispatch-reference-root-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-release-reference-root-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-dispatch-reference-parent-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-release-reference-parent-swap]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-dispatch-reference-inplace-write]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-release-reference-inplace-write]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-dispatch-fd-cleanup]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B12-release-fd-cleanup]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-dispatch-identity-updated-bytes]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-release-identity-updated-bytes]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-dispatch-identity-order]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-release-identity-order]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-dispatch-identity-path]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-release-identity-path]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-dispatch-identity-id]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-release-identity-id]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-dispatch-identity-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-release-identity-owner]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-dispatch-legacy-digest]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B13-release-legacy-digest]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-api-check]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-api-check]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-api-validate]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-api-validate]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-api-bound-context]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-api-bound-context]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-api-missing-context]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-api-missing-context]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-api-cwd]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-api-cwd]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-batch]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-batch]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-diff]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-diff]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-dispatch-transition]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B14-release-transition]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-dispatch-context-wrong-model]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-release-context-wrong-model]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-dispatch-context-forged]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-release-context-forged]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-dispatch-context-model-mutation]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-release-context-model-mutation]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-dispatch-context-snapshot-immutable]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B15-release-context-snapshot-immutable]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B16-dispatch-report-wrapper]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B16-release-report-wrapper]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B16-dispatch-report-dirty-control]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B16-release-report-dirty-control]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B16-dispatch-legacy-wire]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B16-release-legacy-wire]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-dispatch-multiple-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-release-multiple-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-dispatch-duplicate-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-release-duplicate-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-dispatch-candidate-admission]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-release-candidate-admission]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-dispatch-model-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-release-model-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-dispatch-model-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-release-model-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-dispatch-reference-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-release-reference-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-dispatch-reference-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-release-reference-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-dispatch-candidate-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-release-candidate-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-dispatch-candidate-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B18-release-candidate-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-file-count-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-file-count-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-file-count-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-file-count-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-set-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-set-bytes-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-set-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-set-bytes-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-row-count-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-row-count-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-row-count-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-row-count-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-instance-count-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-instance-count-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-instance-count-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-instance-count-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-container-depth-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-container-depth-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-container-depth-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-container-depth-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-id-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-id-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-dispatch-path-depth-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B19-release-path-depth-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-dispatch-join-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-release-join-near]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-dispatch-join-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-release-join-over]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-dispatch-join-over-with-failure]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-release-join-over-with-failure]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-dispatch-join-over-deontic]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B20-release-join-over-deontic]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B21-dispatch-missing-safe-capability]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B21-release-missing-safe-capability]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B22-dispatch-reader-counter-control]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B22-release-reader-counter-control]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B22-dispatch-join-counter-control]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B22-release-join-counter-control]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-synth-refusal]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-synth-refusal]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-codegen-refusal]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-codegen-refusal]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-session-refusal]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-session-refusal]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-conformance-drift]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-conformance-drift]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-extract-owned-projection]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-extract-owned-projection]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-verbalize-ownership]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-verbalize-ownership]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-dispatch-diagnostic-redaction]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B23-release-diagnostic-redaction]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-dispatch-derivation-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-dispatch-anchored-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-release-derivation-origins]
+FAILED tests/test_reference_population_corpus.py::test_phase2_corpus[B17-release-anchored-origins]
+295 failed, 40 passed, 3 deselected in 17.20s
+
+Exit: 1

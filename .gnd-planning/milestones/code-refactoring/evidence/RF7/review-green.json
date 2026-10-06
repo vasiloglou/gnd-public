@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf7_review_regressions.py",
+    "tests/test_rf7_input_policy.py",
+    "tests/test_rf7_consumers.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 0.8267979621887207
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf4_peripheral.py",
+    "-k",
+    "not graph",
+    "--tb=short",
+    "-x"
+  ],
+  "exit": 1,
+  "seconds": 0.3148460388183594
+}

@@ -1,0 +1,301 @@
+{
+ "control_nodes": 148,
+ "killed": 29,
+ "rows": {
+  "M-CLI-root-prog": {
+   "nodes": {
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd codegen]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd conformance]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd coverage]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd diff]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd doccheck]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd doctor]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve apply]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve preview]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp author-expectation]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp close]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp init]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export lean-compile]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export lean-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export lean]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export pyrel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle-run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle-witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd extract]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd fidelity]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import rai-orm]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd install]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd judgments check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd judgments]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd measure]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd recovery inventory]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd recovery verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd recovery]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd replay]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review panel-light]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review panel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd solve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd synth]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd uninstall]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verbalize population]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verbalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd witness-view]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd codegen]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd conformance]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd coverage]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd diff]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd doccheck]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd doctor]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve apply]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve preview]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp author-expectation]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp close]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp init]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export lean-compile]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export lean-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export lean]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export pyrel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle-run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle-witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd extract]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd fidelity]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd import rai-orm]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd import]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd install]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd judgments check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd judgments]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd measure]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd recovery inventory]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd recovery verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd recovery]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd replay]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review panel-light]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review panel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd solve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd synth]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd uninstall]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd verbalize population]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd verbalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd witness-view]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_tree": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-cli-canonical-payload": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_canonical_payload]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-cli-evolve-json-bytes": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_evolve_json_bytes]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-cli-evolve-reject-unsafe-spelling": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.cli:_evolve_reject_unsafe_spelling]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-extract-indent": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/approvals/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/bookrec/complete.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/bookrec/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/bookrec/strict.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/expense/currency.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/expense/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/checker/misc.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/checker/ring.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/checker/setfam.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/dispatch.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/full_vocabulary.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/guarded_minimal.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/keywords.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/library.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/v2_operations.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/v2_worked_example.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-1": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[1]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-2": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[2]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-3": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[3]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-4": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[4]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-5": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[5]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-6": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[6]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[8]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-1": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[1]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-2": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[2]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-3": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[3]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-4": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[4]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-5": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[5]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-6": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[6]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[8]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-1": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[1]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-2": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[2]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-3": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[3]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-4": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[4]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-5": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[5]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-6": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[6]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[8]": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 29
+}

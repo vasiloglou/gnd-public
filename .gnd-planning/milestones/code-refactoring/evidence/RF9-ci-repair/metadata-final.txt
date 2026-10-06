@@ -1,0 +1,34 @@
+432 frozen controls unchanged; exact27 adaptations; 241 production files identical to733389d; current observer identities match.
+All checks passed!
+Read-only architecture measurement: gnd_arch.measure with tools/gnd_layers.json and exact coupling_sites identity inventory; Python3.11, source a390599.
+{
+  "modules": 228,
+  "sccs": {
+    "runtime": [],
+    "module_only": []
+  },
+  "wrong_way": 0,
+  "allowances": 0,
+  "private_raw": 680,
+  "explicit_compatibility": 479,
+  "RF3": {
+    "cohort": 32,
+    "raw": 289,
+    "coupling": 9,
+    "ceiling": 60
+  },
+  "RF4": {
+    "cohort": 162,
+    "raw": 549,
+    "coupling": 89,
+    "ceiling_exclusive": 198
+  }
+}
+Final lint command: uv run ruff check src/gnd/model/__init__.py src/gnd/safefs.py src/gnd/synth/poolfile.py tests/public_site_census.py tests/support/rf8_sources.py tests/support/rf9_ci_sources.py tests/test_measure_offline.py tests/test_public_adapter_derivation.py tests/test_public_adapter_literal_controls.py tests/test_public_classification_scaling.py tests/test_public_correspondence_runtime.py tests/test_public_semantic_composition.py tests/test_public_v72_reader_boundaries.py tests/test_public_v72_semantic_owners.py tests/test_pyrel_export_boundaries.py tests/test_rf2_helpers.py tests/test_rf2_pre_move_pins.py tests/test_rf3_core.py tests/test_rf3_moves.py tests/test_rf4_peripheral.py tests/test_rf6_moves.py tests/test_rf6_packages.py tests/test_rf9_ci_repairs.py tests/test_v51_phase2_extraction_scope.py tests/test_v6_phase2_adapter.py tests/test_v6_phase2_adapter_mutations.py tools/rf1_pins.py
+Exit: 0
+All checks passed!
+Candidate/source identity gate: read candidate/SOURCE_COMMIT; compare to git -C each clean clone rev-parse HEAD.
+gnd-local-ci-20261006-733389d Python311: SOURCE_COMMIT == clone HEAD == 733389db588a3f32956f35fce30b94af59824c34
+gnd-local-ci-20261006-733389d Python313: SOURCE_COMMIT == clone HEAD == 733389db588a3f32956f35fce30b94af59824c34
+gnd-local-ci-20261006-final Python311: SOURCE_COMMIT == clone HEAD == a390599c1a8fe8bdf13596e2f71805b6a94e109d
+gnd-local-ci-20261006-final Python313: SOURCE_COMMIT == clone HEAD == a390599c1a8fe8bdf13596e2f71805b6a94e109d

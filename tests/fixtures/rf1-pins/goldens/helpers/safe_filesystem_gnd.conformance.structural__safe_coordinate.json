@@ -1,0 +1,14 @@
+{
+ "observed": {
+  "non-ascii": {
+   "ok": "é"
+  },
+  "plain": {
+   "ok": "a/b"
+  },
+  "surrogate": {
+   "ok": "a\\udcff"
+  }
+ },
+ "site": "safe_filesystem|gnd.conformance.structural:_safe_coordinate"
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "/private/tmp/rf6-base-check/tests/test_rf2_helpers.py::test_diverged_encoder_source_unchanged",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.44251203536987305
+}

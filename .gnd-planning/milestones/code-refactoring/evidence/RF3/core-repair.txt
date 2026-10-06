@@ -1,0 +1,26 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_core.py tests/test_rf1_layering.py tests/test_rf3_moves.py --tb=short
+.F............................F.............................             [100%]
+=================================== FAILURES ===================================
+___________________ test_core_guard_rejects_a_new_lazy_cycle ___________________
+tests/test_rf3_core.py:60: in test_core_guard_rejects_a_new_lazy_cycle
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+______________ test_effective_view_refuses_unvalidated_population ______________
+tests/test_rf3_core.py:197: in test_effective_view_refuses_unvalidated_population
+    p = population.Population(model=None, source={}, facts={})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 2 validation errors for Population
+E   model
+E     Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+E       For further information visit https://errors.pydantic.dev/2.13/v/string_type
+E   source
+E     Input should be 'agent-output', 'synthetic' or 'fixture' [type=literal_error, input_value={}, input_type=dict]
+E       For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+=========================== short test summary info ============================
+FAILED tests/test_rf3_core.py::test_core_guard_rejects_a_new_lazy_cycle - Fai...
+FAILED tests/test_rf3_core.py::test_effective_view_refuses_unvalidated_population
+2 failed, 58 passed in 5.57s
+
+Exit: 1

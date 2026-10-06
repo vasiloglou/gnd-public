@@ -1,0 +1,81 @@
+Retained intermediate output; operator paths sanitized. Findings and corrections are in the spec; this is not the final gate.
+........................................................................ [ 19%]
+........................................................................ [ 38%]
+........................................................................ [ 58%]
+........................................................................ [ 77%]
+..................................................FFFFFFFFF............. [ 97%]
+...........                                                              [100%]
+=================================== FAILURES ===================================
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:calendar] _
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:hour] __
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:minute] _
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:second] _
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:microsecond] _
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:offset-days] _
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_ test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:offset-seconds] _
+tests/test_v6_phase2_adapter_mutations.py:203: in test_each_dimension_has_a_failing_single_source_mutant
+    control(**arguments)
+tests/support/public_adapter_mutation_controls.py:251: in test_datetime_coordinates_retain_every_instant_component
+    assert (value.num, value.den) == (microseconds, 1)
+            ^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'num'
+_________ test_rf7_retires_fractional_offset_mutant_with_input_refusal _________
+tests/test_v6_phase2_adapter_mutations.py:218: in test_rf7_retires_fractional_offset_mutant_with_input_refusal
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+______ test_reader_decisions_remain_independent_of_producer_declarations _______
+tests/test_public_v72_reader_boundaries.py:41: in test_reader_decisions_remain_independent_of_producer_declarations
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == reader_expected(row)
+                                                                          ^^^^^^^^^^^^^^^^^^^^
+tests/support/rf8_sources.py:63: in reader_expected
+    return successor['predecessor_normalized_ast_sha256']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'predecessor_normalized_ast_sha256'
+=========================== short test summary info ============================
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:calendar]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:hour]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:minute]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:second]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:microsecond]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:offset-days]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_each_dimension_has_a_failing_single_source_mutant[order:DateTime:offset-seconds]
+FAILED tests/test_v6_phase2_adapter_mutations.py::test_rf7_retires_fractional_offset_mutant_with_input_refusal
+FAILED tests/test_public_v72_reader_boundaries.py::test_reader_decisions_remain_independent_of_producer_declarations
+9 failed, 362 passed in 14.26s

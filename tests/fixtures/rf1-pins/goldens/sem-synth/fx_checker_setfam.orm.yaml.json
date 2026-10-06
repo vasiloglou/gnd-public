@@ -1,0 +1,603 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/checker/setfam.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 0,
+ "files": {
+  "boundary/constraints-0.empty-all-scope-fact-types.json": {
+   "bytes": 1928,
+   "sha256": "c2350c7bb45c009a4f38b8de72ff032d84f6a4a68ec39bdfc8aba01d62154e69"
+  },
+  "boundary/constraints-0.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15098,
+   "sha256": "6352bfe812fde4605d11dafb1e1a516315f19ed6b3a563454cf87e65be1c5e3e"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-once.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-once.meta.json": {
+   "bytes": 14990,
+   "sha256": "af24a3043275255cce0f693c93c416690d86c2f737b8f0948a60bd1ed14cde83"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-twice.json": {
+   "bytes": 2639,
+   "sha256": "60c8f3d58ad095d662717f9a119ba101d7f2d696419b82decdd0b4e26ba4cf48"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-twice.meta.json": {
+   "bytes": 14992,
+   "sha256": "538f0fdee18042306b2dcbaed17f1a1905f3edc7e74e5ef7d51658df7dcfd3f7"
+  },
+  "boundary/constraints-0.zero-row-join-disjoint-anchors.json": {
+   "bytes": 2474,
+   "sha256": "bbc066715a7b911cce031ba648c68af7896aca4e2c1e99d3896b268b285ddd39"
+  },
+  "boundary/constraints-0.zero-row-join-disjoint-anchors.meta.json": {
+   "bytes": 15042,
+   "sha256": "0c07ae9498db6e24cc0058060c7a4997f254f85c8087a58c83ad996e2c296dc5"
+  },
+  "boundary/constraints-0.zero-row-join-one-side-empty.json": {
+   "bytes": 2231,
+   "sha256": "c0b4f23889d9dd79fdb152e7f0e65a9d0f1c3a77f38a6495f5efe0ef4e1594af"
+  },
+  "boundary/constraints-0.zero-row-join-one-side-empty.meta.json": {
+   "bytes": 15057,
+   "sha256": "a2b5876dd120f800585350b50f287e25dbf01699c102f1e7bb851e1cee8b887a"
+  },
+  "boundary/constraints-1.coverage-omission-boundary.json": {
+   "bytes": 2449,
+   "sha256": "9f53703705335913554335fbbbcd5aa2fca2c23f8aa535b74edf42855794cc17"
+  },
+  "boundary/constraints-1.coverage-omission-boundary.meta.json": {
+   "bytes": 15022,
+   "sha256": "d6e7591ab015ff82b024fcb3885b40d16da2298a02efd632a496964065d47992"
+  },
+  "boundary/constraints-1.empty-object-scope.json": {
+   "bytes": 1267,
+   "sha256": "7f7179280a6ce314869131924f7858a20af65a36681b901cb4fba66030dd99e3"
+  },
+  "boundary/constraints-1.empty-object-scope.meta.json": {
+   "bytes": 15197,
+   "sha256": "cfdef8eaf5f98b65e46725d67f6917ee3d3daa7c3751694228bc544a4229855e"
+  },
+  "boundary/constraints-1.every-instance-plays-one-listed-role.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/constraints-1.every-instance-plays-one-listed-role.meta.json": {
+   "bytes": 15014,
+   "sha256": "cee2248cb98ce605bf00f2ccec889bb5ec826c81418f6036016aa1b882a56b05"
+  },
+  "boundary/constraints-1.one-instance-plays-none.json": {
+   "bytes": 2336,
+   "sha256": "23ca66418ce3bb50f4c19764f36b511dcc071c707e67a71dd8668b1754f36a67"
+  },
+  "boundary/constraints-1.one-instance-plays-none.meta.json": {
+   "bytes": 14989,
+   "sha256": "a4d30cd2597f1698915a26132924ad5b0ecfc6f91b02b73ecffabc3e78bdc6ad"
+  },
+  "boundary/constraints-2.empty-all-scope-fact-types.json": {
+   "bytes": 1928,
+   "sha256": "c2350c7bb45c009a4f38b8de72ff032d84f6a4a68ec39bdfc8aba01d62154e69"
+  },
+  "boundary/constraints-2.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15098,
+   "sha256": "9aa3ca8e0b83ee7218e8ed88e1dcc3c21afc1dac578b16f7d0867c6ac51336ff"
+  },
+  "boundary/constraints-2.zero-row-join-disjoint-anchors.json": {
+   "bytes": 2474,
+   "sha256": "bbc066715a7b911cce031ba648c68af7896aca4e2c1e99d3896b268b285ddd39"
+  },
+  "boundary/constraints-2.zero-row-join-disjoint-anchors.meta.json": {
+   "bytes": 15041,
+   "sha256": "dfbbe9f5d0112ac51649f398a8e634b16ec534fea8624dfe17ddaf0e5c761ae9"
+  },
+  "boundary/constraints-2.zero-row-join-one-side-empty.json": {
+   "bytes": 2231,
+   "sha256": "c0b4f23889d9dd79fdb152e7f0e65a9d0f1c3a77f38a6495f5efe0ef4e1594af"
+  },
+  "boundary/constraints-2.zero-row-join-one-side-empty.meta.json": {
+   "bytes": 15057,
+   "sha256": "ad665af82e0a9a2a452d915034b3ee4791ef1805d74b083a08d3175bf547f418"
+  },
+  "boundary/constraints-3.containment-edge.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/constraints-3.containment-edge.meta.json": {
+   "bytes": 14975,
+   "sha256": "636ad64481888e01a391a284afc92121b28078a8effb4f16581bf0c5934c9df0"
+  },
+  "boundary/constraints-3.empty-all-scope-fact-types.json": {
+   "bytes": 2124,
+   "sha256": "91ab0104cd3b8a533393acbcce735f70f494890021b9bde8402f03e30d7d8bd5"
+  },
+  "boundary/constraints-3.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15039,
+   "sha256": "6e16f67e837243c2acf2d0afac104a6d5401abc7462240298084764dc7bbae8d"
+  },
+  "boundary/constraints-3.one-tuple-past-containment.json": {
+   "bytes": 2551,
+   "sha256": "155dc27491e93e7237cd5a5e6c8777dfc1dedda7ee880c9a463918bd7823ed67"
+  },
+  "boundary/constraints-3.one-tuple-past-containment.meta.json": {
+   "bytes": 14995,
+   "sha256": "1e5a7cb436ad910d0dee24c954346efc71bd3dbb65d0731c3250ce0c4e499941"
+  },
+  "boundary/constraints-4.empty-all-scope-fact-types.json": {
+   "bytes": 2158,
+   "sha256": "3cfbb81f397b1f91aead5e4c2366caef8559e05b2296575ff2f48ab95e1f666d"
+  },
+  "boundary/constraints-4.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15020,
+   "sha256": "4f107869bb30c9ab5f92785dfc7540eb242f31c0a0f68002e831339699032e2a"
+  },
+  "boundary/constraints-4.one-tuple-removed-from-side-a.json": {
+   "bytes": 2438,
+   "sha256": "c6165256b361d6a773ea3744acfbb9f898edd5639906b33b95b7d433b5bf9aa1"
+  },
+  "boundary/constraints-4.one-tuple-removed-from-side-a.meta.json": {
+   "bytes": 15005,
+   "sha256": "523f680f39a6836caaaca6ea855c01b356c75777c2832541f1fc805beeae450f"
+  },
+  "boundary/constraints-4.one-tuple-removed-from-side-b.json": {
+   "bytes": 2438,
+   "sha256": "be2c6b2142ac26e1a5d35ce1afda94adf9a3ee3720ecc0d53f46e318044f7361"
+  },
+  "boundary/constraints-4.one-tuple-removed-from-side-b.meta.json": {
+   "bytes": 15005,
+   "sha256": "8f4c0ca3dc68f8912a0f1e25c1a2236fe374d4bc5bfa7a17219757656692a71b"
+  },
+  "boundary/constraints-4.projections-identical.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/constraints-4.projections-identical.meta.json": {
+   "bytes": 14985,
+   "sha256": "acabad69920cfb81d1cfef59add630782632001c5982102d57633f8b7326c8f1"
+  },
+  "boundary/constraints-5.empty-all-scope-fact-types.json": {
+   "bytes": 2322,
+   "sha256": "0b1c4659792da3619818b715d36830cbc86abf127ada4e5e0079d556f9df57d2"
+  },
+  "boundary/constraints-5.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15021,
+   "sha256": "831dcc6f19a59d801125844f21992fa65a7cbdeae5e85e31a4ef272943a5ebf9"
+  },
+  "boundary/constraints-5.one-overlapping-tuple.json": {
+   "bytes": 2557,
+   "sha256": "ce023fa34fd105b0517930e1b128e9818618088433d52b01166af8ec79c4c05b"
+  },
+  "boundary/constraints-5.one-overlapping-tuple.meta.json": {
+   "bytes": 14985,
+   "sha256": "fb47cf262269e27e6eca464cafc7962029c2d89ad823fbef027ee40c7c72e8b8"
+  },
+  "boundary/constraints-6.empty-object-scope.json": {
+   "bytes": 1267,
+   "sha256": "7f7179280a6ce314869131924f7858a20af65a36681b901cb4fba66030dd99e3"
+  },
+  "boundary/constraints-6.empty-object-scope.meta.json": {
+   "bytes": 15197,
+   "sha256": "e63b7ca0d17e298b75d7cf9e036a2a31c035f275d53e11c45604e7315eed4b43"
+  },
+  "boundary/constraints-6.plays-both.json": {
+   "bytes": 2522,
+   "sha256": "7e1f11f4f64f297110a0c8d45b29b2a9479dab6beb2cd51b1a5fb7b7cc44dc3f"
+  },
+  "boundary/constraints-6.plays-both.meta.json": {
+   "bytes": 14963,
+   "sha256": "e061ae0755273dc212c8b568d4b03cfd144a32167fe11edfb3eb6d24ab06b8e1"
+  },
+  "boundary/constraints-6.plays-exactly-one.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/constraints-6.plays-exactly-one.meta.json": {
+   "bytes": 14976,
+   "sha256": "22a2454adc11c85888acdad50722c9cbdc550b7a6eddff935473b08045b490d3"
+  },
+  "boundary/constraints-6.plays-neither.json": {
+   "bytes": 2434,
+   "sha256": "f489546bfcbc90d97b3009ceba699b0c94d587f0b7b2f474f69b731d41c2f069"
+  },
+  "boundary/constraints-6.plays-neither.meta.json": {
+   "bytes": 14969,
+   "sha256": "85bc5f745ee403c391555e09a377e379d344bf30a77daaa3d4a5b03daf72def6"
+  },
+  "boundary/constraints-7.empty-all-scope-fact-types.json": {
+   "bytes": 1980,
+   "sha256": "2a242dd6e120ea4d4b6be4511a6a8a01a7eb67029fae0f12a58840041364f7c2"
+  },
+  "boundary/constraints-7.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15098,
+   "sha256": "f37e0f56440cc821e2b09a84c49052cfe3ca7904aa9162677cb7f58ca5d5c231"
+  },
+  "boundary/constraints-7.empty-object-scope.json": {
+   "bytes": 2033,
+   "sha256": "14b497394a744830e3e52adef43f64822ec08f8333f37a0ecb8481db39a7b2f5"
+  },
+  "boundary/constraints-7.empty-object-scope.meta.json": {
+   "bytes": 15081,
+   "sha256": "1dce7404af621d9801b735085933dc3a8a7377238d736d01b0802eb0f596c7d9"
+  },
+  "boundary/constraints-7.universe-at-max.json": {
+   "bytes": 2498,
+   "sha256": "7ca3baa25041537bae997a01ac4c6736670f72f08ee74575845b2cc5b7daf2dc"
+  },
+  "boundary/constraints-7.universe-at-max.meta.json": {
+   "bytes": 14980,
+   "sha256": "002830b01b21162e8d6a7c80f93ca761169fef691b752efa6b6898ace53f2ca9"
+  },
+  "boundary/constraints-7.universe-past-max.json": {
+   "bytes": 2523,
+   "sha256": "009d0ecf316e5b5bbde8206e03fec17d76204a092d7bb2f1518b4326f9728863"
+  },
+  "boundary/constraints-7.universe-past-max.meta.json": {
+   "bytes": 14985,
+   "sha256": "9b5b3aa3929ae3473c80e0d2cc21f6d347edb5258bfa1d116ae28a3ad1fbdd78"
+  },
+  "boundary/constraints-8.empty-all-scope-fact-types.json": {
+   "bytes": 2299,
+   "sha256": "09b7221f5c871d12629c648df108f7827848875f20fcc6d0818bd491a1cf9e37"
+  },
+  "boundary/constraints-8.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15021,
+   "sha256": "e0807d75d48181de13762c604b588a47fe6f37bc8e5750587754eb680ea466f9"
+  },
+  "boundary/constraints-8.universe-at-max.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/constraints-8.universe-at-max.meta.json": {
+   "bytes": 14980,
+   "sha256": "4a0fa40119ee71a96575317fd36aa9546b92673aa22fe9d5cdf3eded7488f39f"
+  },
+  "boundary/constraints-8.universe-past-max.json": {
+   "bytes": 2557,
+   "sha256": "f5a8df463943e053a1c92f295d8414b3f240a017e61f4af97fa8ea39c4e6684d"
+  },
+  "boundary/constraints-8.universe-past-max.meta.json": {
+   "bytes": 14984,
+   "sha256": "f147afe51b6e2aa93ac078b95d294df63ce3f61ceb9184137ba5aa8c9944e128"
+  },
+  "boundary/constraints-9.empty-all-scope-fact-types.json": {
+   "bytes": 2256,
+   "sha256": "f3c86f15d46b4b564efa227336c92538323663f0005abf7f1e4687cbe106c26b"
+  },
+  "boundary/constraints-9.empty-all-scope-fact-types.meta.json": {
+   "bytes": 15021,
+   "sha256": "914ac782b0ec2a5a0716d69d92909be16a74277372f8820b6db12a0388e366d9"
+  },
+  "boundary/constraints-9.range-max-inside.json": {
+   "bytes": 2480,
+   "sha256": "619149c15dd38b8defbaf47a6b05cbb94d271c74341b7a04452b4d40c7ae2272"
+  },
+  "boundary/constraints-9.range-max-inside.meta.json": {
+   "bytes": 14974,
+   "sha256": "f2725028bbf3aafcda01f84db0a54ae03a7bee772b07b13c2b749f245faed830"
+  },
+  "boundary/constraints-9.range-max-outside.json": {
+   "bytes": 2480,
+   "sha256": "46e8acd5fcfb2a9cfb733b16e0cadf3c8229180a73acb02a7f102c9e32a499e5"
+  },
+  "boundary/constraints-9.range-max-outside.meta.json": {
+   "bytes": 14976,
+   "sha256": "015b993769a02f098a90d90b31fc5caad98b5a72f49911886685db80a9822db7"
+  },
+  "boundary/constraints-9.range-min-inside.json": {
+   "bytes": 2478,
+   "sha256": "12b057b4075b7c14c7906a9f3293d55f87a231442a8d3ea356e423b4bf04950c"
+  },
+  "boundary/constraints-9.range-min-inside.meta.json": {
+   "bytes": 14973,
+   "sha256": "248ddbc5ef25c26cd5996bc59e8dcae54d471eb5faeadb868c93d1419ccba548"
+  },
+  "boundary/constraints-9.range-min-outside.json": {
+   "bytes": 2478,
+   "sha256": "fd21b88006b26942bc0c7f54cdecb496d5950fe5e423b561b030215ba52d8edf"
+  },
+  "boundary/constraints-9.range-min-outside.meta.json": {
+   "bytes": 14975,
+   "sha256": "91d3736760615323848e0f62cc0b2779251c6933bb60b7be8823e8671cf9408f"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 2204,
+   "sha256": "369f01139c20bb758a457368d5985d34346fd2fcdad65ba71d3b205ea99ded28"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 15128,
+   "sha256": "50736de5df933dfc51279abcc7a9d0101954b5cbe35470bed6ea69f97c07df00"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 15040,
+   "sha256": "83d9f1ca07d04a6d29aa7f2cbd71ba5b9c825566c80109d4e4ef8a2a524a5153"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-0.occurs-twice.json": {
+   "bytes": 2561,
+   "sha256": "547cbc137a39f3dcaad98acf81557b045ca84fa9c49a6bf846fd2229c5d23c67"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 15027,
+   "sha256": "594212d237462e8efdc9adcd643534ea4e60b6ca8d8d9bb3e25af7148f06cc30"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-1.coverage-omission.json": {
+   "bytes": 2453,
+   "sha256": "977633641f340348f0c2ab7c4bfafdb0d5600e9e3d69e80e1cd3c801cc4fa6ab"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 15064,
+   "sha256": "a0187f3b208537f24981b8f89f8c4eb33f47982f9c8117769497613a15d1849e"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 15064,
+   "sha256": "ee18fef75c4ffeb454c12cc226834a20ec7517462e09e400f48893662b41f08f"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 2529,
+   "sha256": "dbcfe66795067e87b2bce031ab6fad1f250ca608c07872050dac4bf906e4b5e2"
+  },
+  "boundary/fact_types-booking_by_person-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 15072,
+   "sha256": "9384161f53212b2abcf2f12330c84ba565be594d55a8f4a174abd8af67041ed7"
+  },
+  "boundary/fact_types-booking_of_room-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 2204,
+   "sha256": "ee924affad5d188a0e0b9ca3df9c640f23de9396722d7b6e925cc28cab390819"
+  },
+  "boundary/fact_types-booking_of_room-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 15097,
+   "sha256": "d930cadddddd7dd359c3e84cce73f07b408387754680c16ec3ef28f1d38a8ce0"
+  },
+  "boundary/fact_types-booking_of_room-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/fact_types-booking_of_room-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 15037,
+   "sha256": "c31f6f0ac25f93b5cca1e11f39e53a12ea8ddc52ca41a0a61c391b7a34e0e216"
+  },
+  "boundary/fact_types-booking_of_room-.constraints-0.occurs-twice.json": {
+   "bytes": 2560,
+   "sha256": "c8f45299026e834ab75b649d179b3b7ac3c29b9c5d02f947424e174aaeae3e81"
+  },
+  "boundary/fact_types-booking_of_room-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 15023,
+   "sha256": "334e7ceeb70b78b806586dc2da7b420bb44408b860392e22d2303b51104e7b3f"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 2230,
+   "sha256": "118a5b24a8968028932a5e5fe1ad1bba90182bd3ac57de0e32659bb2c263340d"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 15071,
+   "sha256": "339ebe9ae60d224c423f9642010cb164eef9731c131d354cdd72a36f7772bf8d"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.group-at-max.json": {
+   "bytes": 2557,
+   "sha256": "85eb5b7599b39e17851ebe4670d768780529ae98be6e2417882b15962b4e47dc"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.group-at-max.meta.json": {
+   "bytes": 15035,
+   "sha256": "9a6d82253ffbabcbc7d8752731dc2dd23fbaf6d04605239b39bb0ed0ce7e8a69"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.group-at-min.json": {
+   "bytes": 2480,
+   "sha256": "88f3c10ddd561934914a36490e55f81179bceba1c7a339bc2ff6997296cddf3f"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.group-at-min.meta.json": {
+   "bytes": 15030,
+   "sha256": "127a6d38a0ca833448896b6f989d69e7b8a2dc0bfd2bdec3e4e43f1f5ccfc6fc"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.group-past-max.json": {
+   "bytes": 2634,
+   "sha256": "e8a0fd864fbbaafdc9d2099e6d0c735df8cce1307e8e5a7a448e1525e5930c24"
+  },
+  "boundary/fact_types-person_takes_course-.constraints-0.group-past-max.meta.json": {
+   "bytes": 15037,
+   "sha256": "771b4d8f0fe850d4e986ba4a716224e7f70a1a93921010fc252c1aeac6c5db27"
+  },
+  "conforming/pool.94a1ac0d2db68900.pool.json": {
+   "bytes": 1331,
+   "sha256": "f2356434d7db97505eaebe6878a27a6659e9604cb93bf221a8645c85ba5e12c2"
+  },
+  "conforming/setfam.orm.conforming.seed0.json": {
+   "bytes": 2482,
+   "sha256": "6df965e0ad4a5816057a57a4d6a79cbddd031d13da844524f30484d65fabb307"
+  },
+  "conforming/setfam.orm.conforming.seed0.meta.json": {
+   "bytes": 14928,
+   "sha256": "823f7edf7b3cb0b99641ed8d6941c23eeec79015d301b8db740f8a552024fcf3"
+  },
+  "index.json": {
+   "bytes": 50112,
+   "sha256": "5c9fbec153ab2c20b4c181b3bf5ea548f1c98f27dd43d158a989bf82477d39d1"
+  },
+  "violating/constraints-0.duplicate-joined-tuple.json": {
+   "bytes": 2640,
+   "sha256": "f3182c2664611a9046c8917d6c6b64fa0cb2568368c86c816c675dcfbd1dd063"
+  },
+  "violating/constraints-0.duplicate-joined-tuple.meta.json": {
+   "bytes": 15015,
+   "sha256": "beb28b31463de4a44e75f60bb18a99ee59f473f4baf0d8cd16cb7d19a9abe9f7"
+  },
+  "violating/constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 2450,
+   "sha256": "b86d630fb2323deb75bf79aa2c8a270eca35120e0e9f188660fa1d6e22e8a6b9"
+  },
+  "violating/constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 15044,
+   "sha256": "e0fb11ad70e083ff7fa0e17f8123ce0f1b4efd4dde0ce8f9b342995b336e6b62"
+  },
+  "violating/constraints-1.remove-all-disjunctive-role-plays.json": {
+   "bytes": 2337,
+   "sha256": "dc49272de57ce01d8e4ad1ef29fc1cc7776102cc103c03ab4ee32c74a035399f"
+  },
+  "violating/constraints-1.remove-all-disjunctive-role-plays.meta.json": {
+   "bytes": 15038,
+   "sha256": "e5cf4063bed389363f380e1fc9bf083cf06bbd16c2b843a7b3157138a314b173"
+  },
+  "violating/constraints-3.add-player-missing-subset-role.json": {
+   "bytes": 2552,
+   "sha256": "8f7acec6500cac5ef342dd702529a00382f873f9958ba260f25a0f3ebe9e496e"
+  },
+  "violating/constraints-3.add-player-missing-subset-role.meta.json": {
+   "bytes": 15032,
+   "sha256": "7215ca299c01e630063bea161d0a10378332786d9d7a547bb79260646c389391"
+  },
+  "violating/constraints-4.remove-tuple-from-equality-side.json": {
+   "bytes": 2439,
+   "sha256": "ecab22e0072d13585eaa65af92576dd6a5afbc91a91c50003cfa6bb6940abf42"
+  },
+  "violating/constraints-4.remove-tuple-from-equality-side.meta.json": {
+   "bytes": 15034,
+   "sha256": "08340a8e0220fd0e2305bd4c719ab546bce667d56f78f5a8f6b4a24b3d291b47"
+  },
+  "violating/constraints-5.add-overlapping-tuple.json": {
+   "bytes": 2558,
+   "sha256": "5cac70b3ecb4415ce4c09da355243e3f668af6380ca06fc12d7b4b3650adaf0a"
+  },
+  "violating/constraints-5.add-overlapping-tuple.meta.json": {
+   "bytes": 15013,
+   "sha256": "a4dad250aa851816f60c598cb3a1084e0d9d3b6ab104d1e7f18b27b4241be07b"
+  },
+  "violating/constraints-6.play-both-exclusive-or-roles.json": {
+   "bytes": 2523,
+   "sha256": "87ab235e0f32332e47affa52ef81ef068d5e13d390e1b74fdbece0f154e673b7"
+  },
+  "violating/constraints-6.play-both-exclusive-or-roles.meta.json": {
+   "bytes": 15028,
+   "sha256": "9cf59c438d0f500dec3c08a17e517c799926ce627295e4cdb6a9e5e94b7b3dde"
+  },
+  "violating/constraints-6.play-neither-exclusive-or-role.json": {
+   "bytes": 2435,
+   "sha256": "147be0f2b75753803667a126808bf5e741298de398cfca513e48abb30ad9b9f0"
+  },
+  "violating/constraints-6.play-neither-exclusive-or-role.meta.json": {
+   "bytes": 15032,
+   "sha256": "60dd33b5ec6b09438fad7c8b35d681b0963a9c3cc53b4aee2e3cb378635538fa"
+  },
+  "violating/constraints-7.introduce-distinct-instance.json": {
+   "bytes": 2524,
+   "sha256": "ec2fdef26e880bdd6ca34430a9f368fa4ccd188ec91d29901b4b41f79411ddb4"
+  },
+  "violating/constraints-7.introduce-distinct-instance.meta.json": {
+   "bytes": 15025,
+   "sha256": "169560f76f80de3aaf837a363c2ad2cf573e0e295746dd7125bc10f14aea11a5"
+  },
+  "violating/constraints-8.introduce-distinct-instance.json": {
+   "bytes": 2558,
+   "sha256": "50c0e86a6f9c6445b9d278dd5ef3802d4827747c0674697cf638d3f8f40aebf0"
+  },
+  "violating/constraints-8.introduce-distinct-instance.meta.json": {
+   "bytes": 15026,
+   "sha256": "dacefbbde747416724205377a1dcc01361f747ac8d8da86db464e5a1d4fca447"
+  },
+  "violating/constraints-9.add-fact-with-out-of-range-new-entity.json": {
+   "bytes": 2550,
+   "sha256": "1e11921b9fbad1c062ceb34f69f5c000c2c2856acb081e20f414327c0954d5c9"
+  },
+  "violating/constraints-9.add-fact-with-out-of-range-new-entity.meta.json": {
+   "bytes": 15068,
+   "sha256": "f1bd6bf5e93818ffba81a1536c4c2ca268936ccb123b49066dd0b00a50f67bff"
+  },
+  "violating/constraints-9.edit-value-out-of-range.json": {
+   "bytes": 2481,
+   "sha256": "a239d34f8ba655559578354ef03cdb9c7dff8e7a2b1bf10410b15e52c7bdf49a"
+  },
+  "violating/constraints-9.edit-value-out-of-range.meta.json": {
+   "bytes": 15018,
+   "sha256": "2df839f30d5722fcd9a7af2e3d52b75b41ee0d47505ad69ccccd03af455a42d2"
+  },
+  "violating/fact_types-booking_by_person-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 2562,
+   "sha256": "4ce0b9fb9cbb2a4ab53e6b7b25cf89047fa7e03888e11a7133c3a38f67d8a25a"
+  },
+  "violating/fact_types-booking_by_person-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 15147,
+   "sha256": "99563ea73b218e02426ff6ab7352ff241bbb1a3c1e8989a4a89ccf705be594cc"
+  },
+  "violating/fact_types-booking_by_person-.constraints-0.empty-fact-type.json": {
+   "bytes": 2205,
+   "sha256": "aee35b5d3aff91d2b33a2f139d063b7252f9618faecc2fd34c2363d4451386dc"
+  },
+  "violating/fact_types-booking_by_person-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 15298,
+   "sha256": "3934825ae7fc15eff8b2945457b49c21779e42c06bf4960be676ed4a6c06b3c8"
+  },
+  "violating/fact_types-booking_by_person-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 2454,
+   "sha256": "42b82366c79dbb62b6a7e91c590359eb1ce37da6a9152c5fe2a1e9b3c19c1eac"
+  },
+  "violating/fact_types-booking_by_person-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 15164,
+   "sha256": "10a74f3e64b2438457550af6f336d2d9d2b8389f1f2a03398641afd156aeddf7"
+  },
+  "violating/fact_types-booking_by_person-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 2561,
+   "sha256": "a863e301fef1883d9a20195dd3bd7c44d73445622d558ceb3ff1528d90edafe3"
+  },
+  "violating/fact_types-booking_by_person-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 15134,
+   "sha256": "df03b2f8dd388802c406bd3a5075710afb38e84190734eb47a373d8aa1c46162"
+  },
+  "violating/fact_types-booking_by_person-.constraints-1.roster-add-instance.json": {
+   "bytes": 2530,
+   "sha256": "7cbac606dfd08bfd60b1ce1f92047eed2c521dba1d1478f3e518b2363a13acc2"
+  },
+  "violating/fact_types-booking_by_person-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 15129,
+   "sha256": "4d1d025c1efdc8c52701bd316ed49dcdbc20ec6dd955328ac264454182367ec1"
+  },
+  "violating/fact_types-booking_of_room-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 2561,
+   "sha256": "f364e1a6dd0533ce94a63dc13ef4b33bbbcb68ab0b90328695bc047e25b208a4"
+  },
+  "violating/fact_types-booking_of_room-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 15139,
+   "sha256": "8696f71b01d7fe14985a07f09a4b0bd90893d0a4e13c4c3681b91358618166ea"
+  },
+  "violating/fact_types-booking_of_room-.constraints-0.empty-fact-type.json": {
+   "bytes": 2205,
+   "sha256": "a1be24fcaf3c64d9527a58f5f444fbc7396c61097c757597cf5a789345bae2c8"
+  },
+  "violating/fact_types-booking_of_room-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 15210,
+   "sha256": "5624bbf6d8503a23dc9b46f89f2127f129578b0effc45f89a742a6fbae220672"
+  },
+  "violating/fact_types-person_takes_course-.constraints-0.add-facts-past-ceiling.json": {
+   "bytes": 2635,
+   "sha256": "6ad98e183b814a87b2158300075482fb2b9b6bb94b37d80e32b318dc2315ee05"
+  },
+  "violating/fact_types-person_takes_course-.constraints-0.add-facts-past-ceiling.meta.json": {
+   "bytes": 15143,
+   "sha256": "28c1595a6bec4315c04e1be61fb18a4988efd2ba47fa22942e55dd21171a1ece"
+  },
+  "violating/fact_types-person_takes_course-.constraints-0.empty-fact-type.json": {
+   "bytes": 2231,
+   "sha256": "2661baea559257be11837b6c4956c289e959f33d726c2a4a162b78969942a4a5"
+  },
+  "violating/fact_types-person_takes_course-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 15192,
+   "sha256": "12f6e52ca76a09c76cc61f5feffa70ad0a2dffc66c42224bfddd4d0133b669b3"
+  }
+ },
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 0, \"out\": \"<tmp>/synth\", \"class\": \"all\", \"pool\": \"conforming/pool.94a1ac0d2db68900.pool.json\", \"pool_sha256\": \"94a1ac0d2db68900febe46d7ac99b5cd2cc97d90d8327f144426c6f32bb0ec8b\", \"populations\": [{\"population\": \"<tmp>/synth/conforming/setfam.orm.conforming.seed0.json\", \"sidecar\": \"<tmp>/synth/conforming/setfam.orm.conforming.seed0.meta.json\", \"seed\": 0, \"band\": 0, \"class\": \"conforming\", \"case_kind\": \"conforming\"}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 6939373996718761688, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[booking_by_person].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-0.occurs-twice.meta.json\", \"seed\": 11900667917643078117, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[booking_by_person].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 7145493194444390431, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[booking_by_person].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 8767153851049577539, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[booking_by_person].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_of_room-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_of_room-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 13138013847169743150, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[booking_of_room].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_of_room-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_of_room-.constraints-0.occurs-twice.meta.json\", \"seed\": 12004492390010892384, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[booking_of_room].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.group-at-min.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.group-at-min.meta.json\", \"seed\": 1755409267629365856, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-at-min\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[person_takes_course].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.group-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.group-at-max.meta.json\", \"seed\": 10535819499433996809, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 fact\", \"target\": \"fact_types[person_takes_course].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.group-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.group-past-max.meta.json\", \"seed\": 490617586572733912, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 fact\", \"target\": \"fact_types[person_takes_course].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-once.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-once.meta.json\", \"seed\": 5132488731341359946, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"joined-tuple-occurs-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-twice.meta.json\", \"seed\": 3460504716610958137, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"joined-tuple-occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.every-instance-plays-one-listed-role.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.every-instance-plays-one-listed-role.meta.json\", \"seed\": 5871151475950306378, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-instance-plays-one-listed-role\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.one-instance-plays-none.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.one-instance-plays-none.meta.json\", \"seed\": 14535703395788768032, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-instance-plays-none\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.coverage-omission-boundary.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.coverage-omission-boundary.meta.json\", \"seed\": 9226693748481217066, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission-boundary\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.containment-edge.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.containment-edge.meta.json\", \"seed\": 13141552055518176852, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"containment-edge\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.one-tuple-past-containment.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.one-tuple-past-containment.meta.json\", \"seed\": 13649724510645679154, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-tuple-past-containment\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.projections-identical.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.projections-identical.meta.json\", \"seed\": 11429098718084935358, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"projections-identical\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[4]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.one-tuple-removed-from-side-a.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.one-tuple-removed-from-side-a.meta.json\", \"seed\": 4216618813098077801, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-tuple-removed-from-side-a\", \"boundary_side\": \"outside\", \"epsilon\": \"1 tuple\", \"target\": \"constraints[4]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.one-tuple-removed-from-side-b.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.one-tuple-removed-from-side-b.meta.json\", \"seed\": 4270700851153090980, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-tuple-removed-from-side-b\", \"boundary_side\": \"outside\", \"epsilon\": \"1 tuple\", \"target\": \"constraints[4]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-5.one-overlapping-tuple.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-5.one-overlapping-tuple.meta.json\", \"seed\": 12398122931778913279, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-overlapping-tuple\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[5]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.plays-exactly-one.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.plays-exactly-one.meta.json\", \"seed\": 7092218615715074742, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"plays-exactly-one\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.plays-both.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.plays-both.meta.json\", \"seed\": 13490080165389585335, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"plays-both\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.plays-neither.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.plays-neither.meta.json\", \"seed\": 16889428821710710555, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"plays-neither\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.universe-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.universe-at-max.meta.json\", \"seed\": 4811939835831908074, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[7]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.universe-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.universe-past-max.meta.json\", \"seed\": 13059352777597315036, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[7]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-8.universe-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-8.universe-at-max.meta.json\", \"seed\": 2682519932017064401, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[8]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-8.universe-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-8.universe-past-max.meta.json\", \"seed\": 3436565208726650171, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[8]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.range-min-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.range-min-inside.meta.json\", \"seed\": 896480425700439677, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.range-min-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.range-min-outside.meta.json\", \"seed\": 1731905540518480802, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[9]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.range-max-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.range-max-inside.meta.json\", \"seed\": 8418684075052373052, \"band\": 0, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.range-max-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.range-max-outside.meta.json\", \"seed\": 16208225602544015174, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[9]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 1155031036262781920, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[booking_by_person].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_by_person-.constraints-1.coverage-omission.meta.json\", \"seed\": 9711087475423441441, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[booking_by_person].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-booking_of_room-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-booking_of_room-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 2577624557221215530, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[booking_of_room].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-person_takes_course-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 5636820526737273541, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[person_takes_course].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.empty-all-scope-fact-types.meta.json\", \"seed\": 12363959012902464596, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-one-side-empty.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-one-side-empty.meta.json\", \"seed\": 8850204058202897207, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-one-side-empty\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-disjoint-anchors.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-disjoint-anchors.meta.json\", \"seed\": 11817587347432254217, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-disjoint-anchors\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.empty-object-scope.meta.json\", \"seed\": 7503937623656808440, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.empty-all-scope-fact-types.meta.json\", \"seed\": 18186129374485612671, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.zero-row-join-one-side-empty.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.zero-row-join-one-side-empty.meta.json\", \"seed\": 3958824508691369690, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-one-side-empty\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.zero-row-join-disjoint-anchors.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.zero-row-join-disjoint-anchors.meta.json\", \"seed\": 9392910733170296414, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-disjoint-anchors\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.empty-all-scope-fact-types.meta.json\", \"seed\": 5345179257351776655, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.empty-all-scope-fact-types.meta.json\", \"seed\": 442053908340562443, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[4]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-5.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-5.empty-all-scope-fact-types.meta.json\", \"seed\": 2430999733725621809, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[5]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.empty-object-scope.meta.json\", \"seed\": 3055827318829752704, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.empty-object-scope.meta.json\", \"seed\": 6429459637633987666, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[7]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.empty-all-scope-fact-types.meta.json\", \"seed\": 15665921228407933873, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[7]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-8.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-8.empty-all-scope-fact-types.meta.json\", \"seed\": 6809593250278501364, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[8]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.empty-all-scope-fact-types.meta.json\", \"seed\": 1883258561020351549, \"band\": 2, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 9594107120086227832, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[booking_by_person].constraints[0]\", \"violates_target\": \"fact_types[booking_by_person].constraints[0]\", \"violates\": [\"fact_types[booking_by_person].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-0.empty-fact-type.meta.json\", \"seed\": 18172847930538833216, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[booking_by_person].constraints[0]\", \"violates_target\": \"fact_types[booking_by_person].constraints[0]\", \"violates\": [\"constraints[0]\", \"constraints[2]\", \"fact_types[booking_by_person].constraints[0]\", \"fact_types[booking_by_person].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-1.roster-add-instance.meta.json\", \"seed\": 4692453621063141800, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[booking_by_person].constraints[1]\", \"violates_target\": \"fact_types[booking_by_person].constraints[1]\", \"violates\": [\"fact_types[booking_by_person].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 15118558140216929341, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[booking_by_person].constraints[1]\", \"violates_target\": \"fact_types[booking_by_person].constraints[1]\", \"violates\": [\"fact_types[booking_by_person].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_by_person-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 6467411109034990302, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[booking_by_person].constraints[1]\", \"violates_target\": \"fact_types[booking_by_person].constraints[1]\", \"violates\": [\"fact_types[booking_by_person].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_of_room-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_of_room-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 7847977136702821442, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[booking_of_room].constraints[0]\", \"violates_target\": \"fact_types[booking_of_room].constraints[0]\", \"violates\": [\"fact_types[booking_of_room].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-booking_of_room-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-booking_of_room-.constraints-0.empty-fact-type.meta.json\", \"seed\": 7237278174601115892, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[booking_of_room].constraints[0]\", \"violates_target\": \"fact_types[booking_of_room].constraints[0]\", \"violates\": [\"constraints[0]\", \"constraints[2]\", \"fact_types[booking_of_room].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-person_takes_course-.constraints-0.add-facts-past-ceiling.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-person_takes_course-.constraints-0.add-facts-past-ceiling.meta.json\", \"seed\": 9814195235440966010, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-facts-past-ceiling\", \"target\": \"fact_types[person_takes_course].constraints[0]\", \"violates_target\": \"fact_types[person_takes_course].constraints[0]\", \"violates\": [\"fact_types[person_takes_course].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-person_takes_course-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-person_takes_course-.constraints-0.empty-fact-type.meta.json\", \"seed\": 8643540542249599137, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[person_takes_course].constraints[0]\", \"violates_target\": \"fact_types[person_takes_course].constraints[0]\", \"violates\": [\"constraints[1]\", \"constraints[3]\", \"fact_types[person_takes_course].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-0.duplicate-joined-tuple.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-0.duplicate-joined-tuple.meta.json\", \"seed\": 9149530522194353631, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-joined-tuple\", \"target\": \"constraints[0]\", \"violates_target\": \"constraints[0]\", \"violates\": [\"constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-1.remove-all-disjunctive-role-plays.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-1.remove-all-disjunctive-role-plays.meta.json\", \"seed\": 15840429024137547656, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"remove-all-disjunctive-role-plays\", \"target\": \"constraints[1]\", \"violates_target\": \"constraints[1]\", \"violates\": [\"constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 2854434071992599598, \"band\": 2, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"constraints[1]\", \"violates_target\": \"constraints[1]\", \"violates\": [\"constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-3.add-player-missing-subset-role.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-3.add-player-missing-subset-role.meta.json\", \"seed\": 14246148767443569895, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-player-missing-subset-role\", \"target\": \"constraints[3]\", \"violates_target\": \"constraints[3]\", \"violates\": [\"constraints[3]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-4.remove-tuple-from-equality-side.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-4.remove-tuple-from-equality-side.meta.json\", \"seed\": 17933892717758651720, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"remove-tuple-from-equality-side\", \"target\": \"constraints[4]\", \"violates_target\": \"constraints[4]\", \"violates\": [\"constraints[4]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-5.add-overlapping-tuple.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-5.add-overlapping-tuple.meta.json\", \"seed\": 4705879437341625539, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-overlapping-tuple\", \"target\": \"constraints[5]\", \"violates_target\": \"constraints[5]\", \"violates\": [\"constraints[5]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-6.play-both-exclusive-or-roles.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-6.play-both-exclusive-or-roles.meta.json\", \"seed\": 10165530181043209819, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"play-both-exclusive-or-roles\", \"target\": \"constraints[6]\", \"violates_target\": \"constraints[6]\", \"violates\": [\"constraints[6]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-6.play-neither-exclusive-or-role.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-6.play-neither-exclusive-or-role.meta.json\", \"seed\": 17920459832300177280, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"play-neither-exclusive-or-role\", \"target\": \"constraints[6]\", \"violates_target\": \"constraints[6]\", \"violates\": [\"constraints[6]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-7.introduce-distinct-instance.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-7.introduce-distinct-instance.meta.json\", \"seed\": 9823618247295736466, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"introduce-distinct-instance\", \"target\": \"constraints[7]\", \"violates_target\": \"constraints[7]\", \"violates\": [\"constraints[7]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-8.introduce-distinct-instance.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-8.introduce-distinct-instance.meta.json\", \"seed\": 10280879429441584144, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"introduce-distinct-instance\", \"target\": \"constraints[8]\", \"violates_target\": \"constraints[8]\", \"violates\": [\"constraints[8]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-9.edit-value-out-of-range.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-9.edit-value-out-of-range.meta.json\", \"seed\": 10859749375460912493, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"edit-value-out-of-range\", \"target\": \"constraints[9]\", \"violates_target\": \"constraints[9]\", \"violates\": [\"constraints[9]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-9.add-fact-with-out-of-range-new-entity.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-9.add-fact-with-out-of-range-new-entity.meta.json\", \"seed\": 16852271990899914234, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-fact-with-out-of-range-new-entity\", \"target\": \"constraints[9]\", \"violates_target\": \"constraints[9]\", \"violates\": [\"constraints[7]\", \"constraints[9]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}], \"not_derivable\": [{\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:bound-type-mismatch\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:bound-type-mismatch\", \"mechanism\": \"band-4 route `bound-type-mismatch` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:derived-unknown\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:derived-unknown\", \"mechanism\": \"band-4 route `derived-unknown` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:family-unimplemented\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:family-unimplemented\", \"mechanism\": \"band-4 route `family-unimplemented` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-anchor-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-anchor-ambiguous\", \"mechanism\": \"band-4 route `join-anchor-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-disconnected\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-disconnected\", \"mechanism\": \"band-4 route `join-disconnected` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:literal-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:literal-type-ambiguous\", \"mechanism\": \"band-4 route `literal-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:no-reference-clock\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:no-reference-clock\", \"mechanism\": \"band-4 route `no-reference-clock` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:partition-asserts-nothing\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:partition-asserts-nothing\", \"mechanism\": \"band-4 route `partition-asserts-nothing` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:reference-join-work-limit\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:reference-join-work-limit\", \"mechanism\": \"band-4 route `reference-join-work-limit` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:ring-not-binary\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:ring-not-binary\", \"mechanism\": \"band-4 route `ring-not-binary` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:role-unresolved\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:role-unresolved\", \"mechanism\": \"band-4 route `role-unresolved` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subject-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subject-type-ambiguous\", \"mechanism\": \"band-4 route `subject-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subtype-derivation-only\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subtype-derivation-only\", \"mechanism\": \"band-4 route `subtype-derivation-only` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:textual-not-mechanical\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:textual-not-mechanical\", \"mechanism\": \"band-4 route `textual-not-mechanical` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:values-not-comparable\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:values-not-comparable\", \"mechanism\": \"band-4 route `values-not-comparable` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:xor-disjunctive-undefined\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:xor-disjunctive-undefined\", \"mechanism\": \"band-4 route `xor-disjunctive-undefined` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"constraints[1]\", \"family\": \"mandatory-disjunctive\", \"operator\": \"boundary:no-subjects:empty-all-scope-fact-types\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-all-scope-fact-types\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[2]\", \"family\": \"frequency\", \"operator\": \"add-facts-past-ceiling\", \"mechanism\": \"external frequency ceiling amplification requires join-row growth that cascades through the anchor fact types' own constraints (not derivable)\"}, {\"constraint_ref\": \"constraints[2]\", \"family\": \"frequency\", \"operator\": \"boundary:max-inside\", \"case_kind\": \"boundary\", \"side\": \"max-inside\", \"mechanism\": \"external frequency: reaching a joined-group bound requires join-row growth that cascades through the anchor fact types' own constraints, so no single-fact derivation places the population at the bound\"}, {\"constraint_ref\": \"constraints[2]\", \"family\": \"frequency\", \"operator\": \"boundary:max-outside\", \"case_kind\": \"boundary\", \"side\": \"max-outside\", \"mechanism\": \"external frequency: reaching a joined-group bound requires join-row growth that cascades through the anchor fact types' own constraints, so no single-fact derivation places the population at the bound\"}, {\"constraint_ref\": \"constraints[2]\", \"family\": \"frequency\", \"operator\": \"boundary:min-inside\", \"case_kind\": \"boundary\", \"side\": \"min-inside\", \"mechanism\": \"no min bound declared; there is no min frontier\"}, {\"constraint_ref\": \"constraints[2]\", \"family\": \"frequency\", \"operator\": \"boundary:min-outside\", \"case_kind\": \"boundary\", \"side\": \"min-outside\", \"mechanism\": \"no min bound declared; there is no min frontier\"}, {\"constraint_ref\": \"constraints[2]\", \"family\": \"frequency\", \"operator\": \"drop-joined-group-below-min\", \"mechanism\": \"no min bound declared; there is no lower boundary to fall below\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"exclusion\", \"operator\": \"boundary:inside\", \"case_kind\": \"boundary\", \"side\": \"inside\", \"mechanism\": \"side A yields 3 row(s) and side B 0; with one side empty the constraint is trivially satisfied, which is a vacuity case, not the exclusion frontier\"}, {\"constraint_ref\": \"constraints[6]\", \"family\": \"exclusive-or\", \"operator\": \"boundary:no-subjects:empty-all-scope-fact-types\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-all-scope-fact-types\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[7]\", \"family\": \"cardinality\", \"operator\": \"boundary:min\", \"case_kind\": \"boundary\", \"side\": \"min\", \"mechanism\": \"no min bound declared; there is no floor\"}, {\"constraint_ref\": \"constraints[8]\", \"family\": \"cardinality\", \"operator\": \"boundary:min\", \"case_kind\": \"boundary\", \"side\": \"min\", \"mechanism\": \"no min bound declared; there is no floor\"}, {\"constraint_ref\": \"fact_types[booking_by_person].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"fact_types[person_takes_course].constraints[0]\", \"family\": \"frequency\", \"operator\": \"boundary:min-outside\", \"case_kind\": \"boundary\", \"side\": \"min-outside\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group has size 0, which means the group does not OCCUR, and a non-occurring group is satisfied \\u2014 emitting the case would manufacture a violating label the checker correctly passes (a fabricated false pass)\"}, {\"constraint_ref\": \"fact_types[person_takes_course].constraints[0]\", \"family\": \"frequency\", \"operator\": \"drop-fact-from-group\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group does not occur, so the lower boundary is unreachable by deletion\"}, {\"constraint_ref\": \"fact_types[person_takes_course].constraints[0]\", \"family\": \"frequency\", \"operator\": \"remove-fact-from-last-covering-group\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group does not occur, so the lower boundary is unreachable by deletion\"}], \"isolating_cases\": 17, \"set_attributed_cases\": 4, \"isolating_fraction\": 0.8095238095238095}\n"
+}

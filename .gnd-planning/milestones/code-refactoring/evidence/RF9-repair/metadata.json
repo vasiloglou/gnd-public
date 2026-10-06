@@ -1,0 +1,1624 @@
+{
+  "base": "26dbff6",
+  "frozen_controls": 432,
+  "output_byte_move": true,
+  "output_bindings": 25,
+  "module_count": 228,
+  "explicit_sccs": {
+    "runtime": [],
+    "module_only": []
+  },
+  "layering": {
+    "wrong_way": [],
+    "cross_lane": [
+      {
+        "from": "gnd.codegen.docstrings",
+        "to": "gnd.extract.vocabulary",
+        "kind": "module",
+        "line": 42,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.exp.frontmatter",
+        "kind": "module",
+        "line": 99,
+        "from_lane": "codegen",
+        "to_lane": "exp"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.bundle",
+        "kind": "module",
+        "line": 100,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.projection",
+        "kind": "module",
+        "line": 101,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.refscheme",
+        "kind": "module",
+        "line": 102,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract.vocabulary",
+        "kind": "module",
+        "line": 103,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.synth.paths",
+        "kind": "module",
+        "line": 105,
+        "from_lane": "codegen",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.codegen.manifest",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 81,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.service",
+        "to": "gnd.extract.projection",
+        "kind": "lazy",
+        "line": 107,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.conformance.architecture",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 40,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.currency",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 51,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.integrity",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 42,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.integrity",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 55,
+        "from_lane": "conformance",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.conformance.report",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 51,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.service",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 18,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen.emit",
+        "kind": "module",
+        "line": 98,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen.identifiers",
+        "kind": "module",
+        "line": 99,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen.manifest",
+        "kind": "module",
+        "line": 100,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.extract.bundle",
+        "kind": "module",
+        "line": 103,
+        "from_lane": "conformance",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.evolve.service",
+        "to": "gnd.conformance.report",
+        "kind": "module",
+        "line": 26,
+        "from_lane": "evolve",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.evolve.service",
+        "to": "gnd.conformance.service",
+        "kind": "module",
+        "line": 27,
+        "from_lane": "evolve",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.cli_service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 92,
+        "from_lane": "exp",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance.integrity",
+        "kind": "lazy",
+        "line": 419,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance.report",
+        "kind": "lazy",
+        "line": 420,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance.service",
+        "kind": "lazy",
+        "line": 421,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.paths",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 37,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 287,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 338,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session_contract",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 43,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session_patch",
+        "to": "gnd.extract.manifest",
+        "kind": "module",
+        "line": 11,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.lean",
+        "to": "gnd.witness.io",
+        "kind": "module",
+        "line": 9,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.lean",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 10,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.service",
+        "to": "gnd.witness.io",
+        "kind": "lazy",
+        "line": 39,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.service",
+        "to": "gnd.witness.types",
+        "kind": "lazy",
+        "line": 40,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle",
+        "to": "gnd.witness.io",
+        "kind": "module",
+        "line": 19,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 20,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.io",
+        "kind": "module",
+        "line": 18,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.io",
+        "kind": "lazy",
+        "line": 551,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.kernel",
+        "kind": "module",
+        "line": 19,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 20,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness.types",
+        "kind": "module",
+        "line": 21,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.anchors",
+        "kind": "lazy",
+        "line": 299,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.anchors",
+        "kind": "lazy",
+        "line": 492,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 64,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract.service",
+        "kind": "module",
+        "line": 12,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 70,
+        "from_lane": "export",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.extract.bundle",
+        "to": "gnd.synth.paths",
+        "kind": "module",
+        "line": 39,
+        "from_lane": "extract",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.extract.service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 104,
+        "from_lane": "extract",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.identity",
+        "kind": "lazy",
+        "line": 38,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 39,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.refscheme",
+        "kind": "lazy",
+        "line": 44,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract.service",
+        "kind": "module",
+        "line": 11,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.match",
+        "to": "gnd.extract.identity",
+        "kind": "module",
+        "line": 58,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract.manifest",
+        "kind": "lazy",
+        "line": 67,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract.refscheme",
+        "kind": "lazy",
+        "line": 73,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract.service",
+        "kind": "module",
+        "line": 11,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.synth.paths",
+        "kind": "lazy",
+        "line": 82,
+        "from_lane": "fidelity",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 81,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 105,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 199,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.boundary",
+        "kind": "lazy",
+        "line": 106,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.boundary",
+        "kind": "lazy",
+        "line": 252,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.comparison",
+        "kind": "module",
+        "line": 41,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.frontier",
+        "kind": "module",
+        "line": 42,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 43,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.promote",
+        "to": "gnd.synth.paths",
+        "kind": "module",
+        "line": 48,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.promote",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 49,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth.assemble",
+        "kind": "lazy",
+        "line": 183,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth.frontier",
+        "kind": "lazy",
+        "line": 415,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 44,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.score",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 44,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 449,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth.corpus_service",
+        "kind": "module",
+        "line": 15,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth.poolfile",
+        "kind": "lazy",
+        "line": 51,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth.provenance",
+        "kind": "lazy",
+        "line": 52,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.truth",
+        "to": "gnd.synth.provenance",
+        "kind": "module",
+        "line": 37,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.recovery.service",
+        "to": "gnd.evolve.cli_service",
+        "kind": "module",
+        "line": 11,
+        "from_lane": "recovery",
+        "to_lane": "evolve"
+      },
+      {
+        "from": "gnd.codegen.docstrings",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 42,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.exp",
+        "kind": "module",
+        "line": 99,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "exp"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 100,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 101,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 102,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 103,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.emit",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 105,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.codegen.manifest",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 81,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.codegen.service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 107,
+        "implicit_parent": true,
+        "from_lane": "codegen",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.conformance.architecture",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 40,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.currency",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 51,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.integrity",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 42,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.integrity",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 55,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.conformance.report",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 51,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.service",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 18,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 98,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 99,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.codegen",
+        "kind": "module",
+        "line": 100,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "codegen"
+      },
+      {
+        "from": "gnd.conformance.structural",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 103,
+        "implicit_parent": true,
+        "from_lane": "conformance",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.evolve.service",
+        "to": "gnd.conformance",
+        "kind": "module",
+        "line": 26,
+        "implicit_parent": true,
+        "from_lane": "evolve",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.evolve.service",
+        "to": "gnd.conformance",
+        "kind": "module",
+        "line": 27,
+        "implicit_parent": true,
+        "from_lane": "evolve",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.cli_service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 92,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance",
+        "kind": "lazy",
+        "line": 419,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance",
+        "kind": "lazy",
+        "line": 420,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.close",
+        "to": "gnd.conformance",
+        "kind": "lazy",
+        "line": 421,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "conformance"
+      },
+      {
+        "from": "gnd.exp.paths",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 37,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 287,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 338,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session_contract",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 43,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.exp.session_patch",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 11,
+        "implicit_parent": true,
+        "from_lane": "exp",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.lean",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 9,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.lean",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 10,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.service",
+        "to": "gnd.witness",
+        "kind": "lazy",
+        "line": 39,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.service",
+        "to": "gnd.witness",
+        "kind": "lazy",
+        "line": 40,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 19,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 20,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 18,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 19,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 20,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness",
+        "kind": "module",
+        "line": 21,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.souffle_runtime",
+        "to": "gnd.witness",
+        "kind": "lazy",
+        "line": 551,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "witness"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 12,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 64,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 299,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 492,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.export.verification_service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 70,
+        "implicit_parent": true,
+        "from_lane": "export",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.extract.bundle",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 39,
+        "implicit_parent": true,
+        "from_lane": "extract",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.extract.service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 104,
+        "implicit_parent": true,
+        "from_lane": "extract",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 11,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 38,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 39,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.doccheck_service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 44,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.match",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 58,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract",
+        "kind": "module",
+        "line": 11,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 67,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.extract",
+        "kind": "lazy",
+        "line": 73,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "extract"
+      },
+      {
+        "from": "gnd.fidelity.service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 82,
+        "implicit_parent": true,
+        "from_lane": "fidelity",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 41,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 42,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 43,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 81,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 105,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 106,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 199,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.coverage",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 252,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.promote",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 48,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.promote",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 49,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 44,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 183,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.report",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 415,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.score",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 44,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 15,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 51,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.service",
+        "to": "gnd.synth",
+        "kind": "lazy",
+        "line": 52,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.measure.truth",
+        "to": "gnd.synth",
+        "kind": "module",
+        "line": 37,
+        "implicit_parent": true,
+        "from_lane": "measure",
+        "to_lane": "synth"
+      },
+      {
+        "from": "gnd.recovery.service",
+        "to": "gnd.evolve",
+        "kind": "module",
+        "line": 11,
+        "implicit_parent": true,
+        "from_lane": "recovery",
+        "to_lane": "evolve"
+      }
+    ],
+    "clean_layers": [
+      "checking",
+      "entry",
+      "infrastructure",
+      "lanes",
+      "model",
+      "semantics"
+    ]
+  },
+  "entrypoints": {
+    "scope": [
+      "gnd.cli",
+      "gnd.commands.checking",
+      "gnd.commands.codegen",
+      "gnd.commands.conformance",
+      "gnd.commands.doccheck",
+      "gnd.commands.evolve",
+      "gnd.commands.exp",
+      "gnd.commands.export",
+      "gnd.commands.extract",
+      "gnd.commands.fidelity",
+      "gnd.commands.judgments",
+      "gnd.commands.lifecycle",
+      "gnd.commands.measure",
+      "gnd.commands.recovery",
+      "gnd.commands.review",
+      "gnd.commands.solve",
+      "gnd.commands.synth",
+      "gnd.commands.verify",
+      "gnd.commands.witness"
+    ],
+    "violations": [],
+    "exceptions": [
+      {
+        "source": "gnd.cli",
+        "target": "gnd",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.api",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.checker",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.install",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.model",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.population",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.report",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.review.constants",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.semantic_registry",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.solve",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.transition",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.cli",
+        "target": "gnd.verbalize",
+        "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.api",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.assurance_transport",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.batch",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.checker",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.coverage",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.diff",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.model",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.rai_import",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.redaction",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.report",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.verbalize",
+        "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.agents",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.artifacts",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.declared_adapter",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.adapter_policy",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.close",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.session",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.session_contract",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.session_store",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.spec",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.exp.tests_runner",
+        "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.emit",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.lean_cli",
+        "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.pyrel_runtime",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.export",
+        "target": "gnd.export.souffle_cli",
+        "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+      },
+      {
+        "source": "gnd.commands.judgments",
+        "target": "gnd.api",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.judgments",
+        "target": "gnd.artifacts",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.lifecycle",
+        "target": "gnd.install",
+        "reason": "Lifecycle command boundary invokes the existing installer and its refusal classes; not an import from a domain lane."
+      },
+      {
+        "source": "gnd.commands.review",
+        "target": "gnd.review.runner",
+        "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+      },
+      {
+        "source": "gnd.commands.solve",
+        "target": "gnd.solve",
+        "reason": "Solve command boundary delegates to the existing control-plane station walker and its parser labels."
+      },
+      {
+        "source": "gnd.commands.witness",
+        "target": "gnd.witness.cli",
+        "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+      },
+      {
+        "source": "gnd.commands.checking",
+        "target": "gnd.input_policy",
+        "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
+      },
+      {
+        "source": "gnd.commands.exp",
+        "target": "gnd.input_policy",
+        "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
+      }
+    ]
+  },
+  "implicit_parent_edges": 4087,
+  "parent_initialization_sccs": [
+    [
+      "gnd.assurance",
+      "gnd.assurance.core"
+    ],
+    [
+      "gnd.checker",
+      "gnd.checker._core"
+    ],
+    [
+      "gnd.evolve",
+      "gnd.evolve.service"
+    ],
+    [
+      "gnd.model",
+      "gnd.model._operations"
+    ],
+    [
+      "gnd.recovery",
+      "gnd.recovery.inventory",
+      "gnd.recovery.verify"
+    ],
+    [
+      "gnd.review",
+      "gnd.review.report",
+      "gnd.review.runner"
+    ],
+    [
+      "gnd.synth.oracle",
+      "gnd.synth.oracle.mutations",
+      "gnd.synth.oracle.state"
+    ]
+  ],
+  "allowances": 0,
+  "manifest_adaptations": 18,
+  "units_and_authority_unchanged": true,
+  "query_metric": {
+    "baseline_source": "523cdd1a2ae1ad6ea0e8ca092fe29629dd10607c",
+    "baseline": 375,
+    "current": 354,
+    "ceiling": 365,
+    "pre_refactor_f5_count": 374
+  }
+}

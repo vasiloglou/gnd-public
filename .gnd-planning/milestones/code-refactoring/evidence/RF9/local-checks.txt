@@ -1,0 +1,4 @@
+Command: PYTHONDONTWRITEBYTECODE=1 .venv/bin/python .gnd-planning/milestones/code-refactoring/evidence/RF9/local_checks.py
+Graph: 227 modules, zero SCC/wrong-way/entry violations; 432 frozen controls unchanged; production unchanged.
+Bindings: 625 definitions/constants in 12 selected modules remain importable; existence only.
+Exit: 0

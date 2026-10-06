@@ -1,0 +1,15 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf7_consumers.py::test_model_json_refusal_cannot_fall_back_to_yaml --tb=short
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_model_json_refusal_cannot_fall_back_to_yaml _______________
+tests/test_rf7_consumers.py:122: in test_model_json_refusal_cannot_fall_back_to_yaml
+    load_model_bytes(b'{"x":1e999}', source='rf7.json')
+src/gnd/model/__init__.py:303: in load_model_bytes
+    raise ModelValidationError(issues)
+E   gnd.model.ModelValidationError: model validation failed: $: 'version' is a required property; $: 'object_types' is a required property; $: 'fact_types' is a required property; $: Additional properties are not allowed ('x' was unexpected)
+=========================== short test summary info ============================
+FAILED tests/test_rf7_consumers.py::test_model_json_refusal_cannot_fall_back_to_yaml
+1 failed in 0.07s
+
+Exit: 1

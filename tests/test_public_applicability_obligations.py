@@ -12,7 +12,7 @@ from test_public_transition_walks import MODEL as TRANSITION_MODEL
 from test_public_transition_walks import WALKS
 
 import gnd
-from gnd import checker
+from gnd import checker, extensions
 from gnd import semantic_registry as registry
 from gnd.model import load_model
 from gnd.population import load_population
@@ -62,7 +62,7 @@ def test_structured_effective_view_and_opaque_obligations_are_in_scope(monkeypat
             def forbidden(*args, **kwargs):
                 raise AssertionError("claim verdicts do not determine applicability")
 
-            context.setattr(checker, "_derivation_obligation", forbidden)
+            context.setattr(extensions, "_derivation_obligation", forbidden)
             with registry.capture_branches() as classified:
                 applicable = registry.applicable_scope_ids(model, population)
         assert not classified

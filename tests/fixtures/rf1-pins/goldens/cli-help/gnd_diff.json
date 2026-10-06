@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd diff [-h] [--populations DIR] [--seed SEED] [--format {text,json}]\n                model_a model_b\n\npositional arguments:\n  model_a\n  model_b\n\noptions:\n  -h, --help            show this help message and exit\n  --populations DIR\n  --seed SEED\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n",
+ "path": "gnd diff"
+}

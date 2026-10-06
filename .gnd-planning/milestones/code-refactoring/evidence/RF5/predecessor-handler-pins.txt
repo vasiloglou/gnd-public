@@ -1,0 +1,90 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf5_handler_pins.py --tb=short
+........................................F...............FFFFFFF......... [ 83%]
+....F.....F.FF                                                           [100%]
+=================================== FAILURES ===================================
+_____________________ test_original_handler_bytes[doctor] ______________________
+tests/test_rf5_handler_pins.py:37: in test_original_handler_bytes
+    assert observe(case, tmp_path, monkeypatch) == ANSWERS[case['id']]
+E   AssertionError: assert {'exit': 12, ... 'stderr': ''} == {'exit': 12, ... 'stderr': ''}
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Differing items:
+E     {'stdout': 'executable directory: <repo>/.venv/bin (on PATH)\nchecking both scopes regardless of the flags given (skil...> <case>/.claude/skills\n  not installed\nno GND install manifest found at any resolved target root (listed above).\n'} != {'stdout': 'executable directory: <repo>/.venv/bin (NOT on PATH)\n  a successful install whose bin directory is not on...> <case>/.claude/skills\n  not installed\nno GND install manifest found at any resolved target root (listed above).\n'}
+E     Use -v to get more diff
+____ test_handler_disabling_control_changes_the_observation[export souffle] ____
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.souffle_cli' from '<worktree>/src/gnd/export/souffle_cli.py'> has no attribute 'run'
+_ test_handler_disabling_control_changes_the_observation[export souffle-verify] _
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.souffle_cli' from '<worktree>/src/gnd/export/souffle_cli.py'> has no attribute 'run'
+__ test_handler_disabling_control_changes_the_observation[export souffle-run] __
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.souffle_cli' from '<worktree>/src/gnd/export/souffle_cli.py'> has no attribute 'run'
+_ test_handler_disabling_control_changes_the_observation[export souffle-witness] _
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.souffle_cli' from '<worktree>/src/gnd/export/souffle_cli.py'> has no attribute 'run'
+_____ test_handler_disabling_control_changes_the_observation[export lean] ______
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.lean_cli' from '<worktree>/src/gnd/export/lean_cli.py'> has no attribute 'run'
+__ test_handler_disabling_control_changes_the_observation[export lean-verify] __
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.souffle_cli' from '<worktree>/src/gnd/export/souffle_cli.py'> has no attribute 'run'
+_ test_handler_disabling_control_changes_the_observation[export lean-compile] __
+tests/test_rf5_handler_pins.py:43: in test_handler_disabling_control_changes_the_observation
+    monkeypatch.setattr(importlib.import_module(module), name, lambda *args, **kwargs: 0)
+E   AttributeError: <module 'gnd.export.souffle_cli' from '<worktree>/src/gnd/export/souffle_cli.py'> has no attribute 'run'
+_______ test_handler_disabling_control_changes_the_observation[exp init] _______
+tests/test_rf5_handler_pins.py:44: in test_handler_disabling_control_changes_the_observation
+    assert observe(case, tmp_path, monkeypatch) != ANSWERS[case['id']], 'pin missed its actual handler'
+E   AssertionError: pin missed its actual handler
+E   assert {'exit': 64, 'stdout': '', 'stderr': "usage: gnd exp init [-h] --out OUT\n                    [--kind {codegen,analysi...atch ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ — the id IS the directory name, so a separator or a '..' in it would be a path\n"} != {'exit': 64, 'stdout': '', 'stderr': "usage: gnd exp init [-h] --out OUT\n                    [--kind {codegen,analysi...atch ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ — the id IS the directory name, so a separator or a '..' in it would be a path\n"}
+E    +  where {'exit': 64, 'stdout': '', 'stderr': "usage: gnd exp init [-h] --out OUT\n                    [--kind {codegen,analysi...atch ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ — the id IS the directory name, so a separator or a '..' in it would be a path\n"} = observe({'id': 'exp init', 'argv': ['exp', 'init', 'missing', '--out', 'missing'], 'target': 'gnd.cli._cmd_exp_init'}, PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4355/test_handler_disabling_control33'), <_pytest.monkeypatch.MonkeyPatch object at 0x1095d0600>)
+_______ test_handler_disabling_control_changes_the_observation[install] ________
+tests/test_rf5_handler_pins.py:44: in test_handler_disabling_control_changes_the_observation
+    assert observe(case, tmp_path, monkeypatch) != ANSWERS[case['id']], 'pin missed its actual handler'
+E   AssertionError: pin missed its actual handler
+E   assert {'exit': 64, 'stdout': '', 'stderr': 'usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,vali...check,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n'} != {'exit': 64, 'stdout': '', 'stderr': 'usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,vali...check,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n'}
+E    +  where {'exit': 64, 'stdout': '', 'stderr': 'usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,vali...check,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n'} = observe({'id': 'install', 'argv': ['install', '--claude', '--user'], 'target': 'gnd.cli._cmd_install'}, PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4355/test_handler_disabling_control39'), <_pytest.monkeypatch.MonkeyPatch object at 0x109f89a90>)
+______ test_handler_disabling_control_changes_the_observation[uninstall] _______
+tests/test_rf5_handler_pins.py:44: in test_handler_disabling_control_changes_the_observation
+    assert observe(case, tmp_path, monkeypatch) != ANSWERS[case['id']], 'pin missed its actual handler'
+E   AssertionError: pin missed its actual handler
+E   assert {'exit': 64, 'stdout': '', 'stderr': 'usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,vali...check,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n'} != {'exit': 64, 'stdout': '', 'stderr': 'usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,vali...check,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n'}
+E    +  where {'exit': 64, 'stdout': '', 'stderr': 'usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,vali...check,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n'} = observe({'id': 'uninstall', 'argv': ['uninstall', '--claude', '--user'], 'target': 'gnd.cli._cmd_uninstall'}, PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4355/test_handler_disabling_control41'), <_pytest.monkeypatch.MonkeyPatch object at 0x10a0dbd90>)
+___ test_handler_disabling_control_changes_the_observation[judgments check] ____
+tests/test_rf5_handler_pins.py:44: in test_handler_disabling_control_changes_the_observation
+    assert observe(case, tmp_path, monkeypatch) != ANSWERS[case['id']], 'pin missed its actual handler'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_rf5_handler_pins.py:24: in observe
+    result = run_main(argv, cwd=tmp_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/cli_runner.py:78: in run_main
+    code = cli.main(list(arguments))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8743: in main
+    else "saved judgment outcome: " + str(result["outcome"])
+                                          ^^^^^^^^^^^^^^^^^
+E   TypeError: 'int' object is not subscriptable
+=========================== short test summary info ============================
+FAILED tests/test_rf5_handler_pins.py::test_original_handler_bytes[doctor] - ...
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export souffle]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export souffle-verify]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export souffle-run]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export souffle-witness]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export lean]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export lean-verify]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[export lean-compile]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[exp init]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[install]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[uninstall]
+FAILED tests/test_rf5_handler_pins.py::test_handler_disabling_control_changes_the_observation[judgments check]
+12 failed, 74 passed in 1.53s
+
+Exit: 1

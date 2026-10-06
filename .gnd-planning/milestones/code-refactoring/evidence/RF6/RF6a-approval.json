@@ -1,0 +1,15 @@
+{
+  "status": "delegated approval (auto=true)",
+  "date": "2026-10-05",
+  "authorization": "process-phase RF6 auto",
+  "spec_sha256": "8551d7a5e2c4b869ed90746e13d49bde58867bfdcd5314fe03e8f78144c9e504",
+  "base": "523cdd1a2ae1ad6ea0e8ca092fe29629dd10607c",
+  "instrument": "prose with unchanged predecessor pins and red successors",
+  "budgets": {
+    "touched_files": 120,
+    "test_data_added": 2500,
+    "docs_added": 1500,
+    "moved_production": 4000,
+    "nonrelocated_production": 2200
+  }
+}

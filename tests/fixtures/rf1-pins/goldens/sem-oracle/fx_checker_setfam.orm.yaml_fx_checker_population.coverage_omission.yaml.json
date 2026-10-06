@@ -1,0 +1,376 @@
+{
+ "build_expectations": {
+  "ok": {
+   "constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[1]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[2]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[3]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[4]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[5]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[6]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[7]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[8]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "constraints[9]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "fact_types[booking_by_person].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "fact_types[booking_by_person].constraints[1]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "vacuous",
+     "ground_truth": "no-subjects",
+     "reason": "coverage-omission"
+    }
+   },
+   "fact_types[booking_of_room].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   },
+   "fact_types[person_takes_course].constraints[0]": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  }
+ },
+ "expected_state": {
+  "constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[1]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[2]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[3]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[4]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[5]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[6]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[7]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[8]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[9]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[booking_by_person].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[booking_by_person].constraints[1]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "vacuous",
+     "ground_truth": "no-subjects",
+     "reason": "coverage-omission"
+    }
+   }
+  },
+  "fact_types[booking_of_room].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[person_takes_course].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  }
+ },
+ "predict_boundary": {
+  "ok": {
+   "constraints[0]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[1]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[2]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[3]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[4]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[5]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[6]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[7]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[8]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[9]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[booking_by_person].constraints[0]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[booking_by_person].constraints[1]": {
+    "data": {
+     "expected_verdict": "vacuous",
+     "ground_truth": "no-subjects",
+     "reason": "coverage-omission"
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[booking_of_room].constraints[0]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[person_takes_course].constraints[0]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   }
+  }
+ }
+}

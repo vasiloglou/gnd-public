@@ -1,0 +1,11 @@
+{
+ "cli": {
+  "exit": 3,
+  "stderr": "",
+  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [contract:shape]\n"
+ },
+ "reader": {
+  "message": "<root>/EXP-703-constraint-acceptance/session.contract.json is not a valid data-driven session contract",
+  "raises": "gnd.exp.session_contract.SessionContractError"
+ }
+}

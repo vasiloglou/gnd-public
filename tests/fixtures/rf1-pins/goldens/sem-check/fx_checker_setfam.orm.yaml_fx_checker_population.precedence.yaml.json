@@ -1,0 +1,316 @@
+{
+ "cli_admission_json": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.precedence.yaml",
+   "--admission",
+   "--format",
+   "json"
+  ],
+  "exit": 1,
+  "stderr": "",
+  "stdout": "{\"schema_version\": 10, \"tool\": \"gnd\", \"command\": \"check\", \"outcome\": \"violated\", \"exit_code\": 1, \"acceptance_ready\": false, \"model\": \"tests/fixtures/checker/setfam.orm.yaml\", \"model_digest\": \"sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd\", \"population\": \"tests/fixtures/checker/population.precedence.yaml\", \"counts\": {\"pass\": 1, \"fail\": 1, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 12}, \"verdicts\": [{\"constraint_ref\": \"fact_types[booking_by_person].constraints[0]\", \"constraint_type\": \"uniqueness\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"Each booking plays 'booking_by_person' with at most one combination of the other roles \\u2014 violated: booking 'b1' has 2 facts.\", \"offending_facts\": [{\"fact_type\": \"booking_by_person\", \"index\": 0}, {\"fact_type\": \"booking_by_person\", \"index\": 1}], \"reason_code\": null, \"witnesses\": [{\"booking\": \"b1\", \"person\": 1}, {\"booking\": \"b1\", \"person\": 2}], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[booking_by_person].constraints[1]\", \"constraint_type\": \"mandatory\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"Each booking must play the 'booking' role in 'booking_by_person' \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[booking_of_room].constraints[0]\", \"constraint_type\": \"uniqueness\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'booking_of_room' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"fact_types[person_takes_course].constraints[0]\", \"constraint_type\": \"frequency\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_takes_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[0]\", \"constraint_type\": \"uniqueness\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population \\u2014 the referenced fact types share no matching anchor values, so the join is empty \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[1]\", \"constraint_type\": \"mandatory-disjunctive\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_teaches_course', 'person_takes_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[2]\", \"constraint_type\": \"frequency\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population \\u2014 the referenced fact types share no matching anchor values, so the join is empty \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[3]\", \"constraint_type\": \"subset\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_leads_course', 'person_takes_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[4]\", \"constraint_type\": \"equality\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_is_registered', 'person_is_enrolled' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[5]\", \"constraint_type\": \"exclusion\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_is_active', 'person_is_suspended' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[6]\", \"constraint_type\": \"exclusive-or\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_is_student', 'person_is_staff' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[7]\", \"constraint_type\": \"cardinality\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Object type 'room' has no instances in this population \\u2014 no fact type gives it a population and no instances: roster supplies one \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[8]\", \"constraint_type\": \"cardinality\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_teaches_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}, {\"constraint_ref\": \"constraints[9]\", \"constraint_type\": \"value\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'room_has_seats' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null, \"witnesses\": [], \"refused_facts\": []}], \"derivations\": null, \"coverage\": {\"booking_by_person\": {\"declared\": \"declared\", \"facts\": 2}, \"booking_of_room\": {\"declared\": \"declared\", \"facts\": 0}, \"person_teaches_course\": {\"declared\": \"declared\", \"facts\": 0}, \"person_takes_course\": {\"declared\": \"declared\", \"facts\": 0}, \"person_leads_course\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_registered\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_enrolled\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_active\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_suspended\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_student\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_staff\": {\"declared\": \"declared\", \"facts\": 0}, \"room_has_seats\": {\"declared\": \"declared\", \"facts\": 0}}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null, \"assurance\": {\"schema_version\": 1, \"semantic_decision\": \"refuse\", \"assurance_level\": \"none\", \"scope_digest\": null, \"semantics_digest\": null, \"production_roster_digest\": null, \"proof_digest\": null, \"toolchain_digest\": null, \"uncovered_applicable_scope_ids\": [\"applicability:adapter:n-a:boolean-in-numeric-role\", \"applicability:adapter:n-a:malformed-constraint\", \"applicability:adapter:n-a:non-finite-number\", \"applicability:adapter:n-a:unregistered-family\", \"applicability:adapter:n-a:unresolvable-role\", \"applicability:adapter:n-a:untyped-string-ordering\", \"applicability:implemented:n-a:family-unimplemented\", \"applicability:join:guarded:disconnected\", \"applicability:join:n-a:anchor-ambiguous\", \"applicability:join:n-a:disconnected\", \"applicability:refusal:n-a:evidence-not-current\", \"applicability:refusal:n-a:out-of-scope-cardinality\", \"applicability:refusal:n-a:out-of-scope-family\", \"applicability:vacuity:cardinality-object:no-observable-subjects\", \"applicability:vacuity:equality:zero-row-join\", \"applicability:vacuity:exclusion:zero-row-join\", \"applicability:vacuity:frequency-external:zero-row-join\", \"applicability:vacuity:guarded:empty-subject-any\", \"applicability:vacuity:n-a:coverage-omission\", \"applicability:vacuity:n-a:empty-subject-all\", \"applicability:vacuity:subtype-partition:no-observable-subjects\", \"applicability:vacuity:uniqueness-external:zero-row-join\", \"applicability:vacuity:value-comparison-cross:zero-row-join\", \"applicability:vacuity:value:no-observable-subjects\", \"composition:band:n-a:alethic-fail\", \"composition:band:n-a:alethic-unchecked\", \"composition:band:n-a:clean\", \"composition:band:n-a:deontic-unchecked-keeps-band\", \"composition:band:n-a:deontic-warning-keeps-band\", \"composition:band:n-a:fail-over-unchecked-over-vacuous\", \"composition:band:n-a:unchecked-over-vacuous\", \"composition:band:n-a:vacuous\", \"composition:band:n-a:vacuous-over-clean\", \"composition:band:phase1:alethic-fail\", \"composition:band:phase1:alethic-unchecked\", \"composition:band:phase1:clean\", \"composition:band:phase1:deontic-warning-keeps-band\", \"composition:band:phase1:fail-over-unchecked-over-vacuous\", \"composition:band:phase1:unchecked-over-vacuous\", \"composition:band:phase1:vacuous\", \"composition:band:phase1:vacuous-over-clean\", \"composition:verifier-verdict:n-a:fail\", \"composition:verifier-verdict:n-a:pass\", \"composition:verifier-verdict:n-a:unchecked\", \"composition:verifier-verdict:n-a:vacuous\", \"composition:verifier-verdict:n-a:warning\", \"report:check:n-a:counts\", \"report:check:n-a:coverage\", \"report:check:n-a:envelope-only\", \"report:check:n-a:incompatible-schema\", \"report:check:n-a:verdict-row\", \"report:check:phase1:acceptance\", \"report:check:phase1:band\", \"report:check:phase1:counts\", \"report:check:phase1:coverage\", \"report:check:phase1:verdict-row\", \"snapshot:cardinality:object:clean\", \"snapshot:cardinality:object:violated:alethic\", \"snapshot:cardinality:role:clean\", \"snapshot:cardinality:role:violated:alethic\", \"snapshot:equality:single:clean\", \"snapshot:equality:single:violated:alethic\", \"snapshot:exclusion:single:clean\", \"snapshot:exclusion:single:violated:alethic\", \"snapshot:exclusive-or:single-role:clean\", \"snapshot:exclusive-or:single-role:unchecked-subject-type-ambiguous\", \"snapshot:exclusive-or:single-role:violated:alethic\", \"snapshot:frequency:external:clean\", \"snapshot:frequency:external:violated:alethic\", \"snapshot:frequency:phase1-internal:clean\", \"snapshot:frequency:phase1-internal:vacuous-empty-subject\", \"snapshot:frequency:phase1-internal:violated:alethic\", \"snapshot:mandatory-disjunctive:n-a:clean\", \"snapshot:mandatory-disjunctive:n-a:unchecked-subject-type-ambiguous\", \"snapshot:mandatory-disjunctive:n-a:violated:alethic\", \"snapshot:mandatory:phase1-inline:clean\", \"snapshot:mandatory:phase1-inline:vacuous-coverage-omission\", \"snapshot:mandatory:phase1-inline:vacuous-empty-subject\", \"snapshot:mandatory:phase1-inline:violated:alethic\", \"snapshot:subset:single:clean\", \"snapshot:subset:single:violated:alethic\", \"snapshot:uniqueness:external:clean\", \"snapshot:uniqueness:external:violated:alethic\", \"snapshot:uniqueness:inline:clean\", \"snapshot:uniqueness:inline:violated:alethic\", \"snapshot:value:range-role:clean\", \"snapshot:value:range-role:unchecked-bound-type-mismatch\", \"snapshot:value:range-role:violated:alethic\"], \"assumptions\": []}, \"admission\": {\"admitted\": [], \"blocked\": [{\"fact_ref\": {\"fact_type\": \"booking_by_person\", \"index\": 0}, \"blocked_by\": [\"fact_types[booking_by_person].constraints[0]\"]}, {\"fact_ref\": {\"fact_type\": \"booking_by_person\", \"index\": 1}, \"blocked_by\": [\"fact_types[booking_by_person].constraints[0]\"]}]}}\n"
+ },
+ "cli_json": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.precedence.yaml",
+   "--format",
+   "json"
+  ],
+  "exit": 1,
+  "stderr": "",
+  "stdout": "{\"schema_version\": 7, \"tool\": \"gnd\", \"command\": \"check\", \"outcome\": \"violated\", \"exit_code\": 1, \"acceptance_ready\": false, \"model\": \"tests/fixtures/checker/setfam.orm.yaml\", \"model_digest\": \"sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd\", \"population\": \"tests/fixtures/checker/population.precedence.yaml\", \"counts\": {\"pass\": 1, \"fail\": 1, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 12}, \"verdicts\": [{\"constraint_ref\": \"fact_types[booking_by_person].constraints[0]\", \"constraint_type\": \"uniqueness\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"fail\", \"message\": \"Each booking plays 'booking_by_person' with at most one combination of the other roles \\u2014 violated: booking 'b1' has 2 facts.\", \"offending_facts\": [{\"booking\": \"b1\", \"person\": 1}, {\"booking\": \"b1\", \"person\": 2}], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[booking_by_person].constraints[1]\", \"constraint_type\": \"mandatory\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"pass\", \"message\": \"Each booking must play the 'booking' role in 'booking_by_person' \\u2014 satisfied.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[booking_of_room].constraints[0]\", \"constraint_type\": \"uniqueness\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'booking_of_room' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"fact_types[person_takes_course].constraints[0]\", \"constraint_type\": \"frequency\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_takes_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[0]\", \"constraint_type\": \"uniqueness\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population \\u2014 the referenced fact types share no matching anchor values, so the join is empty \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[1]\", \"constraint_type\": \"mandatory-disjunctive\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_teaches_course', 'person_takes_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[2]\", \"constraint_type\": \"frequency\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population \\u2014 the referenced fact types share no matching anchor values, so the join is empty \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[3]\", \"constraint_type\": \"subset\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_leads_course', 'person_takes_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[4]\", \"constraint_type\": \"equality\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_is_registered', 'person_is_enrolled' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[5]\", \"constraint_type\": \"exclusion\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_is_active', 'person_is_suspended' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[6]\", \"constraint_type\": \"exclusive-or\", \"modality\": \"alethic\", \"source\": \"explicit\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_is_student', 'person_is_staff' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[7]\", \"constraint_type\": \"cardinality\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Object type 'room' has no instances in this population \\u2014 no fact type gives it a population and no instances: roster supplies one \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[8]\", \"constraint_type\": \"cardinality\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'person_teaches_course' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}, {\"constraint_ref\": \"constraints[9]\", \"constraint_type\": \"value\", \"modality\": \"alethic\", \"source\": \"user-supplied\", \"status\": \"confirmed\", \"verdict\": \"vacuous\", \"message\": \"Fact type(s) 'room_has_seats' contain no facts in this population \\u2014 constraint is vacuous, not evaluated.\", \"offending_facts\": [], \"reason_code\": null}], \"derivations\": null, \"coverage\": {\"booking_by_person\": {\"declared\": \"declared\", \"facts\": 2}, \"booking_of_room\": {\"declared\": \"declared\", \"facts\": 0}, \"person_teaches_course\": {\"declared\": \"declared\", \"facts\": 0}, \"person_takes_course\": {\"declared\": \"declared\", \"facts\": 0}, \"person_leads_course\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_registered\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_enrolled\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_active\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_suspended\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_student\": {\"declared\": \"declared\", \"facts\": 0}, \"person_is_staff\": {\"declared\": \"declared\", \"facts\": 0}, \"room_has_seats\": {\"declared\": \"declared\", \"facts\": 0}}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null, \"assurance\": {\"schema_version\": 1, \"semantic_decision\": \"refuse\", \"assurance_level\": \"none\", \"scope_digest\": null, \"semantics_digest\": null, \"production_roster_digest\": null, \"proof_digest\": null, \"toolchain_digest\": null, \"uncovered_applicable_scope_ids\": [\"applicability:adapter:n-a:boolean-in-numeric-role\", \"applicability:adapter:n-a:malformed-constraint\", \"applicability:adapter:n-a:non-finite-number\", \"applicability:adapter:n-a:unregistered-family\", \"applicability:adapter:n-a:unresolvable-role\", \"applicability:adapter:n-a:untyped-string-ordering\", \"applicability:implemented:n-a:family-unimplemented\", \"applicability:join:guarded:disconnected\", \"applicability:join:n-a:anchor-ambiguous\", \"applicability:join:n-a:disconnected\", \"applicability:refusal:n-a:evidence-not-current\", \"applicability:refusal:n-a:out-of-scope-cardinality\", \"applicability:refusal:n-a:out-of-scope-family\", \"applicability:vacuity:cardinality-object:no-observable-subjects\", \"applicability:vacuity:equality:zero-row-join\", \"applicability:vacuity:exclusion:zero-row-join\", \"applicability:vacuity:frequency-external:zero-row-join\", \"applicability:vacuity:guarded:empty-subject-any\", \"applicability:vacuity:n-a:coverage-omission\", \"applicability:vacuity:n-a:empty-subject-all\", \"applicability:vacuity:subtype-partition:no-observable-subjects\", \"applicability:vacuity:uniqueness-external:zero-row-join\", \"applicability:vacuity:value-comparison-cross:zero-row-join\", \"applicability:vacuity:value:no-observable-subjects\", \"composition:band:n-a:alethic-fail\", \"composition:band:n-a:alethic-unchecked\", \"composition:band:n-a:clean\", \"composition:band:n-a:deontic-unchecked-keeps-band\", \"composition:band:n-a:deontic-warning-keeps-band\", \"composition:band:n-a:fail-over-unchecked-over-vacuous\", \"composition:band:n-a:unchecked-over-vacuous\", \"composition:band:n-a:vacuous\", \"composition:band:n-a:vacuous-over-clean\", \"composition:band:phase1:alethic-fail\", \"composition:band:phase1:alethic-unchecked\", \"composition:band:phase1:clean\", \"composition:band:phase1:deontic-warning-keeps-band\", \"composition:band:phase1:fail-over-unchecked-over-vacuous\", \"composition:band:phase1:unchecked-over-vacuous\", \"composition:band:phase1:vacuous\", \"composition:band:phase1:vacuous-over-clean\", \"composition:verifier-verdict:n-a:fail\", \"composition:verifier-verdict:n-a:pass\", \"composition:verifier-verdict:n-a:unchecked\", \"composition:verifier-verdict:n-a:vacuous\", \"composition:verifier-verdict:n-a:warning\", \"report:check:n-a:counts\", \"report:check:n-a:coverage\", \"report:check:n-a:envelope-only\", \"report:check:n-a:incompatible-schema\", \"report:check:n-a:verdict-row\", \"report:check:phase1:acceptance\", \"report:check:phase1:band\", \"report:check:phase1:counts\", \"report:check:phase1:coverage\", \"report:check:phase1:verdict-row\", \"snapshot:cardinality:object:clean\", \"snapshot:cardinality:object:violated:alethic\", \"snapshot:cardinality:role:clean\", \"snapshot:cardinality:role:violated:alethic\", \"snapshot:equality:single:clean\", \"snapshot:equality:single:violated:alethic\", \"snapshot:exclusion:single:clean\", \"snapshot:exclusion:single:violated:alethic\", \"snapshot:exclusive-or:single-role:clean\", \"snapshot:exclusive-or:single-role:unchecked-subject-type-ambiguous\", \"snapshot:exclusive-or:single-role:violated:alethic\", \"snapshot:frequency:external:clean\", \"snapshot:frequency:external:violated:alethic\", \"snapshot:frequency:phase1-internal:clean\", \"snapshot:frequency:phase1-internal:vacuous-empty-subject\", \"snapshot:frequency:phase1-internal:violated:alethic\", \"snapshot:mandatory-disjunctive:n-a:clean\", \"snapshot:mandatory-disjunctive:n-a:unchecked-subject-type-ambiguous\", \"snapshot:mandatory-disjunctive:n-a:violated:alethic\", \"snapshot:mandatory:phase1-inline:clean\", \"snapshot:mandatory:phase1-inline:vacuous-coverage-omission\", \"snapshot:mandatory:phase1-inline:vacuous-empty-subject\", \"snapshot:mandatory:phase1-inline:violated:alethic\", \"snapshot:subset:single:clean\", \"snapshot:subset:single:violated:alethic\", \"snapshot:uniqueness:external:clean\", \"snapshot:uniqueness:external:violated:alethic\", \"snapshot:uniqueness:inline:clean\", \"snapshot:uniqueness:inline:violated:alethic\", \"snapshot:value:range-role:clean\", \"snapshot:value:range-role:unchecked-bound-type-mismatch\", \"snapshot:value:range-role:violated:alethic\"], \"assumptions\": []}}\n"
+ },
+ "cli_text": {
+  "argv": [
+   "check",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.precedence.yaml"
+  ],
+  "exit": 1,
+  "stderr": "",
+  "stdout": "BLOCKING (alethic)\n  [fail] fact_types[booking_by_person].constraints[0]: Each booking plays 'booking_by_person' with at most one combination of the other roles — violated: booking 'b1' has 2 facts.\n  [vacuous] fact_types[booking_of_room].constraints[0]: Fact type(s) 'booking_of_room' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] fact_types[person_takes_course].constraints[0]: Fact type(s) 'person_takes_course' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[0]: The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population — the referenced fact types share no matching anchor values, so the join is empty — constraint is vacuous, not evaluated.\n  [vacuous] constraints[1]: Fact type(s) 'person_teaches_course', 'person_takes_course' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[2]: The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population — the referenced fact types share no matching anchor values, so the join is empty — constraint is vacuous, not evaluated.\n  [vacuous] constraints[3]: Fact type(s) 'person_leads_course', 'person_takes_course' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[4]: Fact type(s) 'person_is_registered', 'person_is_enrolled' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[5]: Fact type(s) 'person_is_active', 'person_is_suspended' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[6]: Fact type(s) 'person_is_student', 'person_is_staff' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[7]: Object type 'room' has no instances in this population — no fact type gives it a population and no instances: roster supplies one — constraint is vacuous, not evaluated.\n  [vacuous] constraints[8]: Fact type(s) 'person_teaches_course' contain no facts in this population — constraint is vacuous, not evaluated.\n  [vacuous] constraints[9]: Fact type(s) 'room_has_seats' contain no facts in this population — constraint is vacuous, not evaluated.\nADVISORY (deontic)\n  (none)\npass=1 fail=1 warning=0 unchecked=0 vacuous=12\nCOVERAGE\n  booking_by_person: declared, facts=2\n  booking_of_room: declared, facts=0\n  person_teaches_course: declared, facts=0\n  person_takes_course: declared, facts=0\n  person_leads_course: declared, facts=0\n  person_is_registered: declared, facts=0\n  person_is_enrolled: declared, facts=0\n  person_is_active: declared, facts=0\n  person_is_suspended: declared, facts=0\n  person_is_student: declared, facts=0\n  person_is_staff: declared, facts=0\n  room_has_seats: declared, facts=0\n"
+ },
+ "in_process": {
+  "ok": {
+   "excluded": [
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:uniqueness:inline:violated:alethic"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:mandatory:phase1-inline:clean"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "snapshot:frequency:phase1-internal:vacuous-empty-subject"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:uniqueness-external:zero-row-join"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:frequency-external:zero-row-join"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:cardinality-object:no-observable-subjects"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    },
+    {
+     "fact_refs": [],
+     "scope_id": "applicability:vacuity:n-a:empty-subject-all"
+    }
+   ],
+   "wire": {
+    "coverage": {
+     "booking_by_person": {
+      "declared": "declared",
+      "facts": 2
+     },
+     "booking_of_room": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_is_active": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_is_enrolled": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_is_registered": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_is_staff": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_is_student": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_is_suspended": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_leads_course": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_takes_course": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "person_teaches_course": {
+      "declared": "declared",
+      "facts": 0
+     },
+     "room_has_seats": {
+      "declared": "declared",
+      "facts": 0
+     }
+    },
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[booking_by_person].constraints[0]",
+      "constraint_type": "uniqueness",
+      "message": "Each booking plays 'booking_by_person' with at most one combination of the other roles — violated: booking 'b1' has 2 facts.",
+      "modality": "alethic",
+      "offending_facts": [
+       {
+        "booking": "b1",
+        "person": 1
+       },
+       {
+        "booking": "b1",
+        "person": 2
+       }
+      ],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "fail"
+     },
+     {
+      "constraint_ref": "fact_types[booking_by_person].constraints[1]",
+      "constraint_type": "mandatory",
+      "message": "Each booking must play the 'booking' role in 'booking_by_person' — satisfied.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "pass"
+     },
+     {
+      "constraint_ref": "fact_types[booking_of_room].constraints[0]",
+      "constraint_type": "uniqueness",
+      "message": "Fact type(s) 'booking_of_room' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "fact_types[person_takes_course].constraints[0]",
+      "constraint_type": "frequency",
+      "message": "Fact type(s) 'person_takes_course' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "uniqueness",
+      "message": "The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population — the referenced fact types share no matching anchor values, so the join is empty — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "constraint_type": "mandatory-disjunctive",
+      "message": "Fact type(s) 'person_teaches_course', 'person_takes_course' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "constraint_type": "frequency",
+      "message": "The joined subject (booking_by_person.person, booking_of_room.room) produced no rows in this population — the referenced fact types share no matching anchor values, so the join is empty — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[3]",
+      "constraint_type": "subset",
+      "message": "Fact type(s) 'person_leads_course', 'person_takes_course' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[4]",
+      "constraint_type": "equality",
+      "message": "Fact type(s) 'person_is_registered', 'person_is_enrolled' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[5]",
+      "constraint_type": "exclusion",
+      "message": "Fact type(s) 'person_is_active', 'person_is_suspended' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[6]",
+      "constraint_type": "exclusive-or",
+      "message": "Fact type(s) 'person_is_student', 'person_is_staff' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "explicit",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[7]",
+      "constraint_type": "cardinality",
+      "message": "Object type 'room' has no instances in this population — no fact type gives it a population and no instances: roster supplies one — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[8]",
+      "constraint_type": "cardinality",
+      "message": "Fact type(s) 'person_teaches_course' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     },
+     {
+      "constraint_ref": "constraints[9]",
+      "constraint_type": "value",
+      "message": "Fact type(s) 'room_has_seats' contain no facts in this population — constraint is vacuous, not evaluated.",
+      "modality": "alethic",
+      "offending_facts": [],
+      "reason_code": null,
+      "source": "user-supplied",
+      "status": "confirmed",
+      "verdict": "vacuous"
+     }
+    ]
+   }
+  }
+ }
+}

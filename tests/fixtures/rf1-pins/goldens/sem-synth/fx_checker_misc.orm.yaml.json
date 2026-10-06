@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/checker/misc.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 5,
+ "files": null,
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 5, \"error\": \"generator invariant failed at seed 0: repair oscillated (no net reduction in alethic failures at round 2); unresolved: ['constraints[0]', 'constraints[1]'] (not-derivable, distinct from budget exhaustion).\"}\n"
+}

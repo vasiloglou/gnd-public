@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-05",
+  "authorization": "process-phase RF3 auto",
+  "mark": "delegated approval (auto=true)",
+  "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md",
+  "sha256": "8007e2db1cf9cae09454fb29494d06b654dc1b830bab27414c828ea06509da6c",
+  "decisions": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7",
+    "D8"
+  ],
+  "instrument": "spec prose",
+  "go_ahead": true
+}

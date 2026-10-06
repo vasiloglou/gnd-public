@@ -16,12 +16,13 @@ from pathlib import Path
 from typing import Any
 
 from gnd.atoms import atom_bind
-from gnd.extract.refscheme import reference_identity
-from gnd.extract.vocabulary import reading_text
-from gnd.model import Model, analyze_declared_aggregate, iter_derivation_clauses, load_model
-from gnd.popvalidate import resolve_primitive
+from gnd.documents import Model
+from gnd.model import analyze_declared_aggregate, iter_derivation_clauses, load_model
+from gnd.refscheme import reference_identity
 from gnd.terms import term_variables
+from gnd.universe import resolve_primitive
 from gnd.verbalize import line_text
+from gnd.vocabulary import reading_text
 
 __all__ = ["VerbalizationError", "render_model_verbalization"]
 
@@ -56,7 +57,7 @@ def _object_type_cnl(
     parents = item.get("subtype_of") or []
     if parents:
         parent_names = " and ".join(_display(object_types, parent) for parent in parents)
-        if item.get("inherits_reference"):
+        if item.get("inherits_reference") is True:
             sentence = (
                 f"{name} is a kind of {parent_names}, inheriting the reference of {parent_names}."
             )

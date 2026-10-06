@@ -1,0 +1,80 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_v72_semantic_owners.py tests/test_rf3_moves.py --tb=short
+............FF......FF.............................                      [100%]
+=================================== FAILURES ===================================
+_____________ test_calculator_join_compatibility[exact-exact-add] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2267: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1997: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+_____________ test_calculator_join_compatibility[exact-aggregate] ______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2267: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1997: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+______________ test_calculator_join_compatibility[scc-exact-add] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2267: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1997: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+______________ test_calculator_join_compatibility[scc-aggregate] _______________
+tests/test_public_v72_semantic_owners.py:44: in test_calculator_join_compatibility
+    actual = CHARACTERIZE.observe(row)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:147: in observe
+    return calculator(row) if row["consumer"] == "calculator" else join(row)
+           ^^^^^^^^^^^^^^^
+<temporary-root>/gnd-public-v72-semantic-owners-flq3c1ci/.gnd-planning/milestones/v7.2/evidence/phase-6/characterize.py:102: in calculator
+    "report": checker.check(m, p).model_dump(mode="json"),
+              ^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:2267: in check
+    return _check_dispatch(model, population)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker.py:1997: in _check_dispatch
+    unavailable = calculated.extension_core.unavailable
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_ExactExtensionResult' object has no attribute 'extension_core'
+=========================== short test summary info ============================
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-exact-add]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[exact-aggregate]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-exact-add]
+FAILED tests/test_public_v72_semantic_owners.py::test_calculator_join_compatibility[scc-aggregate]
+4 failed, 47 passed in 3.34s
+
+Exit: 1

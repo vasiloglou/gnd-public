@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf6_query_policy.py::test_subscription_negative_refuses_reverted_scanner",
+    "tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 1.6574969291687012
+}

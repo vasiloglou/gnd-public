@@ -1,0 +1,7 @@
+Retained output edited only to replace machine paths.
+Source: git archive 8ff996f7cf0d17bb08f539bca1f4a116ed839fec src/gnd; PYTHONPATH selects <base-source>/src first.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_adapter_primitive_controls.py --tb=short
+...                                                                      [100%]
+3 passed in 0.13s
+
+Exit: 0

@@ -1,0 +1,25 @@
+{
+ "observed": {
+  "ok": [
+   {
+    "data": {
+     "message": "Field required",
+     "path": "name",
+     "rule_id": "rf1:rule",
+     "severity": "error"
+    },
+    "model": "ValidationIssue"
+   },
+   {
+    "data": {
+     "message": "Input should be a valid integer, unable to parse string as an integer",
+     "path": "inner.value",
+     "rule_id": "rf1:rule",
+     "severity": "error"
+    },
+    "model": "ValidationIssue"
+   }
+  ]
+ },
+ "site": "validation_issues|gnd.extract.manifest:_validation_issues"
+}

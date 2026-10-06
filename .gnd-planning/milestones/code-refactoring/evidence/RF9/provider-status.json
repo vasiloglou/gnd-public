@@ -1,0 +1,54 @@
+{
+  "status": "four area assessments completed; no repair round",
+  "launched_reviewers": 4,
+  "subsequent_authorization": {
+    "user_reply": "approved",
+    "scope": "four RF9 native Codex reviews; bounded prompts and inspected repository source/diffs to Codex provider; existing native authentication; no repair round",
+    "date": "2026-10-06"
+  },
+  "area_C_initial_failure": {
+    "exit": 1,
+    "reason": "selected model at capacity",
+    "final_assessment": false,
+    "retry": "one retry of the same initial area on unchanged source; not repair round"
+  },
+  "initial_auto_review_rejection": {
+    "action": "native reviewer A",
+    "reason": "RF9 review approval did not explicitly authorize repository source/diff transmission to Codex; prior RF8 approval does not extend",
+    "executed": false
+  },
+  "executions": [
+    {
+      "area": "A",
+      "prompt": "A-behavior-prompt.txt",
+      "exit": 0,
+      "return": "notes/phase-RF9-A-review.md",
+      "capacity_retry": false
+    },
+    {
+      "area": "B",
+      "prompt": "B-architecture-prompt.txt",
+      "exit": 0,
+      "return": "notes/phase-RF9-B-review.md",
+      "capacity_retry": false
+    },
+    {
+      "area": "C",
+      "prompt": "C-state-input-retry-prompt.txt",
+      "exit": 0,
+      "return": "notes/phase-RF9-C-review.md",
+      "capacity_retry": true
+    },
+    {
+      "area": "D",
+      "prompt": "D-test-integrity-prompt.txt",
+      "exit": 0,
+      "return": "notes/phase-RF9-D-review.md",
+      "capacity_retry": false
+    }
+  ],
+  "invocation_template": "codex exec --ephemeral --model gpt-6-sol --config model_reasoning_effort='\"xhigh\"' --sandbox read-only --color never --skip-git-repo-check --output-last-message <temporary-final> - < <retained-prompt> > <temporary-log> 2>&1",
+  "execution_count": 5,
+  "assessment_count": 4,
+  "credentials": "existing native authentication; no credential environment file read"
+}

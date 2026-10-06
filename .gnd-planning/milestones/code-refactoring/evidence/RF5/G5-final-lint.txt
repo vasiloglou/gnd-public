@@ -1,0 +1,5 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/ruff check src/gnd/cli.py tests/support/rf5_sources.py tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tools/gnd_arch.py
+All checks passed!
+
+Exit: 0

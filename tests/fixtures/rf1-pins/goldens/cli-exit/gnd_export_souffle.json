@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd export souffle [-h] [--reference-root REFERENCE_ROOT] [--json]\n                          [--raw] [--out OUT]\n                          model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --reference-root REFERENCE_ROOT\n  --json\n  --raw\n  --out OUT\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd export souffle [-h] [--reference-root REFERENCE_ROOT] [--json]\n                          [--raw] [--out OUT]\n                          model population\ngnd export souffle: error: the following arguments are required: model, population\n",
+  "stdout": ""
+ }
+}

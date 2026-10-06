@@ -1,0 +1,43 @@
+{
+ "observed": {
+  "..": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "d": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "d/sub": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  },
+  "file": {
+   "outcome": {
+    "message": "install destination: the component 'file' under <tmp>/s4/tree is not a directory this operation may descend into (Not a directory). A symlink planted after the path was validated must not be able to redirect a write or a delete out of the target root (T-01.2-06, CWE-367).",
+    "raises": "gnd.install.InstallPathError"
+   },
+   "target_after": "file\n"
+  },
+  "link_to_d": {
+   "outcome": {
+    "message": "install destination: the component 'link_to_d' under <tmp>/s3/tree is not a directory this operation may descend into (Not a directory). A symlink planted after the path was validated must not be able to redirect a write or a delete out of the target root (T-01.2-06, CWE-367).",
+    "raises": "gnd.install.InstallPathError"
+   },
+   "target_after": null
+  },
+  "missing": {
+   "outcome": {
+    "ok": "<fd>"
+   },
+   "target_after": null
+  }
+ },
+ "site": "safe_filesystem|gnd.install:_descend[create]"
+}

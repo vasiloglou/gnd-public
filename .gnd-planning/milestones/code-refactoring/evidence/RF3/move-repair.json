@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf1_pin_harness.py::test_mutation_table_rows_of_their_own",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 0.30642008781433105
+}

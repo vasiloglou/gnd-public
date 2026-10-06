@@ -1,0 +1,42 @@
+[
+  {
+    "module": "gnd.model",
+    "name": "_load_meta_schema",
+    "home": "gnd.model._validation",
+    "before": "491b868e5fdf26350ff1336e0bcde90dbf347923ab531850b233bfedf1742a38",
+    "after": "0f77f08572e51308439e5ae67e02dcdd4dc175c42e39c6119bd82745667101b3",
+    "reason": "C2 strict JSON or C4 ISO datetime, including model JSON fallback refusal"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_temporal_literal_valid",
+    "home": "gnd.model._validation",
+    "before": "1bb33aa10c3bbdff1d1c5bec54d4af743785f699ec20d46aab8eeeca577fc13d",
+    "after": "96b46d15445c2170a0c2b7e9dda8262ce196e1819efff96e6386da178727e504",
+    "reason": "C2 strict JSON or C4 ISO datetime, including model JSON fallback refusal"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_value_range_order",
+    "home": "gnd.model._validation",
+    "before": "13f3b894243a7081563021e14e5411f0fab79c90b0c0c02a7369eb99491b0142",
+    "after": "2ab61001059847bbc4e51686d6977d836ea39df5cd891957e02235fb9b73fd21",
+    "reason": "C2 strict JSON or C4 ISO datetime, including model JSON fallback refusal"
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model_bytes",
+    "home": "gnd.model",
+    "before": "3f8433b131cec7cefd64a06c48383cdce1f1af9aa5c7ce149f33ddf54c4c62c7",
+    "after": "ded5be1e171b44abb9af1c6df55b1ffebbdc9e291d75fad93a97fd2858b79b86",
+    "reason": "C2 strict JSON or C4 ISO datetime, including model JSON fallback refusal"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_typed_comparison_values",
+    "home": "gnd.checker._core",
+    "before": "72f2a1308836c84a9fb08e9ead17b2acfdf9261815d3dfa135cd5bbed28a0aba",
+    "after": "71f03b06a9af0996622330468daf858b5370e9047b044e6f65289c40636da2b9",
+    "reason": "C2 strict JSON or C4 ISO datetime, including model JSON fallback refusal"
+  }
+]

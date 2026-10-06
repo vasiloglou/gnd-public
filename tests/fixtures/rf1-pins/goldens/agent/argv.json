@@ -1,0 +1,29 @@
+{
+ "claude": {
+  "ok": [
+   "claude",
+   "--print",
+   "--permission-mode",
+   "acceptEdits",
+   "--output-format",
+   "text",
+   "a prompt with 'quotes'\nand a newline"
+  ]
+ },
+ "codex": {
+  "ok": [
+   "codex",
+   "exec",
+   "--ephemeral",
+   "--sandbox",
+   "workspace-write",
+   "--color",
+   "never",
+   "a prompt with 'quotes'\nand a newline"
+  ]
+ },
+ "not-an-adapter": {
+  "message": "adapter must be a closed AgentAdapterId value",
+  "raises": "builtins.ValueError"
+ }
+}

@@ -1,0 +1,5 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python tools/rf1_pins.py mutate --out .gnd-planning/milestones/code-refactoring/evidence/RF3-mutants --only M-HELP-canonical-json-gnd-extract-anchors-canonical M-HELP-canonical-json-gnd-transition-canonical M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id M-HELP-model-digest-gnd-population-model-digest M-HELP-model-digest-gnd-references-reference-model-digest M-HELP-sha256-hex-gnd-extract-anchors-digest M-HELP-sha256-hex-gnd-population-content-digest M-HELP-validation-issues-gnd-exp-conclusions-validation-issues M-HELP-validation-issues-gnd-exp-spec-validation-issues M-HELP-validation-issues-gnd-extract-manifest-validation-issues M-SEM-check-coverage-anchored M-SEM-resolver-is-true --jobs 2
+rows: 12  killed: 12  not killed: 0
+
+Exit: 0

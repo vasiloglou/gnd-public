@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd doctor [-h] [--claude] [--codex] [--global | --project]\n\nReport every placed asset as current, stale, missing, modified or collided,\nand print the two environment facts that explain most 'it did not work'\nreports: the directory the running executable lives in with an on-PATH\nverdict, and every target root inspected. BOTH scopes are always inspected,\nwhichever scope flag is given, because skill precedence puts the user level\nahead of the project level and a shadowed project install is the most common\nconfusing outcome. Exits 0 when everything is current, 10 on drift, 11 on a\ncollision, 12 when nothing is installed anywhere. Text output only, for the\nreason `gnd install --help` gives (D-25). Scope: installed-asset state ONLY. A\ngreen doctor says nothing about your model or its conformance state — in\nparticular it does not report a pending evolution finalization, which `gnd\nevolve` reports and refuses. Reading exit 0 here as 'my model is fine' is the\none misreading this command cannot make for you.\n\noptions:\n  -h, --help  show this help message and exit\n  --claude    target Claude Code's skills directory (default: both runtimes)\n  --codex     target Codex CLI's skills directory (default: both runtimes)\n  --global    user level (DEFAULT): ~/.claude/skills and $CODEX_HOME/skills\n              (~/.codex/skills)\n  --project   this project: ./.claude/skills and ./.codex/skills\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --rf1-unknown-flag\n",
+  "stdout": ""
+ }
+}

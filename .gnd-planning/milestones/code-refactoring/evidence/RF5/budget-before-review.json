@@ -1,0 +1,21 @@
+{
+  "base": "29915d9",
+  "source_head": "a89358a",
+  "measured": {
+    "touched": 163,
+    "test_python_added": 269,
+    "test_data_added": 703,
+    "test_total_added": 972,
+    "non_evidence_doc_added": 122,
+    "production_moved": 8141,
+    "production_nonrelocated": 2023
+  },
+  "completion_record_pending": true,
+  "limits": {
+    "touched": 320,
+    "test_total_added": 3000,
+    "non_evidence_doc_added": 1500,
+    "production_moved": 12000,
+    "production_nonrelocated": 4000
+  }
+}

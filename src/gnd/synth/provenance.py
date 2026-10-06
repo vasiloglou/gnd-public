@@ -30,13 +30,14 @@ defined HERE, at the sidecar owner, rather than downstream.
 
 from __future__ import annotations
 
-import hashlib
+import hashlib  # noqa: F401 -- historical compatibility binding
 import json
 from pathlib import Path
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from gnd import input_policy as _rf7_input
 from gnd.population import _model_digest
 from gnd.synth import GENERATOR_VERSION
 
@@ -225,7 +226,7 @@ class Sidecar(BaseModel):
     unmutated_derivations: list[dict[str, str]] = Field(default_factory=list)
 
 
-def model_digest(model: Any) -> str:
+def validated_model_sha256(model: Any) -> str:
     """The digest plan 04 recomputes and compares (C6). Delegates to
     :func:`gnd.population._model_digest`, the SAME digest the population loader
     stamps its validation marker with, so the two can never disagree about what a
@@ -234,7 +235,9 @@ def model_digest(model: Any) -> str:
 
 
 def _sha256_file(path: str | Path) -> str:
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    from gnd.safefs import file_sha256
+
+    return '' + file_sha256(path)
 
 
 def write_sidecar(sidecar: Sidecar, population_path: str | Path) -> Path:
@@ -283,8 +286,12 @@ def read_sidecar(path: str | Path, *, verify_population_hash: bool = True) -> Si
     """
     path = Path(path)
     try:
-        document = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        with path.open("rb") as handle:
+            raw = handle.read(_rf7_input.MAX_BYTES + 1)
+        if len(raw) > _rf7_input.MAX_BYTES:
+            raise ValueError("JSON input exceeds byte cap")
+        document = _rf7_input.loads(raw.decode("utf-8"))
+    except (OSError, ValueError) as error:
         raise SidecarError(f"sidecar {path} could not be read: {error}") from error
     try:
         sidecar = Sidecar.model_validate(document)
@@ -340,3 +347,6 @@ def read_sidecar(path: str | Path, *, verify_population_hash: bool = True) -> Si
                 f"{actual!r} — the population was edited after emission (C6)."
             )
     return sidecar
+
+
+model_digest = validated_model_sha256  # RF2 compatibility alias.

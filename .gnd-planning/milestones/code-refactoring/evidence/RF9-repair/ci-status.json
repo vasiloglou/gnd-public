@@ -1,0 +1,33 @@
+{
+  "subject": "f5979caaaa9385faa2ad44ba10364ddb9e5d561e",
+  "url": "https://github.com/vasiloglou/gnd-public/actions/runs/37500909232",
+  "jobs": [
+    {
+      "name": "regression (ubuntu-latest, 3.11)",
+      "conclusion": "failure",
+      "steps": []
+    },
+    {
+      "name": "regression (macos-latest, 3.13)",
+      "conclusion": "failure",
+      "steps": []
+    },
+    {
+      "name": "candidate",
+      "conclusion": "failure",
+      "steps": []
+    },
+    {
+      "name": "installed",
+      "conclusion": "skipped",
+      "steps": []
+    },
+    {
+      "name": "phase2",
+      "conclusion": "failure",
+      "steps": []
+    }
+  ],
+  "annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+  "claim": "Platform refusal before steps, not a passing remote gate; subject-specific observation."
+}

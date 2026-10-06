@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "src/gnd/export/pyrel_runtime.py",
+    "src/gnd/input_policy.py",
+    "src/gnd/model/__init__.py",
+    "src/gnd/model_queries.py",
+    "src/gnd/synth/provenance.py",
+    "src/gnd/input_policy.py",
+    "tests/support/rf7_pins.py",
+    "tests/test_rf7_structure.py",
+    "--output-format",
+    "concise"
+  ],
+  "exit": 0,
+  "seconds": 0.014059066772460938
+}

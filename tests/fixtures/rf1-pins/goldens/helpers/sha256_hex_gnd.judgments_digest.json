@@ -1,0 +1,24 @@
+{
+ "observed": {
+  "not-string": {
+   "message": "invalid saved judgment input",
+   "raises": "gnd.judgments.JudgmentInputError"
+  },
+  "prefixed": {
+   "message": "invalid saved judgment input",
+   "raises": "gnd.judgments.JudgmentInputError"
+  },
+  "short": {
+   "message": "invalid saved judgment input",
+   "raises": "gnd.judgments.JudgmentInputError"
+  },
+  "upper": {
+   "message": "invalid saved judgment input",
+   "raises": "gnd.judgments.JudgmentInputError"
+  },
+  "valid": {
+   "ok": null
+  }
+ },
+ "site": "sha256_hex|gnd.judgments:digest"
+}

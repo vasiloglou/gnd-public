@@ -1,0 +1,30 @@
+FFF..                                                                    [100%]
+=================================== FAILURES ===================================
+______________ test_compatibility_metric_refuses_a_renamed_alias _______________
+tests/test_rf9_ci_repairs.py:121: in test_compatibility_metric_refuses_a_renamed_alias
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+____________ test_markdown_guard_detects_conditional_python_import _____________
+tests/test_rf9_ci_repairs.py:136: in test_markdown_guard_detects_conditional_python_import
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+____________ test_checker_core_producer_preserves_registered_owner _____________
+tests/test_rf9_ci_repairs.py:155: in test_checker_core_producer_preserves_registered_owner
+    trace = run()
+            ^^^^^
+tests/test_rf9_ci_repairs.py:153: in run
+    _core._observe_phase1_compatibility({}, 'rf9', None, None, None, [], [], {})
+src/gnd/checker/_core.py:475: in _observe_phase1_compatibility
+    record_branch(f"applicability:refusal:n-a:{reason}")
+src/gnd/branches.py:1360: in record_branch
+    reached.add(scope_id)
+tests/public_site_census.py:297: in add
+    raise AssertionError(f"no producer owner frame for {scope_id}")
+E   AssertionError: no producer owner frame for applicability:refusal:n-a:out-of-scope-cardinality
+=========================== short test summary info ============================
+FAILED tests/test_rf9_ci_repairs.py::test_compatibility_metric_refuses_a_renamed_alias
+FAILED tests/test_rf9_ci_repairs.py::test_markdown_guard_detects_conditional_python_import
+FAILED tests/test_rf9_ci_repairs.py::test_checker_core_producer_preserves_registered_owner
+3 failed, 2 passed in 0.83s

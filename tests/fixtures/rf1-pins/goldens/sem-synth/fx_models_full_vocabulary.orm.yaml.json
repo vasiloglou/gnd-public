@@ -1,0 +1,1275 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/models/full_vocabulary.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 0,
+ "files": {
+  "boundary/constraints-0.empty-all-scope-fact-types.json": {
+   "bytes": 3584,
+   "sha256": "ed2dc126773518cb34c8e5f5d2d08511c5d197cca39f9c2dee60e437b311bf86"
+  },
+  "boundary/constraints-0.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21323,
+   "sha256": "cf1569a6ac58d1b3746b0eac6fdce8c81b8c5821a868f8a8a51c5766ea8cc3d1"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-once.meta.json": {
+   "bytes": 21207,
+   "sha256": "f34d3ee7dc9a1feccde8e0127ba9e0a7e754abcf0d87bd679409f93875daaea9"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-twice.json": {
+   "bytes": 4376,
+   "sha256": "eea4f743867ebe5bee5b6d5808b1f0e3166e5f65414cc739a60de416382b072e"
+  },
+  "boundary/constraints-0.joined-tuple-occurs-twice.meta.json": {
+   "bytes": 21209,
+   "sha256": "312546db0205807f834218a7c5c55b26452b914ca82d89c1ba2dea6fc1ed8640"
+  },
+  "boundary/constraints-0.zero-row-join-disjoint-anchors.json": {
+   "bytes": 4191,
+   "sha256": "bf1c5376e470a4ac601b6c1325876b997d2cde547229f613789ca8c900bd4a18"
+  },
+  "boundary/constraints-0.zero-row-join-disjoint-anchors.meta.json": {
+   "bytes": 21245,
+   "sha256": "57004346665c2650d1bbae06828e724c085db50a01efd33de22639e669ac4322"
+  },
+  "boundary/constraints-0.zero-row-join-one-side-empty.json": {
+   "bytes": 3922,
+   "sha256": "dbeb28ac5eedbcea679b68d4442c66240d9e99857e17646859f0637321089910"
+  },
+  "boundary/constraints-0.zero-row-join-one-side-empty.meta.json": {
+   "bytes": 21260,
+   "sha256": "2883d252ce18ac7d9da80d1dc96a679b1c36cc07bb23723f9346475d5d96e0d1"
+  },
+  "boundary/constraints-1.coverage-omission-boundary.json": {
+   "bytes": 4162,
+   "sha256": "e3119d313a9adf60d6515543a9964984a51b6529155d3777335310d1ff9c9e37"
+  },
+  "boundary/constraints-1.coverage-omission-boundary.meta.json": {
+   "bytes": 21239,
+   "sha256": "946429d44da024c27a2aea2e3e4d8a101121a8679dfd53791e609ef76ab92ae0"
+  },
+  "boundary/constraints-1.empty-object-scope.json": {
+   "bytes": 2310,
+   "sha256": "8a9e92d170c046871f88bdfdface144f8c55421738334914c9fed3a54596a220"
+  },
+  "boundary/constraints-1.empty-object-scope.meta.json": {
+   "bytes": 21614,
+   "sha256": "28ea8eb1fc9f23ea1cc05c68a55d894183a2c26c87943ef1c5ac76dec86fb9e9"
+  },
+  "boundary/constraints-1.every-instance-plays-one-listed-role.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-1.every-instance-plays-one-listed-role.meta.json": {
+   "bytes": 21231,
+   "sha256": "6d771ca690f03852a84400e3ddd6b4d7e6f160f8aeffda34d4880a890e0590df"
+  },
+  "boundary/constraints-1.one-instance-plays-none.json": {
+   "bytes": 4051,
+   "sha256": "cc6e489b3ba291ac8a1d39c09c9a9cd5619733e132bf23b07ae12a845ae1c6af"
+  },
+  "boundary/constraints-1.one-instance-plays-none.meta.json": {
+   "bytes": 21212,
+   "sha256": "3e2d76d324ef386652c522c94325bebfad460b2daed0339f19e5ad07ec5eff07"
+  },
+  "boundary/constraints-10.universe-at-max.json": {
+   "bytes": 4468,
+   "sha256": "63b2c19bc172687387d8b91014347053abdccd56c074ec6de86219e60a11a082"
+  },
+  "boundary/constraints-10.universe-at-max.meta.json": {
+   "bytes": 21199,
+   "sha256": "9f4b2bc0e9b005e0b593e0552a1d506f9a401ec4fc4c15718b0eed46c2a17482"
+  },
+  "boundary/constraints-10.universe-at-min.json": {
+   "bytes": 4048,
+   "sha256": "02d84c5f2fddbaa206b3839bb6042006fcac1d2c6db8847587f790943c6931d4"
+  },
+  "boundary/constraints-10.universe-at-min.meta.json": {
+   "bytes": 21199,
+   "sha256": "ab5eb1bac13ae3598b848719ba3a00220c7318621725d6c97fd70ba6a071abf9"
+  },
+  "boundary/constraints-10.universe-below-min.json": {
+   "bytes": 3968,
+   "sha256": "9d90db0e1ea84d9547e43f8adfc121f0f022e5bfb8861e5b3a4bf29a54f92a71"
+  },
+  "boundary/constraints-10.universe-below-min.meta.json": {
+   "bytes": 21244,
+   "sha256": "5359358035a3b68da27d498f4442d25058457dae6760114973130e4113338afe"
+  },
+  "boundary/constraints-10.universe-past-max.json": {
+   "bytes": 4496,
+   "sha256": "7d27c81c62359aeee2042ccb1c9be5480dd9c2274df72002ee74c24f2d44f7bf"
+  },
+  "boundary/constraints-10.universe-past-max.meta.json": {
+   "bytes": 21203,
+   "sha256": "1ac4102ee938f53b459781715366dfea51014a0ce7ffb49edd21ac20fa9737cb"
+  },
+  "boundary/constraints-11.empty-all-scope-fact-types.json": {
+   "bytes": 3931,
+   "sha256": "2142120f9c73125e3cbcb89fee26d5ba4230a8ae8744db835d25d63fc8f383a5"
+  },
+  "boundary/constraints-11.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21259,
+   "sha256": "2b09d90c9dbd46ad015a42ec0f1d824a8bab48896d0eadb598fb092150c9453f"
+  },
+  "boundary/constraints-11.universe-at-max.json": {
+   "bytes": 4980,
+   "sha256": "5c3a5fa0c785328448db1a31961038068d703264d7490a73079388e75c754cdf"
+  },
+  "boundary/constraints-11.universe-at-max.meta.json": {
+   "bytes": 21200,
+   "sha256": "6158618eb625f4134a2b3c3cb0f2f4320d0485c114b339168fcb727d2eaa8602"
+  },
+  "boundary/constraints-11.universe-past-max.json": {
+   "bytes": 5068,
+   "sha256": "d11e78a93b2c247524930ee14865b82cdad1168f975d11904b6b0bcda676f82b"
+  },
+  "boundary/constraints-11.universe-past-max.meta.json": {
+   "bytes": 21204,
+   "sha256": "efec01ccad92c5ad2d349259a7128b9790687b1b910d3a64ddfb38ac888a4d97"
+  },
+  "boundary/constraints-12.derivation-only-frontier.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-12.derivation-only-frontier.meta.json": {
+   "bytes": 21218,
+   "sha256": "ce73a6318ba7e7ed17b6b875f1ff827b117f080af21809b524c3f49c0854d495"
+  },
+  "boundary/constraints-12.unchecked-subtype-derivation-only.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-12.unchecked-subtype-derivation-only.meta.json": {
+   "bytes": 21236,
+   "sha256": "38c7e1810448dbce952855337a8393cac744e32c779edc2a1674ac2182d93022"
+  },
+  "boundary/constraints-13.textual-is-never-mechanical.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-13.textual-is-never-mechanical.meta.json": {
+   "bytes": 21223,
+   "sha256": "cea8fd8c60f0a474a30fc4e6cc3aaf8ee9ef13a5c24f66d6800e1e5af3803831"
+  },
+  "boundary/constraints-13.unchecked-textual-not-mechanical.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-13.unchecked-textual-not-mechanical.meta.json": {
+   "bytes": 21233,
+   "sha256": "05a3b9885cdcd81493f7a8786d86c5e24ab055deba7086a2e2c2ab521c5f9c82"
+  },
+  "boundary/constraints-2.empty-all-scope-fact-types.json": {
+   "bytes": 3961,
+   "sha256": "bcb7a50215cc7b7bf86bb0d98c5646829e3b2ef32c816112d4bc2a400a53efc3"
+  },
+  "boundary/constraints-2.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21264,
+   "sha256": "743c01c228942b875781e0bf94e7ad9001d67dee14887610416e0e7d54a40271"
+  },
+  "boundary/constraints-2.empty-object-scope.json": {
+   "bytes": 3992,
+   "sha256": "6dcdc88e3730c451bc877cae01063e8aebcf7b863b5c9caa3524f7bb863f1abe"
+  },
+  "boundary/constraints-2.empty-object-scope.meta.json": {
+   "bytes": 21247,
+   "sha256": "426bbc044f6cc66dcc8b4443ceff2a16e81c5926e3a834361912793e5d702f22"
+  },
+  "boundary/constraints-2.enum-member-f.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-2.enum-member-f.meta.json": {
+   "bytes": 21185,
+   "sha256": "e68959b64b59e4b22205253866a3014b6ba3315d061496a4153bd2585a40887d"
+  },
+  "boundary/constraints-2.enum-member-m.json": {
+   "bytes": 4197,
+   "sha256": "270481d591b61f184a79c94c21ce75bd294b08518e9e8493816b686d449c5fe8"
+  },
+  "boundary/constraints-2.enum-member-m.meta.json": {
+   "bytes": 21185,
+   "sha256": "b741659d9adadefcc5b3257c287247a2925b6fbd2ed27623d6df34cf68530d7b"
+  },
+  "boundary/constraints-2.enum-member-x.json": {
+   "bytes": 4197,
+   "sha256": "508630a0c689e2c1c1c0007c9e86b335f3f838517c749a7e491f08ac1df5e939"
+  },
+  "boundary/constraints-2.enum-member-x.meta.json": {
+   "bytes": 21185,
+   "sha256": "6b5a57a674a183b7d9413e2ca967a6e04dbf5ce2581e280d9f505fa88cb83afa"
+  },
+  "boundary/constraints-2.enum-non-member.json": {
+   "bytes": 4208,
+   "sha256": "996e94c4b74f6b1c869179e571a10229222087064aad3e1ae3c4b2618b57c0df"
+  },
+  "boundary/constraints-2.enum-non-member.meta.json": {
+   "bytes": 21197,
+   "sha256": "e25310f116e64e495ee0b7e6a40cb0eb6d67c04abc1e02dea997c7696819d5b7"
+  },
+  "boundary/constraints-3.empty-all-scope-fact-types.json": {
+   "bytes": 3619,
+   "sha256": "3520c5a0688c8662f85083c321213ffe38ae9cd482ee27062bf72a170ed6e172"
+  },
+  "boundary/constraints-3.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21282,
+   "sha256": "6fafbde2ec93db9d633edf3ce43894a820e1e8e9e80eeb2118896fd4335c13e9"
+  },
+  "boundary/constraints-3.empty-object-scope.json": {
+   "bytes": 3692,
+   "sha256": "067244a6bfb3aa2a9c2165a3e455449090eac4c857b0c6955b3ec26ec7d1cbc7"
+  },
+  "boundary/constraints-3.empty-object-scope.meta.json": {
+   "bytes": 21267,
+   "sha256": "a0d75bfade4fa873393d8ae88dc6dcbd98e1b503a8cb5ffe0445f2d0f75756da"
+  },
+  "boundary/constraints-3.range-max-inside.json": {
+   "bytes": 4198,
+   "sha256": "25608bb98d19a6e87ac4779795a8cb58077e10e8a0c0ef437395d706a4324770"
+  },
+  "boundary/constraints-3.range-max-inside.meta.json": {
+   "bytes": 21192,
+   "sha256": "59fe7d6c7ea790f12e481d8edf6e00ef8945bfccae800502d81f30b5e21535a7"
+  },
+  "boundary/constraints-3.range-max-outside.json": {
+   "bytes": 4198,
+   "sha256": "e3ac4681857fdbde99eba13a475d44e9da012c7fda0761d38a8f3cf4c48c70b5"
+  },
+  "boundary/constraints-3.range-max-outside.meta.json": {
+   "bytes": 21199,
+   "sha256": "9e20e2fbd7aad44e0744e8b979bb6696930b828e1cf4c83123e9fa09c1bea7f0"
+  },
+  "boundary/constraints-3.range-min-inside.json": {
+   "bytes": 4195,
+   "sha256": "81d5477cc5fc2a3f97d46ef2e8704d718552e3d74af1cdd19ee09bbf59d83273"
+  },
+  "boundary/constraints-3.range-min-inside.meta.json": {
+   "bytes": 21191,
+   "sha256": "6a3b2418881fc174ec22076557272a79f5ec07f0ce0025a1a5d8871af9eae402"
+  },
+  "boundary/constraints-3.range-min-outside.json": {
+   "bytes": 4196,
+   "sha256": "a93e430d96634fe443df5860185b80a6b7f27341c3249c69fdd08252d107ff97"
+  },
+  "boundary/constraints-3.range-min-outside.meta.json": {
+   "bytes": 21198,
+   "sha256": "00fb92a687046f209c754bf48f7b9ddd8d02db686c60caf889e2621263d00bc0"
+  },
+  "boundary/constraints-4.empty-all-scope-fact-types.json": {
+   "bytes": 3904,
+   "sha256": "6be6e82168550eedd0e6491b6bdcdd3057b37a11b4d97458fdc71b0a8e7b7f80"
+  },
+  "boundary/constraints-4.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21237,
+   "sha256": "17d623d1c9032285ede28967e86e772494f0b413e3602937b9d7748b19a85231"
+  },
+  "boundary/constraints-4.range-max-inside.json": {
+   "bytes": 4197,
+   "sha256": "23a05248eca1b41a54df5f46f5d189a11dba3dcace0f344e0cd6d04bcb9fbea0"
+  },
+  "boundary/constraints-4.range-max-inside.meta.json": {
+   "bytes": 21192,
+   "sha256": "9f3632c4c3a8bb896755139792fb03a0c55a0dbf2ecd23e7af8fdb5414c33ca2"
+  },
+  "boundary/constraints-4.range-max-outside.json": {
+   "bytes": 4197,
+   "sha256": "5b48e484e0ed99530a7b978435cba8bd24f41058fd7d78c610146759dc3ba3cb"
+  },
+  "boundary/constraints-4.range-max-outside.meta.json": {
+   "bytes": 21199,
+   "sha256": "7bd83f3d2aeaef835d9ed4741dc7ba5b536f38b084922f02f1d14a5b8a147c84"
+  },
+  "boundary/constraints-4.range-min-inside.json": {
+   "bytes": 4195,
+   "sha256": "69c4a0fc7551e83d9d46a9ab9a5bf7f110bde8d09537970f90d22b393343c311"
+  },
+  "boundary/constraints-4.range-min-inside.meta.json": {
+   "bytes": 21191,
+   "sha256": "590d7dc284b403dd41f1b123ca21428d0c02f3fecb43299c98b308e25cb3f79d"
+  },
+  "boundary/constraints-4.range-min-outside.json": {
+   "bytes": 4196,
+   "sha256": "8867e6d8f36d97fb75299268b2a35d09235f3bd199cb51ffff5ba53032ad4d34"
+  },
+  "boundary/constraints-4.range-min-outside.meta.json": {
+   "bytes": 21200,
+   "sha256": "c3e5a01840720ab43cbfc026ee2fdb871c3a461115fe82e02ea2f45ecdebdbbc"
+  },
+  "boundary/constraints-5.empty-all-scope-fact-types.json": {
+   "bytes": 3828,
+   "sha256": "b73d01f4d62cf5779a5159b622feeeb2dd50d29452a2140d700b8368e9b92bb9"
+  },
+  "boundary/constraints-5.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21314,
+   "sha256": "6b79866b225a01dea45d57acce9ac226f6950ceab81156f1b9a161f0a60b1131"
+  },
+  "boundary/constraints-5.zero-row-join-disjoint-anchors.json": {
+   "bytes": 4208,
+   "sha256": "2bc391f0c37e79dcf4fa04ff8b92eaa85aaa0d21cfa12ce2988590803b1db060"
+  },
+  "boundary/constraints-5.zero-row-join-disjoint-anchors.meta.json": {
+   "bytes": 21246,
+   "sha256": "45291e96764623f32de942746d032bf13a216f8f520e4c83a6ac9b7773c367d9"
+  },
+  "boundary/constraints-5.zero-row-join-one-side-empty.json": {
+   "bytes": 4123,
+   "sha256": "4a43e1249ea7f0dc6cc743a3444e0f4aacb6abbda29f85de6515c8b05bddc65b"
+  },
+  "boundary/constraints-5.zero-row-join-one-side-empty.meta.json": {
+   "bytes": 21258,
+   "sha256": "e965b7b35e96b0990f33e461bb5a7d20ce49eaa3568b0e73f99f1dfde160287b"
+  },
+  "boundary/constraints-6.containment-edge.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-6.containment-edge.meta.json": {
+   "bytes": 21192,
+   "sha256": "ff6bf7cf6808215d86fd883071091c5fcf22a16ef8f4d3dc80b2e8a7edebe787"
+  },
+  "boundary/constraints-6.empty-all-scope-fact-types.json": {
+   "bytes": 3828,
+   "sha256": "b73d01f4d62cf5779a5159b622feeeb2dd50d29452a2140d700b8368e9b92bb9"
+  },
+  "boundary/constraints-6.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21314,
+   "sha256": "6c8033742cdf630b2daf84449b8303a8d4fc1b1f7e0651da40c33dacd0b12c1f"
+  },
+  "boundary/constraints-6.one-tuple-past-containment.json": {
+   "bytes": 4274,
+   "sha256": "abdad2d9dbcc5c52f5cb9907b67116263d8d031730d86af0e815ccd93c84d5b5"
+  },
+  "boundary/constraints-6.one-tuple-past-containment.meta.json": {
+   "bytes": 21217,
+   "sha256": "2134fb1e971b64983cc497a592ac2b4482e2ab6933302a24a7a92c9d313ccc7a"
+  },
+  "boundary/constraints-7.empty-all-scope-fact-types.json": {
+   "bytes": 3584,
+   "sha256": "ed2dc126773518cb34c8e5f5d2d08511c5d197cca39f9c2dee60e437b311bf86"
+  },
+  "boundary/constraints-7.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21323,
+   "sha256": "71aceae19aacee1c1b3328ee91adaa956a7ca0b27f7ae49ac30e7c8995a80357"
+  },
+  "boundary/constraints-7.one-tuple-removed-from-side-a.json": {
+   "bytes": 4108,
+   "sha256": "c953e8ca21a8426df208d4fb7f442eb65b09f1ac5c915b7e4f343ab4b393ff46"
+  },
+  "boundary/constraints-7.one-tuple-removed-from-side-a.meta.json": {
+   "bytes": 21227,
+   "sha256": "9f5a6046887a47ccf28db088a4e4be5cebacdeb4a9e0db002983c9d001f743b4"
+  },
+  "boundary/constraints-7.one-tuple-removed-from-side-b.json": {
+   "bytes": 4107,
+   "sha256": "deca40157c834a69519084574a1c08a730180eb80885346579904958f62b396f"
+  },
+  "boundary/constraints-7.one-tuple-removed-from-side-b.meta.json": {
+   "bytes": 21228,
+   "sha256": "49da5d1ca24fe195bf6518a4fbaf3b468ec460fd9b5b2c316d848e1be10599ab"
+  },
+  "boundary/constraints-7.projections-identical.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-7.projections-identical.meta.json": {
+   "bytes": 21202,
+   "sha256": "15aedad5af9626e8240d75d7f24a2a3dfa0e1acc3f01cc40938c7d87b2b3be50"
+  },
+  "boundary/constraints-8.empty-all-scope-fact-types.json": {
+   "bytes": 4031,
+   "sha256": "e093e1a14f6f71c4fc69590a05da1c676d0ead45757533bef1b70753bd934df7"
+  },
+  "boundary/constraints-8.empty-all-scope-fact-types.meta.json": {
+   "bytes": 21238,
+   "sha256": "271f681a608df1010a8203fa773717f2cb66e886d4d4bf20beed9d37ae5e6a32"
+  },
+  "boundary/constraints-8.one-overlapping-tuple.json": {
+   "bytes": 4279,
+   "sha256": "6e32d79fa23bf5c6c644b74609ab1e9d2c764e8196bd1168066c6e868f814a4e"
+  },
+  "boundary/constraints-8.one-overlapping-tuple.meta.json": {
+   "bytes": 21207,
+   "sha256": "b3a9e3fe8394c97e3d10db9b858d5ae0fb11912fed877b483764b7ebe68a9b26"
+  },
+  "boundary/constraints-9.empty-object-scope.json": {
+   "bytes": 2310,
+   "sha256": "8a9e92d170c046871f88bdfdface144f8c55421738334914c9fed3a54596a220"
+  },
+  "boundary/constraints-9.empty-object-scope.meta.json": {
+   "bytes": 21615,
+   "sha256": "bd4359d2d0e39c604ad3123acbb4cfd1190fe0fc48d24c4eb8a256aee7336c36"
+  },
+  "boundary/constraints-9.plays-both.json": {
+   "bytes": 4241,
+   "sha256": "b20735ae450972dc6e5bb136506cd1fa2cc38d9e5972466e8a1f8a49df022f80"
+  },
+  "boundary/constraints-9.plays-both.meta.json": {
+   "bytes": 21185,
+   "sha256": "9746b7c17d364b2ef5ca211628a0f5895b062eaed0fd13e1b38b13a30a6464ab"
+  },
+  "boundary/constraints-9.plays-exactly-one.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/constraints-9.plays-exactly-one.meta.json": {
+   "bytes": 21193,
+   "sha256": "dfc0bc652dd3423664afcb0aabd5bd709a0004718ab53017a54dabac38f5e70b"
+  },
+  "boundary/constraints-9.plays-neither.json": {
+   "bytes": 4149,
+   "sha256": "89001506731ed318a628f360aec5ffdc4e05750fd957d21f99fc2725b01cb492"
+  },
+  "boundary/constraints-9.plays-neither.meta.json": {
+   "bytes": 21191,
+   "sha256": "e1cf4b823ea1946a5f575ad063c4e701b30d8908cf501164aeb2926871c80e58"
+  },
+  "boundary/fact_types-assignment_has_hours-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3912,
+   "sha256": "01876ddf2357b463c07d110675eaaa6eb40b29aed0d09d2cca90df798f2b8fda"
+  },
+  "boundary/fact_types-assignment_has_hours-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21292,
+   "sha256": "b048b3abca7b88d034d3d5b04ea317415a4b2e9100e19c0d55f839213666de0a"
+  },
+  "boundary/fact_types-assignment_has_hours-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-assignment_has_hours-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21264,
+   "sha256": "46747f392b841b70e3171619eb99303c7ef37d1200b4bfbc641bb45826ad6373"
+  },
+  "boundary/fact_types-assignment_has_hours-.constraints-0.occurs-twice.json": {
+   "bytes": 4280,
+   "sha256": "f366a8d6e38bc32fe0b0b259422519af8eef10ec32371566ee8a258645dd30d9"
+  },
+  "boundary/fact_types-assignment_has_hours-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21250,
+   "sha256": "157b838c57d7a788767dfcfab3deec95d8233f94d031801c0dc0f462cc2a160c"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3892,
+   "sha256": "1186e13e1dd1f289714acfe9a1ccc832e8aa74e38adf1c228a19729c52e63a62"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21342,
+   "sha256": "ab738a57fca5f771ab8d6fe42249dca22046d2f0ff429d546ed4d9eece8dfde5"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21267,
+   "sha256": "1ccd1952ae0ea5c268270d58cf81b5547a7d3d9d4cd29aa5c7ee8f458bfc6ac5"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-0.occurs-twice.json": {
+   "bytes": 4286,
+   "sha256": "3b3cf19f9f4f08351dbc1ca633a5d8458643b5dab3646d1fe6979ee23c77c637"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21253,
+   "sha256": "6fd4f559d024511bfaa102b3709a768382eaf520fc902f76b1503f64859af2a5"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-1.coverage-omission.json": {
+   "bytes": 4165,
+   "sha256": "e292a038baa6354afa5c91d61e3c9ff1de394802fd547f0831953b13149fdfb2"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 21291,
+   "sha256": "f2b609e15e82525e15c94fe635911541a5c0b6572f67ddbcbc0930e3c2c7611e"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 21291,
+   "sha256": "998794684a7c017572d912c1505ec5c6b93c93c04d72112156ebec1411102fed"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 4252,
+   "sha256": "a4ac386badcd30874e3de69fb1ea5436ecddf9e729970f8ec4f7771df91dd35b"
+  },
+  "boundary/fact_types-assignment_of_employee-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 21299,
+   "sha256": "c678f4b0ac19354a6428b3af552c7319ea77658904164be8bc25646c3804ec82"
+  },
+  "boundary/fact_types-assignment_on_project-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3889,
+   "sha256": "4af43958902ec85759785ceaae6bac27cf9fc62d28842756f27b054c485dc804"
+  },
+  "boundary/fact_types-assignment_on_project-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21313,
+   "sha256": "0e9d26de2bad41df8141db4df981ac023cd1c7b5b294a652282dcf5a0f9b8ce4"
+  },
+  "boundary/fact_types-assignment_on_project-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-assignment_on_project-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21266,
+   "sha256": "59197a0c6267af9e94ea0c525f037dc4f60c759c8ad305ef65507bc4cee802d2"
+  },
+  "boundary/fact_types-assignment_on_project-.constraints-0.occurs-twice.json": {
+   "bytes": 4287,
+   "sha256": "83e78122a085a8bb0048cd4bd0a10dcf039e3e3febbf88e99ac7a5b1aa342ec6"
+  },
+  "boundary/fact_types-assignment_on_project-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21252,
+   "sha256": "5584cbbd15a22c8cc24b9b158b2d4bb64c0c426bcdf8ee9d378d71c3d033a582"
+  },
+  "boundary/fact_types-employee_earns_salary-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3917,
+   "sha256": "ffb239371d6d14650a7b34eecb4ebbb507a473450a9ecda1e18ce6e2019bddf0"
+  },
+  "boundary/fact_types-employee_earns_salary-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21295,
+   "sha256": "d81d9585d0f40c152798e929984556a0b87838dd3683f472ad86aee2d2eb52ca"
+  },
+  "boundary/fact_types-employee_earns_salary-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_earns_salary-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21266,
+   "sha256": "6b21275d35aa41e1a0f515e182b98d295cd6f85f99520664d35c42b1507b3a19"
+  },
+  "boundary/fact_types-employee_earns_salary-.constraints-0.occurs-twice.json": {
+   "bytes": 4276,
+   "sha256": "4d49c32f826dac17c6b0b2cf216839d7f091abe3b8ddfff2a1284efd2254a94f"
+  },
+  "boundary/fact_types-employee_earns_salary-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21252,
+   "sha256": "f18ed8c0a2e1ab746446bab4978f914bd159aac1318bad1f5b37fa676bf388e5"
+  },
+  "boundary/fact_types-employee_has_gender-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3961,
+   "sha256": "bcb7a50215cc7b7bf86bb0d98c5646829e3b2ef32c816112d4bc2a400a53efc3"
+  },
+  "boundary/fact_types-employee_has_gender-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21315,
+   "sha256": "ba73abb163ece472d7f880dc07abe87babdd24aa724d640ec776f28f0081ea31"
+  },
+  "boundary/fact_types-employee_has_gender-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_has_gender-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21262,
+   "sha256": "ab5f4eccd146c41511c0cffa3de78c91ff2f688048a4dc65a1aa363da3848ca5"
+  },
+  "boundary/fact_types-employee_has_gender-.constraints-0.occurs-twice.json": {
+   "bytes": 4264,
+   "sha256": "af784986489d939c0f206d094f0f3fb7c3409dda4154e99cea54b8d84626811c"
+  },
+  "boundary/fact_types-employee_has_gender-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21248,
+   "sha256": "d397e5050cd75c5081ed9f284613be91c4a73958bc58c81d5f1e7bb70e9736b2"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3959,
+   "sha256": "fca55aea372232299662a71c08ef92c3f400a940f69605dc2cba030646ededf9"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21313,
+   "sha256": "f91989f72289d46b710b1775d8c306f5d3766b2887048695f6f1e922c1716dc7"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21258,
+   "sha256": "ec4eace46c6222a4951c425fa01c71caff5cebf6d760f43d59dfa71d206e3024"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-0.occurs-twice.json": {
+   "bytes": 4264,
+   "sha256": "5d215a79c07da2f8cdc3695bad7d908990e31cf323b5c4561888ce9cd2baa87f"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21242,
+   "sha256": "37efbfbc02bf49d15d2b197888461b8672fe35301c02c114db3dbb150487f7dd"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-1.coverage-omission.json": {
+   "bytes": 4170,
+   "sha256": "3695840b9e3b0717dba68718102bd9f5046cc5291fc7e721de8a58a21e31870a"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-1.coverage-omission.meta.json": {
+   "bytes": 21281,
+   "sha256": "9b402eccfc2f50468f21893da7ce7835ed0b49a6ee9878be4775c72208df423b"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-1.every-observable-instance-plays.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-1.every-observable-instance-plays.meta.json": {
+   "bytes": 21282,
+   "sha256": "c293e33f57ccf0379b5fd997140a867114ceb4c786e1214545f632eba5372767"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-1.one-rostered-instance-does-not-play.json": {
+   "bytes": 4237,
+   "sha256": "5fa41bc613ab73a23cb27103c7c6f98cea44145719ef34295d36ac8b7f76979e"
+  },
+  "boundary/fact_types-employee_has_name-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
+   "bytes": 21294,
+   "sha256": "c1cbe059ce754463cbe2e16f2f3b3ac06f8b1e85149803c980118dfd62fec599"
+  },
+  "boundary/fact_types-employee_heads_department-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3931,
+   "sha256": "2142120f9c73125e3cbcb89fee26d5ba4230a8ae8744db835d25d63fc8f383a5"
+  },
+  "boundary/fact_types-employee_heads_department-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21320,
+   "sha256": "791c7a3a1472717bb2076545343e0f6ab3a70cff2916071c9c43aa6dddd10d94"
+  },
+  "boundary/fact_types-employee_heads_department-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_heads_department-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21273,
+   "sha256": "0bd44a94065d4afa8edf2379f1dd119e6eb05c5c31e40488cea133334d9643df"
+  },
+  "boundary/fact_types-employee_heads_department-.constraints-0.occurs-twice.json": {
+   "bytes": 4273,
+   "sha256": "182ba27788e5f279e22f4a28b97108e9bc4f26600543c17ad81937729a0fd1fb"
+  },
+  "boundary/fact_types-employee_heads_department-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21259,
+   "sha256": "301ae8a168a617c151a98ae96ffadaa81c0bee981335f98b090d9cd9f9ea5485"
+  },
+  "boundary/fact_types-employee_leads_project-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 4089,
+   "sha256": "52e37f66d81c430b0f24f02625529cdab6a89e025d5f75afcac48cfd8a40f865"
+  },
+  "boundary/fact_types-employee_leads_project-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21313,
+   "sha256": "439f57d70702278b370c3fad12a6018a264fce56e36350dfc6f385ce2f32b6cf"
+  },
+  "boundary/fact_types-employee_leads_project-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_leads_project-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21266,
+   "sha256": "08a5744bdc223e1c0228ac20a6d1f78819efab42865ef2685d95ce9685849b24"
+  },
+  "boundary/fact_types-employee_leads_project-.constraints-0.occurs-twice.json": {
+   "bytes": 4267,
+   "sha256": "1c9ce72a845b5545b6391ef57891c61cf2ce8e58d73ae07f7bd690b1156c6ce2"
+  },
+  "boundary/fact_types-employee_leads_project-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21262,
+   "sha256": "513f8f8a7222dfb22820e48e8d6699372ea580511607d8738337fcf0aa42b518"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 4005,
+   "sha256": "6c0fcb90ede2f00ac3f1421591f2b7603b53d4d342ebd938f9ee405fa52bfffa"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21346,
+   "sha256": "1a8ff38b335d7e5ae0ccdd838118b00009879a19a57373a29d40f8489327a389"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21280,
+   "sha256": "1fe74441724c4ce48285abb5d2d709c70a4ad63036dcaf8368949788f8c33f28"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-twice.json": {
+   "bytes": 4271,
+   "sha256": "a6ef11cc3497bb692a309f17ce23707a9f2cfaf1a82854a13e2ddba20dc181db"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21265,
+   "sha256": "9eddb5eb40d105eb4141759b1dab5da11b95d5a0f1ccd5a92d25c7b8ed33e78c"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-1.empty-host-fact-type.json": {
+   "bytes": 4005,
+   "sha256": "6c0fcb90ede2f00ac3f1421591f2b7603b53d4d342ebd938f9ee405fa52bfffa"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-1.empty-host-fact-type.meta.json": {
+   "bytes": 21346,
+   "sha256": "370efd4be1469c29502b98afc8984c903b6195958ab9f2b16a6a270b81bbebb6"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-cycle-of-3.json": {
+   "bytes": 4271,
+   "sha256": "ef1b08b06376944cfc65db988ee8634e9ee0476c97be297c225544c97fbddeaf"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-cycle-of-3.meta.json": {
+   "bytes": 21293,
+   "sha256": "159fa548035fb025533f4a2eaa8d6abb4fe5e549e6ce563cec30b96c210d2318"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-holds.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-holds.meta.json": {
+   "bytes": 21278,
+   "sha256": "07b392de2fb78bee9ddd7e00fe2962d0a5972fa86df0dd91f39309d5db3f4e44"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-holds.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-holds.meta.json": {
+   "bytes": 21286,
+   "sha256": "d67e2b6ce27b5aff2ed0f0994746201722b292d4b401173feb4e55d070f05b77"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-self-loop.json": {
+   "bytes": 4271,
+   "sha256": "92b27d55ae5614e1cd98e29f1a23e975d7639661bb2ecfe64aaf6f5f3508571f"
+  },
+  "boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-self-loop.meta.json": {
+   "bytes": 21295,
+   "sha256": "77087018d8d082882f7a1a9b9625f1844c0241909226e834e1b35a48634d4f99"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3936,
+   "sha256": "5481b02eebdc487de2a7353d53e3959d0c09a03bd19bde3d4d2a645d4e7520a1"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21340,
+   "sha256": "66e1d5967cc6a6b24123f88d2789ea1fbb0d6a48db075e3b24cb8c1d97ebc4f7"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21274,
+   "sha256": "33b11c720aefc3176a43dcc4a4aba5241b62d77222f2f8197d375d3bfdb66a3b"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-0.occurs-twice.json": {
+   "bytes": 4267,
+   "sha256": "c6e902a127165433015c733aa044ec14716eccea018d586b8f2f7e7ad9c25675"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21259,
+   "sha256": "f6ef7b1aa2bf12a7ccf86c960217ed1d33a2a37ad510b177635af25cdef39aa1"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.empty-host-fact-type.json": {
+   "bytes": 3936,
+   "sha256": "5481b02eebdc487de2a7353d53e3959d0c09a03bd19bde3d4d2a645d4e7520a1"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.empty-host-fact-type.meta.json": {
+   "bytes": 21339,
+   "sha256": "49c0581cee2d3c4c63facab7cdcd3ac3a8bc057f07622cf7f01d021680273dab"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.group-at-max.json": {
+   "bytes": 4890,
+   "sha256": "904e432794e684479088d92b068f06c5854c02b378cbf4f565e32e83c41eec14"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.group-at-max.meta.json": {
+   "bytes": 21265,
+   "sha256": "5feac89a372858f795425c7409b93dc9be52a96a228c1437e398eba8ce352cfb"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.group-at-min.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.group-at-min.meta.json": {
+   "bytes": 21260,
+   "sha256": "08be04988feec0fc862e99f490755669042758df3b7f81f386fe61683b5c628c"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.group-past-max.json": {
+   "bytes": 4967,
+   "sha256": "c183401b185482fb0f6da8ef32881ee9ac1a5fa2e29e808b68fd83bd439bdd45"
+  },
+  "boundary/fact_types-employee_works_on_project-.constraints-1.group-past-max.meta.json": {
+   "bytes": 21269,
+   "sha256": "c7cf541d15207521732fc1b93bf639d0d345ee87e5da96b337b465c14d1203a7"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-0.empty-host-fact-type.json": {
+   "bytes": 3836,
+   "sha256": "b3627ba03a419efcec5acfdc9bd73580f0738b6cb377fb2acc27d56c4d1456d4"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-0.empty-host-fact-type.meta.json": {
+   "bytes": 21330,
+   "sha256": "804ab684ee48ff85ff87c27e70c3a90ec34077b4378d2fec14560be7bcb6c764"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-exactly-once.json": {
+   "bytes": 4197,
+   "sha256": "30aa1f89b61a28c0ea84b1d302b50d3fac7a1b43de1e1345860bdbd640a1bf51"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-exactly-once.meta.json": {
+   "bytes": 21281,
+   "sha256": "9c0e083117680e089cb1dd87bbf7df3ecbae70d3c074e98dd1f363003eca16be"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-twice.json": {
+   "bytes": 4306,
+   "sha256": "d5aa7b7a8108848fbbbce344a93a30220b74dbc3a36e31903394bae40c6d34cc"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-twice.meta.json": {
+   "bytes": 21268,
+   "sha256": "1af100ac470b849149bdd18cdfdac8d9b947409a016d20e78cfb61897387d32e"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-inside.json": {
+   "bytes": 4197,
+   "sha256": "ee003543d984584904650261e51b55be8b4b84f07fbf0c0be7cdc5dbaa5b29d4"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-inside.meta.json": {
+   "bytes": 21278,
+   "sha256": "025bec85783103ab26985e768c63d93817cf064e6d87e5abf2fd301fe8c7aba9"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-outside.json": {
+   "bytes": 4197,
+   "sha256": "1787e17940e05f5971cf8c8930dba09f7b8d651975cd3b6f23056c7d19dac6ba"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-outside.meta.json": {
+   "bytes": 21286,
+   "sha256": "745eb00c82e89fd6d9c02694482ec4504765cd4d9f538d5b1b3ef5be13a000ce"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-1.empty-host-fact-type.json": {
+   "bytes": 3836,
+   "sha256": "b3627ba03a419efcec5acfdc9bd73580f0738b6cb377fb2acc27d56c4d1456d4"
+  },
+  "boundary/fact_types-project_ran_from_date_to_date-.constraints-1.empty-host-fact-type.meta.json": {
+   "bytes": 21329,
+   "sha256": "2b2a1d2e4ca394bef81992412a66bd5896bc8133415c4f415329045e5d8f8a7f"
+  },
+  "conforming/full_vocabulary.orm.conforming.seed0.json": {
+   "bytes": 4199,
+   "sha256": "08d357ff5badc93a15c3f848fb3b978f921aef2bd9e9f7ed84134d1fbca7826f"
+  },
+  "conforming/full_vocabulary.orm.conforming.seed0.meta.json": {
+   "bytes": 21154,
+   "sha256": "4efa85afe69dbc6060c260b9f6bd651f7c58d941cbf04ace94c38b929c7371f5"
+  },
+  "conforming/pool.7351c58f74aae386.pool.json": {
+   "bytes": 2305,
+   "sha256": "16f64710f706f605494c1e3915c66fdcc7526fb408d67ffdbdd97f97867bbabb"
+  },
+  "index.json": {
+   "bytes": 105122,
+   "sha256": "ef0baa78d0a6839747e5e6a8214c9f438a4464fd7746b80cc3c30b247fb97bbf"
+  },
+  "violating/constraints-0.duplicate-joined-tuple.json": {
+   "bytes": 4377,
+   "sha256": "0f34213ffec65636f4b9324d6f4a37395dad9505c66b7b950f1ab284ade7ca38"
+  },
+  "violating/constraints-0.duplicate-joined-tuple.meta.json": {
+   "bytes": 21232,
+   "sha256": "f0a75c02d84e251455e6ff1a55bfae8777c6ff87397c0b6d0eb153352a353795"
+  },
+  "violating/constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 4163,
+   "sha256": "75261b7ca902e48ad38a3d4fed5e7b17b864c37a77f3626ac214f2aec559ad5d"
+  },
+  "violating/constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 21261,
+   "sha256": "519e7ca6f6d6658948551f8e7951d558e6d5afaec0a5df2a8ff7aadac1b0ec32"
+  },
+  "violating/constraints-1.remove-all-disjunctive-role-plays.json": {
+   "bytes": 4052,
+   "sha256": "0c2bf4443607a74f98a587d1d408a2f9fc0703c32ef5171137a50ba02659b1f5"
+  },
+  "violating/constraints-1.remove-all-disjunctive-role-plays.meta.json": {
+   "bytes": 21258,
+   "sha256": "21f5323c010af099fe6818f477819eff4b834755372e0cf21463624c109ebfd8"
+  },
+  "violating/constraints-10.introduce-distinct-instance.json": {
+   "bytes": 4497,
+   "sha256": "8f629ff0c7661a3032a226a63d7381426a35e19791638448dba5ae3443224696"
+  },
+  "violating/constraints-10.introduce-distinct-instance.meta.json": {
+   "bytes": 21247,
+   "sha256": "e7e80b33888c32139e6a3226cea2d72fd813c878c9cb2914c8780556a5417ec2"
+  },
+  "violating/constraints-11.introduce-distinct-instance.json": {
+   "bytes": 5069,
+   "sha256": "90bcaec940da76bed138caaafdc84a517208c7a65d7f800d4c610a1db536dde9"
+  },
+  "violating/constraints-11.introduce-distinct-instance.meta.json": {
+   "bytes": 21344,
+   "sha256": "abe9f6998ca6b241babc7e69c81d8ec38b6415c3fe30ca936d1b4acfde7a3a5b"
+  },
+  "violating/constraints-12.place-instance-in-two-subtypes.json": {
+   "bytes": 4297,
+   "sha256": "c1fb94063f2dd48e0bcae658a327a1f83cc1e35b9109b5f1c9a82259978615dc"
+  },
+  "violating/constraints-12.place-instance-in-two-subtypes.meta.json": {
+   "bytes": 21230,
+   "sha256": "7f596297c2a585101c11e92c10452e363b61ac1ddff2c1a20dbfdc27a11c2e94"
+  },
+  "violating/constraints-2.add-fact-with-out-of-range-new-entity.json": {
+   "bytes": 4276,
+   "sha256": "6a8cef67eac3a8ce453e23e7ed7a145f28e8318c97621d8ab377996bf951b769"
+  },
+  "violating/constraints-2.add-fact-with-out-of-range-new-entity.meta.json": {
+   "bytes": 21362,
+   "sha256": "8af1e339d510efe74e6bf6f4f4745168a91bd9b93f70dbf9e447c908f5eba263"
+  },
+  "violating/constraints-2.edit-value-out-of-range.json": {
+   "bytes": 4209,
+   "sha256": "5946f79bd1055032a5f40fd6a87546cc7fa9e2a375e1d807e70bd8bdea2ad6c6"
+  },
+  "violating/constraints-2.edit-value-out-of-range.meta.json": {
+   "bytes": 21234,
+   "sha256": "c160b702860c8c8f765f4257376e26b0ef68d071a50bed7b70156a8839ea65ae"
+  },
+  "violating/constraints-3.add-fact-with-out-of-range-new-entity.json": {
+   "bytes": 4280,
+   "sha256": "ee7521e068ff8a02541d4dd8fb85c51a7755f983797e70b33451509c93d8cdc2"
+  },
+  "violating/constraints-3.add-fact-with-out-of-range-new-entity.meta.json": {
+   "bytes": 21322,
+   "sha256": "ea432f2837de6b92da4563c2d2a3d3219fef39c3ac4f3dde6c98564a45ff2976"
+  },
+  "violating/constraints-3.edit-value-out-of-range.json": {
+   "bytes": 4199,
+   "sha256": "c7ac21342691677c867d001f0a05782d8640afb6d9e86e902ea9e0585f5d52df"
+  },
+  "violating/constraints-3.edit-value-out-of-range.meta.json": {
+   "bytes": 21237,
+   "sha256": "4c3c655fe98d39d19fd13e50e8293e791811cbb617e15b94de0cec08f5e13b13"
+  },
+  "violating/constraints-4.add-fact-with-out-of-range-new-entity.json": {
+   "bytes": 4279,
+   "sha256": "d9862f40a04e49044d43f338b6f232e10681c89fe9f5148c935bb53f6d8e2714"
+  },
+  "violating/constraints-4.add-fact-with-out-of-range-new-entity.meta.json": {
+   "bytes": 21323,
+   "sha256": "ef54ea6cc88b36cc56445513649e41d27e85eff19a850f738fac92fdb4c3abe6"
+  },
+  "violating/constraints-4.edit-value-out-of-range.json": {
+   "bytes": 4198,
+   "sha256": "72f9bcffde232deebcd359381c6fa91bccae1d041ca55d48d4e1efd2ed63ebce"
+  },
+  "violating/constraints-4.edit-value-out-of-range.meta.json": {
+   "bytes": 21237,
+   "sha256": "020619692718fd3febc333f6482d1210da6eebf9c63eebc739436cbdcf0871a7"
+  },
+  "violating/constraints-6.add-player-missing-subset-role.json": {
+   "bytes": 4275,
+   "sha256": "c632d1e7e807f12286c740a7a60209fd404a3e9680fcaa482aace4bef26de1ca"
+  },
+  "violating/constraints-6.add-player-missing-subset-role.meta.json": {
+   "bytes": 21251,
+   "sha256": "0f9f85e0278aab2f63dbb262ac01639687dcef78db920d8e4a94a61d8b09b7d9"
+  },
+  "violating/constraints-7.remove-tuple-from-equality-side.json": {
+   "bytes": 4108,
+   "sha256": "17aa373f726197f1bc811f0ddfc1b79391a51e7a1e3ac1dafcd7ede35675f240"
+  },
+  "violating/constraints-7.remove-tuple-from-equality-side.meta.json": {
+   "bytes": 21254,
+   "sha256": "1d02a0c78bbf0039c370c59f25e2f07b12a419af94ddbe0636bbde101d05a172"
+  },
+  "violating/constraints-8.add-overlapping-tuple.json": {
+   "bytes": 4280,
+   "sha256": "5e94272867b55d3f612d7276a47677004db7d6803ce15379deebcbde94c707d7"
+  },
+  "violating/constraints-8.add-overlapping-tuple.meta.json": {
+   "bytes": 21234,
+   "sha256": "8ec10f1a3045a7e3d82fd1badb0002f03b55fd4db44fc9b79ddf35a17ee03730"
+  },
+  "violating/constraints-9.play-both-exclusive-or-roles.json": {
+   "bytes": 4242,
+   "sha256": "2ac3dfea56f7ec8af9086e1a2f66833ab784f0a4808185dafc94a3906a8c0a4d"
+  },
+  "violating/constraints-9.play-both-exclusive-or-roles.meta.json": {
+   "bytes": 21247,
+   "sha256": "12d2d5b7686b38385e37d74e7988e6f26a3021503fa8f25af79b27cc257ffb1d"
+  },
+  "violating/constraints-9.play-neither-exclusive-or-role.json": {
+   "bytes": 4150,
+   "sha256": "848879621d86dc092c285099860c56d2034b2e5f32790244f1c60a87cd921dd7"
+  },
+  "violating/constraints-9.play-neither-exclusive-or-role.meta.json": {
+   "bytes": 21251,
+   "sha256": "760c144d851a038ed0f0f38b54f099f0aaef37c30ff95897f5799d3bb1f7b104"
+  },
+  "violating/fact_types-assignment_has_hours-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4281,
+   "sha256": "0934f5ced9f812299ce82547afd61cd0b2ce076964360788de0ef53934f3270e"
+  },
+  "violating/fact_types-assignment_has_hours-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21376,
+   "sha256": "e974770c71989e431949cc04aa0e8662dc0cb1f2173aea23c994704569507dc6"
+  },
+  "violating/fact_types-assignment_has_hours-.constraints-0.empty-fact-type.json": {
+   "bytes": 3913,
+   "sha256": "8a58666e1c3f440bef8d37e4c18cc027ad391fd463ad70f71c5812313c51b8c2"
+  },
+  "violating/fact_types-assignment_has_hours-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21370,
+   "sha256": "3852ffc9a9bdbd2cf6f88447be053ebac04eb6660f753e70f2713f4b370c378d"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4287,
+   "sha256": "4fe541984aa325d3bb6020748ce917b9bac67fc3c0547bfcf564730d3593e549"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21384,
+   "sha256": "5a8c056acaa4a7d06ebb115a45533e01e2dd5a0650b0dd0678d6e2b39d8cef29"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-0.empty-fact-type.json": {
+   "bytes": 3893,
+   "sha256": "fff1ec7bfe6c9aeccd4210d43331a737f56652e2e65dc6b49d412a0ae91060b5"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21526,
+   "sha256": "508f1b7a00ea5c38aa12005916f8bdfb0f1d9e75a39b00a4e786dcd4c4e8cf04"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 4166,
+   "sha256": "a552c054044b0c88b2ad60f1c95393950cff9fd23bed0fa4745a7eefa6aca0b9"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 21401,
+   "sha256": "c5bf9317b909a4c03cb0dd514a4f1da59db1fe3d913fd369827d6eda2fc91826"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 4290,
+   "sha256": "a034c4d0585326355cbaff75529781ca5fc1ae9ce376b14eaf9f49c3dbc7d9de"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 21396,
+   "sha256": "5ff5f2ad724110d817df5723b383e28d84fcc636b5e2a231c78f765768d9d112"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-1.roster-add-instance.json": {
+   "bytes": 4253,
+   "sha256": "0296e33698837826fec42ad167094b582719c6c545756cf0a110bf0d4e841eee"
+  },
+  "violating/fact_types-assignment_of_employee-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 21365,
+   "sha256": "f8cc712355a77d365c27e40acdcb16814afa6b02c20a955402215f0df6af3427"
+  },
+  "violating/fact_types-assignment_on_project-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4288,
+   "sha256": "5326326ce73b172b8b5af0266015e1c4a0477d2acae2d963d6032d94305de2cb"
+  },
+  "violating/fact_types-assignment_on_project-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21380,
+   "sha256": "c74e625ae85d287261c5803b6f674bc423f7fcaeab748d5f119f59edc9216dfa"
+  },
+  "violating/fact_types-assignment_on_project-.constraints-0.empty-fact-type.json": {
+   "bytes": 3890,
+   "sha256": "b4906807e6c84786a3301cfb4bcbc1dee2c123e7560a9da19476252d50725e08"
+  },
+  "violating/fact_types-assignment_on_project-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21438,
+   "sha256": "8c3a67363782cdbb2741aee4a7527f4cfc33a8677b174146205beaf8ad944db7"
+  },
+  "violating/fact_types-employee_earns_salary-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4277,
+   "sha256": "b0c6ac2ac8e114f7ceee8ec7f5d2877742ecf37d0b29452b8b3ac7a2497e96dd"
+  },
+  "violating/fact_types-employee_earns_salary-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21381,
+   "sha256": "c5eab422e6e9e0192694ec0290adfee27ef5e5878b782679179dc0addb7a19af"
+  },
+  "violating/fact_types-employee_earns_salary-.constraints-0.empty-fact-type.json": {
+   "bytes": 3918,
+   "sha256": "3366024670724d6667c9e3b6b0148c47081925fee397c7666643fcc329ff455a"
+  },
+  "violating/fact_types-employee_earns_salary-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21375,
+   "sha256": "42ecca664152b5dc46f3d892d9f112a3f66e7372baa21aea7810593465572568"
+  },
+  "violating/fact_types-employee_has_gender-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4265,
+   "sha256": "46aeecc2f153f627b168f6deb3c8acd87d605c56fbf27f8b31354b54be2c3730"
+  },
+  "violating/fact_types-employee_has_gender-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21372,
+   "sha256": "0aa877bb10edd8e2e71e8685447148e0499bc2edc2decb88a224b7fc61797d44"
+  },
+  "violating/fact_types-employee_has_gender-.constraints-0.empty-fact-type.json": {
+   "bytes": 3962,
+   "sha256": "1d83d990e56b3187df89076c88bf078979d8bda7370a015352986ac00bdbed19"
+  },
+  "violating/fact_types-employee_has_gender-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21415,
+   "sha256": "e2707a47be6832626069a96480c7aa2cea9aad12b353be276853ea049ed78606"
+  },
+  "violating/fact_types-employee_has_name-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4266,
+   "sha256": "07cde7937631e32fb78e153a70583eabb36e9382a65d7a0c0a64769ac87db49e"
+  },
+  "violating/fact_types-employee_has_name-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21364,
+   "sha256": "27c3b4b9471a9922b689d1ca25d29c483a65bc0aa6fe8bcc04f4ec306daa1217"
+  },
+  "violating/fact_types-employee_has_name-.constraints-0.empty-fact-type.json": {
+   "bytes": 3960,
+   "sha256": "8b502625e8efd9a92a6665886bef4df30be7b4d5f624b702d2bdb4eef6b60b9a"
+  },
+  "violating/fact_types-employee_has_name-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21438,
+   "sha256": "47584122c82dbf6169c8360054da90936589d10171d7ef8076751d02a51745fd"
+  },
+  "violating/fact_types-employee_has_name-.constraints-1.drop-fact-type-from-covers.json": {
+   "bytes": 4171,
+   "sha256": "42ea5a38903489a9245b1bfddb2865dadf0cc85a066451ba72595f4648d26e3e"
+  },
+  "violating/fact_types-employee_has_name-.constraints-1.drop-fact-type-from-covers.meta.json": {
+   "bytes": 21381,
+   "sha256": "d161ab04d08ccb65773c7642d78ce66509897b707b12b38cd3c243717ccea1cd"
+  },
+  "violating/fact_types-employee_has_name-.constraints-1.new-entity-plays-role.json": {
+   "bytes": 4265,
+   "sha256": "c98e64796a8d757fc6a092277b540109f0381625ced61f69ec5602f8d0dd6dbe"
+  },
+  "violating/fact_types-employee_has_name-.constraints-1.new-entity-plays-role.meta.json": {
+   "bytes": 21400,
+   "sha256": "237eafc36785b5fe6553ad36d798453926406ea38d3f4e27575dc4c1335cc4b9"
+  },
+  "violating/fact_types-employee_has_name-.constraints-1.roster-add-instance.json": {
+   "bytes": 4238,
+   "sha256": "f8cc1af8625fc916616eac23628bc793213b9fd2186af6722d284dad9e4df292"
+  },
+  "violating/fact_types-employee_has_name-.constraints-1.roster-add-instance.meta.json": {
+   "bytes": 21395,
+   "sha256": "23f7c6a986260d7bbf3320a7e867f3c405e2dcf872d027a1e18b8c575ee46fe2"
+  },
+  "violating/fact_types-employee_heads_department-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4274,
+   "sha256": "14de01fe375f631e96b19375f0b1c0744de7fd30a55aa03e0f8d57fe099ffae6"
+  },
+  "violating/fact_types-employee_heads_department-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21395,
+   "sha256": "e38e753d29c4c3b351b8676324bfa6c8916093992b24cd490d784522856e6b89"
+  },
+  "violating/fact_types-employee_heads_department-.constraints-0.empty-fact-type.json": {
+   "bytes": 3932,
+   "sha256": "f1fa67e4aeb666fb6a9730cd2585c5a183b1a8b03dc4ba2868a0454c7645b3a8"
+  },
+  "violating/fact_types-employee_heads_department-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21455,
+   "sha256": "81839e1bc8251003556760ae3f34da9162403a2444917b65b6457fa620cc41bd"
+  },
+  "violating/fact_types-employee_leads_project-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4268,
+   "sha256": "8d3507314350b2645414b9bab2a4bd14cec47b0b0b307ca2786971ffa69dcfce"
+  },
+  "violating/fact_types-employee_leads_project-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21413,
+   "sha256": "dc9d689fcac22d7115d848d21389cfff5ee2c3f710b739fed43aef8dc5f16625"
+  },
+  "violating/fact_types-employee_leads_project-.constraints-0.empty-fact-type.json": {
+   "bytes": 4090,
+   "sha256": "e1b92eff14a48c1230e4679ca3eb735f128c32929f85d7c6717c58117ee751eb"
+  },
+  "violating/fact_types-employee_leads_project-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21418,
+   "sha256": "8fd3e47187837c975fe9e5cf40d71e7c05c2a208968d9f241fa63300ec87601b"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4272,
+   "sha256": "1462e311897485763058acc2ebcfc61b4b076f602c6fe5aea88e482fe1fddf5c"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21407,
+   "sha256": "74df020fabb2b8e8a659ab3f10756e26f6d6c3c14a8ab707de9dbc59bb5808b1"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-0.empty-fact-type.json": {
+   "bytes": 4006,
+   "sha256": "192d82d59bc87658f39a7553ef05ded03895b1b4b8e76a5ed436718067bdd059"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21568,
+   "sha256": "0b2ced6c6c8276b26820fd3cd29ed163d59a8560f57a63b3442c2abeb0bc8ecf"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-1.add-self-loop.json": {
+   "bytes": 4272,
+   "sha256": "1ce329337d863038d60a194ec4ce1d67c9fdc738212df6755a2814007ae31342"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-1.add-self-loop.meta.json": {
+   "bytes": 21445,
+   "sha256": "e121b363588f721bf51c6ff2430539deaf6c70fd9452519f93d2e357642dfaa3"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-1.close-2-cycle.json": {
+   "bytes": 4272,
+   "sha256": "36fa72f182c747c97691dad5456c632350043b44e3f480d803b410fef1c9463c"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-1.close-2-cycle.meta.json": {
+   "bytes": 21382,
+   "sha256": "e5c49c895b205629c6b9efe44edd7afbb9b566d063d8f473dd219e6a65b86094"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-1.close-3-cycle.json": {
+   "bytes": 4272,
+   "sha256": "faa89a615e9579330d5fc3d63b0db2da7ee57aa7aa925fe86db175328d2e9959"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-1.close-3-cycle.meta.json": {
+   "bytes": 21381,
+   "sha256": "d9c3f22eedb1d997ce1379f93799885c17b7fb424841055f86ce76036bdbabd0"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-2.add-self-loop.json": {
+   "bytes": 4272,
+   "sha256": "1ce329337d863038d60a194ec4ce1d67c9fdc738212df6755a2814007ae31342"
+  },
+  "violating/fact_types-employee_reports_to_employee-.constraints-2.add-self-loop.meta.json": {
+   "bytes": 21443,
+   "sha256": "997d8c9a7f4a17e356e863421081d4658ec23752fb47b5153e4668a089a828d1"
+  },
+  "violating/fact_types-employee_works_on_project-.constraints-0.empty-fact-type.json": {
+   "bytes": 3937,
+   "sha256": "5f08aa9172ecc7406bb2654de519faa71dfb834f35684d104ae92064aa948f14"
+  },
+  "violating/fact_types-employee_works_on_project-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21533,
+   "sha256": "0d3704422ed276a277594eef35d3686721c0679e8c9d71e09cc66e3c5b712af5"
+  },
+  "violating/fact_types-employee_works_on_project-.constraints-0.exact-duplicate-row.json": {
+   "bytes": 4268,
+   "sha256": "ecb72fa1b48b120f3235fe24ef1cc2fc4bd6fd61436c91f06c39c575d12037ef"
+  },
+  "violating/fact_types-employee_works_on_project-.constraints-0.exact-duplicate-row.meta.json": {
+   "bytes": 21378,
+   "sha256": "d116c9b9bf5b15c64266ba897d633e3a61e000381c724b77e93e680ee8b0570b"
+  },
+  "violating/fact_types-employee_works_on_project-.constraints-1.add-facts-past-ceiling.json": {
+   "bytes": 4968,
+   "sha256": "5c8b4f971e8e76f14cd091a8c40f429c3f35e8431ef0e45f96bde7d5b19495d1"
+  },
+  "violating/fact_types-employee_works_on_project-.constraints-1.add-facts-past-ceiling.meta.json": {
+   "bytes": 21460,
+   "sha256": "5da07935e2f80f1ca7674dddbe3900b6ba56e9198f2ccf9bd84b40819a49eb35"
+  },
+  "violating/fact_types-project_ran_from_date_to_date-.constraints-0.duplicate-covered-role-value.json": {
+   "bytes": 4307,
+   "sha256": "530be7ce7748ea6512f856d2e029d9481157b180f3d32ab4fdbaf140a36cc872"
+  },
+  "violating/fact_types-project_ran_from_date_to_date-.constraints-0.duplicate-covered-role-value.meta.json": {
+   "bytes": 21413,
+   "sha256": "a83f68810fbc1acfe64c0cd7cd2fb91b09f9c135be3cce96997b715f28b94eaa"
+  },
+  "violating/fact_types-project_ran_from_date_to_date-.constraints-0.empty-fact-type.json": {
+   "bytes": 3837,
+   "sha256": "70aafd069b082a74c15fd76623175487a956f5f9afb78ca0483d4ba59d84b150"
+  },
+  "violating/fact_types-project_ran_from_date_to_date-.constraints-0.empty-fact-type.meta.json": {
+   "bytes": 21491,
+   "sha256": "900363226a282b88b867df5178532abc4d36bf8d64c079de24f5be4405c2fcc0"
+  },
+  "violating/fact_types-project_ran_from_date_to_date-.constraints-1.invert-value-comparison-operands.json": {
+   "bytes": 4198,
+   "sha256": "2de62d62e24dbe6f7412896a3a6d144adf88bca40e14369a0a8b97c16677a6fc"
+  },
+  "violating/fact_types-project_ran_from_date_to_date-.constraints-1.invert-value-comparison-operands.meta.json": {
+   "bytes": 21423,
+   "sha256": "ce3b6b8c2a8b1d1721592d03e52f51f5a5136188086dafd9212e19909930d408"
+  }
+ },
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 0, \"out\": \"<tmp>/synth\", \"class\": \"all\", \"pool\": \"conforming/pool.7351c58f74aae386.pool.json\", \"pool_sha256\": \"7351c58f74aae3860d992e0d0ea0bebb8854bf2eadc74afd6af56b95a256c417\", \"populations\": [{\"population\": \"<tmp>/synth/conforming/full_vocabulary.orm.conforming.seed0.json\", \"sidecar\": \"<tmp>/synth/conforming/full_vocabulary.orm.conforming.seed0.meta.json\", \"seed\": 0, \"band\": 4, \"class\": \"conforming\", \"case_kind\": \"conforming\"}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 11229300475247855096, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_has_name].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-0.occurs-twice.meta.json\", \"seed\": 580955895406900231, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_has_name].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 10791482558312484984, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_has_name].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 15655009854149987153, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_has_name].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_gender-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_gender-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 16238232685029985163, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_has_gender].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_gender-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_gender-.constraints-0.occurs-twice.meta.json\", \"seed\": 17655500786234348274, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_has_gender].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_earns_salary-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_earns_salary-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 16300049260649815590, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_earns_salary].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_earns_salary-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_earns_salary-.constraints-0.occurs-twice.meta.json\", \"seed\": 17935146531607792238, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_earns_salary].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 10521323604406895886, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-0.occurs-twice.meta.json\", \"seed\": 9254146815880843702, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-holds.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-holds.meta.json\", \"seed\": 16833969752685959090, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"ring-acyclic-holds\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-cycle-of-3.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-1.ring-acyclic-cycle-of-3.meta.json\", \"seed\": 3230685262184425038, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"ring-acyclic-cycle-of-3\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-holds.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-holds.meta.json\", \"seed\": 14533049461392752998, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"ring-irreflexive-holds\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[2]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-self-loop.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-2.ring-irreflexive-self-loop.meta.json\", \"seed\": 8206764344748047272, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"ring-irreflexive-self-loop\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[2]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 16645589706974492413, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_works_on_project].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-0.occurs-twice.meta.json\", \"seed\": 3940174930184564490, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_works_on_project].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.group-at-min.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.group-at-min.meta.json\", \"seed\": 10802233441733369803, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-at-min\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_works_on_project].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.group-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.group-at-max.meta.json\", \"seed\": 16190761211836667466, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 fact\", \"target\": \"fact_types[employee_works_on_project].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.group-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.group-past-max.meta.json\", \"seed\": 16771806702998036235, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"group-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 fact\", \"target\": \"fact_types[employee_works_on_project].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_leads_project-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_leads_project-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 257613431216913352, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_leads_project].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_leads_project-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_leads_project-.constraints-0.occurs-twice.meta.json\", \"seed\": 12248235820580063777, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_leads_project].constraints[0]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_heads_department-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_heads_department-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 7550980067419341619, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[employee_heads_department].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_heads_department-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_heads_department-.constraints-0.occurs-twice.meta.json\", \"seed\": 2050506512335722408, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[employee_heads_department].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 6874056704231408875, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[assignment_of_employee].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-0.occurs-twice.meta.json\", \"seed\": 4331652106260045624, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[assignment_of_employee].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-1.every-observable-instance-plays.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-1.every-observable-instance-plays.meta.json\", \"seed\": 6961445567635829011, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-observable-instance-plays\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[assignment_of_employee].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-1.one-rostered-instance-does-not-play.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-1.one-rostered-instance-does-not-play.meta.json\", \"seed\": 1306769119606043082, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-rostered-instance-does-not-play\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[assignment_of_employee].constraints[1]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_on_project-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_on_project-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 10374088795607249156, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[assignment_on_project].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_on_project-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_on_project-.constraints-0.occurs-twice.meta.json\", \"seed\": 14546738998208719937, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[assignment_on_project].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_has_hours-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_has_hours-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 18314959286416560048, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[assignment_has_hours].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_has_hours-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_has_hours-.constraints-0.occurs-twice.meta.json\", \"seed\": 16261033179796238587, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[assignment_has_hours].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-exactly-once.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-exactly-once.meta.json\", \"seed\": 9480112442410810592, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-exactly-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-0.occurs-twice.meta.json\", \"seed\": 12473502202829203611, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-inside.meta.json\", \"seed\": 12735276757214304576, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"comparison-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"fact_types[project_ran_from_date_to_date].constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-1.comparison-outside.meta.json\", \"seed\": 3214985158656191386, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"comparison-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"P1D\", \"target\": \"fact_types[project_ran_from_date_to_date].constraints[1]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-once.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-once.meta.json\", \"seed\": 5132488731341359946, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"joined-tuple-occurs-once\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-twice.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.joined-tuple-occurs-twice.meta.json\", \"seed\": 3460504716610958137, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"joined-tuple-occurs-twice\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.every-instance-plays-one-listed-role.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.every-instance-plays-one-listed-role.meta.json\", \"seed\": 5871151475950306378, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"every-instance-plays-one-listed-role\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.one-instance-plays-none.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.one-instance-plays-none.meta.json\", \"seed\": 14535703395788768032, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-instance-plays-none\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.coverage-omission-boundary.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.coverage-omission-boundary.meta.json\", \"seed\": 9226693748481217066, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission-boundary\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.enum-member-m.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.enum-member-m.meta.json\", \"seed\": 5385034689398854863, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-m\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.enum-member-f.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.enum-member-f.meta.json\", \"seed\": 5844283755500809653, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-f\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.enum-member-x.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.enum-member-x.meta.json\", \"seed\": 5768024843486262016, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-member-x\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.enum-non-member.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.enum-non-member.meta.json\", \"seed\": 2587115612006258867, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"enum-non-member\", \"boundary_side\": \"outside\", \"epsilon\": \"membership\", \"target\": \"constraints[2]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.range-min-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.range-min-inside.meta.json\", \"seed\": 9797043037407913903, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.range-min-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.range-min-outside.meta.json\", \"seed\": 8214791456348901896, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[3]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.range-max-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.range-max-inside.meta.json\", \"seed\": 11020418461912184620, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.range-max-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.range-max-outside.meta.json\", \"seed\": 11071989193235144154, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[3]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.range-min-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.range-min-inside.meta.json\", \"seed\": 9766296999125723950, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[4]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.range-min-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.range-min-outside.meta.json\", \"seed\": 3676999595042891999, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-min-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[4]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.range-max-inside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.range-max-inside.meta.json\", \"seed\": 12668096195726135559, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-inside\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[4]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.range-max-outside.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.range-max-outside.meta.json\", \"seed\": 11232424931530542805, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"range-max-outside\", \"boundary_side\": \"outside\", \"epsilon\": \"1\", \"target\": \"constraints[4]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.containment-edge.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.containment-edge.meta.json\", \"seed\": 10452478328139186304, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"containment-edge\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.one-tuple-past-containment.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.one-tuple-past-containment.meta.json\", \"seed\": 1245289334663544822, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-tuple-past-containment\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.projections-identical.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.projections-identical.meta.json\", \"seed\": 12431364073910699668, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"projections-identical\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[7]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.one-tuple-removed-from-side-a.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.one-tuple-removed-from-side-a.meta.json\", \"seed\": 2810763021732190963, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-tuple-removed-from-side-a\", \"boundary_side\": \"outside\", \"epsilon\": \"1 tuple\", \"target\": \"constraints[7]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.one-tuple-removed-from-side-b.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.one-tuple-removed-from-side-b.meta.json\", \"seed\": 3229263340736490096, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-tuple-removed-from-side-b\", \"boundary_side\": \"outside\", \"epsilon\": \"1 tuple\", \"target\": \"constraints[7]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-8.one-overlapping-tuple.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-8.one-overlapping-tuple.meta.json\", \"seed\": 3049484218476453263, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"one-overlapping-tuple\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[8]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.plays-exactly-one.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.plays-exactly-one.meta.json\", \"seed\": 2576273901411206748, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"plays-exactly-one\", \"boundary_side\": \"inside\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.plays-both.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.plays-both.meta.json\", \"seed\": 8750488927548223380, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"plays-both\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.plays-neither.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.plays-neither.meta.json\", \"seed\": 8204153820322928384, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"plays-neither\", \"boundary_side\": \"outside\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"warning\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-10.universe-at-min.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-10.universe-at-min.meta.json\", \"seed\": 6843250646273024781, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-at-min\", \"boundary_side\": \"inside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[10]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-10.universe-below-min.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-10.universe-below-min.meta.json\", \"seed\": 17062916611738207042, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-below-min\", \"boundary_side\": \"outside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[10]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-10.universe-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-10.universe-at-max.meta.json\", \"seed\": 5126145975292443234, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[10]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-10.universe-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-10.universe-past-max.meta.json\", \"seed\": 1175693475120751992, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[10]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-11.universe-at-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-11.universe-at-max.meta.json\", \"seed\": 9503754064095834089, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-at-max\", \"boundary_side\": \"inside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[11]\", \"predicted_verdict\": \"pass\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-11.universe-past-max.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-11.universe-past-max.meta.json\", \"seed\": 12963644695421192006, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"boundary\", \"operator\": \"universe-past-max\", \"boundary_side\": \"outside\", \"epsilon\": \"1 instance\", \"target\": \"constraints[11]\", \"predicted_verdict\": \"fail\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-12.derivation-only-frontier.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-12.derivation-only-frontier.meta.json\", \"seed\": 12193086979034054719, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"unchecked\", \"operator\": \"derivation-only-frontier\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[12]\", \"predicted_verdict\": \"unchecked\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-13.textual-is-never-mechanical.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-13.textual-is-never-mechanical.meta.json\", \"seed\": 8040948253167018181, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"unchecked\", \"operator\": \"textual-is-never-mechanical\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[13]\", \"predicted_verdict\": \"unchecked\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 2811360701156523741, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_has_name].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_name-.constraints-1.coverage-omission.meta.json\", \"seed\": 3954181968263170574, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_has_name].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_has_gender-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_has_gender-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 5068081825562365130, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_has_gender].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_earns_salary-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_earns_salary-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 11290235886505851448, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_earns_salary].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 3773694731650789992, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-1.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_reports_to_employee-.constraints-1.empty-host-fact-type.meta.json\", \"seed\": 1897778606282886141, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 17792849325605133253, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_works_on_project].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_works_on_project-.constraints-1.empty-host-fact-type.meta.json\", \"seed\": 4256705494919074837, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_works_on_project].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_leads_project-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_leads_project-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 15572358832108583373, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_leads_project].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-employee_heads_department-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-employee_heads_department-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 2914185667112151858, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[employee_heads_department].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 17919852889869031689, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[assignment_of_employee].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-1.coverage-omission.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_of_employee-.constraints-1.coverage-omission.meta.json\", \"seed\": 7645990003469113517, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"coverage-omission\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[assignment_of_employee].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_on_project-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_on_project-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 15641203642699234725, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[assignment_on_project].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-assignment_has_hours-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-assignment_has_hours-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 3085440488378003577, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[assignment_has_hours].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-0.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-0.empty-host-fact-type.meta.json\", \"seed\": 11961104914585927929, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-1.empty-host-fact-type.json\", \"sidecar\": \"<tmp>/synth/boundary/fact_types-project_ran_from_date_to_date-.constraints-1.empty-host-fact-type.meta.json\", \"seed\": 6422359742698895112, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-host-fact-type\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"fact_types[project_ran_from_date_to_date].constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.empty-all-scope-fact-types.meta.json\", \"seed\": 12363959012902464596, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-one-side-empty.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-one-side-empty.meta.json\", \"seed\": 8850204058202897207, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-one-side-empty\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-disjoint-anchors.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-0.zero-row-join-disjoint-anchors.meta.json\", \"seed\": 11817587347432254217, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-disjoint-anchors\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[0]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-1.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-1.empty-object-scope.meta.json\", \"seed\": 7503937623656808440, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[1]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.empty-object-scope.meta.json\", \"seed\": 7325333080203450223, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-2.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-2.empty-all-scope-fact-types.meta.json\", \"seed\": 18186129374485612671, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[2]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.empty-object-scope.meta.json\", \"seed\": 10705610197588628780, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-3.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-3.empty-all-scope-fact-types.meta.json\", \"seed\": 5345179257351776655, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[3]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-4.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-4.empty-all-scope-fact-types.meta.json\", \"seed\": 442053908340562443, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[4]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-5.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-5.empty-all-scope-fact-types.meta.json\", \"seed\": 2430999733725621809, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[5]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-5.zero-row-join-one-side-empty.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-5.zero-row-join-one-side-empty.meta.json\", \"seed\": 4175708877251013094, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-one-side-empty\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[5]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-5.zero-row-join-disjoint-anchors.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-5.zero-row-join-disjoint-anchors.meta.json\", \"seed\": 13167275278613334142, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"zero-row-join-disjoint-anchors\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[5]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-6.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-6.empty-all-scope-fact-types.meta.json\", \"seed\": 2349917439361812265, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[6]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-7.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-7.empty-all-scope-fact-types.meta.json\", \"seed\": 15665921228407933873, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[7]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-8.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-8.empty-all-scope-fact-types.meta.json\", \"seed\": 6809593250278501364, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[8]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-9.empty-object-scope.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-9.empty-object-scope.meta.json\", \"seed\": 13091088651520037218, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-object-scope\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[9]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-11.empty-all-scope-fact-types.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-11.empty-all-scope-fact-types.meta.json\", \"seed\": 14555408254374578377, \"band\": 1, \"class\": \"boundary\", \"case_kind\": \"no-subjects\", \"operator\": \"empty-all-scope-fact-types\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[11]\", \"predicted_verdict\": \"vacuous\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-12.unchecked-subtype-derivation-only.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-12.unchecked-subtype-derivation-only.meta.json\", \"seed\": 10890984743501001560, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"unchecked\", \"operator\": \"unchecked-subtype-derivation-only\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[12]\", \"predicted_verdict\": \"unchecked\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/boundary/constraints-13.unchecked-textual-not-mechanical.json\", \"sidecar\": \"<tmp>/synth/boundary/constraints-13.unchecked-textual-not-mechanical.meta.json\", \"seed\": 9797089232446762723, \"band\": 4, \"class\": \"boundary\", \"case_kind\": \"unchecked\", \"operator\": \"unchecked-textual-not-mechanical\", \"boundary_side\": \"frontier\", \"epsilon\": null, \"target\": \"constraints[13]\", \"predicted_verdict\": \"unchecked\", \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 2903083904382394063, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[employee_has_name].constraints[0]\", \"violates_target\": \"fact_types[employee_has_name].constraints[0]\", \"violates\": [\"fact_types[employee_has_name].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-0.empty-fact-type.meta.json\", \"seed\": 4776643625408190852, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_has_name].constraints[0]\", \"violates_target\": \"fact_types[employee_has_name].constraints[0]\", \"violates\": [\"fact_types[employee_has_name].constraints[0]\", \"fact_types[employee_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-1.roster-add-instance.meta.json\", \"seed\": 8997500111971587781, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[employee_has_name].constraints[1]\", \"violates_target\": \"fact_types[employee_has_name].constraints[1]\", \"violates\": [\"constraints[1]\", \"constraints[9]\", \"fact_types[employee_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 10904958299442724820, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[employee_has_name].constraints[1]\", \"violates_target\": \"fact_types[employee_has_name].constraints[1]\", \"violates\": [\"constraints[1]\", \"constraints[9]\", \"fact_types[employee_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_name-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 6587735965956854719, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[employee_has_name].constraints[1]\", \"violates_target\": \"fact_types[employee_has_name].constraints[1]\", \"violates\": [\"fact_types[employee_has_name].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_gender-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_gender-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 6129814310095965581, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[employee_has_gender].constraints[0]\", \"violates_target\": \"fact_types[employee_has_gender].constraints[0]\", \"violates\": [\"fact_types[employee_has_gender].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_has_gender-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_has_gender-.constraints-0.empty-fact-type.meta.json\", \"seed\": 13383935459448263947, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_has_gender].constraints[0]\", \"violates_target\": \"fact_types[employee_has_gender].constraints[0]\", \"violates\": [\"constraints[2]\", \"fact_types[employee_has_gender].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_earns_salary-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_earns_salary-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 13543630680227199663, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[employee_earns_salary].constraints[0]\", \"violates_target\": \"fact_types[employee_earns_salary].constraints[0]\", \"violates\": [\"fact_types[employee_earns_salary].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_earns_salary-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_earns_salary-.constraints-0.empty-fact-type.meta.json\", \"seed\": 16965611659200616804, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_earns_salary].constraints[0]\", \"violates_target\": \"fact_types[employee_earns_salary].constraints[0]\", \"violates\": [\"fact_types[employee_earns_salary].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 933675619361178759, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"violates_target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"violates\": [\"fact_types[employee_reports_to_employee].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-0.empty-fact-type.meta.json\", \"seed\": 12255146455600209679, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"violates_target\": \"fact_types[employee_reports_to_employee].constraints[0]\", \"violates\": [\"fact_types[employee_reports_to_employee].constraints[0]\", \"fact_types[employee_reports_to_employee].constraints[1]\", \"fact_types[employee_reports_to_employee].constraints[2]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-1.close-3-cycle.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-1.close-3-cycle.meta.json\", \"seed\": 1130388129586923414, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"close-3-cycle\", \"target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"violates_target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"violates\": [\"fact_types[employee_reports_to_employee].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-1.close-2-cycle.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-1.close-2-cycle.meta.json\", \"seed\": 17882802654984085312, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"close-2-cycle\", \"target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"violates_target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"violates\": [\"fact_types[employee_reports_to_employee].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-1.add-self-loop.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-1.add-self-loop.meta.json\", \"seed\": 14725151365345109905, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-self-loop\", \"target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"violates_target\": \"fact_types[employee_reports_to_employee].constraints[1]\", \"violates\": [\"fact_types[employee_reports_to_employee].constraints[1]\", \"fact_types[employee_reports_to_employee].constraints[2]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-2.add-self-loop.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_reports_to_employee-.constraints-2.add-self-loop.meta.json\", \"seed\": 363939919711953404, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-self-loop\", \"target\": \"fact_types[employee_reports_to_employee].constraints[2]\", \"violates_target\": \"fact_types[employee_reports_to_employee].constraints[2]\", \"violates\": [\"fact_types[employee_reports_to_employee].constraints[1]\", \"fact_types[employee_reports_to_employee].constraints[2]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_works_on_project-.constraints-0.exact-duplicate-row.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_works_on_project-.constraints-0.exact-duplicate-row.meta.json\", \"seed\": 7642999676242531632, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"exact-duplicate-row\", \"target\": \"fact_types[employee_works_on_project].constraints[0]\", \"violates_target\": \"fact_types[employee_works_on_project].constraints[0]\", \"violates\": [\"fact_types[employee_works_on_project].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_works_on_project-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_works_on_project-.constraints-0.empty-fact-type.meta.json\", \"seed\": 14142891103194767798, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_works_on_project].constraints[0]\", \"violates_target\": \"fact_types[employee_works_on_project].constraints[0]\", \"violates\": [\"constraints[5]\", \"constraints[6]\", \"fact_types[employee_works_on_project].constraints[0]\", \"fact_types[employee_works_on_project].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_works_on_project-.constraints-1.add-facts-past-ceiling.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_works_on_project-.constraints-1.add-facts-past-ceiling.meta.json\", \"seed\": 1641135886154884147, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-facts-past-ceiling\", \"target\": \"fact_types[employee_works_on_project].constraints[1]\", \"violates_target\": \"fact_types[employee_works_on_project].constraints[1]\", \"violates\": [\"constraints[9]\", \"fact_types[employee_has_name].constraints[1]\", \"fact_types[employee_works_on_project].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_leads_project-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_leads_project-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 10191476101069413168, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[employee_leads_project].constraints[0]\", \"violates_target\": \"fact_types[employee_leads_project].constraints[0]\", \"violates\": [\"constraints[6]\", \"fact_types[employee_leads_project].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_leads_project-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_leads_project-.constraints-0.empty-fact-type.meta.json\", \"seed\": 10818931966621992444, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_leads_project].constraints[0]\", \"violates_target\": \"fact_types[employee_leads_project].constraints[0]\", \"violates\": [\"constraints[5]\", \"fact_types[employee_leads_project].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_heads_department-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_heads_department-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 596209778695398354, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[employee_heads_department].constraints[0]\", \"violates_target\": \"fact_types[employee_heads_department].constraints[0]\", \"violates\": [\"fact_types[employee_heads_department].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-employee_heads_department-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-employee_heads_department-.constraints-0.empty-fact-type.meta.json\", \"seed\": 3912541198613731769, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[employee_heads_department].constraints[0]\", \"violates_target\": \"fact_types[employee_heads_department].constraints[0]\", \"violates\": [\"constraints[10]\", \"constraints[11]\", \"fact_types[employee_heads_department].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 7081622654688409128, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[assignment_of_employee].constraints[0]\", \"violates_target\": \"fact_types[assignment_of_employee].constraints[0]\", \"violates\": [\"fact_types[assignment_of_employee].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-0.empty-fact-type.meta.json\", \"seed\": 15142495818768333541, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[assignment_of_employee].constraints[0]\", \"violates_target\": \"fact_types[assignment_of_employee].constraints[0]\", \"violates\": [\"constraints[0]\", \"constraints[7]\", \"fact_types[assignment_of_employee].constraints[0]\", \"fact_types[assignment_of_employee].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-1.roster-add-instance.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-1.roster-add-instance.meta.json\", \"seed\": 490072839303162222, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"roster-add-instance\", \"target\": \"fact_types[assignment_of_employee].constraints[1]\", \"violates_target\": \"fact_types[assignment_of_employee].constraints[1]\", \"violates\": [\"fact_types[assignment_of_employee].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-1.new-entity-plays-role.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-1.new-entity-plays-role.meta.json\", \"seed\": 17696797419025125569, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"new-entity-plays-role\", \"target\": \"fact_types[assignment_of_employee].constraints[1]\", \"violates_target\": \"fact_types[assignment_of_employee].constraints[1]\", \"violates\": [\"constraints[7]\", \"fact_types[assignment_of_employee].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_of_employee-.constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 5408620661300007881, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"fact_types[assignment_of_employee].constraints[1]\", \"violates_target\": \"fact_types[assignment_of_employee].constraints[1]\", \"violates\": [\"fact_types[assignment_of_employee].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_on_project-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_on_project-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 4541351301919491376, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[assignment_on_project].constraints[0]\", \"violates_target\": \"fact_types[assignment_on_project].constraints[0]\", \"violates\": [\"fact_types[assignment_on_project].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_on_project-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_on_project-.constraints-0.empty-fact-type.meta.json\", \"seed\": 18394195540115699412, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[assignment_on_project].constraints[0]\", \"violates_target\": \"fact_types[assignment_on_project].constraints[0]\", \"violates\": [\"constraints[0]\", \"constraints[7]\", \"fact_types[assignment_on_project].constraints[0]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_has_hours-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_has_hours-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 4371509902655350896, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[assignment_has_hours].constraints[0]\", \"violates_target\": \"fact_types[assignment_has_hours].constraints[0]\", \"violates\": [\"fact_types[assignment_has_hours].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-assignment_has_hours-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-assignment_has_hours-.constraints-0.empty-fact-type.meta.json\", \"seed\": 9278057848142927372, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[assignment_has_hours].constraints[0]\", \"violates_target\": \"fact_types[assignment_has_hours].constraints[0]\", \"violates\": [\"fact_types[assignment_has_hours].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-project_ran_from_date_to_date-.constraints-0.duplicate-covered-role-value.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-project_ran_from_date_to_date-.constraints-0.duplicate-covered-role-value.meta.json\", \"seed\": 11378234612114388930, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-covered-role-value\", \"target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"violates_target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"violates\": [\"fact_types[project_ran_from_date_to_date].constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-project_ran_from_date_to_date-.constraints-0.empty-fact-type.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-project_ran_from_date_to_date-.constraints-0.empty-fact-type.meta.json\", \"seed\": 13734883135268000100, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"empty-fact-type\", \"target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"violates_target\": \"fact_types[project_ran_from_date_to_date].constraints[0]\", \"violates\": [\"fact_types[project_ran_from_date_to_date].constraints[0]\", \"fact_types[project_ran_from_date_to_date].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/fact_types-project_ran_from_date_to_date-.constraints-1.invert-value-comparison-operands.json\", \"sidecar\": \"<tmp>/synth/violating/fact_types-project_ran_from_date_to_date-.constraints-1.invert-value-comparison-operands.meta.json\", \"seed\": 4881204238410721532, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"invert-value-comparison-operands\", \"target\": \"fact_types[project_ran_from_date_to_date].constraints[1]\", \"violates_target\": \"fact_types[project_ran_from_date_to_date].constraints[1]\", \"violates\": [\"fact_types[project_ran_from_date_to_date].constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-0.duplicate-joined-tuple.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-0.duplicate-joined-tuple.meta.json\", \"seed\": 9149530522194353631, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"duplicate-joined-tuple\", \"target\": \"constraints[0]\", \"violates_target\": \"constraints[0]\", \"violates\": [\"constraints[0]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-1.remove-all-disjunctive-role-plays.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-1.remove-all-disjunctive-role-plays.meta.json\", \"seed\": 15840429024137547656, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"remove-all-disjunctive-role-plays\", \"target\": \"constraints[1]\", \"violates_target\": \"constraints[1]\", \"violates\": [\"constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-1.drop-fact-type-from-covers.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-1.drop-fact-type-from-covers.meta.json\", \"seed\": 2854434071992599598, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"drop-fact-type-from-covers\", \"target\": \"constraints[1]\", \"violates_target\": \"constraints[1]\", \"violates\": [\"constraints[1]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-2.edit-value-out-of-range.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-2.edit-value-out-of-range.meta.json\", \"seed\": 6499954303889609508, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"edit-value-out-of-range\", \"target\": \"constraints[2]\", \"violates_target\": \"constraints[2]\", \"violates\": [\"constraints[2]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-2.add-fact-with-out-of-range-new-entity.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-2.add-fact-with-out-of-range-new-entity.meta.json\", \"seed\": 3673102529939230923, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-fact-with-out-of-range-new-entity\", \"target\": \"constraints[2]\", \"violates_target\": \"constraints[2]\", \"violates\": [\"constraints[1]\", \"constraints[2]\", \"constraints[9]\", \"fact_types[employee_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-3.edit-value-out-of-range.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-3.edit-value-out-of-range.meta.json\", \"seed\": 6801522392612969057, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"edit-value-out-of-range\", \"target\": \"constraints[3]\", \"violates_target\": \"constraints[3]\", \"violates\": [\"constraints[3]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-3.add-fact-with-out-of-range-new-entity.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-3.add-fact-with-out-of-range-new-entity.meta.json\", \"seed\": 1861880574598622489, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-fact-with-out-of-range-new-entity\", \"target\": \"constraints[3]\", \"violates_target\": \"constraints[3]\", \"violates\": [\"constraints[3]\", \"fact_types[assignment_of_employee].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-4.edit-value-out-of-range.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-4.edit-value-out-of-range.meta.json\", \"seed\": 1585997397618639363, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"edit-value-out-of-range\", \"target\": \"constraints[4]\", \"violates_target\": \"constraints[4]\", \"violates\": [\"constraints[4]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-4.add-fact-with-out-of-range-new-entity.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-4.add-fact-with-out-of-range-new-entity.meta.json\", \"seed\": 14972548710807124433, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-fact-with-out-of-range-new-entity\", \"target\": \"constraints[4]\", \"violates_target\": \"constraints[4]\", \"violates\": [\"constraints[4]\", \"fact_types[assignment_of_employee].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-6.add-player-missing-subset-role.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-6.add-player-missing-subset-role.meta.json\", \"seed\": 4887229035196851351, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-player-missing-subset-role\", \"target\": \"constraints[6]\", \"violates_target\": \"constraints[6]\", \"violates\": [\"constraints[6]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-7.remove-tuple-from-equality-side.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-7.remove-tuple-from-equality-side.meta.json\", \"seed\": 13718991445880583208, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"remove-tuple-from-equality-side\", \"target\": \"constraints[7]\", \"violates_target\": \"constraints[7]\", \"violates\": [\"constraints[7]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-8.add-overlapping-tuple.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-8.add-overlapping-tuple.meta.json\", \"seed\": 10726274454702997523, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"add-overlapping-tuple\", \"target\": \"constraints[8]\", \"violates_target\": \"constraints[8]\", \"violates\": [\"constraints[8]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-9.play-both-exclusive-or-roles.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-9.play-both-exclusive-or-roles.meta.json\", \"seed\": 9712305100352923066, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"play-both-exclusive-or-roles\", \"target\": \"constraints[9]\", \"violates_target\": \"constraints[9]\", \"violates\": [\"constraints[9]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-9.play-neither-exclusive-or-role.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-9.play-neither-exclusive-or-role.meta.json\", \"seed\": 4173001720712305666, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"play-neither-exclusive-or-role\", \"target\": \"constraints[9]\", \"violates_target\": \"constraints[9]\", \"violates\": [\"constraints[9]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-10.introduce-distinct-instance.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-10.introduce-distinct-instance.meta.json\", \"seed\": 11288379555185325471, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"introduce-distinct-instance\", \"target\": \"constraints[10]\", \"violates_target\": \"constraints[10]\", \"violates\": [\"constraints[10]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-11.introduce-distinct-instance.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-11.introduce-distinct-instance.meta.json\", \"seed\": 2939404650797564899, \"band\": 1, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"introduce-distinct-instance\", \"target\": \"constraints[11]\", \"violates_target\": \"constraints[11]\", \"violates\": [\"constraints[10]\", \"constraints[11]\", \"constraints[9]\", \"fact_types[employee_has_name].constraints[1]\"], \"isolating\": false, \"isolation_verified\": true, \"baseline_seed\": 0}, {\"population\": \"<tmp>/synth/violating/constraints-12.place-instance-in-two-subtypes.json\", \"sidecar\": \"<tmp>/synth/violating/constraints-12.place-instance-in-two-subtypes.meta.json\", \"seed\": 16662748861626830627, \"band\": 4, \"class\": \"violating\", \"case_kind\": \"violating\", \"operator\": \"place-instance-in-two-subtypes\", \"target\": \"constraints[12]\", \"violates_target\": \"constraints[12]\", \"violates\": [\"constraints[12]\"], \"isolating\": true, \"isolation_verified\": true, \"baseline_seed\": 0}], \"not_derivable\": [{\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:bound-type-mismatch\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:bound-type-mismatch\", \"mechanism\": \"band-4 route `bound-type-mismatch` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:derived-unknown\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:derived-unknown\", \"mechanism\": \"band-4 route `derived-unknown` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:family-unimplemented\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:family-unimplemented\", \"mechanism\": \"band-4 route `family-unimplemented` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-anchor-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-anchor-ambiguous\", \"mechanism\": \"band-4 route `join-anchor-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:join-disconnected\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:join-disconnected\", \"mechanism\": \"band-4 route `join-disconnected` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:literal-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:literal-type-ambiguous\", \"mechanism\": \"band-4 route `literal-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:no-reference-clock\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:no-reference-clock\", \"mechanism\": \"band-4 route `no-reference-clock` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:partition-asserts-nothing\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:partition-asserts-nothing\", \"mechanism\": \"band-4 route `partition-asserts-nothing` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:reference-join-work-limit\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:reference-join-work-limit\", \"mechanism\": \"band-4 route `reference-join-work-limit` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:ring-not-binary\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:ring-not-binary\", \"mechanism\": \"band-4 route `ring-not-binary` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:role-unresolved\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:role-unresolved\", \"mechanism\": \"band-4 route `role-unresolved` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:subject-type-ambiguous\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:subject-type-ambiguous\", \"mechanism\": \"band-4 route `subject-type-ambiguous` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:values-not-comparable\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:values-not-comparable\", \"mechanism\": \"band-4 route `values-not-comparable` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"-\", \"family\": \"-\", \"operator\": \"boundary:unchecked:xor-disjunctive-undefined\", \"case_kind\": \"unchecked\", \"side\": \"unchecked:xor-disjunctive-undefined\", \"mechanism\": \"band-4 route `xor-disjunctive-undefined` is not reachable over this model: no constraint it declares has the shape that route guards, over the baseline or any derived boundary candidate\"}, {\"constraint_ref\": \"constraints[10]\", \"family\": \"cardinality\", \"operator\": \"boundary:no-subjects:empty-all-scope-fact-types\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-all-scope-fact-types\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'fail', reason None) \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[10]\", \"family\": \"cardinality\", \"operator\": \"boundary:no-subjects:empty-object-scope\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-object-scope\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'fail', reason None) \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[11]\", \"family\": \"cardinality\", \"operator\": \"boundary:min\", \"case_kind\": \"boundary\", \"side\": \"min\", \"mechanism\": \"no min bound declared; there is no floor\"}, {\"constraint_ref\": \"constraints[12]\", \"family\": \"subtype-partition\", \"operator\": \"boundary:inside\", \"case_kind\": \"boundary\", \"side\": \"inside\", \"mechanism\": \"subtype(s) ['contractor_employee'] are DERIVATION-ONLY (`derivation: derived`) and have no roster or subtype-typed fact occurrence in this population, so `_check_subtype_partition` returns `unchecked` (reason `subtype-derivation-only`) here \\u2014 the violating and boundary cells are not measurable here, and counting them covered would inflate the coverage fraction\"}, {\"constraint_ref\": \"constraints[12]\", \"family\": \"subtype-partition\", \"operator\": \"boundary:no-subjects:empty-all-scope-fact-types\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-all-scope-fact-types\", \"mechanism\": \"the construction leaves ground truth 'satisfied' (expected verdict 'unchecked', reason 'subtype-derivation-only') \\u2014 that is a decided case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[12]\", \"family\": \"subtype-partition\", \"operator\": \"boundary:no-subjects:empty-object-scope\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-object-scope\", \"mechanism\": \"the construction leaves ground truth 'satisfied' (expected verdict 'unchecked', reason 'subtype-derivation-only') \\u2014 that is a decided case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[12]\", \"family\": \"subtype-partition\", \"operator\": \"boundary:outside\", \"case_kind\": \"boundary\", \"side\": \"outside\", \"mechanism\": \"subtype(s) ['contractor_employee'] are DERIVATION-ONLY (`derivation: derived`) and have no roster or subtype-typed fact occurrence in this population, so `_check_subtype_partition` returns `unchecked` (reason `subtype-derivation-only`) here \\u2014 the violating and boundary cells are not measurable here, and counting them covered would inflate the coverage fraction\"}, {\"constraint_ref\": \"constraints[12]\", \"family\": \"subtype-partition\", \"operator\": \"remove-instance-from-all-subtypes\", \"mechanism\": \"the baseline asserts no roster subtype membership (derivation-only); there is nothing to remove without first asserting one\"}, {\"constraint_ref\": \"constraints[13]\", \"family\": \"textual\", \"operator\": \"boundary:no-subjects\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects\", \"mechanism\": \"family 'textual' is not mechanically evaluated at all, so it never reaches the subject-set step \\u2014 it returns `unchecked` at the verdict step and never reaches vacuity (01.1-VERIFICATION residual-routes table)\"}, {\"constraint_ref\": \"constraints[1]\", \"family\": \"mandatory-disjunctive\", \"operator\": \"boundary:no-subjects:empty-all-scope-fact-types\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-all-scope-fact-types\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"frequency\", \"operator\": \"add-facts-past-ceiling\", \"mechanism\": \"external frequency ceiling amplification requires join-row growth that cascades through the anchor fact types' own constraints (not derivable)\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"frequency\", \"operator\": \"boundary:max-inside\", \"case_kind\": \"boundary\", \"side\": \"max-inside\", \"mechanism\": \"external frequency: reaching a joined-group bound requires join-row growth that cascades through the anchor fact types' own constraints, so no single-fact derivation places the population at the bound\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"frequency\", \"operator\": \"boundary:max-outside\", \"case_kind\": \"boundary\", \"side\": \"max-outside\", \"mechanism\": \"external frequency: reaching a joined-group bound requires join-row growth that cascades through the anchor fact types' own constraints, so no single-fact derivation places the population at the bound\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"frequency\", \"operator\": \"boundary:min-inside\", \"case_kind\": \"boundary\", \"side\": \"min-inside\", \"mechanism\": \"no min bound declared; there is no min frontier\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"frequency\", \"operator\": \"boundary:min-outside\", \"case_kind\": \"boundary\", \"side\": \"min-outside\", \"mechanism\": \"no min bound declared; there is no min frontier\"}, {\"constraint_ref\": \"constraints[5]\", \"family\": \"frequency\", \"operator\": \"drop-joined-group-below-min\", \"mechanism\": \"no min bound declared; there is no lower boundary to fall below\"}, {\"constraint_ref\": \"constraints[8]\", \"family\": \"exclusion\", \"operator\": \"boundary:inside\", \"case_kind\": \"boundary\", \"side\": \"inside\", \"mechanism\": \"side A yields 3 row(s) and side B 0; with one side empty the constraint is trivially satisfied, which is a vacuity case, not the exclusion frontier\"}, {\"constraint_ref\": \"constraints[9]\", \"family\": \"exclusive-or\", \"operator\": \"boundary:no-subjects:empty-all-scope-fact-types\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-all-scope-fact-types\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"fact_types[assignment_of_employee].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"fact_types[employee_has_name].constraints[1]\", \"family\": \"mandatory\", \"operator\": \"boundary:no-subjects:empty-host-fact-type\", \"case_kind\": \"no-subjects\", \"side\": \"no-subjects:empty-host-fact-type\", \"mechanism\": \"the construction leaves ground truth 'violated' (expected verdict 'vacuous', reason 'masked-by-fact-type-vacuity') \\u2014 that is a masked-by-vacuity case, not a no-subjects one, and labelling it `no-subjects` would put a decided ground truth in the row the measurement uses to detect exactly that confusion\"}, {\"constraint_ref\": \"fact_types[employee_works_on_project].constraints[1]\", \"family\": \"frequency\", \"operator\": \"boundary:min-outside\", \"case_kind\": \"boundary\", \"side\": \"min-outside\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group has size 0, which means the group does not OCCUR, and a non-occurring group is satisfied \\u2014 emitting the case would manufacture a violating label the checker correctly passes (a fabricated false pass)\"}, {\"constraint_ref\": \"fact_types[employee_works_on_project].constraints[1]\", \"family\": \"frequency\", \"operator\": \"drop-fact-from-group\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group does not occur, so the lower boundary is unreachable by deletion\"}, {\"constraint_ref\": \"fact_types[employee_works_on_project].constraints[1]\", \"family\": \"frequency\", \"operator\": \"remove-fact-from-last-covering-group\", \"mechanism\": \"occurring-groups semantics (constraint-reference.md:360): at min=1 the below-bound group does not occur, so the lower boundary is unreachable by deletion\"}], \"isolating_cases\": 31, \"set_attributed_cases\": 20, \"isolating_fraction\": 0.6078431372549019}\n"
+}

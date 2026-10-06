@@ -10,6 +10,7 @@ from typing import Any
 
 import pytest
 from support.digests import sha256_bytes as _sha256
+from support.rf5_sources import cli_sources, owner
 
 from gnd import cli
 from gnd.cli import main
@@ -594,7 +595,7 @@ def test_inventory_output_scope_name_resolution_is_bounded(
         encoding="utf-8",
     )
     before = _tree(root)
-    monkeypatch.setattr(cli, "_RECOVERY_DIRECTORY_NAME_OBSERVATION_CAP", 2)
+    monkeypatch.setattr(owner("_RECOVERY_DIRECTORY_NAME_OBSERVATION_CAP"), "_RECOVERY_DIRECTORY_NAME_OBSERVATION_CAP", 2)
 
     assert (
         main(
@@ -784,7 +785,7 @@ def test_inventory_refuses_user_exclusion_deleted_before_bound_scan(
         original(root_fd, relative)
         vendor.rmdir()
 
-    monkeypatch.setattr(cli, "_recovery_require_existing_exclusion", check_then_delete)
+    monkeypatch.setattr(owner("_recovery_require_existing_exclusion"), "_recovery_require_existing_exclusion", check_then_delete)
     assert (
         main(
             [
@@ -1427,9 +1428,9 @@ def test_inventory_and_verify_never_execute_repository_or_external_authority(
     monkeypatch.setattr(session_module, "run_session", forbidden)
     monkeypatch.setattr(cli.install_module, "apply", forbidden)
     monkeypatch.setattr(cli.install_module, "remove", forbidden)
-    monkeypatch.setattr(cli, "_cmd_codegen", forbidden)
-    monkeypatch.setattr(cli, "_cmd_conformance", forbidden)
-    monkeypatch.setattr(cli, "_cmd_exp_run", forbidden)
+    monkeypatch.setattr(owner("_cmd_codegen"), "_cmd_codegen", forbidden)
+    monkeypatch.setattr(owner("_cmd_conformance"), "_cmd_conformance", forbidden)
+    monkeypatch.setattr(owner("_cmd_exp_run"), "_cmd_exp_run", forbidden)
     output = root / "inventory.json"
     assert (
         main(
@@ -1487,7 +1488,7 @@ def test_inventory_keeps_semantic_hints_proposed_and_deontic(tmp_path: Path) -> 
 
 def test_recovery_adds_no_exit_constant_or_parser_factory() -> None:
     assert not any(name.startswith("EXIT_RECOVERY") for name in vars(cli))
-    source = Path(cli.__file__).read_text(encoding="utf-8")
+    source = cli_sources()
     assert "def parser(" not in source
 
 

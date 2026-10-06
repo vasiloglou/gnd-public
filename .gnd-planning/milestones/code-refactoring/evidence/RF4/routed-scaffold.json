@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_development_scaffold.py",
+    "tests/test_contributor_preparation.py",
+    "tests/test_review_credential_launcher.py",
+    "tests/test_measure_offline.py",
+    "--tb=short",
+    "-x"
+  ],
+  "exit": 1,
+  "seconds": 4.885278224945068
+}

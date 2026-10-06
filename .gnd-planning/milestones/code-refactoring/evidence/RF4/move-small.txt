@@ -1,0 +1,17 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_semantic_pins.py tests/test_v63_phase2_cache.py tests/test_synth_false_pass_quarantine.py --tb=short -x
+........................................................................ [ 42%]
+........................................................................ [ 85%]
+................F
+=================================== FAILURES ===================================
+__________________ test_roster_entry_cap_counts_ignored_files __________________
+tests/test_v63_phase2_cache.py:657: in test_roster_entry_cap_counts_ignored_files
+    with pytest.raises(ValueError, match="production roster entry limit"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+=========================== short test summary info ============================
+FAILED tests/test_v63_phase2_cache.py::test_roster_entry_cap_counts_ignored_files
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 160 passed in 30.43s
+
+Exit: 1

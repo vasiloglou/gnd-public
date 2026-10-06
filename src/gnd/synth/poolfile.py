@@ -39,8 +39,10 @@ from pathlib import Path
 from random import Random
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.synth.identity import scalar_identity
 from gnd.synth.value_domain import (
     EmptyValueDomain,
@@ -165,7 +167,7 @@ def _non_finite_failures(value: Any, path: str = "$") -> list[str]:
 
 def _load_pool_schema() -> dict[str, Any]:
     text = _resource_files("gnd").joinpath("pool.schema.json").read_text(encoding="utf-8")
-    return json.loads(text)
+    return _rf7_input.loads(text)
 
 
 # --------------------------------------------------------------------------- #
@@ -174,16 +176,12 @@ def _load_pool_schema() -> dict[str, Any]:
 
 
 def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:
-    return {
-        str(ot.get("id")): ot
-        for ot in model.object_types or []
-        if ot.get("id") is not None
-    }
+    return ModelIndex.object_map(model)
 
 
 def _iter_all_constraints(model: Model):
     """Yield ``(fact_type_id | None, constraint)`` for every active constraint."""
-    for fact_type in model.fact_types or []:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types():
         ftid = fact_type.get("id")
         for constraint in fact_type.get("constraints") or []:
             yield ftid, constraint
@@ -410,7 +408,11 @@ def load_pool(path: str | Path, model: Model) -> Pool:
     be coherence-checked meaningfully.
     """
     text = Path(path).read_text(encoding="utf-8")
-    document = json.loads(text)
+    try:
+        document = _rf7_input.loads(text)
+    except _rf7_input.InputRefusal as error:
+        message = str(error).replace('nonfinite', 'non-finite')
+        raise PoolValidationError([f"input: {message}"]) from error
 
     finite_failures = _non_finite_failures(document)
     if finite_failures:

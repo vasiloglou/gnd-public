@@ -3,8 +3,8 @@
 import json
 import os
 
-from gnd import api
 from gnd.artifacts import canonical_json_bytes
+from gnd.witness import service as api
 from gnd.witness.io import load_certificate
 from gnd.witness.view import result_view, witness_view
 

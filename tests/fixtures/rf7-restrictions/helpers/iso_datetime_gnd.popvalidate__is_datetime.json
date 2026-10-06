@@ -1,0 +1,41 @@
+{
+ "observed": {
+  "date-only": {
+   "ok": false
+  },
+  "fractional": {
+   "ok": true
+  },
+  "hour-24": {
+   "ok": false
+  },
+  "integer": {
+   "ok": false
+  },
+  "leading-space": {
+   "ok": false
+  },
+  "naive": {
+   "ok": true
+  },
+  "none": {
+   "ok": false
+  },
+  "offset": {
+   "ok": true
+  },
+  "space-separator": {
+   "ok": false
+  },
+  "utc-lower-z": {
+   "ok": false
+  },
+  "utc-z": {
+   "ok": true
+  },
+  "week-date": {
+   "ok": false
+  }
+ },
+ "site": "iso_datetime|gnd.popvalidate:_is_datetime"
+}

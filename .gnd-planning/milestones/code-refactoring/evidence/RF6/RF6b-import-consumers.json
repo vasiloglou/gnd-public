@@ -1,0 +1,3905 @@
+{
+  "imports": [
+    {
+      "path": "src/gnd/redaction.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "analyze_declared_aggregate"
+      ]
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "analyze_declared_aggregate",
+        "iter_derivation_clauses",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/references.py",
+      "line": 4,
+      "module": "gnd.model",
+      "names": [
+        "BOUND"
+      ]
+    },
+    {
+      "path": "src/gnd/references.py",
+      "line": 5,
+      "module": "gnd.model",
+      "names": [
+        "COMBINED"
+      ]
+    },
+    {
+      "path": "src/gnd/references.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "MAX_BYTES",
+        "MAX_ENTRIES",
+        "MAX_SET_BYTES",
+        "BoundPopulationView",
+        "BoundReferenceContext",
+        "OccurrenceOrigin",
+        "ReferenceInputError",
+        "ReferenceOrigin",
+        "bind_population",
+        "bind_references",
+        "candidate_fact_count",
+        "is_bound_population",
+        "resolve_context",
+        "retained_root",
+        "validate_declarations",
+        "validate_reference_structure"
+      ]
+    },
+    {
+      "path": "src/gnd/references.py",
+      "line": 24,
+      "module": "gnd.model",
+      "names": [
+        "TOKEN"
+      ]
+    },
+    {
+      "path": "src/gnd/references.py",
+      "line": 25,
+      "module": "gnd.model",
+      "names": [
+        "bind_at"
+      ]
+    },
+    {
+      "path": "src/gnd/references.py",
+      "line": 26,
+      "module": "gnd.model",
+      "names": [
+        "relative"
+      ]
+    },
+    {
+      "path": "src/gnd/batch.py",
+      "line": 12,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/batch.py",
+      "line": 13,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/batch.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES",
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "line": 18,
+      "module": "gnd.model",
+      "names": [
+        "bind_population",
+        "resolve_context"
+      ]
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "line": 56,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "Verdict",
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "line": 57,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "line": 66,
+      "module": "gnd.model",
+      "names": [
+        "derivation_classifications",
+        "dynamic_subject_is_functional"
+      ]
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "line": 1920,
+      "module": "gnd.model",
+      "names": [
+        "bind_population",
+        "resolve_context"
+      ]
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "_layer1_structural",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "line": 199,
+      "module": "gnd.model",
+      "names": [
+        "bind_population",
+        "resolve_context"
+      ]
+    },
+    {
+      "path": "src/gnd/coverage.py",
+      "line": 31,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "line": 278,
+      "module": "gnd.model",
+      "names": [
+        "derivation_classifications"
+      ]
+    },
+    {
+      "path": "src/gnd/model.py",
+      "line": 5126,
+      "module": "gnd.model",
+      "names": [
+        "_layer1_structural",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "src/gnd/api.py",
+      "line": 31,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/api.py",
+      "line": 87,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/api.py",
+      "line": 775,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "AggregateAnalysis",
+        "_derivation_variable",
+        "analyze_declared_aggregate",
+        "body_components",
+        "derivation_classifications",
+        "derivation_dependencies",
+        "derivation_strata",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/cli.py",
+      "line": 157,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "check",
+        "check_with_anchors"
+      ]
+    },
+    {
+      "path": "src/gnd/cli.py",
+      "line": 162,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/cli.py",
+      "line": 501,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "ModelValidationError",
+        "ValidationIssue",
+        "derivation_classifications",
+        "load_model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/payloads.py",
+      "line": 51,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/payloads.py",
+      "line": 54,
+      "module": "gnd.model",
+      "names": [
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "line": 25,
+      "module": "gnd.model",
+      "names": [
+        "body_components",
+        "derivation_dependencies",
+        "derivation_strata",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "_compare",
+        "_identity_token",
+        "_partial_compatible",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/judgments.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "line": 8,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "line": 24,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "line": 26,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "line": 251,
+      "module": "gnd.model",
+      "names": [
+        "AggregateAnalysis",
+        "BoundReferenceContext",
+        "_derivation_variable",
+        "analyze_declared_aggregate",
+        "body_components",
+        "derivation_classifications",
+        "derivation_dependencies",
+        "derivation_strata",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "line": 2222,
+      "module": "gnd.model",
+      "names": [
+        "bind_population",
+        "is_bound_population",
+        "resolve_context"
+      ]
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "line": 29,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES",
+        "MAX_YAML_EVENTS",
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "iter_derivation_clauses",
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/witness/producer.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/assurance/core.py",
+      "line": 416,
+      "module": "gnd.model",
+      "names": [
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "line": 18,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "line": 27,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "src/gnd/codegen/service.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "line": 104,
+      "module": "gnd.model",
+      "names": [
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "line": 47,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "line": 252,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "line": 290,
+      "module": "gnd.checker",
+      "names": [
+        "_model_uses_exact_derivations"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "line": 60,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES",
+        "CheckReport",
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "line": 61,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/value_domain.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "line": 77,
+      "module": "gnd.checker",
+      "names": [
+        "check",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "line": 78,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/poolfile.py",
+      "line": 43,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/pool.py",
+      "line": 26,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/frontier.py",
+      "line": 49,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES",
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/frontier.py",
+      "line": 50,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "line": 10,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/promote.py",
+      "line": 46,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "ConstraintVerdict",
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/promote.py",
+      "line": 47,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/coverage.py",
+      "line": 39,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/coverage.py",
+      "line": 40,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/truth.py",
+      "line": 36,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/report.py",
+      "line": 38,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/report.py",
+      "line": 41,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/measure/score.py",
+      "line": 43,
+      "module": "gnd.checker",
+      "names": [
+        "Verdict"
+      ]
+    },
+    {
+      "path": "src/gnd/commands/_output.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/commands/_output.py",
+      "line": 10,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "src/gnd/commands/_output.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "ValidationIssue",
+        "derivation_classifications"
+      ]
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "line": 12,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/extract/service.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "_iter_constraints",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/export/lean_io.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/export/souffle_io.py",
+      "line": 113,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "derivation_dependencies",
+        "iter_derivation_clauses"
+      ]
+    },
+    {
+      "path": "src/gnd/export/verification_service.py",
+      "line": 10,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "check",
+        "check_with_anchors"
+      ]
+    },
+    {
+      "path": "src/gnd/export/verification_service.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/frontmatter.py",
+      "line": 38,
+      "module": "gnd.model",
+      "names": [
+        "MAX_YAML_EVENTS"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/paths.py",
+      "line": 42,
+      "module": "gnd.model",
+      "names": [
+        "ValidationIssue"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/session_eval.py",
+      "line": 30,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/session.py",
+      "line": 561,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "line": 38,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "line": 1678,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES",
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/spec.py",
+      "line": 45,
+      "module": "gnd.model",
+      "names": [
+        "ValidationIssue",
+        "issues_from_validation_error"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/conclusions.py",
+      "line": 67,
+      "module": "gnd.model",
+      "names": [
+        "ValidationIssue",
+        "issues_from_validation_error"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/cli_service.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "ValidationIssue"
+      ]
+    },
+    {
+      "path": "src/gnd/exp/session_v7.py",
+      "line": 60,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/conformance/structural.py",
+      "line": 104,
+      "module": "gnd.model",
+      "names": [
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "src/gnd/conformance/service.py",
+      "line": 30,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "_RING_COMPONENTS",
+        "_RING_VARIANTS",
+        "IMPLEMENTED_FAMILIES",
+        "CheckReport",
+        "check"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES"
+      ]
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "tests/test_fixture_conformance.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_tagged_comparison.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v51_phase2_extraction_scope.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_checker.py",
+      "line": 5,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_checker.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_extract_cli.py",
+      "line": 18,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase6_adversarial.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_snapshot_source_counterexamples.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_popvalidate.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_public_transition_review_controls.py",
+      "line": 19,
+      "module": "gnd.model",
+      "names": [
+        "dynamic_subject_is_functional",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_branch_runtime.py",
+      "line": 19,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_branch_runtime.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v61_phase4_review_regressions.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase1_dates.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_report_json.py",
+      "line": 24,
+      "module": "gnd.model",
+      "names": [
+        "ValidationIssue",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_report_json.py",
+      "line": 589,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase4_transition.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "_attach_compiled_obligations",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_codegen_force.py",
+      "line": 58,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_skeleton_e2e.py",
+      "line": 20,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_skeleton_e2e.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_expectation_independence.py",
+      "line": 32,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_synth_expectation_independence.py",
+      "line": 34,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_fidelity_match.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase1_adversarial.py",
+      "line": 78,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase1_adversarial.py",
+      "line": 134,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/conftest.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_synth_measure.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "DynamicRefreshWork",
+        "RelationUnavailable",
+        "StructuredExtensionView"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_synth_measure.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_codegen_identifiers.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_semantic_adapter.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_registry.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_registry.py",
+      "line": 30,
+      "module": "gnd.checker",
+      "names": [
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_registry.py",
+      "line": 94,
+      "module": "gnd.checker",
+      "names": [
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_registry.py",
+      "line": 126,
+      "module": "gnd.checker",
+      "names": [
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_registry.py",
+      "line": 189,
+      "module": "gnd.checker",
+      "names": [
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_registry.py",
+      "line": 206,
+      "module": "gnd.checker",
+      "names": [
+        "DerivationVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_public_adapter_derivation.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_conformance_payload.py",
+      "line": 59,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 685,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 686,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 838,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 844,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 884,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 885,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 915,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 916,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "line": 955,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_adapter_structural_controls.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_adapter_structural_controls.py",
+      "line": 30,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/test_public_adapter_primitive_controls.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase5_corpus.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase2_scaling.py",
+      "line": 11,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase2_scaling.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_population_load.py",
+      "line": 26,
+      "module": "gnd.checker",
+      "names": [
+        "UnvalidatedPopulationError",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_population_load.py",
+      "line": 27,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_mutations.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_measure_negative_control.py",
+      "line": 43,
+      "modules": [
+        "gnd.checker"
+      ]
+    },
+    {
+      "path": "tests/test_measure_negative_control.py",
+      "line": 47,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_measure_negative_control.py",
+      "line": 50,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_reference_universe.py",
+      "line": 48,
+      "module": "gnd.checker",
+      "names": [
+        "_denoting_types",
+        "_instance_values_of",
+        "_instances_of",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_reference_universe.py",
+      "line": 49,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_extract_applicable.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_boundary.py",
+      "line": 35,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_synth_boundary.py",
+      "line": 36,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_selective.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_codegen_architecture.py",
+      "line": 25,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_v72_status.py",
+      "line": 35,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_intermediate.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_generated_examples.py",
+      "line": 13,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_generated_examples.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v61_phase4_projection.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_assurance_feedback.py",
+      "line": 69,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_external_uniqueness.py",
+      "line": 12,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "tests/test_synth_external_uniqueness.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_validation.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "derivation_classifications",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase5_adversarial.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_registry_runtime.py",
+      "line": 99,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 5,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 35,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 47,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 61,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 111,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 119,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 138,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 155,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 175,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase2_successors.py",
+      "line": 207,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_codegen_emit.py",
+      "line": 44,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_transition_report.py",
+      "line": 13,
+      "module": "gnd.checker",
+      "names": [
+        "_identity_key"
+      ]
+    },
+    {
+      "path": "tests/test_transition_report.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_book_population_publish.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase2_consumers.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_conforming.py",
+      "line": 33,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_synth_conforming.py",
+      "line": 34,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_synth_conforming.py",
+      "line": 36,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_conforming.py",
+      "line": 1001,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_redaction.py",
+      "line": 5,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_facts"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_redaction.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_validation.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregate_dispatch_controls.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_redaction.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_public_expense_guards.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_kernel_production.py",
+      "line": 15,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_kernel_production.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_aggregate.py",
+      "line": 10,
+      "module": "gnd.checker",
+      "names": [
+        "_aggregate_bindings",
+        "_ExactJoinWork",
+        "exact_extension_envelope",
+        "structured_extension_facts",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_aggregate.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_values.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase1_production.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase1_production.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_semiderived.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_semiderived.py",
+      "line": 20,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_measure_coverage.py",
+      "line": 12,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_measure_coverage.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_measure_coverage.py",
+      "line": 342,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_controls.py",
+      "line": 8,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "ConstraintVerdict",
+        "DerivationFinding",
+        "DerivationVerdict",
+        "_evaluate_derivations",
+        "band"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_controls.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "DerivationFinding",
+        "_base_relations",
+        "_constraint_view",
+        "_evaluate_derivations",
+        "_python_extension_calculator",
+        "_TypedRelation",
+        "band"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_evaluator_controls.py",
+      "line": 23,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregation_admission_layers.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_guarded_corpus.py",
+      "line": 22,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_guarded_corpus.py",
+      "line": 23,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregate_surface_corpus_controls.py",
+      "line": 10,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_facts"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregate_surface_corpus_controls.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregate_surface_corpus_controls.py",
+      "line": 69,
+      "module": "gnd.model",
+      "names": [
+        "_layer1_structural"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_scaling.py",
+      "line": 7,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_scaling.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 126,
+      "module": "gnd.model",
+      "names": [
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 136,
+      "module": "gnd.model",
+      "names": [
+        "body_components",
+        "derivation_strata"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 149,
+      "module": "gnd.model",
+      "names": [
+        "derivation_dependencies",
+        "derivation_strata"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 166,
+      "module": "gnd.model",
+      "names": [
+        "body_components",
+        "derivation_strata"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 195,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 202,
+      "module": "gnd.model",
+      "names": [
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 208,
+      "module": "gnd.model",
+      "names": [
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_derivation_rule.py",
+      "line": 214,
+      "module": "gnd.model",
+      "names": [
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase6_review.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase1_registration.py",
+      "line": 4,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES",
+        "_is_implemented"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase1_registration.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_evidence_origins.py",
+      "line": 23,
+      "module": "gnd.checker",
+      "names": [
+        "_constraint_view",
+        "_evaluate_derivations"
+      ]
+    },
+    {
+      "path": "tests/test_public_evidence_origins.py",
+      "line": 24,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_redaction.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 33,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "ConstraintVerdict",
+        "DerivationFinding",
+        "DerivationVerdict",
+        "_base_relations",
+        "_constraint_view",
+        "_evaluate_derivations",
+        "_python_extension_calculator",
+        "_TypedRelation",
+        "band"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_evaluation_complete.py",
+      "line": 48,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_redaction.py",
+      "line": 5,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_public_tests_mode_corpus.py",
+      "line": 30,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_tests_mode_corpus.py",
+      "line": 34,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregate_near_cap_work.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_public_aggregate_near_cap_work.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_dynamic_gate.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_composition_digest_3.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_transition_scaling.py",
+      "line": 68,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_coverage_payload.py",
+      "line": 31,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_parity_corpus.py",
+      "line": 19,
+      "module": "gnd.checker",
+      "names": [
+        "_base_relations",
+        "_identity_token",
+        "_python_extension_calculator"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_parity_corpus.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_subtype_universe.py",
+      "line": 37,
+      "module": "gnd.checker",
+      "names": [
+        "_descendant_closure",
+        "_instance_values_of",
+        "_instances_of",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_subtype_universe.py",
+      "line": 38,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_synth_measure.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_synth_measure.py",
+      "line": 36,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_synth_measure.py",
+      "line": 91,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_synth_measure.py",
+      "line": 235,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_synth_measure.py",
+      "line": 282,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_corpus_applicability_support.py",
+      "line": 55,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_model_evolution.py",
+      "line": 1554,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_model_verbalization.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_architecture_conformance.py",
+      "line": 19,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_model_validation.py",
+      "line": 25,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES",
+        "Model",
+        "ModelLoadError",
+        "ModelValidationError",
+        "ValidationIssue",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_adapter_literal_controls.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase1_validation.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_public_semantic_boundaries.py",
+      "line": 16,
+      "module": "gnd.checker",
+      "names": [
+        "EXACT_DERIVATION_REASON_CODES",
+        "_FixpointJoinWork",
+        "_partial_bindings",
+        "_Wildcard"
+      ]
+    },
+    {
+      "path": "tests/test_public_semantic_boundaries.py",
+      "line": 25,
+      "module": "gnd.model",
+      "names": [
+        "_layer1_structural",
+        "derivation_dependencies",
+        "derivation_dependency_edges",
+        "derivation_strata",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_transition_mutations.py",
+      "line": 35,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_example_projections.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_example_projections.py",
+      "line": 23,
+      "module": "gnd.checker",
+      "names": [
+        "_constraint_view",
+        "_evaluate_derivations"
+      ]
+    },
+    {
+      "path": "tests/test_reference_population_corpus.py",
+      "line": 27,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_reference_population_corpus.py",
+      "line": 486,
+      "modules": [
+        "gnd.model"
+      ]
+    },
+    {
+      "path": "tests/test_reference_population_corpus.py",
+      "line": 696,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "tests/test_reference_population_corpus.py",
+      "line": 623,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "tests/test_public_optional_opaque_scaling.py",
+      "line": 11,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_public_optional_opaque_scaling.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase1_successors.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase1_successors.py",
+      "line": 81,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/test_public_v62_aggregate_optional.py",
+      "line": 17,
+      "module": "gnd.checker",
+      "names": [
+        "exact_extension_envelope",
+        "structured_extension_facts"
+      ]
+    },
+    {
+      "path": "tests/test_public_v62_aggregate_optional.py",
+      "line": 18,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "analyze_declared_aggregate",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_validation.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "_layer1_structural",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_synth_false_pass_quarantine.py",
+      "line": 35,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_transition_contract.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "compile_operation",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase4_runtime.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_correspondence_runtime.py",
+      "line": 23,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase1_adapter.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_conformance_structural.py",
+      "line": 104,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_vacuity.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_vacuity.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_adapter_reference_opaque_controls.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_oracle_value_range.py",
+      "line": 42,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_synth_oracle_value_range.py",
+      "line": 45,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_semantic_spec.py",
+      "line": 23,
+      "module": "gnd.checker",
+      "names": [
+        "_anchored_verdicts"
+      ]
+    },
+    {
+      "path": "tests/test_public_applicability_obligations.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase3_opaque.py",
+      "line": 100,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase3_opaque.py",
+      "line": 101,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_validation.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_facts"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_validation.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "_layer1_structural",
+        "analyze_aggregate",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_public_transition_trace.py",
+      "line": 241,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_phase4_transition_support.py",
+      "line": 29,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_extract_projection.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase6_execution.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_exp_close_codegen_gate.py",
+      "line": 64,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_evolution_conformance.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_subbranches.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_ring_frozen.py",
+      "line": 13,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_ring_frozen.py",
+      "line": 14,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_limits.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_terms.py",
+      "line": 12,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check",
+        "exact_extension_envelope",
+        "structured_extension_facts",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_terms.py",
+      "line": 19,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase4_successors.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_semantic_guarded_join.py",
+      "line": 19,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_codegen_derivation.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model",
+        "structured_derivation_ids"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_regressions.py",
+      "line": 6,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_identity.py",
+      "line": 2,
+      "module": "gnd.checker",
+      "names": [
+        "_identity_token"
+      ]
+    },
+    {
+      "path": "tests/test_model_guarded.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_transition_mapping_totality.py",
+      "line": 28,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "ConstraintVerdict"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase3_successors.py",
+      "line": 181,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v71_phase3_successors.py",
+      "line": 242,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_extract_vocabulary.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase1_redaction.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_validation.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "_load_meta_schema",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_redaction.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_redaction.py",
+      "line": 84,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_cost_mutations.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "_base_relations",
+        "_python_extension_calculator"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_cost_mutations.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_derivation_parity_tools.py",
+      "line": 32,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_coverage_version_mismatch.py",
+      "line": 19,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_coverage_version_mismatch.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_binding_reports.py",
+      "line": 18,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_guarded_temporal_coverage.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase1_surfaces.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_model_v2.py",
+      "line": 17,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_model_v2.py",
+      "line": 19,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_model_v2.py",
+      "line": 292,
+      "module": "gnd.model",
+      "names": [
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_rf3_review_regressions.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_mutate_derivation.py",
+      "line": 20,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_synth_measure.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase2_order.py",
+      "line": 7,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_surface.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_consumer_oracle.py",
+      "line": 31,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_hostile_import.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES"
+      ]
+    },
+    {
+      "path": "tests/test_public_v62_aggregate_local.py",
+      "line": 12,
+      "module": "gnd.checker",
+      "names": [
+        "structured_extension_facts"
+      ]
+    },
+    {
+      "path": "tests/test_public_v62_aggregate_local.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "analyze_declared_aggregate"
+      ]
+    },
+    {
+      "path": "tests/test_measure_derivation.py",
+      "line": 8,
+      "module": "gnd.checker",
+      "names": [
+        "DERIVATION_REASON_CODES"
+      ]
+    },
+    {
+      "path": "tests/test_measure_derivation.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_assurance.py",
+      "line": 21,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_assurance.py",
+      "line": 23,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_composition.py",
+      "line": 16,
+      "module": "gnd.checker",
+      "names": [
+        "RelationUnavailable",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase3_composition.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_emitter21_controls.py",
+      "line": 114,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_slice_runtime.py",
+      "line": 20,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_slice_runtime.py",
+      "line": 21,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v61_phase4_model.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_conformance_derivation.py",
+      "line": 25,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_transition_ir_immutability.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_rf4_premove.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_transition_api_guards.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "MAX_MODEL_BYTES",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v61_phase1_batch.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "ValidationIssue"
+      ]
+    },
+    {
+      "path": "tests/test_synth_mutate.py",
+      "line": 21,
+      "module": "gnd.checker",
+      "names": [
+        "IMPLEMENTED_FAMILIES",
+        "CheckReport",
+        "ConstraintVerdict",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_synth_mutate.py",
+      "line": 22,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_synth_mutate.py",
+      "line": 603,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 22,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 23,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 209,
+      "module": "gnd.checker",
+      "names": [
+        "_find_cycle"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 879,
+      "module": "gnd.checker",
+      "names": [
+        "_compare"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 900,
+      "module": "gnd.checker",
+      "names": [
+        "_compare"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 910,
+      "module": "gnd.checker",
+      "names": [
+        "_in_range"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 930,
+      "module": "gnd.checker",
+      "names": [
+        "_in_range",
+        "_orderable"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 1218,
+      "module": "gnd.checker",
+      "names": [
+        "_compare"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 1230,
+      "module": "gnd.checker",
+      "names": [
+        "_instances_of"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 1272,
+      "module": "gnd.checker",
+      "names": [
+        "_instances_of"
+      ]
+    },
+    {
+      "path": "tests/test_checker_families.py",
+      "line": 1737,
+      "modules": [
+        "gnd.checker"
+      ]
+    },
+    {
+      "path": "tests/test_v6_phase2_applicability.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_runtime_preparation.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "_derivation_dependency_closures"
+      ]
+    },
+    {
+      "path": "tests/test_public_example_guards.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_composition.py",
+      "line": 8,
+      "module": "gnd.checker",
+      "names": [
+        "band"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_composition.py",
+      "line": 9,
+      "module": "gnd.checker",
+      "names": [
+        "check",
+        "exact_extension_envelope",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_composition.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "derivation_classifications",
+        "load_model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_conformance_drift.py",
+      "line": 58,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_phase1_trace_refusals.py",
+      "line": 7,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_phase1_trace_refusals.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_extraction_prose_policy.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_alias_schema_guards.py",
+      "line": 41,
+      "module": "gnd.model",
+      "names": [
+        "load_model_bytes"
+      ]
+    },
+    {
+      "path": "tests/test_coverage_scaling.py",
+      "line": 11,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "CoverageEntry"
+      ]
+    },
+    {
+      "path": "tests/test_coverage_scaling.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_public_consumer_report.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_consumer_report.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_assurance.py",
+      "line": 7,
+      "module": "gnd.checker",
+      "names": [
+        "EXACT_DERIVATION_REASON_CODES"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase5_assurance.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_evaluation.py",
+      "line": 16,
+      "module": "gnd.checker",
+      "names": [
+        "_base_relations",
+        "_correspondence_message",
+        "_exact_extension_calculator"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase6_evaluation.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/test_pyrel_constraint_oracle.py",
+      "line": 44,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_pyrel_constraint_oracle.py",
+      "line": 45,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase6_corpus.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_provenance_in_report.py",
+      "line": 27,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v51_phase2_fidelity_scope.py",
+      "line": 5,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/test_codegen_manifest.py",
+      "line": 51,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_synth_measure.py",
+      "line": 14,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport"
+      ]
+    },
+    {
+      "path": "tests/test_v62_phase4_synth_measure.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase3_successors.py",
+      "line": 17,
+      "module": "gnd.checker",
+      "names": [
+        "CheckReport",
+        "UnvalidatedPopulationError",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase3_successors.py",
+      "line": 19,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase4_fixpoint.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_exact_scope_guards.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_scope_boundary_guards.py",
+      "line": 17,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_scope_boundary_guards.py",
+      "line": 18,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_poolfile.py",
+      "line": 24,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase2_recursion.py",
+      "line": 11,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check",
+        "structured_extension_view"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase2_recursion.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "ModelValidationError",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_v70_phase2_recursion.py",
+      "line": 427,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/test_public_float_corpus_guards.py",
+      "line": 11,
+      "module": "gnd.checker",
+      "names": [
+        "check"
+      ]
+    },
+    {
+      "path": "tests/test_public_float_corpus_guards.py",
+      "line": 12,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "semantic_validate"
+      ]
+    },
+    {
+      "path": "tests/support/public_transition_adapter.py",
+      "line": 17,
+      "module": "gnd.model",
+      "names": [
+        "Model"
+      ]
+    },
+    {
+      "path": "tests/support/public_adapter_cases.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/adapter_universe.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/partition_cases.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/v71_session_cases.py",
+      "line": 15,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/public_adapter_mutation_controls.py",
+      "line": 10,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/counting_cases.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/comparison_cases.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/ring_cases.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/v71_phase4_full_runtime.py",
+      "line": 24,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/v71_phase4_full_runtime.py",
+      "line": 900,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/support/v71_phase4_full_runtime.py",
+      "line": 1203,
+      "module": "gnd.model",
+      "names": [
+        "ModelLoadError",
+        "ModelValidationError"
+      ]
+    },
+    {
+      "path": "tests/support/public_snapshot_counterexamples.py",
+      "line": 10,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/support/public_snapshot_counterexamples.py",
+      "line": 11,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/v62_phase6_corpus.py",
+      "line": 40,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/support/v62_phase6_corpus.py",
+      "line": 41,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/mandatory_cases.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/v71_witness_cases.py",
+      "line": 16,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/public_v71_witness_corpus.py",
+      "line": 23,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/pyrel_contract.py",
+      "line": 13,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/support/set_relation_cases.py",
+      "line": 9,
+      "module": "gnd.model",
+      "names": [
+        "Model",
+        "load_model"
+      ]
+    },
+    {
+      "path": "tests/fixtures/public-generated-examples/bookrec/extension.py",
+      "line": 7,
+      "module": "gnd.checker",
+      "names": [
+        "band",
+        "check"
+      ]
+    },
+    {
+      "path": "tests/fixtures/public-generated-examples/bookrec/extension.py",
+      "line": 8,
+      "module": "gnd.model",
+      "names": [
+        "load_model"
+      ]
+    }
+  ],
+  "physical_source_observers": [
+    "tests/test_rf6_query_policy.py",
+    "tests/test_atom_bind.py",
+    "tests/test_measure_offline.py",
+    "tests/test_rf2_review_regressions.py",
+    "tests/test_v2_offline.py",
+    "tests/test_public_registry_runtime.py",
+    "tests/test_rf3_core.py",
+    "tests/test_recovery_adversarial.py",
+    "tests/test_public_derivation_parity_local.py",
+    "tests/test_rf2_helpers.py",
+    "tests/test_codegen_manifest.py"
+  ]
+}

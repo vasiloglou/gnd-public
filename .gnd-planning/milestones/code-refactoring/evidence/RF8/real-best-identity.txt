@@ -1,0 +1,6 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf8_sessions.py::test_best_identity_matches_real_reconstruction --tb=short
+..                                                                       [100%]
+2 passed in 1.88s
+
+Exit: 0

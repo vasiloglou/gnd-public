@@ -1,0 +1,10 @@
+Retained output edited to replace machine paths.
+ImportError while loading conftest '<worktree>/tests/conftest.py'.
+tests/conftest.py:11: in <module>
+    from gnd.model import Model
+src/gnd/model.py:64: in <module>
+    from gnd.universe import (
+src/gnd/universe.py:114: in <module>
+    identifying_id = _identifying_id
+                     ^^^^^^^^^^^^^^^
+E   NameError: name '_identifying_id' is not defined

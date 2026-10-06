@@ -1,0 +1,20 @@
+{
+ "observed": {
+  "not-string": {
+   "ok": false
+  },
+  "prefixed": {
+   "ok": false
+  },
+  "short": {
+   "ok": false
+  },
+  "upper": {
+   "ok": false
+  },
+  "valid": {
+   "ok": true
+  }
+ },
+ "site": "sha256_hex|gnd.extract.anchors:_digest"
+}

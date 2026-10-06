@@ -20,7 +20,6 @@ from typing import Any, Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from gnd.agent_cli import BoundedProcessResult, ProcessLimits, run_bounded_process
 from gnd.artifacts import canonical_json_bytes, sha256_hex
 from gnd.exp.junit import (
     JUNIT_COLLISION_REASON,
@@ -44,6 +43,7 @@ from gnd.exp.session_contract import (
     Sha256String,
     TestsAcceptance,
 )
+from gnd.process import BoundedProcessResult, ProcessLimits, run_bounded_process
 
 __all__ = [
     "MAX_COPY_BYTES",
@@ -282,7 +282,7 @@ class _HeldResultParent:
 def tests_environment() -> dict[str, str]:
     """Call the shipped verifier allowlist expression at execution time."""
 
-    from gnd.exp.session import verifier_environment
+    from gnd.exp.session_environment import verifier_environment
 
     return verifier_environment()
 

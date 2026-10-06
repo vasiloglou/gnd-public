@@ -1,0 +1,355 @@
+[
+  {
+    "path": "AGENTS.md",
+    "before": {
+      "path": "AGENTS.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 4636,
+      "public_sha256": "16986afc848c69dc78b56d6ae971f019e8a29c019160f9614862dc62d4345a32",
+      "mode": 420,
+      "baseline_sha256": "db3e24b35d15cc6f997e65ebb2666142d1c0e306721d06d44e00306fe2f1b8ea"
+    },
+    "after": {
+      "path": "AGENTS.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 5115,
+      "public_sha256": "2293be093c50e5a94d310e833da0015ca6a65e3b6e0651203344c9bb5dfffc02",
+      "mode": 420,
+      "baseline_sha256": "db3e24b35d15cc6f997e65ebb2666142d1c0e306721d06d44e00306fe2f1b8ea"
+    }
+  },
+  {
+    "path": "CONTRIBUTING.md",
+    "before": {
+      "path": "CONTRIBUTING.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 3744,
+      "public_sha256": "fca2c9cb3e7b92bbb6bbd07ae93f80e96636590b49ff9ff03ead2126219b10a2",
+      "mode": 420,
+      "baseline_sha256": "bf00c14334b5822a495c22f57c02a10f77adc49d27f63dff0bdbdfe137a6f2b4"
+    },
+    "after": {
+      "path": "CONTRIBUTING.md",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 4620,
+      "public_sha256": "c699824df755971ed4e484ac0d703ed62072d8684f002a0bdc6d12acce35e457",
+      "mode": 420,
+      "baseline_sha256": "bf00c14334b5822a495c22f57c02a10f77adc49d27f63dff0bdbdfe137a6f2b4"
+    }
+  },
+  {
+    "path": "src/gnd/checker.py",
+    "before": {
+      "path": "src/gnd/checker.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF3 D6 bounded core refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 107635,
+      "public_sha256": "e149a50de628c17cd944e6da0e3e692cf5fc7ebfa6c7596a49298bad26555281",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/checker.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "00c8c9ad61918a505a8d3e8dc01de9db0d140018df47e868628fb068410e74ea"
+    },
+    "after": {
+      "path": "src/gnd/checker.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 108395,
+      "public_sha256": "eefca774b53623600ff1916597d4ecc4dbcfe1cbf9b63387286b55f3a214cc20",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/checker.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "00c8c9ad61918a505a8d3e8dc01de9db0d140018df47e868628fb068410e74ea"
+    }
+  },
+  {
+    "path": "src/gnd/popvalidate.py",
+    "before": {
+      "path": "src/gnd/popvalidate.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF3 D6 bounded core refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 27865,
+      "public_sha256": "608447d2785f24a91d2f4ebd42af3fb61e8a55599ec8d68629862330c36271c5",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/popvalidate.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "bc722f2922a3f7ad4aa111c5a015738afcd3d291c2efd98197cc7ec15bd04bf6"
+    },
+    "after": {
+      "path": "src/gnd/popvalidate.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 27557,
+      "public_sha256": "e92bffc91425890d79adb53ed5512e637a935e1bc623ad9fa0c2b68b01084213",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/popvalidate.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "bc722f2922a3f7ad4aa111c5a015738afcd3d291c2efd98197cc7ec15bd04bf6"
+    }
+  },
+  {
+    "path": "src/gnd/semantic_adapter.py",
+    "before": {
+      "path": "src/gnd/semantic_adapter.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF3 D6 bounded core refactoring adaptation; prior release identity is unavailable for these current bytes.",
+      "bytes": 43636,
+      "public_sha256": "2aae902869891e4868b8dd55d830ef6b26acd3edd4dce126e78d402d064ace8c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/semantic_adapter.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "3f883b4fe4289886af08a1803b31ec6ee7d22c486b6fa208999585fde4e4b4d5"
+    },
+    "after": {
+      "path": "src/gnd/semantic_adapter.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 43229,
+      "public_sha256": "f7428eccc22eeeb0119c32a82371665b615214f60164692058e6b76ef294fc6f",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/semantic_adapter.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "3f883b4fe4289886af08a1803b31ec6ee7d22c486b6fa208999585fde4e4b4d5"
+    }
+  },
+  {
+    "path": "src/gnd/semantic_spec.py",
+    "before": {
+      "path": "src/gnd/semantic_spec.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 95965,
+      "public_sha256": "93ae1c2af69967dd68fb7127928d9c373715e35117a6aa11b046cac03cc25fd5",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/semantic_spec.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "93ae1c2af69967dd68fb7127928d9c373715e35117a6aa11b046cac03cc25fd5"
+    },
+    "after": {
+      "path": "src/gnd/semantic_spec.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 96328,
+      "public_sha256": "73eb08dc260c9777be7bda9b9fd713b5a0e04126e639b1c84455fb330f2c304e",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/semantic_spec.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "93ae1c2af69967dd68fb7127928d9c373715e35117a6aa11b046cac03cc25fd5"
+    }
+  },
+  {
+    "path": "src/gnd/synth/oracle/constructive.py",
+    "before": {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 75544,
+      "public_sha256": "fc54df86d72636bdcb3be5285aa634c7c5789f8435e402227f71b9b410cdd196",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "fc54df86d72636bdcb3be5285aa634c7c5789f8435e402227f71b9b410cdd196"
+    },
+    "after": {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 75224,
+      "public_sha256": "9f98c0c9ddac492e3c66c03bc8c3b2626a20094e49ec41a6f9973e5a02bec407",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "fc54df86d72636bdcb3be5285aa634c7c5789f8435e402227f71b9b410cdd196"
+    }
+  },
+  {
+    "path": "src/gnd/synth/poolfile.py",
+    "before": {
+      "path": "src/gnd/synth/poolfile.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 26516,
+      "public_sha256": "4b6e9fd0f7cdd38bf34a327525d71701c23af151ed67905df3a6b867e4ae67dc",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/poolfile.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "4b6e9fd0f7cdd38bf34a327525d71701c23af151ed67905df3a6b867e4ae67dc"
+    },
+    "after": {
+      "path": "src/gnd/synth/poolfile.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 26490,
+      "public_sha256": "d14d1be65ba128ebb3b57ecfe5c16ed4cd802d5b1980b4c6ba688b1d67222886",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/poolfile.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "4b6e9fd0f7cdd38bf34a327525d71701c23af151ed67905df3a6b867e4ae67dc"
+    }
+  },
+  {
+    "path": "src/gnd/synth/value_domain.py",
+    "before": {
+      "path": "src/gnd/synth/value_domain.py",
+      "kind": "identical-import",
+      "reason": "coherent runtime or exact dependency lock import",
+      "bytes": 6738,
+      "public_sha256": "91d3bba11508d118e78941bdb4c105564e5cd277cd7cd363f63d5f489f0455c3",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/value_domain.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "91d3bba11508d118e78941bdb4c105564e5cd277cd7cd363f63d5f489f0455c3"
+    },
+    "after": {
+      "path": "src/gnd/synth/value_domain.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 7017,
+      "public_sha256": "0d0c9708bc994f850f7a371947026fed84dcdd3da1d8eb99692fdb772e3d4e2c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/synth/value_domain.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "91d3bba11508d118e78941bdb4c105564e5cd277cd7cd363f63d5f489f0455c3"
+    }
+  },
+  {
+    "path": "src/gnd/constraint_families.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/constraint_families.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 4715,
+      "public_sha256": "d70978c5b6586509c914b8814a84d8c6112f69a70bb1bb371fa3ba04893a43c0",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "d70978c5b6586509c914b8814a84d8c6112f69a70bb1bb371fa3ba04893a43c0"
+    }
+  },
+  {
+    "path": "src/gnd/model_index.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/model_index.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 7923,
+      "public_sha256": "5e363f35bd94c36838303a678359fb82df220badad2b4e54e70087dc99cf5f03",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "5e363f35bd94c36838303a678359fb82df220badad2b4e54e70087dc99cf5f03"
+    }
+  },
+  {
+    "path": "src/gnd/model_queries.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/model_queries.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 5970,
+      "public_sha256": "d204481a77fc41d0198e1c9f0200d2f78f07e701a88736724c8e4743511b2b52",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "d204481a77fc41d0198e1c9f0200d2f78f07e701a88736724c8e4743511b2b52"
+    }
+  },
+  {
+    "path": "src/gnd/universe.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/universe.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 21169,
+      "public_sha256": "7d8767beca1d2e9799de41c2e3eebc21572a44bd041ff3b8ec023a347cf1094c",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "7d8767beca1d2e9799de41c2e3eebc21572a44bd041ff3b8ec023a347cf1094c"
+    }
+  },
+  {
+    "path": "tests/fixtures/rf1-pins/mutations.json",
+    "before": null,
+    "after": {
+      "path": "tests/fixtures/rf1-pins/mutations.json",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 91662,
+      "public_sha256": "4fdda85d90c991971d78a6c926a8ccf0a79bb3903a408237e08b7edd28730012",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "4fdda85d90c991971d78a6c926a8ccf0a79bb3903a408237e08b7edd28730012"
+    }
+  },
+  {
+    "path": "tests/test_rf6_index.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf6_index.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 7384,
+      "public_sha256": "b9b9756d5bac0f23ace0de20529409d98928249272c215cc97116caed85e8f35",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "b9b9756d5bac0f23ace0de20529409d98928249272c215cc97116caed85e8f35"
+    }
+  },
+  {
+    "path": "tests/test_rf6_moves.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf6_moves.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 2407,
+      "public_sha256": "53cbc56b1beed6f87f81b6517749a1b8dbaf9e9b43426c3bceba8e982b50beee",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "53cbc56b1beed6f87f81b6517749a1b8dbaf9e9b43426c3bceba8e982b50beee"
+    }
+  },
+  {
+    "path": "tests/test_rf6_query_policy.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf6_query_policy.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 2787,
+      "public_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9"
+    }
+  },
+  {
+    "path": "tests/test_rf6_registry.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf6_registry.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a new refactoring home or focused control; no release identity claim.",
+      "bytes": 3728,
+      "public_sha256": "0b07ccd713f3376051756ec6cd7d7829c47195d6a4e892c993d73f9ca131060a",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "0b07ccd713f3376051756ec6cd7d7829c47195d6a4e892c993d73f9ca131060a"
+    }
+  }
+]

@@ -77,6 +77,7 @@ from pydantic import (
     ValidationError,
 )
 
+from gnd import input_policy as _rf7_input
 from gnd.extract.manifest import manifest_path_issue
 
 __all__ = [
@@ -287,7 +288,8 @@ def write_manifest(root: str | Path, manifest: CodegenManifest) -> Path:
     ``_cmd_extract``'s load-bearing index-last ordering, so a crashed run never
     leaves a manifest describing files that do not exist.
     """
-    from gnd.install import _atomic_write, safe_destination
+    from gnd.safefs import atomic_write as _atomic_write
+    from gnd.safefs import safe_destination
 
     root_path = Path(root)
     destination = safe_destination(root_path, MANIFEST_FILENAME)
@@ -314,7 +316,7 @@ def _read_document(path: Path) -> Any:
             f"cap for an untrusted codegen manifest (T-03-21)"
         )
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return _rf7_input.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise _refuse(f"{path} is not parseable JSON: {error}") from error
 
@@ -366,7 +368,7 @@ def read_manifest_bytes(data: bytes, *, source: str) -> CodegenManifest:
             "cap for an untrusted codegen manifest (T-03-21)"
         )
     try:
-        document = json.loads(data.decode("utf-8"))
+        document = _rf7_input.loads(data.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError) as error:
         raise _refuse(f"{source} is not parseable JSON: {error}") from error
     return _validate_document(document, source)

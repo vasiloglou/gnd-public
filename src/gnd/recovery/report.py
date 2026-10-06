@@ -26,6 +26,8 @@ from pydantic import (
     model_validator,
 )
 
+from gnd.artifacts import Sha256
+
 __all__ = [
     "AmbiguousProposal",
     "CensusDisposition",
@@ -57,7 +59,7 @@ __all__ = [
 
 
 NonEmptyString = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-Sha256 = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
+
 MAX_REPORT_RECORDS = 10_000
 
 

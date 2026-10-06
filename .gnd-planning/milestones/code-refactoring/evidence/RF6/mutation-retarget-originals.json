@@ -1,0 +1,56 @@
+[
+  {
+    "expect_red": [
+      "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_object_types_by_id]"
+    ],
+    "file": "src/gnd/universe.py",
+    "id": "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id",
+    "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+    "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {\n"
+  },
+  {
+    "expect_red": [
+      "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_role_object_types]"
+    ],
+    "file": "src/gnd/popvalidate.py",
+    "id": "M-HELP-identical-candidate-gnd-popvalidate-role-object-types",
+    "new": "def _role_object_types(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"fact_type id -> {role_name: object_type id}.\"\"\"\n",
+    "old": "def _role_object_types(model: Model) -> dict[str, dict[str, str]]:\n    \"\"\"fact_type id -> {role_name: object_type id}.\"\"\"\n"
+  },
+  {
+    "expect_red": [
+      "tests/test_rf1_semantic_pins.py::test_resolver"
+    ],
+    "file": "src/gnd/universe.py",
+    "id": "M-SEM-resolver-is-true",
+    "new": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\"):",
+    "old": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\") is True:"
+  },
+  {
+    "expect_red": [
+      "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_object_types_by_id]"
+    ],
+    "file": "src/gnd/synth/oracle/constructive.py",
+    "id": "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id",
+    "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n",
+    "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n"
+  },
+  {
+    "expect_red": [
+      "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_role_object]"
+    ],
+    "file": "src/gnd/synth/oracle/constructive.py",
+    "id": "M-HELP-identical-candidate-gnd-synth-assemble-role-object",
+    "new": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+    "old": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    return {\n"
+  },
+  {
+    "expect_red": [
+      "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.poolfile:_object_types_by_id]"
+    ],
+    "file": "src/gnd/synth/poolfile.py",
+    "id": "M-HELP-identical-candidate-gnd-synth-poolfile-object-types-by-id",
+    "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+    "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {\n"
+  }
+]

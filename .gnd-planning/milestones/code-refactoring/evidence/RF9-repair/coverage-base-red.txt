@@ -1,0 +1,26 @@
+Edited evidence: worktree/baseline/temp prefixes sanitized; other output retained.
+Command: exact26dbff6 archived src/gnd and tests/test_measure_offline.py, isolated PYTHONPATH; pytest -q current tests/test_rf9_repairs.py::{test_missing_best_accessor_is_a_structured_refusal,test_offline_relative_import_cannot_climb_above_package} --tb=short -p no:cacheprovider
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_missing_best_accessor_is_a_structured_refusal ______________
+tests/test_rf9_repairs.py:386: in test_missing_best_accessor_is_a_structured_refusal
+    findings = close._declared_case_findings(
+<baseline>/src/gnd/exp/close.py:969: in _declared_case_findings
+    f"attempts/{record.attempt_index:04d}/attempt.json", cap=10 * 1024 * 1024
+                ^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'attempt_index'
+---------------------------- Captured stdout setup -----------------------------
+CREATED <pytest-temp>/pytest-4549/test_missing_best_accessor_is_0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+___________ test_offline_relative_import_cannot_climb_above_package ____________
+tests/test_rf9_repairs.py:397: in test_offline_relative_import_cannot_climb_above_package
+    guard._imports('from ... import escape', package='gnd.exp')
+E   TypeError: _imports() got an unexpected keyword argument 'package'
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_missing_best_accessor_is_a_structured_refusal
+FAILED tests/test_rf9_repairs.py::test_offline_relative_import_cannot_climb_above_package
+2 failed in 1.00s
+
+Exit:1
+
+Instrument provenance correction: the first archive probe reused pytest's current scanner module and showed1failed1passed; it was not accepted as baseline scanner proof. This corrected probe explicitly loads the archived test_measure_offline module before pytest collection; both cases fail on26dbff6.

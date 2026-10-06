@@ -1,0 +1,10 @@
+{
+  "action": "required independent RF5 Codex provider review",
+  "result": "automatic approval review rejected",
+  "reason": "RF5 auto authorizes the phase but does not explicitly authorize this specific source/diff payload and external Codex provider destination.",
+  "payload": "RF5 review prompt and inspected repository source/diff",
+  "authorization_request": "initial RF5 Codex review and one repair review if needed",
+  "status": "pending user response",
+  "external_process_started": false,
+  "no_workaround_attempted": true
+}

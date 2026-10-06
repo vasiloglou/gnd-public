@@ -1,0 +1,13 @@
+Command: PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_rf6_index.py::test_lookup_closure_variants_and_missing --tb=short -p no:cacheprovider
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_lookup_closure_variants_and_missing ___________________
+tests/test_rf6_index.py:36: in test_lookup_closure_variants_and_missing
+    assert q.primitive('Child', variant='truthy') == 'String'
+E   AssertionError: assert None == 'String'
+E    +  where None = primitive('Child', variant='truthy')
+E    +    where primitive = ModelIndex(digest='be951cb5e4e782c3f57b9275877077330c71b537bdb1ed35b7a2a8c5d7ba011b').primitive
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_lookup_closure_variants_and_missing - As...
+1 failed in 0.06s
+Exit: 1

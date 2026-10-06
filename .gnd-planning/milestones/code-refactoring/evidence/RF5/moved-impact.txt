@@ -1,0 +1,421 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_codegen_force.py tests/test_codegen_manifest.py tests/test_coverage_cli.py tests/test_exp_bands.py tests/test_exp_spec.py tests/test_extract_cli.py tests/test_install.py tests/test_measure_negative_control.py tests/test_measure_offline.py tests/test_poolfile.py tests/test_public_derivation_evaluation_complete.py tests/test_public_payload_alias_sites.py tests/test_public_registry_runtime.py tests/test_recovery_adversarial.py tests/test_report_json.py tests/test_review_bands.py tests/test_rf1_cli_pins.py tests/test_rf1_session_pins.py tests/test_skeleton_e2e.py tests/test_solve.py tests/test_v63_phase4_helpers.py tests/test_v6_phase3_distribution.py tests/test_verification_fixes.py tests/test_verify_cli.py
+........................................................................ [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 19%]
+........................................................................ [ 25%]
+...........................................................FF........... [ 32%]
+........................................................................ [ 38%]
+........................................................................ [ 45%]
+........................................................................ [ 51%]
+FFF..................................................................... [ 58%]
+...................................F.................................... [ 64%]
+........................................................................ [ 71%]
+........................................................................ [ 77%]
+........................................................................ [ 84%]
+........................................................................ [ 90%]
+........................................................................ [ 97%]
+...............................                                          [100%]
+=================================== FAILURES ===================================
+________ test_no_network_library_is_reachable_from_the_generation_lane _________
+
+    def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
+        """Walk the generation lane's transitive import closure and assert no module
+        in it imports a network library.
+    
+        A FIFTH, separately-named scan rooted at ``GENERATION_LANE_ROOTS``. Scan 1 is
+        ``measure/``-scoped and its docstring forbids re-scoping it tree-wide, scan 2
+        matches provider CLIENTS only, scan 3's closure is rooted at ``gnd.measure``,
+        and scan 4's roots are the extraction/fidelity lanes — so ``httpx`` imported
+        by ``src/gnd/exp/`` would be caught by NONE of them. Scans 1-4 keep their
+        owner-decided scopes and are not touched (R-04').
+    
+        Why the generation lane needs its own offline guarantee: an experiment's
+        conclusions and a conformance verdict are computed from committed artifacts.
+        A network call anywhere in that closure would mean a recorded conclusion
+        depended on something no reviewer can reproduce from the repository.
+    
+        Mutation check (recorded): adding ``import urllib.request`` to
+        ``src/gnd/exp/spec.py`` reds THIS scan while scans 1-4 stay green. Plan
+        03-03 recorded the same mutation against ``src/gnd/codegen/emit.py``.
+    
+        Self-check: the walk must LEAVE its root and reach ``src/gnd/model.py`` — the
+        module the lane genuinely imports (``ValidationIssue`` and the untrusted-YAML
+        event budget). A closure walk that never leaves its root is a scan over one
+        directory wearing a closure's name (G-3).
+    
+        Second self-check (plan 03-03): EVERY root must exist. ``rglob`` over a
+        missing directory yields nothing and raises nothing, so a renamed or
+        not-yet-created package would silently drop out of the scan while the
+        aggregate ``queue`` stayed non-empty from its siblings — a guard that keeps
+        reporting green over exactly the lane it stopped covering.
+        """
+        for root in GENERATION_LANE_ROOTS:
+            assert root.is_dir(), (
+                f"scan-5 root {root} does not exist; rglob over a missing directory "
+                f"is silent, so this lane would be dropped from the closure walk "
+                f"without any test going red"
+            )
+        seen: set[Path] = set()
+        queue: list[Path] = [
+            path for root in GENERATION_LANE_ROOTS for path in root.rglob("*.py")
+        ]
+        assert queue, "the generation lane has no modules — the scan root is wrong"
+        reached_outside_the_roots = False
+        offenders: dict[str, list[str]] = {}
+    
+        while queue:
+            path = queue.pop()
+            if path in seen or not path.is_file():
+                continue
+            seen.add(path)
+            source = path.read_text(encoding="utf-8")
+            hits = _forbidden_hit(source, _NETWORK_LIBS)
+            if hits:
+                offenders[str(path.relative_to(REPO_ROOT))] = hits
+            for dotted in _imports(source):
+                if not dotted.startswith("gnd"):
+                    continue
+                target = _module_path(dotted)
+                if target is not None and target not in seen:
+                    if not any(root in target.parents for root in GENERATION_LANE_ROOTS):
+                        reached_outside_the_roots = True
+                    queue.append(target)
+    
+        assert not offenders, (
+            f"a network library is reachable from the generation lane: {offenders}. "
+            f"Codegen and the experiment primitive derive from COMMITTED artifacts; "
+            f"a live call in this closure makes a recorded conclusion irreproducible."
+        )
+        assert (GND_SRC / "model.py") in seen, (
+            "the closure scan never reached src/gnd/model.py — the module the "
+            "generation lane genuinely imports. The scan is not exercising its "
+            "purpose; check that gnd.exp still sources ValidationIssue from gnd.model."
+        )
+        assert reached_outside_the_roots, (
+            "the closure walk never left GENERATION_LANE_ROOTS — a scan over one "
+            "directory is not a closure scan, and would report green over exactly "
+            "the transitive import it was written to catch."
+        )
+>       assert (GND_SRC / "declared_adapter.py") not in seen, (
+            "the deterministic generation closure reached the live declared-adapter edge"
+        )
+E       AssertionError: the deterministic generation closure reached the live declared-adapter edge
+E       assert (PosixPath('<worktree>/src/gnd') / 'declared_adapter.py') not in {PosixPath('<worktree>/src/gnd/__...laosvasiloglou/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109/src/gnd/anchor_identity.py'), ...}
+
+tests/test_measure_offline.py:378: AssertionError
+____________ test_g01_g04_declared_network_edge_has_one_module_home ____________
+
+    def test_g01_g04_declared_network_edge_has_one_module_home() -> None:
+        declared = GND_SRC / "declared_adapter.py"
+        source = declared.read_text(encoding="utf-8")
+        assert "asyncio.open_connection" in source
+        offenders = []
+        for path in sorted(GND_SRC.rglob("*.py")):
+            if path != declared and "asyncio.open_connection" in path.read_text(encoding="utf-8"):
+                offenders.append(str(path.relative_to(REPO_ROOT)))
+        assert offenders == []
+        for path in sorted(EXP_SRC.rglob("*.py")):
+>           assert "gnd.declared_adapter" not in path.read_text(encoding="utf-8")
+E           assert 'gnd.declared_adapter' not in 'from __futu... "gnd.cli"\n'
+E             
+E             'gnd.declared_adapter' is contained here:
+E               
+E                   from gnd.declared_adapter import invoke_declared_adapter
+E             ?          ++++++++++++++++++++
+E                   from gnd.exp.adapter_policy import AdapterPolicyError, read_adapter_policy
+E                   from gnd.exp.session import (...
+E             
+E             ...Full output truncated (251 lines hidden), use '-vv' to show
+
+tests/test_measure_offline.py:393: AssertionError
+__________________________ test_phase2_branch[P2-054] __________________________
+
+case = {'branch': 'constraint:all-extensions-before-constraints', 'expected': 'After all extensions and comparisons, one isol...nal-order verdict for this branch.', 'id': 'P2-054', 'path': 'cases/constraint-all-extensions-before-constraints', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d86b7e0>
+
+    @pytest.mark.parametrize("case", RED_CASES, ids=[str(case["id"]) for case in RED_CASES])
+    def test_phase2_branch(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch):
+        branch = str(case["branch"])
+        if branch in A8_MIGRATED_BRANCHES:
+            _assert_preconditions(case)
+        elif branch.startswith("wire:"):
+            _assert_wire(case)
+        elif branch.startswith("obligation:"):
+            _assert_obligation(case)
+        elif branch.startswith("eval:"):
+            _assert_evaluation(case)
+        elif branch.startswith(("constraint:", "band:")):
+>           _assert_constraint_or_band(case, monkeypatch)
+
+tests/test_public_derivation_evaluation_complete.py:788: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'branch': 'constraint:all-extensions-before-constraints', 'expected': 'After all extensions and comparisons, one isol...nal-order verdict for this branch.', 'id': 'P2-054', 'path': 'cases/constraint-all-extensions-before-constraints', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d86b7e0>
+
+    def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch) -> None:
+        model, population = _loaded(case)
+        branch = str(case["branch"])
+        extensions, derivations = _evaluate_derivations(model, population)
+        if branch == "constraint:evaluator-view-isolated":
+            base = _base_relations(model, population)
+            assert all(not base[fact_type].rows for fact_type in extensions)
+        elif branch in {
+            "constraint:constraint-view-isolated",
+            "constraint:derived-claim-view",
+            "constraint:semiderived-computed-view",
+            "constraint:unlisted-derived-claim-inert",
+        }:
+            view = _constraint_view(model, population, extensions)
+            if branch == "constraint:unlisted-derived-claim-inert":
+                assert view.facts["result"] == ()
+            elif "semi_result" in view.facts:
+                assert [dict(row) for row in view.facts["semi_result"]] == [{"item": "alpha"}]
+            else:
+                assert view.facts["result"]
+            assert view.facts is not population.facts
+        elif branch in {
+            "constraint:all-extensions-before-constraints",
+            "constraint:one-final-walk",
+            "constraint:duplicate-final-walk-red",
+        }:
+            target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
+            target_model, target_population = _loaded(target_case)
+            calls: list[str] = []
+            original_evaluate = extension_core.evaluate_derivations
+            original_message = checker._correspondence_message
+    
+            def traced_evaluate(*args: Any, **kwargs: Any):
+                result = original_evaluate(*args, **kwargs)
+                calls.extend(f"extension:{fact_type}" for fact_type in result[0])
+                calls.extend(f"comparison:{row.fact_type}" for row in result[1])
+                return result
+    
+            def traced_message(*args: Any, **kwargs: Any):
+                calls.append(f"constraint:{args[2].constraint_id}")
+                return original_message(*args, **kwargs)
+    
+>           monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+E           AttributeError: mappingproxy({'low': _TypedRelation(fact_type='low', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'middle': _TypedRelation(fact_type='middle', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'top': _TypedRelation(fact_type='top', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) has no attribute 'evaluate_derivations'
+
+tests/test_public_derivation_evaluation_complete.py:564: AttributeError
+__________________________ test_phase2_branch[P2-055] __________________________
+
+case = {'branch': 'constraint:one-final-walk', 'expected': 'After all extensions and comparisons, one isolated constraint vie...s exactly one original-order verdict for this branch.', 'id': 'P2-055', 'path': 'cases/constraint-one-final-walk', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cf9ac80>
+
+    @pytest.mark.parametrize("case", RED_CASES, ids=[str(case["id"]) for case in RED_CASES])
+    def test_phase2_branch(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch):
+        branch = str(case["branch"])
+        if branch in A8_MIGRATED_BRANCHES:
+            _assert_preconditions(case)
+        elif branch.startswith("wire:"):
+            _assert_wire(case)
+        elif branch.startswith("obligation:"):
+            _assert_obligation(case)
+        elif branch.startswith("eval:"):
+            _assert_evaluation(case)
+        elif branch.startswith(("constraint:", "band:")):
+>           _assert_constraint_or_band(case, monkeypatch)
+
+tests/test_public_derivation_evaluation_complete.py:788: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'branch': 'constraint:one-final-walk', 'expected': 'After all extensions and comparisons, one isolated constraint vie...s exactly one original-order verdict for this branch.', 'id': 'P2-055', 'path': 'cases/constraint-one-final-walk', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cf9ac80>
+
+    def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch) -> None:
+        model, population = _loaded(case)
+        branch = str(case["branch"])
+        extensions, derivations = _evaluate_derivations(model, population)
+        if branch == "constraint:evaluator-view-isolated":
+            base = _base_relations(model, population)
+            assert all(not base[fact_type].rows for fact_type in extensions)
+        elif branch in {
+            "constraint:constraint-view-isolated",
+            "constraint:derived-claim-view",
+            "constraint:semiderived-computed-view",
+            "constraint:unlisted-derived-claim-inert",
+        }:
+            view = _constraint_view(model, population, extensions)
+            if branch == "constraint:unlisted-derived-claim-inert":
+                assert view.facts["result"] == ()
+            elif "semi_result" in view.facts:
+                assert [dict(row) for row in view.facts["semi_result"]] == [{"item": "alpha"}]
+            else:
+                assert view.facts["result"]
+            assert view.facts is not population.facts
+        elif branch in {
+            "constraint:all-extensions-before-constraints",
+            "constraint:one-final-walk",
+            "constraint:duplicate-final-walk-red",
+        }:
+            target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
+            target_model, target_population = _loaded(target_case)
+            calls: list[str] = []
+            original_evaluate = extension_core.evaluate_derivations
+            original_message = checker._correspondence_message
+    
+            def traced_evaluate(*args: Any, **kwargs: Any):
+                result = original_evaluate(*args, **kwargs)
+                calls.extend(f"extension:{fact_type}" for fact_type in result[0])
+                calls.extend(f"comparison:{row.fact_type}" for row in result[1])
+                return result
+    
+            def traced_message(*args: Any, **kwargs: Any):
+                calls.append(f"constraint:{args[2].constraint_id}")
+                return original_message(*args, **kwargs)
+    
+>           monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+E           AttributeError: mappingproxy({'result': _TypedRelation(fact_type='result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'semi_result': _TypedRelation(fact_type='semi_result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) has no attribute 'evaluate_derivations'
+
+tests/test_public_derivation_evaluation_complete.py:564: AttributeError
+__________________________ test_phase2_branch[P2-056] __________________________
+
+case = {'branch': 'constraint:duplicate-final-walk-red', 'expected': 'After all extensions and comparisons, one isolated cons...one original-order verdict for this branch.', 'id': 'P2-056', 'path': 'cases/constraint-duplicate-final-walk-red', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bf70d00>
+
+    @pytest.mark.parametrize("case", RED_CASES, ids=[str(case["id"]) for case in RED_CASES])
+    def test_phase2_branch(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch):
+        branch = str(case["branch"])
+        if branch in A8_MIGRATED_BRANCHES:
+            _assert_preconditions(case)
+        elif branch.startswith("wire:"):
+            _assert_wire(case)
+        elif branch.startswith("obligation:"):
+            _assert_obligation(case)
+        elif branch.startswith("eval:"):
+            _assert_evaluation(case)
+        elif branch.startswith(("constraint:", "band:")):
+>           _assert_constraint_or_band(case, monkeypatch)
+
+tests/test_public_derivation_evaluation_complete.py:788: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'branch': 'constraint:duplicate-final-walk-red', 'expected': 'After all extensions and comparisons, one isolated cons...one original-order verdict for this branch.', 'id': 'P2-056', 'path': 'cases/constraint-duplicate-final-walk-red', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bf70d00>
+
+    def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch) -> None:
+        model, population = _loaded(case)
+        branch = str(case["branch"])
+        extensions, derivations = _evaluate_derivations(model, population)
+        if branch == "constraint:evaluator-view-isolated":
+            base = _base_relations(model, population)
+            assert all(not base[fact_type].rows for fact_type in extensions)
+        elif branch in {
+            "constraint:constraint-view-isolated",
+            "constraint:derived-claim-view",
+            "constraint:semiderived-computed-view",
+            "constraint:unlisted-derived-claim-inert",
+        }:
+            view = _constraint_view(model, population, extensions)
+            if branch == "constraint:unlisted-derived-claim-inert":
+                assert view.facts["result"] == ()
+            elif "semi_result" in view.facts:
+                assert [dict(row) for row in view.facts["semi_result"]] == [{"item": "alpha"}]
+            else:
+                assert view.facts["result"]
+            assert view.facts is not population.facts
+        elif branch in {
+            "constraint:all-extensions-before-constraints",
+            "constraint:one-final-walk",
+            "constraint:duplicate-final-walk-red",
+        }:
+            target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
+            target_model, target_population = _loaded(target_case)
+            calls: list[str] = []
+            original_evaluate = extension_core.evaluate_derivations
+            original_message = checker._correspondence_message
+    
+            def traced_evaluate(*args: Any, **kwargs: Any):
+                result = original_evaluate(*args, **kwargs)
+                calls.extend(f"extension:{fact_type}" for fact_type in result[0])
+                calls.extend(f"comparison:{row.fact_type}" for row in result[1])
+                return result
+    
+            def traced_message(*args: Any, **kwargs: Any):
+                calls.append(f"constraint:{args[2].constraint_id}")
+                return original_message(*args, **kwargs)
+    
+>           monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+E           AttributeError: mappingproxy({'result': _TypedRelation(fact_type='result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'semi_result': _TypedRelation(fact_type='semi_result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) has no attribute 'evaluate_derivations'
+
+tests/test_public_derivation_evaluation_complete.py:564: AttributeError
+___ test_inventory_and_verify_never_execute_repository_or_external_authority ___
+
+tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4360/test_inventory_and_verify_neve0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10eba1780>
+
+    def test_inventory_and_verify_never_execute_repository_or_external_authority(
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        from gnd import agent_cli
+        from gnd.conformance import service as conformance_service
+        from gnd.exp import session as session_module
+    
+        root = tmp_path / "hostile"
+        (root / "src").mkdir(parents=True)
+        marker = root / "executed"
+        (root / "src" / "hostile.py").write_text(
+            "from pathlib import Path\n"
+            f"Path({str(marker)!r}).write_text('executed')\n"
+            "import subprocess\n"
+            "subprocess.run(['false'])\n",
+            encoding="utf-8",
+        )
+        bundle = tmp_path / "bundle"
+        _write_bundle(bundle)
+    
+        def forbidden(*_args: Any, **_kwargs: Any) -> Any:
+            raise AssertionError("recovery crossed an execution or external-authority boundary")
+    
+        imported_packages: list[str] = []
+        canonical_import_module = importlib.import_module
+    
+        def package_only_import(name: str, package: str | None = None) -> Any:
+            imported_packages.append(name)
+            if name != "gnd":
+                forbidden(name, package)
+            return canonical_import_module(name, package)
+    
+        monkeypatch.setattr(subprocess, "run", forbidden)
+        monkeypatch.setattr(subprocess, "Popen", forbidden)
+        monkeypatch.setattr(os, "system", forbidden)
+        monkeypatch.setattr(importlib, "import_module", package_only_import)
+        monkeypatch.setattr(socket, "create_connection", forbidden)
+        monkeypatch.setattr(agent_cli, "invoke_agent", forbidden)
+        monkeypatch.setattr(conformance_service, "run_conformance", forbidden)
+        monkeypatch.setattr(session_module, "run_session", forbidden)
+        monkeypatch.setattr(cli.install_module, "apply", forbidden)
+        monkeypatch.setattr(cli.install_module, "remove", forbidden)
+>       monkeypatch.setattr(owner("_cmd_codegen"), "_cmd_codegen", forbidden)
+                            ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_recovery_adversarial.py:1432: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/support/rf5_sources.py:10: in owner
+    return importlib.import_module(HOMES[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_recovery_adversarial.py:1419: in package_only_import
+    forbidden(name, package)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_args = ('gnd.codegen.service', None), _kwargs = {}
+
+    def forbidden(*_args: Any, **_kwargs: Any) -> Any:
+>       raise AssertionError("recovery crossed an execution or external-authority boundary")
+E       AssertionError: recovery crossed an execution or external-authority boundary
+
+tests/test_recovery_adversarial.py:1411: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_measure_offline.py::test_no_network_library_is_reachable_from_the_generation_lane
+FAILED tests/test_measure_offline.py::test_g01_g04_declared_network_edge_has_one_module_home
+FAILED tests/test_public_derivation_evaluation_complete.py::test_phase2_branch[P2-054]
+FAILED tests/test_public_derivation_evaluation_complete.py::test_phase2_branch[P2-055]
+FAILED tests/test_public_derivation_evaluation_complete.py::test_phase2_branch[P2-056]
+FAILED tests/test_recovery_adversarial.py::test_inventory_and_verify_never_execute_repository_or_external_authority
+6 failed, 1105 passed in 109.98s (0:01:49)
+
+Exit: 1

@@ -1,0 +1,13 @@
+{
+  "before_sha256": "ce2ea2e4a085bb13d874d2788118031a3f343342fe2e89dfa471195ca10c3b08",
+  "after_sha256": "48c8d40cb2ef76c7fe4358bea97de8a4523454db1b8501d801fcc813031b4def",
+  "added": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "walk",
+      "set[str]",
+      1
+    ]
+  ],
+  "reason": "Nested walk seen:set[str] annotation is a syntax candidate; no fact/role query or literal policy exception added."
+}

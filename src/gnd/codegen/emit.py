@@ -1109,7 +1109,9 @@ def _assert_frontmatter_round_trips(skill: GeneratedFile, *, expected_name: str)
 
 def _write_staged_file(root_fd: int, relpath: str, text: str) -> PurePosixPath:
     """Write and fsync one planned leaf below a private staging descriptor."""
-    from gnd.install import FILE_MODE, _descend, _reject_unsafe_relpath
+    from gnd.safefs import FILE_MODE
+    from gnd.safefs import descend as _descend
+    from gnd.safefs import reject_unsafe_relpath as _reject_unsafe_relpath
 
     posix = _reject_unsafe_relpath(relpath, source="codegen staging path")
     destination_parent = _descend(root_fd, posix.parts[:-1], create=True)
@@ -1162,7 +1164,7 @@ def _fsync_staged_directories(
     relpaths: list[PurePosixPath],
 ) -> None:
     """Fsync every staging directory with created entries, bottom-up."""
-    from gnd.install import _descend
+    from gnd.safefs import descend as _descend
 
     directories = {posix.parts[:depth] for posix in relpaths for depth in range(len(posix.parts))}
     for parts in sorted(directories, key=lambda value: (-len(value), value)):
@@ -1210,13 +1212,23 @@ def write_project(
         _bind_codegen_parent,
         _open_codegen_root,
     )
-    from gnd.install import (
-        _NO_REPLACE_CONFLICT_ERRNOS,
-        InstallPathError,
-        _descend,
-        _reject_unsafe_relpath,
-        _rename_noreplace,
-        _temp_name,
+    from gnd.safefs import (
+        NO_REPLACE_CONFLICT_ERRNOS as _NO_REPLACE_CONFLICT_ERRNOS,
+    )
+    from gnd.safefs import (
+        InstallPathError as InstallPathError,  # noqa: PLC0414 -- compatibility surface
+    )
+    from gnd.safefs import (
+        descend as _descend,
+    )
+    from gnd.safefs import (
+        reject_unsafe_relpath as _reject_unsafe_relpath,
+    )
+    from gnd.safefs import (
+        rename_noreplace as _rename_noreplace,
+    )
+    from gnd.safefs import (
+        temp_name as _temp_name,
     )
 
     root = Path(out_root)

@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/release/model.orm.json",
+   "src/gnd/examples/release/repaired.pop.json",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"release_due\",\"index\":0},\"sentence\":\"'REL-0' relates '2026-01-04'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_flag\",\"index\":0},\"sentence\":\"'REL-0' relates 'False'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_flag\",\"index\":1},\"sentence\":\"'REL-0' relates 'True'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_metric\",\"index\":0},\"sentence\":\"'REL-0' relates '-1'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_metric\",\"index\":1},\"sentence\":\"'REL-0' relates '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_reachable\",\"index\":0},\"sentence\":\"'API' relates 'AUTH'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_reachable\",\"index\":1},\"sentence\":\"'API' relates 'DB'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_reachable\",\"index\":2},\"sentence\":\"'API' relates 'DEP-D'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_reachable\",\"index\":3},\"sentence\":\"'AUTH' relates 'DB'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_reachable\",\"index\":4},\"sentence\":\"'AUTH' relates 'DEP-D'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_reachable\",\"index\":5},\"sentence\":\"'DB' relates 'DEP-D'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_request\",\"index\":0},\"sentence\":\"'REL-0' relates 'API'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_start\",\"index\":0},\"sentence\":\"'REL-0' relates '2026-01-01'.\"}\n{\"fact_ref\":{\"fact_type\":\"release_window\",\"index\":0},\"sentence\":\"'REL-0' relates '3'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "src/gnd/examples/release/model.orm.json",
+   "src/gnd/examples/release/repaired.pop.json",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT release_due[0]: 'REL-0' relates '2026-01-04'.\nFACT release_flag[0]: 'REL-0' relates 'False'.\nFACT release_flag[1]: 'REL-0' relates 'True'.\nFACT release_metric[0]: 'REL-0' relates '-1'.\nFACT release_metric[1]: 'REL-0' relates '2'.\nFACT release_reachable[0]: 'API' relates 'AUTH'.\nFACT release_reachable[1]: 'API' relates 'DB'.\nFACT release_reachable[2]: 'API' relates 'DEP-D'.\nFACT release_reachable[3]: 'AUTH' relates 'DB'.\nFACT release_reachable[4]: 'AUTH' relates 'DEP-D'.\nFACT release_reachable[5]: 'DB' relates 'DEP-D'.\nFACT release_request[0]: 'REL-0' relates 'API'.\nFACT release_start[0]: 'REL-0' relates '2026-01-01'.\nFACT release_window[0]: 'REL-0' relates '3'.\n"
+ }
+}

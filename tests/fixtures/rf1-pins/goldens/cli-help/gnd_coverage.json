@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd coverage [-h] [--experiments DIR] [--check PATH] [--verify PATH]\n                    [--conformance PATH] [--transition PATH]\n                    [--format {text,json}]\n                    model\n\npositional arguments:\n  model                 path to the model file\n\noptions:\n  -h, --help            show this help message and exit\n  --experiments DIR\n  --check PATH\n  --verify PATH\n  --conformance PATH\n  --transition PATH\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n",
+ "path": "gnd coverage"
+}

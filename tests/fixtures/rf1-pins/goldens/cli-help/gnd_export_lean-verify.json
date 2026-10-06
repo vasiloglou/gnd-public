@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd export lean-verify [-h] [--json] bundle\n\npositional arguments:\n  bundle\n\noptions:\n  -h, --help  show this help message and exit\n  --json\n",
+ "path": "gnd export lean-verify"
+}

@@ -1,0 +1,25 @@
+Affected reader/validator consumers under configured default filter; no native/provider/oracle lane override.
+tests/test_population_load.py
+tests/test_popvalidate.py
+tests/test_model_validation.py
+tests/test_model_v2.py
+tests/test_model_guarded.py
+tests/test_model_identity.py
+tests/test_synth_values.py
+tests/test_synth_boundary.py
+tests/test_model_evolution.py
+tests/test_evolution_conformance.py
+tests/test_public_evolution_legacy_readers.py
+tests/test_public_evolution_drift_readers.py
+tests/test_public_souffle_successors.py
+tests/test_public_souffle_input_contract.py
+tests/test_v72_phase4_json_input.py
+tests/test_public_v72_full_json_boundary.py
+tests/test_exp_session_contract.py
+tests/test_exp_session_store.py
+tests/test_review_request.py
+tests/test_public_local_adapter_policy_controls.py
+tests/test_measure_offline.py
+tests/test_public_transition_contract.py
+tests/test_codegen_manifest.py
+tests/test_install.py

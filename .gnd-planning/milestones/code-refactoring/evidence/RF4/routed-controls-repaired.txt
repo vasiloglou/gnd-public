@@ -1,0 +1,23 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_layering.py tests/test_rf4_peripheral.py tests/test_rf4_premove.py tests/test_report_json.py tests/test_v61_phase4_projection.py --tb=short -x
+........................................................................ [  7%]
+........................................................................ [ 14%]
+........................................................................ [ 21%]
+........................................................................ [ 28%]
+........................................................................ [ 36%]
+........................................................................ [ 43%]
+........................................................................ [ 50%]
+.......F
+=================================== FAILURES ===================================
+__________________ test_body_import_control_is_live[binding] ___________________
+tests/test_rf4_peripheral.py:105: in test_body_import_control_is_live
+    assert _import_bindings(before) != _import_bindings(after)
+E   AssertionError: assert [] != []
+E    +  where [] = _import_bindings(FunctionDef(name='f', args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, ...nc=Name(...), args=[Constant(...)], keywords=[]))], decorator_list=[], returns=None, type_comment=None, type_params=[]))
+E    +  and   [] = _import_bindings(FunctionDef(name='f', args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, ...nc=Name(...), args=[Constant(...)], keywords=[]))], decorator_list=[], returns=None, type_comment=None, type_params=[]))
+=========================== short test summary info ============================
+FAILED tests/test_rf4_peripheral.py::test_body_import_control_is_live[binding]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 511 passed in 3.18s
+
+Exit: 1

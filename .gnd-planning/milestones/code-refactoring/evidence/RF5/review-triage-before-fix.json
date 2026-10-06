@@ -1,0 +1,20 @@
+{
+  "source_head": "d8dd49d",
+  "before_any_fix": true,
+  "findings": [
+    {
+      "id": "RF5-01",
+      "classification": "hardening",
+      "reproduction": "review-regressions-pre-fix.txt, cross-domain service and unused exception controls fail",
+      "disposition": "fix phase-owned verification instrument; no production behavior change"
+    },
+    {
+      "id": "RF5-02",
+      "classification": "hardening",
+      "reproduction": "review-regressions-pre-fix.txt, both actual copied-source missing-group measurements fail to refuse",
+      "disposition": "fix phase-owned non-vacuity gate; no production behavior change"
+    }
+  ],
+  "observed_regressions_red": 4,
+  "blocking_remaining": 2
+}

@@ -807,7 +807,7 @@ The reason is that a path is a coordinate, not an identity. Two different models
 ## ORM++ — derived fact types
 
 **This section is the one normative home for structured derivation rules.** The
-loader implements it (`semantic:derivation-*` in `src/gnd/model.py`); the plan
+loader implements it (`semantic:derivation-*` in `src/gnd/model/_validation.py`); the plan
 and the skills cite it; nothing restates it.
 
 An **asserted** fact type holds what somebody claimed. A **derived** fact type

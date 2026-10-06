@@ -35,6 +35,7 @@ from typing import Any, NamedTuple
 
 import pytest
 from support.digests import sha256_bytes as _digest
+from support.rf5_sources import cli_sources
 
 from gnd import cli, install
 
@@ -912,7 +913,7 @@ def test_lifecycle_exit_codes_never_collide_with_the_band_contract() -> None:
 
 
 def test_cli_module_declares_the_collision_code_with_its_rationale() -> None:
-    source = Path(cli.__file__).read_text(encoding="utf-8")
+    source = cli_sources()
     assert source.count("EXIT_COLLISION") >= 1
     assert "masquerade" in source, (
         "each lifecycle constant carries a 'would masquerade as X' justification in "

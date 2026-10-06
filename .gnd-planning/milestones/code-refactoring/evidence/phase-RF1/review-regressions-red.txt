@@ -1,0 +1,14 @@
+tests/test_rf1_pin_harness.py:388: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf1_pin_harness.py::test_r01_goldens_carry_no_machine_paths
+FAILED tests/test_rf1_pin_harness.py::test_r02_prompt_digest_is_verified_not_erased
+FAILED tests/test_rf1_pin_harness.py::test_r03_timing_semantics_are_checked_before_placeholders[negative-elapsed]
+FAILED tests/test_rf1_pin_harness.py::test_r03_timing_semantics_are_checked_before_placeholders[ended-before-started]
+FAILED tests/test_rf1_pin_harness.py::test_r03_timing_semantics_are_checked_before_placeholders[negative-accounted]
+FAILED tests/test_rf1_pin_harness.py::test_r04_junit_placeholder_is_limited_to_xml_results
+FAILED tests/test_rf1_pin_harness.py::test_r06_staging_names_are_refused_in_published_bytes[patch-input-0123456789abcdef]
+FAILED tests/test_rf1_pin_harness.py::test_r06_staging_names_are_refused_in_published_bytes[.staging/0001-0123456789abcdef]
+FAILED tests/test_rf1_pin_harness.py::test_r06_staging_names_are_refused_in_published_bytes[cleanup-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+FAILED tests/test_rf1_pin_harness.py::test_r09_a_teardown_failure_is_not_a_kill
+FAILED tests/test_rf1_pin_harness.py::test_r10_owed_surfaces_carry_their_approval_anchor
+11 failed, 28 deselected in 0.57s

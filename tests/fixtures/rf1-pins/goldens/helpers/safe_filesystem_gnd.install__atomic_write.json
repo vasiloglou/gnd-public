@@ -1,0 +1,43 @@
+{
+ "observed": {
+  "d": {
+   "outcome": {
+    "message": "[Errno 21] Is a directory: '.gnd-tmp-<random>' -> 'd'",
+    "raises": "builtins.IsADirectoryError"
+   },
+   "target_after": null
+  },
+  "d/existing": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  },
+  "d/new": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  },
+  "link_file": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  },
+  "link_to_d/new": {
+   "outcome": {
+    "message": "install destination: the component 'link_to_d' under <tmp>/s2/tree is not a directory this operation may descend into (Not a directory). A symlink planted after the path was validated must not be able to redirect a write or a delete out of the target root (T-01.2-06, CWE-367).",
+    "raises": "gnd.install.InstallPathError"
+   },
+   "target_after": null
+  },
+  "missing/new": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  }
+ },
+ "site": "safe_filesystem|gnd.install:_atomic_write"
+}

@@ -1,0 +1,21 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_rf1_semantic_pins.py",
+    "tests/test_rf4_premove.py",
+    "tests/test_synth_mutate.py",
+    "tests/test_synth_boundary.py",
+    "tests/test_synth_conforming.py",
+    "tests/test_synth_false_pass_quarantine.py",
+    "tests/test_v63_phase2_cache.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 51.38981080055237
+}

@@ -98,16 +98,25 @@ def test_bound_operator_modality_and_operand_order_survive(tmp_path):
     assert ranged.flags[2:] == (False, True)
 
 
-def test_admitted_untyped_overflow_retains_cell_position_and_refuses(tmp_path):
+def test_admitted_untyped_overflow_retains_cell_position_and_refuses(tmp_path, monkeypatch):
     model, _ = corpus._build("P2-161", tmp_path)
     _, document = corpus._documents("P2-161")
     document["facts"]["observed_pair"][0]["left"] = "OVERFLOW"
     path = tmp_path / "overflow.json"
     # Standard JSON exponent syntax overflows Python's float parser. D-05
-    # leaves this role untyped, so this pair actually passes current admission.
+    # leaves this role untyped; RF7 now refuses overflow at JSON admission.
     path.write_text(json.dumps(document).replace('"OVERFLOW"', "1e999"))
+    from gnd.errors import PopulationLoadError
+    with pytest.raises(PopulationLoadError):
+        load_population(path, model=model)
+    path.write_text(json.dumps(document).replace('"OVERFLOW"', '1'))
     population = load_population(path, model=model)
+    population.facts["observed_pair"][0]["left"] = float('inf')
     assert math.isinf(population.facts["observed_pair"][0]["left"])
+    # RF7 refuses serialized overflow. Isolate the adapter's in-memory defense;
+    # the genuine validation marker correctly rejects this changed population.
+    assert not population.matches_validation_marker(model)
+    monkeypatch.setattr(type(population), 'matches_validation_marker', lambda *_: True)
     snapshot = adapter.adapt_snapshot(model, population)
     relation = next(row for row in snapshot.relations if row.fact_type == "observed_pair")
     assert len(relation.rows) == 1 and len(relation.rows[0]) == 3

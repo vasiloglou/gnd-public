@@ -1,0 +1,16 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf3_moves.py",
+    "tests/test_rf1_pin_harness.py::test_mutation_table_rows_of_their_own",
+    "tests/test_public_v72_semantic_owners.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 3.3502237796783447
+}

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import re
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
@@ -11,6 +10,7 @@ from typing import Any
 
 from gnd.address import positional_constraint_ref
 from gnd.artifacts import canonical_json_bytes
+from gnd.artifacts import sha256_hex as _digest
 from gnd.checker import _compare, _identity_token, _partial_compatible, structured_extension_view
 from gnd.extract.anchors import vocabulary_digest
 from gnd.model import Model
@@ -26,8 +26,6 @@ class DiffError(ValueError):
     """A diff input violates its contract."""
 
 
-def _digest(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
 
 
 def _constraints(model: Model) -> list[tuple[str, str, dict[str, Any]]]:
@@ -224,7 +222,7 @@ def _derivation_rows(model_a: Model, model_b: Model, pop_a: Any, pop_b: Any) -> 
 
 def compare_population(model_a: Model, model_b: Model, population_bytes: bytes, *, source: str, population_ref: str, origin: str = "provided") -> dict[str, Any]:
     """Load the same bytes independently under both models and compare results."""
-    from gnd import api
+    from gnd import checker, checking_service
 
     populations = []
     reports = []
@@ -236,7 +234,9 @@ def compare_population(model_a: Model, model_b: Model, population_bytes: bytes, 
             reports.append({"state": "not_comparable", "rule": type(error).__name__})
             continue
         populations.append(population)
-        payload = api.check(model, population, admission=True, unredacted=True)
+        payload = checking_service.check_report(
+            model, population, evaluator=checker.check_partial, admission=True, unredacted=True
+        ).payload
         reports.append(payload.get("report", payload))
     summary = [_summary(r) if pop is not None else r for pop, r in zip(populations, reports, strict=True)]
     a_to_b: list[dict[str, Any]] = []

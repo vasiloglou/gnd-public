@@ -1,0 +1,356 @@
+{
+ "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+ "files": [
+  {
+   "added": 130,
+   "moved_in": 37,
+   "moved_out": 917,
+   "path": "src/gnd/agent_cli.py",
+   "removed": 1033
+  },
+  {
+   "added": 445,
+   "moved_in": 373,
+   "moved_out": 0,
+   "path": "src/gnd/agents.py",
+   "removed": 0
+  },
+  {
+   "added": 88,
+   "moved_in": 23,
+   "moved_out": 702,
+   "path": "src/gnd/api.py",
+   "removed": 755
+  },
+  {
+   "added": 0,
+   "moved_in": 0,
+   "moved_out": 525,
+   "path": "src/gnd/assurance.py",
+   "removed": 596
+  },
+  {
+   "added": 117,
+   "moved_in": 38,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/__init__.py",
+   "removed": 0
+  },
+  {
+   "added": 359,
+   "moved_in": 254,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/_wire.py",
+   "removed": 0
+  },
+  {
+   "added": 280,
+   "moved_in": 246,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/claims.py",
+   "removed": 0
+  },
+  {
+   "added": 627,
+   "moved_in": 519,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/core.py",
+   "removed": 0
+  },
+  {
+   "added": 432,
+   "moved_in": 333,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/evidence.py",
+   "removed": 0
+  },
+  {
+   "added": 496,
+   "moved_in": 444,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/inheritance.py",
+   "removed": 0
+  },
+  {
+   "added": 240,
+   "moved_in": 179,
+   "moved_out": 0,
+   "path": "src/gnd/assurance/transport.py",
+   "removed": 0
+  },
+  {
+   "added": 23,
+   "moved_in": 6,
+   "moved_out": 249,
+   "path": "src/gnd/assurance_claims.py",
+   "removed": 255
+  },
+  {
+   "added": 177,
+   "moved_in": 32,
+   "moved_out": 547,
+   "path": "src/gnd/assurance_evidence.py",
+   "removed": 615
+  },
+  {
+   "added": 50,
+   "moved_in": 0,
+   "moved_out": 440,
+   "path": "src/gnd/assurance_inheritance.py",
+   "removed": 449
+  },
+  {
+   "added": 100,
+   "moved_in": 0,
+   "moved_out": 179,
+   "path": "src/gnd/assurance_transport.py",
+   "removed": 209
+  },
+  {
+   "added": 647,
+   "moved_in": 518,
+   "moved_out": 0,
+   "path": "src/gnd/checking_service.py",
+   "removed": 0
+  },
+  {
+   "added": 46,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/cli.py",
+   "removed": 45
+  },
+  {
+   "added": 21,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/codegen/emit.py",
+   "removed": 9
+  },
+  {
+   "added": 2,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/codegen/manifest.py",
+   "removed": 1
+  },
+  {
+   "added": 12,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/codegen/plan.py",
+   "removed": 11
+  },
+  {
+   "added": 2,
+   "moved_in": 0,
+   "moved_out": 1,
+   "path": "src/gnd/declared_adapter.py",
+   "removed": 7
+  },
+  {
+   "added": 8,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/evolve/service.py",
+   "removed": 1
+  },
+  {
+   "added": 2,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/declared_invocation.py",
+   "removed": 1
+  },
+  {
+   "added": 9,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session.py",
+   "removed": 7
+  },
+  {
+   "added": 2,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_eval.py",
+   "removed": 2
+  },
+  {
+   "added": 8,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_store.py",
+   "removed": 5
+  },
+  {
+   "added": 2,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/session_v7.py",
+   "removed": 2
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/exp/tests_runner.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/export/lean_cli.py",
+   "removed": 1
+  },
+  {
+   "added": 103,
+   "moved_in": 68,
+   "moved_out": 0,
+   "path": "src/gnd/export/service.py",
+   "removed": 0
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/export/souffle_cli.py",
+   "removed": 1
+  },
+  {
+   "added": 65,
+   "moved_in": 0,
+   "moved_out": 396,
+   "path": "src/gnd/install.py",
+   "removed": 415
+  },
+  {
+   "added": 2,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/manifest_paths.py",
+   "removed": 1
+  },
+  {
+   "added": 794,
+   "moved_in": 663,
+   "moved_out": 0,
+   "path": "src/gnd/payloads.py",
+   "removed": 0
+  },
+  {
+   "added": 673,
+   "moved_in": 535,
+   "moved_out": 0,
+   "path": "src/gnd/process.py",
+   "removed": 0
+  },
+  {
+   "added": 126,
+   "moved_in": 0,
+   "moved_out": 679,
+   "path": "src/gnd/report.py",
+   "removed": 757
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/review/adapters.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/review/runner.py",
+   "removed": 1
+  },
+  {
+   "added": 511,
+   "moved_in": 379,
+   "moved_out": 0,
+   "path": "src/gnd/safefs.py",
+   "removed": 0
+  },
+  {
+   "added": 170,
+   "moved_in": 2,
+   "moved_out": 1448,
+   "path": "src/gnd/synth/assemble.py",
+   "removed": 1565
+  },
+  {
+   "added": 143,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/synth/boundary.py",
+   "removed": 49
+  },
+  {
+   "added": 474,
+   "moved_in": 0,
+   "moved_out": 1899,
+   "path": "src/gnd/synth/mutate.py",
+   "removed": 2305
+  },
+  {
+   "added": 147,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/synth/oracle/__init__.py",
+   "removed": 0
+  },
+  {
+   "added": 1720,
+   "moved_in": 1422,
+   "moved_out": 0,
+   "path": "src/gnd/synth/oracle/constructive.py",
+   "removed": 0
+  },
+  {
+   "added": 1832,
+   "moved_in": 1326,
+   "moved_out": 0,
+   "path": "src/gnd/synth/oracle/mutations.py",
+   "removed": 0
+  },
+  {
+   "added": 705,
+   "moved_in": 515,
+   "moved_out": 0,
+   "path": "src/gnd/synth/oracle/state.py",
+   "removed": 0
+  },
+  {
+   "added": 3,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/synth/paths.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/witness/cli.py",
+   "removed": 1
+  },
+  {
+   "added": 106,
+   "moved_in": 70,
+   "moved_out": 0,
+   "path": "src/gnd/witness/service.py",
+   "removed": 0
+  }
+ ],
+ "head": "3c758f743885561e05f19ae402f30ccde505fff8",
+ "schema_version": 1,
+ "totals": {
+  "added": 11905,
+  "moved_in": 7982,
+  "moved_out": 7982,
+  "removed": 9102
+ }
+}

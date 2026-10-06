@@ -485,7 +485,7 @@ def test_atomic_write_race_is_actionable_from_the_caught_error(
     plan = plan_codegen(project, root, read_manifest(manifest_path(root)))
     assert plan.by_relpath()[target_relpath].state == "missing"
 
-    import gnd.install as install_module
+    import gnd.safefs as install_module
 
     real_atomic_write = install_module._atomic_write
 
@@ -494,7 +494,7 @@ def test_atomic_write_race_is_actionable_from_the_caught_error(
             raise install_module.InstallError("leaf identity changed at replacement")
         return real_atomic_write(root, relpath, data, expected=expected)
 
-    monkeypatch.setattr(install_module, "_atomic_write", racing_atomic_write)
+    monkeypatch.setattr(install_module, "atomic_write", racing_atomic_write)
     result = apply_codegen(project, root, plan, force=force)
 
     assert result.collisions == [target_relpath]
@@ -517,7 +517,7 @@ def test_atomic_write_refuses_a_fifo_swapped_into_the_identity_open(
     if not hasattr(os, "mkfifo"):
         pytest.skip("os.mkfifo is unavailable")
 
-    from gnd import install as install_module
+    from gnd import safefs as install_module
 
     root = tmp_path / "root"
     root.mkdir()
@@ -576,7 +576,7 @@ def test_leaf_cas_preserves_a_concurrent_owner_and_the_moved_original(
     matches: bool,
 ) -> None:
     """CR-01: neither publication nor restoration may clobber a new owner."""
-    from gnd import install as install_module
+    from gnd import safefs as install_module
 
     root = tmp_path / "root"
     root.mkdir()
@@ -759,7 +759,7 @@ def test_fresh_cli_no_clobber_publication_preserves_a_raced_root(
     raced_nonempty: bool,
 ) -> None:
     """CR-02: the final descriptor-relative rename is an exclusive CAS."""
-    from gnd import install as install_module
+    from gnd import safefs as install_module
 
     out = tmp_path / "project"
     if accepted_empty:
@@ -778,7 +778,7 @@ def test_fresh_cli_no_clobber_publication_preserves_a_raced_root(
             raced_identity = (info.st_dev, info.st_ino)
         return real_rename(src_fd, src, dst_fd, dst)
 
-    monkeypatch.setattr(install_module, "_rename_noreplace", claim_root_before_publish)
+    monkeypatch.setattr(install_module, "rename_noreplace", claim_root_before_publish)
 
     assert main(["codegen", str(FULL_VOCABULARY), "--out", str(out)]) == EXIT_COLLISION
     printed = capsys.readouterr().out
@@ -1560,7 +1560,7 @@ def test_cli_renders_apply_time_state_consistently_after_an_atomic_write_race(
     relpath = _a_derived_relpath(project)
     (out / relpath).unlink()
 
-    import gnd.install as install_module
+    import gnd.safefs as install_module
 
     real_atomic_write = install_module._atomic_write
 
@@ -1569,7 +1569,7 @@ def test_cli_renders_apply_time_state_consistently_after_an_atomic_write_race(
             raise install_module.InstallError("deterministic public CLI leaf race")
         return real_atomic_write(root, candidate, data, expected=expected)
 
-    monkeypatch.setattr(install_module, "_atomic_write", racing_atomic_write)
+    monkeypatch.setattr(install_module, "atomic_write", racing_atomic_write)
 
     assert main(command) == EXIT_COLLISION
     printed = capsys.readouterr().out

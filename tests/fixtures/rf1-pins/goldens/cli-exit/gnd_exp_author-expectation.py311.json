@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd exp author-expectation [-h] --case CASE_ID --output-id OUTPUT_ID\n                                  --candidate-path CANDIDATE_PATH --from\n                                  SOURCE [--media-type MEDIA_TYPE]\n                                  [--encoding ENCODING]\n                                  directory\n\nAuthor one answer-free exact-bytes expectation in <DIR>/session.contract.json.\n--from must be an experiment-relative regular file (an absolute path is\naccepted only when it remains inside DIR). The source is read through\ndescriptor-anchored, no-follow traversal and the 10 MiB session-input cap, the\nupdated contract is production-validated before publication, the source is\ndeleted, and every regular file under the experiment root is scanned for equal\nbytes. The contract entry contains sha256, output_id, candidate_path,\ncomparison, media_type, and encoding, but no path or size_bytes. Exits 0 only\nafter the published contract loads and no answer copy remains; 3 when the\nspec, contract, case, output, source, or answer-copy state is refused; 64 on\nusage errors; 66 when SPEC.md is missing; 74 on refused or failed path/I/O.\n\npositional arguments:\n  directory             the data-driven experiment directory\n\noptions:\n  -h, --help            show this help message and exit\n  --case CASE_ID        case_id to update\n  --output-id OUTPUT_ID\n                        expected output id to insert or replace\n  --candidate-path CANDIDATE_PATH\n                        output path relative to candidate/\n  --from SOURCE         produced answer file inside the experiment root\n  --media-type MEDIA_TYPE\n                        declared media type (default: application/json)\n  --encoding ENCODING   declared encoding (default: utf-8)\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd exp author-expectation [-h] --case CASE_ID --output-id OUTPUT_ID\n                                  --candidate-path CANDIDATE_PATH --from\n                                  SOURCE [--media-type MEDIA_TYPE]\n                                  [--encoding ENCODING]\n                                  directory\ngnd exp author-expectation: error: the following arguments are required: directory, --case, --output-id, --candidate-path, --from\n",
+  "stdout": ""
+ }
+}

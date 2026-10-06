@@ -1,0 +1,6 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_development_scaffold.py --tb=short
+..............                                                           [100%]
+14 passed, 1 deselected in 4.82s
+
+Exit: 0

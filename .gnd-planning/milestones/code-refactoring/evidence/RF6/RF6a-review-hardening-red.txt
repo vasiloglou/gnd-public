@@ -1,0 +1,20 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_query_policy.py::test_subscription_negative_refuses_reverted_scanner tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused --tb=short
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_subscription_negative_refuses_reverted_scanner ______________
+tests/test_rf6_query_policy.py:129: in test_subscription_negative_refuses_reverted_scanner
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_______________ test_dynamic_duplicate_inventory_row_is_refused ________________
+tests/test_rf6_query_policy.py:137: in test_dynamic_duplicate_inventory_row_is_refused
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf6_query_policy.py::test_subscription_negative_refuses_reverted_scanner
+FAILED tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused
+2 failed in 1.35s
+
+Exit: 1

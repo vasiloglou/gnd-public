@@ -241,6 +241,34 @@ def _is_type_checking(test) -> bool:
     )
 
 
+_UNBOUND = object()
+
+
+class _AliasScopes:
+    """Lexically scoped import-alias bindings, shared by both visitors (RF0-OQ2).
+
+    A name bound to None is a known non-gnd binding; an unbound name is absent.
+    """
+
+    def __init__(self) -> None:
+        self._scopes: list[dict[str, str | None]] = [{}]
+
+    def bind(self, name: str, target: str | None) -> None:
+        self._scopes[-1][name] = target
+
+    def lookup(self, name: str):
+        for scope in reversed(self._scopes):
+            if name in scope:
+                return scope[name]
+        return _UNBOUND
+
+    def push(self) -> None:
+        self._scopes.append({})
+
+    def pop(self) -> None:
+        self._scopes.pop()
+
+
 class _ModuleVisitor(ast.NodeVisitor):
     """One walk per module; every import kind is classified here."""
 
@@ -251,7 +279,7 @@ class _ModuleVisitor(ast.NodeVisitor):
         self.package = module if rel.endswith("/__init__.py") else module.rpartition(".")[0]
         self.function_depth = 0
         self.type_checking_depth = 0
-        self.scopes: list[dict[str, str]] = [{}]
+        self.aliases = _AliasScopes()
         self.edges: set[tuple[str, str, int]] = set()
         self.unresolved: set[int] = set()
         self.private: set[tuple[str, str, int, str]] = set()
@@ -272,13 +300,11 @@ class _ModuleVisitor(ast.NodeVisitor):
         return None
 
     def _bind(self, name: str, module: str) -> None:
-        self.scopes[-1][name] = module
+        self.aliases.bind(name, module)
 
     def _lookup(self, name: str) -> str | None:
-        for scope in reversed(self.scopes):
-            if name in scope:
-                return scope[name]
-        return None
+        found = self.aliases.lookup(name)
+        return None if found is _UNBOUND else found
 
     def _edge(self, target: str | None, line: int, kind: str | None = None) -> None:
         if target is not None and target != self.module:
@@ -338,10 +364,10 @@ class _ModuleVisitor(ast.NodeVisitor):
         if node.returns:
             self.visit(node.returns)
         self.function_depth += 1
-        self.scopes.append({})
+        self.aliases.push()
         for child in node.body:
             self.visit(child)
-        self.scopes.pop()
+        self.aliases.pop()
         self.function_depth -= 1
         self.functions.append((node.name, node.lineno, _function_hash(node)))
 
@@ -351,9 +377,9 @@ class _ModuleVisitor(ast.NodeVisitor):
     def visit_Lambda(self, node: ast.Lambda) -> None:
         self.visit(node.args)
         self.function_depth += 1
-        self.scopes.append({})
+        self.aliases.push()
         self.visit(node.body)
-        self.scopes.pop()
+        self.aliases.pop()
         self.function_depth -= 1
 
     def visit_Call(self, node: ast.Call) -> None:
@@ -468,7 +494,7 @@ class _TestVisitor(ast.NodeVisitor):
     def __init__(self, rel: str, modules: set[str]) -> None:
         self.rel = rel
         self.modules = modules
-        self.aliases: dict[str, str | None] = {}
+        self.aliases = _AliasScopes()
         self.patches: set[tuple[int, str, str, bool]] = set()
         self.scans: set[tuple[int, str]] = set()
         self.private: set[tuple[int, str]] = set()
@@ -477,16 +503,16 @@ class _TestVisitor(ast.NodeVisitor):
         for alias in node.names:
             is_gnd = alias.name == "gnd" or alias.name.startswith("gnd.")
             if alias.asname:
-                self.aliases[alias.asname] = alias.name if is_gnd else None
+                self.aliases.bind(alias.asname, alias.name if is_gnd else None)
             else:
                 head = alias.name.partition(".")[0]
-                self.aliases[head] = head if is_gnd else None
+                self.aliases.bind(head, head if is_gnd else None)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         source = node.module or ""
         is_gnd = not node.level and (source == "gnd" or source.startswith("gnd."))
         for alias in node.names:
-            self.aliases[alias.asname or alias.name] = f"{source}.{alias.name}" if is_gnd else None
+            self.aliases.bind(alias.asname or alias.name, f"{source}.{alias.name}" if is_gnd else None)
             if is_gnd and _is_private(alias.name):
                 self.private.add((node.lineno, f"{source}.{alias.name}"))
 
@@ -495,9 +521,9 @@ class _TestVisitor(ast.NodeVisitor):
         if base is None:
             return ("<expression>", False)
         head, _, rest = base.partition(".")
-        if head not in self.aliases:
+        bound = self.aliases.lookup(head)
+        if bound is _UNBOUND:
             return (base, False)
-        bound = self.aliases[head]
         if bound is None:
             return None
         return (bound + (f".{rest}" if rest else ""), True)
@@ -537,12 +563,21 @@ class _TestVisitor(ast.NodeVisitor):
             base = _dotted(node.value)
             if base:
                 head, _, rest = base.partition(".")
-                bound = self.aliases.get(head)
-                if bound:
+                bound = self.aliases.lookup(head)
+                if bound is not _UNBOUND and bound:
                     full = bound + (f".{rest}" if rest else "")
                     if full in self.modules:
                         self.private.add((node.lineno, f"{full}.{node.attr}"))
         self.generic_visit(node)
+
+    def _scoped(self, node) -> None:
+        self.aliases.push()
+        self.generic_visit(node)
+        self.aliases.pop()
+
+    visit_FunctionDef = _scoped
+    visit_AsyncFunctionDef = _scoped
+    visit_Lambda = _scoped
 
     def visit_Constant(self, node: ast.Constant) -> None:
         if isinstance(node.value, str):
@@ -650,13 +685,31 @@ def measure(root: Path, layers_path: Path) -> dict:
     runtime_pairs = {(e["from"], e["to"]) for e in edges if e["kind"] in RUNTIME_KINDS}
     module_pairs = {(e["from"], e["to"]) for e in edges if e["kind"] == "module"}
 
+    # A dotted child import also executes package initializers. Keep these
+    # effects explicit so historic AST SCC counts remain separately comparable.
+    parent_rows = set()
+    for edge in edges:
+        parts = edge["to"].split(".")
+        for size in range(1, len(parts)):
+            parent = ".".join(parts[:size])
+            if (parent in paths and parent != edge["from"]
+                    and str(paths[parent]).endswith("/__init__.py")):
+                parent_rows.add((edge["from"], parent, edge["kind"], edge["line"]))
+    implicit_parent_edges = sorted(
+        ({"from": source, "to": target, "kind": kind, "line": line,
+          "implicit_parent": True} for source, target, kind, line in parent_rows), key=edge_key)
+    combined_runtime_pairs = runtime_pairs | {
+        (edge["from"], edge["to"]) for edge in implicit_parent_edges
+        if edge["kind"] in RUNTIME_KINDS
+    }
+
     fan_in, fan_out = Counter(), Counter()
     for source, target in runtime_pairs:
         fan_out[source] += 1
         fan_in[target] += 1
 
     wrong_way, cross_lane = [], []
-    for e in edges:
+    for e in edges + implicit_parent_edges:
         if e["kind"] not in RUNTIME_KINDS:
             continue
         source, target = entry[e["from"]], entry[e["to"]]
@@ -691,7 +744,7 @@ def measure(root: Path, layers_path: Path) -> dict:
             }
         )
 
-    return {
+    result = {
         "schema_version": SCHEMA_VERSION,
         "scope": {
             "package": PACKAGE_DIR,
@@ -702,6 +755,8 @@ def measure(root: Path, layers_path: Path) -> dict:
         },
         "modules": module_rows,
         "edges": edges,
+        "implicit_parent_edges": implicit_parent_edges,
+        "parent_initialization_sccs": _sccs(modules, combined_runtime_pairs),
         "unresolved_dynamic": sorted(unresolved, key=lambda u: (u["from"], u["line"])),
         "sccs": {
             "runtime": _sccs(modules, runtime_pairs),
@@ -727,6 +782,85 @@ def measure(root: Path, layers_path: Path) -> dict:
             "get_roles_calls": sorted(query_roles, key=lambda q: (q["module"], q["line"])),
         },
     }
+    if (root / "tools/gnd_entrypoints.json").exists() or any(
+        module == "gnd.commands" or module.startswith("gnd.commands.") for module in modules
+    ):
+        policy_path = root / "tools/gnd_entrypoints.json"
+        try:
+            raw = policy_path.read_bytes()
+            if len(raw) > MAP_READ_CAP:
+                raise ValueError("entry-point policy exceeds read bound")
+            policy = json.loads(raw.decode("utf-8"), object_pairs_hook=_reject_duplicates,
+                                parse_constant=_reject_constant)
+            result["entrypoints"] = entrypoint_rule(result, policy)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            raise _invalid(f"invalid entry-point policy: {error}") from None
+    return result
+
+
+
+RF5_COMMAND_GROUPS = frozenset({
+    "checking", "verify", "synth", "measure", "extract", "export", "codegen",
+    "conformance", "recovery", "evolve", "doccheck", "fidelity", "review", "exp",
+    "solve", "lifecycle", "judgments", "witness",
+})
+
+
+def entrypoint_rule(metrics: dict, policy: dict) -> dict:
+    """Check the nonempty RF5 entry scope against explicit import boundaries.
+
+    Exceptions name exact source/target module pairs and a reviewable reason.
+    There are no wildcard exemptions, even for historical CLI aliases.
+    """
+    expected = {"gnd.cli", *("gnd.commands." + name for name in RF5_COMMAND_GROUPS)}
+    scope = set(policy["scope"])
+    actual = {row["module"] for row in metrics["modules"]}
+    actual_groups = {module for module in actual
+                     if module.startswith("gnd.commands.")
+                     and not module.rsplit(".", 1)[-1].startswith("_")}
+    if scope != expected or not scope <= actual or actual_groups != expected - {"gnd.cli"}:
+        raise ValueError("incomplete RF5 entry-point scope")
+    mapped = {row["module"]: row for row in metrics["modules"]}
+    for target in policy["service_targets"]:
+        if target not in mapped or mapped[target]["layer"] != "lanes" or not target.endswith(
+            (".service", "_service")
+        ):
+            raise ValueError("invalid entry-point service target")
+    bindings = policy["service_bindings"]
+    if set(bindings) != scope or any(
+        not isinstance(targets, list) or not set(targets) <= set(policy["service_targets"])
+        for targets in bindings.values()
+    ):
+        raise ValueError("invalid per-source entry-point service bindings")
+    if {target for targets in bindings.values() for target in targets} != set(policy["service_targets"]):
+        raise ValueError("unused entry-point service target")
+    common = {
+        "gnd.commands._arguments", "gnd.commands._output", "gnd.exits"
+    }
+    edge_pairs = {(edge["from"], edge["to"]) for edge in metrics["edges"]}
+    exceptions = {}
+    for row in policy["exceptions"]:
+        if set(row) != {"source", "target", "reason"} or not row["reason"].strip():
+            raise ValueError("invalid entry-point exception")
+        pair = (row["source"], row["target"])
+        if pair in exceptions or row["source"] not in scope or row["target"] not in actual:
+            raise ValueError("invalid entry-point exception scope")
+        if pair not in edge_pairs:
+            raise ValueError("unused entry-point exception")
+        exceptions[pair] = row["reason"]
+    violations = []
+    for edge in metrics["edges"]:
+        source, target = edge["from"], edge["to"]
+        if source not in scope:
+            continue
+        # The bootstrap imports exactly the declared command groups.
+        if source == "gnd.cli" and target in expected - {"gnd.cli"}:
+            continue
+        if target in common or target in bindings[source] or (source, target) in exceptions:
+            continue
+        violations.append(dict(edge, rule="entry-point imports a non-service module"))
+    return {"scope": sorted(scope), "violations": violations,
+            "exceptions": policy["exceptions"]}
 
 
 # ---------------------------------------------------------------- compare

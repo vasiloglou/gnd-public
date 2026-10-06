@@ -1,0 +1,51 @@
+{
+  "source": "exact archive a3f35a6/src/gnd, explicit PYTHONPATH",
+  "python": "311",
+  "counts": {
+    "gnd.model": 238,
+    "gnd.checker": 230
+  },
+  "differences": [
+    {
+      "module": "gnd.model",
+      "predecessor_native": {
+        "name": "Literal",
+        "kind": "_LiteralSpecialForm",
+        "module": "typing",
+        "qualname": "Literal"
+      },
+      "predecessor_py314": {
+        "name": "Literal",
+        "kind": "_TypedCacheSpecialForm",
+        "module": "typing",
+        "qualname": "Literal"
+      }
+    },
+    {
+      "module": "gnd.checker",
+      "predecessor_native": {
+        "name": "Literal",
+        "kind": "_LiteralSpecialForm",
+        "module": "typing",
+        "qualname": "Literal"
+      },
+      "predecessor_py314": {
+        "name": "Literal",
+        "kind": "_TypedCacheSpecialForm",
+        "module": "typing",
+        "qualname": "Literal"
+      }
+    },
+    {
+      "module": "gnd.checker",
+      "predecessor_native": {
+        "name": "Scalar",
+        "kind": "UnionType"
+      },
+      "predecessor_py314": {
+        "name": "Scalar",
+        "kind": "Union"
+      }
+    }
+  ]
+}

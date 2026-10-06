@@ -1,0 +1,12 @@
+{
+  "two_measures_identical": true,
+  "sha256": "c59598e87a84e84a21d050672feb3eb876e7168ee8d476ef1b39d5ee94b3f1de",
+  "private_imports": 124,
+  "module_count": 179,
+  "wrong_way_edges": 0,
+  "allowances": 0,
+  "runtime_sccs": [
+    "RF8 session"
+  ],
+  "nonrelocated": 3971
+}

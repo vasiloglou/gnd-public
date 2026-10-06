@@ -1,0 +1,12 @@
+{
+ "argv": [
+  "extract",
+  "src/gnd/examples/dispatch/model.orm.json",
+  "--out",
+  "<tmp>/out"
+ ],
+ "exit": 3,
+ "files": null,
+ "stderr": "",
+ "stdout": "ERROR at $: extract does not support temporal models in Phase 1 [temporal:consumer-unsupported]\n"
+}

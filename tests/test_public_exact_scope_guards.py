@@ -3,6 +3,7 @@ from __future__ import annotations
 from support.v62_phase3_corpus import FIXTURE
 
 import gnd.api as api_module
+from gnd import checking_service
 from gnd.assurance import CorrespondenceDigests, _assurance_policy, derive_assurance_scope
 from gnd.assurance_evidence import AuthenticatedAssuranceEvidence
 from gnd.model import load_model
@@ -50,7 +51,7 @@ def test_k06_authenticated_mixed_result_is_partial_never_proof_backed(monkeypatc
     evidence = object.__new__(AuthenticatedAssuranceEvidence)
     for name, value in {'available': True, 'covered_scope_ids': covered, 'declared_scope_ids': covered, 'digests': CorrespondenceDigests(scope_digest='1' * 64, semantics_digest='2' * 64, production_roster_digest=baseline.execution.production_roster_digest, proof_digest='3' * 64, toolchain_digest='4' * 64), 'assumptions': (), 'reason': None}.items():
         object.__setattr__(evidence, name, value)
-    monkeypatch.setattr(api_module, 'load_assurance_evidence', lambda: evidence)
+    monkeypatch.setattr(checking_service, 'load_assurance_evidence', lambda: evidence)
     payload = api_module.check(model_path, population_path, unredacted=True)
     assert payload['assurance']['assurance_level'] == 'partial'
     assert payload['assurance']['assurance_level'] != 'proof-backed'

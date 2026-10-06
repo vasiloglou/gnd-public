@@ -1,0 +1,9 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "tests/test_rf6_query_policy.py"
+  ],
+  "exit": 0,
+  "seconds": 0.009364128112792969
+}

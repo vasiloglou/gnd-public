@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "/private/tmp/rf8-base/tests/test_artifacts.py::test_no_module_redefines_a_promoted_artifact_primitive",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.5532047748565674
+}

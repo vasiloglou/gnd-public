@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import math
 from decimal import Decimal
+
+from gnd import input_policy as _rf7_input
 
 MAX_JSON_BYTES = 10 * 1024 * 1024
 
@@ -63,7 +65,7 @@ def bounded_json(raw: bytes, *, max_bytes=MAX_JSON_BYTES):
         return value
 
     try:
-        doc = json.loads(
+        doc = _rf7_input.loads(
             raw,
             object_pairs_hook=pairs,
             parse_int=lambda x: number(x, int),

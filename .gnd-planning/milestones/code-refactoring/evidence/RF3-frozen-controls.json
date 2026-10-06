@@ -1,0 +1,37 @@
+{
+  "base": "8ff996f7cf0d17bb08f539bca1f4a116ed839fec",
+  "head": "c9efd6651656d655ddd8b1a31b85a1b5a79ded6b",
+  "command": [
+    "git",
+    "diff",
+    "--quiet",
+    "8ff996f7cf0d17bb08f539bca1f4a116ed839fec",
+    "c9efd6651656d655ddd8b1a31b85a1b5a79ded6b",
+    "--",
+    "tests/fixtures/rf1-pins/goldens",
+    "tests/fixtures/rf1-pins/goldens.sha256",
+    "tests/support/rf1_pins.py",
+    "tests/fixtures/rf2-pins/session-successors.json",
+    ".gnd-planning/milestones/public-launch/migration/units.json",
+    "tests/test_public_distribution.py",
+    "tests/fixtures/public-v72-semantic-owners/closure.json.gz"
+  ],
+  "exit": 0,
+  "unchanged_paths": [
+    "tests/fixtures/rf1-pins/goldens",
+    "tests/fixtures/rf1-pins/goldens.sha256",
+    "tests/support/rf1_pins.py",
+    "tests/fixtures/rf2-pins/session-successors.json",
+    ".gnd-planning/milestones/public-launch/migration/units.json",
+    "tests/test_public_distribution.py",
+    "tests/fixtures/public-v72-semantic-owners/closure.json.gz"
+  ],
+  "sha256": {
+    "tests/fixtures/rf1-pins/goldens.sha256": "68d9163ee30f32fc03f59294b94c709e52ac569168ac6ecc773eb5dd22a36444",
+    "tests/support/rf1_pins.py": "bc8d818edd867c2fd86c03fd99aaad8ae96a7815ee4a3a1b1627cbcbefc70c1e",
+    "tests/fixtures/rf2-pins/session-successors.json": "47d76e43fe8d5abd27dfe96b2afc8b7ecbd8732d1bf739817b469ccd3235457d",
+    ".gnd-planning/milestones/public-launch/migration/units.json": "8a4d3a8b90c39ecac613af69723cc82ee75b8a1d8b70709a5481c31ab97c7650",
+    "tests/test_public_distribution.py": "7c658aeda10b80ff35b36abc1cc5854b87962f9fb6e44bc08ced08c8ad0cb677",
+    "tests/fixtures/public-v72-semantic-owners/closure.json.gz": "5c2dbddbf5e3c2b7996500a51f3a87c3665dea650e4f6bb9ec57263a25aade53"
+  }
+}

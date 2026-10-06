@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd import rai-orm [-h] --out OUT [--source-artifact SOURCE_ARTIFACT]\n                          [--source-commit SOURCE_COMMIT]\n                          model\n\npositional arguments:\n  model                 path to the source RAI ORM YAML file\n\noptions:\n  -h, --help            show this help message and exit\n  --out OUT             new directory for model.orm.yaml and aliases.json\n  --source-artifact SOURCE_ARTIFACT\n                        stable relative POSIX source path recorded in\n                        provenance\n  --source-commit SOURCE_COMMIT\n                        source repository commit required when provenance must\n                        be synthesized\n",
+ "path": "gnd import rai-orm"
+}

@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_moves.py tests/test_rf1_pin_harness.py::test_mutation_table_rows_of_their_own tests/test_public_v72_semantic_owners.py --tb=short
+....................................................                     [100%]
+52 passed in 3.15s
+
+Exit: 0

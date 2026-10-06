@@ -1,0 +1,48 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_packages.py::test_new_package_scope_is_complete tests/test_rf6_packages.py::test_package_size_targets_and_over_ceiling_negative tests/test_rf6_packages.py::test_actual_source_observers_cover_all_package_homes --tb=short
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________________ test_new_package_scope_is_complete ______________________
+tests/test_rf6_packages.py:105: in test_new_package_scope_is_complete
+    assert_complete_homes(actual)
+tests/test_rf6_packages.py:99: in assert_complete_homes
+    assert actual == split_homes()
+E   AssertionError: assert set() == {PosixPath('/...ons.py'), ...}
+E     
+E     Extra items in the right set:
+E     PosixPath('<worktree>/src/gnd/checker/__init__.py')
+E     PosixPath('<worktree>/src/gnd/checker/_reports.py')
+E     PosixPath('<worktree>/src/gnd/model/_validation.py')
+E     PosixPath('<worktree>/src/gnd/checker/_core.py')
+E     PosixPath('<machine-path>
+E     
+E     ...Full output truncated (4 lines hidden), use '-vv' to show
+_____________ test_package_size_targets_and_over_ceiling_negative ______________
+tests/test_rf6_packages.py:118: in test_package_size_targets_and_over_ceiling_negative
+    check(model_sizes, checker_sizes)
+tests/test_rf6_packages.py:114: in check
+    assert m and c
+E   assert ({})
+_____________ test_actual_source_observers_cover_all_package_homes _____________
+tests/test_rf6_packages.py:125: in test_actual_source_observers_cover_all_package_homes
+    assert_scanned(split_homes())
+tests/test_rf6_moves.py:43: in assert_scanned
+    assert homes <= visited, sorted(homes - visited)
+E   AssertionError: [PosixPath('<worktree>/src/gnd/ch...osvasiloglou/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109/src/gnd/model/_operations.py'), ...]
+E   assert {PosixPath('/...ons.py'), ...} <= {PosixPath('/...cts.py'), ...}
+E     
+E     Extra items in the left set:
+E     PosixPath('<worktree>/src/gnd/checker/__init__.py')
+E     PosixPath('<worktree>/src/gnd/checker/_reports.py')
+E     PosixPath('<worktree>/src/gnd/model/_operations.py')
+E     PosixPath('<worktree>/src/gnd/model/_validation.py')
+E     Po...
+E     
+E     ...Full output truncated (3 lines hidden), use '-vv' to show
+=========================== short test summary info ============================
+FAILED tests/test_rf6_packages.py::test_new_package_scope_is_complete - Asser...
+FAILED tests/test_rf6_packages.py::test_package_size_targets_and_over_ceiling_negative
+FAILED tests/test_rf6_packages.py::test_actual_source_observers_cover_all_package_homes
+3 failed in 0.18s
+
+Exit: 1

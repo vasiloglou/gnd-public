@@ -1,0 +1,88 @@
+FFF.FFF.                                                                 [100%]
+=================================== FAILURES ===================================
+_____________ test_model_counter_lookup_is_live[_DERIVATION_WORK] ______________
+tests/test_rf9_ci_repairs.py:15: in test_model_counter_lookup_is_live
+    assert getattr(model, name) == before + 173
+E   AssertionError: assert 0 == (0 + 173)
+E    +  where 0 = getattr(model, '_DERIVATION_WORK')
+__________ test_model_counter_lookup_is_live[_DERIVATION_ATOM_VISITS] __________
+tests/test_rf9_ci_repairs.py:15: in test_model_counter_lookup_is_live
+    assert getattr(model, name) == before + 173
+E   AssertionError: assert 0 == (0 + 173)
+E    +  where 0 = getattr(model, '_DERIVATION_ATOM_VISITS')
+______ test_model_counter_lookup_is_live[_DERIVATION_CLASSIFICATION_WORK] ______
+tests/test_rf9_ci_repairs.py:15: in test_model_counter_lookup_is_live
+    assert getattr(model, name) == before + 173
+E   AssertionError: assert 0 == (0 + 173)
+E    +  where 0 = getattr(model, '_DERIVATION_CLASSIFICATION_WORK')
+__________ test_pool_shared_policy_refusal_keeps_boundary[{"x": NaN}] __________
+tests/test_rf9_ci_repairs.py:28: in test_pool_shared_policy_refusal_keeps_boundary
+    load_pool(path, None)
+src/gnd/synth/poolfile.py:411: in load_pool
+    document = _rf7_input.loads(text)
+               ^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:104: in loads
+    return JSONDecoder(**kwargs).decode(_text(raw))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:345: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:99: in raw_decode
+    return super().raw_decode(text, idx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:361: in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:91: in constant
+    raise InputRefusal('nonfinite JSON constant', '', 0)
+E   gnd.input_policy.InputRefusal: nonfinite JSON constant
+_________ test_pool_shared_policy_refusal_keeps_boundary[{"x": 1e999}] _________
+tests/test_rf9_ci_repairs.py:28: in test_pool_shared_policy_refusal_keeps_boundary
+    load_pool(path, None)
+src/gnd/synth/poolfile.py:411: in load_pool
+    document = _rf7_input.loads(text)
+               ^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:104: in loads
+    return JSONDecoder(**kwargs).decode(_text(raw))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:345: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:99: in raw_decode
+    return super().raw_decode(text, idx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:361: in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:85: in number
+    raise InputRefusal('nonfinite JSON number', '', 0)
+E   gnd.input_policy.InputRefusal: nonfinite JSON number
+_______ test_pool_shared_policy_refusal_keeps_boundary[{"x": 1, "x": 2}] _______
+tests/test_rf9_ci_repairs.py:28: in test_pool_shared_policy_refusal_keeps_boundary
+    load_pool(path, None)
+src/gnd/synth/poolfile.py:411: in load_pool
+    document = _rf7_input.loads(text)
+               ^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:104: in loads
+    return JSONDecoder(**kwargs).decode(_text(raw))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:345: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:99: in raw_decode
+    return super().raw_decode(text, idx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:361: in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/input_policy.py:79: in pairs
+    raise InputRefusal('duplicate JSON key', '', 0)
+E   gnd.input_policy.InputRefusal: duplicate JSON key
+=========================== short test summary info ============================
+FAILED tests/test_rf9_ci_repairs.py::test_model_counter_lookup_is_live[_DERIVATION_WORK]
+FAILED tests/test_rf9_ci_repairs.py::test_model_counter_lookup_is_live[_DERIVATION_ATOM_VISITS]
+FAILED tests/test_rf9_ci_repairs.py::test_model_counter_lookup_is_live[_DERIVATION_CLASSIFICATION_WORK]
+FAILED tests/test_rf9_ci_repairs.py::test_pool_shared_policy_refusal_keeps_boundary[{"x": NaN}]
+FAILED tests/test_rf9_ci_repairs.py::test_pool_shared_policy_refusal_keeps_boundary[{"x": 1e999}]
+FAILED tests/test_rf9_ci_repairs.py::test_pool_shared_policy_refusal_keeps_boundary[{"x": 1, "x": 2}]
+6 failed, 2 passed in 1.15s

@@ -1,0 +1,420 @@
+{
+  "base": "26dbff6",
+  "implementation": "b8d7e1fc4fbeada6936dcd453523603d04e68600",
+  "implementation_paths": 73,
+  "added_production_including_exact_move": 458,
+  "moved_production_lines": 322,
+  "added_tests_probes": 502,
+  "added_non_evidence_prose_at_implementation": 295,
+  "ceilings": {
+    "paths": 80,
+    "production_added": 2000,
+    "tests_added": 2000,
+    "non_evidence_prose_added": 1500,
+    "moved_production": 1000
+  },
+  "rows": [
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/R1-replay-impact.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/approval.json",
+      "added": 9,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/budget.json",
+      "added": 314,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/ci-status.json",
+      "added": 33,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/cli-homes.json",
+      "added": 136,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/compat-impact.txt",
+      "added": 340,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/consumer-impact.txt",
+      "added": 4,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/coverage-base-red.txt",
+      "added": 26,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/current-gate.txt",
+      "added": 9,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct-complete.txt",
+      "added": 4,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct-final.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/direct.txt",
+      "added": 60,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/dynamic-query-candidates.json",
+      "added": 34562,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/env-graph-final.txt",
+      "added": 130,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/environment-base-red.txt",
+      "added": 26,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/equality-red.txt",
+      "added": 16,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/extra.txt",
+      "added": 15,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/feedback-branch-base-red.txt",
+      "added": 17,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/feedback-branch-current.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/feedback-branch-instrument-error.txt",
+      "added": 16,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/gates.json",
+      "added": 125,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/lint.txt",
+      "added": 2,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/manifest-adaptations.json",
+      "added": 413,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/metadata.json",
+      "added": 1624,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/metadata.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/metadata_checks.py",
+      "added": 31,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/native311-current.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/native313-current.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/no-best-base-red.txt",
+      "added": 21,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/no-best.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/output-bindings.json",
+      "added": 32,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/parent-edge-base-red.json",
+      "added": 7,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/provider-status.json",
+      "added": 61,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/py311.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/py313.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/query-allow-list.json",
+      "added": 2016,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/reconstruct-successor.json",
+      "added": 7,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/red.txt",
+      "added": 234,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/repair-review-prompt.txt",
+      "added": 16,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/review-R1-green.txt",
+      "added": 19,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/review-R1-red.txt",
+      "added": 17,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/review-R3-verification.txt",
+      "added": 75,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/review-metadata.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/review-prompt.txt",
+      "added": 22,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/session-current.txt",
+      "added": 19,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/session-impact.txt",
+      "added": 19,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/session-pins-final.txt",
+      "added": 3,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/notes/phase-RF9-repair-codex-repair-review.md",
+      "added": 11,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/notes/phase-RF9-repair-codex-review.md",
+      "added": 14,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/notes/phase-RF9-repair-spec.md",
+      "added": 215,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/notes/phase-RF9-repair-status.md",
+      "added": 52,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/code-refactoring/notes/shim-inventory.md",
+      "added": 33,
+      "removed": 0
+    },
+    {
+      "path": ".gnd-planning/milestones/public-launch/migration/b3-files.json",
+      "added": 61,
+      "removed": 51
+    },
+    {
+      "path": "src/gnd/codegen/service.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "src/gnd/commands/_output.py",
+      "added": 76,
+      "removed": 322
+    },
+    {
+      "path": "src/gnd/exp/cli_service.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "src/gnd/exp/close.py",
+      "added": 2,
+      "removed": 0
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "added": 1,
+      "removed": 7
+    },
+    {
+      "path": "src/gnd/exp/session_replay.py",
+      "added": 16,
+      "removed": 0
+    },
+    {
+      "path": "src/gnd/export/verification_service.py",
+      "added": 4,
+      "removed": 4
+    },
+    {
+      "path": "src/gnd/extract/service.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "src/gnd/output.py",
+      "added": 322,
+      "removed": 0
+    },
+    {
+      "path": "src/gnd/review/service.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "src/gnd/values.py",
+      "added": 7,
+      "removed": 2
+    },
+    {
+      "path": "tests/support/rf5_sources.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "tests/support/rf8_sources.py",
+      "added": 8,
+      "removed": 3
+    },
+    {
+      "path": "tests/test_measure_offline.py",
+      "added": 30,
+      "removed": 11
+    },
+    {
+      "path": "tests/test_rf5_commands.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "path": "tests/test_rf6_index.py",
+      "added": 5,
+      "removed": 1
+    },
+    {
+      "path": "tests/test_rf6_query_policy.py",
+      "added": 11,
+      "removed": 6
+    },
+    {
+      "path": "tests/test_rf8_structure.py",
+      "added": 6,
+      "removed": 0
+    },
+    {
+      "path": "tests/test_rf9_repairs.py",
+      "added": 440,
+      "removed": 0
+    },
+    {
+      "path": "tools/gnd_arch.py",
+      "added": 21,
+      "removed": 1
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "added": 3,
+      "removed": 0
+    }
+  ],
+  "final_record_review_evidence_reserve": 0,
+  "initial_measurement": {
+    "base": "26dbff6",
+    "implementation": "f5979caaaa9385faa2ad44ba10364ddb9e5d561e",
+    "implementation_paths": 59,
+    "added_production_including_exact_move": 458,
+    "moved_production_lines": 322,
+    "added_tests_probes": 381,
+    "added_non_evidence_prose_at_implementation": 191,
+    "ceilings": {
+      "paths": 80,
+      "production_added": 2000,
+      "tests_added": 2000,
+      "non_evidence_prose_added": 1500,
+      "moved_production": 1000
+    },
+    "final_record_review_evidence_reserve": 12
+  },
+  "final_source_commit": "21487ab1711fb7781d106deefd40243666d904b4",
+  "final_touched_paths": 77,
+  "non_evidence_prose_before_completion": 325,
+  "added_non_evidence_prose_final": 792
+}

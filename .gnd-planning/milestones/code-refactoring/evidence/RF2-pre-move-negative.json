@@ -1,0 +1,20 @@
+[
+  {
+    "mutation": "guard-ref",
+    "test": "test_measure_guarded_exists_refs",
+    "exit": 1,
+    "output": "1 failed in 0.11s"
+  },
+  {
+    "mutation": "measure-bytes",
+    "test": "test_measure_output_bytes",
+    "exit": 1,
+    "output": "1 failed in 0.51s"
+  },
+  {
+    "mutation": "pyrel-ref",
+    "test": "test_pyrel_inline_and_top_level_refs",
+    "exit": 1,
+    "output": "1 failed in 0.11s"
+  }
+]

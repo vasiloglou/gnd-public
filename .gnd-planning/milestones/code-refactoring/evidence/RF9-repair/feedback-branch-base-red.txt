@@ -1,0 +1,17 @@
+Edited evidence: baseline/worktree/temporary prefixes sanitized; outcome preserved.
+Command: exact26dbff6 src/gnd archived, isolated PYTHONPATH; .venv/bin/python -m pytest -q tests/test_rf9_repairs.py::test_accepted_feedback_cannot_replace_contract_acceptance --tb=short -p no:cacheprovider
+Exact26dbff6 archived src/gnd; current regression test; isolated PYTHONPATH.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_accepted_feedback_cannot_replace_contract_acceptance ___________
+tests/test_rf9_repairs.py:350: in test_accepted_feedback_cannot_replace_contract_acceptance
+    with pytest.raises(ValueError, match='terminal result differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+---------------------------- Captured stdout setup -----------------------------
+CREATED <pytest-temp>/pytest-4544/test_accepted_feedback_cannot_0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_accepted_feedback_cannot_replace_contract_acceptance
+1 failed in 1.16s
+Exit:1

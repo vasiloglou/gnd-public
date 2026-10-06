@@ -1,0 +1,9 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_session_pins.py --deselect tests/test_rf1_session_pins.py::test_session_fresh[3] --deselect tests/test_rf1_session_pins.py::test_session_resume[3] --tb=short
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+........................................................................ [ 93%]
+...............                                                          [100%]
+231 passed, 2 deselected in 60.91s (0:01:00)
+
+Exit: 0

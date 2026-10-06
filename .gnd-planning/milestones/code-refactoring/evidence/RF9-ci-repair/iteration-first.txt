@@ -1,0 +1,37 @@
+Retained intermediate output; operator paths sanitized. Findings and corrections are in the spec; this is not the final gate.
+..........................................................FF......F..... [ 83%]
+..........FF..                                                           [100%]
+=================================== FAILURES ===================================
+__ test_derivation_literal_patterns_keep_raw_identity[Number-True-1-boolean] ___
+tests/test_public_adapter_derivation.py:121: in test_derivation_literal_patterns_keep_raw_identity
+    with pytest.raises(ModelLoadError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ModelLoadError
+_ test_derivation_literal_patterns_keep_raw_identity[Date-not-a-date-2026-09-07-string] _
+tests/test_public_adapter_derivation.py:121: in test_derivation_literal_patterns_keep_raw_identity
+    with pytest.raises(ModelLoadError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ModelLoadError
+_______ test_admitted_untyped_overflow_retains_cell_position_and_refuses _______
+tests/test_public_adapter_literal_controls.py:116: in test_admitted_untyped_overflow_retains_cell_position_and_refuses
+    snapshot = adapter.adapt_snapshot(model, population)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/semantic_adapter.py:644: in adapt_snapshot
+    raise UnvalidatedPopulationError(population, model)
+E   gnd.checker.UnvalidatedPopulationError: check() was called with a population that was not validated against this model. Load it via load_population(path, model=model), which runs layer-2 structural validation (CORE-04) and stamps the result. There is deliberately no bypass (D-18). If you deep-copied a validated population, the marker's identity was lost — re-load or re-stamp it; the copy fails closed on purpose. (population declares model='undecidable.orm.yaml'; it WAS validated against this model, but its content has changed since — the recorded content digest no longer matches. Mutating a loaded population (assigning to a field, appending to population.facts[...], or model_copy(update={...})) re-opens the very hole layer 2 closes (CR-01); re-load or re-validate the mutated content instead)
+_____________ test_three_policy_consumers_call_the_one_scope_owner _____________
+tests/test_v51_phase2_extraction_scope.py:45: in test_three_policy_consumers_call_the_one_scope_owner
+    assert 'fact_type_scope(' in source, path
+E   AssertionError: PosixPath('<operator-home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109/src/gnd/universe.py')
+E   assert 'fact_type_scope(' in '"""RF3 shared dependency home; algorithms retain predecessor semantics."""\nfrom __future__ import annotations\n\nfro...false(constraint, fact_type):\n    return False\n\n\ndef _family_shape_true(constraint, fact_type):\n    return True\n'
+_________ test_three_policy_consumers_obey_a_monkeypatched_scope_owner _________
+tests/test_v51_phase2_extraction_scope.py:53: in test_three_policy_consumers_obey_a_monkeypatched_scope_owner
+    monkeypatch.setattr(module, 'fact_type_scope', lambda _model: dict(altered))
+E   AttributeError: <module 'gnd.universe' from '<operator-home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109/src/gnd/universe.py'> has no attribute 'fact_type_scope'
+=========================== short test summary info ============================
+FAILED tests/test_public_adapter_derivation.py::test_derivation_literal_patterns_keep_raw_identity[Number-True-1-boolean]
+FAILED tests/test_public_adapter_derivation.py::test_derivation_literal_patterns_keep_raw_identity[Date-not-a-date-2026-09-07-string]
+FAILED tests/test_public_adapter_literal_controls.py::test_admitted_untyped_overflow_retains_cell_position_and_refuses
+FAILED tests/test_v51_phase2_extraction_scope.py::test_three_policy_consumers_call_the_one_scope_owner
+FAILED tests/test_v51_phase2_extraction_scope.py::test_three_policy_consumers_obey_a_monkeypatched_scope_owner
+5 failed, 81 passed in 6.39s

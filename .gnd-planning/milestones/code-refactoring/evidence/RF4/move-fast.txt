@@ -1,0 +1,2999 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf4_premove.py tests/test_synth_mutate.py tests/test_synth_boundary.py tests/test_synth_conforming.py tests/test_synth_false_pass_quarantine.py tests/test_v63_phase2_cache.py --tb=short
+........................................................................ [ 15%]
+........................................................................ [ 31%]
+..................................FF.F....F..F.F.....................FFF [ 47%]
+...FFFFF.FFF......FFFFFFF........................F..FF.FF.FF.FFFF..F...F [ 63%]
+..FFFFFFF.F..FF.F.F.F....F...F.....F......F.....F.......FFFFFFFFFFFFFFFF [ 78%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFF................FFFFFFFFFFFFFFFFF...FF [ 94%]
+FFFFFFFFFFFFFFF..FFF...F.                                                [100%]
+=================================== FAILURES ===================================
+_ test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml] _
+tests/test_rf1_semantic_pins.py:361: in test_oracle
+    assert_golden("sem-oracle", f"{_id(pair[0])}|{_id(pair[1])}", _oracle(*pair))
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-oracle/fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml
+E   --- golden
+E   +++ observed
+E   @@ -1,118 +1,6 @@
+E    {
+E     "build_expectations": {
+E   -  "ok": {
+E   -   "constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[1]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[2]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[3]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[4]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[5]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[6]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[7]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[8]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[9]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[1]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_of_room].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[person_takes_course].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   }
+E   -  }
+E   +  "message": "name '_xor_single_role' is not defined",
+E   +  "raises": "builtins.NameError"
+E     },
+E     "expected_state": {
+E   @@ -178,12 +66,6 @@
+E      },
+E      "constraints[6]": {
+E   -   "ok": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   }
+E   +   "message": "name '_xor_single_role' is not defined",
+E   +   "raises": "builtins.NameError"
+E      },
+E      "constraints[7]": {
+E   @@ -259,118 +141,6 @@
+E     },
+E     "predict_boundary": {
+E   -  "ok": {
+E   -   "constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[1]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[2]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[3]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[4]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[5]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[6]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[7]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[8]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[9]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[1]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_of_room].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[person_takes_course].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   }
+E   -  }
+E   +  "message": "name '_xor_single_role' is not defined",
+E   +  "raises": "builtins.NameError"
+E     }
+E    }
+_ test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml] _
+tests/test_rf1_semantic_pins.py:361: in test_oracle
+    assert_golden("sem-oracle", f"{_id(pair[0])}|{_id(pair[1])}", _oracle(*pair))
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-oracle/fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml
+E   --- golden
+E   +++ observed
+E   @@ -1,118 +1,6 @@
+E    {
+E     "build_expectations": {
+E   -  "ok": {
+E   -   "constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[1]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[2]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[3]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[4]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[5]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[6]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[7]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[8]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[9]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[1]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_of_room].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[person_takes_course].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   }
+E   -  }
+E   +  "message": "name '_xor_single_role' is not defined",
+E   +  "raises": "builtins.NameError"
+E     },
+E     "expected_state": {
+E   @@ -178,12 +66,6 @@
+E      },
+E      "constraints[6]": {
+E   -   "ok": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    }
+E   -   }
+E   +   "message": "name '_xor_single_role' is not defined",
+E   +   "raises": "builtins.NameError"
+E      },
+E      "constraints[7]": {
+E   @@ -259,118 +141,6 @@
+E     },
+E     "predict_boundary": {
+E   -  "ok": {
+E   -   "constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[1]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[2]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[3]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[4]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[5]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[6]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[7]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[8]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[9]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[1]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_of_room].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[person_takes_course].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "fail",
+E   -     "ground_truth": "violated",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   }
+E   -  }
+E   +  "message": "name '_xor_single_role' is not defined",
+E   +  "raises": "builtins.NameError"
+E     }
+E    }
+_ test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml] _
+tests/test_rf1_semantic_pins.py:361: in test_oracle
+    assert_golden("sem-oracle", f"{_id(pair[0])}|{_id(pair[1])}", _oracle(*pair))
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-oracle/fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml
+E   --- golden
+E   +++ observed
+E   @@ -1,118 +1,6 @@
+E    {
+E     "build_expectations": {
+E   -  "ok": {
+E   -   "constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[1]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[2]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[3]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[4]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[5]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[6]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[7]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[8]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "constraints[9]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[1]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "vacuous",
+E   -     "ground_truth": "no-subjects",
+E   -     "reason": "coverage-omission"
+E   -    }
+E   -   },
+E   -   "fact_types[booking_of_room].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   },
+E   -   "fact_types[person_takes_course].constraints[0]": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   }
+E   -  }
+E   +  "message": "name '_xor_single_role' is not defined",
+E   +  "raises": "builtins.NameError"
+E     },
+E     "expected_state": {
+E   @@ -178,12 +66,6 @@
+E      },
+E      "constraints[6]": {
+E   -   "ok": {
+E   -    "dataclass": "ExpectedStateData",
+E   -    "fields": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    }
+E   -   }
+E   +   "message": "name '_xor_single_role' is not defined",
+E   +   "raises": "builtins.NameError"
+E      },
+E      "constraints[7]": {
+E   @@ -259,118 +141,6 @@
+E     },
+E     "predict_boundary": {
+E   -  "ok": {
+E   -   "constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[1]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[2]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[3]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[4]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[5]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[6]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[7]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[8]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "constraints[9]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_by_person].constraints[1]": {
+E   -    "data": {
+E   -     "expected_verdict": "vacuous",
+E   -     "ground_truth": "no-subjects",
+E   -     "reason": "coverage-omission"
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[booking_of_room].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   },
+E   -   "fact_types[person_takes_course].constraints[0]": {
+E   -    "data": {
+E   -     "expected_verdict": "pass",
+E   -     "ground_truth": "satisfied",
+E   -     "reason": null
+E   -    },
+E   -    "model": "ExpectedState"
+E   -   }
+E   -  }
+E   +  "message": "name '_xor_single_role' is not defined",
+E   +  "raises": "builtins.NameError"
+E     }
+E    }
+___________________ test_predict_violations[setfam.orm.yaml] ___________________
+tests/test_rf1_semantic_pins.py:378: in test_predict_violations
+    assert_golden("sem-oracle", f"predict-violations|{_id(model_path)}", observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-oracle/predict-violations|fx/checker/setfam.orm.yaml
+E   --- golden
+E   +++ observed
+E   @@ -1,92 +1,4 @@
+E    {
+E   - "ok": {
+E   -  "constraints[0]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[1]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[2]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[3]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[4]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[5]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[6]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[7]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[8]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "constraints[9]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  },
+E   -  "fact_types[person_takes_course].constraints[0]": {
+E   -   "data": {
+E   -    "expected_verdict": "fail",
+E   -    "ground_truth": "violated",
+E   -    "reason": null
+E   -   },
+E   -   "model": "ExpectedState"
+E   -  }
+E   - }
+E   + "message": "name '_xor_single_role' is not defined",
+E   + "raises": "builtins.NameError"
+E    }
+____________________ test_synth[fx/checker/setfam.orm.yaml] ____________________
+tests/test_rf1_semantic_pins.py:384: in test_synth
+    observed = _run(["synth", model_path, "--class", "all", "--seed", "0", "--out", str(out), "--format", "json"])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_rf1_semantic_pins.py:49: in _run
+    result = run_main(argv, cwd=ROOT)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/cli_runner.py:78: in run_main
+    code = cli.main(list(arguments))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________________ test_synth[fx/models/full_vocabulary.orm.yaml] ________________
+tests/test_rf1_semantic_pins.py:384: in test_synth
+    observed = _run(["synth", model_path, "--class", "all", "--seed", "0", "--out", str(out), "--format", "json"])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_rf1_semantic_pins.py:49: in _run
+    result = run_main(argv, cwd=ROOT)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/cli_runner.py:78: in run_main
+    code = cli.main(list(arguments))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_declared_implemented_family_has_an_operator_or_a_named_mechanism[setfam.orm] _
+tests/test_synth_mutate.py:114: in test_every_declared_implemented_family_has_an_operator_or_a_named_mechanism
+    model, assembly, _report = _baseline(model_path, tmp_path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_declared_implemented_family_has_an_operator_or_a_named_mechanism[full_vocabulary.orm] _
+tests/test_synth_mutate.py:114: in test_every_declared_implemented_family_has_an_operator_or_a_named_mechanism
+    model, assembly, _report = _baseline(model_path, tmp_path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__ test_full_vocabulary_has_an_applicable_operator_for_every_declared_family ___
+tests/test_synth_mutate.py:138: in test_full_vocabulary_has_an_applicable_operator_for_every_declared_family
+    model, assembly, _report = _baseline(FULL_VOCAB, tmp_path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_predict_is_a_typed_map_where_deletion_and_duplication_differ _______
+tests/test_synth_mutate.py:349: in test_predict_is_a_typed_map_where_deletion_and_duplication_differ
+    model, assembly, _report = _baseline(SETFAM, tmp_path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_a_family_emptied_mandatory_is_the_masked_cell_not_a_no_subject ______
+tests/test_synth_mutate.py:373: in test_a_family_emptied_mandatory_is_the_masked_cell_not_a_no_subject
+    model, assembly, _report = _baseline(SETFAM, tmp_path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_emptying_role_scoped_value_subjects_predicts_vacuity ___________
+tests/test_synth_mutate.py:408: in test_emptying_role_scoped_value_subjects_predicts_vacuity
+    model, assembly, report = _baseline(FULL_VOCAB, tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__ test_rejected_off_by_one_inside_max_bound_raises_on_the_empty_observed_set __
+tests/test_synth_mutate.py:427: in test_rejected_off_by_one_inside_max_bound_raises_on_the_empty_observed_set
+    model, assembly, report = _baseline(SETFAM, tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_the_observed_set_is_one_expression_including_vacuous ___________
+tests/test_synth_mutate.py:448: in test_the_observed_set_is_one_expression_including_vacuous
+    model, assembly, report = _baseline(SETFAM, tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_enumerated_case_matches_its_prediction_against_the_real_checker[setfam.orm] _
+tests/test_synth_mutate.py:472: in test_every_enumerated_case_matches_its_prediction_against_the_real_checker
+    model, assembly, report = _baseline(model_path, tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_enumerated_case_matches_its_prediction_against_the_real_checker[full_vocabulary.orm] _
+tests/test_synth_mutate.py:472: in test_every_enumerated_case_matches_its_prediction_against_the_real_checker
+    model, assembly, report = _baseline(model_path, tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_compare_observed_flags_an_unpredicted_ref_and_a_wrong_verdict ______
+tests/test_synth_mutate.py:503: in test_compare_observed_flags_an_unpredicted_ref_and_a_wrong_verdict
+    model, assembly, report = _baseline(SETFAM, tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:49: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__ test_cli_violating_emits_one_case_per_constraint_operator_pair[setfam.orm] __
+tests/test_synth_mutate.py:687: in test_cli_violating_emits_one_case_per_constraint_operator_pair
+    assert _cli_violating(model_path, out) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:654: in _cli_violating
+    return main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_cli_violating_emits_one_case_per_constraint_operator_pair[full_vocabulary.orm] _
+tests/test_synth_mutate.py:687: in test_cli_violating_emits_one_case_per_constraint_operator_pair
+    assert _cli_violating(model_path, out) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:654: in _cli_violating
+    return main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_violating_sidecars_carry_the_five_new_keys_and_the_typed_map _______
+tests/test_synth_mutate.py:711: in test_violating_sidecars_carry_the_five_new_keys_and_the_typed_map
+    assert _cli_violating(SETFAM, out, ["--baseline-seed", "7"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_mutate.py:654: in _cli_violating
+    return main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_the_isolating_fraction_is_reported_as_a_number_per_model _________
+tests/test_synth_mutate.py:735: in test_the_isolating_fraction_is_reported_as_a_number_per_model
+    rc = main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______________ test_class_all_emits_every_class_against_one_pool _______________
+tests/test_synth_mutate.py:765: in test_class_all_emits_every_class_against_one_pool
+    rc = main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_a_deliberate_misprediction_quarantines_types_the_discrepancy_and_exits_6 _
+tests/test_synth_mutate.py:801: in test_a_deliberate_misprediction_quarantines_types_the_discrepancy_and_exits_6
+    rc = main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_boundary_class_is_derived_and_is_never_a_silent_conforming_run ______
+tests/test_synth_mutate.py:841: in test_boundary_class_is_derived_and_is_never_a_silent_conforming_run
+    rc = main(["synth", str(SETFAM), "--out", str(out), "--class", "boundary", "--seed", "1"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____________ test_exclusive_bounds_are_exercised_in_both_directions ____________
+tests/test_synth_boundary.py:258: in test_exclusive_bounds_are_exercised_in_both_directions
+    doc = assemble_conforming(model, 1, model_ref=FULL_VOCAB.name).doc
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_derived_case_predicted_verdict_is_confirmed_by_the_real_checker[setfam.orm] _
+tests/test_synth_boundary.py:340: in test_every_derived_case_predicted_verdict_is_confirmed_by_the_real_checker
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_derived_case_predicted_verdict_is_confirmed_by_the_real_checker[full_vocabulary.orm] _
+tests/test_synth_boundary.py:340: in test_every_derived_case_predicted_verdict_is_confirmed_by_the_real_checker
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_cases_and_not_derivable_records_account_for_every_constraint[setfam.orm] _
+tests/test_synth_boundary.py:354: in test_cases_and_not_derivable_records_account_for_every_constraint
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_cases_and_not_derivable_records_account_for_every_constraint[full_vocabulary.orm] _
+tests/test_synth_boundary.py:354: in test_cases_and_not_derivable_records_account_for_every_constraint
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_every_not_derivable_record_names_a_mechanism[setfam.orm] _________
+tests/test_synth_boundary.py:363: in test_every_not_derivable_record_names_a_mechanism
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____ test_every_not_derivable_record_names_a_mechanism[full_vocabulary.orm] ____
+tests/test_synth_boundary.py:363: in test_every_not_derivable_record_names_a_mechanism
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_every_emitted_population_carries_a_d10_label[setfam.orm] _________
+tests/test_synth_boundary.py:376: in test_every_emitted_population_carries_a_d10_label
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____ test_every_emitted_population_carries_a_d10_label[full_vocabulary.orm] ____
+tests/test_synth_boundary.py:376: in test_every_emitted_population_carries_a_d10_label
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_frequency_min_one_lower_side_is_not_derivable_with_the_occurring_groups_mechanism _
+tests/test_synth_boundary.py:392: in test_frequency_min_one_lower_side_is_not_derivable_with_the_occurring_groups_mechanism
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____ test_cardinality_min_over_an_empty_universe_predicts_fail_not_vacuity _____
+tests/test_synth_boundary.py:417: in test_cardinality_min_over_an_empty_universe_predicts_fail_not_vacuity
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+___ test_multirole_exclusive_or_has_no_inside_case_and_is_unchecked_outside ____
+tests/test_synth_boundary.py:504: in test_multirole_exclusive_or_has_no_inside_case_and_is_unchecked_outside
+    admitted = emit_boundary(model, outside, tmp_path / "xor-multirole.json")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/boundary.py:472: in emit_boundary
+    predicted = predict_boundary(model, doc)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/boundary.py:404: in predict_boundary
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_a_subtype_partition_with_derivation_only_membership_stands_down _____
+tests/test_synth_boundary.py:603: in test_a_subtype_partition_with_derivation_only_membership_stands_down
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_textual_emits_exactly_one_case_per_model_predicting_unchecked ______
+tests/test_synth_boundary.py:693: in test_textual_emits_exactly_one_case_per_model_predicting_unchecked
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_an_external_uniqueness_boundary_asserts_the_join_yields_rows _______
+tests/test_synth_boundary.py:711: in test_an_external_uniqueness_boundary_asserts_the_join_yields_rows
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_________ test_join_scoped_set_family_boundaries_refuse_an_empty_side __________
+tests/test_synth_boundary.py:736: in test_join_scoped_set_family_boundaries_refuse_an_empty_side
+    model, doc = _baseline(SETFAM)
+                 ^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________________ test_equality_derives_BOTH_removal_directions _________________
+tests/test_synth_boundary.py:751: in test_equality_derives_BOTH_removal_directions
+    model, doc = _baseline(SETFAM)
+                 ^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_________ test_a_deliberately_wrong_prediction_raises_a_typed_mismatch _________
+tests/test_synth_boundary.py:773: in test_a_deliberately_wrong_prediction_raises_a_typed_mismatch
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_compare_reports_every_disagreement_over_the_full_map ___________
+tests/test_synth_boundary.py:802: in test_compare_reports_every_disagreement_over_the_full_map
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_a_structurally_invalid_boundary_population_is_a_generator_error _____
+tests/test_synth_boundary.py:824: in test_a_structurally_invalid_boundary_population_is_a_generator_error
+    model, doc = _baseline(FULL_VOCAB)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_cli_class_boundary_emits_cases_sidecars_and_an_index ___________
+tests/test_synth_boundary.py:864: in test_cli_class_boundary_emits_cases_sidecars_and_an_index
+    assert result.returncode == 0, result.stdout + result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<frozen runpy>", line 198, in _run_module_as_main
+E       File "<frozen runpy>", line 88, in _run_code
+E       File "<worktree>/src/gnd/__main__.py", line 8, in <module>
+E         sys.exit(main())
+E                  ~~~~^^
+E       File "<worktree>/src/gnd/cli.py", line 8872, in main
+E         return _cmd_synth(
+E             args.model,
+E         ...<6 lines>...
+E             args.baseline_seed,
+E         )
+E       File "<worktree>/src/gnd/cli.py", line 6661, in _cmd_synth
+E         b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+E                                                                    ~~~~~~~~~~~~~~~~^
+E             b_seed_value
+E             ^^^^^^^^^^^^
+E         )
+E         ^
+E       File "<worktree>/src/gnd/cli.py", line 6495, in resolve_baseline
+E         baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+E       File "<worktree>/src/gnd/synth/assemble.py", line 474, in assemble_conforming
+E         expectations = _build_expectations(model, doc, children)
+E       File "<worktree>/src/gnd/synth/assemble.py", line 253, in _build_expectations
+E         state = expected_state(constraint, ft, doc, model, children)
+E       File "<worktree>/src/gnd/synth/oracle/state.py", line 518, in expected_state
+E         if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+E                                        ^^^^^^^^^^^^^^^^
+E     NameError: name '_xor_single_role' is not defined
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510... is None:\n                                   ^^^^^^^^^^^^^^^^\nNameError: name \'_xor_single_role\' is not defined\n').returncode
+_ test_every_implemented_family_the_model_declares_is_accounted_for[setfam.orm] _
+tests/test_synth_boundary.py:906: in test_every_implemented_family_the_model_declares_is_accounted_for
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_every_implemented_family_the_model_declares_is_accounted_for[full_vocabulary.orm] _
+tests/test_synth_boundary.py:906: in test_every_implemented_family_the_model_declares_is_accounted_for
+    model, doc = _baseline(model_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_boundary.py:71: in _baseline
+    assembly = assemble_conforming(model, seed, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_ test_emitted_conforming_loads_clean_and_reports_no_alethic_fail[setfam.orm] __
+tests/test_synth_conforming.py:87: in test_emitted_conforming_loads_clean_and_reports_no_alethic_fail
+    assembly = assemble_conforming(model, 1, model_ref=model_path.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____ test_same_seed_reproduces_byte_identical_across_processes[setfam.orm] _____
+tests/test_synth_conforming.py:98: in test_same_seed_reproduces_byte_identical_across_processes
+    rc = main(["synth", str(model_path), "--out", str(out), "--seed", "5"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__ test_omitted_seed_is_probabilistic_and_records_the_drawn_seed[setfam.orm] ___
+tests/test_synth_conforming.py:108: in test_omitted_seed_is_probabilistic_and_records_the_drawn_seed
+    rc = main(["synth", str(model_path), "--out", str(out)])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______________ test_omitted_pool_materializes_a_hashed_pool_file _______________
+tests/test_synth_conforming.py:228: in test_omitted_pool_materializes_a_hashed_pool_file
+    rc = main(["synth", str(SETFAM), "--out", str(out), "--seed", "1", "--format", "json"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_______ test_sidecar_swapped_next_to_a_different_population_is_rejected ________
+tests/test_synth_conforming.py:299: in test_sidecar_swapped_next_to_a_different_population_is_rejected
+    _p2, _sc2 = _emit_one(SETFAM, out / "two", seed=1)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_conforming.py:258: in _emit_one
+    rc = main(["synth", str(model_path), "--out", str(out), "--seed", str(seed)])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+----------------------------- Captured stdout call -----------------------------
+OK: wrote 1 conforming population(s) under <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4299/test_sidecar_swapped_next_to_a0/o/one
+  seed 1: <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4299/test_sidecar_swapped_next_to_a0/o/one/conforming/ring.orm.conforming.seed1.json (band 0, conforming)
+  pool: conforming/pool.0dc765993743b91d.pool.json (0dc765993743b91d)
+_________________ test_sidecar_paths_are_relative_not_absolute _________________
+tests/test_synth_conforming.py:343: in test_sidecar_paths_are_relative_not_absolute
+    _population, sidecar_path = _emit_one(FULL_VOCAB, out)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_conforming.py:258: in _emit_one
+    rc = main(["synth", str(model_path), "--out", str(out), "--seed", str(seed)])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_expectations_represent_an_unchecked_by_design_constraint _________
+tests/test_synth_conforming.py:451: in test_expectations_represent_an_unchecked_by_design_constraint
+    _population, sidecar_path = _emit_one(FULL_VOCAB, out)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_synth_conforming.py:258: in _emit_one
+    rc = main(["synth", str(model_path), "--out", str(out), "--seed", str(seed)])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_every_loadable_model_converges_to_0_5_or_6[full_vocabulary.orm] _____
+tests/test_synth_conforming.py:608: in test_every_loadable_model_converges_to_0_5_or_6
+    assemble_conforming(model, 1, model_ref=model_path.name, max_rounds=20)
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_________ test_every_loadable_model_converges_to_0_5_or_6[setfam.orm] __________
+tests/test_synth_conforming.py:608: in test_every_loadable_model_converges_to_0_5_or_6
+    assemble_conforming(model, 1, model_ref=model_path.name, max_rounds=20)
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[1] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[2] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[3] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[4] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[5] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[6] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[7] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[8] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[9] ___________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[10] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[11] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[12] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[13] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[14] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[15] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[16] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[17] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[18] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[19] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[20] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[21] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[22] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[23] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[24] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[25] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[26] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[27] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[28] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[29] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__________ test_full_vocabulary_converges_over_30_seeds_at_band_4[30] __________
+tests/test_synth_conforming.py:629: in test_full_vocabulary_converges_over_30_seeds_at_band_4
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_no_join_scoped_constraint_reports_vacuous_across_30_seeds ________
+tests/test_synth_conforming.py:641: in test_no_join_scoped_constraint_reports_vacuous_across_30_seeds
+    assembly = assemble_conforming(model, seed, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_positive_non_degeneracy_gate_is_asserted_in_the_emission_path ______
+tests/test_synth_conforming.py:656: in test_positive_non_degeneracy_gate_is_asserted_in_the_emission_path
+    assembly = assemble_conforming(model, 1, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_entity_recurrence_is_below_one_beating_polyfactory_8_of_8 ________
+tests/test_synth_conforming.py:670: in test_entity_recurrence_is_below_one_beating_polyfactory_8_of_8
+    assembly = assemble_conforming(model, 1, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_llm_composed_pool_passes_load_pool_and_the_empirical_gate ________
+tests/test_synth_conforming.py:689: in test_llm_composed_pool_passes_load_pool_and_the_empirical_gate
+    assembly = assemble_conforming(model, 1, pool=pool, model_ref=FULL_VOCAB.name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____________________ test_llm_pool_drives_the_cli_pipeline _____________________
+tests/test_synth_conforming.py:697: in test_llm_pool_drives_the_cli_pipeline
+    rc = main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______________ test_index_merges_across_invocations_and_is_sorted ______________
+tests/test_synth_conforming.py:716: in test_index_merges_across_invocations_and_is_sorted
+    assert main(["synth", str(FULL_VOCAB), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____ test_synth_refuses_to_replace_a_malformed_existing_index[invalid-json] ____
+tests/test_synth_conforming.py:733: in test_synth_refuses_to_replace_a_malformed_existing_index
+    assert main(["synth", str(FULL_VOCAB), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+___ test_synth_refuses_to_replace_a_malformed_existing_index[invalid-shape] ____
+tests/test_synth_conforming.py:733: in test_synth_refuses_to_replace_a_malformed_existing_index
+    assert main(["synth", str(FULL_VOCAB), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_______ test_synth_rolls_back_the_whole_batch_when_the_second_seed_fails _______
+tests/test_synth_conforming.py:748: in test_synth_rolls_back_the_whole_batch_when_the_second_seed_fails
+    assert main(["synth", str(SETFAM), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+__ test_synth_rolls_back_the_whole_batch_when_the_second_boundary_case_fails ___
+tests/test_synth_conforming.py:783: in test_synth_rolls_back_the_whole_batch_when_the_second_boundary_case_fails
+    assert main(["synth", str(SETFAM), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_______ test_synth_rolls_back_the_whole_batch_when_a_sidecar_write_fails _______
+tests/test_synth_conforming.py:819: in test_synth_rolls_back_the_whole_batch_when_a_sidecar_write_fails
+    assert main(["synth", str(SETFAM), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+______ test_synth_rolls_back_the_whole_batch_when_index_replacement_fails ______
+tests/test_synth_conforming.py:837: in test_synth_rolls_back_the_whole_batch_when_index_replacement_fails
+    assert main(["synth", str(SETFAM), "--out", str(out), "--seed", "1"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________________________ test_cli_seeds_default_is_one _________________________
+tests/test_synth_conforming.py:856: in test_cli_seeds_default_is_one
+    assert main(["synth", str(FULL_VOCAB), "--out", str(out), "--seed", "1", "--format", "json"]) == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+____ test_cli_seeds_emits_independent_variants_for_every_class[conforming] _____
+tests/test_synth_conforming.py:892: in test_cli_seeds_emits_independent_variants_for_every_class
+    assert main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_cli_seeds_emits_independent_variants_for_every_class[boundary] ______
+tests/test_synth_conforming.py:892: in test_cli_seeds_emits_independent_variants_for_every_class
+    assert main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+_____ test_cli_seeds_emits_independent_variants_for_every_class[violating] _____
+tests/test_synth_conforming.py:892: in test_cli_seeds_emits_independent_variants_for_every_class
+    assert main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6661: in _cmd_synth
+    b_seed, baseline, baseline_report, baseline_expectations = resolve_baseline(
+src/gnd/cli.py:6495: in resolve_baseline
+    baseline = _assemble.assemble_conforming(model, b_seed, pool=pool, model_ref=model_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+________ test_cli_seeds_emits_independent_variants_for_every_class[all] ________
+tests/test_synth_conforming.py:892: in test_cli_seeds_emits_independent_variants_for_every_class
+    assert main(
+src/gnd/cli.py:8872: in main
+    return _cmd_synth(
+src/gnd/cli.py:6426: in _cmd_synth
+    assembly = _assemble.assemble_conforming(
+src/gnd/synth/assemble.py:474: in assemble_conforming
+    expectations = _build_expectations(model, doc, children)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/assemble.py:253: in _build_expectations
+    state = expected_state(constraint, ft, doc, model, children)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/synth/oracle/state.py:518: in expected_state
+    if ctype == "exclusive-or" and _xor_single_role(constraint) is None:
+                                   ^^^^^^^^^^^^^^^^
+E   NameError: name '_xor_single_role' is not defined
+___________________________ test_phase2_branch[C01] ____________________________
+tests/test_v63_phase2_cache.py:114: in test_phase2_branch
+    _expect(case_id, reader.load_assurance_evidence(), calls)
+tests/test_v63_phase2_cache.py:65: in _expect
+    assert calls["full"] == answer["full_loads"]
+E   assert 0 == 1
+___________________________ test_phase2_branch[C02] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C03] ____________________________
+tests/test_v63_phase2_cache.py:133: in test_phase2_branch
+    _expect(case_id, second, calls)
+tests/test_v63_phase2_cache.py:65: in _expect
+    assert calls["full"] == answer["full_loads"]
+E   assert 0 == 2
+___________________________ test_phase2_branch[C04] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C05] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C06] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C07] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C08] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C09] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C10] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C11] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C12] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C13] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C14] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C15] ____________________________
+tests/test_v63_phase2_cache.py:149: in test_phase2_branch
+    _expect(case_id, reader.load_assurance_evidence(), calls)
+tests/test_v63_phase2_cache.py:65: in _expect
+    assert calls["full"] == answer["full_loads"]
+E   assert 0 == 2
+___________________________ test_phase2_branch[C16] ____________________________
+tests/test_v63_phase2_cache.py:164: in test_phase2_branch
+    _expect(case_id, reader.load_assurance_evidence(), calls)
+tests/test_v63_phase2_cache.py:65: in _expect
+    assert calls["full"] == answer["full_loads"]
+E   assert 0 == 2
+___________________________ test_phase2_branch[C17] ____________________________
+tests/test_v63_phase2_cache.py:180: in test_phase2_branch
+    _expect(case_id, reader.load_assurance_evidence(), calls)
+tests/test_v63_phase2_cache.py:64: in _expect
+    assert value.available is answer["available_after"]
+E   AssertionError: assert True is False
+E    +  where True = AuthenticatedAssuranceEvidence(available=True, covered_scope_ids=frozenset(), declared_scope_ids=frozenset({'derivatio...198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558'), assumptions=('synthetic-release-test',), reason=None).available
+___________________________ test_phase2_branch[C21] ____________________________
+tests/test_v63_phase2_cache.py:404: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C22] ____________________________
+tests/test_v63_phase2_cache.py:214: in test_phase2_branch
+    calls, _ = _prime(package, monkeypatch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C23] ____________________________
+tests/test_v63_phase2_cache.py:235: in test_phase2_branch
+    calls, _ = _prime(package, monkeypatch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C24] ____________________________
+tests/test_v63_phase2_cache.py:244: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C25] ____________________________
+tests/test_v63_phase2_cache.py:244: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C26] ____________________________
+tests/test_v63_phase2_cache.py:244: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C27] ____________________________
+tests/test_v63_phase2_cache.py:244: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C28] ____________________________
+tests/test_v63_phase2_cache.py:263: in test_phase2_branch
+    calls, _ = _prime(package, monkeypatch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C29] ____________________________
+tests/test_v63_phase2_cache.py:294: in test_phase2_branch
+    _expect(case_id, reader.load_assurance_evidence(), calls)
+tests/test_v63_phase2_cache.py:65: in _expect
+    assert calls["full"] == answer["full_loads"]
+E   assert 0 == 2
+___________________________ test_phase2_branch[C30] ____________________________
+tests/test_v63_phase2_cache.py:312: in test_phase2_branch
+    _expect(case_id, value, calls)
+tests/test_v63_phase2_cache.py:65: in _expect
+    assert calls["full"] == answer["full_loads"]
+E   assert 0 == 2
+___________________________ test_phase2_branch[C31] ____________________________
+tests/test_v63_phase2_cache.py:312: in test_phase2_branch
+    _expect(case_id, value, calls)
+tests/test_v63_phase2_cache.py:64: in _expect
+    assert value.available is answer["available_after"]
+E   AssertionError: assert True is False
+E    +  where True = AuthenticatedAssuranceEvidence(available=True, covered_scope_ids=frozenset(), declared_scope_ids=frozenset({'derivatio...198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558'), assumptions=('synthetic-release-test',), reason=None).available
+___________________________ test_phase2_branch[C32] ____________________________
+tests/test_v63_phase2_cache.py:343: in test_phase2_branch
+    _expect(case_id, value, calls)
+tests/test_v63_phase2_cache.py:64: in _expect
+    assert value.available is answer["available_after"]
+E   AssertionError: assert True is False
+E    +  where True = AuthenticatedAssuranceEvidence(available=True, covered_scope_ids=frozenset(), declared_scope_ids=frozenset({'derivatio...198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558'), assumptions=('synthetic-release-test',), reason=None).available
+___________________________ test_phase2_branch[C33] ____________________________
+tests/test_v63_phase2_cache.py:347: in test_phase2_branch
+    calls, value = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C34] ____________________________
+tests/test_v63_phase2_cache.py:356: in test_phase2_branch
+    calls, _ = _prime(package, monkeypatch)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C35] ____________________________
+tests/test_v63_phase2_cache.py:364: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C36] ____________________________
+tests/test_v63_phase2_cache.py:376: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+___________________________ test_phase2_branch[C37] ____________________________
+tests/test_v63_phase2_cache.py:390: in test_phase2_branch
+    calls, first = _prime(package, monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_v63_phase2_cache.py:43: in _prime
+    assert calls["full"] == 1, "the accepting control must prove a cache hit"
+E   AssertionError: the accepting control must prove a cache hit
+E   assert 0 == 1
+______________ test_fingerprint_failure_retry_branch[first-post] _______________
+tests/test_v63_phase2_cache.py:582: in test_fingerprint_failure_retry_branch
+    assert calls == {"fingerprint": 4, "full": 2}
+E   AssertionError: assert {'fingerprint': 0, 'full': 0} == {'fingerprint': 4, 'full': 2}
+E     
+E     Differing items:
+E     {'full': 0} != {'full': 2}
+E     {'fingerprint': 0} != {'fingerprint': 4}
+E     Use -v to get more diff
+_______________ test_fingerprint_failure_retry_branch[retry-pre] _______________
+tests/test_v63_phase2_cache.py:582: in test_fingerprint_failure_retry_branch
+    assert calls == {"fingerprint": 4, "full": 2}
+E   AssertionError: assert {'fingerprint': 0, 'full': 0} == {'fingerprint': 4, 'full': 2}
+E     
+E     Differing items:
+E     {'full': 0} != {'full': 2}
+E     {'fingerprint': 0} != {'fingerprint': 4}
+E     Use -v to get more diff
+______________ test_fingerprint_failure_retry_branch[retry-post] _______________
+tests/test_v63_phase2_cache.py:582: in test_fingerprint_failure_retry_branch
+    assert calls == {"fingerprint": 4, "full": 2}
+E   AssertionError: assert {'fingerprint': 0, 'full': 0} == {'fingerprint': 4, 'full': 2}
+E     
+E     Differing items:
+E     {'full': 0} != {'full': 2}
+E     {'fingerprint': 0} != {'fingerprint': 4}
+E     Use -v to get more diff
+__________________ test_roster_entry_cap_counts_ignored_files __________________
+tests/test_v63_phase2_cache.py:656: in test_roster_entry_cap_counts_ignored_files
+    with pytest.raises(ValueError, match="production roster entry limit"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+=========================== short test summary info ============================
+FAILED tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]
+FAILED tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]
+FAILED tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]
+FAILED tests/test_rf1_semantic_pins.py::test_predict_violations[setfam.orm.yaml]
+FAILED tests/test_rf1_semantic_pins.py::test_synth[fx/checker/setfam.orm.yaml]
+FAILED tests/test_rf1_semantic_pins.py::test_synth[fx/models/full_vocabulary.orm.yaml]
+FAILED tests/test_synth_mutate.py::test_every_declared_implemented_family_has_an_operator_or_a_named_mechanism[setfam.orm]
+FAILED tests/test_synth_mutate.py::test_every_declared_implemented_family_has_an_operator_or_a_named_mechanism[full_vocabulary.orm]
+FAILED tests/test_synth_mutate.py::test_full_vocabulary_has_an_applicable_operator_for_every_declared_family
+FAILED tests/test_synth_mutate.py::test_predict_is_a_typed_map_where_deletion_and_duplication_differ
+FAILED tests/test_synth_mutate.py::test_a_family_emptied_mandatory_is_the_masked_cell_not_a_no_subject
+FAILED tests/test_synth_mutate.py::test_emptying_role_scoped_value_subjects_predicts_vacuity
+FAILED tests/test_synth_mutate.py::test_rejected_off_by_one_inside_max_bound_raises_on_the_empty_observed_set
+FAILED tests/test_synth_mutate.py::test_the_observed_set_is_one_expression_including_vacuous
+FAILED tests/test_synth_mutate.py::test_every_enumerated_case_matches_its_prediction_against_the_real_checker[setfam.orm]
+FAILED tests/test_synth_mutate.py::test_every_enumerated_case_matches_its_prediction_against_the_real_checker[full_vocabulary.orm]
+FAILED tests/test_synth_mutate.py::test_compare_observed_flags_an_unpredicted_ref_and_a_wrong_verdict
+FAILED tests/test_synth_mutate.py::test_cli_violating_emits_one_case_per_constraint_operator_pair[setfam.orm]
+FAILED tests/test_synth_mutate.py::test_cli_violating_emits_one_case_per_constraint_operator_pair[full_vocabulary.orm]
+FAILED tests/test_synth_mutate.py::test_violating_sidecars_carry_the_five_new_keys_and_the_typed_map
+FAILED tests/test_synth_mutate.py::test_the_isolating_fraction_is_reported_as_a_number_per_model
+FAILED tests/test_synth_mutate.py::test_class_all_emits_every_class_against_one_pool
+FAILED tests/test_synth_mutate.py::test_a_deliberate_misprediction_quarantines_types_the_discrepancy_and_exits_6
+FAILED tests/test_synth_mutate.py::test_boundary_class_is_derived_and_is_never_a_silent_conforming_run
+FAILED tests/test_synth_boundary.py::test_exclusive_bounds_are_exercised_in_both_directions
+FAILED tests/test_synth_boundary.py::test_every_derived_case_predicted_verdict_is_confirmed_by_the_real_checker[setfam.orm]
+FAILED tests/test_synth_boundary.py::test_every_derived_case_predicted_verdict_is_confirmed_by_the_real_checker[full_vocabulary.orm]
+FAILED tests/test_synth_boundary.py::test_cases_and_not_derivable_records_account_for_every_constraint[setfam.orm]
+FAILED tests/test_synth_boundary.py::test_cases_and_not_derivable_records_account_for_every_constraint[full_vocabulary.orm]
+FAILED tests/test_synth_boundary.py::test_every_not_derivable_record_names_a_mechanism[setfam.orm]
+FAILED tests/test_synth_boundary.py::test_every_not_derivable_record_names_a_mechanism[full_vocabulary.orm]
+FAILED tests/test_synth_boundary.py::test_every_emitted_population_carries_a_d10_label[setfam.orm]
+FAILED tests/test_synth_boundary.py::test_every_emitted_population_carries_a_d10_label[full_vocabulary.orm]
+FAILED tests/test_synth_boundary.py::test_frequency_min_one_lower_side_is_not_derivable_with_the_occurring_groups_mechanism
+FAILED tests/test_synth_boundary.py::test_cardinality_min_over_an_empty_universe_predicts_fail_not_vacuity
+FAILED tests/test_synth_boundary.py::test_multirole_exclusive_or_has_no_inside_case_and_is_unchecked_outside
+FAILED tests/test_synth_boundary.py::test_a_subtype_partition_with_derivation_only_membership_stands_down
+FAILED tests/test_synth_boundary.py::test_textual_emits_exactly_one_case_per_model_predicting_unchecked
+FAILED tests/test_synth_boundary.py::test_an_external_uniqueness_boundary_asserts_the_join_yields_rows
+FAILED tests/test_synth_boundary.py::test_join_scoped_set_family_boundaries_refuse_an_empty_side
+FAILED tests/test_synth_boundary.py::test_equality_derives_BOTH_removal_directions
+FAILED tests/test_synth_boundary.py::test_a_deliberately_wrong_prediction_raises_a_typed_mismatch
+FAILED tests/test_synth_boundary.py::test_compare_reports_every_disagreement_over_the_full_map
+FAILED tests/test_synth_boundary.py::test_a_structurally_invalid_boundary_population_is_a_generator_error
+FAILED tests/test_synth_boundary.py::test_cli_class_boundary_emits_cases_sidecars_and_an_index
+FAILED tests/test_synth_boundary.py::test_every_implemented_family_the_model_declares_is_accounted_for[setfam.orm]
+FAILED tests/test_synth_boundary.py::test_every_implemented_family_the_model_declares_is_accounted_for[full_vocabulary.orm]
+FAILED tests/test_synth_conforming.py::test_emitted_conforming_loads_clean_and_reports_no_alethic_fail[setfam.orm]
+FAILED tests/test_synth_conforming.py::test_same_seed_reproduces_byte_identical_across_processes[setfam.orm]
+FAILED tests/test_synth_conforming.py::test_omitted_seed_is_probabilistic_and_records_the_drawn_seed[setfam.orm]
+FAILED tests/test_synth_conforming.py::test_omitted_pool_materializes_a_hashed_pool_file
+FAILED tests/test_synth_conforming.py::test_sidecar_swapped_next_to_a_different_population_is_rejected
+FAILED tests/test_synth_conforming.py::test_sidecar_paths_are_relative_not_absolute
+FAILED tests/test_synth_conforming.py::test_expectations_represent_an_unchecked_by_design_constraint
+FAILED tests/test_synth_conforming.py::test_every_loadable_model_converges_to_0_5_or_6[full_vocabulary.orm]
+FAILED tests/test_synth_conforming.py::test_every_loadable_model_converges_to_0_5_or_6[setfam.orm]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[1]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[2]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[3]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[4]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[5]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[6]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[7]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[8]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[9]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[10]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[11]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[12]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[13]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[14]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[15]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[16]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[17]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[18]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[19]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[20]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[21]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[22]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[23]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[24]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[25]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[26]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[27]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[28]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[29]
+FAILED tests/test_synth_conforming.py::test_full_vocabulary_converges_over_30_seeds_at_band_4[30]
+FAILED tests/test_synth_conforming.py::test_no_join_scoped_constraint_reports_vacuous_across_30_seeds
+FAILED tests/test_synth_conforming.py::test_positive_non_degeneracy_gate_is_asserted_in_the_emission_path
+FAILED tests/test_synth_conforming.py::test_entity_recurrence_is_below_one_beating_polyfactory_8_of_8
+FAILED tests/test_synth_conforming.py::test_llm_composed_pool_passes_load_pool_and_the_empirical_gate
+FAILED tests/test_synth_conforming.py::test_llm_pool_drives_the_cli_pipeline
+FAILED tests/test_synth_conforming.py::test_index_merges_across_invocations_and_is_sorted
+FAILED tests/test_synth_conforming.py::test_synth_refuses_to_replace_a_malformed_existing_index[invalid-json]
+FAILED tests/test_synth_conforming.py::test_synth_refuses_to_replace_a_malformed_existing_index[invalid-shape]
+FAILED tests/test_synth_conforming.py::test_synth_rolls_back_the_whole_batch_when_the_second_seed_fails
+FAILED tests/test_synth_conforming.py::test_synth_rolls_back_the_whole_batch_when_the_second_boundary_case_fails
+FAILED tests/test_synth_conforming.py::test_synth_rolls_back_the_whole_batch_when_a_sidecar_write_fails
+FAILED tests/test_synth_conforming.py::test_synth_rolls_back_the_whole_batch_when_index_replacement_fails
+FAILED tests/test_synth_conforming.py::test_cli_seeds_default_is_one - NameEr...
+FAILED tests/test_synth_conforming.py::test_cli_seeds_emits_independent_variants_for_every_class[conforming]
+FAILED tests/test_synth_conforming.py::test_cli_seeds_emits_independent_variants_for_every_class[boundary]
+FAILED tests/test_synth_conforming.py::test_cli_seeds_emits_independent_variants_for_every_class[violating]
+FAILED tests/test_synth_conforming.py::test_cli_seeds_emits_independent_variants_for_every_class[all]
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C01] - assert 0 == 1
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C02] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C03] - assert 0 == 2
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C04] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C05] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C06] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C07] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C08] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C09] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C10] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C11] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C12] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C13] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C14] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C15] - assert 0 == 2
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C16] - assert 0 == 2
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C17] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C21] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C22] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C23] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C24] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C25] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C26] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C27] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C28] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C29] - assert 0 == 2
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C30] - assert 0 == 2
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C31] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C32] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C33] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C34] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C35] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C36] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_phase2_branch[C37] - AssertionErr...
+FAILED tests/test_v63_phase2_cache.py::test_fingerprint_failure_retry_branch[first-post]
+FAILED tests/test_v63_phase2_cache.py::test_fingerprint_failure_retry_branch[retry-pre]
+FAILED tests/test_v63_phase2_cache.py::test_fingerprint_failure_retry_branch[retry-post]
+FAILED tests/test_v63_phase2_cache.py::test_roster_entry_cap_counts_ignored_files
+141 failed, 316 passed in 51.11s
+
+Exit: 1

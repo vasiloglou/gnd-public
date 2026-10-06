@@ -1,0 +1,21 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_pin_harness.py tests/test_rf2_instrument.py tests/test_rf2_digest_predicate.py tests/test_rf2_helpers.py tests/test_rf2_pre_move_pins.py tests/test_rf2_review_regressions.py tests/test_rf3_moves.py --tb=short
+........................................................................ [ 15%]
+........................................................................ [ 31%]
+........................................................................ [ 46%]
+........................................................................ [ 62%]
+.......................................................................F [ 78%]
+........................................................................ [ 93%]
+............................                                             [100%]
+=================================== FAILURES ===================================
+____________________ test_mutation_table_rows_of_their_own _____________________
+tests/test_rf1_pin_harness.py:147: in test_mutation_table_rows_of_their_own
+    tool.validate_rows(ROOT, tool.DEFAULT_SOURCE, table["rows"])
+tools/rf1_pins.py:141: in validate_rows
+    raise _invalid(f"{row['id']}: snippet occurs {count} times in {row['file']} (exactly 1 required)")
+E   rf1_pins_tool.ToolError: M-SEM-check-coverage-anchored: snippet occurs 0 times in src/gnd/checker.py (exactly 1 required)
+=========================== short test summary info ============================
+FAILED tests/test_rf1_pin_harness.py::test_mutation_table_rows_of_their_own
+1 failed, 459 passed in 64.79s (0:01:04)
+
+Exit: 1

@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf7_consumers.py::test_model_json_refusal_cannot_fall_back_to_yaml",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.3194239139556885
+}

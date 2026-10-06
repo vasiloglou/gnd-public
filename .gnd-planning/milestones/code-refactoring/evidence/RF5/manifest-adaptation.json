@@ -1,0 +1,738 @@
+[
+  {
+    "path": "src/gnd/checking_service.py",
+    "before": {
+      "path": "src/gnd/checking_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 new dependency home; old imports retained in listed shims.",
+      "bytes": 23133,
+      "public_sha256": "e2f3c65af519895670a37f785498f24b895c8faf12b2253663cb3339b9e98242",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "e2f3c65af519895670a37f785498f24b895c8faf12b2253663cb3339b9e98242"
+    },
+    "after": {
+      "path": "src/gnd/checking_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 23239,
+      "public_sha256": "cfc1e2126e90314f25c55c7db02089de64e112e61cfe1814691845d897190e86",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "e2f3c65af519895670a37f785498f24b895c8faf12b2253663cb3339b9e98242"
+    }
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "before": {
+      "path": "src/gnd/cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF4 D5 peripheral layering adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 384895,
+      "public_sha256": "cbb5a32c1c315d43fc89c9e04a37f9f4a03a83e12d5cbe7799052b333b877e97",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "963b7838aaa60bf89fd4eb80eb443837b8a19e5ba8b9136dff93dede20e77724"
+    },
+    "after": {
+      "path": "src/gnd/cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "bytes": 33781,
+      "public_sha256": "a4fb19a8fcf2344702ea0a9c8f8677a83505dfe2b88c8d0c3fe2880920de7dc1",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_path": "src/gnd/cli.py",
+      "source_commit": "ac4be67afdddde0b2b2095a6cd383bc13852758c",
+      "source_sha256": "963b7838aaa60bf89fd4eb80eb443837b8a19e5ba8b9136dff93dede20e77724"
+    }
+  },
+  {
+    "path": "tests/test_codegen_manifest.py",
+    "before": {
+      "path": "tests/test_codegen_manifest.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "public_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "bytes": 31924,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_codegen_manifest.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "5bbd375e3840bc733c589d4a56a73104f44da7314e0b5855c00505a9c9c96acd",
+      "public_sha256": "802675ce68ebbbaac64bab1fa0aaba9ef63a4c8f4d60b0ee68a1dd041e394521",
+      "bytes": 31915,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_exp_bands.py",
+    "before": {
+      "path": "tests/test_exp_bands.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "9de41d178273e5eb2563e61a36a32d0630fbdbcaac9fcf8b16b39c2d42e98fdb",
+      "public_sha256": "835006c6b6ee855fd2d0c0e8387d89cba1633619de830065b08969f301f42488",
+      "bytes": 17430,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_exp_bands.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "9de41d178273e5eb2563e61a36a32d0630fbdbcaac9fcf8b16b39c2d42e98fdb",
+      "public_sha256": "b4ef718b38f0dc6037275e28bce790561907fc702a3fd3bd6a13393763b816f8",
+      "bytes": 17441,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_exp_spec.py",
+    "before": {
+      "path": "tests/test_exp_spec.py",
+      "kind": "adaptation",
+      "reason": "Remove source-private editorial history only; exact executable assertion/helper/parameter AST unchanged. Original prose retained privately.",
+      "baseline_sha256": "7ac9c32f3e964d0f7d25534088d2502b75e91c348f8e3211c66782fe1518f16a",
+      "public_sha256": "bcb53e382862b5ba486b7f339a5e68b02d7bf1c66698016d2e7397ef11b66af3",
+      "bytes": 6292,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_exp_spec.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "7ac9c32f3e964d0f7d25534088d2502b75e91c348f8e3211c66782fe1518f16a",
+      "public_sha256": "b91153188f8aeb8688f7d8471066fcf8980d3d701722fed98943b28d938aa50d",
+      "bytes": 6270,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_extract_cli.py",
+    "before": {
+      "path": "tests/test_extract_cli.py",
+      "kind": "identical-import",
+      "reason": "Individually reviewed current test/helper or synthetic fixture; no directory clearance.",
+      "baseline_sha256": "45b170ab1ea3e9284e82f5f6fb69b4cc052fd8f95bfbf99eed85257e05840cb6",
+      "bytes": 5112,
+      "public_sha256": "45b170ab1ea3e9284e82f5f6fb69b4cc052fd8f95bfbf99eed85257e05840cb6",
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_extract_cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "45b170ab1ea3e9284e82f5f6fb69b4cc052fd8f95bfbf99eed85257e05840cb6",
+      "bytes": 5166,
+      "public_sha256": "a225187149e95ff6d71dc348c1f9c41b7c924d98e99ed34538ec909776a9f921",
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_install.py",
+    "before": {
+      "path": "tests/test_install.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "public_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "bytes": 68867,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_install.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "afbeda0fe170c47796a92aa383b1a4d9e7bdcea07aa54139497bd285d055795b",
+      "public_sha256": "cb3115d3c03efdc2930df240d3dfeec29546597b03ad064772d81d0e945993c4",
+      "bytes": 68878,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_measure_offline.py",
+    "before": {
+      "path": "tests/test_measure_offline.py",
+      "kind": "adaptation",
+      "reason": "Private application editorial attribution removed; original closed exit-code subset, alias and reserved-headroom assertions retained without claiming complete current CLI allocation.",
+      "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
+      "public_sha256": "b07c1b90b9c9b5a5253478dcc56a4b132a5f679f5797f2b44a0041669908babd",
+      "bytes": 46407,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_measure_offline.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
+      "public_sha256": "fd72a31ead8e030cd27fa5d1cc3ea3797192e2e47c1e2ec0fb33b8413694a682",
+      "bytes": 46436,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_poolfile.py",
+    "before": {
+      "path": "tests/test_poolfile.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "9036bdab59ec6bc7933dbc0b342c1ab584ca87b9eb4fdb868fc305f7bf4c4525",
+      "public_sha256": "9036bdab59ec6bc7933dbc0b342c1ab584ca87b9eb4fdb868fc305f7bf4c4525",
+      "bytes": 23706,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_poolfile.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "9036bdab59ec6bc7933dbc0b342c1ab584ca87b9eb4fdb868fc305f7bf4c4525",
+      "public_sha256": "eebf735d09bf76074d2e1053726a1e3b45e1526adea0814a5989ca1b8d228e82",
+      "bytes": 23716,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_recovery_adversarial.py",
+    "before": {
+      "path": "tests/test_recovery_adversarial.py",
+      "kind": "identical-import",
+      "reason": "Exact fully reviewed module/helper/synthetic consumed fixture; no bulk fixture directory clearance.",
+      "baseline_sha256": "79140e53d69fc3a5afbc811701393d4046dd591c9bfe2ea217c9e1231283b078",
+      "public_sha256": "79140e53d69fc3a5afbc811701393d4046dd591c9bfe2ea217c9e1231283b078",
+      "bytes": 51458,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_recovery_adversarial.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "79140e53d69fc3a5afbc811701393d4046dd591c9bfe2ea217c9e1231283b078",
+      "public_sha256": "3ffc87cca6f12e4c1834b0065350dd2636bf7f11b03aa46e826cebec2e544722",
+      "bytes": 51622,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_skeleton_e2e.py",
+    "before": {
+      "path": "tests/test_skeleton_e2e.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "4c7c2e0b66eaa92ac3d7f692b2d2f7d489a4cb174dffec6b856eed12a09f95fd",
+      "public_sha256": "4c7c2e0b66eaa92ac3d7f692b2d2f7d489a4cb174dffec6b856eed12a09f95fd",
+      "bytes": 9444,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_skeleton_e2e.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "4c7c2e0b66eaa92ac3d7f692b2d2f7d489a4cb174dffec6b856eed12a09f95fd",
+      "public_sha256": "6a0327446c4a1a2a734e78aff4e5164da668f2422e537a00eb081b0ce4a47695",
+      "bytes": 9505,
+      "mode": 420
+    }
+  },
+  {
+    "path": "tests/test_verify_cli.py",
+    "before": {
+      "path": "tests/test_verify_cli.py",
+      "kind": "identical-import",
+      "reason": "Exact module or consumed synthetic fixture reviewed; private retained artifacts excluded.",
+      "baseline_sha256": "65d61e5a145a9ab086b7aa437d7e628a44c022bda4679b03de85c08817ce1276",
+      "public_sha256": "65d61e5a145a9ab086b7aa437d7e628a44c022bda4679b03de85c08817ce1276",
+      "bytes": 17869,
+      "mode": 420
+    },
+    "after": {
+      "path": "tests/test_verify_cli.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 CLI definition adaptation; prior release identity unavailable for current bytes.",
+      "baseline_sha256": "65d61e5a145a9ab086b7aa437d7e628a44c022bda4679b03de85c08817ce1276",
+      "public_sha256": "f29aeddd6260a9f4d64dc868b83aad7afd62fbbf813dc00bd80fffa4183fc31f",
+      "bytes": 17809,
+      "mode": 420
+    }
+  },
+  {
+    "path": "src/gnd/codegen/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/codegen/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 13907,
+      "public_sha256": "5969d60f5cd7efa12fb44d8319a80ab2260c33d7c0a14ac14eb0cebbde25f6db",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "5969d60f5cd7efa12fb44d8319a80ab2260c33d7c0a14ac14eb0cebbde25f6db"
+    }
+  },
+  {
+    "path": "src/gnd/commands/__init__.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/__init__.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 78,
+      "public_sha256": "57b4e772fa3fe936e5f3be4036bd6d82fe213eb8b9d4eee8909ef39a12030958",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "57b4e772fa3fe936e5f3be4036bd6d82fe213eb8b9d4eee8909ef39a12030958"
+    }
+  },
+  {
+    "path": "src/gnd/commands/_arguments.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/_arguments.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 2620,
+      "public_sha256": "637b73ea7d6def6e69d6b145028ec08f43bea49a00d8378116a8ae73b80c1f12",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "637b73ea7d6def6e69d6b145028ec08f43bea49a00d8378116a8ae73b80c1f12"
+    }
+  },
+  {
+    "path": "src/gnd/commands/_output.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/_output.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 12851,
+      "public_sha256": "eccabb9e15fe7ef64d0d108074de06f0c94d9315dc572809e2d57d579be89401",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "eccabb9e15fe7ef64d0d108074de06f0c94d9315dc572809e2d57d579be89401"
+    }
+  },
+  {
+    "path": "src/gnd/commands/checking.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/checking.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 27605,
+      "public_sha256": "8dbc77aee1fb96865dc7aca6eb4c4cc8537e4bb14ff5eb336a53b3a642bd589b",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "8dbc77aee1fb96865dc7aca6eb4c4cc8537e4bb14ff5eb336a53b3a642bd589b"
+    }
+  },
+  {
+    "path": "src/gnd/commands/codegen.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/codegen.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 3395,
+      "public_sha256": "88fc45d932dec327e780cd017c97acbe453cfac4ad410da8da384d1d81188cd8",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "88fc45d932dec327e780cd017c97acbe453cfac4ad410da8da384d1d81188cd8"
+    }
+  },
+  {
+    "path": "src/gnd/commands/conformance.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/conformance.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 4424,
+      "public_sha256": "4c228ac00ae72238a6c9f678d05d2b64f4153f3756c9864e23ed44ba91428aaa",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "4c228ac00ae72238a6c9f678d05d2b64f4153f3756c9864e23ed44ba91428aaa"
+    }
+  },
+  {
+    "path": "src/gnd/commands/doccheck.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/doccheck.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 2788,
+      "public_sha256": "8826c5d4e594f1381f96141243c7bfcbc046255a008c96f053da99ba3e5fecaa",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "8826c5d4e594f1381f96141243c7bfcbc046255a008c96f053da99ba3e5fecaa"
+    }
+  },
+  {
+    "path": "src/gnd/commands/evolve.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/evolve.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 6095,
+      "public_sha256": "5257f004f0eb319e9fb70203fdaacd75f467fa89b0912223d5448e88576a798a",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "5257f004f0eb319e9fb70203fdaacd75f467fa89b0912223d5448e88576a798a"
+    }
+  },
+  {
+    "path": "src/gnd/commands/exp.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/exp.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 29174,
+      "public_sha256": "6759f7f15fa30b036b0806503f735474dfdcd001ba08538b0146d0fc29aa0817",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "6759f7f15fa30b036b0806503f735474dfdcd001ba08538b0146d0fc29aa0817"
+    }
+  },
+  {
+    "path": "src/gnd/commands/export.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/export.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 3315,
+      "public_sha256": "2c77b9da2ed8b3bd4d21433e5f51a10a280dd7073beddd6eb42b1b898abb7b35",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "2c77b9da2ed8b3bd4d21433e5f51a10a280dd7073beddd6eb42b1b898abb7b35"
+    }
+  },
+  {
+    "path": "src/gnd/commands/extract.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/extract.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 2219,
+      "public_sha256": "a1faa346887507c39cb9e58ac01bbd67c5e9bcb989e6350b20470561310f7786",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a1faa346887507c39cb9e58ac01bbd67c5e9bcb989e6350b20470561310f7786"
+    }
+  },
+  {
+    "path": "src/gnd/commands/fidelity.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/fidelity.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 3451,
+      "public_sha256": "75156652a1df73c0bba8c371b27c61872f430e0faccaf8babbb29b7942868209",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "75156652a1df73c0bba8c371b27c61872f430e0faccaf8babbb29b7942868209"
+    }
+  },
+  {
+    "path": "src/gnd/commands/judgments.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/judgments.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 2041,
+      "public_sha256": "92712980cde7c5d12e5c6a1c0c84380c30e8d24053bc45b7f478b95eb675969b",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "92712980cde7c5d12e5c6a1c0c84380c30e8d24053bc45b7f478b95eb675969b"
+    }
+  },
+  {
+    "path": "src/gnd/commands/lifecycle.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/lifecycle.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 25161,
+      "public_sha256": "3fadce04bb400f475b2f8869dfd765c95982af4677f76aa513bb20df63ebbe59",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "3fadce04bb400f475b2f8869dfd765c95982af4677f76aa513bb20df63ebbe59"
+    }
+  },
+  {
+    "path": "src/gnd/commands/measure.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/measure.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 2907,
+      "public_sha256": "68ab7e9426bac246d30802e0ad4bbe9f293620e19db623d8a89dc6e89452ef0b",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "68ab7e9426bac246d30802e0ad4bbe9f293620e19db623d8a89dc6e89452ef0b"
+    }
+  },
+  {
+    "path": "src/gnd/commands/recovery.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/recovery.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 6518,
+      "public_sha256": "23d1a108c97fec77e932103f90e08bed82b69c6617cb17ca32df304c298c5c38",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "23d1a108c97fec77e932103f90e08bed82b69c6617cb17ca32df304c298c5c38"
+    }
+  },
+  {
+    "path": "src/gnd/commands/review.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/review.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 10386,
+      "public_sha256": "63c8a0bb2322a41699fcad16537f4b661b7fa97e9abe4da474f2cc07369796b2",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "63c8a0bb2322a41699fcad16537f4b661b7fa97e9abe4da474f2cc07369796b2"
+    }
+  },
+  {
+    "path": "src/gnd/commands/solve.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/solve.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 10103,
+      "public_sha256": "5eb51b97b21a0885987e60091472b4ed8759eca10d9d28acf1a03bb718ac2fb2",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "5eb51b97b21a0885987e60091472b4ed8759eca10d9d28acf1a03bb718ac2fb2"
+    }
+  },
+  {
+    "path": "src/gnd/commands/synth.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/synth.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 4063,
+      "public_sha256": "ee87e7ec1294311f9523e2bd475562dcac9dc9a487a75312d3a1f8f6f7a79a14",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "ee87e7ec1294311f9523e2bd475562dcac9dc9a487a75312d3a1f8f6f7a79a14"
+    }
+  },
+  {
+    "path": "src/gnd/commands/verify.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/verify.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 4488,
+      "public_sha256": "ffafe1192aee822ff2c4b209674984ed3194c8d29f86139b48609db9e4ad8730",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "ffafe1192aee822ff2c4b209674984ed3194c8d29f86139b48609db9e4ad8730"
+    }
+  },
+  {
+    "path": "src/gnd/commands/witness.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/commands/witness.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 1148,
+      "public_sha256": "56b925c71e4b01fdc3e9367da9dc6f8ced1fad1df2d43c2d08d6c74ab64fe013",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "56b925c71e4b01fdc3e9367da9dc6f8ced1fad1df2d43c2d08d6c74ab64fe013"
+    }
+  },
+  {
+    "path": "src/gnd/conformance/cli_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/conformance/cli_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 2333,
+      "public_sha256": "5dc9b4f01a0dd88e8b03b2939d7ea13e583cb3fae7c794f7536ed36edc611fdd",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "5dc9b4f01a0dd88e8b03b2939d7ea13e583cb3fae7c794f7536ed36edc611fdd"
+    }
+  },
+  {
+    "path": "src/gnd/evolve/cli_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/evolve/cli_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 27181,
+      "public_sha256": "e2c7ac3f41d98dc5583eaad56690cf43003e3b6e1186e767b6638910f7d221d9",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "e2c7ac3f41d98dc5583eaad56690cf43003e3b6e1186e767b6638910f7d221d9"
+    }
+  },
+  {
+    "path": "src/gnd/exp/cli_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/exp/cli_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 20183,
+      "public_sha256": "c2fb3124c8606ce556c0656caab097f6b22d207ba32c942c8c2b5332a8bd4003",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "c2fb3124c8606ce556c0656caab097f6b22d207ba32c942c8c2b5332a8bd4003"
+    }
+  },
+  {
+    "path": "src/gnd/export/verification_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/export/verification_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 23032,
+      "public_sha256": "4bd9136de4b7d7673718b44c702e3b7bec4bfd5905cf264caadfdcc12012f9a0",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "4bd9136de4b7d7673718b44c702e3b7bec4bfd5905cf264caadfdcc12012f9a0"
+    }
+  },
+  {
+    "path": "src/gnd/extract/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/extract/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 9433,
+      "public_sha256": "6454b8b0bd2588b326ac4c8c38e3fa2300fc06290ba7c9df4aecc77d3f38b6b3",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "6454b8b0bd2588b326ac4c8c38e3fa2300fc06290ba7c9df4aecc77d3f38b6b3"
+    }
+  },
+  {
+    "path": "src/gnd/fidelity/doccheck_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 14099,
+      "public_sha256": "b0e98fc3d07acfe4a574a82aabf41853383c46777650f5a72243c9fef8e7393f",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "b0e98fc3d07acfe4a574a82aabf41853383c46777650f5a72243c9fef8e7393f"
+    }
+  },
+  {
+    "path": "src/gnd/fidelity/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/fidelity/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 16057,
+      "public_sha256": "5515c8d183f09350f0231fc01dbcf67b70cd5acd540561b6af25c2f0dea393cb",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "5515c8d183f09350f0231fc01dbcf67b70cd5acd540561b6af25c2f0dea393cb"
+    }
+  },
+  {
+    "path": "src/gnd/measure/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/measure/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 21340,
+      "public_sha256": "476cfc8bbf622dd144d19b9228cb6646b0cf7faf69533fb667eedbf6d9394a33",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "476cfc8bbf622dd144d19b9228cb6646b0cf7faf69533fb667eedbf6d9394a33"
+    }
+  },
+  {
+    "path": "src/gnd/recovery/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/recovery/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 25005,
+      "public_sha256": "a1cf281ce9a61da2ddf15df5e4b3fafffb0829e66f4ef388024bf488f6763253",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "a1cf281ce9a61da2ddf15df5e4b3fafffb0829e66f4ef388024bf488f6763253"
+    }
+  },
+  {
+    "path": "src/gnd/review/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/review/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 12626,
+      "public_sha256": "021521dcc59adc93e3a644994b53be47334d5f31e6aaa1ba1d7f7fcaf6fe1e90",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "021521dcc59adc93e3a644994b53be47334d5f31e6aaa1ba1d7f7fcaf6fe1e90"
+    }
+  },
+  {
+    "path": "src/gnd/synth/corpus_service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/synth/corpus_service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 16987,
+      "public_sha256": "4cc6506140394f985a6a34fad47a3ee23013e54b2f068c90b6ca8e354218b9fd",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "4cc6506140394f985a6a34fad47a3ee23013e54b2f068c90b6ca8e354218b9fd"
+    }
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "before": null,
+    "after": {
+      "path": "src/gnd/synth/service.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
+      "bytes": 34849,
+      "public_sha256": "3021b2fa1649e261d298b8768070f665ed97270e9cee9e22dd6b2b6cbec46e1d",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "3021b2fa1649e261d298b8768070f665ed97270e9cee9e22dd6b2b6cbec46e1d"
+    }
+  }
+]

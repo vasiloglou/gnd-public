@@ -1,0 +1,583 @@
+{
+ "corpus": {
+  "checker_pairs": [
+   [
+    "tests/fixtures/checker/misc.orm.yaml",
+    "tests/fixtures/checker/population.misc_pass.yaml"
+   ],
+   [
+    "tests/fixtures/checker/misc.orm.yaml",
+    "tests/fixtures/checker/population.misc_fail.yaml"
+   ],
+   [
+    "tests/fixtures/checker/ring.orm.yaml",
+    "tests/fixtures/checker/population.ring_pass.yaml"
+   ],
+   [
+    "tests/fixtures/checker/ring.orm.yaml",
+    "tests/fixtures/checker/population.ring_fail.yaml"
+   ],
+   [
+    "tests/fixtures/checker/setfam.orm.yaml",
+    "tests/fixtures/checker/population.setfam_pass.yaml"
+   ],
+   [
+    "tests/fixtures/checker/setfam.orm.yaml",
+    "tests/fixtures/checker/population.setfam_fail.yaml"
+   ],
+   [
+    "tests/fixtures/checker/setfam.orm.yaml",
+    "tests/fixtures/checker/population.empty.yaml"
+   ],
+   [
+    "tests/fixtures/checker/setfam.orm.yaml",
+    "tests/fixtures/checker/population.coverage_omission.yaml"
+   ],
+   [
+    "tests/fixtures/checker/setfam.orm.yaml",
+    "tests/fixtures/checker/population.covers_none.yaml"
+   ],
+   [
+    "tests/fixtures/checker/setfam.orm.yaml",
+    "tests/fixtures/checker/population.precedence.yaml"
+   ],
+   [
+    "src/gnd/examples/bookrec/model.orm.yaml",
+    "src/gnd/examples/bookrec/seed.population.json"
+   ],
+   [
+    "src/gnd/examples/bookrec/model.orm.yaml",
+    "src/gnd/examples/bookrec/adult-for-minor.population.json"
+   ],
+   [
+    "src/gnd/examples/bookrec/model.orm.yaml",
+    "src/gnd/examples/bookrec/already-read.population.json"
+   ],
+   [
+    "src/gnd/examples/bookrec/model.orm.yaml",
+    "src/gnd/examples/bookrec/genre-warning.population.json"
+   ],
+   [
+    "src/gnd/examples/bookrec/complete.orm.yaml",
+    "src/gnd/examples/bookrec/complete.population.json"
+   ],
+   [
+    "src/gnd/examples/expense/model.orm.json",
+    "src/gnd/examples/expense/seed.population.json"
+   ],
+   [
+    "src/gnd/examples/expense/model.orm.json",
+    "src/gnd/examples/expense/approved.population.json"
+   ],
+   [
+    "src/gnd/examples/expense/model.orm.json",
+    "src/gnd/examples/expense/invalid-chain.population.json"
+   ],
+   [
+    "src/gnd/examples/expense/model.orm.json",
+    "src/gnd/examples/expense/invalid-meal.population.json"
+   ],
+   [
+    "src/gnd/examples/expense/currency.orm.json",
+    "src/gnd/examples/expense/currency.population.json"
+   ],
+   [
+    "src/gnd/examples/expense/currency.orm.json",
+    "src/gnd/examples/expense/currency-missing.population.json"
+   ],
+   [
+    "src/gnd/examples/dispatch/model.orm.json",
+    "src/gnd/examples/dispatch/seed.pop.json"
+   ],
+   [
+    "src/gnd/examples/dispatch/model.orm.json",
+    "src/gnd/examples/dispatch/repaired.pop.json"
+   ],
+   [
+    "src/gnd/examples/release/model.orm.json",
+    "src/gnd/examples/release/seed.pop.json"
+   ],
+   [
+    "src/gnd/examples/release/model.orm.json",
+    "src/gnd/examples/release/repaired.pop.json"
+   ]
+  ],
+  "diff_pairs": [
+   [
+    "src/gnd/examples/bookrec/model.orm.yaml",
+    "src/gnd/examples/bookrec/strict.orm.yaml"
+   ],
+   [
+    "src/gnd/examples/bookrec/model.orm.yaml",
+    "src/gnd/examples/bookrec/complete.orm.yaml"
+   ],
+   [
+    "src/gnd/examples/expense/model.orm.json",
+    "src/gnd/examples/expense/currency.orm.json"
+   ]
+  ],
+  "models": [
+   "tests/fixtures/checker/misc.orm.yaml",
+   "tests/fixtures/checker/ring.orm.yaml",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/models/dispatch.orm.yaml",
+   "tests/fixtures/models/full_vocabulary.orm.yaml",
+   "tests/fixtures/models/guarded_minimal.orm.yaml",
+   "tests/fixtures/models/keywords.orm.yaml",
+   "tests/fixtures/models/library.orm.yaml",
+   "tests/fixtures/models/v2_operations.orm.yaml",
+   "tests/fixtures/models/v2_worked_example.orm.yaml",
+   "src/gnd/examples/approvals/model.orm.yaml",
+   "src/gnd/examples/bookrec/model.orm.yaml",
+   "src/gnd/examples/bookrec/complete.orm.yaml",
+   "src/gnd/examples/bookrec/strict.orm.yaml",
+   "src/gnd/examples/expense/model.orm.json",
+   "src/gnd/examples/expense/currency.orm.json",
+   "src/gnd/examples/dispatch/model.orm.json",
+   "src/gnd/examples/release/model.orm.json"
+  ],
+  "transition": {
+   "model": "src/gnd/examples/approvals/model.orm.yaml",
+   "post": "src/gnd/examples/approvals/claimed-post.pop.yaml",
+   "pre": "src/gnd/examples/approvals/state.pop.yaml",
+   "steps": [
+    "src/gnd/examples/approvals/approve-41.steps.json",
+    "src/gnd/examples/approvals/plan-draft-1.steps.json",
+    "src/gnd/examples/approvals/plan-draft-2.steps.json"
+   ]
+  }
+ },
+ "inputs": {
+  "bytes": {
+   "empty": {
+    "kind": "bytes",
+    "value": ""
+   },
+   "gnd-newline": {
+    "kind": "bytes",
+    "value": "676e640a"
+   },
+   "one-mebibyte": {
+    "kind": "bytes_repeat",
+    "value": [
+     "61",
+     1048576
+    ]
+   }
+  },
+  "canonical": {
+   "decimal": {
+    "kind": "decimal",
+    "value": "1.10"
+   },
+   "empty-object": {
+    "kind": "json",
+    "value": {}
+   },
+   "infinity": {
+    "kind": "float",
+    "value": "inf"
+   },
+   "int-key": {
+    "kind": "int_key_dict",
+    "value": {
+     "1": "int key"
+    }
+   },
+   "large-float": {
+    "kind": "float",
+    "value": "1e16"
+   },
+   "nan": {
+    "kind": "float",
+    "value": "nan"
+   },
+   "nested-ordering": {
+    "kind": "json",
+    "value": {
+     "a": {
+      "c": "ü",
+      "d": [
+       2,
+       1
+      ]
+     },
+     "b": 1
+    }
+   },
+   "non-ascii-text": {
+    "kind": "json",
+    "value": "é 😀"
+   },
+   "pydantic-model": {
+    "kind": "model",
+    "value": {
+     "count": 2,
+     "name": "é"
+    }
+   },
+   "scalars": {
+    "kind": "float_list",
+    "value": [
+     null,
+     true,
+     "0.0",
+     "-0.0"
+    ]
+   },
+   "trailing-newline-string": {
+    "kind": "json",
+    "value": "line\n"
+   }
+  },
+  "coordinates": {
+   "non-ascii": {
+    "kind": "json",
+    "value": "é"
+   },
+   "plain": {
+    "kind": "json",
+    "value": "a/b"
+   },
+   "surrogate": {
+    "kind": "surrogate",
+    "value": "dcff"
+   }
+  },
+  "hex_candidates": {
+   "not-string": {
+    "kind": "json",
+    "value": 7
+   },
+   "prefixed": {
+    "kind": "json",
+    "value": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   },
+   "short": {
+    "kind": "json",
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   },
+   "upper": {
+    "kind": "json",
+    "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+   },
+   "valid": {
+    "kind": "json",
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   }
+  },
+  "iso_datetime": {
+   "date-only": {
+    "kind": "json",
+    "value": "2024-01-01"
+   },
+   "fractional": {
+    "kind": "json",
+    "value": "2024-01-01T00:00:00.123456Z"
+   },
+   "hour-24": {
+    "kind": "json",
+    "value": "2024-01-01T24:00:00"
+   },
+   "integer": {
+    "kind": "json",
+    "value": 1
+   },
+   "leading-space": {
+    "kind": "json",
+    "value": " 2024-01-01T00:00:00Z"
+   },
+   "naive": {
+    "kind": "json",
+    "value": "2024-01-01T00:00:00"
+   },
+   "none": {
+    "kind": "json",
+    "value": null
+   },
+   "offset": {
+    "kind": "json",
+    "value": "2024-01-01T00:00:00+00:00"
+   },
+   "space-separator": {
+    "kind": "json",
+    "value": "2024-01-01 00:00:00"
+   },
+   "utc-lower-z": {
+    "kind": "json",
+    "value": "2024-01-01T00:00:00z"
+   },
+   "utc-z": {
+    "kind": "json",
+    "value": "2024-01-01T00:00:00Z"
+   },
+   "week-date": {
+    "kind": "json",
+    "value": "2024-W01-1"
+   }
+  },
+  "path_strings": {
+   "absolute": {
+    "kind": "json",
+    "value": "/abs"
+   },
+   "backslash": {
+    "kind": "json",
+    "value": "a\\b"
+   },
+   "backslash-parent": {
+    "kind": "json",
+    "value": "..\\x"
+   },
+   "dot": {
+    "kind": "json",
+    "value": "."
+   },
+   "dot-slash": {
+    "kind": "json",
+    "value": "./a"
+   },
+   "dotdot": {
+    "kind": "json",
+    "value": ".."
+   },
+   "double-slash": {
+    "kind": "json",
+    "value": "a//b"
+   },
+   "drive-absolute": {
+    "kind": "json",
+    "value": "C:\\a"
+   },
+   "drive-relative": {
+    "kind": "json",
+    "value": "C:a"
+   },
+   "empty": {
+    "kind": "json",
+    "value": ""
+   },
+   "inner-parent": {
+    "kind": "json",
+    "value": "a/../b"
+   },
+   "nested": {
+    "kind": "json",
+    "value": "a/b"
+   },
+   "non-ascii": {
+    "kind": "json",
+    "value": "é"
+   },
+   "nul": {
+    "kind": "json",
+    "value": "a\u0000b"
+   },
+   "parent": {
+    "kind": "json",
+    "value": "../a"
+   },
+   "plain": {
+    "kind": "json",
+    "value": "a"
+   },
+   "tilde": {
+    "kind": "json",
+    "value": "~"
+   },
+   "trailing-slash": {
+    "kind": "json",
+    "value": "a/"
+   }
+  },
+  "pool_payload": {
+   "nan": {
+    "kind": "nan_dict",
+    "value": "x"
+   },
+   "small": {
+    "kind": "json",
+    "value": {
+     "a": "ü",
+     "b": [
+      1,
+      2
+     ]
+    }
+   }
+  },
+  "rates": {
+   "half": {
+    "kind": "json",
+    "value": [
+     1,
+     2
+    ]
+   },
+   "third": {
+    "kind": "json",
+    "value": [
+     1,
+     3
+    ]
+   },
+   "zero-denominator": {
+    "kind": "json",
+    "value": [
+     0,
+     0
+    ]
+   }
+  },
+  "sorted_set": {
+   "duplicates": {
+    "kind": "tuple",
+    "value": [
+     "b",
+     "a",
+     "b"
+    ]
+   },
+   "empty": {
+    "kind": "tuple",
+    "value": []
+   }
+  },
+  "strict_json": {
+   "array-root": {
+    "kind": "bytes_text",
+    "value": "[1]"
+   },
+   "deep": {
+    "kind": "deep_json",
+    "value": 10000
+   },
+   "duplicate-key": {
+    "kind": "bytes_text",
+    "value": "{\"a\":1,\"a\":2}"
+   },
+   "fenced": {
+    "kind": "bytes_text",
+    "value": "```json\n{\"a\":1}\n```"
+   },
+   "invalid-utf8": {
+    "kind": "bytes",
+    "value": "ff"
+   },
+   "nan": {
+    "kind": "bytes_text",
+    "value": "{\"a\":NaN}"
+   },
+   "object": {
+    "kind": "bytes_text",
+    "value": "{\"a\":1}"
+   },
+   "overflow": {
+    "kind": "bytes_text",
+    "value": "{\"a\":1e999}"
+   },
+   "trailing-data": {
+    "kind": "bytes_text",
+    "value": "{\"a\":1} x"
+   }
+  },
+  "text": {
+   "empty": {
+    "kind": "json",
+    "value": ""
+   },
+   "gnd-newline": {
+    "kind": "json",
+    "value": "gnd\n"
+   },
+   "non-ascii": {
+    "kind": "json",
+    "value": "é"
+   }
+  },
+  "transition_canonical": {
+   "date": {
+    "kind": "date",
+    "value": "2024-02-29"
+   },
+   "datetime": {
+    "kind": "datetime",
+    "value": "2024-02-29T10:00:00+00:00"
+   },
+   "int-key": {
+    "kind": "int_key_dict",
+    "value": {
+     "1": "v"
+    }
+   },
+   "nested": {
+    "kind": "json",
+    "value": {
+     "z": [
+      1,
+      {
+       "y": "x"
+      }
+     ]
+    }
+   },
+   "set": {
+    "kind": "set",
+    "value": [
+     "a"
+    ]
+   }
+  },
+  "yaml": {
+   "alias": {
+    "kind": "json",
+    "value": "a: &x 1\nb: *x\n"
+   },
+   "anchor-only": {
+    "kind": "json",
+    "value": "a: &x 1\n"
+   },
+   "invalid": {
+    "kind": "json",
+    "value": "a: [1\n"
+   },
+   "large-stream": {
+    "kind": "yaml_list",
+    "value": 300000
+   },
+   "mapping": {
+    "kind": "json",
+    "value": "a: 1\nb: [x, y]\n"
+   },
+   "two-documents": {
+    "kind": "json",
+    "value": "a: 1\n---\nb: 2\n"
+   }
+  }
+ },
+ "schema_version": 1,
+ "tree_scenarios": {
+  "descend": [
+   "d",
+   "d/sub",
+   "missing",
+   "link_to_d",
+   "file",
+   ".."
+  ],
+  "open_root": [
+   "d",
+   "link_to_d",
+   "file",
+   "missing"
+  ],
+  "write": [
+   "d/new",
+   "d/existing",
+   "link_to_d/new",
+   "link_file",
+   "missing/new",
+   "d"
+  ]
+ }
+}

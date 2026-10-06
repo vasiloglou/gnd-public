@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_lean_export_successors.py tests/test_public_souffle_successors.py tests/test_public_souffle_input_contract.py tests/test_public_optional_value_witness.py --tb=short
+................................                                         [100%]
+32 passed, 11 deselected in 3.00s
+
+Exit: 0

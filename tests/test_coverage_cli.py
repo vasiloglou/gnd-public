@@ -84,7 +84,7 @@ def test_only_the_coverage_subparser_can_name_the_coverage_output(monkeypatch: p
     with pytest.raises(AssertionError):
         _assert_no_coverage_inputs(parser)
     for path in (REPO_ROOT / 'src/gnd').rglob('*.py'):
-        if path.name in {'coverage.py', 'cli.py'}:
+        if path.name in {'coverage.py', 'cli.py'} or path == REPO_ROOT / 'src/gnd/commands/checking.py':
             continue
         tree = ast.parse(path.read_text(encoding='utf-8'))
         assert not any(isinstance(node, ast.Constant) and node.value == 'coverage.schema.json' for node in ast.walk(tree)), f'{path} loads the coverage output contract'

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import math
-import os
+import os  # noqa: F401 -- historical compatibility binding
 import shutil
 import sys
 import tempfile
@@ -16,15 +16,13 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Literal
 
-from gnd.agent_cli import (
+from gnd.agents import (
     AgentAdapterId,
     AgentCLIError,
     InvocationResult,
     InvocationStatus,
-    ProcessLimits,
-    build_agent_argv,
+    build_agent_argv,  # noqa: F401 -- historical compatibility binding
     invoke_agent,
-    run_bounded_process,
 )
 from gnd.exp.adapter_policy import ResolvedAdapterPolicy
 from gnd.exp.declared_invocation import (
@@ -32,7 +30,7 @@ from gnd.exp.declared_invocation import (
     declared_effective_prompt,
 )
 from gnd.exp.session_contract import (
-    DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,
+    DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,  # noqa: F401 -- historical compatibility binding
     ConstraintSatisfactionAcceptance,
     DataDrivenContract,
     SessionCase,
@@ -40,12 +38,12 @@ from gnd.exp.session_contract import (
     TransitionAcceptance,
 )
 from gnd.exp.session_eval import (
-    ASSURANCE_FEEDBACK_SCHEMA_VERSION,
-    DERIVATION_FEEDBACK_SCHEMA_VERSION,
+    ASSURANCE_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    DERIVATION_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
     FEEDBACK_SCHEMA_VERSION,
-    REDACTION_FEEDBACK_SCHEMA_VERSION,
-    TRANSITION_FEEDBACK_SCHEMA_VERSION,
-    WALK_FLOOR_FEEDBACK_SCHEMA_VERSION,
+    REDACTION_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    TRANSITION_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    WALK_FLOOR_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
     AttemptEvaluation,
     CaseEvaluation,
     SessionRedaction,
@@ -63,17 +61,22 @@ from gnd.exp.session_eval import (
     validate_transition_payload,
     validate_verifier_payload,
 )
+from gnd.exp.session_profile import profile_for_version
 from gnd.exp.session_store import (
-    REDACTION_RESULT_SCHEMA_VERSION,
-    TRANSITION_RESULT_SCHEMA_VERSION,
-    WALK_FLOOR_RESULT_SCHEMA_VERSION,
+    REDACTION_RESULT_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    TRANSITION_RESULT_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    WALK_FLOOR_RESULT_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
     AttemptRecord,
     SessionResult,
     SessionStore,
     StagedCandidate,
     WalkFloorResult,
 )
-from gnd.report import DERIVATION_PAYLOAD_SCHEMA_VERSIONS, PAYLOAD_SCHEMA_VERSION
+from gnd.payloads import (
+    DERIVATION_PAYLOAD_SCHEMA_VERSIONS,  # noqa: F401 -- historical compatibility binding
+    PAYLOAD_SCHEMA_VERSION,
+)
+from gnd.process import ProcessLimits, run_bounded_process
 
 __all__ = [
     "case_payload_versions",
@@ -91,271 +94,48 @@ InvocationEvidence = InvocationResult | DeclaredInvocationResult
 _VERIFIER_FAILURE_REASON = "one or more declared verifier cases did not produce valid evidence"
 
 
-def verifier_environment() -> dict[str, str]:
-    """Return the live environment allowlist shared by verifier processes."""
-
-    return {
-        name: os.environ[name]
-        for name in ("PATH", "HOME", "TMPDIR", "LANG", "LC_ALL", "SSL_CERT_FILE")
-        if name in os.environ
-    }
-
-
-def _required_evidence_complete(
-    contract: DataDrivenContract,
-    evaluation: AttemptEvaluation,
-) -> bool:
-    """Whether every required case has one current, schema-valid result."""
-
-    by_id = {result.case_id: result for result in evaluation.results}
-    return all(
-        (result := by_id.get(case.case_id)) is not None
-        and result.payload_valid
-        and result.role == "required"
-        and result.process_exit != 70
-        and result.payload_exit != 70
-        and result.outcome != "internal_error"
-        and result.candidate_sha256 == evaluation.candidate_sha256
-        and result.contract_sha256 == evaluation.contract_sha256
-        for case in contract.required_cases
-    )
-
-
-def _has_verifier_harness_failure(evaluation: AttemptEvaluation) -> bool:
-    """Whether any declared result reports the closed internal-error band."""
-
-    return any(
-        result.process_exit == 70 or result.payload_exit == 70 or result.outcome == "internal_error"
-        for result in evaluation.results
-    )
-
-
-def _declared_evidence_complete(
-    contract: DataDrivenContract,
-    evaluation: AttemptEvaluation,
-) -> bool:
-    """Whether every declared verifier case produced one valid result."""
-
-    by_id = {result.case_id: result for result in evaluation.results}
-    return all(
-        (result := by_id.get(case.case_id)) is not None
-        and result.payload_valid
-        and result.role == case.role.value
-        and result.candidate_sha256 == evaluation.candidate_sha256
-        and result.contract_sha256 == evaluation.contract_sha256
-        for case in contract.cases
-    )
-
-
-def _agent_failure_reason(invocation: InvocationEvidence) -> str:
-    if invocation.status is InvocationStatus.timed_out:
-        return "agent attempt timed out"
-    if not invocation.spawned:
-        detail = invocation.spawn_error or "unknown spawn error"
-        return f"agent process did not start ({detail})"
-    return f"agent exited {invocation.exit_code}"
-
-
-def _expected_invocation_argv(
-    adapter: AgentAdapterId,
-    *,
-    prompt: str,
-    feedback_sha256: str | None,
-) -> tuple[str, ...]:
-    effective = _effective_agent_prompt(prompt, feedback_sha256=feedback_sha256)
-    prompt_token = f"<prompt:sha256={hashlib.sha256(effective.encode('utf-8')).hexdigest()}>"
-    fixed = build_agent_argv(adapter, effective)
-    return (*fixed[:-1], prompt_token)
-
-
-def _effective_agent_prompt(prompt: str, *, feedback_sha256: str | None) -> str:
-    effective = prompt
-    if feedback_sha256 is not None:
-        effective = (
-            f"{prompt}\n\nCurrent attempt feedback SHA-256: {feedback_sha256}\n"
-            "Canonical current-attempt feedback is supplied byte-for-byte on stdin."
-        )
-    return effective
-
-
-def _effective_policy_sha256(contract: DataDrivenContract) -> str:
-    encoded = json.dumps(
-        contract.model_dump(mode="json"),
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-        allow_nan=False,
-    ).encode("utf-8")
-    return hashlib.sha256(encoded).hexdigest()
-
-
-def _policy_bound_prompt(prompt: str, contract: DataDrivenContract) -> str:
-    return f"{prompt}\n\nSession policy SHA-256: {_effective_policy_sha256(contract)}"
-
-
-def _validated_invocation_proof(
-    invocation: InvocationResult,
-    *,
-    adapter: AgentAdapterId,
-    prompt: str,
-    feedback_sha256: str | None,
-    bind_missing_identity: bool,
-) -> InvocationResult:
-    """Validate one invocation boundary and bind controller-owned request identity.
-
-    Injected invokers predate the request-identity fields, so the live
-    controller may fill only omitted identity from the exact arguments it
-    supplied. Explicit claims are never overwritten. Immutable replay requires
-    the complete bound form and therefore follows the same validation path.
-    """
-
-    if not invocation.process_group_cleaned:
-        raise ValueError("agent invocation does not prove process-group cleanup")
-    invocation.ensure_closed_provenance()
-    if invocation.adapter is not adapter:
-        raise ValueError("agent invocation belongs to a different agent adapter")
-    if invocation.status is InvocationStatus.succeeded and (
-        not invocation.spawned
-        or invocation.termination == "not-started"
-        or invocation.exit_code != 0
-    ):
-        raise ValueError("successful agent invocation has inconsistent launch evidence")
-
-    expected_prompt_sha256 = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-    if invocation.prompt_sha256 is not None and invocation.prompt_sha256 != expected_prompt_sha256:
-        raise ValueError("agent invocation belongs to different agent instructions")
-    if invocation.feedback_sha256 is not None and invocation.feedback_sha256 != feedback_sha256:
-        raise ValueError("agent invocation names stale retry feedback")
-
-    expected_argv = _expected_invocation_argv(
-        adapter,
-        prompt=prompt,
-        feedback_sha256=feedback_sha256,
-    )
-    has_bound_prompt_argv = any(
-        len(argument) == len("<prompt:sha256=>") + 64
-        and argument.startswith("<prompt:sha256=")
-        and argument.endswith(">")
-        and all(character in "0123456789abcdef" for character in argument[15:-1])
-        for argument in invocation.argv
-    )
-    if has_bound_prompt_argv and invocation.argv != expected_argv:
-        raise ValueError("agent invocation has stale fixed adapter arguments")
-
-    if bind_missing_identity:
-        return invocation.model_copy(
-            update={
-                "argv": expected_argv,
-                "prompt_sha256": expected_prompt_sha256,
-                "feedback_sha256": feedback_sha256,
-            }
-        )
-    if invocation.prompt_sha256 is None:
-        raise ValueError("attempt evidence lacks agent instruction identity")
-    if invocation.feedback_sha256 != feedback_sha256:
-        raise ValueError("attempt evidence names stale retry feedback")
-    if invocation.argv != expected_argv:
-        raise ValueError("attempt evidence has stale fixed adapter arguments")
-    return invocation
-
-
-def _validated_declared_invocation_proof(
-    invocation: DeclaredInvocationResult,
-    *,
-    policy: ResolvedAdapterPolicy,
-    prompt: str,
-    feedback_bytes: bytes | None,
-    feedback_sha256: str | None,
-) -> DeclaredInvocationResult:
-    """Bind declared invocation evidence to controller-owned policy inputs."""
-
-    if (
-        invocation.policy_id != policy.policy.policy_id
-        or invocation.policy_kind != policy.policy.kind
-        or invocation.policy_sha256 != policy.policy_sha256
-    ):
-        raise ValueError("declared invocation belongs to a different adapter policy")
-    if not invocation.process_group_cleaned:
-        raise ValueError("declared invocation does not prove cleanup")
-    expected_prompt = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-    if invocation.prompt_sha256 != expected_prompt:
-        raise ValueError("declared invocation belongs to different agent instructions")
-    if invocation.feedback_sha256 != feedback_sha256:
-        raise ValueError("declared invocation names stale retry feedback")
-    effective = declared_effective_prompt(
-        prompt,
-        policy_kind=policy.policy.kind,
-        feedback_bytes=feedback_bytes,
-        feedback_sha256=feedback_sha256,
-    )
-    expected_effective = hashlib.sha256(effective.encode("utf-8")).hexdigest()
-    if invocation.effective_prompt_sha256 != expected_effective:
-        raise ValueError("declared invocation binds a stale effective prompt")
-    return invocation
-
-
-def _budget_reason(*, wall_bound_hit: bool) -> str:
-    if wall_bound_hit:
-        return "session wall budget exhausted"
-    return "session attempt budget exhausted without required-case acceptance"
-
-
-@dataclass(frozen=True, slots=True)
-class _Disposition:
-    value: Literal[
-        "accepted",
-        "retry",
-        "agent-failure",
-        "verifier-failure",
-        "stagnation",
-        "oscillation",
-        "budget-exhausted",
-    ]
-    reason: str
-
-
-def _decide_disposition(
-    *,
-    invocation: InvocationEvidence,
-    accepted: bool,
-    explicit_wall_expiry: bool,
-    wall_bound_hit: bool,
-    verifier_failed: bool,
-    recurrence_disposition: Literal["stagnation", "oscillation"] | None,
-    recurrence_first_seen: int | None,
-    attempt_bound_hit: bool,
-) -> _Disposition:
-    """Apply one precedence table to live and replayed immutable attempts."""
-
-    if accepted:
-        return _Disposition("accepted", "all required cases accepted")
-    if explicit_wall_expiry:
-        return _Disposition(
-            "budget-exhausted",
-            _budget_reason(wall_bound_hit=True),
-        )
-    if invocation.status is not InvocationStatus.succeeded:
-        return _Disposition("agent-failure", _agent_failure_reason(invocation))
-    if verifier_failed:
-        return _Disposition("verifier-failure", _VERIFIER_FAILURE_REASON)
-    if recurrence_disposition is not None:
-        if recurrence_first_seen is None:  # pragma: no cover - caller invariant
-            raise ValueError("recurrence disposition lacks its first attempt")
-        return _Disposition(
-            recurrence_disposition,
-            f"exact candidate/signature pair first seen at attempt {recurrence_first_seen}",
-        )
-    if wall_bound_hit:
-        return _Disposition(
-            "budget-exhausted",
-            _budget_reason(wall_bound_hit=True),
-        )
-    if attempt_bound_hit:
-        return _Disposition(
-            "budget-exhausted",
-            _budget_reason(wall_bound_hit=False),
-        )
-    return _Disposition("retry", "")
+from gnd.exp.session_control import (
+    _agent_failure_reason as _agent_failure_reason,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _budget_reason as _budget_reason,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _decide_disposition as _decide_disposition,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _declared_evidence_complete as _declared_evidence_complete,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _Disposition as _Disposition,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _effective_agent_prompt as _effective_agent_prompt,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _effective_policy_sha256 as _effective_policy_sha256,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _expected_invocation_argv as _expected_invocation_argv,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _has_verifier_harness_failure as _has_verifier_harness_failure,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _policy_bound_prompt as _policy_bound_prompt,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _required_evidence_complete as _required_evidence_complete,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _validated_declared_invocation_proof as _validated_declared_invocation_proof,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _validated_invocation_proof as _validated_invocation_proof,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_environment import (
+    verifier_environment as verifier_environment,  # noqa: PLC0414 -- compatibility re-export
+)
 
 
 def _discard_unpublished_stage(
@@ -558,8 +338,8 @@ def _case_models(
     from gnd.extract.manifest import open_manifest_relative_path
     from gnd.model import load_model
 
-    if contract.schema_version in {7, 8}:
-        from gnd.exp.session_v7 import _model
+    if contract.profile.patch:
+        from gnd.exp.session_replay import _model
 
         return [
             (case, _model(case, experiment_root)[0])
@@ -607,12 +387,12 @@ def case_payload_versions(
     :func:`payload_schema_version`.
     """
 
+    from gnd.payloads import current_payload_schema_version
     from gnd.redaction import RedactionPolicy
-    from gnd.report import current_payload_schema_version
 
     versions: dict[str, int] = {}
     for case, model in _case_models(contract, experiment_root):
-        if contract.schema_version in {7, 8} and isinstance(
+        if contract.profile.patch and isinstance(
             case.acceptance, ConstraintSatisfactionAcceptance
         ):
             from gnd.terms import uses_temporal
@@ -677,8 +457,8 @@ async def run_gnd_verifier(
         view = Path(temporary) / "view"
         shutil.copytree(snapshot, view, dirs_exist_ok=True)
         _copy_bound_model(case, experiment_root, view)
-        if case._session_version in {7, 8} and case.reference_root is not None:
-            from gnd.exp.session_v7 import _model
+        if (profile := profile_for_version(case._session_version)) is not None and profile.patch and case.reference_root is not None:
+            from gnd.exp.session_replay import _model
 
             _selected_model, context = _model(case, experiment_root)
             for _origin, relative, raw in context._snapshots:
@@ -694,7 +474,7 @@ async def run_gnd_verifier(
                 argv.extend(("--post", case.verify.post))
         else:
             argv.append(case.verify.subject)
-        if case._session_version in {7, 8} and isinstance(
+        if (profile := profile_for_version(case._session_version)) is not None and profile.patch and isinstance(
             case.acceptance, ConstraintSatisfactionAcceptance
         ):
             argv.append("--admission")
@@ -773,7 +553,7 @@ async def run_session(
     pair.
     """
 
-    if contract.schema_version in {7, 8}:
+    if contract.profile.patch:
         if (
             adapter_policy is None
             or declared_invoker is None
@@ -781,7 +561,7 @@ async def run_session(
             or invoker is not None
         ):
             raise ValueError("v7 requires exactly one declared adapter")
-        from gnd.exp.session_v7 import run
+        from gnd.exp.session_runtime import run
 
         return await run(
             contract,
@@ -794,7 +574,7 @@ async def run_session(
             declared_invoker=declared_invoker,
             redaction=redaction,
         )
-    declared_session = contract.schema_version == DECLARED_ADAPTER_SESSION_CONTRACT_VERSION
+    declared_session = contract.profile.declared_adapter
     if declared_session:
         if (
             adapter_policy is None
@@ -837,20 +617,10 @@ async def run_session(
         isinstance(case.acceptance, TransitionAcceptance) and case.acceptance.walk is not None
         for case in contract.cases
     )
-    feedback_schema_version = (
-        WALK_FLOOR_FEEDBACK_SCHEMA_VERSION
-        if has_walk_floor
-        else REDACTION_FEEDBACK_SCHEMA_VERSION
-        if redaction is not None
-        else TRANSITION_FEEDBACK_SCHEMA_VERSION
-        if any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases)
-        else ASSURANCE_FEEDBACK_SCHEMA_VERSION
-        if any(version == 7 for version in payload_versions.values())
-        else DERIVATION_FEEDBACK_SCHEMA_VERSION
-        if any(
-            version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS for version in payload_versions.values()
-        )
-        else FEEDBACK_SCHEMA_VERSION
+    feedback_schema_version = contract.profile.select_feedback(
+        walk=has_walk_floor, redaction=redaction is not None,
+        transition=any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases),
+        payload_versions=payload_versions.values(),
     )
     store = SessionStore(
         root,
@@ -1005,14 +775,9 @@ async def run_session(
         if identity != best_identity:
             raise ValueError("best pointer changed before result publication")
         result = SessionResult(
-            schema_version=(
-                WALK_FLOOR_RESULT_SCHEMA_VERSION
-                if has_walk_floor
-                else REDACTION_RESULT_SCHEMA_VERSION
-                if redaction is not None
-                else TRANSITION_RESULT_SCHEMA_VERSION
-                if any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases)
-                else 2
+            schema_version=contract.profile.select_result(
+                walk=has_walk_floor, redaction=redaction is not None,
+                transition=any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases),
             ),
             run_id=root.name,
             disposition=disposition,
@@ -1278,7 +1043,7 @@ async def run_session(
                         staged=staged,
                     )
                     raise
-                except Exception as error:  # noqa: BLE001 - injected verifier boundary
+                except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                     if verifier_failure is None:
                         verifier_failure = (
                             f"case {case.case_id} verifier raised {type(error).__name__}"
@@ -1359,7 +1124,7 @@ async def run_session(
                 except VerifierPayloadError as error:
                     if verifier_failure is None:
                         verifier_failure = f"case {case.case_id}: {'; '.join(error.issues)}"
-                except Exception as error:  # noqa: BLE001 - untrusted verifier boundary
+                except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
                     raw_payloads.pop(case.case_id, None)
                     if verifier_failure is None:
                         verifier_failure = (

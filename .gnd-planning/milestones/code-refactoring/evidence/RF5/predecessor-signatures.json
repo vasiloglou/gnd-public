@@ -1,0 +1,1614 @@
+[
+  {
+    "name": "_session_result_exit",
+    "line": 194,
+    "end": 197,
+    "signature": "result: Any",
+    "global_imports": {
+      "Any": "from typing import Any, get_args",
+      "EXIT_SESSION_NOT_ACCEPTED": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.session_store"
+    ]
+  },
+  {
+    "name": "IndexValidationError",
+    "line": 210,
+    "end": 211,
+    "signature": "class",
+    "global_imports": {},
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_validate_index_document",
+    "line": 296,
+    "end": 308,
+    "signature": "document: Any",
+    "global_imports": {
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_BandSafeParser",
+    "line": 311,
+    "end": 318,
+    "signature": "class",
+    "global_imports": {
+      "argparse": "import argparse",
+      "sys": "import sys",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_StoreOnce",
+    "line": 321,
+    "end": 334,
+    "signature": "class",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_positive_int",
+    "line": 337,
+    "end": 342,
+    "signature": "value: str",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_positive_finite_float",
+    "line": 345,
+    "end": 351,
+    "signature": "value: str",
+    "global_imports": {
+      "argparse": "import argparse",
+      "math": "import math"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_issues",
+    "line": 354,
+    "end": 374,
+    "signature": "issues: list[ValidationIssue]",
+    "global_imports": {
+      "report_module": "from gnd import report as report_module",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_trace",
+    "line": 377,
+    "end": 449,
+    "signature": "model: Model, model_path: str",
+    "global_imports": {
+      "transition": "from gnd import resolve_version, solve, transition, verbalize",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize",
+      "Model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "derivation_classifications": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_projected_text",
+    "line": 452,
+    "end": 471,
+    "signature": "payload: dict[str, Any]",
+    "global_imports": {
+      "Any": "from typing import Any, get_args",
+      "report_module": "from gnd import report as report_module",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize"
+    },
+    "gnd_local_imports": [
+      "gnd.redaction"
+    ]
+  },
+  {
+    "name": "_cmd_validate",
+    "line": 474,
+    "end": 513,
+    "signature": "model_path: str, output_format: str, *, trace: bool=False, unredacted: bool=False",
+    "global_imports": {
+      "api_module": "from gnd import api as api_module",
+      "report_module": "from gnd import report as report_module",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_coverage",
+    "line": 516,
+    "end": 580,
+    "signature": "model_path: str, experiments: list[str], check_sources: list[str], verify_sources: list[str], conformance_sources: list[str], transition_sources: list[str], output_format: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.coverage"
+    ]
+  },
+  {
+    "name": "_constraint_verdict_line",
+    "line": 583,
+    "end": 596,
+    "signature": "verdict: Any, indent: str='  '",
+    "global_imports": {
+      "Any": "from typing import Any, get_args",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_derivation_verdict_lines",
+    "line": 599,
+    "end": 616,
+    "signature": "verdict: Any, indent: str='  '",
+    "global_imports": {
+      "Any": "from typing import Any, get_args",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_report",
+    "line": 619,
+    "end": 662,
+    "signature": "report: CheckReport",
+    "global_imports": {
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize",
+      "CheckReport": "from gnd.checker import CheckReport, check, check_with_anchors"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_band",
+    "line": 665,
+    "end": 673,
+    "signature": "report: CheckReport",
+    "global_imports": {
+      "CheckReport": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "checker_band": "from gnd.checker import band as checker_band"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_transition",
+    "line": 676,
+    "end": 714,
+    "signature": "walk: Any, warnings: list[ValidationIssue], *, computed_post: dict[str, Any] | None=None",
+    "global_imports": {
+      "json": "import json",
+      "Any": "from typing import Any, get_args",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_derived_change_summaries",
+    "line": 717,
+    "end": 727,
+    "signature": "changes: Any",
+    "global_imports": {
+      "Any": "from typing import Any, get_args",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_print_check_verdicts",
+    "line": 730,
+    "end": 733,
+    "signature": "report: CheckReport, label: str='  snapshot'",
+    "global_imports": {
+      "CheckReport": "from gnd.checker import CheckReport, check, check_with_anchors"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_live_assurance",
+    "line": 736,
+    "end": 752,
+    "signature": "model, populations, result, band, trace, *, steps=None, extraction_route='not-applicable'",
+    "global_imports": {
+      "api_module": "from gnd import api as api_module"
+    },
+    "gnd_local_imports": [
+      "gnd.assurance_transport"
+    ]
+  },
+  {
+    "name": "_cmd_transition",
+    "line": 755,
+    "end": 798,
+    "signature": "model_path: str, pre_path: str, steps_path: str, post_path: str | None, output_format: str, *, unredacted: bool=False",
+    "global_imports": {
+      "api_module": "from gnd import api as api_module",
+      "report_module": "from gnd import report as report_module",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.assurance_transport"
+    ]
+  },
+  {
+    "name": "_cmd_check",
+    "line": 801,
+    "end": 847,
+    "signature": "model_path: str, population_path: str, output_format: str, *, unredacted: bool=False, anchors_path: str | None=None, document_path: str | None=None, admission: bool=False",
+    "global_imports": {
+      "api_module": "from gnd import api as api_module",
+      "report_module": "from gnd import report as report_module",
+      "check": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.assurance_transport"
+    ]
+  },
+  {
+    "name": "_cmd_verbalize_population",
+    "line": 850,
+    "end": 870,
+    "signature": "model_path: str, population_path: str, output_format: str, *, anchors_path: str | None=None, document_path: str | None=None, unredacted: bool=False",
+    "global_imports": {
+      "json": "import json",
+      "sys": "import sys",
+      "api_module": "from gnd import api as api_module",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_diff",
+    "line": 873,
+    "end": 906,
+    "signature": "model_a: str, model_b: str, populations: str | None, output_format: str, unredacted: bool, seed: int",
+    "global_imports": {
+      "json": "import json",
+      "sys": "import sys",
+      "api_module": "from gnd import api as api_module",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.diff"
+    ]
+  },
+  {
+    "name": "_print_admission_text",
+    "line": 909,
+    "end": 916,
+    "signature": "payload: dict[str, Any]",
+    "global_imports": {
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_rai_import",
+    "line": 919,
+    "end": 957,
+    "signature": "model_path: str, output_dir: str, source_artifact: str, source_commit: str | None",
+    "global_imports": {
+      "sys": "import sys",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.rai_import"
+    ]
+  },
+  {
+    "name": "_cmd_check_batch",
+    "line": 960,
+    "end": 1013,
+    "signature": "model_path: str, populations_dir: str, *, unredacted: bool=False",
+    "global_imports": {
+      "json": "import json",
+      "sys": "import sys",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Draft202012Validator": "from jsonschema import Draft202012Validator",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.batch",
+      "gnd.redaction"
+    ]
+  },
+  {
+    "name": "_cmd_verify",
+    "line": 1016,
+    "end": 1524,
+    "signature": "model_path: str, population_path: str, sidecar_path: str | None, artifacts_dir: str | None, no_extraction: bool, out: str | None, output_format: str, *, unredacted: bool=False",
+    "global_imports": {
+      "os": "import os",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "install_module": "from gnd import install as install_module",
+      "report_module": "from gnd import report as report_module",
+      "transition": "from gnd import resolve_version, solve, transition, verbalize",
+      "CheckReport": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "check": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "check_with_anchors": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "structured_derivation_ids": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "PopulationValidationError": "from gnd.population import PopulationValidationError, load_population",
+      "load_population": "from gnd.population import PopulationValidationError, load_population",
+      "capture_branches": "from gnd.semantic_registry import capture_branches"
+    },
+    "gnd_local_imports": [
+      "gnd.assurance_transport",
+      "gnd.extract.anchors",
+      "gnd.extract.manifest",
+      "gnd.population",
+      "gnd.redaction",
+      "gnd.synth"
+    ]
+  },
+  {
+    "name": "_extract_stem",
+    "line": 1527,
+    "end": 1537,
+    "signature": "model_path: str",
+    "global_imports": {},
+    "gnd_local_imports": [
+      "gnd.extract.bundle"
+    ]
+  },
+  {
+    "name": "_extraction_header_template",
+    "line": 1540,
+    "end": 1550,
+    "signature": "model_path: str, model: Any",
+    "global_imports": {
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": [
+      "gnd.extract.bundle"
+    ]
+  },
+  {
+    "name": "_artifact_index_issue",
+    "line": 1553,
+    "end": 1601,
+    "signature": "model_path: str, artifacts_dir: str, required_artifacts: tuple[str, ...]",
+    "global_imports": {
+      "json": "import json",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_extract",
+    "line": 1604,
+    "end": 1736,
+    "signature": "model_path: str, out_dir: str",
+    "global_imports": {
+      "json": "import json",
+      "os": "import os",
+      "tempfile": "import tempfile",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "install_module": "from gnd import install as install_module",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.extract.projection",
+      "gnd.extract.refscheme",
+      "gnd.extract.vocabulary",
+      "gnd.synth",
+      "gnd.terms"
+    ]
+  },
+  {
+    "name": "_stale_smoke_modules",
+    "line": 1739,
+    "end": 1763,
+    "signature": "root_fd: int | None, project: object",
+    "global_imports": {
+      "os": "import os"
+    },
+    "gnd_local_imports": [
+      "gnd.codegen.emit"
+    ]
+  },
+  {
+    "name": "_cmd_export_pyrel",
+    "line": 1766,
+    "end": 1792,
+    "signature": "model_path: str, out_path: str, *, duckdb_path: str=':memory:', connection: str | None=None",
+    "global_imports": {
+      "sys": "import sys",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.export.emit",
+      "gnd.export.pyrel_runtime"
+    ]
+  },
+  {
+    "name": "_cmd_codegen",
+    "line": 1795,
+    "end": 2080,
+    "signature": "model_path: str, out_dir: str, *, force: bool=False",
+    "global_imports": {
+      "os": "import os",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "install_module": "from gnd import install as install_module",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.codegen.emit",
+      "gnd.codegen.identifiers",
+      "gnd.codegen.manifest",
+      "gnd.codegen.plan",
+      "gnd.extract.projection",
+      "gnd.terms"
+    ]
+  },
+  {
+    "name": "_utf8_clean",
+    "line": 2083,
+    "end": 2095,
+    "signature": "value: str",
+    "global_imports": {},
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_solve",
+    "line": 2098,
+    "end": 2176,
+    "signature": "args: argparse.Namespace",
+    "global_imports": {
+      "argparse": "import argparse",
+      "sys": "import sys",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "solve": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_conformance",
+    "line": 2179,
+    "end": 2221,
+    "signature": "model_path: str, project_dir: str, output_format: str",
+    "global_imports": {},
+    "gnd_local_imports": [
+      "gnd.conformance.report",
+      "gnd.conformance.service"
+    ]
+  },
+  {
+    "name": "_RecoveryCLIError",
+    "line": 2224,
+    "end": 2229,
+    "signature": "class",
+    "global_imports": {},
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_root",
+    "line": 2232,
+    "end": 2250,
+    "signature": "value: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.recovery.inventory"
+    ]
+  },
+  {
+    "name": "_recovery_relative_argv",
+    "line": 2253,
+    "end": 2281,
+    "signature": "root: Path, value: str, *, label: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "PureWindowsPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_required_canonical_leaf",
+    "line": 2284,
+    "end": 2311,
+    "signature": "root: Path, root_fd: int, value: str, *, label: str, canonical_name: str",
+    "global_imports": {
+      "os": "import os",
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_cause_is",
+    "line": 2314,
+    "end": 2324,
+    "signature": "error: BaseException, kind: type[BaseException]",
+    "global_imports": {},
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_json",
+    "line": 2327,
+    "end": 2337,
+    "signature": "value: Any",
+    "global_imports": {
+      "json": "import json",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_open_output_parent",
+    "line": 2340,
+    "end": 2377,
+    "signature": "root_fd: int, relative: str",
+    "global_imports": {
+      "os": "import os",
+      "stat": "import stat",
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_canonical_directory_parts",
+    "line": 2383,
+    "end": 2445,
+    "signature": "root_fd: int, parts: tuple[str, ...]",
+    "global_imports": {
+      "os": "import os",
+      "stat": "import stat",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_require_absent_output",
+    "line": 2448,
+    "end": 2463,
+    "signature": "root_fd: int, relative: str",
+    "global_imports": {
+      "os": "import os",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_require_existing_exclusion",
+    "line": 2466,
+    "end": 2482,
+    "signature": "root_fd: int, relative: str",
+    "global_imports": {
+      "os": "import os",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_recovery_root_still_bound",
+    "line": 2485,
+    "end": 2504,
+    "signature": "root: Path, root_fd: int",
+    "global_imports": {
+      "os": "import os",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.recovery.inventory"
+    ]
+  },
+  {
+    "name": "_recovery_publish_absent",
+    "line": 2507,
+    "end": 2552,
+    "signature": "root_fd: int, relative: str, data: bytes",
+    "global_imports": {
+      "os": "import os",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_parse_recovery_exclusion",
+    "line": 2555,
+    "end": 2582,
+    "signature": "value: str",
+    "global_imports": {
+      "hashlib": "import hashlib",
+      "Any": "from typing import Any, get_args",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.recovery.report"
+    ]
+  },
+  {
+    "name": "_cmd_recovery_inventory",
+    "line": 2585,
+    "end": 2784,
+    "signature": "root_value: str, sources: list[str], tests: list[str], docs: list[str], configs: list[str], schemas: list[str], exclusions: list[str], max_file_bytes: int, max_total_bytes: int, max_files: int, out_value: str",
+    "global_imports": {
+      "os": "import os",
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "install_module": "from gnd import install as install_module",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.recovery.inventory",
+      "gnd.recovery.report"
+    ]
+  },
+  {
+    "name": "_cmd_recovery_verify",
+    "line": 2787,
+    "end": 2840,
+    "signature": "root_value: str, report_value: str, model_value: str, verbalization_value: str",
+    "global_imports": {
+      "os": "import os",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.recovery.verify"
+    ]
+  },
+  {
+    "name": "_EvolutionCLIError",
+    "line": 2843,
+    "end": 2848,
+    "signature": "class",
+    "global_imports": {},
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_reject_unsafe_spelling",
+    "line": 2854,
+    "end": 2864,
+    "signature": "value: str, *, label: str",
+    "global_imports": {
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "PureWindowsPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_absolute_path",
+    "line": 2867,
+    "end": 2870,
+    "signature": "value: str, *, label: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_reject_existing_symlinks",
+    "line": 2873,
+    "end": 2889,
+    "signature": "path: Path, *, label: str",
+    "global_imports": {
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_workspace",
+    "line": 2892,
+    "end": 2910,
+    "signature": "value: str",
+    "global_imports": {
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_rooted_path",
+    "line": 2913,
+    "end": 2973,
+    "signature": "root: Path, value: str, *, root_label: str, label: str, required: bool, regular: bool=True",
+    "global_imports": {
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_workspace_path",
+    "line": 2976,
+    "end": 2991,
+    "signature": "workspace: Path, value: str, *, label: str, required: bool, regular: bool=True",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_records_root",
+    "line": 2994,
+    "end": 3013,
+    "signature": "value: str",
+    "global_imports": {
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_read_claim",
+    "line": 3016,
+    "end": 3056,
+    "signature": "path: Path, model_type: Any, *, label: str, anchor: Path | None=None, relative: str | None=None",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.evolve"
+    ]
+  },
+  {
+    "name": "_evolve_validate_proposal_roots",
+    "line": 3059,
+    "end": 3068,
+    "signature": "proposal: Any",
+    "global_imports": {
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "PureWindowsPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_service_exit",
+    "line": 3071,
+    "end": 3165,
+    "signature": "error: Exception",
+    "global_imports": {
+      "json": "import json",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.safefs"
+    ]
+  },
+  {
+    "name": "_evolve_json_bytes",
+    "line": 3168,
+    "end": 3178,
+    "signature": "claim: Any",
+    "global_imports": {
+      "json": "import json",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_emit_claim",
+    "line": 3181,
+    "end": 3203,
+    "signature": "claim: Any, output_format: str, *, stage: str",
+    "global_imports": {
+      "sys": "import sys",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_publish_preview",
+    "line": 3206,
+    "end": 3256,
+    "signature": "workspace: Path, destination: Path, relative: str, data: bytes",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.artifacts",
+      "gnd.safefs"
+    ]
+  },
+  {
+    "name": "_evolve_same_review_identity",
+    "line": 3259,
+    "end": 3270,
+    "signature": "reviewed: Any, staged: Any",
+    "global_imports": {
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_error_exit",
+    "line": 3273,
+    "end": 3302,
+    "signature": "error: Exception",
+    "global_imports": {
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_EVOLUTION_OPERATIONS_GATED": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.evolve",
+      "gnd.safefs"
+    ]
+  },
+  {
+    "name": "_evolve_fail",
+    "line": 3305,
+    "end": 3308,
+    "signature": "error: Exception, *, stage: str",
+    "global_imports": {
+      "sys": "import sys"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_evolve_finish_apply",
+    "line": 3311,
+    "end": 3340,
+    "signature": "service: Any, pending: Any, output_format: str",
+    "global_imports": {
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_evolve_preview",
+    "line": 3343,
+    "end": 3384,
+    "signature": "model_path: str, proposal_path: str, workspace_path: str, records_path: str, preview_path: str, output_format: str",
+    "global_imports": {},
+    "gnd_local_imports": [
+      "gnd.evolve"
+    ]
+  },
+  {
+    "name": "_cmd_evolve_apply",
+    "line": 3387,
+    "end": 3506,
+    "signature": "model_path: str, proposal_path: str, preview_path: str, workspace_path: str, records_path: str, output_format: str",
+    "global_imports": {
+      "sys": "import sys",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.artifacts",
+      "gnd.evolve"
+    ]
+  },
+  {
+    "name": "_cmd_evolve_finalize",
+    "line": 3509,
+    "end": 3549,
+    "signature": "model_path: str, pending_path: str, workspace_path: str, records_path: str, output_format: str",
+    "global_imports": {},
+    "gnd_local_imports": [
+      "gnd.evolve"
+    ]
+  },
+  {
+    "name": "_cmd_doccheck",
+    "line": 3552,
+    "end": 3858,
+    "signature": "model_path: str, manifest_path: str, artifacts_dir: str",
+    "global_imports": {
+      "json": "import json",
+      "re": "import re",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "PopulationValidationError": "from gnd.population import PopulationValidationError, load_population",
+      "load_population": "from gnd.population import PopulationValidationError, load_population"
+    },
+    "gnd_local_imports": [
+      "gnd.extract.identity",
+      "gnd.extract.manifest",
+      "gnd.extract.refscheme",
+      "gnd.fidelity.match",
+      "gnd.terms"
+    ]
+  },
+  {
+    "name": "_cmd_fidelity",
+    "line": 3872,
+    "end": 4246,
+    "signature": "model_path: str, cases_dir: str, artifacts_dir: str, out: str | None, output_format: str",
+    "global_imports": {
+      "json": "import json",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "Draft202012Validator": "from jsonschema import Draft202012Validator",
+      "install_module": "from gnd import install as install_module",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "verbalize": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "PopulationValidationError": "from gnd.population import PopulationValidationError, load_population",
+      "load_population": "from gnd.population import PopulationValidationError, load_population"
+    },
+    "gnd_local_imports": [
+      "gnd.extract.manifest",
+      "gnd.extract.refscheme",
+      "gnd.fidelity.match",
+      "gnd.fidelity.report",
+      "gnd.synth"
+    ]
+  },
+  {
+    "name": "_canonical_payload",
+    "line": 4261,
+    "end": 4265,
+    "signature": "payload: dict[str, Any]",
+    "global_imports": {
+      "json": "import json",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_review_outcome",
+    "line": 4268,
+    "end": 4281,
+    "signature": "attempted: int, successful: int",
+    "global_imports": {
+      "EXIT_REVIEW_INCONCLUSIVE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "REVIEW_QUORUM": "from gnd.review.constants import REVIEW_QUORUM"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_repository_relative_path",
+    "line": 4284,
+    "end": 4308,
+    "signature": "value: str",
+    "global_imports": {
+      "argparse": "import argparse",
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_add_review_panel_arguments",
+    "line": 4311,
+    "end": 4349,
+    "signature": "parser: argparse.ArgumentParser",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_review_panel",
+    "line": 4352,
+    "end": 4485,
+    "signature": "request_path: str, out_dir: str, reviewer_timeout: float, overall_timeout: float, max_output_bytes: int, reviewer_effort: str='xhigh', command_name: str='review panel'",
+    "global_imports": {
+      "asyncio": "import asyncio",
+      "hashlib": "import hashlib",
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "REVIEW_QUORUM": "from gnd.review.constants import REVIEW_QUORUM"
+    },
+    "gnd_local_imports": [
+      "gnd.review.adapters",
+      "gnd.review.request",
+      "gnd.review.runner"
+    ]
+  },
+  {
+    "name": "_cmd_review_finalize",
+    "line": 4488,
+    "end": 4615,
+    "signature": "run_dir: str, synthesis_path: str, out_path: str",
+    "global_imports": {
+      "hashlib": "import hashlib",
+      "os": "import os",
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "REVIEW_QUORUM": "from gnd.review.constants import REVIEW_QUORUM"
+    },
+    "gnd_local_imports": [
+      "gnd.review.report",
+      "gnd.review.runner"
+    ]
+  },
+  {
+    "name": "_add_format_argument",
+    "line": 4618,
+    "end": 4626,
+    "signature": "parser: argparse.ArgumentParser",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_add_unredacted_argument",
+    "line": 4629,
+    "end": 4634,
+    "signature": "parser: argparse.ArgumentParser",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_experiment_outcome",
+    "line": 4637,
+    "end": 4678,
+    "signature": "io_failures: list[str], missing_artifacts: list[str], ill_formed: list[str], open_obligations: list[str]",
+    "global_imports": {
+      "EXIT_EXPERIMENT_OPEN": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_exp_init",
+    "line": 4681,
+    "end": 4820,
+    "signature": "experiment_id: str, out_dir: str, kind: str, title: str, questions: list[tuple[str, str]], covers: list[Any], session_contract: str | None",
+    "global_imports": {
+      "os": "import os",
+      "shutil": "import shutil",
+      "tempfile": "import tempfile",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.frontmatter",
+      "gnd.exp.session_contract",
+      "gnd.exp.spec",
+      "gnd.safefs",
+      "gnd.synth.paths"
+    ]
+  },
+  {
+    "name": "_cmd_exp_validate",
+    "line": 4823,
+    "end": 4872,
+    "signature": "experiment_dir: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.spec"
+    ]
+  },
+  {
+    "name": "_cmd_exp_author_expectation",
+    "line": 4875,
+    "end": 4985,
+    "signature": "experiment_dir: str, case_id: str, output_id: str, candidate_path: str, source: str, media_type: str, encoding: str",
+    "global_imports": {
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.artifacts",
+      "gnd.exp.expectation_author",
+      "gnd.exp.session_contract",
+      "gnd.exp.spec"
+    ]
+  },
+  {
+    "name": "_cmd_exp_close",
+    "line": 4988,
+    "end": 5110,
+    "signature": "experiment_dir: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "EXIT_EXPERIMENT_OPEN": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.close",
+      "gnd.exp.conclusions",
+      "gnd.exp.spec"
+    ]
+  },
+  {
+    "name": "_next_session_run_root",
+    "line": 5113,
+    "end": 5156,
+    "signature": "experiment_root: Path",
+    "global_imports": {
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.close"
+    ]
+  },
+  {
+    "name": "_run_tests_mode_bridge",
+    "line": 5159,
+    "end": 5181,
+    "signature": "contract: Any, *, test_argv: list[str], candidate_root: Path, experiment_root: Path, run_root: Path, contract_sha256: str",
+    "global_imports": {
+      "asyncio": "import asyncio",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.tests_runner"
+    ]
+  },
+  {
+    "name": "_cmd_exp_run",
+    "line": 5184,
+    "end": 5438,
+    "signature": "experiment_dir: str, adapter: str | None, adapter_policy: str | None, wall_seconds: float | None, test_argv: list[str]",
+    "global_imports": {
+      "asyncio": "import asyncio",
+      "hashlib": "import hashlib",
+      "json": "import json",
+      "stat": "import stat",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INPUT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.agents",
+      "gnd.artifacts",
+      "gnd.declared_adapter",
+      "gnd.exp.adapter_policy",
+      "gnd.exp.session",
+      "gnd.exp.session_contract",
+      "gnd.exp.session_store",
+      "gnd.exp.spec",
+      "gnd.exp.tests_runner"
+    ]
+  },
+  {
+    "name": "_parse_question",
+    "line": 5441,
+    "end": 5449,
+    "signature": "value: str",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_parse_covers",
+    "line": 5452,
+    "end": 5466,
+    "signature": "value: str",
+    "global_imports": {
+      "argparse": "import argparse",
+      "json": "import json",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": [
+      "gnd.exp.spec"
+    ]
+  },
+  {
+    "name": "_add_target_arguments",
+    "line": 5469,
+    "end": 5505,
+    "signature": "parser: argparse.ArgumentParser",
+    "global_imports": {
+      "argparse": "import argparse"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_install_outcome",
+    "line": 5508,
+    "end": 5522,
+    "signature": "io_failures: list[str], collisions: list[str]",
+    "global_imports": {
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_doctor_outcome",
+    "line": 5525,
+    "end": 5550,
+    "signature": "report: install_module.DoctorReport",
+    "global_imports": {
+      "install_module": "from gnd import install as install_module",
+      "EXIT_COLLISION": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_DRIFT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INSTALL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_render_states",
+    "line": 5553,
+    "end": 5566,
+    "signature": "states: list[install_module.SkillFileState]",
+    "global_imports": {
+      "install_module": "from gnd import install as install_module"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_render_diagnosis",
+    "line": 5569,
+    "end": 5591,
+    "signature": "diagnosis: install_module.TargetDiagnosis",
+    "global_imports": {
+      "install_module": "from gnd import install as install_module"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_doctor",
+    "line": 5594,
+    "end": 5648,
+    "signature": "*, claude: bool, codex: bool",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "install_module": "from gnd import install as install_module",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INSTALL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_uninstall_outcome",
+    "line": 5651,
+    "end": 5671,
+    "signature": "io_failures: list[str], retained: list[str], installed: bool",
+    "global_imports": {
+      "EXIT_DRIFT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INSTALL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_uninstall",
+    "line": 5674,
+    "end": 5748,
+    "signature": "*, claude: bool, codex: bool, scope: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "install_module": "from gnd import install as install_module",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_render_target_result",
+    "line": 5751,
+    "end": 5780,
+    "signature": "target: install_module.InstallTarget, result: install_module.ApplyResult",
+    "global_imports": {
+      "install_module": "from gnd import install as install_module"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_install",
+    "line": 5783,
+    "end": 5905,
+    "signature": "*, claude: bool, codex: bool, scope: str, force: bool, symlink: bool, sync: bool",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "install_module": "from gnd import install as install_module",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_NO_INSTALL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_emit_boundary_corpus",
+    "line": 5908,
+    "end": 6074,
+    "signature": "*, model: Any, baseline: Any, baseline_seed_value: int, baseline_expectations: dict[str, Any], out_root: Path, build_sidecar: Any, written: list[dict[str, Any]], not_derivable: list[dict[str, Any]], output_format: str, fail: Any, abort_quarantine: Any, filename_suffix: str=''",
+    "global_imports": {
+      "json": "import json",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "report_module": "from gnd import report as report_module",
+      "EXIT_GENERATOR": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_QUARANTINE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.checker",
+      "gnd.synth"
+    ]
+  },
+  {
+    "name": "_SynthCorpusTransaction",
+    "line": 6077,
+    "end": 6146,
+    "signature": "class",
+    "global_imports": {
+      "os": "import os",
+      "shutil": "import shutil",
+      "tempfile": "import tempfile",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_validate_existing_synth_index",
+    "line": 6149,
+    "end": 6160,
+    "signature": "out_root: Path",
+    "global_imports": {
+      "json": "import json",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_bind_synth_not_derivable",
+    "line": 6163,
+    "end": 6188,
+    "signature": "out_root: Path, not_derivable: list[dict[str, Any]]",
+    "global_imports": {
+      "json": "import json",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": [
+      "gnd.synth"
+    ]
+  },
+  {
+    "name": "_cmd_synth",
+    "line": 6191,
+    "end": 6758,
+    "signature": "model_path: str, out: str, class_: str, pool_path: str | None, seed: int | None, seeds: int, output_format: str, baseline_seed: int | None=None",
+    "global_imports": {
+      "json": "import json",
+      "os": "import os",
+      "tempfile": "import tempfile",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "report_module": "from gnd import report as report_module",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "check": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "EXIT_GENERATOR": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_QUARANTINE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "ModelValidationError": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "ValidationIssue": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "structured_derivation_ids": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_population": "from gnd.population import PopulationValidationError, load_population"
+    },
+    "gnd_local_imports": [
+      "gnd.checker",
+      "gnd.synth",
+      "gnd.terms"
+    ]
+  },
+  {
+    "name": "CorpusPathError",
+    "line": 6761,
+    "end": 6774,
+    "signature": "class",
+    "global_imports": {},
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_resolve_corpus_path",
+    "line": 6777,
+    "end": 6818,
+    "signature": "populations_dir: Path, stored: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": [
+      "gnd.synth"
+    ]
+  },
+  {
+    "name": "_resolve_unique_index_entries",
+    "line": 6821,
+    "end": 6854,
+    "signature": "populations_dir: Path, index: dict[str, Any]",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_cmd_measure",
+    "line": 6857,
+    "end": 7261,
+    "signature": "model_path: str, populations: str, output_format: str, out: str | None, promote: str | None=None, *, unredacted: bool=False",
+    "global_imports": {
+      "json": "import json",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "report_module": "from gnd import report as report_module",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "check": "from gnd.checker import CheckReport, check, check_with_anchors",
+      "checker_band": "from gnd.checker import band as checker_band",
+      "EXIT_CHECKER_DEFECT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_GENERATOR": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_INTERNAL": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_USAGE": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "load_model": "from gnd.model import Model, ModelValidationError, ValidationIssue, derivation_classifications, load_model, structured_derivation_ids",
+      "load_population": "from gnd.population import PopulationValidationError, load_population"
+    },
+    "gnd_local_imports": [
+      "gnd",
+      "gnd.measure",
+      "gnd.measure.score",
+      "gnd.measure.truth",
+      "gnd.redaction",
+      "gnd.synth",
+      "gnd.terms"
+    ]
+  },
+  {
+    "name": "_promote_defects",
+    "line": 7264,
+    "end": 7326,
+    "signature": "*, model: Any, model_path: str, payload: dict[str, Any], measured: list[Any], corpus_dir: Path, populations_root: Path, output_format: str, fail: Any",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args",
+      "report_module": "from gnd import report as report_module",
+      "EXIT_CHECKER_DEFECT": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_GENERATOR": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED",
+      "EXIT_IO": "from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_COLLISION, EXIT_DRIFT, EXIT_EVOLUTION_OPERATIONS_GATED, EXIT_EXPERIMENT_OPEN, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_MODEL_CODE_DRIFT, EXIT_NO_INPUT, EXIT_NO_INSTALL, EXIT_QUARANTINE, EXIT_REVIEW_INCONCLUSIVE, EXIT_SESSION_NOT_ACCEPTED, EXIT_USAGE, EXIT_WALK_HALTED"
+    },
+    "gnd_local_imports": [
+      "gnd.measure",
+      "gnd.synth"
+    ]
+  },
+  {
+    "name": "_corpus_relative",
+    "line": 7329,
+    "end": 7341,
+    "signature": "out_root: Path, path: str",
+    "global_imports": {
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "_merge_index",
+    "line": 7344,
+    "end": 7421,
+    "signature": "out_root: Path, written: list[dict[str, Any]], not_derivable: list[dict[str, Any]] | None=None",
+    "global_imports": {
+      "json": "import json",
+      "os": "import os",
+      "tempfile": "import tempfile",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "Any": "from typing import Any, get_args"
+    },
+    "gnd_local_imports": []
+  },
+  {
+    "name": "main",
+    "line": 7424,
+    "end": 9056,
+    "signature": "argv: list[str] | None=None",
+    "global_imports": {
+      "argparse": "import argparse",
+      "Path": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "PurePosixPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "PureWindowsPath": "from pathlib import Path, PurePosixPath, PureWindowsPath",
+      "get_args": "from typing import Any, get_args",
+      "exits_module": "from gnd import exits as exits_module",
+      "resolve_version": "from gnd import resolve_version, solve, transition, verbalize",
+      "solve": "from gnd import resolve_version, solve, transition, verbalize"
+    },
+    "gnd_local_imports": [
+      "gnd.api",
+      "gnd.artifacts",
+      "gnd.exp.spec",
+      "gnd.export.lean_cli",
+      "gnd.export.souffle_cli",
+      "gnd.review.runner",
+      "gnd.witness.cli"
+    ]
+  }
+]

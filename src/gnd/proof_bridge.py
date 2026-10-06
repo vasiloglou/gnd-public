@@ -20,7 +20,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from gnd.model import Model
+from gnd.documents import Model
 from gnd.population import Population
 from gnd.proof_kernel import (
     SLICE_VERDICT_NAMES,
@@ -260,7 +260,8 @@ def _universe_is_widened(object_type_id: str, model: Model) -> bool:
     trace before this refusal existed). The closure questions are answered by
     the checker's own helpers rather than by a second copy of either rule.
     """
-    from gnd.checker import _denoting_types, _descendant_closure
+    from gnd.universe import denoting_types as _denoting_types
+    from gnd.universe import descendant_closure as _descendant_closure
 
     if _descendant_closure(object_type_id, model) != {object_type_id}:
         return True
@@ -278,7 +279,7 @@ def _universe_values(object_type_id: str, model: Model, population: Population) 
     standing rule 4 forbids, so the cycle is broken here rather than by writing
     the universe rule down twice.
     """
-    from gnd.checker import _instance_values_of
+    from gnd.universe import instance_values_of as _instance_values_of
 
     return list(_instance_values_of(object_type_id, model, population))
 

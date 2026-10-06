@@ -1,0 +1,102 @@
+[
+  {
+    "module": "gnd.api",
+    "name": "PopulationLoadError",
+    "statement": "from gnd.population import PopulationLoadError"
+  },
+  {
+    "module": "gnd.install",
+    "name": "ctypes",
+    "statement": "import ctypes"
+  },
+  {
+    "module": "gnd.install",
+    "name": "errno",
+    "statement": "import errno"
+  },
+  {
+    "module": "gnd.install",
+    "name": "hashlib",
+    "statement": "import hashlib"
+  },
+  {
+    "module": "gnd.install",
+    "name": "tempfile",
+    "statement": "import tempfile"
+  },
+  {
+    "module": "gnd.install",
+    "name": "PureWindowsPath",
+    "statement": "from pathlib import PureWindowsPath"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "math",
+    "statement": "import math"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "dataclass",
+    "statement": "from dataclasses import dataclass"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "field",
+    "statement": "from dataclasses import field"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "date",
+    "statement": "from datetime import date"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "datetime",
+    "statement": "from datetime import datetime"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "product",
+    "statement": "from itertools import product"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "checker_module",
+    "statement": "from gnd import checker as checker_module"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "_normalize_comparison_operands",
+    "statement": "from gnd.synth.comparison import normalize_operands as _normalize_comparison_operands"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "_role_literal_operands",
+    "statement": "from gnd.synth.comparison import role_literal_operands as _role_literal_operands"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "_exists_witness",
+    "statement": "from gnd.synth.guarded import exists_witness as _exists_witness"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "EntityPool",
+    "statement": "from gnd.synth.pool import EntityPool"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "EmptyValueDomain",
+    "statement": "from gnd.synth.value_domain import EmptyValueDomain"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "draw_value_for_constraints",
+    "statement": "from gnd.synth.value_domain import draw_value_for_constraints"
+  },
+  {
+    "module": "gnd.synth.assemble",
+    "name": "governing_value_constraints",
+    "statement": "from gnd.synth.value_domain import governing_value_constraints"
+  }
+]

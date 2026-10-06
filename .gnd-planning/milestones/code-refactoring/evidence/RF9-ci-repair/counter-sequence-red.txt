@@ -1,0 +1,10 @@
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+______ test_model_counter_lookup_is_live[_DERIVATION_CLASSIFICATION_WORK] ______
+tests/test_rf9_ci_repairs.py:15: in test_model_counter_lookup_is_live
+    assert getattr(model, name) == before + 173
+E   AssertionError: assert 0 == (22802 + 173)
+E    +  where 0 = getattr(model, '_DERIVATION_CLASSIFICATION_WORK')
+=========================== short test summary info ============================
+FAILED tests/test_rf9_ci_repairs.py::test_model_counter_lookup_is_live[_DERIVATION_CLASSIFICATION_WORK]
+1 failed, 5 passed in 0.23s

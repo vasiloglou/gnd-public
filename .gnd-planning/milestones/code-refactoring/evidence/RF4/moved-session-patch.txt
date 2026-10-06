@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_session_pins.py --tb=short -x
+............................                                             [100%]
+28 passed in 25.45s
+
+Exit: 0

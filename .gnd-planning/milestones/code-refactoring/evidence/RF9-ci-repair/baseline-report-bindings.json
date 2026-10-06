@@ -1,0 +1,14 @@
+{
+  "report.md": "a9a96fd4dff59fc38c88b729b7df634240ab65e349fb15dedf2a0612a6463d16",
+  "status.json": "12f17ff536ec2ee09b3e7a8fe9c968a6ccd6671efc282d446e5d0db4f993aa84",
+  "followup-status.json": "2343cb2ec9478c0fbd91f9ee66309de68bea394b880008caaedb1f6aa931760b",
+  "confirmed-failures.json": "71f81d8baca282eddf1168ed41e20056147afa5df3b647c79195d6533e78ae3d",
+  "failed-nodes.json": "bc730ed4ee15a7ae9af8513253cbb405f4ebbf88e7a55d4c768237dcc3a52960",
+  "regression-311.log": "2b18b18c5bf08291da0ebe6d6eaa7c3ff414f58fb2095716e71f7ff104ff3d72",
+  "regression-313.log": "49e02158a351ebd8855b7d45f4238bcd0993fec612380d330fd12f0b8e87413e",
+  "failed-corrected-311.log": "9d4e291fd7141494505c57d0599ce3083a055ba5d8a430b3fb939cfcd0962635",
+  "failed-corrected-313.log": "cf315e2677d3919733c9a81da21ac6589777928cc1fb41e65dce5cc631055c35",
+  "installed-corrected-311.log": "64d820ab5febd894576d29b40bc95b6a6fb89ad52bba9108a4341e4aaa3e1684",
+  "installed-corrected-313.log": "4ec1071d7fe8ebc2123cb5f319f5af10146bf5612e3de2c5f4d22f780f5db12b",
+  "_retained_evidence_edit": "Operator/worktree paths sanitized. Embedded hashes bind original raw temporary evidence, not this edited copy."
+}

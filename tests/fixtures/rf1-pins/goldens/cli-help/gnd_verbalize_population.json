@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd verbalize population [-h] [--anchors ANCHORS] [--document DOCUMENT]\n                                [--format {text,jsonl}]\n                                model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --anchors ANCHORS\n  --document DOCUMENT\n  --format {text,jsonl}\n",
+ "path": "gnd verbalize population"
+}

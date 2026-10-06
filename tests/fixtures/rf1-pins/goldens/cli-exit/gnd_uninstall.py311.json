@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd uninstall [-h] [--claude] [--codex] [--global | --project]\n\nRemove every skill file GND placed at the requested target roots. A file is\ndeleted only when its bytes still hash to what the install receipt recorded,\nso anything you edited is KEPT and named in the report — there is deliberately\nno flag that overrides this. Files GND never placed are never touched. The\ndirectories emptied by the removal are pruned and the receipt is removed last.\nUnlike `doctor`, this acts on exactly the scope you name. Exits 0 on a clean\nremoval, 10 when something was kept, 12 when nothing is installed, 74 when a\nreceipt could not be trusted (in which case nothing at all was deleted). Text\noutput only (D-25).\n\noptions:\n  -h, --help  show this help message and exit\n  --claude    target Claude Code's skills directory (default: both runtimes)\n  --codex     target Codex CLI's skills directory (default: both runtimes)\n  --global    user level (DEFAULT): ~/.claude/skills and $CODEX_HOME/skills\n              (~/.codex/skills)\n  --project   this project: ./.claude/skills and ./.codex/skills\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments}\n           ...\ngnd: error: unrecognized arguments: --rf1-unknown-flag\n",
+  "stdout": ""
+ }
+}

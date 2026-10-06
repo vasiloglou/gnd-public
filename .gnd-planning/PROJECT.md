@@ -51,5 +51,7 @@ deferred to a successor milestone. The plan was approved on 2026-10-05
 ([gate](milestones/code-refactoring/003-plan-gate.md)) and updated by text-only
 erratum e1 ([005](milestones/code-refactoring/005-plan-erratum.md)). **RF0** (baseline,
 measurement tool, authority handoff) is recorded in
-[004](milestones/code-refactoring/004-phase-RF0.md). **Next:** RF1
-characterization tests, run with `process-phase RF1 code-refactoring`.
+[004](milestones/code-refactoring/004-phase-RF0.md). **RF1** (characterization pins over every
+surface RF2–RF8 move; 167 of 167 seeded mutations killed) is recorded in
+[006](milestones/code-refactoring/006-phase-RF1.md). **Next:** RF2, consolidating
+the identical helpers, run with `process-phase RF2 code-refactoring`.

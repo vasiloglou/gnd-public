@@ -1,0 +1,15 @@
+Edited retained gate output: absolute worktree/home and operator temporary path prefixes sanitized; other output preserved.
+.F.......                                                                [100%]
+=================================== FAILURES ===================================
+__________ test_launched_without_eligible_best_refuses_forged_result ___________
+tests/test_rf9_repairs.py:272: in test_launched_without_eligible_best_refuses_forged_result
+    assert store.best_record() is None
+E   AssertionError: assert AttemptRecord(run_id='run-0001', attempt_index=1, elapsed_seconds=0.25927487504668534, launch_intent=EvidenceFile(path...tes=1726, sha256='bc2dce459ddf982c0c54a932e0c9d8b8f6cdf13690d796641c8dd4d4b0b1e53b'), ranking=(), judgment_evidence={}) is None
+E    +  where AttemptRecord(run_id='run-0001', attempt_index=1, elapsed_seconds=0.25927487504668534, launch_intent=EvidenceFile(path...tes=1726, sha256='bc2dce459ddf982c0c54a932e0c9d8b8f6cdf13690d796641c8dd4d4b0b1e53b'), ranking=(), judgment_evidence={}) = best_record()
+E    +    where best_record = <gnd.exp.session_store.SessionStore object at 0x10d71ab10>.best_record
+----------------------------- Captured stdout call -----------------------------
+CREATED <pytest-temp>/pytest-4527/test_launched_without_eligible0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_launched_without_eligible_best_refuses_forged_result
+1 failed, 8 passed in 1.75s

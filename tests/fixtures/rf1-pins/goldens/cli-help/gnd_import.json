@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd import [-h] {rai-orm} ...\n\npositional arguments:\n  {rai-orm}\n    rai-orm   import the bounded rai-orm-from-schema dialect\n\noptions:\n  -h, --help  show this help message and exit\n",
+ "path": "gnd import"
+}

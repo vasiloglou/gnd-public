@@ -1,0 +1,31 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/checker/ring.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 6,
+ "files": {
+  "quarantine/fact_types-rel_reflexive-.constraints-0.ring-reflexive-participant-missing-self-edge.discrepancy.json": {
+   "bytes": 271,
+   "sha256": "8af3523ba4cfc1f68a282d2fcddd4adcb88154638b4fd54b915bbc4445ec6cac"
+  },
+  "quarantine/fact_types-rel_reflexive-.constraints-0.ring-reflexive-participant-missing-self-edge.json": {
+   "bytes": 2655,
+   "sha256": "a5fe4f443763c761cceee9513775a63dc71774348679cbabec59e9034ba3c8e6"
+  },
+  "quarantine/fact_types-rel_reflexive-.constraints-0.ring-reflexive-participant-missing-self-edge.meta.json": {
+   "bytes": 10505,
+   "sha256": "860e5cc28e41922f1ddf86d0f01e183e159a037c9967f424d6b6d1842e07ef4a"
+  }
+ },
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 6, \"quarantine\": \"<tmp>/synth/quarantine/fact_types-rel_reflexive-.constraints-0.ring-reflexive-participant-missing-self-edge.json\", \"discrepancies\": [{\"constraint_ref\": \"fact_types[rel_reflexive].constraints[0]\", \"predicted\": {\"ground_truth\": \"violated\", \"expected_verdict\": \"fail\", \"reason\": null}, \"observed_verdict\": \"pass\", \"kind\": \"prediction-observation-mismatch\"}]}\n"
+}

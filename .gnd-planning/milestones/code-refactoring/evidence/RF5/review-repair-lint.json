@@ -1,0 +1,10 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "tools/gnd_arch.py",
+    "tests/test_rf5_review_regressions.py"
+  ],
+  "exit": 0,
+  "seconds": 0.011200904846191406
+}

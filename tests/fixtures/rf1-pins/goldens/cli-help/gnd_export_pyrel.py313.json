@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd export pyrel [-h] --out OUT [--duckdb-path DUCKDB_PATH |\n                        --connection CONNECTION]\n                        model\n\npositional arguments:\n  model                 path to the model file\n\noptions:\n  -h, --help            show this help message and exit\n  --out OUT             new Python program path\n  --duckdb-path DUCKDB_PATH\n  --connection CONNECTION\n                        reserved named Snowflake connection\n",
+ "path": "gnd export pyrel"
+}

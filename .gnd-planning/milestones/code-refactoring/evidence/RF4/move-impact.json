@@ -1,0 +1,32 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_install.py",
+    "tests/test_doctor_uninstall.py",
+    "tests/test_review_fixes.py",
+    "tests/test_artifacts.py",
+    "tests/test_agent_cli.py",
+    "tests/test_v63_phase2_cache.py",
+    "tests/test_public_assurance_inheritance.py",
+    "tests/test_public_assurance_feedback.py",
+    "tests/test_synth_mutate.py",
+    "tests/test_synth_boundary.py",
+    "tests/test_synth_conforming.py",
+    "tests/test_synth_expectation_independence.py",
+    "tests/test_synth_false_pass_quarantine.py",
+    "tests/test_synth_oracle_value_range.py",
+    "tests/test_synth_tagged_comparison.py",
+    "tests/test_codegen_emit.py",
+    "tests/test_codegen_force.py",
+    "tests/test_codegen_manifest.py",
+    "--tb=short",
+    "-x"
+  ],
+  "exit": 1,
+  "seconds": 0.7526528835296631
+}

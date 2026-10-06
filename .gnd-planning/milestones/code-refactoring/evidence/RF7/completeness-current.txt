@@ -1,0 +1,9 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -c from gnd.evolve.service import _parse_model_text
+try:
+ _parse_model_text("x: [1\n")
+except Exception as error:
+ print(type(error).__name__)
+ParserError
+
+Exit: 0

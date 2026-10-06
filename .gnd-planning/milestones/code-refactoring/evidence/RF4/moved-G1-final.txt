@@ -1,0 +1,85 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_pin_harness.py --tb=short
+........................................................................ [ 18%]
+........................................................................ [ 36%]
+........................................................................ [ 55%]
+........................................................................ [ 73%]
+.....................................FF......FF...........F............. [ 91%]
+................................                                         [100%]
+=================================== FAILURES ===================================
+____________________________ test_session_fresh[1] _____________________________
+tests/test_rf1_session_pins.py:348: in test_session_fresh
+    assert_successor(f"v{version}-fresh", observed, captures, built, run, tmp_path,
+tests/support/rf2_session_pins.py:152: in assert_successor
+    answer = prepare(observed, records, built, run, tmp_path, tokens)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/rf2_session_pins.py:131: in prepare
+    assert digest in indexed, "execution occurrence has no authenticated mint input"
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: execution occurrence has no authenticated mint input
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4313/test_session_fresh_1_0/EXP-401-session/SPEC.md
+  declares Q1: Did the bounded session establish the contract?
+____________________________ test_session_fresh[2] _____________________________
+tests/test_rf1_session_pins.py:348: in test_session_fresh
+    assert_successor(f"v{version}-fresh", observed, captures, built, run, tmp_path,
+tests/support/rf2_session_pins.py:152: in assert_successor
+    answer = prepare(observed, records, built, run, tmp_path, tokens)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/rf2_session_pins.py:131: in prepare
+    assert digest in indexed, "execution occurrence has no authenticated mint input"
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: execution occurrence has no authenticated mint input
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4313/test_session_fresh_2_0/EXP-703-constraint-acceptance/SPEC.md
+  declares Q1: Did the public session meet its declared acceptance relation?
+____________________________ test_session_resume[1] ____________________________
+tests/test_rf1_session_pins.py:371: in test_session_resume
+    assert_successor(f"v{version}-resume", observed, captures, built, run, tmp_path,
+tests/support/rf2_session_pins.py:152: in assert_successor
+    answer = prepare(observed, records, built, run, tmp_path, tokens)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/rf2_session_pins.py:131: in prepare
+    assert digest in indexed, "execution occurrence has no authenticated mint input"
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: execution occurrence has no authenticated mint input
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4313/test_session_resume_1_0/EXP-401-session/SPEC.md
+  declares Q1: Did the bounded session establish the contract?
+____________________________ test_session_resume[2] ____________________________
+tests/test_rf1_session_pins.py:371: in test_session_resume
+    assert_successor(f"v{version}-resume", observed, captures, built, run, tmp_path,
+tests/support/rf2_session_pins.py:152: in assert_successor
+    answer = prepare(observed, records, built, run, tmp_path, tokens)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/support/rf2_session_pins.py:131: in prepare
+    assert digest in indexed, "execution occurrence has no authenticated mint input"
+           ^^^^^^^^^^^^^^^^^
+E   AssertionError: execution occurrence has no authenticated mint input
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4313/test_session_resume_2_0/EXP-703-constraint-acceptance/SPEC.md
+  declares Q1: Did the public session meet its declared acceptance relation?
+_________________________ test_session_determinism[2] __________________________
+tests/test_rf1_session_pins.py:425: in test_session_determinism
+    assert copy.deepcopy(first) == copy.deepcopy(second)
+E   assert {'streams': {...': '1'}, ...}} == {'streams': {...': '1'}, ...}}
+E     
+E     Differing items:
+E     {'streams': {'exit': 0, 'stdout': '{"acceptance_modes":["constraint-satisfaction"],"attempt_count":2,"best_attempt":2,...empt.json>"},"run_id":"run-0001","schema_version":2,"terminal_reason":"all required cases accepted"}\n', 'stderr': ''}} != {'streams': {'exit': 0, 'stdout': '{"acceptance_modes":["constraint-satisfaction"],"attempt_count":2,"best_attempt":2,...empt.json>"},"run_id":"run-0001","schema_version":2,"terminal_reason":"all required cases accepted"}\n', 'stderr': ''}}
+E     {'evidence': {'attempts/0001/agent.stderr': {'text': ''}, 'attempts/0001/age...
+E     
+E     ...Full output truncated (2 lines hidden), use '-vv' to show
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4313/test_session_determinism_2_0/one/EXP-703-constraint-acceptance/SPEC.md
+  declares Q1: Did the public session meet its declared acceptance relation?
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4313/test_session_determinism_2_0/two/EXP-703-constraint-acceptance/SPEC.md
+  declares Q1: Did the public session meet its declared acceptance relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[1] - AssertionError...
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[2] - AssertionError...
+FAILED tests/test_rf1_session_pins.py::test_session_resume[1] - AssertionErro...
+FAILED tests/test_rf1_session_pins.py::test_session_resume[2] - AssertionErro...
+FAILED tests/test_rf1_session_pins.py::test_session_determinism[2] - assert {...
+5 failed, 387 passed in 62.56s (0:01:02)
+
+Exit: 1

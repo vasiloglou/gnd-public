@@ -41,10 +41,12 @@ from pathlib import Path, PurePosixPath
 from types import MappingProxyType
 from typing import BinaryIO, Literal
 
+from gnd import input_policy as _rf7_input
 from gnd.exits import (
     EXIT_INTERNAL,
     EXIT_IO,
     EXIT_NO_INPUT,
+    EXIT_OK,
     EXIT_USAGE,
     EXIT_WALK_HALTED,
 )
@@ -738,7 +740,7 @@ class _WalkLog:
 # be circular, and restating the literals here was two unguarded homes for one
 # normative value. 0 is not a named band -- a completed walk is not an
 # allocation, it is the absence of one.
-_EXIT_OK = 0
+_EXIT_OK = EXIT_OK
 _EXIT_HALTED = EXIT_WALK_HALTED
 _EXIT_USAGE = EXIT_USAGE
 _EXIT_NOINPUT = EXIT_NO_INPUT
@@ -1272,7 +1274,7 @@ def _exp_run_index_from_stdout(spawn: StationSpawn) -> int | None:
             chunks.extend(block)
         if len(chunks) > _MAX_RESULT_STDOUT_BYTES:
             return None
-        document = json.loads(bytes(chunks))
+        document = _rf7_input.loads(bytes(chunks))
         if not isinstance(document, dict):
             return None
         run_id = document.get("run_id")

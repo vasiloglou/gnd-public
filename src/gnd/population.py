@@ -36,9 +36,9 @@ Security notes:
 
 from __future__ import annotations
 
-import hashlib
+import hashlib  # noqa: F401 -- compatibility export
 import io
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from importlib.resources import files
 from pathlib import Path
 from typing import Any, Literal
@@ -47,15 +47,23 @@ from jsonschema import Draft202012Validator
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 from ruamel.yaml import YAML
 
-from gnd.model import MAX_YAML_EVENTS, Model, ValidationIssue
+from gnd import input_policy as _rf7_input
+from gnd.documents import MAX_YAML_EVENTS, Model
+from gnd.errors import (
+    MAX_SUMMARY_ISSUES,  # noqa: F401 -- compatibility export
+    PopulationLoadError,
+    PopulationValidationError,
+    ValidationIssue,
+)
 from gnd.popvalidate import population_validate
+from gnd.values import MODEL_DIGEST_EXCLUDED_FIELDS  # noqa: F401 -- compatibility export
+from gnd.values import (
+    content_digest as _content_digest,
+)
+from gnd.values import model_digest as _model_digest
 from gnd.yaml_comments import configure_comment_scanner
 
 MAX_POPULATION_BYTES = 10 * 1024 * 1024  # 10 MB
-
-
-class PopulationLoadError(Exception):
-    """Raised when a population file cannot be loaded or is malformed."""
 
 
 #: How many issues the exception's SUMMARY STRING names (WR-01). Deliberately
@@ -64,38 +72,6 @@ class PopulationLoadError(Exception):
 #: human-readable fallback for a stray ``str(error)``. Building an unbounded one
 #: was ~100 MB of throwaway work per hostile population, since neither
 #: ``_cmd_check`` arm ever reads it.
-MAX_SUMMARY_ISSUES = 20
-
-
-class PopulationValidationError(PopulationLoadError):
-    """Raised when a population document fails D-10 schema validation.
-
-    Carries the same :class:`~gnd.model.ValidationIssue` records as
-    :class:`~gnd.model.ModelValidationError` — one unified error vocabulary.
-
-    ``warnings`` carries the warning-severity issues found on the SAME layer-2
-    pass (WR-05). ``load_population`` used to assemble them only AFTER the error
-    check had already raised, so they were computed for a clean load and thrown
-    away for a dirty one — the exact inversion of where they are useful. A
-    population that both mismatched its model structurally and omitted
-    ``model_id`` lost the ``population:model-id-absent`` record, which is
-    precisely the diagnostic explaining the structural mismatch: "you validated
-    against the wrong model." D-04 makes exit 3 the outcome where a retry loop
-    most needs the full picture.
-    """
-
-    def __init__(
-        self,
-        issues: list[ValidationIssue],
-        warnings: list[ValidationIssue] | None = None,
-    ):
-        self.issues = list(issues)
-        self.warnings = list(warnings or [])
-        head = self.issues[:MAX_SUMMARY_ISSUES]
-        summary = "; ".join(f"{i.path}: {i.message}" for i in head)
-        if len(self.issues) > len(head):
-            summary += f"; ... (+{len(self.issues) - len(head)} more)"
-        super().__init__(f"population validation failed: {summary}")
 
 
 class Population(BaseModel):
@@ -213,31 +189,6 @@ class Population(BaseModel):
         )
 
 
-def _content_digest(population: Population) -> str:
-    """A stable digest of everything layer 2 validated and the checker reads.
-
-    ``warnings`` is excluded deliberately: it is layer 2's own OUTPUT, written
-    onto the population after validation ran, and no checker verdict depends on
-    it. Every other field is included, because every other field is either
-    validated by layer 2 (``facts``, ``instances``, ``covers``, ``model_id``) or
-    reported verbatim (``model``, ``source``, ``label``).
-
-    ``repr`` rather than ``json.dumps`` because it is TOTAL: ``facts`` values are
-    ``Any``, so a population may legitimately carry a value ``json.dumps``
-    refuses (and ``sort_keys=True`` additionally raises on mixed-type nested
-    keys, which WR-02 shows a population can supply). A digest that raises on
-    hostile input would convert the guard into a denial of service. ``repr`` of
-    a dict preserves insertion order, so re-ordering counts as mutation — the
-    conservative direction.
-    """
-    payload = population.model_dump(exclude={"warnings"})
-    # Keep the historical v1 marker byte-identical while binding v2's changed
-    # role-value grammar to the validation stamp.
-    if population.format_version != 1:
-        payload["format_version"] = population.format_version
-    return hashlib.sha256(repr(payload).encode("utf-8", "surrogatepass")).hexdigest()
-
-
 #: Model fields this digest deliberately does NOT cover, each for its own
 #: reason. Named rather than inlined because ``representation-format.md`` states
 #: the coverage normatively and a reader has to be able to find the code that
@@ -256,24 +207,6 @@ def _content_digest(population: Population) -> str:
 #: needs — that the steps were authored against these operations — is a
 #: different claim over different bytes, and Phase 2's ``steps.json`` carries its
 #: own ``operations_digest`` for it rather than overloading this one.
-MODEL_DIGEST_EXCLUDED_FIELDS = frozenset({"warnings", "operations"})
-
-
-def _model_digest(model: Model) -> str:
-    """Stable digest of model content that layer 2 validated/checker reads.
-
-    Everything outside :data:`MODEL_DIGEST_EXCLUDED_FIELDS` is included, so
-    nested mutation invalidates the population's marker even when the same Model
-    object is retained.
-    """
-    if model.reference_populations:
-        from gnd.references import reference_model_digest
-
-        return reference_model_digest(model).removeprefix("sha256:")
-    payload = model.model_dump(
-        exclude=set(MODEL_DIGEST_EXCLUDED_FIELDS) | {"reference_populations"}
-    )
-    return hashlib.sha256(repr(payload).encode("utf-8", "surrogatepass")).hexdigest()
 
 
 def _stamp_validated_against(population: Population, model: Model) -> None:
@@ -298,7 +231,7 @@ def _load_population_schema() -> dict[str, Any]:
     schema_text = (
         files("gnd").joinpath("schema/population.schema.json").read_text(encoding="utf-8")
     )
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
 def _schema_issues(doc: Any) -> list[ValidationIssue]:
@@ -382,7 +315,7 @@ def _parse_document_bytes(data: bytes, *, suffix: str, source: str) -> Any:
             # a message. Adding a second counter would be a disagreeing cap for
             # a hazard that is already bounded.
             try:
-                return json.load(
+                return _rf7_input.load(
                     handle,
                     object_pairs_hook=_reject_duplicate_json_keys,
                     parse_constant=_reject_json_constant,

@@ -1,4 +1,4 @@
-from gnd import assurance_inheritance
+from gnd.assurance import inheritance as assurance_inheritance
 
 
 def test_phase3_runtime_input_rebinding_is_metadata_but_input_name_is_semantic():

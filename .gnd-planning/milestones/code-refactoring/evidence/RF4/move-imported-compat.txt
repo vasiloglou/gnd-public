@@ -1,0 +1,8 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest tests/test_rf4_peripheral.py tests/test_synth_mutate.py tests/test_rf1_pin_inventory.py tests/test_rf4_premove.py -q -k not graph -x
+ERROR: file or directory not found: tests/test_rf1_pin_inventory.py
+
+
+no tests ran in 0.00s
+
+Exit: 4

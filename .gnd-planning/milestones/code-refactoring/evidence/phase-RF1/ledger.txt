@@ -1,0 +1,16 @@
+$ uv run pytest -q tests/test_gnd_arch.py
+47 passed in 4.70s
+exit=0
+$ uv run pytest -q tests/test_coverage_cli.py tests/test_exp_session_e2e.py tests/test_v71_phase4_successors.py tests/test_public_v71_judgment_successor_guards.py tests/test_agent_cli.py tests/test_checker_families.py tests/test_public_constraint_sessions.py tests/test_public_tests_mode_corpus.py tests/test_public_v71_full_judgments.py tests/test_rf1_session_pins.py
+892 passed, 2 deselected in 138.54s (0:02:18)
+exit=0
+$ uv run ruff check tools/rf1_pins.py tools/gnd_arch.py tests/support/rf1_pins.py tests/test_rf1_*.py tests/test_gnd_arch.py
+All checks passed!
+exit=0
+$ uv run pytest -q tests/test_development_scaffold.py
+14 passed, 1 deselected in 3.85s
+exit=0
+$ git diff --quiet e834c6e -- src/gnd .gnd-planning/milestones/public-launch
+exit=0
+$ git diff --name-only e834c6e | grep -v -E "^(tests/|tools/|\.gnd-planning/milestones/code-refactoring/)"
+exit=1 (1 means no path outside the RF1-C2 scope)

@@ -1,0 +1,22 @@
+{
+  "status": "delegated approval (auto=true)",
+  "date": "2026-10-06",
+  "authorization": "process-phase RF6 auto",
+  "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF6b-spec.md",
+  "sha256": "9614e074cc3b532a8cec97f0ed8774a13e29c7fa236862a645041ffae197a1de",
+  "base": "a3f35a6d3f562aacf325056493a0799412811117",
+  "instrument": "prose plus frozen predecessor/body/import pins and separately red successors",
+  "review": "one initial plus at most one repair, expressly provider-authorized",
+  "budgets": {
+    "touched_files": 170,
+    "moved_production_lines": 9500,
+    "nonrelocated_production_added": 2500,
+    "test_data_added": 3000,
+    "non_evidence_documentation_added": 1500
+  },
+  "targets": {
+    "model_largest": 5000,
+    "checker_largest": 2400,
+    "facade": 400
+  }
+}

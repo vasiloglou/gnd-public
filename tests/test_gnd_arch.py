@@ -421,6 +421,35 @@ def test_t8_t9_test_inventory(tmp_path):
     ]
 
 
+SCOPED_TEST_SOURCE = """
+def test_inside(monkeypatch):
+    import gnd.a as m
+    monkeypatch.setattr(m, "_inside", 1)
+
+
+def test_outside(monkeypatch):
+    monkeypatch.setattr(m, "_outside", 1)
+"""
+
+
+def test_rf1_alias_scopes_are_lexical_in_test_files(tmp_path):
+    """RF0-OQ2 (RF1 spec 6.11): one resolver; a test-function alias does not leak."""
+    files = {
+        "src/gnd/__init__.py": "",
+        "src/gnd/a.py": "_inside = _outside = 1\n",
+        "tests/test_scoped.py": SCOPED_TEST_SOURCE,
+    }
+    data = measured(tmp_path, files)
+    at = lambda snippet: line_of(SCOPED_TEST_SOURCE, snippet)
+    patches = {(p["line"], p["target"], p["resolved"]) for p in data["tests"]["patches"]}
+    assert patches == {
+        (at('"_inside"'), "gnd.a._inside", True),
+        (at('"_outside"'), "m._outside", False),
+    }
+    assert not hasattr(arch._ModuleVisitor("gnd.x", "src/gnd/x.py", set()), "scopes")
+    assert isinstance(arch._TestVisitor("tests/t.py", set()).aliases, arch._AliasScopes)
+
+
 # ---------------------------------------------------------------- T10, T11, T13 exits
 
 

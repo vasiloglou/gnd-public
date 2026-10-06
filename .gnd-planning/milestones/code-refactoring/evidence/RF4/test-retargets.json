@@ -1,0 +1,25 @@
+{
+  "files": [
+    "tests/public_site_census.py",
+    "tests/support/public_probe.py",
+    "tests/support/rf2_session_pins.py",
+    "tests/test_agent_cli.py",
+    "tests/test_codegen_force.py",
+    "tests/test_contributor_preparation.py",
+    "tests/test_public_assurance_inheritance.py",
+    "tests/test_public_construction_site_guards.py",
+    "tests/test_public_exact_scope_guards.py",
+    "tests/test_public_inheritance_successor_constants.py",
+    "tests/test_public_inherited_successor_comparison.py",
+    "tests/test_report_json.py",
+    "tests/test_synth_external_uniqueness.py",
+    "tests/test_synth_false_pass_quarantine.py",
+    "tests/test_synth_mutate.py",
+    "tests/test_v62_phase4_assurance.py",
+    "tests/test_v63_phase2_cache.py",
+    "tests/test_v6_phase6_execution.py",
+    "tests/test_v6_phase6_release_reader.py",
+    "tests/test_v6_phase6_runtime_identity.py"
+  ],
+  "preserved": "existing input/assertion/answer meanings; only lookup/scanned-home adaptations"
+}

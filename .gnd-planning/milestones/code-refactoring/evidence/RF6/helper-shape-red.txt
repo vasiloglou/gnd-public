@@ -1,0 +1,16 @@
+Retained output edited to replace machine paths.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_shared_maps_keep_non_model_and_malformed_model_shapes __________
+tests/test_rf6_index.py:148: in test_shared_maps_keep_non_model_and_malformed_model_shapes
+    assert helper(raw) == {'F': {'x': 'T'}}
+           ^^^^^^^^^^^
+src/gnd/popvalidate.py:108: in _role_object_types
+    return ModelIndex.for_model(model).role_object_types()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model_index.py:55: in for_model
+    raise TypeError('ModelIndex requires a Model')
+E   TypeError: ModelIndex requires a Model
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_shared_maps_keep_non_model_and_malformed_model_shapes
+1 failed in 0.09s

@@ -1,0 +1,12 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -c import sys; from pathlib import Path; p=Path("/private/tmp/rf4-census-base-path").read_text(); sys.path.insert(0,p+"/tests"); import public_site_census; public_site_census.inventory(Path(p))
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys; from pathlib import Path; p=Path("<temporary-root>/rf4-census-base-path").read_text(); sys.path.insert(0,p+"/tests"); import public_site_census; public_site_census.inventory(Path(p))
+                                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "<temporary-root>/rf4-census-base-ixxtp4mo/tests/public_site_census.py", line 238, in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: scope forwarder changed or disappeared
+
+Exit: 1

@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd evolve finalize [-h] --workspace WORKSPACE --records RECORDS\n                           [--format {text,json}]\n                           model pending\n\nLoad one immutable PENDING identity, finish its exact verbalization and\nlinked-project conformance leaves, and publish the final evolution record\nlast. Linked drift remains exit 13 with its raw evidence; no rollback or\nregeneration occurs.\n\npositional arguments:\n  model                 published model file beneath ROOT\n  pending               immutable pending-finalization JSON beneath ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --workspace WORKSPACE\n                        authoritative existing workspace ROOT\n  --records RECORDS     authoritative immutable evidence DIR\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd evolve finalize [-h] --workspace WORKSPACE --records RECORDS\n                           [--format {text,json}]\n                           model pending\ngnd evolve finalize: error: the following arguments are required: model, pending, --workspace, --records\n",
+  "stdout": ""
+ }
+}

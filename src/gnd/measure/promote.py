@@ -32,7 +32,7 @@ characters cannot forge manifest structure.
 
 from __future__ import annotations
 
-import hashlib
+import hashlib  # noqa: F401 -- historical compatibility binding
 import io
 import os
 import shutil
@@ -125,11 +125,9 @@ def _case_id(defect: dict[str, Any]) -> str:
 
 
 def _digest(path: Path) -> str:
-    hasher = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            hasher.update(chunk)
-    return hasher.hexdigest()
+    from gnd.safefs import file_sha256
+
+    return '' + file_sha256(path)
 
 
 @dataclass(frozen=True)

@@ -57,7 +57,7 @@ __all__ = [
 ]
 
 
-def model_digest(model_path: str | Path) -> str:
+def model_file_sha256(model_path: str | Path) -> str:
     """The model's content identity: sha256 over its bytes.
 
     The same computation ``build_manifest`` performs when it records
@@ -92,7 +92,7 @@ def check_currency(
     reproduce with ``shasum -a 256``.
     """
     recorded = manifest.model.sha256
-    actual = model_digest(model_path)
+    actual = model_file_sha256(model_path)
     if actual == recorded:
         return ()
     return (
@@ -109,3 +109,6 @@ def check_currency(
             actual_sha256=actual,
         ),
     )
+
+
+model_digest = model_file_sha256  # RF2 compatibility alias.

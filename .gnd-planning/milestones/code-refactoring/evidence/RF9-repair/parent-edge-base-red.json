@@ -1,0 +1,7 @@
+{
+  "base": "26dbff6",
+  "fixture": "tests/test_rf9_repairs.py::test_architecture_observes_implicit_parent_layer_violation, corrected declared alpha lane",
+  "missing_implicit_parent_edges": true,
+  "wrong_way": [],
+  "expected_entry_parent_violation_found": false
+}

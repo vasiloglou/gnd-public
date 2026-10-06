@@ -1,0 +1,2 @@
+Retained output edited to replace absolute machine paths.
+rows: 6  killed: 6  not killed: 0

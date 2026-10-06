@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import hashlib
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import math
 import re
 import stat
@@ -20,6 +20,7 @@ from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 from ruamel.yaml.events import AliasEvent, DocumentStartEvent
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import (
     ArtifactError,
     canonical_json_bytes,
@@ -400,7 +401,7 @@ def plan_rai_import(request: RaiImportRequest) -> RaiImportResult:
         alias = _alias_document(request, input_sha, input_sha, [], [])
         alias_bytes = canonical_json_bytes(alias)
         Draft202012Validator(
-            json.loads(files("gnd").joinpath("rai-alias.schema.json").read_text(encoding="utf-8"))
+            _rf7_input.loads(files("gnd").joinpath("rai-alias.schema.json").read_text(encoding="utf-8"))
         ).validate(alias)
         return RaiImportResult(data, alias_bytes, input_sha, input_sha, ())
 
@@ -625,7 +626,7 @@ def plan_rai_import(request: RaiImportRequest) -> RaiImportResult:
         raise
     output_sha = hashlib.sha256(model_bytes).hexdigest()
     alias = _alias_document(request, input_sha, output_sha, role_aliases, constraint_aliases)
-    schema = json.loads(files("gnd").joinpath("rai-alias.schema.json").read_text(encoding="utf-8"))
+    schema = _rf7_input.loads(files("gnd").joinpath("rai-alias.schema.json").read_text(encoding="utf-8"))
     Draft202012Validator(schema).validate(alias)
     return RaiImportResult(
         model_bytes,

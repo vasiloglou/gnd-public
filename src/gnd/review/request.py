@@ -30,7 +30,9 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import ArtifactError, read_regular_bounded
+from gnd.artifacts import reject_json_duplicate_pairs as _reject_duplicate_object_pairs
 
 __all__ = [
     "MVP_TRIAGE_CRITERION",
@@ -623,13 +625,6 @@ def canonical_review_request(request: ReviewRequest) -> bytes:
     return _canonical_json(request.model_dump(mode="json"))
 
 
-def _reject_duplicate_object_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-    document: dict[str, Any] = {}
-    for key, value in pairs:
-        if key in document:
-            raise ValueError(f"duplicate JSON key {key!r}")
-        document[key] = value
-    return document
 
 
 def _reject_nonfinite_constant(value: str) -> None:
@@ -666,7 +661,7 @@ def _unfence(text: str) -> str:
 def _strict_json_object(raw: bytes, *, label: str) -> dict[str, Any]:
     try:
         text = _unfence(raw.decode("utf-8"))
-        document = json.loads(
+        document = _rf7_input.loads(
             text,
             object_pairs_hook=_reject_duplicate_object_pairs,
             parse_constant=_reject_nonfinite_constant,
@@ -868,7 +863,7 @@ def _json_object_or_none(text: str) -> dict[str, Any] | None:
     """
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             text,
             object_pairs_hook=_reject_duplicate_object_pairs,
             parse_constant=_reject_nonfinite_constant,

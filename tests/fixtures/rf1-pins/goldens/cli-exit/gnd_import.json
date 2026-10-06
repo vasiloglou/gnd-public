@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd import [-h] {rai-orm} ...\n\npositional arguments:\n  {rai-orm}\n    rai-orm   import the bounded rai-orm-from-schema dialect\n\noptions:\n  -h, --help  show this help message and exit\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd import [-h] {rai-orm} ...\ngnd import: error: the following arguments are required: import_command\n",
+  "stdout": ""
+ }
+}

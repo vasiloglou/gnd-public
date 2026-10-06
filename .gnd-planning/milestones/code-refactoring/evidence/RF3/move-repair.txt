@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_pin_harness.py::test_mutation_table_rows_of_their_own --tb=short
+.                                                                        [100%]
+1 passed in 0.06s
+
+Exit: 0

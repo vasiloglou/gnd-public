@@ -1,0 +1,6 @@
+{
+  "base": "10608c4761bae7c0989b774a20de5f43c6350912",
+  "exit": 1,
+  "seconds": 1.066498041152954,
+  "scope": "exact archived source and archived tests; isolated4000-parameter, installer65-count and setuid control"
+}

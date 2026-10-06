@@ -1,0 +1,40 @@
+[
+  {
+    "id": "A1",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF5 auto",
+    "sha256": "3aa67d677c32134d426f8b405f191fc4272004c86dda334297f9b250b2fa7cb4",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A1-spec.md"
+  },
+  {
+    "id": "A2",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF5 auto",
+    "sha256": "ae47111f0b8dbbe38de72598e10f7467eed803a67941175ab2abf980fbced13e",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A2-spec.md"
+  },
+  {
+    "id": "A3",
+    "authorization": "process-phase RF5 auto",
+    "decision": "delegated approval (auto=true)",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A3-spec.md",
+    "sha256": "f00fabca826bdcca85bfb49cdd81524b48082a6b797b03b4d84d92e55aa45956"
+  },
+  {
+    "id": "A4",
+    "decision": "delegated approval (auto=true)",
+    "authorization": "process-phase RF5 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A4-spec.md",
+    "sha256": "68fb5e6f72b34e450388c0220e6bbf35013dec181b694c18d9c0c9ac3cb84498"
+  },
+  {
+    "id": "A5",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF5 auto",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A5-spec.md",
+    "sha256": "a7228b3d112eda496173cb530936deb5cdbe2fc6f2183ee9dd47957f8517568d"
+  }
+]

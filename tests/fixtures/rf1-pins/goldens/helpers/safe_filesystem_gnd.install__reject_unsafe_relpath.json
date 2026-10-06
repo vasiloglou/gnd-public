@@ -1,0 +1,85 @@
+{
+ "observed": {
+  "absolute": {
+   "message": "rf1: refusing the absolute path '/abs' (as supplied: /abs). Install destinations are always relative to the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "backslash": {
+   "ok": {
+    "path": "a\\b"
+   }
+  },
+  "backslash-parent": {
+   "message": "rf1: refusing '..\\x' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "dot": {
+   "message": "rf1: '.' is empty after normalisation",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "dot-slash": {
+   "ok": {
+    "path": "a"
+   }
+  },
+  "dotdot": {
+   "message": "rf1: refusing '..' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "double-slash": {
+   "ok": {
+    "path": "a/b"
+   }
+  },
+  "drive-absolute": {
+   "message": "rf1: refusing the absolute path 'C:\\\\a' (as supplied: C:\\a). Install destinations are always relative to the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "drive-relative": {
+   "message": "rf1: refusing the absolute path 'C:a' (as supplied: C:a). Install destinations are always relative to the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "empty": {
+   "message": "rf1: the relative path is empty or blank ('')",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "inner-parent": {
+   "message": "rf1: refusing 'a/../b' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "nested": {
+   "ok": {
+    "path": "a/b"
+   }
+  },
+  "non-ascii": {
+   "ok": {
+    "path": "é"
+   }
+  },
+  "nul": {
+   "message": "rf1: the relative path 'a\u0000b' contains a NUL byte",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "parent": {
+   "message": "rf1: refusing '../a' — it contains a '..' component and would climb out of the target root.",
+   "raises": "gnd.install.InstallPathError"
+  },
+  "plain": {
+   "ok": {
+    "path": "a"
+   }
+  },
+  "tilde": {
+   "ok": {
+    "path": "~"
+   }
+  },
+  "trailing-slash": {
+   "ok": {
+    "path": "a"
+   }
+  }
+ },
+ "site": "safe_filesystem|gnd.install:_reject_unsafe_relpath"
+}

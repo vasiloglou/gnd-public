@@ -18,23 +18,18 @@ import ssl
 import stat
 import time
 from pathlib import Path, PurePosixPath, PureWindowsPath
-from typing import Any
 from urllib.parse import urlsplit
 
-from gnd.agent_cli import (
-    AgentCLIError,
-    BoundedProcessResult,
-    InvocationStatus,
-    ProcessLimits,
-    run_bounded_process,
-)
-from gnd.artifacts import canonical_json_bytes
+from gnd import input_policy as _rf7_input
+from gnd.agents import AgentCLIError, InvocationStatus
+from gnd.artifacts import canonical_json_bytes, reject_json_constant, reject_json_duplicate_pairs
 from gnd.exp.adapter_policy import (
     CommandAdapterPolicy,
     OpenAICompatiblePolicy,
     ResolvedAdapterPolicy,
 )
 from gnd.exp.declared_invocation import DeclaredInvocationResult, declared_effective_prompt
+from gnd.process import BoundedProcessResult, ProcessLimits, run_bounded_process
 
 __all__ = [
     "MAX_BUNDLE_FILES",
@@ -92,22 +87,13 @@ def _safe_bundle_path(value: object) -> tuple[str, ...]:
 
 
 def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:
-    def reject_constant(token: str) -> None:
-        raise ValueError(f"non-finite JSON number {token!r} is forbidden")
 
-    def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-        document: dict[str, Any] = {}
-        for key, value in pairs:
-            if key in document:
-                raise ValueError(f"duplicate JSON key {key!r}")
-            document[key] = value
-        return document
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             content,
-            parse_constant=reject_constant,
-            object_pairs_hook=reject_duplicates,
+            parse_constant=reject_json_constant,
+            object_pairs_hook=reject_json_duplicate_pairs,
         )
     except (json.JSONDecodeError, ValueError, RecursionError) as error:
         raise CandidateBundleError(f"assistant content is not bundle JSON: {error}") from error
@@ -574,7 +560,7 @@ async def _invoke_http(
             if not 200 <= http_status < 300:
                 raise OpenAIResponseError(f"HTTP response status {http_status} is not successful")
             try:
-                document = json.loads(response_body.decode("utf-8"))
+                document = _rf7_input.loads(response_body.decode("utf-8"))
                 message = document["choices"][0]["message"]
                 if message.get("tool_calls"):
                     raise OpenAIResponseError("tool-call responses are refused")

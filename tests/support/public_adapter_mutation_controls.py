@@ -1,11 +1,11 @@
-"""Exact original mutation-control bodies over reviewed public inputs."""
+"""Original mutation cases with RF3 lookup retargets over reviewed public inputs."""
 import json
 from itertools import pairwise
 from pathlib import Path
 
 from support import public_adapter_cases as corpus
 
-from gnd import correspondence
+from gnd import checker, correspondence, extensions
 from gnd import semantic_adapter as adapter
 from gnd.model import load_model
 from gnd.population import load_population
@@ -169,7 +169,7 @@ def test_semiderived_claims_are_retained_without_computing_extensions(monkeypatc
     def forbidden(*args, **kwargs):
         raise AssertionError("preserve rules and claims without calculating their meaning")
 
-    monkeypatch.setattr(adapter.checker, "_python_extension_calculator", forbidden)
+    monkeypatch.setattr(extensions, "_python_extension_calculator", forbidden)
     result = adapter.adapt_snapshot(model, population)
     assert any(
         row.derivation == "semiderived" and row.relation_source == "computed-extension"
@@ -183,8 +183,9 @@ def test_dependency_graph_and_bare_dollar_literal_are_preserved(monkeypatch):
     def forbidden(*args, **kwargs):
         raise AssertionError("the adapter must not evaluate constraints or derive extensions")
 
-    for name in ("check", "_python_extension_calculator", "_derivation_obligation"):
-        monkeypatch.setattr(adapter.checker, name, forbidden)
+    monkeypatch.setattr(checker, "check", forbidden)
+    for name in ("_python_extension_calculator", "_derivation_obligation"):
+        monkeypatch.setattr(extensions, name, forbidden)
     monkeypatch.setattr(correspondence, "evaluate_snapshot", forbidden)
     root = ROOT / "tests/fixtures/derivation-evaluation/cases"
     directory = root / "cost-chain-counted"

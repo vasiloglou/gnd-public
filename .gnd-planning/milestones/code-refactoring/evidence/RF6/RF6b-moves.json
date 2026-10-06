@@ -1,0 +1,2090 @@
+[
+  {
+    "module": "gnd.model",
+    "name": "yaml_stream_guard_error",
+    "kind": "FunctionDef",
+    "line": 85,
+    "end": 113,
+    "sha256": "9e083056b386b7ab0b880fbe18b6711a66e1e89614a5bec9f271b097d4f74d04",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_load_meta_schema",
+    "kind": "FunctionDef",
+    "line": 119,
+    "end": 121,
+    "sha256": "491b868e5fdf26350ff1336e0bcde90dbf347923ab531850b233bfedf1742a38",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_rule_hint",
+    "kind": "FunctionDef",
+    "line": 131,
+    "end": 188,
+    "sha256": "6a475c78001b082f2b2f19fa6811d96395eaee90eb0a55e51bf3a5460d8c56a5",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_layer1_structural",
+    "kind": "FunctionDef",
+    "line": 191,
+    "end": 230,
+    "sha256": "ba78b16641f5e8df5ec40dc251e6e07c5c85ab37d2cbb7ae9260ec6c99056780",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_constraints",
+    "kind": "FunctionDef",
+    "line": 236,
+    "end": 247,
+    "sha256": "28c7111aa9ddb4600fb84066f49d9d018c6bd2aa5d8d36f159370b947e6d5339",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_role_refs",
+    "kind": "FunctionDef",
+    "line": 250,
+    "end": 263,
+    "sha256": "7e5e04fde985dbd68a1b50dd92c25b8f5730feb8f1fc0bb74033a81873e79178",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_id_unique",
+    "kind": "FunctionDef",
+    "line": 269,
+    "end": 310,
+    "sha256": "83bd596d8c1ab049817e8b0d87669f061523d7d1639d14456075b00beb93d534",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_ref",
+    "kind": "FunctionDef",
+    "line": 313,
+    "end": 340,
+    "sha256": "1c48f6c9c53e175592863e41e31da643868c65216efe09a9e1ebb943ac694da2",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_cross_ref",
+    "kind": "FunctionDef",
+    "line": 343,
+    "end": 369,
+    "sha256": "232bcdfbc32e1f6a60516bb5f7fa4c0d9e8c2dbaf6eb9bc49f9447351573bcb9",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_depends_on",
+    "kind": "FunctionDef",
+    "line": 372,
+    "end": 386,
+    "sha256": "4d7eef800115b43dcc97501ef5a0d86f7c1b60a3b2e0eb1d72074358bd78af20",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_reading_placeholders",
+    "kind": "FunctionDef",
+    "line": 389,
+    "end": 439,
+    "sha256": "649bdd5daa5e1de81a931368356b2f8c653467334d05551631dabe0fba116170",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_fact_type_arity",
+    "kind": "FunctionDef",
+    "line": 442,
+    "end": 462,
+    "sha256": "9c880a4c1991f80484b735ccae7afffb77b8a97baa41b3d3ad56c946f940a974",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_names_distinct",
+    "kind": "FunctionDef",
+    "line": 465,
+    "end": 518,
+    "sha256": "b510c404509910614e9f0678f1836f7d9e1e76ece2fa9a5ae3cb5b770f8dd7c3",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_subtype_ref",
+    "kind": "FunctionDef",
+    "line": 521,
+    "end": 537,
+    "sha256": "ecdbae2e5dfc188173676a602bbc4da82fd86d2621b5d82e6d2659920c9f0575",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_external_ref_uc",
+    "kind": "FunctionDef",
+    "line": 540,
+    "end": 584,
+    "sha256": "d63ffed0782a94f63bf5b6f247931cf3533e3a31b8ccbef261a21b4ec4eeeeef",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_reference_value_type",
+    "kind": "FunctionDef",
+    "line": 587,
+    "end": 609,
+    "sha256": "d134718fae9451418ba1025303df8d3fd5774bb9c4faec8af299ccf479f3d2d2",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_temporal_literal_valid",
+    "kind": "FunctionDef",
+    "line": 612,
+    "end": 632,
+    "sha256": "1bb33aa10c3bbdff1d1c5bec54d4af743785f699ec20d46aab8eeeca577fc13d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_range_endpoints_valid",
+    "kind": "FunctionDef",
+    "line": 638,
+    "end": 655,
+    "sha256": "f0a6a4781169ae24193094f9a5dd5fc556b0c4c47f21981de845dd93ca8cede3",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_value_range_type",
+    "kind": "FunctionDef",
+    "line": 658,
+    "end": 696,
+    "sha256": "598ed07a876c59993e6ce65464476505e529abc8daa011c4c8e54423d5cbccd8",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_value_range_order",
+    "kind": "FunctionDef",
+    "line": 699,
+    "end": 769,
+    "sha256": "13f3b894243a7081563021e14e5411f0fab79c90b0c0c02a7369eb99491b0142",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_count_bound_order",
+    "kind": "FunctionDef",
+    "line": 772,
+    "end": 789,
+    "sha256": "05698034cf557ed6562da1c61857f99b607aeeb2d8ecce550e7931c8c1ea0bf0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_status_source",
+    "kind": "FunctionDef",
+    "line": 792,
+    "end": 829,
+    "sha256": "cc135c30636e517830c6982302f5dbd4eea6e1ee5b13c993771715ab7f763ca0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_string_ref",
+    "kind": "FunctionDef",
+    "line": 832,
+    "end": 912,
+    "sha256": "6a7c06a914458d23bfdefe64657f8d77e21ea221fd67ad6eaf426ce9b10f6360",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_ancestor_closure",
+    "kind": "FunctionDef",
+    "line": 915,
+    "end": 925,
+    "sha256": "f106e4fbad7bfe4690bd032cc90ff6c5ae5b96c177f9516cb5e11da36e0ec1a9",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_ring_binary",
+    "kind": "FunctionDef",
+    "line": 928,
+    "end": 957,
+    "sha256": "3a0170ecc71096aaf86958b6c09bc4663b3738115317aab203cb75932c49fca3",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_constraint_role_seqs",
+    "kind": "FunctionDef",
+    "line": 970,
+    "end": 983,
+    "sha256": "7a5f433f19d69f6c5fb4552978f37716b9f564e8769199b0d8c44aab36089a0a",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_joining_sequences",
+    "kind": "FunctionDef",
+    "line": 986,
+    "end": 993,
+    "sha256": "3a41d4a4c7304a7fa1a9b3c0c6709d1367c8fedf5d45b52c173c341a79c9d370",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_join_anchor_unambiguous",
+    "kind": "FunctionDef",
+    "line": 996,
+    "end": 1036,
+    "sha256": "6e0dbf854bf1cab4411ce63b708acbf6bf9bac6600b6ad6247af711345335206",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_role_object_types",
+    "kind": "FunctionDef",
+    "line": 1039,
+    "end": 1049,
+    "sha256": "87afc4262b1b5f2d12a615176fd1868c1a71a910d61ab290d7dea66320b4b759",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_seq_arity",
+    "kind": "FunctionDef",
+    "line": 1052,
+    "end": 1077,
+    "sha256": "7d5fbb75040639dbe423d6406ba25c5fd6e3429b2785c5c12b4ed6374c7ea295",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_role_seq_type_compat",
+    "kind": "FunctionDef",
+    "line": 1080,
+    "end": 1137,
+    "sha256": "c43e7f2c886a600b4f704f9e3174ac334bc44e0beaea9e0d773e6520c5894a47",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_disjunctive_subject_type",
+    "kind": "FunctionDef",
+    "line": 1140,
+    "end": 1175,
+    "sha256": "2135a2f9c9166161cfe9ee12e234cfa9c90466f0698e73afc07995c7f1a18043",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_partition_asserts_something",
+    "kind": "FunctionDef",
+    "line": 1178,
+    "end": 1227,
+    "sha256": "27b224ea7d8cff42865b16dc655494d0a15238d5f6534a1316d0bf2b38416f29",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_anchored_role_and_recogniser",
+    "kind": "FunctionDef",
+    "line": 1239,
+    "end": 1283,
+    "sha256": "5bffb927ddd6efee6d6e481e592c6ca7b829aaebd0a9cb166d58163eee606ea1",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_textual_alethic",
+    "kind": "FunctionDef",
+    "line": 1286,
+    "end": 1314,
+    "sha256": "07c9179319e6b581dcadf55e4498476aff8f6b2a1395d6745a77670d0c3f97ae",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_modality_policy",
+    "kind": "FunctionDef",
+    "line": 1317,
+    "end": 1340,
+    "sha256": "bd83f28b3fb7bfe2e679853f9c4a789097f987031e199709b540356557bd5a46",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operations",
+    "kind": "FunctionDef",
+    "line": 1351,
+    "end": 1356,
+    "sha256": "8863cb5aa59de64ab1c074464a3706276a1f2d3eaa69a2203cd9e9837c645f82",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_operation_parameters",
+    "kind": "FunctionDef",
+    "line": 1359,
+    "end": 1371,
+    "sha256": "20f7e69c8840335d483b1564b6c093f64cb6144687d170e527d2d9b9db2775d5",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operation_obligations",
+    "kind": "FunctionDef",
+    "line": 1374,
+    "end": 1380,
+    "sha256": "ee814cf78fe00305e25f465a5b03124b04100fc7c4bc6b4395a107aa92fa1916",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operation_atoms",
+    "kind": "FunctionDef",
+    "line": 1383,
+    "end": 1403,
+    "sha256": "998abc4b3dcd6b458ebb09b6caee813a7dbcbc6c197f02fff8986b5fe5cb4a0e",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_operation_terms",
+    "kind": "FunctionDef",
+    "line": 1406,
+    "end": 1413,
+    "sha256": "c39a9cb6fc9f2793b57e23c1c35293b24e92c36dec425ff8496b3a058ca8af6a",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_variable_name",
+    "kind": "FunctionDef",
+    "line": 1416,
+    "end": 1420,
+    "sha256": "c1bc4fda33493e0a89d325f0309659fc342fdc2f1f83e8b6df736691677edf27",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_param_ref",
+    "kind": "FunctionDef",
+    "line": 1423,
+    "end": 1443,
+    "sha256": "c4286ffd493b09fce089898a1403e59f85e9a9c49bc3b36c0bf141f7a42e264d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_param_names_distinct",
+    "kind": "FunctionDef",
+    "line": 1446,
+    "end": 1469,
+    "sha256": "2dd531d8227c73e3e75b0b9aacfedc323b91eac6c92c688f5a3abb8f689030e7",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_reading_placeholders",
+    "kind": "FunctionDef",
+    "line": 1479,
+    "end": 1589,
+    "sha256": "a447be8115b57e66270351465dce58ad9ceb242a2429d515fc1627c85b93aee6",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_atom_reference_issues",
+    "kind": "FunctionDef",
+    "line": 1592,
+    "end": 1631,
+    "sha256": "adc4ba6a9b92001ec76f5fe686a78f18e6c49ad3aeb0792319c880b21733d70e",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_atom_ref",
+    "kind": "FunctionDef",
+    "line": 1634,
+    "end": 1651,
+    "sha256": "68c5ca6dca2654e4637d0e8e543709181fc98ee2e18a5726afcbe5a577586ec2",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_term_ref",
+    "kind": "FunctionDef",
+    "line": 1654,
+    "end": 1675,
+    "sha256": "82246c9c34cf04f9367aef2edf8b6e9ed7c903c773a465fb893a558190a84eec",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_term_type_compat",
+    "kind": "FunctionDef",
+    "line": 1678,
+    "end": 1729,
+    "sha256": "9966579875e6df327cc455c8133628a878588ff66859ea4a5378a1955fbd3ac1",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_effect_ground",
+    "kind": "FunctionDef",
+    "line": 1732,
+    "end": 1766,
+    "sha256": "c938b3c2298127b7a6aef7972246ead82823019883c44abc3ab58c36873f1f76",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_create_param",
+    "kind": "FunctionDef",
+    "line": 1769,
+    "end": 1838,
+    "sha256": "393cb4c028b0e3dd3f108ff63ce0b380ba81fd378905ac17087ad8e1acbd8e6b",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_create_ref_mode",
+    "kind": "FunctionDef",
+    "line": 1841,
+    "end": 1903,
+    "sha256": "ba0a89d4686acf9ed2f078685aa03c320c7ac5d38b18a2ca5546aa7155f8d5a4",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_obligation_ids_distinct",
+    "kind": "FunctionDef",
+    "line": 1906,
+    "end": 1934,
+    "sha256": "5be0d31b4acd20917873c6081398a5322763fbce56a3f9fa8487c6bc7b9386f0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_provenance_bearing",
+    "kind": "FunctionDef",
+    "line": 1944,
+    "end": 1957,
+    "sha256": "8bace9009eb98ac260085fbe042256e5a09704a24d1b56cd220869f2acd1cf33",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_provenance_bearing_label",
+    "kind": "FunctionDef",
+    "line": 1960,
+    "end": 1971,
+    "sha256": "338b3b3e35223b2818eb31de92e10bdfe45fecda8d75b1c7cb440cef35901e86",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_imported_provenance",
+    "kind": "FunctionDef",
+    "line": 1974,
+    "end": 2003,
+    "sha256": "443c930d687a703493a627409c6dab611fd8ad982894d49d6c2f9115c0bcc994",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_imported_confirmed_reviewed",
+    "kind": "FunctionDef",
+    "line": 2006,
+    "end": 2030,
+    "sha256": "7042bf071980d4a274e90bb23e435dcb6c5cf85c76d9401cda66e0c181a53f3c",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_internal_uniqueness_keys",
+    "kind": "FunctionDef",
+    "line": 2033,
+    "end": 2039,
+    "sha256": "b53c8e16160d0dba4fd5738c9f5a2c3ce970ed3902449d02f1005a552d3687b6",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "dynamic_subject_is_functional",
+    "kind": "FunctionDef",
+    "line": 2042,
+    "end": 2076,
+    "sha256": "66124e08dd4a43a532c7d734392933ddd34781e7f6fea572823a6f62d48f3eb2",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_dynamic_functional",
+    "kind": "FunctionDef",
+    "line": 2079,
+    "end": 2125,
+    "sha256": "1a3e9dc826ef2c2558355e7186f4720300a6d50829da82c2ed9cb48a88704b70",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_dynamic_untouched",
+    "kind": "FunctionDef",
+    "line": 2128,
+    "end": 2182,
+    "sha256": "b2a9e5e68dcc529b99acd2c2597a732ca3e8bd9b49cdbe7290f138cad712db11",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_op_modality_policy",
+    "kind": "FunctionDef",
+    "line": 2185,
+    "end": 2215,
+    "sha256": "fa6e87983caa6952d6953083df6f581fe63dd2ca429e9b68909cd38a30a8ea39",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_guarded_constraints",
+    "kind": "FunctionDef",
+    "line": 2221,
+    "end": 2230,
+    "sha256": "cd9ea1b419491993831c7cdb6806cede9851e042253618158e0f7ccbdcbbeee6",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_guarded_atoms",
+    "kind": "FunctionDef",
+    "line": 2233,
+    "end": 2250,
+    "sha256": "37f5cdc681bff923a85919bf80218ecbff74e23999ae93334b12d04037a9aac1",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_guarded_consequent_terms",
+    "kind": "FunctionDef",
+    "line": 2253,
+    "end": 2273,
+    "sha256": "89c190d0b4594cd0e8b2c49c444c7ba6642e6d4603dd9fbe270dcd4bfcbe08af",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_term_ref",
+    "kind": "FunctionDef",
+    "line": 2276,
+    "end": 2290,
+    "sha256": "542fcaf4609c211dfc937bc327685e84d59931c7f8519b02a047910864ad520b",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_role_claim",
+    "kind": "FunctionDef",
+    "line": 2293,
+    "end": 2319,
+    "sha256": "8ba01a3fe13e5434fd78f7e8844e36e1110a944027129af87dda601eea8ab529",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_consequent_ground",
+    "kind": "FunctionDef",
+    "line": 2322,
+    "end": 2369,
+    "sha256": "bccecba41feb72d2c0107faa042927c39acda8f62a91655c1ca837f6f19f858c",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_nested_function_variables",
+    "kind": "FunctionDef",
+    "line": 2372,
+    "end": 2386,
+    "sha256": "643645b7f0b469379cab928a69d80abf5d22bd5a9ccf50d34db8193114334ab9",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_exists_range",
+    "kind": "FunctionDef",
+    "line": 2389,
+    "end": 2425,
+    "sha256": "e7181017e8a24b28aa5e9759551bbd7a7c8c973bd482a19037380187827a9a52",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_exists_where_bound",
+    "kind": "FunctionDef",
+    "line": 2428,
+    "end": 2463,
+    "sha256": "666f74c676527d09752d1efda4d8696ea218493851c2fad8e8bd05d7b50f4034",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_primitives_compatible",
+    "kind": "FunctionDef",
+    "line": 2466,
+    "end": 2469,
+    "sha256": "910e64e006f9e25f492064055bb4583c942e61c8edf8b6297245806497012758",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_literal_matches_primitive",
+    "kind": "FunctionDef",
+    "line": 2472,
+    "end": 2487,
+    "sha256": "72c92abff20a73768830ffe64393d5c9f45aabb8bcf455af8bf9ba0eddba794b",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_guarded_literal_kinds_compatible",
+    "kind": "FunctionDef",
+    "line": 2490,
+    "end": 2501,
+    "sha256": "436e1edc403861fa6b88bbc69ce78197e89ce5681e8b4d5869822cf630b5ff64",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_comparison_type",
+    "kind": "FunctionDef",
+    "line": 2504,
+    "end": 2649,
+    "sha256": "73dfb3fff3fe7f78cfdf43f5bb23299ef1ca3f45a1f1027272c4b2047de98e21",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_guarded_exists_where_type",
+    "kind": "FunctionDef",
+    "line": 2652,
+    "end": 2737,
+    "sha256": "356c82f7919f43f7167f67c2002d227eb971dd997de54f79a764f750090320c0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "iter_derivation_clauses",
+    "kind": "FunctionDef",
+    "line": 2758,
+    "end": 2781,
+    "sha256": "f322df025a0aa8efda7a55d3bca9643d51434ddbf97ca6cd3fd0357d6990ff5d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_is_structured_rule",
+    "kind": "FunctionDef",
+    "line": 2784,
+    "end": 2786,
+    "sha256": "05101e5e8c281009be1d7ed1558516e4ccc8f568f506266f5d67791f11855064",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_iter_structured_fact_derivations",
+    "kind": "FunctionDef",
+    "line": 2789,
+    "end": 2807,
+    "sha256": "613311b352765847da3359b0abbdf19290a08da70186b86e014d309b8a1efc28",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_atoms",
+    "kind": "FunctionDef",
+    "line": 2829,
+    "end": 2846,
+    "sha256": "c7bf6bf306ac31a9af460bd2b5bf023b575d247b5e102c00c9229796a6f0d8c8",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_safe_key",
+    "kind": "FunctionDef",
+    "line": 2849,
+    "end": 2860,
+    "sha256": "ac4d9c3dd9bf610590a184ab25a0b19e639c2df3affdcd799641ea7088c5366d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_id",
+    "kind": "FunctionDef",
+    "line": 2863,
+    "end": 2870,
+    "sha256": "3044349cdd9926c720dbbb21d3aa5f70f5cabc02925a5f53af4c3d34ef116d6e",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_bind",
+    "kind": "FunctionDef",
+    "line": 2873,
+    "end": 2881,
+    "sha256": "5e8b9b1b26e79e3745c1f2e37f5478898934ece57c9182ea521748f8ba208d69",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_variable",
+    "kind": "FunctionDef",
+    "line": 2884,
+    "end": 2892,
+    "sha256": "83cfcdae372f604bd3f88614db1be89515dd4f8096ad7602e5d764fd06f2425b",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_positive_variables",
+    "kind": "FunctionDef",
+    "line": 2895,
+    "end": 2903,
+    "sha256": "8c4cd736d9d3a3d56f59aa135cdc0ef0357ecf4d8034e644a127be28261342a8",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_aggregate_variables",
+    "kind": "FunctionDef",
+    "line": 2906,
+    "end": 2916,
+    "sha256": "54816a8aa7ddb5f3fbb54eb5e5ff7102741b01e387cfac4a0eddcde60e9b6a53",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "AggregateAnalysis",
+    "kind": "ClassDef",
+    "line": 2919,
+    "end": 2931,
+    "sha256": "c470070e30018a42a45d51f34308bf24ba8d1da0d0d862fdf4cb34f6baadc201",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "analyze_aggregate",
+    "kind": "FunctionDef",
+    "line": 2934,
+    "end": 3124,
+    "sha256": "910a10ab3a847a6ed85e270722a17a5c3df5b830f851f6e779b4ea7b5ee0ef8c",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_scope_variables",
+    "kind": "FunctionDef",
+    "line": 3127,
+    "end": 3139,
+    "sha256": "6d6e883a26870ebf31fc577e03b22238c41a8c50eac7216c26799d157ed4c682",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_primitive_maps",
+    "kind": "FunctionDef",
+    "line": 3142,
+    "end": 3154,
+    "sha256": "27d71fd35bcbee7201fc2eb3f140ae275f4955429ae14b49e2d2e2db4caf73b5",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_variable_primitives",
+    "kind": "FunctionDef",
+    "line": 3157,
+    "end": 3191,
+    "sha256": "245ea28f60b98aabb2e025d0c904e705fd00bdf15da4f47f75486bdba61fe080",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "analyze_declared_aggregate",
+    "kind": "FunctionDef",
+    "line": 3194,
+    "end": 3206,
+    "sha256": "5e7b9cbcf2da2a06624f761ffe43983cb491ac6a5636b862bb7685f9bfbb0f92",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "body_components",
+    "kind": "FunctionDef",
+    "line": 3209,
+    "end": 3266,
+    "sha256": "ff09bb5f4ad356e00485eb01f510335c377dafb83fd74be6e7b497ab74bb3805",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_dependencies",
+    "kind": "FunctionDef",
+    "line": 3269,
+    "end": 3284,
+    "sha256": "b1f7c39758b316b431f439441a2f5646964d52533962b8ed363c7da1020a3177",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DerivationEdge",
+    "kind": "ClassDef",
+    "line": 3287,
+    "end": 3293,
+    "sha256": "d0dddcb62c91f2ce6bfc262ea8b3d1c747fbd2f68f424fa2e2149801738b60a7",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_dependency_edges",
+    "kind": "FunctionDef",
+    "line": 3296,
+    "end": 3313,
+    "sha256": "5d80e28cb2180879cb0a3d3b5bce035f76cee376c8838edd11417e1371031ef0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "DerivationClassification",
+    "kind": "ClassDef",
+    "line": 3319,
+    "end": 3330,
+    "sha256": "ff284c17becb9c795479fecf195636ce970fcc24a35fcb4cfdf7d916be86f76d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_dependency_closure",
+    "kind": "FunctionDef",
+    "line": 3333,
+    "end": 3349,
+    "sha256": "97dd652b9326052d85b8ef413aab3f417c7fc9e624d2ae7baf059fd0258cfdfb",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_dependency_closures",
+    "kind": "FunctionDef",
+    "line": 3352,
+    "end": 3421,
+    "sha256": "4dc6de1bc21b66428c8d462dc216913829968ec58d7380f7e00b485f3013d111",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_classifications",
+    "kind": "FunctionDef",
+    "line": 3424,
+    "end": 3541,
+    "sha256": "20c485b89502e89a7d831b309d9ab957d6be7a661953f69d72e7e81b627e4690",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_components",
+    "kind": "FunctionDef",
+    "line": 3544,
+    "end": 3584,
+    "sha256": "da860ad95d1fc65494dca353ac32446eb47103bd943d0362e7c8ed04f6372b76",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "derivation_strata",
+    "kind": "FunctionDef",
+    "line": 3587,
+    "end": 3613,
+    "sha256": "e9e0a39a91339e1f24ccc863650b232d25f59abd17dfb4d1aee202675eb2b0bb",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_term_ref",
+    "kind": "FunctionDef",
+    "line": 3616,
+    "end": 3668,
+    "sha256": "1f394ea50f427e1de6f99e73d3b8a2f1469880b70dfe4731cb6058198deec07f",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_rule_shape",
+    "kind": "FunctionDef",
+    "line": 3671,
+    "end": 3773,
+    "sha256": "0b40118213754f4a512419d435f4276683a5175b78dd0c16fdd7f99f62d6bb9c",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_aggregate_issues",
+    "kind": "FunctionDef",
+    "line": 3776,
+    "end": 3790,
+    "sha256": "ba518b9de06fcfb7bae86aeb98ae3bbb1a34cea59852bfebbda4e68e4cf4051d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_shape",
+    "kind": "FunctionDef",
+    "line": 3793,
+    "end": 3794,
+    "sha256": "6e8a96950f1045ecd00640613e24a290b08c13400c0386fce8c06cd92c71cbfe",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_function",
+    "kind": "FunctionDef",
+    "line": 3797,
+    "end": 3798,
+    "sha256": "faffe08340f4cb8c3e7f38cac2dbb060bbd85d05f316aa7e475f1afe248e7d1a",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_of_unbound",
+    "kind": "FunctionDef",
+    "line": 3801,
+    "end": 3802,
+    "sha256": "a42d52e3b39c748fc6ee0413d1cf741f88dbeca754160c4c08156223ccdb3d3d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_over_unbound",
+    "kind": "FunctionDef",
+    "line": 3805,
+    "end": 3806,
+    "sha256": "df0db64ce32fa3280e00ff9eaa85a719ec8a09e060a0287fe5e2acd74f5ee002",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_over_duplicate",
+    "kind": "FunctionDef",
+    "line": 3809,
+    "end": 3810,
+    "sha256": "9f5d0be8ea78a3cd3474fbb234f439be5c56612a613de7f22d7f2652ca85f2df",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_as_not_fresh",
+    "kind": "FunctionDef",
+    "line": 3813,
+    "end": 3814,
+    "sha256": "42ace675913723bf3b2cd5e986ed5627d87b2d2b6a96b72f4bf364ad7c088cbe",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_input_type",
+    "kind": "FunctionDef",
+    "line": 3817,
+    "end": 3818,
+    "sha256": "30e49d0d5ccba2e870db1bf4cb8bfac981c9376dac4e68728a0b7e8ca206f396",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_where_scope",
+    "kind": "FunctionDef",
+    "line": 3821,
+    "end": 3822,
+    "sha256": "d2d4567a6087bb15ea8bcbb05a128e6feed7a19cdb956919646755afa316c1e3",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_head_scope",
+    "kind": "FunctionDef",
+    "line": 3825,
+    "end": 3826,
+    "sha256": "5e4a465cdb65f02b37baa8e51fb08204f1159496e9b7c73ab2e04695fc397b3f",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_aggregate_head_needs_round",
+    "kind": "FunctionDef",
+    "line": 3829,
+    "end": 3830,
+    "sha256": "e29345d103a7930f60b4ffbeb8b9059d572ac32c301db632f26519e23d01d28c",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_structured_on_object_type",
+    "kind": "FunctionDef",
+    "line": 3833,
+    "end": 3862,
+    "sha256": "1d79ae13883faa8274e7d457add51161af79cc8b4047598414af78d9ebeb8b91",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_effect_on_derived",
+    "kind": "FunctionDef",
+    "line": 3865,
+    "end": 3900,
+    "sha256": "99d2a52e6dc80c405cdeb51c811d22e9059d486659f8d1ba8ca4115f04fba22a",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_effect_on_semiderived",
+    "kind": "FunctionDef",
+    "line": 3903,
+    "end": 3941,
+    "sha256": "8b43285c032e7dabad0c4a9b4bade87290411bf11e3203f4991a3daa85ba34e6",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_dynamic_dependency_incomplete",
+    "kind": "FunctionDef",
+    "line": 3944,
+    "end": 3966,
+    "sha256": "b4bbb8a144bb3719d8f6cf63a86c56376a4a8196522363862ce0d4cf344aa2dc",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_role_claim",
+    "kind": "FunctionDef",
+    "line": 3969,
+    "end": 3992,
+    "sha256": "3eabf12b896da71e406fd41b5d51ff8d1f4f10a074e802b40f6cb6ca545b0c2d",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_role_claim",
+    "kind": "FunctionDef",
+    "line": 3995,
+    "end": 4016,
+    "sha256": "010ddb3ec876a8d70c12005e5671e3d06d8bbfe38db0a6226226b5e00934b2f7",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_head_term_issues",
+    "kind": "FunctionDef",
+    "line": 4019,
+    "end": 4135,
+    "sha256": "4546a929e72f3a169951a90d40a5846dc893bf8efb320bef05424f56133fa2d5",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_filter_derivation_term_issues",
+    "kind": "FunctionDef",
+    "line": 4138,
+    "end": 4146,
+    "sha256": "8009ded557c8e28da0a76121a3e328ba18bbe40d367c8a287e2f25a94be4295e",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_function_name",
+    "kind": "FunctionDef",
+    "line": 4149,
+    "end": 4150,
+    "sha256": "2994bbbc6b3a08744a6e7c9a9ba0285d061839e0d276d012f50c55336187fc91",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_function_arity",
+    "kind": "FunctionDef",
+    "line": 4153,
+    "end": 4154,
+    "sha256": "b0f09c8b4bf0d0e386bcebc4d69724a04640ce129e53ddca5e80c1e7c8d3ad68",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_argument_type",
+    "kind": "FunctionDef",
+    "line": 4157,
+    "end": 4158,
+    "sha256": "80dc397194a9961a73537e0193680cd382f6ebd25f773d8b06b0876e88e9c8b0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_non_finite_number",
+    "kind": "FunctionDef",
+    "line": 4161,
+    "end": 4178,
+    "sha256": "40863440e8ccb22ec1fe229c1624ba34c07e37ff7d2fcf28a20583270ab0e141",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_node_budget",
+    "kind": "FunctionDef",
+    "line": 4181,
+    "end": 4182,
+    "sha256": "8e16392fcc67866a987bc02369ba0fbbbe76c793878ddbb5961821d133c413c4",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_depth_budget",
+    "kind": "FunctionDef",
+    "line": 4185,
+    "end": 4186,
+    "sha256": "e79b5a9d49ca19b684d25c06dba3c11010699e77af56d951fbdb771dfa430e37",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_shape",
+    "kind": "FunctionDef",
+    "line": 4189,
+    "end": 4190,
+    "sha256": "fd22fc2702426da0b6c6a64d9599c21fbd8f0abc6d0e2449ace41a11fc3efe0b",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_unbound",
+    "kind": "FunctionDef",
+    "line": 4193,
+    "end": 4194,
+    "sha256": "4135ec365f1a81b4421ab960c3a0d9bbb74d66453f9e708a49417cb5eb1ec273",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_term_type",
+    "kind": "FunctionDef",
+    "line": 4197,
+    "end": 4198,
+    "sha256": "267e28fd7a064a9aca2c585b32be7c85ed9ab2f757f3c0e7fafb580e285c6551",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_needs_round",
+    "kind": "FunctionDef",
+    "line": 4201,
+    "end": 4202,
+    "sha256": "641cceec83daf6d72a57d5ede9bbbea6dde7d4e8e8f2209880dee0133a9dd822",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_float_head_unquantized",
+    "kind": "FunctionDef",
+    "line": 4205,
+    "end": 4208,
+    "sha256": "64e6b0bd6e069ef4ac0547d2673158c60dd7777e0ba7c3930f0de484ed9503c2",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_term_unbound",
+    "kind": "FunctionDef",
+    "line": 4211,
+    "end": 4212,
+    "sha256": "100c54ba7927088c9a766ba4f0c6c27c9e5c0ef9b80244f50d460ae78d7f9ef0",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_term_comparison_type",
+    "kind": "FunctionDef",
+    "line": 4215,
+    "end": 4216,
+    "sha256": "32a19488c82f579935e934a3b769c4a6a55061d0094e36445428ece160f42ee6",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_head_unbound",
+    "kind": "FunctionDef",
+    "line": 4219,
+    "end": 4240,
+    "sha256": "adbbd641cd1a93c13ca3f6060542b54eba6be547cf29a5917f90370c94b33bec",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_negate_unbound",
+    "kind": "FunctionDef",
+    "line": 4243,
+    "end": 4265,
+    "sha256": "21b016316311b8902703e1741ebe803c5080652e29d59b24c71673415d1f1867",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_body_component_unused",
+    "kind": "FunctionDef",
+    "line": 4268,
+    "end": 4302,
+    "sha256": "cbb6ae0297300fd25bb453a536869ad7b533abab0b9597c4583cc66a5c449106",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_term_type",
+    "kind": "FunctionDef",
+    "line": 4305,
+    "end": 4372,
+    "sha256": "fa50784e05f9c5637581e6849c831a976a534ca468f6639f418a7b1c57088455",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_opaque_dependency",
+    "kind": "FunctionDef",
+    "line": 4375,
+    "end": 4405,
+    "sha256": "0e99890bc88dff6ff455aca23d458bcb969dd8958936052213242b25cb96793a",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_derivation_cycles",
+    "kind": "FunctionDef",
+    "line": 4408,
+    "end": 4469,
+    "sha256": "195096f8289d7b7cbf12cac7f07425018f4f31f16d46247d8943e7088472701a",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_derivation_unstratified",
+    "kind": "FunctionDef",
+    "line": 4472,
+    "end": 4507,
+    "sha256": "2b47a0bea5988d6e7b3729e031f63bdcb849f61059d8ebe037c03c5f7d63de9f",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_temporal_language",
+    "kind": "FunctionDef",
+    "line": 4510,
+    "end": 4585,
+    "sha256": "e019eb535dbdfb51aef62ce812f0191fde6758412ee95a993cce79dccdd768b5",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "semantic_validate",
+    "kind": "FunctionDef",
+    "line": 4690,
+    "end": 4726,
+    "sha256": "a836dbdd3643ce770b196eeecddb46adac27615e72658f0e09669d4f3322f747",
+    "home": "gnd.model._validation"
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model_bytes",
+    "kind": "FunctionDef",
+    "line": 4729,
+    "end": 4764,
+    "sha256": "3f8433b131cec7cefd64a06c48383cdce1f1af9aa5c7ce149f33ddf54c4c62c7",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_load_model_no_follow",
+    "kind": "FunctionDef",
+    "line": 4767,
+    "end": 4781,
+    "sha256": "65f4e0339539215744296c76ae5d234028d48e03df37c2fe4321872937041dc8",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model",
+    "kind": "FunctionDef",
+    "line": 4784,
+    "end": 4809,
+    "sha256": "6a28d914546798b3908ba6209d75fd5aa430933be4c0a94cd62e3ae58f985c10",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_effect_index",
+    "kind": "FunctionDef",
+    "line": 4817,
+    "end": 4836,
+    "sha256": "9d31a08de0b60693a3b41b0ec65319a843e082666f11b5c32edd81aee7c2d6f1",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_variables_in",
+    "kind": "FunctionDef",
+    "line": 4839,
+    "end": 4844,
+    "sha256": "58ee4c9b0ce71225c16840865ccf1bcb63e212ef9a1750a1598b727be808b665",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_roles_by_variable",
+    "kind": "FunctionDef",
+    "line": 4847,
+    "end": 4859,
+    "sha256": "6bea51688005421e040dbaa42fef21ce34ca7dd9db203ebc2ffd63177acc5197",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_has_literal",
+    "kind": "FunctionDef",
+    "line": 4862,
+    "end": 4866,
+    "sha256": "64cb5a288eab681caebee08690124d9b65928e4cf5302d07432f89692218ca79",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "compile_operation",
+    "kind": "FunctionDef",
+    "line": 4869,
+    "end": 4992,
+    "sha256": "e3b8c9a958b3397ca9e5409e24b7ce9287e88b9933437d92c301e92fa08b853f",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_attach_compiled_obligations",
+    "kind": "FunctionDef",
+    "line": 4995,
+    "end": 5012,
+    "sha256": "d4ff2c5381d6f185086790b781055dc9e65bb33c03841c1c714e26768fcddde6",
+    "home": "gnd.model._operations"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ReferenceInputError",
+    "kind": "ClassDef",
+    "line": 5042,
+    "end": 5047,
+    "sha256": "9cd76337c71ab3d7b5d5cdaf29fde2d4a3b7d51fc678922272861daebb0d5c8f",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "ReferenceOrigin",
+    "kind": "ClassDef",
+    "line": 5050,
+    "end": 5053,
+    "sha256": "0a471796ea9694bcf8dcb8fe70fe5c697a74e7ca0af8c02262fdfede793c6bda",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "OccurrenceOrigin",
+    "kind": "ClassDef",
+    "line": 5056,
+    "end": 5059,
+    "sha256": "af1f269e3765ee13c895f4b97ad40ccaf487a76b08c626092b34ec252b407894",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "BoundReferenceContext",
+    "kind": "ClassDef",
+    "line": 5062,
+    "end": 5069,
+    "sha256": "f8f7d8c0cf683f504f9c3ac8f6af962e8f3f11f151e3830e5c228aaa7cd09990",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "BoundPopulationView",
+    "kind": "ClassDef",
+    "line": 5072,
+    "end": 5077,
+    "sha256": "370f1f613ce4927b717fc796c92504bde8689f260976f4a79c0698d14613957f",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "validate_reference_structure",
+    "kind": "FunctionDef",
+    "line": 5080,
+    "end": 5088,
+    "sha256": "23e0bff60f98129385c561242d3c6b6dd19127be51e04bd4b30067a0372fcf82",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_relative",
+    "kind": "FunctionDef",
+    "line": 5091,
+    "end": 5101,
+    "sha256": "bf78ccec3363f4db78ee6fc57cab6b91e19ee3c76212fe718b6ccaa559dd715a",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "retained_root",
+    "kind": "FunctionDef",
+    "line": 5104,
+    "end": 5120,
+    "sha256": "968d8a9b8a2186624d3d02b6fa3efe76a002eed1e90332fb689dc92cd4177761",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "validate_declarations",
+    "kind": "FunctionDef",
+    "line": 5123,
+    "end": 5168,
+    "sha256": "e1de4e90da83db7aefdef3f4c6256cde34d7f118286063c7895d8fd153c8d448",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "_bind_at",
+    "kind": "FunctionDef",
+    "line": 5171,
+    "end": 5221,
+    "sha256": "f8dd186f2421a7bd0db780140ae211ba840ea83b2e3de04cf6fabfb3b1060571",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "bind_references",
+    "kind": "FunctionDef",
+    "line": 5224,
+    "end": 5227,
+    "sha256": "a48967c94771b62863af8eb365d752a335a8d8d9288785596c1404608a64439f",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "resolve_context",
+    "kind": "FunctionDef",
+    "line": 5230,
+    "end": 5259,
+    "sha256": "e5b22e0b2cef01671bb2e8016a997183ae5ea27a96bda1daf7405cd88ad0da41",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "bind_population",
+    "kind": "FunctionDef",
+    "line": 5262,
+    "end": 5333,
+    "sha256": "f394f0010617dcbf7f8a67eae0581338cf48d237b3f8b31f1e97ea7d95b20fbb",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "candidate_fact_count",
+    "kind": "FunctionDef",
+    "line": 5336,
+    "end": 5337,
+    "sha256": "1c825b6ea72405790d2b18bf55202a846c220f8774e834544eba9826852333ec",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.model",
+    "name": "is_bound_population",
+    "kind": "FunctionDef",
+    "line": 5340,
+    "end": 5348,
+    "sha256": "252e2ae51483b8d8c87ab1f4a93b164bf9797bd88fb7654119a9404b6f3f18d6",
+    "home": "gnd.model"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "ConstraintVerdict",
+    "kind": "ClassDef",
+    "line": 324,
+    "end": 369,
+    "sha256": "5f57d756fdc9205a8a4e6d68054001dd442f0a31713a256324e070907f626f84",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "CoverageEntry",
+    "kind": "ClassDef",
+    "line": 372,
+    "end": 376,
+    "sha256": "1cb0659f2e63af99691400f5b535e065e97113a254394f071ce3f1929e478648",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "Phase1Trace",
+    "kind": "ClassDef",
+    "line": 379,
+    "end": 393,
+    "sha256": "0f7a755f5e9c417b876e0feee29ccaf01ebe7fc0d3d53bfe20c5a653e8079ed1",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "CheckReport",
+    "kind": "ClassDef",
+    "line": 396,
+    "end": 447,
+    "sha256": "001939e673a6d9b3053fb28b886477c4616d92b9e0c1eed3a1d4d187538ebc6c",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "band",
+    "kind": "FunctionDef",
+    "line": 450,
+    "end": 492,
+    "sha256": "3f8fe0f006b141f884fab614acb317e03f7e2c5211f10fa385b08d5b7d2e97d9",
+    "home": "gnd.checker._reports"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_legacy",
+    "kind": "FunctionDef",
+    "line": 495,
+    "end": 612,
+    "sha256": "5d79cae37e2eba75bfa449a62a1270056a878f1d98ebce04a234b932d31c8238",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_observe_phase1_compatibility",
+    "kind": "FunctionDef",
+    "line": 615,
+    "end": 640,
+    "sha256": "db011f247d0f44fc972460fd30075425b71514f888919365d185e40f95643a18",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_plain_projected_witness",
+    "kind": "FunctionDef",
+    "line": 643,
+    "end": 647,
+    "sha256": "18cd6f7f30fdfa6adb2b3e8b83928914cf9a837f79e2f5c663d5284477d54334",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_correspondence_message",
+    "kind": "FunctionDef",
+    "line": 650,
+    "end": 886,
+    "sha256": "e79933ec6b7dc23a0ca0c7a974b2215c085df95f93a1fb2b059031da3b4f03af",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_value_comparison_message_inputs",
+    "kind": "FunctionDef",
+    "line": 889,
+    "end": 941,
+    "sha256": "9aecb06b21f9be070b4bc11e24498d8f7d3d82eb7fd13b9b05b5ca4d078d5052",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_compatibility_trace",
+    "kind": "FunctionDef",
+    "line": 944,
+    "end": 971,
+    "sha256": "9e19f60fb10dfc5698a28f10da76928817b062ed2050fbe498f1939d005c5b23",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_no_observable_subjects_message",
+    "kind": "FunctionDef",
+    "line": 984,
+    "end": 1006,
+    "sha256": "8b524e54fb0476e80142ad129f87ad5d2b4ff7a3993e53ebef696eda2670ad19",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_JoinSubjectRow",
+    "kind": "ClassDef",
+    "line": 1009,
+    "end": 1028,
+    "sha256": "cbc3cdd320da20786178e597407f6e5557152654e055b2ec4a3590164e722d43",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_joining_subject_sequences",
+    "kind": "FunctionDef",
+    "line": 1088,
+    "end": 1119,
+    "sha256": "8f75ab57a52442489346e0c66f559c651e0a0d9dff488673d35dfe337750fac9",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_no_joined_rows_message",
+    "kind": "FunctionDef",
+    "line": 1122,
+    "end": 1169,
+    "sha256": "36ee94dd98d42e536b82105cd41644966ba74d62c22c90b7e687d85d2899b0e0",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_vacuity_message",
+    "kind": "FunctionDef",
+    "line": 1181,
+    "end": 1219,
+    "sha256": "83f48dc027409cc003eb23d6505a62d20ebd9e9329365ce919bee77853c559f8",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "JoinAmbiguousError",
+    "kind": "ClassDef",
+    "line": 1225,
+    "end": 1234,
+    "sha256": "e12e81c49b364b8fac25487365536047f3c7712b5fb2051d21f6cb5be86a3ea4",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_project",
+    "kind": "FunctionDef",
+    "line": 1237,
+    "end": 1243,
+    "sha256": "84f32d5ca5a2239bd04ccd507165e17db474c5e577480ef1dadcc2dca1c7579b",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_identity_counts",
+    "kind": "FunctionDef",
+    "line": 1246,
+    "end": 1252,
+    "sha256": "d5e131f7079217dd5d0c4c118e1cff9ff74c17bcd92be70b247b37335a434481",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_join_rows",
+    "kind": "FunctionDef",
+    "line": 1255,
+    "end": 1309,
+    "sha256": "ad8a01b9787435d281350555b63ed8c99cdd92659e3521d26c8bb45e279c99d7",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_require_joinable",
+    "kind": "FunctionDef",
+    "line": 1312,
+    "end": 1357,
+    "sha256": "ea0d94314e78501839ff76d979a7b3cda857f61cb3ea65858163d030722acac5",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_role_seq_tuples",
+    "kind": "FunctionDef",
+    "line": 1360,
+    "end": 1368,
+    "sha256": "fde186f03208797d747da414f3e3a990b48463dbb7241ef48b002a37280852c3",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ref_labels",
+    "kind": "FunctionDef",
+    "line": 1371,
+    "end": 1372,
+    "sha256": "2f18bc55d669722cf14f6f17ff7e3ba7a517d98a1c4a2e4bfbd0bd66c2b5200e",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_violation_verdict",
+    "kind": "FunctionDef",
+    "line": 1375,
+    "end": 1376,
+    "sha256": "170bc8361d7e6dbcfa03a38bf290521514aba7bfed3536181d8e79b059914d16",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_orderable",
+    "kind": "FunctionDef",
+    "line": 1382,
+    "end": 1421,
+    "sha256": "62bbb3c7ec63e8c7156aaaa70290f2fada99943f01d4276609c9f0d39da89abe",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_in_range",
+    "kind": "FunctionDef",
+    "line": 1424,
+    "end": 1457,
+    "sha256": "e6a48847f132c89adb9c38190d6b7ecb5dd4fd95c89b79b585fd7fe4225a3967",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_find_cycle",
+    "kind": "FunctionDef",
+    "line": 1460,
+    "end": 1479,
+    "sha256": "184a3da19eb63b64fa16460b61db6dd8dba785214a8cd93d65b5b2f13c85bc8e",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_dfs_cycle",
+    "kind": "FunctionDef",
+    "line": 1482,
+    "end": 1501,
+    "sha256": "372541ffeb8ad0030ef4791a0b8bc8e4c7b22fb7c937845e44aab2bd648f19e9",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_ring_component_violations",
+    "kind": "FunctionDef",
+    "line": 1504,
+    "end": 1542,
+    "sha256": "ab341289348e2ebf8150dfe4a30024e87cee9f87e21e94fcb18bcc80e08f39bf",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_typed_comparison_values",
+    "kind": "FunctionDef",
+    "line": 1555,
+    "end": 1588,
+    "sha256": "72f2a1308836c84a9fb08e9ead17b2acfdf9261815d3dfa135cd5bbed28a0aba",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_compare",
+    "kind": "FunctionDef",
+    "line": 1591,
+    "end": 1639,
+    "sha256": "af5ed4be118e2b265de093d939eb28e914b54c918fec0d0a94fee0cc51ab6f8e",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_variable",
+    "kind": "FunctionDef",
+    "line": 1642,
+    "end": 1644,
+    "sha256": "c41c93e9b164d3e6bd68fb320ed809e292cbc7166efd4368f8184a52074ae9da",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_FactView",
+    "kind": "ClassDef",
+    "line": 1650,
+    "end": 1653,
+    "sha256": "5a71e5e762e1e9802b5435a9db858c5ab84ceac3a8f7006850ba502ad9bde121",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_bindings",
+    "kind": "FunctionDef",
+    "line": 1656,
+    "end": 1671,
+    "sha256": "d99c7f180f24f1f5b4aa7e2f4b8b408aa8bdb0786fb0fbbe41d5d75498b06837",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "structured_extension_facts",
+    "kind": "FunctionDef",
+    "line": 1674,
+    "end": 1696,
+    "sha256": "cff6d5da090693b7f31f1e060840ad8477cf8d89c42ad6d7a03b5b20f3bf371e",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_variable_primitives",
+    "kind": "FunctionDef",
+    "line": 1704,
+    "end": 1720,
+    "sha256": "543a1e45a7c79cdbf3563254a694150f885f5e2dd226ba51048ad08ae56aebd5",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_ground_atom",
+    "kind": "FunctionDef",
+    "line": 1723,
+    "end": 1739,
+    "sha256": "08ed346768dcce8b64c3e307ac6934cb82198ed0940bf412cdf9b8ec4e7b7ab1",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_atom_index",
+    "kind": "FunctionDef",
+    "line": 1742,
+    "end": 1757,
+    "sha256": "5136e2061eb18fe0eaeb429ac68c4a32e919ef124d6a15f7e74c9784666a2440",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_guarded_term_failure",
+    "kind": "FunctionDef",
+    "line": 1763,
+    "end": 1792,
+    "sha256": "b17361ca03547ece0c931d5fb6f25b9c678bc564ea12fd8ce31eb50186d0638c",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_term_unavailable_constraint_verdict",
+    "kind": "FunctionDef",
+    "line": 1795,
+    "end": 1827,
+    "sha256": "6723edbd6f43eb751e5e632f9b58f34b8fdc49fa3221a61752ae8366f91eaee5",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_record_aggregate_guarded_outcomes",
+    "kind": "FunctionDef",
+    "line": 1830,
+    "end": 1849,
+    "sha256": "98c3d99bf4938595399fd5454253157e7a02d81696553713756f1f8083aae720",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_partial_constraint_report",
+    "kind": "FunctionDef",
+    "line": 1852,
+    "end": 1940,
+    "sha256": "7e597ada924135a43b834de8101b9338f2fd7b9b6f61519c4f20da0ff3b7d51e",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_check_dispatch",
+    "kind": "FunctionDef",
+    "line": 1943,
+    "end": 2048,
+    "sha256": "ab86d401e35dd1601486670ac7d1f8facc9751e6d75e9441b1dd81f52d34e4d5",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_anchored_verdicts",
+    "kind": "FunctionDef",
+    "line": 2051,
+    "end": 2197,
+    "sha256": "c167aa37e600a6c554c28753abad0898c50ad52cf82e9b8dd13889c2b5219bca",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_with_anchors",
+    "kind": "FunctionDef",
+    "line": 2200,
+    "end": 2215,
+    "sha256": "aebad6f581f60dda6da662132eb3a622857b4f91a6f1b0e482c86275a03912b0",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check",
+    "kind": "FunctionDef",
+    "line": 2218,
+    "end": 2227,
+    "sha256": "e2d73e23de3da792f005b89a03e385f041715aeead37906475badf24023d6630",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_partial",
+    "kind": "FunctionDef",
+    "line": 2230,
+    "end": 2236,
+    "sha256": "24206de9707df8f2153ca7269d90d4828f93706c8fc95538fbb50e7b6bfc0632",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "check_with_anchors_partial",
+    "kind": "FunctionDef",
+    "line": 2239,
+    "end": 2250,
+    "sha256": "19dbab5cfbe32f92695b5ae6f9f6eb896ee6d58bdcb1e67857235974899fa4aa",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_ring",
+    "kind": "FunctionDef",
+    "line": 2255,
+    "end": 2261,
+    "sha256": "199222253ddecc3f595231a1c162e6cd97797804f1b664efad2a0792ebdfa859",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_mandatory",
+    "kind": "FunctionDef",
+    "line": 2264,
+    "end": 2269,
+    "sha256": "c786d9208bd2214a8d99e977974e8462be1c7a9bec8435ad8418051e383e3add",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_mandatory_disjunctive",
+    "kind": "FunctionDef",
+    "line": 2272,
+    "end": 2281,
+    "sha256": "cca54c895db765fcc976c0bf2c8d37be589b57a8fdd76a3e9a33644207afe8a1",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_uniqueness",
+    "kind": "FunctionDef",
+    "line": 2284,
+    "end": 2297,
+    "sha256": "d165e70c9cb894737a5acb2bfd0c57dea553e9e93d54b0da0e7a06bb32d69b4f",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_value",
+    "kind": "FunctionDef",
+    "line": 2300,
+    "end": 2314,
+    "sha256": "2d49fd85a61c75df0d6d8aa5d83f6e135e13e5fa8838915bf3aa166e79cd43f1",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_frequency",
+    "kind": "FunctionDef",
+    "line": 2317,
+    "end": 2332,
+    "sha256": "683073940fadef4740262d65ac4f4ad9dc1f55fef90bff83eac372debaf14458",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_subset",
+    "kind": "FunctionDef",
+    "line": 2335,
+    "end": 2354,
+    "sha256": "0f82396fe7ad8f2092a1213c60ec0288d6e034dbfb9cdfc4dd16ec580315e992",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_exclusive_or",
+    "kind": "FunctionDef",
+    "line": 2357,
+    "end": 2381,
+    "sha256": "0db4ca5b322b5fd1009d4d218a677f044243bf866b79e5d4e9f762a5dd3acd2c",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_value_comparison",
+    "kind": "FunctionDef",
+    "line": 2384,
+    "end": 2393,
+    "sha256": "469bfb91411193f24245ef5692949812fa93d8b2c69b73d22ab21b9bf32486ce",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_cardinality",
+    "kind": "FunctionDef",
+    "line": 2396,
+    "end": 2410,
+    "sha256": "a4dc772787882ac014586987b9e1f3e6848462895b903ea31cb36e910a4d6ee9",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_subtype_partition",
+    "kind": "FunctionDef",
+    "line": 2413,
+    "end": 2429,
+    "sha256": "250f6a08e82f33b2b10e30705f9f1689c6e47e7565afbf71a3617e5d75fd493c",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_guarded",
+    "kind": "FunctionDef",
+    "line": 2432,
+    "end": 2450,
+    "sha256": "3ab324ee716cf1dc22654bce2d4c18e113fb7b6746c9e89039f7606caf27aa60",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_flat_projected_witness",
+    "kind": "FunctionDef",
+    "line": 2453,
+    "end": 2455,
+    "sha256": "92a0885be24a402f5e0590aaf1708c3c5800c194d79685468906715dbbd02c96",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_row_projected_witness",
+    "kind": "FunctionDef",
+    "line": 2458,
+    "end": 2459,
+    "sha256": "de5200ac595256d3c34e8a62198438ef321c86c4e3536f8c76e84ce64b1c1c85",
+    "home": "gnd.checker._core"
+  },
+  {
+    "module": "gnd.checker",
+    "name": "_family_message_default",
+    "kind": "FunctionDef",
+    "line": 2462,
+    "end": 2469,
+    "sha256": "5c112660a62b72f21ad398ebc88e8d052ac41305e30d2cd7a5c3b82946b93d26",
+    "home": "gnd.checker._core"
+  }
+]

@@ -1,0 +1,413 @@
+{
+  "gnd.exp.session": {
+    "_Disposition": {
+      "module": "gnd.exp.session",
+      "qualname": "_Disposition",
+      "signature": "(value: \"Literal['accepted', 'retry', 'agent-failure', 'verifier-failure', 'stagnation', 'oscillation', 'budget-exhausted']\", reason: 'str') -> None"
+    },
+    "_PublishedAttempt": {
+      "module": "gnd.exp.session",
+      "qualname": "_PublishedAttempt",
+      "signature": "(record: 'AttemptRecord', evaluation: 'AttemptEvaluation', feedback_bytes: 'bytes', feedback_sha256: 'str', accepted: 'bool', pair: 'tuple[str, str]', decision: '_Disposition', eligible: 'bool') -> None"
+    },
+    "_agent_failure_reason": {
+      "module": "gnd.exp.session",
+      "qualname": "_agent_failure_reason",
+      "signature": "(invocation: 'InvocationEvidence') -> 'str'"
+    },
+    "_budget_reason": {
+      "module": "gnd.exp.session",
+      "qualname": "_budget_reason",
+      "signature": "(*, wall_bound_hit: 'bool') -> 'str'"
+    },
+    "_case_models": {
+      "module": "gnd.exp.session",
+      "qualname": "_case_models",
+      "signature": "(contract: 'DataDrivenContract', experiment_root: 'Path') -> 'list[tuple[SessionCase, object]]'"
+    },
+    "_copy_bound_model": {
+      "module": "gnd.exp.session",
+      "qualname": "_copy_bound_model",
+      "signature": "(case: 'SessionCase', experiment_root: 'Path', view: 'Path') -> 'None'"
+    },
+    "_decide_disposition": {
+      "module": "gnd.exp.session",
+      "qualname": "_decide_disposition",
+      "signature": "(*, invocation: 'InvocationEvidence', accepted: 'bool', explicit_wall_expiry: 'bool', wall_bound_hit: 'bool', verifier_failed: 'bool', recurrence_disposition: \"Literal['stagnation', 'oscillation'] | None\", recurrence_first_seen: 'int | None', attempt_bound_hit: 'bool') -> '_Disposition'"
+    },
+    "_declared_evidence_complete": {
+      "module": "gnd.exp.session",
+      "qualname": "_declared_evidence_complete",
+      "signature": "(contract: 'DataDrivenContract', evaluation: 'AttemptEvaluation') -> 'bool'"
+    },
+    "_discard_unpublished_stage": {
+      "module": "gnd.exp.session",
+      "qualname": "_discard_unpublished_stage",
+      "signature": "(store: 'SessionStore', *, attempt_index: 'int', staged: 'StagedCandidate') -> 'None'"
+    },
+    "_effective_agent_prompt": {
+      "module": "gnd.exp.session",
+      "qualname": "_effective_agent_prompt",
+      "signature": "(prompt: 'str', *, feedback_sha256: 'str | None') -> 'str'"
+    },
+    "_effective_policy_sha256": {
+      "module": "gnd.exp.session",
+      "qualname": "_effective_policy_sha256",
+      "signature": "(contract: 'DataDrivenContract') -> 'str'"
+    },
+    "_expected_invocation_argv": {
+      "module": "gnd.exp.session",
+      "qualname": "_expected_invocation_argv",
+      "signature": "(adapter: 'AgentAdapterId', *, prompt: 'str', feedback_sha256: 'str | None') -> 'tuple[str, ...]'"
+    },
+    "_has_verifier_harness_failure": {
+      "module": "gnd.exp.session",
+      "qualname": "_has_verifier_harness_failure",
+      "signature": "(evaluation: 'AttemptEvaluation') -> 'bool'"
+    },
+    "_policy_bound_prompt": {
+      "module": "gnd.exp.session",
+      "qualname": "_policy_bound_prompt",
+      "signature": "(prompt: 'str', contract: 'DataDrivenContract') -> 'str'"
+    },
+    "_publish_current_attempt": {
+      "module": "gnd.exp.session",
+      "qualname": "_publish_current_attempt",
+      "signature": "(*, store: 'SessionStore', staged: 'StagedCandidate', candidate_path: 'Path', contract: 'DataDrivenContract', contract_sha256: 'str', invocation: 'InvocationEvidence', raw_payloads: 'dict[str, bytes]', results: 'list[CaseEvaluation]', verifier_failure: 'str | None', wall_expired: 'bool', wall_bound_hit: 'bool', attempt_bound_hit: 'bool', seen: 'dict[tuple[str, str], int]', attempt_index: 'int', attempt_elapsed: 'float', feedback_schema_version: 'int' = 2, redaction: 'SessionRedaction | None' = None) -> '_PublishedAttempt'"
+    },
+    "_required_evidence_complete": {
+      "module": "gnd.exp.session",
+      "qualname": "_required_evidence_complete",
+      "signature": "(contract: 'DataDrivenContract', evaluation: 'AttemptEvaluation') -> 'bool'"
+    },
+    "_validated_declared_invocation_proof": {
+      "module": "gnd.exp.session",
+      "qualname": "_validated_declared_invocation_proof",
+      "signature": "(invocation: 'DeclaredInvocationResult', *, policy: 'ResolvedAdapterPolicy', prompt: 'str', feedback_bytes: 'bytes | None', feedback_sha256: 'str | None') -> 'DeclaredInvocationResult'"
+    },
+    "_validated_invocation_proof": {
+      "module": "gnd.exp.session",
+      "qualname": "_validated_invocation_proof",
+      "signature": "(invocation: 'InvocationResult', *, adapter: 'AgentAdapterId', prompt: 'str', feedback_sha256: 'str | None', bind_missing_identity: 'bool') -> 'InvocationResult'"
+    },
+    "case_payload_versions": {
+      "module": "gnd.exp.session",
+      "qualname": "case_payload_versions",
+      "signature": "(contract: 'DataDrivenContract', experiment_root: 'Path') -> 'dict[str, int]'"
+    },
+    "case_redaction": {
+      "module": "gnd.exp.session",
+      "qualname": "case_redaction",
+      "signature": "(contract: 'DataDrivenContract', experiment_root: 'Path') -> 'SessionRedaction | None'"
+    },
+    "run_gnd_verifier": {
+      "module": "gnd.exp.session",
+      "qualname": "run_gnd_verifier",
+      "signature": "(case: 'SessionCase', snapshot: 'Path', *, experiment_root: 'Path', timeout_seconds: 'float' = 300.0) -> 'tuple[int, bytes]'"
+    },
+    "run_session": {
+      "module": "gnd.exp.session",
+      "qualname": "run_session",
+      "signature": "(contract: 'DataDrivenContract', *, contract_sha256: 'str', adapter_id: 'AgentAdapterId | None' = None, adapter_policy: 'ResolvedAdapterPolicy | None' = None, prompt: 'str', candidate_root: 'str | Path', run_root: 'str | Path', verifier: 'Verifier', invoker: 'SessionInvoker | None' = None, declared_invoker: 'DeclaredSessionInvoker | None' = None, expected_payload_versions: 'Mapping[str, int] | None' = None, redaction: 'SessionRedaction | None' = None) -> 'SessionResult'"
+    },
+    "verifier_environment": {
+      "module": "gnd.exp.session",
+      "qualname": "verifier_environment",
+      "signature": "() -> 'dict[str, str]'"
+    }
+  },
+  "gnd.exp.session_store": {
+    "AttemptRecord": {
+      "module": "gnd.exp.session_store",
+      "qualname": "AttemptRecord",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult | gnd.exp.declared_invocation.DeclaredInvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10] = 2, feedback_schema_version: Literal[2, 3, 4, 5, 6, 7, 8, 9] | None = 2, assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...] = (), redaction: gnd.exp.session_eval.SessionRedaction | None = None, candidate_edit: gnd.exp.session_store.CandidateEdit | None = None, operator_feedback: gnd.exp.session_store.EvidenceFile | None = None, ranking: tuple[gnd.exp.session_store.RankingObservation, ...] = (), judgment_evidence: dict[str, gnd.exp.session_store.JudgmentEvidence] = {}) -> None"
+    },
+    "BestAttemptIdentity": {
+      "module": "gnd.exp.session_store",
+      "qualname": "BestAttemptIdentity",
+      "signature": "(*, attempt_index: Annotated[int, Gt(gt=0)], attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]) -> None"
+    },
+    "CandidateEdit": {
+      "module": "gnd.exp.session_store",
+      "qualname": "CandidateEdit",
+      "signature": "(*, mode: Literal['complete', 'patch'], patch_path: str, patch_raw_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None, base_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None, result_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None, refusal: Literal['shape', 'limit', 'stale-base', 'protected', 'path', 'keys', 'conflict', 'missing-delete', 'publication'] | None) -> None"
+    },
+    "CandidateFile": {
+      "module": "gnd.exp.session_store",
+      "qualname": "CandidateFile",
+      "signature": "(*, path: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], media_type: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], encoding: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)] | None, size_bytes: Annotated[int, Ge(ge=0)], sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], executable: bool = False) -> None"
+    },
+    "CandidateInventory": {
+      "module": "gnd.exp.session_store",
+      "qualname": "CandidateInventory",
+      "signature": "(*, schema_version: Literal[1] = 1, files: tuple[gnd.exp.session_store.CandidateFile, ...], file_count: Annotated[int, Ge(ge=0)], total_bytes: Annotated[int, Ge(ge=0)], tree_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]) -> None"
+    },
+    "DeclaredLaunchIntent": {
+      "module": "gnd.exp.session_store",
+      "qualname": "DeclaredLaunchIntent",
+      "signature": "(*, schema_version: Literal[2, 3, 4] = 2, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], policy_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], policy_kind: Literal['command', 'openai-compatible'], policy_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], model_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, base_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], controller_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], effective_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], feedback_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], judgment_policy_sha256: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]] = <factory>) -> None"
+    },
+    "EvidenceFile": {
+      "module": "gnd.exp.session_store",
+      "qualname": "EvidenceFile",
+      "signature": "(*, path: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], size_bytes: Annotated[int, Ge(ge=0)], sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]) -> None"
+    },
+    "JudgmentEvidence": {
+      "module": "gnd.exp.session_store",
+      "qualname": "JudgmentEvidence",
+      "signature": "(*, policy: gnd.exp.session_store.EvidenceFile, receipts: gnd.exp.session_store.EvidenceFile, report: gnd.exp.session_store.EvidenceFile, sources: tuple[gnd.exp.session_store.EvidenceFile, ...]) -> None"
+    },
+    "LaunchIntent": {
+      "module": "gnd.exp.session_store",
+      "qualname": "LaunchIntent",
+      "signature": "(*, schema_version: Literal[1] = 1, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], policy_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], adapter: gnd.agent_cli.AgentAdapterId, base_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], controller_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], effective_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], feedback_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]) -> None"
+    },
+    "RankingObservation": {
+      "module": "gnd.exp.session_store",
+      "qualname": "RankingObservation",
+      "signature": "(*, metric: Literal['accepted_required_cases', 'candidate_admitted_unique', 'alethic_failures', 'alethic_indeterminate', 'coverage_shortfall'], direction: Literal['min', 'max'], available: bool, value: int | None) -> None"
+    },
+    "RecurrencePair": {
+      "module": "gnd.exp.session_store",
+      "qualname": "RecurrencePair",
+      "signature": "(*, candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], normalized_verifier_signature: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], first_attempt_index: Annotated[int, Gt(gt=0)]) -> None"
+    },
+    "ResumeState": {
+      "module": "gnd.exp.session_store",
+      "qualname": "ResumeState",
+      "signature": "(next_attempt_index: 'int', best_attempt_identity: 'BestAttemptIdentity | None', seen_recurrence_pairs: 'tuple[RecurrencePair, ...]', accounted_wall_seconds: 'float', prior_feedback_bytes: 'bytes | None', prior_feedback_sha256: 'str | None') -> None"
+    },
+    "SessionOutcome": {
+      "module": "gnd.exp.session_store",
+      "qualname": "SessionOutcome",
+      "signature": "(*values)"
+    },
+    "SessionResult": {
+      "module": "gnd.exp.session_store",
+      "qualname": "SessionResult",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[1, 2, 3, 4, 5, 6, 7] = 2, acceptance_modes: tuple[typing.Literal['exact-bytes', 'constraint-satisfaction', 'tests', 'transition'], ...] = ('exact-bytes',), redaction: gnd.exp.session_eval.SessionRedaction | None = None, contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, walk_floors: tuple[gnd.exp.session_store.WalkFloorResult, ...] = (), judgment_admission: dict[str, bool] | None = None, ranking_policy: tuple[gnd.exp.session_contract.RankingMetric, ...] | None = None, best_ranking: tuple[gnd.exp.session_store.RankingObservation, ...] | None = None) -> None"
+    },
+    "SessionStore": {
+      "module": "gnd.exp.session_store",
+      "qualname": "SessionStore",
+      "signature": "(root: 'str | Path', *, run_id: 'str', contract_id: 'str | None' = None)"
+    },
+    "StagedCandidate": {
+      "module": "gnd.exp.session_store",
+      "qualname": "StagedCandidate",
+      "signature": "(attempt_index: 'int', snapshot_path: 'Path', inventory: 'CandidateInventory', _staging_path: 'Path', _source_root: 'Path', _staging_identity: 'tuple[int, int]', _snapshot_identity: 'tuple[int, int]', _patch_source_identity: 'tuple[int, int] | None' = None) -> None"
+    },
+    "VerifierPayloadEvidence": {
+      "module": "gnd.exp.session_store",
+      "qualname": "VerifierPayloadEvidence",
+      "signature": "(*, path: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], size_bytes: Annotated[int, Ge(ge=0)], sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], case_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)]) -> None"
+    },
+    "WalkFloorResult": {
+      "module": "gnd.exp.session_store",
+      "qualname": "WalkFloorResult",
+      "signature": "(*, case_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], role: Literal['required', 'diagnostic'], required_ops: Annotated[int, Ge(ge=0)], forbidden_ops: Annotated[int, Ge(ge=0)], discharged: bool) -> None"
+    },
+    "_AttemptRecordBase": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordBase",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]]) -> None"
+    },
+    "_AttemptRecordV1": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV1",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[1]) -> None"
+    },
+    "_AttemptRecordV10": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV10",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.exp.declared_invocation.DeclaredInvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[10], feedback_schema_version: Literal[9], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...] = (), redaction: gnd.exp.session_eval.SessionRedaction | None = None, candidate_edit: gnd.exp.session_store.CandidateEdit | None, operator_feedback: gnd.exp.session_store.EvidenceFile, ranking: tuple[gnd.exp.session_store.RankingObservation, ...], judgment_evidence: dict[str, gnd.exp.session_store.JudgmentEvidence]) -> None"
+    },
+    "_AttemptRecordV2": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV2",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[2], feedback_schema_version: Literal[2]) -> None"
+    },
+    "_AttemptRecordV3": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV3",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[3], feedback_schema_version: Literal[3]) -> None"
+    },
+    "_AttemptRecordV4": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV4",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[4], feedback_schema_version: Literal[4], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...]) -> None"
+    },
+    "_AttemptRecordV5": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV5",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[5], feedback_schema_version: Literal[5], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...]) -> None"
+    },
+    "_AttemptRecordV6": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV6",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[6], feedback_schema_version: Literal[6], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...], redaction: gnd.exp.session_eval.SessionRedaction) -> None"
+    },
+    "_AttemptRecordV7": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV7",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.agent_cli.InvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[7], feedback_schema_version: Literal[7], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...], redaction: gnd.exp.session_eval.SessionRedaction | None) -> None"
+    },
+    "_AttemptRecordV8": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV8",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.exp.declared_invocation.DeclaredInvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[8], feedback_schema_version: Literal[2, 3, 4, 5, 6, 7], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...] = (), redaction: gnd.exp.session_eval.SessionRedaction | None = None) -> None"
+    },
+    "_AttemptRecordV9": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_AttemptRecordV9",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], elapsed_seconds: Annotated[float, Ge(ge=0), _PydanticGeneralMetadata(allow_inf_nan=False)], launch_intent: gnd.exp.session_store.EvidenceFile, invocation: gnd.exp.declared_invocation.DeclaredInvocationResult, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_snapshot: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], agent_stdout: gnd.exp.session_store.EvidenceFile, agent_stderr: gnd.exp.session_store.EvidenceFile, raw_verifier_payloads: tuple[gnd.exp.session_store.VerifierPayloadEvidence, ...], evaluation: gnd.exp.session_eval.AttemptEvaluation, feedback: gnd.exp.session_store.EvidenceFile, best_eligible: bool, evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[9], feedback_schema_version: Literal[8], assurance_receipts: tuple[gnd.assurance_transport.ArchivedAssuranceReceipt, ...] = (), redaction: gnd.exp.session_eval.SessionRedaction | None = None, candidate_edit: gnd.exp.session_store.CandidateEdit | None, operator_feedback: gnd.exp.session_store.EvidenceFile, ranking: tuple[gnd.exp.session_store.RankingObservation, ...]) -> None"
+    },
+    "_CollectedFile": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_CollectedFile",
+      "signature": "(entry: 'CandidateFile', data: 'bytes') -> None"
+    },
+    "_DeclaredLaunchIntentV2": {
+      "module": "gnd.exp.session_store",
+      "qualname": "DeclaredLaunchIntent",
+      "signature": "(*, schema_version: Literal[2] = 2, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], policy_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], policy_kind: Literal['command', 'openai-compatible'], policy_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], model_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, base_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], controller_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], effective_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], feedback_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]) -> None"
+    },
+    "_DeclaredLaunchIntentV3": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_DeclaredLaunchIntentV3",
+      "signature": "(*, schema_version: Literal[3] = 3, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], policy_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], policy_kind: Literal['command', 'openai-compatible'], policy_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], model_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, base_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], controller_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], effective_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], feedback_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]) -> None"
+    },
+    "_DeclaredLaunchIntentV4": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_DeclaredLaunchIntentV4",
+      "signature": "(*, schema_version: Literal[4], run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_index: Annotated[int, Gt(gt=0)], contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], policy_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], policy_kind: Literal['command', 'openai-compatible'], policy_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], model_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, base_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], controller_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], effective_prompt_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], feedback_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, candidate_inventory: gnd.exp.session_store.CandidateInventory, candidate_inventory_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], judgment_policy_sha256: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]]) -> None"
+    },
+    "_SessionResultBase": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultBase",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]]) -> None"
+    },
+    "_SessionResultV1": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV1",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[1]) -> None"
+    },
+    "_SessionResultV2": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV2",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[2], acceptance_modes: Annotated[tuple[Literal['exact-bytes', 'constraint-satisfaction', 'tests'], ...], MinLen(min_length=1)]) -> None"
+    },
+    "_SessionResultV3": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV3",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[3], acceptance_modes: Annotated[tuple[Literal['exact-bytes', 'constraint-satisfaction', 'tests', 'transition'], ...], MinLen(min_length=1)]) -> None"
+    },
+    "_SessionResultV4": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV4",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[4], acceptance_modes: Annotated[tuple[Literal['exact-bytes', 'constraint-satisfaction', 'tests', 'transition'], ...], MinLen(min_length=1)], redaction: gnd.exp.session_eval.SessionRedaction) -> None"
+    },
+    "_SessionResultV5": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV5",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[5], acceptance_modes: Annotated[tuple[Literal['exact-bytes', 'constraint-satisfaction', 'tests', 'transition'], ...], MinLen(min_length=1)], redaction: gnd.exp.session_eval.SessionRedaction | None, contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], walk_floors: tuple[gnd.exp.session_store.WalkFloorResult, ...]) -> None"
+    },
+    "_SessionResultV6": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV6",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[6], acceptance_modes: Annotated[tuple[Literal['exact-bytes', 'constraint-satisfaction', 'tests', 'transition'], ...], MinLen(min_length=1)], redaction: gnd.exp.session_eval.SessionRedaction | None, contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], walk_floors: tuple[gnd.exp.session_store.WalkFloorResult, ...], ranking_policy: tuple[gnd.exp.session_contract.RankingMetric, ...] | None, best_ranking: tuple[gnd.exp.session_store.RankingObservation, ...] | None) -> None"
+    },
+    "_SessionResultV7": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_SessionResultV7",
+      "signature": "(*, run_id: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], disposition: gnd.exp.session_store.SessionOutcome, terminal_reason: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], attempt_count: Annotated[int, Gt(gt=0)], best_attempt: Annotated[int | None, Gt(gt=0)] = None, best_attempt_manifest_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, best_candidate_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)] | None = None, referenced_evidence_digests: dict[str, typing.Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)]], schema_version: Literal[7], acceptance_modes: Annotated[tuple[Literal['exact-bytes', 'constraint-satisfaction', 'tests', 'transition'], ...], MinLen(min_length=1)], redaction: gnd.exp.session_eval.SessionRedaction | None, contract_sha256: Annotated[str, StringConstraints(strip_whitespace=None, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[0-9a-f]{64}$', ascii_only=None)], walk_floors: tuple[gnd.exp.session_store.WalkFloorResult, ...], ranking_policy: tuple[gnd.exp.session_contract.RankingMetric, ...] | None, best_ranking: tuple[gnd.exp.session_store.RankingObservation, ...] | None, judgment_admission: dict[str, bool] | None) -> None"
+    },
+    "_classify": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_classify",
+      "signature": "(path: 'str', data: 'bytes') -> 'tuple[str, str | None]'"
+    },
+    "_collect_candidate": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_collect_candidate",
+      "signature": "(root: 'Path', *, expected_identity: 'tuple[int, int] | None' = None, bound_fd: 'int | None' = None) -> 'tuple[CandidateInventory, tuple[_CollectedFile, ...]]'"
+    },
+    "_create_evidence_parent": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_create_evidence_parent",
+      "signature": "(root: 'Path', parts: 'tuple[str, ...]', *, expected_identity: 'tuple[int, int] | None' = None) -> 'int'"
+    },
+    "_evidence_entry": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_evidence_entry",
+      "signature": "(path: 'str', raw: 'bytes') -> 'dict[str, object]'"
+    },
+    "_retained_wire": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_retained_wire",
+      "signature": "(raw: 'bytes', declared: 'Mapping[str, int]', case_id: 'str') -> 'int'"
+    },
+    "_strict_object_bytes": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_strict_object_bytes",
+      "signature": "(data: 'bytes', *, label: 'str') -> 'dict[str, Any]'"
+    },
+    "_version_validation_error": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_version_validation_error",
+      "signature": "(model_name: 'str', version: 'Any') -> 'ValidationError'"
+    },
+    "_write_new_file": {
+      "module": "gnd.exp.session_store",
+      "qualname": "_write_new_file",
+      "signature": "(path: 'Path', data: 'bytes', *, root: 'Path | None' = None, mode: 'int' = 420, expected_root: 'tuple[int, int] | None' = None) -> 'None'"
+    }
+  },
+  "gnd.exp.session_v7": {
+    "_copy_files": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_copy_files",
+      "signature": "(files, root, executable=())"
+    },
+    "_entry": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_entry",
+      "signature": "(path, raw)"
+    },
+    "_evaluate": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_evaluate",
+      "signature": "(case, raw, process_exit, snapshot, experiment, digest, contract_sha, run_root=None)"
+    },
+    "_feedback": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_feedback",
+      "signature": "(contract, evaluation, invocation, disposition, experiment, redaction)"
+    },
+    "_model": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_model",
+      "signature": "(case, experiment)"
+    },
+    "_project": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_project",
+      "signature": "(node, hidden)"
+    },
+    "_read": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "_read",
+      "signature": "(root, relative)"
+    },
+    "reconstruct": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "reconstruct",
+      "signature": "(store, contract, *, allow_terminal=False, policy_sha256=None)"
+    },
+    "run": {
+      "module": "gnd.exp.session_v7",
+      "qualname": "run",
+      "signature": "(contract, *, contract_sha256, adapter_policy, prompt, candidate_root, run_root, verifier, declared_invoker, redaction=None, **unused)"
+    }
+  }
+}

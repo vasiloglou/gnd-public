@@ -1,0 +1,5 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python tools/rf1_pins.py mutate --out .gnd-planning/milestones/code-refactoring/evidence/RF6/RF6b-affected-mutations --jobs 2 --only M-HELP-yaml-guard-gnd-model-yaml-stream-guard-error M-SEM-datetime-model-_temporal_literal_valid M-SEM-datetime-checker-_typed_comparison_values M-SEM-check-coverage-anchored
+rows: 4  killed: 4  not killed: 0
+
+Exit: 0

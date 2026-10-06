@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd export souffle-witness [-h] [--json] [--raw] [--out OUT]\n                                  [--executable EXECUTABLE] --targets TARGETS\n                                  bundle\n\npositional arguments:\n  bundle\n\noptions:\n  -h, --help            show this help message and exit\n  --json\n  --raw\n  --out OUT\n  --executable EXECUTABLE\n  --targets TARGETS\n",
+ "path": "gnd export souffle-witness"
+}

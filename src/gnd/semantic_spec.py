@@ -7,6 +7,7 @@ executable specification candidates; they are not production correspondence
 or production-branch coverage claims.
 """
 
+from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.semantic_ir import IRConstraint, IRFactType, Scalar, SnapshotIR
 
 
@@ -2394,42 +2395,11 @@ def unchecked_reason_of(constraint: IRConstraint, snapshot: SnapshotIR) -> str:
 def snapshot_family_result(
     constraint: IRConstraint, snapshot: SnapshotIR
 ) -> tuple[int, list[list[Scalar]]]:
-    """Dispatch exactly one of the fourteen snapshot family providers."""
-    if constraint.family == "mandatory":
-        return mandatory_state(constraint, snapshot), [
-            [value] for value in mandatory_witness(constraint, snapshot)
-        ]
-    if constraint.family == "mandatory-disjunctive":
-        return mandatory_disjunctive_state(constraint, snapshot), [
-            [value] for value in mandatory_disjunctive_witness(constraint, snapshot)
-        ]
-    if constraint.family == "value":
-        return value_state(constraint, snapshot), [
-            [value] for value in value_witness(constraint, snapshot)
-        ]
-    if constraint.family == "uniqueness":
-        return uniqueness_result(constraint, snapshot)
-    if constraint.family == "frequency":
-        return frequency_result(constraint, snapshot)
-    if constraint.family == "ring":
-        return ring_result(constraint, snapshot)
-    if constraint.family == "subset":
-        return subset_state(constraint, snapshot), subset_witness(constraint, snapshot)
-    if constraint.family == "equality":
-        return equality_state(constraint, snapshot), equality_witness(constraint, snapshot)
-    if constraint.family == "exclusion":
-        return exclusion_state(constraint, snapshot), exclusion_witness(constraint, snapshot)
-    if constraint.family == "exclusive-or":
-        return exclusive_or_result(constraint, snapshot)
-    if constraint.family == "value-comparison":
-        return value_comparison_result(constraint, snapshot)
-    if constraint.family == "cardinality":
-        return cardinality_result(constraint, snapshot)
-    if constraint.family == "subtype-partition":
-        return subtype_partition_result(constraint, snapshot)
-    if constraint.family == "guarded":
-        return guarded_result(constraint, snapshot)
-    return -1, []
+    """Select one family provider from the shared registry."""
+    entry = FAMILIES.get(constraint.family)
+    if entry is None:
+        return -1, []
+    return resolve_hook(entry.evaluator, globals())(constraint, snapshot)
 
 
 def sequence_spans_facts(sequence: tuple[tuple[str, str], ...]) -> bool:
@@ -2551,3 +2521,68 @@ def verdict_of(
     if joined_pass_is_empty(constraint, snapshot):
         return "vacuous", None, ()
     return "pass", None, ()
+
+def _family_result_mandatory(constraint, snapshot):
+    return mandatory_state(constraint, snapshot), [
+        [value] for value in mandatory_witness(constraint, snapshot)
+    ]
+
+
+def _family_result_mandatory_disjunctive(constraint, snapshot):
+    return mandatory_disjunctive_state(constraint, snapshot), [
+        [value] for value in mandatory_disjunctive_witness(constraint, snapshot)
+    ]
+
+
+def _family_result_value(constraint, snapshot):
+    return value_state(constraint, snapshot), [
+        [value] for value in value_witness(constraint, snapshot)
+    ]
+
+
+def _family_result_uniqueness(constraint, snapshot):
+    return uniqueness_result(constraint, snapshot)
+
+
+def _family_result_frequency(constraint, snapshot):
+    return frequency_result(constraint, snapshot)
+
+
+def _family_result_ring(constraint, snapshot):
+    return ring_result(constraint, snapshot)
+
+
+def _family_result_subset(constraint, snapshot):
+    return subset_state(constraint, snapshot), subset_witness(constraint, snapshot)
+
+
+def _family_result_equality(constraint, snapshot):
+    return equality_state(constraint, snapshot), equality_witness(constraint, snapshot)
+
+
+def _family_result_exclusion(constraint, snapshot):
+    return exclusion_state(constraint, snapshot), exclusion_witness(constraint, snapshot)
+
+
+def _family_result_exclusive_or(constraint, snapshot):
+    return exclusive_or_result(constraint, snapshot)
+
+
+def _family_result_value_comparison(constraint, snapshot):
+    return value_comparison_result(constraint, snapshot)
+
+
+def _family_result_cardinality(constraint, snapshot):
+    return cardinality_result(constraint, snapshot)
+
+
+def _family_result_subtype_partition(constraint, snapshot):
+    return subtype_partition_result(constraint, snapshot)
+
+
+def _family_result_guarded(constraint, snapshot):
+    return guarded_result(constraint, snapshot)
+
+
+def _family_result_unknown(constraint, snapshot):
+    return -1, []

@@ -1,0 +1,23 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_index.py::test_cyclic_metadata_takes_uncached_bounded_snapshot --tb=short
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_cyclic_metadata_takes_uncached_bounded_snapshot _____________
+tests/test_rf6_index.py:208: in test_cyclic_metadata_takes_uncached_bounded_snapshot
+    result = subprocess.run([sys.executable, '-c', code], cwd=root,
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:556: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1220: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:2153: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
+    raise TimeoutExpired(
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "\nfrom gnd.documents import Model\nfrom gnd.model_index import ModelIndex\nm = Model(version=1, object_types=[{'id': 'Code', 'kind': 'value', 'primitive': 'String'}],\n          fact_types=[{'id': 'F', 'roles': [{'role_name': 'x', 'object_type': 'Code'}]}])\nm.source['cycle'] = m.source\nold = ModelIndex.for_model(m)\nassert old.digest is None\nassert old.role_object_type('F', 'x') == 'Code'\nm.fact_types[0]['roles'][0]['object_type'] = 'Other'\nnew = ModelIndex.for_model(m)\nassert new is not old and new.digest is None\nassert new.role_object_type('F', 'x') == 'Other'\nassert old.role_object_type('F', 'x') == 'Code'\n"]' timed out after 3 seconds
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_cyclic_metadata_takes_uncached_bounded_snapshot
+1 failed in 3.10s
+
+Exit: 1

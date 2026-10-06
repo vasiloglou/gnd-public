@@ -1,0 +1,217 @@
+{
+  "witness": {
+    "exit": 3,
+    "stdout": "{\"exit_code\": 3, \"kind\": \"derivation-witness-view\", \"reason\": \"input-invalid\", \"replayable\": false, \"results\": [], \"work\": {}}\n",
+    "stderr": ""
+  },
+  "replay": {
+    "exit": 3,
+    "stdout": "{\"exit_code\": 3, \"kind\": \"derivation-witness-view\", \"reason\": \"input-invalid\", \"replayable\": false, \"results\": [], \"work\": {}}\n",
+    "stderr": ""
+  },
+  "witness-view": {
+    "exit": 3,
+    "stdout": "{\"exit_code\": 3, \"reason\": \"input-invalid\"}\n",
+    "stderr": ""
+  },
+  "import rai-orm": {
+    "exit": 66,
+    "stdout": "",
+    "stderr": "rai-import:missing at $: artifact missing could not be inspected: [Errno 2] No such file or directory: 'missing'\n"
+  },
+  "validate": {
+    "exit": 3,
+    "stdout": "ERROR: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "diff": {
+    "exit": 3,
+    "stdout": "",
+    "stderr": "ERROR: diff:invalid-model:ArtifactError\n"
+  },
+  "coverage": {
+    "exit": 66,
+    "stdout": "MISSING: named source missing does not exist\n",
+    "stderr": ""
+  },
+  "check": {
+    "exit": 3,
+    "stdout": "ERROR: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "verbalize population": {
+    "exit": 3,
+    "stdout": "",
+    "stderr": "invalid model, population, anchors, or document\n"
+  },
+  "verify": {
+    "exit": 3,
+    "stdout": "ERROR at missing.extraction.json: no extraction sidecar at missing.extraction.json and --no-extraction not given \u2014 a missing measurement must not look green [extraction:sidecar-missing]\n",
+    "stderr": ""
+  },
+  "synth": {
+    "exit": 3,
+    "stdout": "ERROR: missing: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "measure": {
+    "exit": 3,
+    "stdout": "ERROR: missing: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "extract": {
+    "exit": 3,
+    "stdout": "ERROR: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "export souffle": {
+    "exit": 3,
+    "stdout": "{\"version\": 1, \"kind\": \"souffle-export-result\", \"exit_code\": 3, \"status\": \"input-refused\", \"reason\": \"input-invalid\", \"assurance\": \"none\", \"counts\": {\"fact_types\": 0, \"clauses\": 0, \"input_rows\": 0, \"encoded_cells\": 0, \"emission_visits\": 0}}\n",
+    "stderr": ""
+  },
+  "export souffle-verify": {
+    "exit": 3,
+    "stdout": "{\"version\": 1, \"kind\": \"souffle-export-result\", \"exit_code\": 3, \"status\": \"input-refused\", \"reason\": \"input-invalid\", \"assurance\": \"none\", \"counts\": {\"fact_types\": 0, \"clauses\": 0, \"input_rows\": 0, \"encoded_cells\": 0, \"emission_visits\": 0}}\n",
+    "stderr": ""
+  },
+  "export souffle-run": {
+    "exit": 3,
+    "stdout": "{\"version\": 1, \"kind\": \"souffle-run-result\", \"exit_code\": 3, \"status\": \"failed\", \"reason\": \"input-invalid\", \"assurance\": \"none\", \"counts\": {\"fact_types\": 0, \"clauses\": 0, \"input_rows\": 0, \"encoded_cells\": 0, \"emission_visits\": 0}, \"tool\": null, \"elapsed_seconds\": 0, \"extensions\": null}\n",
+    "stderr": ""
+  },
+  "export souffle-witness": {
+    "exit": 3,
+    "stdout": "{\"exit_code\": 3, \"results\": [], \"certificate\": null, \"reason\": \"input-invalid\", \"work\": {}}\n",
+    "stderr": ""
+  },
+  "export lean": {
+    "exit": 3,
+    "stdout": "{\"version\": 1, \"kind\": \"lean-export-result\", \"exit_code\": 3, \"status\": \"input-refused\", \"reason\": \"input-invalid\", \"assurance\": \"none\", \"proof_status\": \"unproved\", \"counts\": {\"object_types\": 0, \"fact_types\": 0, \"clauses\": 0, \"constraints\": 0, \"carrier_values\": 0, \"input_rows\": 0, \"emission_visits\": 0}}\n",
+    "stderr": ""
+  },
+  "export lean-verify": {
+    "exit": 3,
+    "stdout": "{\"version\": 1, \"kind\": \"lean-export-result\", \"exit_code\": 3, \"status\": \"input-refused\", \"reason\": \"input-invalid\", \"assurance\": \"none\", \"proof_status\": \"unproved\", \"counts\": {\"object_types\": 0, \"fact_types\": 0, \"clauses\": 0, \"constraints\": 0, \"carrier_values\": 0, \"input_rows\": 0, \"emission_visits\": 0}}\n",
+    "stderr": ""
+  },
+  "export lean-compile": {
+    "exit": 3,
+    "stdout": "{\"version\": 1, \"kind\": \"lean-compile-result\", \"exit_code\": 3, \"status\": \"input-refused\", \"reason\": \"input-invalid\", \"assurance\": \"none\", \"proof_status\": \"unproved\", \"counts\": {\"object_types\": 0, \"fact_types\": 0, \"clauses\": 0, \"constraints\": 0, \"carrier_values\": 0, \"input_rows\": 0, \"emission_visits\": 0}, \"tool\": {\"version\": null, \"raw_sha256\": null}, \"definitions\": {\"attempted\": false, \"native_exit\": null, \"status\": \"not-attempted\", \"elapsed_seconds\": 0}, \"stubs\": {\"attempted\": false, \"native_exit\": null, \"status\": \"not-attempted\", \"elapsed_seconds\": 0}}\n",
+    "stderr": ""
+  },
+  "export pyrel": {
+    "exit": 66,
+    "stdout": "",
+    "stderr": "missing input: [Errno 2] No such file or directory: 'missing'\n"
+  },
+  "codegen": {
+    "exit": 3,
+    "stdout": "ERROR: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "conformance": {
+    "exit": 74,
+    "stdout": "conformance for missing (0 recorded file(s))\nERROR: the generated project root could not be bound (cause: root-open)\n  integrity: DID NOT RUN \u2014 this is not a pass\n  currency: DID NOT RUN \u2014 this is not a pass\n  structural: DID NOT RUN \u2014 this is not a pass\n  architecture: DID NOT RUN \u2014 this is not a pass\n\narchitecture declaration: no readable contract binding\n  declared: unavailable\n  scanned: 0 file(s) whose bytes assertion #4 obtained\n\n\nunexamined by integrity: 0 file(s) not digest-gated\n\nlimits of a green result:\n  manifest-co-edit: a manifest cannot record its own digest, so an edit to a derived file that is CO-EDITED with its manifest entry is undetectable by digest comparison; this is an integrity bound, not tamper evidence (gnd doctor has the identical limit)\n  extension-unexamined: extension files are user- or LLM-authored and therefore not byte-reproducible (G-05); integrity has no record to compare them against and does not digest-gate them, while a separate conformance assertion may statically inspect an explicitly declared extension\n  green-is-not-correctness: a green digest comparison says the derived surface is unedited and current, never that the generated code is correct (G-08)\n  structural-surface-only: assertion #3 binds the NAMES and SIGNATURES of the emitted tools to the fact types and role names that the model declares; it does not read a function body. A tool whose name and parameters agree with the model may still compute the wrong thing, and the only check that catches that is the runtime verifier over the population the generated agent actually produces\n  architecture-static-only: assertion #4 checks declared paths, module-level positional shape, fact-type membership, recognized path expressions and whole-AST flag or subcommand string presence without executing project code; string presence does not prove argparse wiring, declared exits are unverified without smoke rows, unrecognized expressions and cross-module indirection are not guessed, computed-only artifact names can report reference-unfound, dotted entry modules use only project-root flat module paths, weakening remains visibl\u2026 (+180 more characters)\n",
+    "stderr": ""
+  },
+  "recovery inventory": {
+    "exit": 66,
+    "stdout": "RECOVERY INVENTORY REFUSED (66): repository directory component 'missing' could not be inspected: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "recovery verify": {
+    "exit": 66,
+    "stdout": "RECOVERY VERIFY REFUSED (66): repository directory component 'missing' could not be inspected: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "evolve preview": {
+    "exit": 66,
+    "stdout": "",
+    "stderr": "EVOLUTION PREVIEW REFUSED (66): workspace <case>/missing does not exist\n"
+  },
+  "evolve apply": {
+    "exit": 66,
+    "stdout": "",
+    "stderr": "EVOLUTION APPLY REFUSED (66): workspace <case>/missing does not exist\n"
+  },
+  "evolve finalize": {
+    "exit": 66,
+    "stdout": "",
+    "stderr": "EVOLUTION FINALIZE REFUSED (66): workspace <case>/missing does not exist\n"
+  },
+  "doccheck": {
+    "exit": 3,
+    "stdout": "ERROR: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "fidelity": {
+    "exit": 3,
+    "stdout": "ERROR: [Errno 2] No such file or directory: 'missing'\n",
+    "stderr": ""
+  },
+  "review panel": {
+    "exit": 66,
+    "stdout": "MISSING: review request missing does not exist\n",
+    "stderr": ""
+  },
+  "review panel-light": {
+    "exit": 66,
+    "stdout": "MISSING: review request missing does not exist\n",
+    "stderr": ""
+  },
+  "review finalize": {
+    "exit": 66,
+    "stdout": "MISSING: panel run directory missing does not exist\n",
+    "stderr": ""
+  },
+  "exp init": {
+    "exit": 64,
+    "stdout": "",
+    "stderr": "usage: gnd exp init [-h] --out OUT\n                    [--kind {codegen,analysis,roundtrip,data-driven,work}]\n                    [--title TITLE] [--question ID=TEXT] [--covers ENTRY]\n                    [--session-contract PATH]\n                    id\ngnd exp init: error: 'missing' is not a legal experiment id; it must match ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ \u2014 the id IS the directory name, so a separator or a '..' in it would be a path\n"
+  },
+  "exp validate": {
+    "exit": 66,
+    "stdout": "MISSING: missing/SPEC.md does not exist \u2014 an experiment is its SPEC.md, and a directory without one is not an experiment with nothing wrong\n",
+    "stderr": ""
+  },
+  "exp author-expectation": {
+    "exit": 66,
+    "stdout": "MISSING: required experiment artifact missing/SPEC.md does not exist\n",
+    "stderr": ""
+  },
+  "exp run": {
+    "exit": 66,
+    "stdout": "MISSING: experiment directory missing does not exist\n",
+    "stderr": ""
+  },
+  "exp close": {
+    "exit": 66,
+    "stdout": "MISSING: missing/SPEC.md does not exist \u2014 there is no declared question set to close against, so nothing can be said about this directory\n",
+    "stderr": ""
+  },
+  "solve": {
+    "exit": 66,
+    "stdout": "",
+    "stderr": ""
+  },
+  "install": {
+    "exit": 64,
+    "stdout": "",
+    "stderr": "usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n"
+  },
+  "doctor": {
+    "exit": 12,
+    "stdout": "executable directory: <repo>/.venv/bin (NOT on PATH)\n  a successful install whose bin directory is not on PATH presents as `gnd: command not found`. Fix it with `uv tool update-shell`, then open a new shell.\nchecking both scopes regardless of the flags given (skill precedence is user level over project level)\nclaude/global -> <case>/home/.claude/skills\n  not installed\nclaude/project -> <case>/.claude/skills\n  not installed\nno GND install manifest found at any resolved target root (listed above).\n",
+    "stderr": ""
+  },
+  "uninstall": {
+    "exit": 64,
+    "stdout": "",
+    "stderr": "usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --user\n"
+  },
+  "judgments check": {
+    "exit": 3,
+    "stdout": "saved judgment outcome: 3\n",
+    "stderr": ""
+  }
+}

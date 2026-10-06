@@ -4,6 +4,7 @@ import json
 import pytest
 from support import public_adapter_cases as corpus
 
+from gnd import checker
 from gnd import semantic_adapter as adapter
 from gnd.model import load_model
 from gnd.population import load_population
@@ -41,7 +42,7 @@ def test_inline_untyped_role_preserves_the_typed_sibling_fallback(
     population_path.write_text(json.dumps(data))
     model = load_model(model_path)
     population = load_population(population_path, model=model)
-    observed = adapter.checker.check(model, population).verdicts[0]
+    observed = checker.check(model, population).verdicts[0]
     assert observed.verdict == verdict
     if primitive == "String":
         correspondence = adapter.adapt_snapshot_observed(model, population)
@@ -74,7 +75,7 @@ def test_guarded_variables_retain_their_own_primitives(tmp_path):
     population_path.write_text(json.dumps(data))
     model = load_model(model_path)
     population = load_population(population_path, model=model)
-    assert adapter.checker.check(model, population).verdicts[0].verdict == "pass"
+    assert checker.check(model, population).verdicts[0].verdict == "pass"
     constraint = adapter.adapt_snapshot(model, population).constraints[0]
     assert tuple(term.primitive for term in constraint.operands) == ("", "DateTime")
     assert constraint.refused == "untyped-string-ordering"

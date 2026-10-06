@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd judgments [-h] {check} ...\n\npositional arguments:\n  {check}\n    check     check saved receipts and confidence floors\n\noptions:\n  -h, --help  show this help message and exit\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd judgments [-h] {check} ...\ngnd judgments: error: the following arguments are required: judgment_command\n",
+  "stdout": ""
+ }
+}

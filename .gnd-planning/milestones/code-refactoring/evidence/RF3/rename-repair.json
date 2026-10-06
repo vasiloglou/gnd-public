@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf2_helpers.py::test_shim_inventory_covers_moves_and_patch_effects",
+    "tests/test_rf1_layering.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 2.0635149478912354
+}

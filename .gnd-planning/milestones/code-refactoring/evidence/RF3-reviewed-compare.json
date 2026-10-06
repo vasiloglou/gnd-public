@@ -1,0 +1,279 @@
+{
+ "base": "8ff996f7cf0d17bb08f539bca1f4a116ed839fec",
+ "files": [
+  {
+   "added": 5,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/admission_validation.py",
+   "removed": 4
+  },
+  {
+   "added": 64,
+   "moved_in": 41,
+   "moved_out": 0,
+   "path": "src/gnd/anchor_identity.py",
+   "removed": 0
+  },
+  {
+   "added": 466,
+   "moved_in": 342,
+   "moved_out": 0,
+   "path": "src/gnd/anchors.py",
+   "removed": 0
+  },
+  {
+   "added": 386,
+   "moved_in": 348,
+   "moved_out": 0,
+   "path": "src/gnd/applicability.py",
+   "removed": 0
+  },
+  {
+   "added": 1511,
+   "moved_in": 1388,
+   "moved_out": 0,
+   "path": "src/gnd/branches.py",
+   "removed": 0
+  },
+  {
+   "added": 381,
+   "moved_in": 86,
+   "moved_out": 2742,
+   "path": "src/gnd/checker.py",
+   "removed": 3076
+  },
+  {
+   "added": 8,
+   "moved_in": 2,
+   "moved_out": 14,
+   "path": "src/gnd/correspondence.py",
+   "removed": 22
+  },
+  {
+   "added": 105,
+   "moved_in": 74,
+   "moved_out": 0,
+   "path": "src/gnd/documents.py",
+   "removed": 0
+  },
+  {
+   "added": 171,
+   "moved_in": 116,
+   "moved_out": 0,
+   "path": "src/gnd/errors.py",
+   "removed": 0
+  },
+  {
+   "added": 2763,
+   "moved_in": 2297,
+   "moved_out": 0,
+   "path": "src/gnd/extensions.py",
+   "removed": 0
+  },
+  {
+   "added": 34,
+   "moved_in": 0,
+   "moved_out": 342,
+   "path": "src/gnd/extract/anchors.py",
+   "removed": 389
+  },
+  {
+   "added": 9,
+   "moved_in": 0,
+   "moved_out": 41,
+   "path": "src/gnd/extract/identity.py",
+   "removed": 52
+  },
+  {
+   "added": 3,
+   "moved_in": 0,
+   "moved_out": 23,
+   "path": "src/gnd/extract/manifest.py",
+   "removed": 32
+  },
+  {
+   "added": 19,
+   "moved_in": 0,
+   "moved_out": 224,
+   "path": "src/gnd/extract/refscheme.py",
+   "removed": 247
+  },
+  {
+   "added": 12,
+   "moved_in": 0,
+   "moved_out": 125,
+   "path": "src/gnd/extract/vocabulary.py",
+   "removed": 148
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/extraction_scope.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/judgments.py",
+   "removed": 1
+  },
+  {
+   "added": 35,
+   "moved_in": 22,
+   "moved_out": 0,
+   "path": "src/gnd/manifest_paths.py",
+   "removed": 0
+  },
+  {
+   "added": 407,
+   "moved_in": 277,
+   "moved_out": 154,
+   "path": "src/gnd/model.py",
+   "removed": 192
+  },
+  {
+   "added": 5,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/model_verbalization.py",
+   "removed": 4
+  },
+  {
+   "added": 13,
+   "moved_in": 0,
+   "moved_out": 64,
+   "path": "src/gnd/population.py",
+   "removed": 81
+  },
+  {
+   "added": 19,
+   "moved_in": 0,
+   "moved_out": 110,
+   "path": "src/gnd/popvalidate.py",
+   "removed": 140
+  },
+  {
+   "added": 4,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/proof_bridge.py",
+   "removed": 3
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/redaction.py",
+   "removed": 1
+  },
+  {
+   "added": 25,
+   "moved_in": 0,
+   "moved_out": 302,
+   "path": "src/gnd/references.py",
+   "removed": 350
+  },
+  {
+   "added": 273,
+   "moved_in": 212,
+   "moved_out": 0,
+   "path": "src/gnd/refscheme.py",
+   "removed": 0
+  },
+  {
+   "added": 6,
+   "moved_in": 0,
+   "moved_out": 9,
+   "path": "src/gnd/report.py",
+   "removed": 14
+  },
+  {
+   "added": 20,
+   "moved_in": 9,
+   "moved_out": 0,
+   "path": "src/gnd/report_schema.py",
+   "removed": 0
+  },
+  {
+   "added": 20,
+   "moved_in": 0,
+   "moved_out": 2,
+   "path": "src/gnd/semantic_adapter.py",
+   "removed": 24
+  },
+  {
+   "added": 55,
+   "moved_in": 1,
+   "moved_out": 1733,
+   "path": "src/gnd/semantic_registry.py",
+   "removed": 1817
+  },
+  {
+   "added": 36,
+   "moved_in": 14,
+   "moved_out": 0,
+   "path": "src/gnd/semantic_rows.py",
+   "removed": 0
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/temporal_guarded.py",
+   "removed": 1
+  },
+  {
+   "added": 1,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/terms.py",
+   "removed": 1
+  },
+  {
+   "added": 20,
+   "moved_in": 0,
+   "moved_out": 63,
+   "path": "src/gnd/transition.py",
+   "removed": 92
+  },
+  {
+   "added": 642,
+   "moved_in": 452,
+   "moved_out": 0,
+   "path": "src/gnd/universe.py",
+   "removed": 0
+  },
+  {
+   "added": 234,
+   "moved_in": 148,
+   "moved_out": 0,
+   "path": "src/gnd/values.py",
+   "removed": 0
+  },
+  {
+   "added": 10,
+   "moved_in": 0,
+   "moved_out": 0,
+   "path": "src/gnd/verbalize_population.py",
+   "removed": 6
+  },
+  {
+   "added": 169,
+   "moved_in": 119,
+   "moved_out": 0,
+   "path": "src/gnd/vocabulary.py",
+   "removed": 0
+  }
+ ],
+ "head": "355e2ae39e0dcfb03bd50321ad0ac10fd58e2caa",
+ "schema_version": 1,
+ "totals": {
+  "added": 7935,
+  "moved_in": 5948,
+  "moved_out": 5948,
+  "removed": 6698
+ }
+}

@@ -77,7 +77,7 @@ form the record describes.
 
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import os
 import re
 import stat
@@ -85,6 +85,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 
+from gnd import input_policy as _rf7_input
 from gnd.exp.conclusions import ExperimentConclusions
 from gnd.exp.paths import (
     EvidencePathError,
@@ -411,7 +412,7 @@ def _conformance_findings(spec: ExperimentSpec, spec_path: Path) -> list[CloseFi
     # Imported at call time: `gnd.exp` must stay importable without pulling the
     # generation lane in behind it, and the conformance package reaches
     # `gnd.codegen.emit` through assertion #3.
-    import json
+    import json  # noqa: F811 -- historical compatibility binding
 
     from jsonschema import Draft202012Validator, ValidationError
 
@@ -444,7 +445,7 @@ def _conformance_findings(spec: ExperimentSpec, spec_path: Path) -> list[CloseFi
         ]
 
     try:
-        payload = json.loads(payload_path.read_text(encoding="utf-8"))
+        payload = _rf7_input.loads(payload_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         return [
             _conformance_finding(
@@ -893,7 +894,7 @@ def _declared_case_findings(
         contract_path = experiment_root / SESSION_CONTRACT_FILENAME
         try:
             raw = _read_capped(contract_path, MAX_SESSION_CONTRACT_READ_BYTES)
-            document = json.loads(raw)
+            document = _rf7_input.loads(raw)
             selected_id = experiment_id or document["experiment_id"]
             contract = read_session_contract(
                 contract_path,
@@ -958,12 +959,14 @@ def _declared_case_findings(
                 contract_id=contract.experiment_id,
             )
             if session_result.schema_version in {6, 7}:
-                from gnd.exp.session_v7 import reconstruct
+                from gnd.exp.session_replay import reconstruct
 
-                if contract.schema_version not in {7, 8}:
+                if not contract.profile.patch:
                     raise ValueError("v7 result requires its v7 contract")
                 reconstruct(store, contract, allow_terminal=True)
-                record, _ = store._v7_best
+                record = store.best_record()
+                if record is None:
+                    raise ValueError("result names a best attempt but reconstruction has none")
                 attempt_bytes = store._read_evidence_leaf(
                     f"attempts/{record.attempt_index:04d}/attempt.json", cap=10 * 1024 * 1024
                 )
@@ -1028,7 +1031,7 @@ def _declared_case_findings(
     contract_path = experiment_root / SESSION_CONTRACT_FILENAME
     try:
         raw = _read_capped(contract_path, MAX_SESSION_CONTRACT_READ_BYTES)
-        document = json.loads(raw)
+        document = _rf7_input.loads(raw)
         cases = document["cases"]
         declared = {
             str(case["case_id"])

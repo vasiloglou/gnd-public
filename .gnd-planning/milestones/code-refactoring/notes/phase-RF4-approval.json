@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-05",
+  "authorization": "process-phase RF4 auto",
+  "mark": "delegated approval (auto=true)",
+  "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF4-spec.md",
+  "sha256": "326792938270a28b64eb418499a4199d0fd7006bf84648e417506097b2c8afa9",
+  "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/approved-spec.md",
+  "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+  "instrument": "spec prose",
+  "review_round_limit": 2
+}

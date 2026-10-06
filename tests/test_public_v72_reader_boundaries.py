@@ -27,22 +27,21 @@ _TEMPORARY, ROOT, INSTRUMENT = _materialize()
 atexit.register(_TEMPORARY.cleanup)
 
 def test_reader_decisions_remain_independent_of_producer_declarations():
-    saved = json.loads(INSTRUMENT.with_name("reader-boundaries-before.json").read_bytes())
+    saved = json.loads((Path(__file__).parent.parent / ".gnd-planning/milestones/code-refactoring/evidence/RF8/reader-base.json").read_text())
     for row in saved["functions"]:
-        source = (ROOT / row["path"]).read_text()
+        physical = "src/gnd/exp/session_replay.py" if row["path"] == "src/gnd/exp/session_v7.py" else row["path"]
+        source = (ROOT / physical).read_text()
         node = next(
             node
             for node in ast.walk(ast.parse(source))
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
             and node.name == row["function"]
         )
-        assert (
-            hashlib.sha256(ast.get_source_segment(source, node).encode()).hexdigest()
-            == row["sha256"]
-        )
+        from support.rf8_sources import predecessor_body, reader_expected
+        assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == reader_expected(row)
         assert not row["calls_entry_helper"]
     for path, name in [
-        ("src/gnd/exp/session_v7.py", "_entry"),
+        ("src/gnd/exp/session_replay.py", "_entry"),
         ("src/gnd/exp/session_judgments.py", "entry"),
     ]:
         tree = ast.parse((ROOT / path).read_bytes())

@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "synth",
+  "tests/fixtures/models/guarded_minimal.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 5,
+ "files": null,
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 5, \"error\": \"generator invariant failed at seed 0: no independent expected-state oracle for ['constraints[0] [guarded]', 'constraints[1] [guarded]', 'constraints[2] [guarded]'] \\u2014 the conforming class cannot label them, so they are not-derivable (exit 5). Copying the checker's own verdict in as the expectation would score them `correct` forever and hide the gap behind a coverage fraction of 1.0000.\"}\n"
+}

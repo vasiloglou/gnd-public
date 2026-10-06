@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd judgments check [-h] --policy POLICY --receipts RECEIPTS\n                           --trusted-root TRUSTED_ROOT\n                           [--reference-root REFERENCE_ROOT] [--unredacted]\n                           [--format {json,text}]\n                           model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --policy POLICY\n  --receipts RECEIPTS\n  --trusted-root TRUSTED_ROOT\n  --reference-root REFERENCE_ROOT\n  --unredacted\n  --format {json,text}\n",
+ "path": "gnd judgments check"
+}

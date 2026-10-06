@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd exp init [-h] --out OUT\n                    [--kind {codegen,analysis,roundtrip,data-driven,work}]\n                    [--title TITLE] [--question ID=TEXT] [--covers ENTRY]\n                    [--session-contract PATH]\n                    id\n\nCreate <out>/<ID>/SPEC.md declaring the questions this experiment will have to\nanswer. ID must match ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ because the id IS the\ndirectory name, and every write goes through the shipped traversal guard. An\nexisting experiment directory is REFUSED, never overwritten, and there is\ndeliberately no --force: an experiment directory holds recorded conclusions\nand evidence. Exits 0 when the spec is written, 3 when the requested\ndeclaration is not a valid ExperimentSpec, 11 when the experiment directory\nalready exists (nothing was written), 64 on usage errors including a malformed\nID or a --question that is not ID=TEXT, 74 when the output path is refused by\nthe guard or is unwritable.\n\npositional arguments:\n  id                    the experiment id, e.g. EXP-001-codegen-drift\n\noptions:\n  -h, --help            show this help message and exit\n  --out OUT             directory the experiment directory is created in\n  --kind {codegen,analysis,roundtrip,data-driven,work}\n                        the closed experiment kind (default: codegen)\n  --title TITLE         one line saying what this experiment is for\n  --question ID=TEXT    a declared question; repeatable. Every id must be\n                        answered to close.\n  --covers ENTRY        compact JSON model-element cover with exactly one of\n                        operation, constraint, fact_type, or derivation (which\n                        addresses derivation:<id>); repeatable\n  --session-contract PATH\n                        contract inspected only to establish the work tests-\n                        only covers exemption\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd exp init [-h] --out OUT\n                    [--kind {codegen,analysis,roundtrip,data-driven,work}]\n                    [--title TITLE] [--question ID=TEXT] [--covers ENTRY]\n                    [--session-contract PATH]\n                    id\ngnd exp init: error: the following arguments are required: id, --out\n",
+  "stdout": ""
+ }
+}

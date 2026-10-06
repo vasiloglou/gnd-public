@@ -1,0 +1,35 @@
+Retained output edited to replace machine paths.
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____ test_malformed_model_object_map_retains_predecessor_error[popvalidate] ____
+tests/test_rf6_index.py:166: in test_malformed_model_object_map_retains_predecessor_error
+    with pytest.raises(AttributeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AttributeError
+_____ test_malformed_model_object_map_retains_predecessor_error[assemble] ______
+tests/test_rf6_index.py:166: in test_malformed_model_object_map_retains_predecessor_error
+    with pytest.raises(AttributeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AttributeError
+_____ test_malformed_model_object_map_retains_predecessor_error[poolfile] ______
+tests/test_rf6_index.py:166: in test_malformed_model_object_map_retains_predecessor_error
+    with pytest.raises(AttributeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AttributeError
+____________ test_raw_scope_unhashable_target_retains_empty_result _____________
+tests/test_rf6_index.py:172: in test_raw_scope_unhashable_target_retains_empty_result
+    assert universe.scope_fact_types({'object_type': []}, 'value', built(), None) == []
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/universe.py:218: in _scope_fact_types
+    return resolve_hook(entry.scope, globals())(constraint, constraint_type, model, fact_type)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/universe.py:546: in _family_scope_value
+    return ModelIndex.for_model(model).facts_for_objects({target})
+                                                         ^^^^^^^^
+E   TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_malformed_model_object_map_retains_predecessor_error[popvalidate]
+FAILED tests/test_rf6_index.py::test_malformed_model_object_map_retains_predecessor_error[assemble]
+FAILED tests/test_rf6_index.py::test_malformed_model_object_map_retains_predecessor_error[poolfile]
+FAILED tests/test_rf6_index.py::test_raw_scope_unhashable_target_retains_empty_result
+4 failed in 0.10s

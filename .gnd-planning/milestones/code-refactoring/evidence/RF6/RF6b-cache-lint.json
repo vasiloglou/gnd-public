@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "ruff",
+    "check",
+    "src/gnd/model_index.py",
+    "tests/test_rf6_index.py",
+    "tests/test_rf6_packages.py"
+  ],
+  "exit": 0,
+  "seconds": 0.05861186981201172
+}

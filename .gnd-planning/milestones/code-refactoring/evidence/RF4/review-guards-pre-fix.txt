@@ -1,0 +1,249 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf4_review_regressions.py tests/test_public_construction_site_guards.py --tb=short
+FFFFFFFFFFFFFFFFFFFFFFFFFEEEEEEE                                         [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_static_inventory_excludes_installed_assurance_copies __
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+_ ERROR at setup of test_transition_assurance_delegation_is_an_exact_static_site _
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+____ ERROR at setup of test_a_runtime_producer_cannot_hide_behind_an_alias _____
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+____________ ERROR at setup of test_unused_registry_row_is_detected ____________
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+_______ ERROR at setup of test_an_unexecuted_duplicate_site_is_detected ________
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+_ ERROR at setup of test_duplicate_execution_of_one_id_at_two_sites_is_detected _
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+______ ERROR at setup of test_an_unregistered_producer_owner_is_detected _______
+tests/test_public_construction_site_guards.py:13: in static_sites
+    return inventory(ROOT)
+           ^^^^^^^^^^^^^^^
+tests/public_site_census.py:238: in inventory
+    assert forwarded == _FORWARDERS.keys(), "scope forwarder changed or disappeared"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: scope forwarder changed or disappeared
+=================================== FAILURES ===================================
+____ test_predecessor_import_binding_survives[gnd.api:PopulationLoadError] _____
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.api' has no attribute 'PopulationLoadError'
+_________ test_predecessor_import_binding_survives[gnd.install:ctypes] _________
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.install' has no attribute 'ctypes'
+_________ test_predecessor_import_binding_survives[gnd.install:errno] __________
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.install' has no attribute 'errno'
+________ test_predecessor_import_binding_survives[gnd.install:hashlib] _________
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.install' has no attribute 'hashlib'
+________ test_predecessor_import_binding_survives[gnd.install:tempfile] ________
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.install' has no attribute 'tempfile'
+____ test_predecessor_import_binding_survives[gnd.install:PureWindowsPath] _____
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.install' has no attribute 'PureWindowsPath'
+______ test_predecessor_import_binding_survives[gnd.synth.assemble:math] _______
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'math'. Did you mean: 'Path'?
+____ test_predecessor_import_binding_survives[gnd.synth.assemble:dataclass] ____
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'dataclass'
+______ test_predecessor_import_binding_survives[gnd.synth.assemble:field] ______
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'field'
+______ test_predecessor_import_binding_survives[gnd.synth.assemble:date] _______
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'date'
+____ test_predecessor_import_binding_survives[gnd.synth.assemble:datetime] _____
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'datetime'
+_____ test_predecessor_import_binding_survives[gnd.synth.assemble:product] _____
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'product'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:checker_module] __
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'checker_module'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:_normalize_comparison_operands] _
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute '_normalize_comparison_operands'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:_role_literal_operands] _
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute '_role_literal_operands'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:_exists_witness] _
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute '_exists_witness'
+___ test_predecessor_import_binding_survives[gnd.synth.assemble:EntityPool] ____
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'EntityPool'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:EmptyValueDomain] _
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'EmptyValueDomain'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:draw_value_for_constraints] _
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'draw_value_for_constraints'
+_ test_predecessor_import_binding_survives[gnd.synth.assemble:governing_value_constraints] _
+tests/test_rf4_review_regressions.py:27: in test_predecessor_import_binding_survives
+    assert getattr(old, row['name']) is expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'gnd.synth.assemble' has no attribute 'governing_value_constraints'
+_______ test_identity_stimulus_targets_the_actual_assurance_home[source] _______
+tests/test_rf4_review_regressions.py:54: in test_identity_stimulus_targets_the_actual_assurance_home
+    legacy.test_dirty_release_is_rejected_at_its_identity_boundary(tmp_path, mutation)
+tests/test_v6_phase6_release_reader.py:147: in test_dirty_release_is_rejected_at_its_identity_boundary
+    publish(package, manifest)
+tests/test_rf4_review_regressions.py:40: in guarded_publish
+    assert subject.read_bytes() != original_bytes, 'source mutant missed actual assurance home'
+E   AssertionError: source mutant missed actual assurance home
+E   assert b'"""Internal v6 snapshot correspondence coverage and assurance decisions.\n\nThis module deliberately does not read f...t = _phase3_target\nresult_obligation = _result_obligation\nsorted_set = _sorted_set\nunique_sorted = _unique_sorted\n' != b'"""Internal v6 snapshot correspondence coverage and assurance decisions.\n\nThis module deliberately does not read f...t = _phase3_target\nresult_obligation = _result_obligation\nsorted_set = _sorted_set\nunique_sorted = _unique_sorted\n'
+E    +  where b'"""Internal v6 snapshot correspondence coverage and assurance decisions.\n\nThis module deliberately does not read f...t = _phase3_target\nresult_obligation = _result_obligation\nsorted_set = _sorted_set\nunique_sorted = _unique_sorted\n' = read_bytes()
+E    +    where read_bytes = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4345/test_identity_stimulus_targets0/gnd/assurance/core.py').read_bytes
+___ test_identity_stimulus_targets_the_actual_assurance_home[missing-source] ___
+tests/test_rf4_review_regressions.py:54: in test_identity_stimulus_targets_the_actual_assurance_home
+    legacy.test_dirty_release_is_rejected_at_its_identity_boundary(tmp_path, mutation)
+tests/test_v6_phase6_release_reader.py:127: in test_dirty_release_is_rejected_at_its_identity_boundary
+    (package / "assurance.py").unlink()
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/pathlib/__init__.py:1042: in unlink
+    os.unlink(self)
+E   FileNotFoundError: [Errno 2] No such file or directory: '<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4345/test_identity_stimulus_targets1/gnd/assurance.py'
+___ test_identity_stimulus_targets_the_actual_assurance_home[omitted-roster] ___
+tests/test_rf4_review_regressions.py:54: in test_identity_stimulus_targets_the_actual_assurance_home
+    legacy.test_dirty_release_is_rejected_at_its_identity_boundary(tmp_path, mutation)
+tests/test_v6_phase6_release_reader.py:147: in test_dirty_release_is_rejected_at_its_identity_boundary
+    publish(package, manifest)
+tests/test_rf4_review_regressions.py:44: in guarded_publish
+    assert not any(row['address']['path'] == 'src/gnd/assurance/core.py' for row in manifest['files'])
+E   assert not True
+E    +  where True = any(<generator object test_identity_stimulus_targets_the_actual_assurance_home.<locals>.guarded_publish.<locals>.<genexpr> at 0x10c61f030>)
+________ test_cache_stimulus_changes_an_existing_assurance_member[C18] _________
+tests/test_rf4_review_regressions.py:70: in test_cache_stimulus_changes_an_existing_assurance_member
+    legacy.test_phase2_branch(case_id, tmp_path, monkeypatch)
+tests/test_v63_phase2_cache.py:104: in test_phase2_branch
+    package, manifest = synthetic_release(tmp_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_rf4_review_regressions.py:66: in fixture
+    assert (package / "assurance.py").is_file(), "legacy cache stimulus is not a production member"
+E   AssertionError: legacy cache stimulus is not a production member
+E   assert False
+E    +  where False = is_file()
+E    +    where is_file = (PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4345/test_cache_stimulus_changes_an0/gnd') / 'assurance.py').is_file
+________ test_cache_stimulus_changes_an_existing_assurance_member[C20] _________
+tests/test_rf4_review_regressions.py:70: in test_cache_stimulus_changes_an_existing_assurance_member
+    legacy.test_phase2_branch(case_id, tmp_path, monkeypatch)
+tests/test_v63_phase2_cache.py:104: in test_phase2_branch
+    package, manifest = synthetic_release(tmp_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_rf4_review_regressions.py:66: in fixture
+    assert (package / "assurance.py").is_file(), "legacy cache stimulus is not a production member"
+E   AssertionError: legacy cache stimulus is not a production member
+E   assert False
+E    +  where False = is_file()
+E    +    where is_file = (PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4345/test_cache_stimulus_changes_an1/gnd') / 'assurance.py').is_file
+=========================== short test summary info ============================
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.api:PopulationLoadError]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.install:ctypes]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.install:errno]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.install:hashlib]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.install:tempfile]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.install:PureWindowsPath]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:math]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:dataclass]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:field]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:date]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:datetime]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:product]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:checker_module]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:_normalize_comparison_operands]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:_role_literal_operands]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:_exists_witness]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:EntityPool]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:EmptyValueDomain]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:draw_value_for_constraints]
+FAILED tests/test_rf4_review_regressions.py::test_predecessor_import_binding_survives[gnd.synth.assemble:governing_value_constraints]
+FAILED tests/test_rf4_review_regressions.py::test_identity_stimulus_targets_the_actual_assurance_home[source]
+FAILED tests/test_rf4_review_regressions.py::test_identity_stimulus_targets_the_actual_assurance_home[missing-source]
+FAILED tests/test_rf4_review_regressions.py::test_identity_stimulus_targets_the_actual_assurance_home[omitted-roster]
+FAILED tests/test_rf4_review_regressions.py::test_cache_stimulus_changes_an_existing_assurance_member[C18]
+FAILED tests/test_rf4_review_regressions.py::test_cache_stimulus_changes_an_existing_assurance_member[C20]
+ERROR tests/test_public_construction_site_guards.py::test_static_inventory_excludes_installed_assurance_copies
+ERROR tests/test_public_construction_site_guards.py::test_transition_assurance_delegation_is_an_exact_static_site
+ERROR tests/test_public_construction_site_guards.py::test_a_runtime_producer_cannot_hide_behind_an_alias
+ERROR tests/test_public_construction_site_guards.py::test_unused_registry_row_is_detected
+ERROR tests/test_public_construction_site_guards.py::test_an_unexecuted_duplicate_site_is_detected
+ERROR tests/test_public_construction_site_guards.py::test_duplicate_execution_of_one_id_at_two_sites_is_detected
+ERROR tests/test_public_construction_site_guards.py::test_an_unregistered_producer_owner_is_detected
+25 failed, 7 errors in 1.27s
+
+Exit: 1

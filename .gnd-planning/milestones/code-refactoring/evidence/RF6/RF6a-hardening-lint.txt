@@ -1,0 +1,5 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/ruff check tests/test_rf6_query_policy.py
+All checks passed!
+
+Exit: 0

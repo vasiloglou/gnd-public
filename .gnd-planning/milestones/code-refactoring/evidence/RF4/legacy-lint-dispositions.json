@@ -1,0 +1,332 @@
+[
+  {
+    "path": "src/gnd/api.py",
+    "line": 237,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 311,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 355,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 437,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 544,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 576,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 640,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 817,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 961,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/api.py",
+    "line": 1230,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 551,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 888,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 953,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 980,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1011,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1407,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1434,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1509,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1631,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1780,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1788,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 1886,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 3383,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 3505,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 3548,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 3592,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 3694,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 3935,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 4160,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 4440,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 4540,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 5356,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 5436,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 5969,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6011,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6056,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6259,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6303,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6311,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6389,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6445,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6452,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6466,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6513,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6539,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6589,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6632,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 6913,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 7011,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 7026,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/exp/session.py",
+    "line": 1284,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/exp/session.py",
+    "line": 1365,
+    "code": "BLE001",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/exp/session_store.py",
+    "line": 2391,
+    "code": "TRY004",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/exp/session_store.py",
+    "line": 2915,
+    "code": "TRY004",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  },
+  {
+    "path": "src/gnd/exp/session_store.py",
+    "line": 2921,
+    "code": "TRY004",
+    "disposition": "annotation only; predecessor AST/exception contract preserved, no tightening"
+  }
+]

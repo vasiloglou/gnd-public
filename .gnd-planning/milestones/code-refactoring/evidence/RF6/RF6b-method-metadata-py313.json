@@ -1,0 +1,704 @@
+[
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "AggregateAnalysis.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "AggregateAnalysis.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "AggregateAnalysis.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "AggregateAnalysis.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "AggregateAnalysis.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "AggregateAnalysis.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__getstate__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_dataclass_getstate",
+    "function_name": "_dataclass_getstate"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "AggregateAnalysis",
+    "name": "__setstate__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_dataclass_setstate",
+    "function_name": "_dataclass_setstate"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationEdge.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationEdge.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationEdge.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationEdge.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationEdge.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationEdge.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__getstate__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_dataclass_getstate",
+    "function_name": "_dataclass_getstate"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationEdge",
+    "name": "__setstate__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_dataclass_setstate",
+    "function_name": "_dataclass_setstate"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationClassification.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationClassification.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationClassification.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationClassification.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationClassification.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "DerivationClassification.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__getstate__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_dataclass_getstate",
+    "function_name": "_dataclass_getstate"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "DerivationClassification",
+    "name": "__setstate__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_dataclass_setstate",
+    "function_name": "_dataclass_setstate"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceInputError",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceInputError.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceOrigin.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceOrigin.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceOrigin.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceOrigin.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceOrigin.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "ReferenceOrigin",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "ReferenceOrigin.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "OccurrenceOrigin.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "OccurrenceOrigin.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "OccurrenceOrigin.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "OccurrenceOrigin.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "OccurrenceOrigin.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "OccurrenceOrigin",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "OccurrenceOrigin.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundReferenceContext.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundReferenceContext.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundReferenceContext.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundReferenceContext.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundReferenceContext.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundReferenceContext",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundReferenceContext.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundPopulationView.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundPopulationView.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundPopulationView.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundPopulationView.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundPopulationView.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.model",
+    "owner": "BoundPopulationView",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.model",
+    "qualname": "BoundPopulationView.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "ConstraintVerdict",
+    "name": "_registered_branch",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "ConstraintVerdict._registered_branch",
+    "function_name": "_registered_branch"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "dataclasses",
+    "qualname": "_replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__hash__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "Phase1Trace.__hash__",
+    "function_name": "__hash__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "Phase1Trace.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "Phase1Trace.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__eq__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "Phase1Trace.__eq__",
+    "function_name": "__eq__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__setattr__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "Phase1Trace.__setattr__",
+    "function_name": "__setattr__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "Phase1Trace",
+    "name": "__delattr__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "Phase1Trace.__delattr__",
+    "function_name": "__delattr__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "CheckReport",
+    "name": "has_alethic_fail",
+    "accessor": "fget",
+    "defining_module": "gnd.checker",
+    "qualname": "CheckReport.has_alethic_fail",
+    "function_name": "has_alethic_fail"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "CheckReport",
+    "name": "has_vacuous",
+    "accessor": "fget",
+    "defining_module": "gnd.checker",
+    "qualname": "CheckReport.has_vacuous",
+    "function_name": "has_vacuous"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "CheckReport",
+    "name": "has_unevaluated_alethic",
+    "accessor": "fget",
+    "defining_module": "gnd.checker",
+    "qualname": "CheckReport.has_unevaluated_alethic",
+    "function_name": "has_unevaluated_alethic"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "CheckReport",
+    "name": "counts",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "CheckReport.counts",
+    "function_name": "counts"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "__new__",
+    "accessor": "__func__",
+    "defining_module": "namedtuple__JoinSubjectRow",
+    "qualname": "_JoinSubjectRow.__new__",
+    "function_name": "__new__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "_make",
+    "accessor": "__func__",
+    "defining_module": "collections",
+    "qualname": "_JoinSubjectRow._make",
+    "function_name": "_make"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "__replace__",
+    "accessor": null,
+    "defining_module": "collections",
+    "qualname": "_JoinSubjectRow._replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "_replace",
+    "accessor": null,
+    "defining_module": "collections",
+    "qualname": "_JoinSubjectRow._replace",
+    "function_name": "_replace"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "__repr__",
+    "accessor": null,
+    "defining_module": "collections",
+    "qualname": "_JoinSubjectRow.__repr__",
+    "function_name": "__repr__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "_asdict",
+    "accessor": null,
+    "defining_module": "collections",
+    "qualname": "_JoinSubjectRow._asdict",
+    "function_name": "_asdict"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_JoinSubjectRow",
+    "name": "__getnewargs__",
+    "accessor": null,
+    "defining_module": "collections",
+    "qualname": "_JoinSubjectRow.__getnewargs__",
+    "function_name": "__getnewargs__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "JoinAmbiguousError",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "gnd.checker",
+    "qualname": "JoinAmbiguousError.__init__",
+    "function_name": "__init__"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_FactView",
+    "name": "__subclasshook__",
+    "accessor": "__func__",
+    "defining_module": "typing",
+    "qualname": "_proto_hook",
+    "function_name": "_proto_hook"
+  },
+  {
+    "module": "gnd.checker",
+    "owner": "_FactView",
+    "name": "__init__",
+    "accessor": null,
+    "defining_module": "typing",
+    "qualname": "_no_init_or_replace_init",
+    "function_name": "_no_init_or_replace_init"
+  }
+]

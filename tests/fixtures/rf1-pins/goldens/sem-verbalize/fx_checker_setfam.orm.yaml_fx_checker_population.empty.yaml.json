@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.empty.yaml",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": ""
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/setfam.orm.yaml",
+   "tests/fixtures/checker/population.empty.yaml",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": ""
+ }
+}

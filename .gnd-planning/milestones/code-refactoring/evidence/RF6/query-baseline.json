@@ -1,0 +1,2160 @@
+{
+  "base": "523cdd1a2ae1ad6ea0e8ca092fe29629dd10607c",
+  "scope": "all src/gnd/**/*.py; Load .fact_types and literal .get fact_types/roles; raw subscriptions separately audited",
+  "rows": [
+    {
+      "path": "src/gnd/admission.py",
+      "owner": "_verdict_refs",
+      "expression": "model.fact_types",
+      "line": 45
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "owner": "build_admission",
+      "expression": "model.fact_types",
+      "line": 75
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "owner": "build_admission",
+      "expression": "fact_type.get('roles')",
+      "line": 99
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
+      "expression": "model.fact_types",
+      "line": 134
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "constraint_annotations",
+      "expression": "model.fact_types",
+      "line": 36
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "owner": "_validate",
+      "expression": "model.fact_types",
+      "line": 205
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "vocabulary_digest",
+      "expression": "model.fact_types",
+      "line": 193
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "bind_anchors",
+      "expression": "model.fact_types",
+      "line": 225
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "owner": "bind_anchors",
+      "expression": "fact_type.get('roles')",
+      "line": 224
+    },
+    {
+      "path": "src/gnd/api.py",
+      "owner": "_run_transition_raw",
+      "expression": "model.fact_types",
+      "line": 339
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 89
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 113
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 63
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 73
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 79
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 106
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 204
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 208
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 213
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 217
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 221
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 268
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "model.fact_types",
+      "line": 330
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "owner": "applicable_scope_ids",
+      "expression": "ft.get('roles')",
+      "line": 66
+    },
+    {
+      "path": "src/gnd/branches.py",
+      "owner": "time_relative_operand",
+      "expression": "fact_type.get('roles')",
+      "line": 1373
+    },
+    {
+      "path": "src/gnd/branches.py",
+      "owner": "constraint_variant",
+      "expression": "fact_type.get('roles')",
+      "line": 1449
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "check_legacy",
+      "expression": "model.fact_types",
+      "line": 520
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_partial_constraint_report",
+      "expression": "model.fact_types",
+      "line": 2065
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_check_dispatch",
+      "expression": "model.fact_types",
+      "line": 2156
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "check_legacy",
+      "expression": "model.fact_types",
+      "line": 622
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_require_joinable",
+      "expression": "(fact_type or {}).get('roles')",
+      "line": 1527
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_record_aggregate_guarded_outcomes",
+      "expression": "model.fact_types",
+      "line": 2029
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_anchored_verdicts",
+      "expression": "model.fact_types",
+      "line": 2263
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_value_comparison_message_inputs",
+      "expression": "fact_type.get('roles')",
+      "line": 1106
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_join_rows",
+      "expression": "(fact_type or {}).get('roles')",
+      "line": 1477
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_require_joinable",
+      "expression": "(fact_type or {}).get('roles')",
+      "line": 1538
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_anchored_verdicts",
+      "expression": "fact_type.get('roles')",
+      "line": 2320
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_correspondence_message",
+      "expression": "(fact_type or {}).get('roles')",
+      "line": 759
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_correspondence_message",
+      "expression": "constraint.get('roles')",
+      "line": 927
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_correspondence_message",
+      "expression": "constraint.get('roles')",
+      "line": 957
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_partial_constraint_report",
+      "expression": "fact_type.get('roles')",
+      "line": 2111
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_partial_constraint_report",
+      "expression": "model.fact_types",
+      "line": 2051
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_partial_constraint_report",
+      "expression": "next((ft for ft in model.fact_types if ft.get('id') == head)).get('roles')",
+      "line": 2092
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_anchored_verdicts",
+      "expression": "fact_type.get('roles')",
+      "line": 2334
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_partial_constraint_report",
+      "expression": "constraint.get('roles')",
+      "line": 2112
+    },
+    {
+      "path": "src/gnd/checker.py",
+      "owner": "_partial_constraint_report",
+      "expression": "model.fact_types",
+      "line": 2093
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "owner": "_run_check_raw",
+      "expression": "model.fact_types",
+      "line": 290
+    },
+    {
+      "path": "src/gnd/codegen/docstrings.py",
+      "owner": "tool_docstring",
+      "expression": "fact_type.get('roles')",
+      "line": 102
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "render_skill_document",
+      "expression": "model.fact_types",
+      "line": 745
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "_constructor_fact_types",
+      "expression": "model.fact_types",
+      "line": 407
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "render_tools_module",
+      "expression": "fact_type.get('roles')",
+      "line": 474
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "owner": "render_skill_document",
+      "expression": "fact_type.get('roles')",
+      "line": 720
+    },
+    {
+      "path": "src/gnd/conformance/structural.py",
+      "owner": "expected_surface",
+      "expression": "fact_type.get('roles')",
+      "line": 303
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_indexed_guarded_bindings",
+      "expression": "snapshot.fact_types",
+      "line": 405
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_indexed_guarded_verdict",
+      "expression": "snapshot.fact_types",
+      "line": 530
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_indexed_guarded_exists_verdict",
+      "expression": "snapshot.fact_types",
+      "line": 657
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "_inline_uniqueness_result",
+      "expression": "snapshot.fact_types",
+      "line": 250
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "evaluate_snapshot",
+      "expression": "adapted.snapshot.fact_types",
+      "line": 853
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "owner": "evaluate_snapshot",
+      "expression": "adapted.snapshot.fact_types",
+      "line": 946
+    },
+    {
+      "path": "src/gnd/coverage.py",
+      "owner": "_element_universe",
+      "expression": "model.fact_types",
+      "line": 673
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_constraints",
+      "expression": "model.fact_types",
+      "line": 33
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_derivation_rows",
+      "expression": "model_a.fact_types",
+      "line": 184
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_implies",
+      "expression": "left.get('roles')",
+      "line": 78
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_implies",
+      "expression": "right.get('roles')",
+      "line": 78
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_derivation_rows",
+      "expression": "model_b.fact_types",
+      "line": 183
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "owner": "_structured",
+      "expression": "model.fact_types",
+      "line": 261
+    },
+    {
+      "path": "src/gnd/documents.py",
+      "owner": "structured_derivation_ids",
+      "expression": "model.fact_types",
+      "line": 100
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_constraints",
+      "expression": "document.get('fact_types')",
+      "line": 201
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_surface_index",
+      "expression": "document.get('fact_types')",
+      "line": 310
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_find_role",
+      "expression": "_find_fact(document, locator.fact_type_id).get('roles')",
+      "line": 661
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_surface_index",
+      "expression": "fact_type.get('roles')",
+      "line": 328
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_operation_target",
+      "expression": "_find_fact(document, locator.fact_type_id).get('roles')",
+      "line": 715
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "owner": "_find_fact",
+      "expression": "document.get('fact_types')",
+      "line": 652
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "owner": "read_session_contract",
+      "expression": "model.fact_types",
+      "line": 1775
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "__init__",
+      "expression": "model.fact_types",
+      "line": 88
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "owner": "classify",
+      "expression": "c.get('roles')",
+      "line": 224
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "roles",
+      "expression": "self.fact_types[ft_id].get('roles', [])",
+      "line": 71
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "universe_values",
+      "expression": "self.model.fact_types",
+      "line": 231
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_admit_model",
+      "expression": "document.get('fact_types')",
+      "line": 998
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_define_fact_relations",
+      "expression": "self.model.fact_types",
+      "line": 199
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_uniqueness",
+      "expression": "constraint.get('roles', [])",
+      "line": 351
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_frequency",
+      "expression": "constraint.get('roles', [])",
+      "line": 508
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_constraint_entries",
+      "expression": "model.fact_types",
+      "line": 889
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "_admit_model",
+      "expression": "fact.get('roles')",
+      "line": 1060
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "admit_population",
+      "expression": "model.fact_types",
+      "line": 1089
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "__init__",
+      "expression": "doc.get('fact_types', [])",
+      "line": 68
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "owner": "roles",
+      "expression": "self.fact_types",
+      "line": 71
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
+      "expression": "model.fact_types",
+      "line": 104
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "render_souffle",
+      "expression": "model.fact_types",
+      "line": 263
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
+      "expression": "model.fact_types",
+      "line": 129
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
+      "expression": "model.fact_types",
+      "line": 150
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "render_souffle",
+      "expression": "model.fact_types",
+      "line": 233
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "render_souffle",
+      "expression": "model.fact_types",
+      "line": 220
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "owner": "admit",
+      "expression": "model.fact_types",
+      "line": 141
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "extensions",
+      "expression": "model.fact_types",
+      "line": 276
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "extensions",
+      "expression": "model.fact_types",
+      "line": 295
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "owner": "map_proof",
+      "expression": "model.fact_types",
+      "line": 405
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_base_relations",
+      "expression": "model.fact_types",
+      "line": 816
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "constraint_view_legacy",
+      "expression": "model.fact_types",
+      "line": 2354
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_relation_roles",
+      "expression": "fact_type.get('roles')",
+      "line": 801
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_derivations_dispatch",
+      "expression": "model.fact_types",
+      "line": 2451
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_python_extension_calculator",
+      "expression": "model.fact_types",
+      "line": 1024
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_stratified_extensions",
+      "expression": "model.fact_types",
+      "line": 1275
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_exact_extension_calculator",
+      "expression": "model.fact_types",
+      "line": 1618
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "exact_extension_envelope",
+      "expression": "model.fact_types",
+      "line": 1774
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "structured_extension_view",
+      "expression": "model.fact_types",
+      "line": 2105
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "derivation_claims_against",
+      "expression": "model.fact_types",
+      "line": 2171
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "evaluate_derivations_legacy",
+      "expression": "model.fact_types",
+      "line": 2328
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "evaluate_derivations_legacy",
+      "expression": "model.fact_types",
+      "line": 2340
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_derivations_dispatch",
+      "expression": "model.fact_types",
+      "line": 2520
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_constraint_view_dispatch",
+      "expression": "model.fact_types",
+      "line": 2536
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_partial_clause_rows",
+      "expression": "fact_type.get('roles')",
+      "line": 543
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_project_extension",
+      "expression": "fact_type.get('roles')",
+      "line": 936
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_project_lineage",
+      "expression": "fact_type.get('roles')",
+      "line": 992
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_model_uses_exact_derivations",
+      "expression": "model.fact_types",
+      "line": 1236
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_requires_fixpoint",
+      "expression": "model.fact_types",
+      "line": 1242
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "structured_extension_view",
+      "expression": "model.fact_types",
+      "line": 1946
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "structured_extension_view",
+      "expression": "model.fact_types",
+      "line": 2041
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_exact_extension_calculator",
+      "expression": "fact_type.get('roles')",
+      "line": 1714
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "effective_view",
+      "expression": "model.fact_types",
+      "line": 2750
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_stratified_extensions",
+      "expression": "fact_types[head_id].get('roles')",
+      "line": 1554
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "_evaluate_stratified_extensions",
+      "expression": "fact_type.get('roles')",
+      "line": 1507
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "structured_extension_view",
+      "expression": "model.fact_types",
+      "line": 2004
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "owner": "structured_extension_view",
+      "expression": "model.fact_types",
+      "line": 2076
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "owner": "_build_projection",
+      "expression": "model.fact_types",
+      "line": 252
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "owner": "_build_projection",
+      "expression": "fact_type.get('roles')",
+      "line": 255
+    },
+    {
+      "path": "src/gnd/extraction_scope.py",
+      "owner": "fact_type_scope",
+      "expression": "model.fact_types",
+      "line": 27
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "owner": "role_object_types",
+      "expression": "model.fact_types",
+      "line": 181
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "owner": "role_object_types",
+      "expression": "fact_type.get('roles')",
+      "line": 185
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "owner": "__init__",
+      "expression": "model.fact_types",
+      "line": 200
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "owner": "__init__",
+      "expression": "fact_type.get('roles')",
+      "line": 203
+    },
+    {
+      "path": "src/gnd/judgments.py",
+      "owner": "evaluate_judgments",
+      "expression": "model.fact_types",
+      "line": 526
+    },
+    {
+      "path": "src/gnd/measure/coverage.py",
+      "owner": "shape",
+      "expression": "(ft or {}).get('roles')",
+      "line": 213
+    },
+    {
+      "path": "src/gnd/measure/coverage.py",
+      "owner": "shape",
+      "expression": "(ft or {}).get('roles')",
+      "line": 225
+    },
+    {
+      "path": "src/gnd/measure/report.py",
+      "owner": "build_measurement_report",
+      "expression": "model.fact_types",
+      "line": 362
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "owner": "_cmd_measure",
+      "expression": "model.fact_types",
+      "line": 100
+    },
+    {
+      "path": "src/gnd/measure/truth.py",
+      "owner": "resolve_constraint_ref",
+      "expression": "model.fact_types",
+      "line": 101
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_iter_structured_fact_derivations",
+      "expression": "doc.get('fact_types')",
+      "line": 2793
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_derivation_dependency_closures",
+      "expression": "doc.get('fact_types')",
+      "line": 3357
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "derivation_classifications",
+      "expression": "doc.get('fact_types')",
+      "line": 3440
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_derivation_rule_hint",
+      "expression": "doc.get('fact_types')",
+      "line": 152
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_iter_constraints",
+      "expression": "doc.get('fact_types')",
+      "line": 238
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_role_ref",
+      "expression": "doc.get('fact_types')",
+      "line": 320
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_reading_placeholders",
+      "expression": "doc.get('fact_types')",
+      "line": 400
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_fact_type_arity",
+      "expression": "doc.get('fact_types')",
+      "line": 445
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_role_names_distinct",
+      "expression": "doc.get('fact_types')",
+      "line": 498
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_string_ref",
+      "expression": "doc.get('fact_types')",
+      "line": 849
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_ring_binary",
+      "expression": "doc.get('fact_types')",
+      "line": 935
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_anchored_role_and_recogniser",
+      "expression": "doc.get('fact_types')",
+      "line": 1253
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_op_dynamic_functional",
+      "expression": "doc.get('fact_types')",
+      "line": 2092
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_role_ref",
+      "expression": "fact_type.get('roles')",
+      "line": 324
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_depends_on",
+      "expression": "doc.get('fact_types')",
+      "line": 376
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_reading_placeholders",
+      "expression": "fact_type.get('roles')",
+      "line": 404
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_ring_binary",
+      "expression": "fact_type.get('roles')",
+      "line": 936
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "analyze_declared_aggregate",
+      "expression": "model.fact_types",
+      "line": 3199
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_derivation_rule_shape",
+      "expression": "doc.get('fact_types')",
+      "line": 3691
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "validate_declarations",
+      "expression": "model.fact_types",
+      "line": 5139
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_depends_on",
+      "expression": "doc.get('fact_types')",
+      "line": 374
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_fact_type_arity",
+      "expression": "fact_type.get('roles')",
+      "line": 449
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_external_ref_uc",
+      "expression": "doc.get('fact_types')",
+      "line": 546
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_string_ref",
+      "expression": "constraint.get('roles')",
+      "line": 860
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_join_anchor_unambiguous",
+      "expression": "doc.get('fact_types')",
+      "line": 1001
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_role_object_types",
+      "expression": "doc.get('fact_types')",
+      "line": 1047
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_derivation_effect_on_derived",
+      "expression": "doc.get('fact_types')",
+      "line": 3871
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_derivation_effect_on_semiderived",
+      "expression": "doc.get('fact_types')",
+      "line": 3909
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_derivation_opaque_dependency",
+      "expression": "doc.get('fact_types')",
+      "line": 4385
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_temporal_language",
+      "expression": "doc.get('fact_types')",
+      "line": 4525
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_role_names_distinct",
+      "expression": "fact_type.get('roles')",
+      "line": 500
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_join_anchor_unambiguous",
+      "expression": "(fact_types.get(fact_type_id) or {}).get('roles')",
+      "line": 1014
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_role_object_types",
+      "expression": "ft.get('roles')",
+      "line": 1044
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_anchored_role_and_recogniser",
+      "expression": "fact_type.get('roles')",
+      "line": 1258
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_internal_uniqueness_keys",
+      "expression": "constraint.get('roles')",
+      "line": 2035
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "dynamic_subject_is_functional",
+      "expression": "fact_type.get('roles')",
+      "line": 2072
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_op_dynamic_functional",
+      "expression": "constraint.get('roles')",
+      "line": 2094
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_rule_op_dynamic_functional",
+      "expression": "doc.get('fact_types')",
+      "line": 2111
+    },
+    {
+      "path": "src/gnd/model.py",
+      "owner": "_identifies",
+      "expression": "fact_type.get('roles')",
+      "line": 564
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "_fact_type_cnl",
+      "expression": "item.get('roles')",
+      "line": 108
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "render_model_verbalization",
+      "expression": "loaded.fact_types",
+      "line": 528
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "_constraint_cnl",
+      "expression": "item.get('roles')",
+      "line": 284
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "_constraint_cnl",
+      "expression": "item.get('roles')",
+      "line": 298
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "owner": "render_model_verbalization",
+      "expression": "item.get('roles')",
+      "line": 557
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_rule_anchored_empty_string",
+      "expression": "model.fact_types",
+      "line": 531
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_declared_fact_type_roles",
+      "expression": "model.fact_types",
+      "line": 97
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_role_object_types",
+      "expression": "model.fact_types",
+      "line": 114
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_role_object_types",
+      "expression": "ft.get('roles')",
+      "line": 111
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "owner": "_rule_anchored_empty_string",
+      "expression": "fact_type.get('roles')",
+      "line": 535
+    },
+    {
+      "path": "src/gnd/proof_bridge.py",
+      "owner": "_candidate_slice",
+      "expression": "constraint.get('roles')",
+      "line": 216
+    },
+    {
+      "path": "src/gnd/proof_bridge.py",
+      "owner": "_role_object_type",
+      "expression": "fact_type.get('roles')",
+      "line": 245
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_rewrite_reference_node",
+      "expression": "node.get('roles')",
+      "line": 196
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_all_constraints",
+      "expression": "document.get('fact_types')",
+      "line": 273
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "_guard_dialect_shape",
+      "expression": "fact.get('roles')",
+      "line": 236
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "fact.get('roles')",
+      "line": 438
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "owner": "plan_rai_import",
+      "expression": "target.get('roles')",
+      "line": 536
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "owner": "_expected_model_elements",
+      "expression": "model.get('fact_types')",
+      "line": 312
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "owner": "_expected_model_elements",
+      "expression": "fact_type.get('roles')",
+      "line": 316
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "model.fact_types",
+      "line": 91
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "model.fact_types",
+      "line": 118
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "model.fact_types",
+      "line": 308
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "model.fact_types",
+      "line": 324
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "fact_type.get('roles')",
+      "line": 99
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "render_text_header",
+      "expression": "row.get('roles', ())",
+      "line": 866
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "from_model",
+      "expression": "fact_type.get('roles')",
+      "line": 93
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "owner": "project_output",
+      "expression": "row.get('roles')",
+      "line": 777
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "_referenced_object_type",
+      "expression": "fact_type.get('roles')",
+      "line": 27
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "applicable_set",
+      "expression": "model.fact_types",
+      "line": 222
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "_fact_types_by_id",
+      "expression": "model.fact_types",
+      "line": 19
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "_anchors_on",
+      "expression": "fact_type.get('roles')",
+      "line": 48
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "owner": "applicable_set",
+      "expression": "fact_type.get('roles')",
+      "line": 234
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot",
+      "expression": "model.fact_types",
+      "line": 775
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot_observed",
+      "expression": "model.fact_types",
+      "line": 975
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "_operand",
+      "expression": "fact_type.get('roles', [])",
+      "line": 316
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot_observed",
+      "expression": "model.fact_types",
+      "line": 902
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot_observed",
+      "expression": "fact_type.get('roles')",
+      "line": 907
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "owner": "adapt_snapshot",
+      "expression": "source.get('roles', [])",
+      "line": 783
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "fact_projection_rows",
+      "expression": "snapshot.fact_types",
+      "line": 1002
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "guarded_atom_state",
+      "expression": "snapshot.fact_types",
+      "line": 1629
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "snapshot_fact_index",
+      "expression": "snapshot.fact_types",
+      "line": 130
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "mandatory_cursor",
+      "expression": "snapshot.fact_types",
+      "line": 327
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "role_sequence_rows",
+      "expression": "snapshot.fact_types",
+      "line": 606
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "guarded_bindings",
+      "expression": "snapshot.fact_types",
+      "line": 1546
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "value_cursor",
+      "expression": "snapshot.fact_types",
+      "line": 2043
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "sequence_join_reason",
+      "expression": "snapshot.fact_types",
+      "line": 2249
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "mandatory_disjunctive_cursor",
+      "expression": "snapshot.fact_types",
+      "line": 428
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "role_sequence_rows",
+      "expression": "snapshot.fact_types",
+      "line": 573
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "exclusive_or_result",
+      "expression": "snapshot.fact_types",
+      "line": 905
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "sequence_join_reason",
+      "expression": "snapshot.fact_types",
+      "line": 2235
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "snapshot_fact_index",
+      "expression": "snapshot.fact_types",
+      "line": 131
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "mandatory_cursor",
+      "expression": "snapshot.fact_types",
+      "line": 330
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "ring_result",
+      "expression": "snapshot.fact_types",
+      "line": 1458
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "value_comparison_pairs",
+      "expression": "snapshot.fact_types",
+      "line": 1807
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "mandatory_disjunctive_cursor",
+      "expression": "snapshot.fact_types",
+      "line": 431
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "owner": "exclusive_or_result",
+      "expression": "snapshot.fact_types",
+      "line": 908
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/scripts/verify_migration.py",
+      "owner": "_load_model_surface",
+      "expression": "loaded.get('fact_types')",
+      "line": 223
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_materialize_structured_claims",
+      "expression": "model.fact_types",
+      "line": 601
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_repair_uniqueness",
+      "expression": "constraint.get('roles')",
+      "line": 744
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_repair_frequency",
+      "expression": "constraint.get('roles')",
+      "line": 763
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_repair_disjunctive",
+      "expression": "model.fact_types",
+      "line": 848
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_seed_guarded_exists",
+      "expression": "model.fact_types",
+      "line": 710
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "owner": "_seed_guarded_exists",
+      "expression": "fact_type.get('roles')",
+      "line": 726
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_value_target",
+      "expression": "model.fact_types",
+      "line": 601
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_reference_targets",
+      "expression": "model.fact_types",
+      "line": 626
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_value_target",
+      "expression": "ft.get('roles')",
+      "line": 602
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_reference_targets",
+      "expression": "ft.get('roles')",
+      "line": 627
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "owner": "_derive_frequency",
+      "expression": "constraint.get('roles')",
+      "line": 1009
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "owner": "normalize_operands",
+      "expression": "fact_type.get('roles')",
+      "line": 120
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "owner": "normalize_operands",
+      "expression": "model.fact_types",
+      "line": 86
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "owner": "normalize_operands",
+      "expression": "(target_ft or {}).get('roles')",
+      "line": 97
+    },
+    {
+      "path": "src/gnd/synth/frontier.py",
+      "owner": "frontier_codes_for",
+      "expression": "model.fact_types",
+      "line": 146
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_universe",
+      "expression": "model.fact_types",
+      "line": 181
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_join_scoped_sequences",
+      "expression": "model.fact_types",
+      "line": 1568
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "measure_distinct_ratios",
+      "expression": "model.fact_types",
+      "line": 1603
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_constraint_iter_with_ref",
+      "expression": "model.fact_types",
+      "line": 1618
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_collect_role_value_specs",
+      "expression": "self.model.fact_types",
+      "line": 848
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_iter_constraints",
+      "expression": "self.model.fact_types",
+      "line": 882
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_claimed_fact_types",
+      "expression": "self.model.fact_types",
+      "line": 928
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "construct",
+      "expression": "self.model.fact_types",
+      "line": 958
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "construct",
+      "expression": "self.model.fact_types",
+      "line": 963
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_ring",
+      "expression": "ft.get('roles')",
+      "line": 1032
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_coordinate_value_comparisons",
+      "expression": "self.model.fact_types",
+      "line": 1322
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_close_mandatory",
+      "expression": "self.model.fact_types",
+      "line": 1424
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_complete_fact",
+      "expression": "ft.get('roles')",
+      "line": 1510
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_role_object",
+      "expression": "model.fact_types",
+      "line": 111
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_collect_role_value_specs",
+      "expression": "fact_type.get('roles')",
+      "line": 850
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_claimed_fact_types",
+      "expression": "ft.get('roles')",
+      "line": 930
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_seed_one_join",
+      "expression": "ft.get('roles')",
+      "line": 1410
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_role_object",
+      "expression": "ft.get('roles')",
+      "line": 108
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_witness",
+      "expression": "fact_type.get('roles')",
+      "line": 627
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_entity_roles",
+      "expression": "ft.get('roles')",
+      "line": 975
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_value_roles",
+      "expression": "ft.get('roles')",
+      "line": 980
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_plain",
+      "expression": "c.get('roles')",
+      "line": 991
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_external_uniqueness_components",
+      "expression": "self.model.fact_types",
+      "line": 1094
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_mandatory_completion",
+      "expression": "constraint.get('roles')",
+      "line": 1458
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_mandatory_completion",
+      "expression": "ft.get('roles')",
+      "line": 1464
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "doc",
+      "expression": "self.model.fact_types",
+      "line": 1524
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_externals",
+      "expression": "self.model.fact_types",
+      "line": 1071
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_externals",
+      "expression": "ft.get('roles')",
+      "line": 1078
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_seed_one_join",
+      "expression": "self.model.fact_types",
+      "line": 1406
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_witness",
+      "expression": "constraint.get('roles')",
+      "line": 578
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_witness",
+      "expression": "constraint.get('roles')",
+      "line": 616
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_plain",
+      "expression": "c.get('roles')",
+      "line": 992
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_external_uniqueness_components",
+      "expression": "(fact_types.get(ftid) or {}).get('roles')",
+      "line": 1109
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_mandatory_completion",
+      "expression": "constraint.get('roles')",
+      "line": 1457
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "owner": "_generate_externals",
+      "expression": "ft.get('roles')",
+      "line": 1072
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_duplicate_covered",
+      "expression": "ft.get('roles')",
+      "line": 170
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_other_ft_with_role",
+      "expression": "model.fact_types",
+      "line": 272
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_ring_gate",
+      "expression": "ft.get('roles')",
+      "line": 525
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_value_occurrence",
+      "expression": "model.fact_types",
+      "line": 636
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_duplicate_joined",
+      "expression": "(ft2 or {}).get('roles')",
+      "line": 233
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_other_ft_with_role",
+      "expression": "ft.get('roles')",
+      "line": 275
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_drop_from_group",
+      "expression": "constraint.get('roles')",
+      "line": 397
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_add_past_ceiling",
+      "expression": "constraint.get('roles')",
+      "line": 436
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_add_past_ceiling",
+      "expression": "constraint.get('roles')",
+      "line": 441
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_value_occurrence",
+      "expression": "ft.get('roles')",
+      "line": 638
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_governed_ft_with_entity_role",
+      "expression": "model.fact_types",
+      "line": 680
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_duplicate_covered",
+      "expression": "constraint.get('roles')",
+      "line": 151
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_duplicate_covered",
+      "expression": "constraint.get('roles')",
+      "line": 153
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_duplicate_covered",
+      "expression": "ft.get('roles')",
+      "line": 154
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_duplicate_covered",
+      "expression": "constraint.get('roles')",
+      "line": 166
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_exact_duplicate",
+      "expression": "constraint.get('roles')",
+      "line": 187
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_exact_duplicate",
+      "expression": "constraint.get('roles')",
+      "line": 189
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_exact_duplicate",
+      "expression": "ft.get('roles')",
+      "line": 190
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_exact_duplicate",
+      "expression": "ft.get('roles')",
+      "line": 202
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_internal_frequency_groups",
+      "expression": "constraint.get('roles')",
+      "line": 371
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_ring_edges",
+      "expression": "ft.get('roles')",
+      "line": 514
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_governed_ft_with_entity_role",
+      "expression": "ft.get('roles')",
+      "line": 681
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_uniqueness_conflict",
+      "expression": "constraint.get('roles')",
+      "line": 771
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_uniqueness_conflict",
+      "expression": "constraint.get('roles')",
+      "line": 773
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_applies_add_self_loop",
+      "expression": "ft.get('roles')",
+      "line": 604
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_apply_add_self_loop",
+      "expression": "ft.get('roles')",
+      "line": 618
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "owner": "_governed_ft_with_entity_role",
+      "expression": "ft.get('roles')",
+      "line": 686
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_ft_by_id",
+      "expression": "model.fact_types",
+      "line": 84
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_complete_row",
+      "expression": "ft.get('roles')",
+      "line": 270
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_guarded_atoms_have_derived_source",
+      "expression": "model.fact_types",
+      "line": 424
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_scope_fts",
+      "expression": "model.fact_types",
+      "line": 324
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_scope_fts",
+      "expression": "model.fact_types",
+      "line": 331
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_scope_fts",
+      "expression": "f.get('roles')",
+      "line": 325
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "owner": "_scope_fts",
+      "expression": "f.get('roles')",
+      "line": 332
+    },
+    {
+      "path": "src/gnd/synth/poolfile.py",
+      "owner": "_iter_all_constraints",
+      "expression": "model.fact_types",
+      "line": 186
+    },
+    {
+      "path": "src/gnd/synth/poolfile.py",
+      "owner": "_distinctness_demand",
+      "expression": "constraint.get('roles')",
+      "line": 278
+    },
+    {
+      "path": "src/gnd/synth/poolfile.py",
+      "owner": "_distinctness_demand",
+      "expression": "constraint.get('roles')",
+      "line": 292
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "owner": "_cmd_synth",
+      "expression": "model.fact_types",
+      "line": 342
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "owner": "_cmd_synth",
+      "expression": "model.fact_types",
+      "line": 295
+    },
+    {
+      "path": "src/gnd/synth/value_domain.py",
+      "owner": "_iter_constraints",
+      "expression": "model.fact_types",
+      "line": 24
+    },
+    {
+      "path": "src/gnd/temporal_guarded.py",
+      "owner": "evaluate_temporal_guard",
+      "expression": "snapshot.fact_types",
+      "line": 59
+    },
+    {
+      "path": "src/gnd/terms.py",
+      "owner": "uses_temporal",
+      "expression": "model.fact_types",
+      "line": 97
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "assert_dynamic_derivation_coverage",
+      "expression": "model.fact_types",
+      "line": 527
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_instance_keys",
+      "expression": "model.fact_types",
+      "line": 893
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_derived_changes",
+      "expression": "model.fact_types",
+      "line": 1674
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_step",
+      "expression": "model.fact_types",
+      "line": 1109
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_effective_extension_state",
+      "expression": "model.fact_types",
+      "line": 1487
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_unknown_precondition_verdicts",
+      "expression": "model.fact_types",
+      "line": 1578
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_derived_dynamic_rules",
+      "expression": "model.fact_types",
+      "line": 1747
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_to_state",
+      "expression": "model.fact_types",
+      "line": 1941
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_dynamic_heads_for_step",
+      "expression": "model.fact_types",
+      "line": 1661
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_instance_keys",
+      "expression": "fact_type.get('roles')",
+      "line": 896
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_derived_dynamic_rules",
+      "expression": "next((ft for ft in model.fact_types if ft.get('id') == subject_type)).get('roles')",
+      "line": 1723
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_unknown_precondition_verdicts",
+      "expression": "fact_types[head].get('roles')",
+      "line": 1586
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "owner": "_evaluate_derived_dynamic_rules",
+      "expression": "model.fact_types",
+      "line": 1724
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_fact_type_by_id",
+      "expression": "model.fact_types",
+      "line": 424
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_instance_values_of",
+      "expression": "model.fact_types",
+      "line": 554
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_role_object_type",
+      "expression": "(fact_type or {}).get('roles')",
+      "line": 432
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_fact_type_roles",
+      "expression": "doc.get('fact_types')",
+      "line": 19
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_is_implemented",
+      "expression": "constraint.get('roles')",
+      "line": 298
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_scope_fact_types",
+      "expression": "model.fact_types",
+      "line": 410
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_scope_fact_types",
+      "expression": "model.fact_types",
+      "line": 417
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_fact_type_roles",
+      "expression": "ft.get('roles')",
+      "line": 16
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_is_implemented",
+      "expression": "constraint.get('roles')",
+      "line": 309
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_instance_values_of",
+      "expression": "fact_type.get('roles')",
+      "line": 557
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_scope_fact_types",
+      "expression": "ft.get('roles')",
+      "line": 411
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "owner": "_scope_fact_types",
+      "expression": "ft.get('roles')",
+      "line": 418
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "verbalize_population",
+      "expression": "model.fact_types",
+      "line": 209
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "_project_rows",
+      "expression": "model.fact_types",
+      "line": 173
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "owner": "render_witness",
+      "expression": "model.fact_types",
+      "line": 239
+    },
+    {
+      "path": "src/gnd/vocabulary.py",
+      "owner": "render_verbalization",
+      "expression": "model.fact_types",
+      "line": 121
+    },
+    {
+      "path": "src/gnd/vocabulary.py",
+      "owner": "render_verbalization",
+      "expression": "fact_type.get('roles')",
+      "line": 123
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "roster",
+      "expression": "model.fact_types",
+      "line": 329
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "owner": "support_closure",
+      "expression": "model.fact_types",
+      "line": 361
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "owner": "_replay_graph",
+      "expression": "model.fact_types",
+      "line": 139
+    },
+    {
+      "path": "src/gnd/witness/producer.py",
+      "owner": "__init__",
+      "expression": "model.fact_types",
+      "line": 38
+    }
+  ]
+}

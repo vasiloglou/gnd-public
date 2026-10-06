@@ -1,0 +1,36 @@
+{
+  "source": "exact archive a3f35a6/src/gnd, explicit PYTHONPATH",
+  "python": "313",
+  "counts": {
+    "gnd.model": 238,
+    "gnd.checker": 230
+  },
+  "differences": [
+    {
+      "module": "gnd.model",
+      "predecessor_native": {
+        "name": "Path",
+        "kind": "type",
+        "module": "pathlib._local",
+        "qualname": "Path"
+      },
+      "predecessor_py314": {
+        "name": "Path",
+        "kind": "type",
+        "module": "pathlib",
+        "qualname": "Path"
+      }
+    },
+    {
+      "module": "gnd.checker",
+      "predecessor_native": {
+        "name": "Scalar",
+        "kind": "UnionType"
+      },
+      "predecessor_py314": {
+        "name": "Scalar",
+        "kind": "Union"
+      }
+    }
+  ]
+}

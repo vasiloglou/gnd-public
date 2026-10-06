@@ -1,0 +1,80 @@
+{
+ "control_nodes": 12,
+ "killed": 12,
+ "rows": {
+  "M-HELP-canonical-json-gnd-extract-anchors-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.extract.anchors:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-transition-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.transition:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-population-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.population:_model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-references-reference-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.references:reference_model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-extract-anchors-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.extract.anchors:_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-population-content-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.population:_content_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-conclusions-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.conclusions:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-spec-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.spec:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-extract-manifest-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.extract.manifest:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-check-coverage-anchored": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check_coverage": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-resolver-is-true": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_resolver": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 12
+}

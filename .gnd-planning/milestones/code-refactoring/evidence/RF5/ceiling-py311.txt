@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: /private/tmp/rf2-py311/bin/python -m pytest -q tests/test_rf5_commands.py::test_bootstrap_ceiling_and_single_parse_dispatch
+.                                                                        [100%]
+1 passed in 0.17s
+
+Exit: 0

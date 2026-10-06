@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-06",
+  "status": "delegated approval (auto=true)",
+  "authorization": [
+    "process-phase RF7 auto",
+    "yes implement RF7",
+    "modify any tests to respect the new restrictions"
+  ],
+  "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF7/approved-spec.md",
+  "sha256": "7ef824a8c38873897f4bb35e8972914a693e07be77da1f57cb12d2c955abd25e",
+  "scope": "C1--C7 and RF1-OQ5; explicit plan amendment",
+  "instrument": "corpus-first",
+  "source_base": "10608c4761bae7c0989b774a20de5f43c6350912",
+  "review_limit": "one initial plus at most one repair"
+}

@@ -1,0 +1,1 @@
+rows: 8  killed: 8  not killed: 0

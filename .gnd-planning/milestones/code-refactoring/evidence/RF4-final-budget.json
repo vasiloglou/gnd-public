@@ -1,0 +1,29 @@
+{
+  "source_base": "387aada",
+  "source_head": "301e80fb886c7866c9fcfeb5f82671351c1ee35e",
+  "measured": {
+    "touched_files": 249,
+    "non_evidence_doc_added": 578,
+    "python_test_added": 472,
+    "test_data_added": 3043,
+    "test_total_added": 3515,
+    "nonrelocated_production": 3971,
+    "moved_production": 7977
+  },
+  "original_limits": {
+    "touched_files": 130,
+    "non_evidence_doc_added": 180,
+    "nonrelocated_production": 2200,
+    "test_total_added": 1800,
+    "moved_production": 15000
+  },
+  "delegated_limits": {
+    "touched_files": 250,
+    "non_evidence_doc_added": 800,
+    "nonrelocated_production": 4200,
+    "test_total_added": 3600,
+    "python_test_added": 1800,
+    "moved_production": 15000
+  },
+  "disposition": "Original exceeded limits remain disclosed; A5/A6/A9 govern approved final scope."
+}

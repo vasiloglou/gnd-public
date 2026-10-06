@@ -1,0 +1,1193 @@
+{
+ "control_nodes": 350,
+ "killed": 167,
+ "rows": {
+  "M-AGENT-argv-print": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_argv": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-invoke-version": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[failure]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[success]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[timeout]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-invoke-version-probe-failed": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[version-fails]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-run-stdout-retained": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[stdout-over-limit]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-run-truncated": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[aggregate-over-budget]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[missing-executable]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[nonzero-exit]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[secret-redaction]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[stderr-over-limit]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[success]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[timeout]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-CLI-exit-drift": {
+   "nodes": {
+    "tests/test_rf1_cli_pins.py::test_cli_exit_map": "failed"
+   },
+   "status": "killed"
+  },
+  "M-CLI-root-prog": {
+   "nodes": {
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd codegen]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd conformance]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd coverage]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd diff]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd doccheck]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd doctor]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve apply]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve preview]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd evolve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp author-expectation]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp close]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp init]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd exp]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export lean-compile]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export lean-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export lean]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export pyrel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle-run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle-witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export souffle]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd export]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd extract]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd fidelity]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import rai-orm]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd import]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd install]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd judgments check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd judgments]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd measure]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd recovery inventory]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd recovery verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd recovery]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd replay]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review panel-light]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review panel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd review]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd solve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd synth]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd uninstall]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verbalize population]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verbalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd witness-view]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_exit_probe[gnd]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd codegen]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd conformance]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd coverage]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd diff]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd doccheck]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd doctor]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve apply]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve preview]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd evolve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp author-expectation]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp close]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp init]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd exp]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export lean-compile]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export lean-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export lean]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export pyrel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle-run]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle-verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle-witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export souffle]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd export]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd extract]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd fidelity]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd import rai-orm]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd import]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd install]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd judgments check]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd judgments]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd measure]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd recovery inventory]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd recovery verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd recovery]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd replay]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review finalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review panel-light]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review panel]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd review]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd solve]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd synth]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd uninstall]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd validate]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd verbalize population]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd verbalize]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd verify]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd witness-view]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd witness]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_help[gnd]": "failed",
+    "tests/test_rf1_cli_pins.py::test_cli_tree": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-artifacts-canonical-json-bytes": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.artifacts:canonical_json_bytes]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-artifacts-canonical-json-bytes-exact-numbers": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.artifacts:canonical_json_bytes[exact_numbers]]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-artifacts-canonical-json-text": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.artifacts:canonical_json_text]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-assurance-inheritance-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance_inheritance:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-assurance-sorted-set": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance:_sorted_set]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-cli-canonical-payload": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_canonical_payload]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-cli-evolve-json-bytes": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_evolve_json_bytes]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-codegen-emit-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.codegen.emit:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-conformance-report-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.conformance.report:canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-coverage-canonical-payload": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.coverage:canonical_payload]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-evolve-models-canonical-json": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.evolve.models:_canonical_json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-extract-anchors-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.extract.anchors:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-fidelity-report-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.fidelity.report:canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-measure-report-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.measure.report:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-model-verbalization-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.model_verbalization:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-proof-bridge-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.proof_bridge:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-review-request-canonical-json": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.review.request:_canonical_json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-synth-poolfile-canonical-bytes": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.synth.poolfile:_canonical_bytes]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-transition-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.transition:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-file-digest-gnd-evolve-service-final-record-file-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.evolve.service:final_record_file_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-file-digest-gnd-evolve-service-tree-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.evolve.service:_tree_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-file-digest-gnd-exp-tests-runner-digest-regular-path": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.exp.tests_runner:_digest_regular_path]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-file-digest-gnd-synth-provenance-sha256-file": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.synth.provenance:_sha256_file]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-file-digest-gnd-transition-population-file-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.transition:population_file_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-fidelity-match-rate": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.fidelity.match:_rate]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-measure-score-rate": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.measure.score:_rate]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-popvalidate-role-object-types": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_role_object_types]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-assemble-role-object": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_role_object]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-poolfile-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.poolfile:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-iso-datetime-gnd-popvalidate-is-datetime": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[iso_datetime|gnd.popvalidate:_is_datetime]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-iso-datetime-gnd-synth-values-parse-datetime": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[iso_datetime|gnd.synth.values:_parse_datetime]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-conformance-currency-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.conformance.currency:model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-population-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.population:_model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-references-reference-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.references:reference_model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-synth-provenance-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.synth.provenance:model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-transition-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.transition:model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-artifacts-descend": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.artifacts:_descend]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-artifacts-open-root": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.artifacts:_open_root]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-artifacts-safe-fs-coordinate": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.artifacts:_safe_fs_coordinate]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-artifacts-write-new-file": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.artifacts:_write_new_file]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-artifacts-write-new-file-at": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.artifacts:_write_new_file_at]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-cli-evolve-reject-unsafe-spelling": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.cli:_evolve_reject_unsafe_spelling]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-conformance-structural-directory-identity": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.conformance.structural:_directory_identity]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-conformance-structural-safe-coordinate": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.conformance.structural:_safe_coordinate]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-evolve-models-unsafe-project-path": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.evolve.models:_unsafe_project_path]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-exp-junit-same-inode": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.exp.junit:_same_inode]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-exp-session-store-write-new-file": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.exp.session_store:_write_new_file]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-exp-tests-runner-same-inode": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.exp.tests_runner:_same_inode]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-export-pyrel-runtime-write-new": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.export.pyrel_runtime:write_new]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-atomic-write": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_atomic_write]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-descend": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-descend-create": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend[create]]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-reject-unsafe-relpath": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_reject_unsafe_relpath]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-safe-destination": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:safe_destination]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-recovery-inventory-descend": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.recovery.inventory:_descend]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-artifacts-sha256-hex": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.artifacts:sha256_hex]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-assurance-evidence-sha": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.assurance_evidence:_sha]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-codegen-manifest-digest-text": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.codegen.manifest:digest_text]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-diff-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.diff:_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-export-souffle-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.export.souffle:digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-extract-anchors-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.extract.anchors:_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-install-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.install:_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-judgments-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.judgments:digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-measure-promote-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.measure.promote:_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-population-content-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.population:_content_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-recovery-verify-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.recovery.verify:_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-synth-poolfile-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.synth.poolfile:_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-coverage-read-json-document": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.coverage:read_json_document]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-declared-adapter-bundle-rows": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.declared_adapter:_bundle_rows]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-exp-adapter-policy-strict-document": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.adapter_policy:_strict_document]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-exp-session-eval-strict-object": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.session_eval:_strict_object]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-exp-session-store-strict-object-bytes": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.session_store:_strict_object_bytes]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-review-request-reject-duplicate-object-pairs": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.request:_reject_duplicate_object_pairs]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-review-request-strict-json-object": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.request:_strict_json_object]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-review-runner-strict-json": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.runner:_strict_json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-conclusions-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.conclusions:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-session-contract-pydantic-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.session_contract:_pydantic_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-session-eval-schema-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.session_eval:_schema_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-spec-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.spec:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-extract-manifest-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.extract.manifest:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-population-schema-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.population:_schema_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-yaml-guard-gnd-architecture-load-yaml": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.architecture:_load_yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-yaml-guard-gnd-architecture-preflight-yaml": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.architecture:_preflight_yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-yaml-guard-gnd-export-pyrel-runtime-load-yaml": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.export.pyrel_runtime:_load_yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-yaml-guard-gnd-model-yaml-stream-guard-error": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.model:yaml_stream_guard_error]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-yaml-guard-gnd-recovery-inventory-load-yaml-static": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.recovery.inventory:_load_yaml_static]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-assurance-block": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_assurance_blocks": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-check-arms": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check_anchored": "failed",
+    "tests/test_rf1_semantic_pins.py::test_check_transition": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-check-batch-command": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check_batch": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-check-coverage-anchored": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check_coverage": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-checker-_typed_comparison_values": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[checker._typed_comparison_values]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-export-pyrel_runtime-_valid_temporal": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[export.pyrel_runtime._valid_temporal]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-model-_temporal_literal_valid": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[model._temporal_literal_valid]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-semantic_adapter-canonical_scalar": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[semantic_adapter.canonical_scalar]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-synth-assemble-_instant_pair": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[synth.assemble._instant_pair]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-synth-boundary-boundary_neighbour": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[synth.boundary.boundary_neighbour]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-diff-schema": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_diff[ex/bookrec/model.orm.yaml|ex/bookrec/strict.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-diff-vocabulary-refusal": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_diff[ex/bookrec/model.orm.yaml|ex/bookrec/complete.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_diff[ex/expense/model.orm.json|ex/expense/currency.orm.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-extract-indent": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/approvals/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/bookrec/complete.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/bookrec/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/bookrec/strict.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/expense/currency.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/expense/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/checker/misc.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/checker/ring.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/checker/setfam.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/dispatch.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/full_vocabulary.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/guarded_minimal.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/keywords.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/library.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/v2_operations.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[fx/models/v2_worked_example.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-extract-temporal-refusal": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/dispatch/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_extract[ex/release/model.orm.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-inheritance-compare": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_assurance_inheritance_comparison": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-oracle-expected-state": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[misc.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[ring.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[setfam.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-resolver-is-true": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_resolver": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-synth-emit": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/approvals/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/complete.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/strict.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/dispatch/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/currency.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/release/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/misc.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/ring.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/setfam.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/dispatch.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/full_vocabulary.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/guarded_minimal.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/keywords.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/library.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_operations.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_worked_example.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-complete-orm-yaml-ex-bookrec-complete-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/complete.orm.yaml|ex/bookrec/complete.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-adult-for-minor-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/adult-for-minor.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-already-read-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/already-read.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-genre-warning-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/genre-warning.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-seed-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/seed.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-repaired-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/repaired.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-seed-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/seed.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-missing-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency-missing.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-approved-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/approved.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-chain-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-chain.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-meal-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-meal.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-seed-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/seed.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-release-model-orm-json-ex-release-repaired-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/repaired.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-release-model-orm-json-ex-release-seed-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/seed.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-fail-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-pass-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-fail-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-pass-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-coverage-omission-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-covers-none-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-empty-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-precedence-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-fail-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-pass-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-verbalize-population": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/bookrec/complete.orm.yaml|ex/bookrec/complete.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/bookrec/model.orm.yaml|ex/bookrec/adult-for-minor.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/bookrec/model.orm.yaml|ex/bookrec/already-read.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/bookrec/model.orm.yaml|ex/bookrec/genre-warning.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/bookrec/model.orm.yaml|ex/bookrec/seed.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/dispatch/model.orm.json|ex/dispatch/repaired.pop.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/dispatch/model.orm.json|ex/dispatch/seed.pop.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/expense/currency.orm.json|ex/expense/currency-missing.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/expense/currency.orm.json|ex/expense/currency.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/expense/model.orm.json|ex/expense/approved.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/expense/model.orm.json|ex/expense/invalid-chain.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/expense/model.orm.json|ex/expense/invalid-meal.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/expense/model.orm.json|ex/expense/seed.population.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/release/model.orm.json|ex/release/repaired.pop.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[ex/release/model.orm.json|ex/release/seed.pop.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_verbalize_population[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-1": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[1]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-2": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[2]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-3": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[3]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-4": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[4]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-5": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[5]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-6": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[6]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-determinism-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_determinism[8]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-1": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[1]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-2": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[2]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-3": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[3]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-4": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[4]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-5": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[5]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-6": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[6]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-fresh-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_fresh[8]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-reconstruct-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_reconstruct[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-reconstruct-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_reconstruct[8]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-1": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[1]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-2": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[2]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-3": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[3]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-4": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[4]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-5": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[5]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-6": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[6]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-resume-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_resume[8]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-unknown-version-0": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_unknown_version[0]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-unknown-version-9": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_unknown_version[9]": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 167
+}

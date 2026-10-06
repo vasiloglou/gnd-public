@@ -1,0 +1,14 @@
+{
+ "observed": {
+  "other-device": {
+   "ok": false
+  },
+  "other-inode": {
+   "ok": false
+  },
+  "same": {
+   "ok": true
+  }
+ },
+ "site": "safe_filesystem|gnd.exp.tests_runner:_same_inode"
+}

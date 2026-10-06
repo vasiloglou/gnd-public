@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_public_lean_export_successors.py",
+    "tests/test_public_souffle_successors.py",
+    "tests/test_public_souffle_input_contract.py",
+    "tests/test_public_optional_value_witness.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 3.371187925338745
+}

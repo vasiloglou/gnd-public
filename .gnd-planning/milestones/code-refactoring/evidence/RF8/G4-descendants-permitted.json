@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_exp_session_eval.py::test_timeout_kills_and_drains_descendants_before_returning",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 4.495513916015625
+}

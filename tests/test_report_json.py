@@ -350,7 +350,9 @@ def test_population_warnings_are_forwarded_to_the_payload(monkeypatch, validator
         # marker while a copy that replaced `facts` would not.
         return population.model_copy(update={"warnings": [warning]})
 
-    monkeypatch.setattr(cli_module.api_module, "load_population", _loader)
+    from gnd import checking_service
+
+    monkeypatch.setattr(checking_service, "load_population", _loader)
 
     payload_lines: list[str] = []
     monkeypatch.setattr(

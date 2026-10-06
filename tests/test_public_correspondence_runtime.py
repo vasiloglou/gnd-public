@@ -184,7 +184,7 @@ def test_message_rendering_cannot_rewrite_semantic_fields(monkeypatch, tmp_path:
     model, population = _build("P2-002", tmp_path)
     baseline = check(model, population)
     monkeypatch.setattr(
-        checker_module,
+        __import__("gnd.checker._core", fromlist=["_core"]),
         "_correspondence_message",
         lambda *_args, **_kwargs: "presentation-only mutation",
     )

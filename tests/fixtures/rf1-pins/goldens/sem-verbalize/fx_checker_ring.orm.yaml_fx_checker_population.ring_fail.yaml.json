@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/ring.orm.yaml",
+   "tests/fixtures/checker/population.ring_fail.yaml",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"rel_acyclic\",\"index\":0},\"sentence\":\"'1' relates-acyclic '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_acyclic\",\"index\":1},\"sentence\":\"'2' relates-acyclic '3'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_acyclic\",\"index\":2},\"sentence\":\"'3' relates-acyclic '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_acyclic_intransitive\",\"index\":0},\"sentence\":\"'1' relates-acyclic-intransitive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_acyclic_intransitive\",\"index\":2},\"sentence\":\"'1' relates-acyclic-intransitive '3'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_acyclic_intransitive\",\"index\":1},\"sentence\":\"'2' relates-acyclic-intransitive '3'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_antisymmetric\",\"index\":0},\"sentence\":\"'1' relates-antisymmetric '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_antisymmetric\",\"index\":1},\"sentence\":\"'2' relates-antisymmetric '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_asymmetric\",\"index\":0},\"sentence\":\"'1' relates-asymmetric '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_asymmetric\",\"index\":1},\"sentence\":\"'2' relates-asymmetric '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_asymmetric_intransitive\",\"index\":0},\"sentence\":\"'1' relates-asymmetric-intransitive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_asymmetric_intransitive\",\"index\":1},\"sentence\":\"'2' relates-asymmetric-intransitive '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_intransitive\",\"index\":0},\"sentence\":\"'1' relates-intransitive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_intransitive\",\"index\":2},\"sentence\":\"'1' relates-intransitive '3'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_intransitive\",\"index\":1},\"sentence\":\"'2' relates-intransitive '3'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_irreflexive\",\"index\":0},\"sentence\":\"'1' relates-irreflexive '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_purely_reflexive\",\"index\":0},\"sentence\":\"'1' relates-purely-reflexive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_reflexive\",\"index\":1},\"sentence\":\"'1' relates-reflexive '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_reflexive\",\"index\":0},\"sentence\":\"'1' relates-reflexive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_symmetric\",\"index\":0},\"sentence\":\"'1' relates-symmetric '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_symmetric_intransitive\",\"index\":0},\"sentence\":\"'1' relates-symmetric-intransitive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_symmetric_irreflexive\",\"index\":0},\"sentence\":\"'1' relates-symmetric-irreflexive '1'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_transitive\",\"index\":0},\"sentence\":\"'1' relates-transitive '2'.\"}\n{\"fact_ref\":{\"fact_type\":\"rel_transitive\",\"index\":1},\"sentence\":\"'2' relates-transitive '3'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/ring.orm.yaml",
+   "tests/fixtures/checker/population.ring_fail.yaml",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT rel_acyclic[0]: '1' relates-acyclic '2'.\nFACT rel_acyclic[1]: '2' relates-acyclic '3'.\nFACT rel_acyclic[2]: '3' relates-acyclic '1'.\nFACT rel_acyclic_intransitive[0]: '1' relates-acyclic-intransitive '2'.\nFACT rel_acyclic_intransitive[2]: '1' relates-acyclic-intransitive '3'.\nFACT rel_acyclic_intransitive[1]: '2' relates-acyclic-intransitive '3'.\nFACT rel_antisymmetric[0]: '1' relates-antisymmetric '2'.\nFACT rel_antisymmetric[1]: '2' relates-antisymmetric '1'.\nFACT rel_asymmetric[0]: '1' relates-asymmetric '2'.\nFACT rel_asymmetric[1]: '2' relates-asymmetric '1'.\nFACT rel_asymmetric_intransitive[0]: '1' relates-asymmetric-intransitive '2'.\nFACT rel_asymmetric_intransitive[1]: '2' relates-asymmetric-intransitive '1'.\nFACT rel_intransitive[0]: '1' relates-intransitive '2'.\nFACT rel_intransitive[2]: '1' relates-intransitive '3'.\nFACT rel_intransitive[1]: '2' relates-intransitive '3'.\nFACT rel_irreflexive[0]: '1' relates-irreflexive '1'.\nFACT rel_purely_reflexive[0]: '1' relates-purely-reflexive '2'.\nFACT rel_reflexive[1]: '1' relates-reflexive '1'.\nFACT rel_reflexive[0]: '1' relates-reflexive '2'.\nFACT rel_symmetric[0]: '1' relates-symmetric '2'.\nFACT rel_symmetric_intransitive[0]: '1' relates-symmetric-intransitive '2'.\nFACT rel_symmetric_irreflexive[0]: '1' relates-symmetric-irreflexive '1'.\nFACT rel_transitive[0]: '1' relates-transitive '2'.\nFACT rel_transitive[1]: '2' relates-transitive '3'.\n"
+ }
+}

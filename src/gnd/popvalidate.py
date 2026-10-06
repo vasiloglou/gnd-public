@@ -63,20 +63,39 @@ from __future__ import annotations
 import math
 import re
 from collections.abc import Callable
-from datetime import date, datetime
+from datetime import date, datetime  # noqa: F401 -- historical compatibility binding
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
+from gnd.documents import Model
+from gnd.errors import ValidationIssue
 from gnd.extraction_scope import fact_type_scope
-from gnd.model import Model, ValidationIssue, _fact_type_roles, _supertype_parents
+from gnd.model_index import ModelIndex
 from gnd.terms import valid_duration
+from gnd.universe import (
+    identifying_id as _identifying_id,  # noqa: F401 -- compatibility export
+)
+from gnd.universe import (
+    identifying_primitive as _identifying_primitive,  # noqa: F401 -- compatibility export
+)
+from gnd.universe import (
+    object_types_by_id as _object_types_by_id,  # noqa: F401 -- compatibility export
+)
+from gnd.universe import (
+    resolve_primitive,
+    resolve_reference_value_type,  # noqa: F401 -- compatibility export
+)
+from gnd.universe import (
+    resolve_reference as _resolve_reference,  # noqa: F401 -- compatibility export
+)
 
 # --- layer-2 helpers ---
 
 
 def _declared_fact_type_roles(model: Model) -> dict[str, set[str]]:
     """fact_type id -> declared role_names, reusing the model loader's helper."""
-    return _fact_type_roles({"fact_types": model.fact_types})
+    return ModelIndex.for_model(model).fact_type_roles()
 
 
 def _declared_object_type_ids(model: Model) -> set[str]:
@@ -85,23 +104,9 @@ def _declared_object_type_ids(model: Model) -> set[str]:
     }
 
 
-def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:
-    return {
-        str(ot.get("id")): ot for ot in model.object_types or [] if ot.get("id") is not None
-    }
-
-
 def _role_object_types(model: Model) -> dict[str, dict[str, str]]:
-    """fact_type id -> {role_name: object_type id}."""
-    return {
-        str(ft.get("id")): {
-            str(role.get("role_name")): str(role.get("object_type"))
-            for role in ft.get("roles") or []
-            if role.get("role_name") is not None and role.get("object_type") is not None
-        }
-        for ft in model.fact_types or []
-        if ft.get("id") is not None
-    }
+    """Historical role-map shape from the shared read-only query index."""
+    return ModelIndex.role_map(model)
 
 
 def _covers(doc: dict[str, Any]) -> list[Any]:
@@ -181,9 +186,8 @@ def _is_date(value: Any) -> bool:
 def _is_datetime(value: Any) -> bool:
     if not isinstance(value, str) or _ISO_DATETIME.fullmatch(value) is None:
         return False
-    normalized = value[:-1] + "+00:00" if value[-1:] in ("Z", "z") else value
     try:
-        datetime.fromisoformat(normalized)
+        _rf7_input.parse_datetime(value)
     except ValueError:
         return False
     return True
@@ -214,139 +218,6 @@ _PRIMITIVE_PREDICATES: dict[str, Callable[[Any], bool]] = {
     "Binary": _is_binary,
     "Duration": valid_duration,
 }
-
-
-def _identifying_primitive(_object_type_id: str, object_type: dict[str, Any]) -> str | None:
-    """Extractor: the primitive an identifying value type carries."""
-    # The meta-schema guarantees `primitive` is present when kind is value
-    # (`$defs/object_type.allOf[1]`).
-    primitive = object_type.get("primitive")
-    return str(primitive) if primitive is not None else None
-
-
-def _identifying_id(object_type_id: str, _object_type: dict[str, Any]) -> str | None:
-    """Extractor: the id of the identifying value type itself."""
-    return str(object_type_id)
-
-
-def _resolve_reference(
-    object_type_id: str,
-    by_id: dict[str, dict[str, Any]],
-    parents: dict[str, list[str]],
-    seen: set[str],
-    extract: Callable[[str, dict[str, Any]], str | None],
-) -> str | None:
-    """Walk an object type to the value type that IDENTIFIES its instances.
-
-    One walk, two extractions (the ``_instance_values_of`` /``_instances_of``
-    posture applied to reference resolution). ``extract`` is applied to the value
-    type the walk lands on: :func:`_identifying_primitive` yields the primitive
-    for layer-2 type checking, :func:`_identifying_id` yields the value type's own
-    id for the checker's universe walk. Both answers therefore come from ONE
-    notion of "which value type denotes this entity" — the F-01 fix would
-    otherwise have been a second, drift-prone copy of this traversal.
-
-    The disjunction at the ``inherits_reference`` branch is over the EXTRACTED
-    value, not over the id, which is what preserves the pre-existing primitive
-    semantics exactly: two supertypes identified by two distinct value types that
-    share one primitive still resolve that primitive, while the id extraction
-    correctly declines to pick one of the two.
-    """
-    if object_type_id in seen:
-        # A subtype cycle is NOT rejected by model validation today — a model
-        # with `a subtype_of [b]` and `b subtype_of [a]` validates at exit 0 —
-        # so the walk cannot assume acyclicity (T-01.1-07).
-        return None
-    seen.add(object_type_id)
-
-    object_type = by_id.get(object_type_id)
-    if object_type is None:
-        return None
-
-    if object_type.get("kind") == "value":
-        return extract(object_type_id, object_type)
-
-    reference = object_type.get("reference") or {}
-    value_type = reference.get("value_type")
-    if reference.get("mode") in ("popular", "general") and value_type is not None:
-        # `semantic:reference-value-type` (model.py) guarantees this names a
-        # value-kind object type, which in turn carries a `primitive`.
-        target = by_id.get(str(value_type))
-        if target is None:
-            return None
-        return extract(str(value_type), target)
-
-    if parents.get(object_type_id) and object_type.get("inherits_reference") is True:
-        # Only when the subtype declares that it INHERITS its supertype's
-        # identification scheme. `inherits_reference: false` with no reference of
-        # its own is unresolvable, and reading through anyway would be a guess.
-        resolved = {
-            _resolve_reference(parent, by_id, parents, seen, extract)
-            for parent in parents[object_type_id]
-        }
-        resolved.discard(None)
-        return next(iter(resolved)) if len(resolved) == 1 else None
-
-    return None
-
-
-def resolve_reference_value_type(object_type_id: str, model: Model) -> str | None:
-    """The id of the value type whose values DENOTE this object type's instances.
-
-    A ``kind: value`` object type denotes itself. An entity type resolves through
-    ``reference.value_type``; an entity subtype declaring
-    ``inherits_reference: true`` walks its supertypes and yields an id only when
-    every resolvable ancestor agrees on exactly one. ``None`` means not
-    resolvable, on the same five routes :func:`resolve_primitive` documents.
-
-    This is the *typing* inference of :func:`resolve_primitive` stopped one step
-    earlier, and it is what lets the checker populate a value type's universe
-    with the identifying values that appear in facts (F-01):
-    ``population-format.md`` — *"Entity values in facts use the entity's
-    reference-scheme value … ``movie: 1`` means the Movie whose MovieId is 1"*.
-    Having asserted here that ``999999`` IS a MovieId in order to type-check it,
-    the tool cannot coherently decline to range-check it as one.
-    """
-    return _resolve_reference(
-        str(object_type_id),
-        _object_types_by_id(model),
-        _supertype_parents({"object_types": model.object_types}),
-        set(),
-        _identifying_id,
-    )
-
-
-def resolve_primitive(object_type_id: str, model: Model) -> str | None:
-    """The primitive an object type's values carry, or ``None`` (D-05).
-
-    A ``kind: value`` object type yields its ``primitive`` directly. An entity
-    type resolves through ``reference.value_type``. An entity SUBTYPE that
-    declares ``inherits_reference: true`` walks its supertypes and yields a
-    primitive only when every resolvable ancestor agrees on exactly one.
-
-    ``None`` means **not resolvable**, and every caller must then skip the type
-    check *silently* — no issue, no warning. A skipped check is honest; an
-    invented one is not. The five ways resolution legitimately fails are
-    unit-based reference mode, external reference mode, an entity subtype with
-    ``inherits_reference: false`` and no reference of its own, multiple
-    inheritance resolving to two distinct primitives, and a subtype cycle.
-
-    The upward walk carries a ``seen`` set because subtype cycles are not
-    rejected by model validation today (T-01.1-07). It reuses
-    :func:`gnd.model._supertype_parents` for the edge map rather than
-    re-deriving one. It deliberately does NOT call
-    :func:`gnd.model._ancestor_closure`: that closure walks ``subtype_of``
-    unconditionally, while resolution must stop at any ancestor that does not
-    declare ``inherits_reference: true`` — reading past one would be exactly the
-    guess D-05 forbids.
-    """
-    return _resolve_reference(
-        str(object_type_id),
-        _object_types_by_id(model),
-        _supertype_parents({"object_types": model.object_types}),
-        set(),
-        _identifying_primitive,
-    )
 
 
 # --- layer-2 rules (each: pure function (doc, model) -> list[ValidationIssue]) ---

@@ -6,7 +6,7 @@ from gnd.artifacts import (
     read_regular_bounded,
     sha256_hex,
 )
-from gnd.exp.session_store import _collect_candidate, _evidence_entry
+from gnd.exp.session_records import _collect_candidate, _evidence_entry
 from gnd.judgments import (
     evaluate_judgments,
     read_judgment_policy,

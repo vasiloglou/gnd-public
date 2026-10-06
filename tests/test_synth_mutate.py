@@ -21,7 +21,6 @@ import pytest
 from gnd.checker import IMPLEMENTED_FAMILIES, CheckReport, ConstraintVerdict, check
 from gnd.model import load_model
 from gnd.population import load_population
-from gnd.synth import mutate
 from gnd.synth.assemble import assemble_conforming
 from gnd.synth.mutate import (
     OPERATORS,
@@ -35,6 +34,7 @@ from gnd.synth.mutate import (
     operators_for,
     predict_violations,
 )
+from gnd.synth.oracle import mutations as mutate
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RING = REPO_ROOT / "tests" / "fixtures" / "checker" / "ring.orm.yaml"

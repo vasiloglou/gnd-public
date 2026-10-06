@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/private/tmp/rf2-py311/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf8_sessions.py",
+    "tests/test_rf1_session_pins.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 33.06852602958679
+}

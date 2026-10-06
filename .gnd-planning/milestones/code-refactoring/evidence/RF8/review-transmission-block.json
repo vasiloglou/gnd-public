@@ -1,0 +1,14 @@
+{
+  "reviewed_source_head": "6a0875097ae3547bf829c3818606487cc63b4060",
+  "attempt": "native Codex RF8 independent diff review",
+  "outcome": "automatic approval review rejected before launch",
+  "reason": "RF8 phase approval does not explicitly authorize repository source/diff transmission to external Codex provider",
+  "authorization_question": "RF8 review and at most one repair review; existing native authentication",
+  "prompt_sha256": "c6b705b2e0a2333dd4ddbe2f6f1b3719b386d6160154da2f0b41cb8c2d32b8c0",
+  "subsequent_authorization": {
+    "date": "2026-10-06",
+    "user_reply": "approved",
+    "scope": "RF8 initial independent Codex review and at most one repair review; bounded prompts and inspected repository source/diffs to Codex provider using existing native authentication",
+    "credential_handling": "native authentication only; no credential file read or values printed"
+  }
+}

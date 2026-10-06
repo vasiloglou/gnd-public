@@ -1,0 +1,74 @@
+{
+ "date-only": {
+  "ok": null
+ },
+ "fractional": {
+  "ok": [
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, 0, 123456, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   },
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  ]
+ },
+ "hour-24": {
+  "ok": null
+ },
+ "integer": {
+  "ok": null
+ },
+ "leading-space": {
+  "ok": null
+ },
+ "naive": {
+  "ok": null
+ },
+ "none": {
+  "ok": null
+ },
+ "offset": {
+  "ok": [
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   },
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  ]
+ },
+ "space-separator": {
+  "ok": null
+ },
+ "utc-lower-z": {
+  "ok": [
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   },
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  ]
+ },
+ "utc-z": {
+  "ok": [
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   },
+   {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  ]
+ },
+ "week-date": {
+  "ok": null
+ }
+}

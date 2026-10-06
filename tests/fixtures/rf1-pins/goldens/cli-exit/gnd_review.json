@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd review [-h] {panel,panel-light,finalize} ...\n\nAdvisory multi-CLI review over ONE of exactly three input classes — a plan, an\nexperiment outcome, or a spec/results/delta bundle. GND attempts six reviewer\nseats over five installed terminal-agent CLIs (claude, codex, qwen, gemini,\nkimi, plus a glm seat that runs the claude CLI against Z.AI's Anthropic-\ncompatible endpoint) through fixed Python-owned invocation argv and bounded\nprompt transport (stdin for five, one --prompt argv element for Kimi), keeps\none closed envelope per reviewer including every timeout, authentication\nfailure, missing executable and unparseable response, and requires three\nDISTINCT schema-valid successes before any panel result may be reported. Every\nreviewer must first return substantive help that documents every long flag in\nthe invocation GND is about to send; an incompatible reviewer is never\ninvoked. GND does not sandbox reviewer CLIs or enforce read-only execution. It\nverifies the reviewed artifacts are unchanged before publishing a run. The\npanel ships no provider SDK and sources no credentials.\n\npositional arguments:\n  {panel,panel-light,finalize}\n    panel               attempt all six reviewers and publish one immutable\n                        evidence directory\n    panel-light         run the same panel at high or medium supported per-run\n                        effort\n    finalize            validate a semantic synthesis against immutable run\n                        evidence and render it\n\noptions:\n  -h, --help            show this help message and exit\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd review [-h] {panel,panel-light,finalize} ...\ngnd review: error: the following arguments are required: review_command\n",
+  "stdout": ""
+ }
+}

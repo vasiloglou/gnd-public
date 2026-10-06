@@ -1,0 +1,6 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_moves.py --tb=short
+......                                                                   [100%]
+6 passed in 1.17s
+
+Exit: 0

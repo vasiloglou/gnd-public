@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf8_structure.py::test_v7_moved_sentinel_stays_importable",
+    "tests/test_rf8_sessions.py::test_empty_reconstruction_clears_previous_best",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.5603389739990234
+}

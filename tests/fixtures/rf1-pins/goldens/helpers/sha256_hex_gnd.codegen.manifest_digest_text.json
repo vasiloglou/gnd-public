@@ -1,0 +1,14 @@
+{
+ "observed": {
+  "empty": {
+   "ok": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "gnd-newline": {
+   "ok": "e669a3e2d6d0fe70c8a20b73fce2d427c6fbd70add1b94b9094f19d0e5049a90"
+  },
+  "non-ascii": {
+   "ok": "4a99557e4033c3539de2eb65472017cad5f9557f7a0625a09f1c3f6e2ba69c4c"
+  }
+ },
+ "site": "sha256_hex|gnd.codegen.manifest:digest_text"
+}

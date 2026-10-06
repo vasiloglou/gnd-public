@@ -8,7 +8,8 @@ from typing import Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from gnd.agent_cli import EnvironmentFact, InvocationStatus
+from gnd.agents import InvocationStatus
+from gnd.process import EnvironmentFact
 
 __all__ = ["DeclaredInvocationResult", "declared_effective_prompt"]
 

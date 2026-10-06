@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "synth",
+  "src/gnd/examples/bookrec/complete.orm.yaml",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 5,
+ "files": null,
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 5, \"error\": \"synth-derivation-unsupported: model declares structured derivation rules (book_is_blocked_for, book_is_eligible); generating a claimed derived extension is the forward-chaining constructor OQ-P2-2 names, and synth refuses rather than emitting facts it cannot warrant\"}\n"
+}

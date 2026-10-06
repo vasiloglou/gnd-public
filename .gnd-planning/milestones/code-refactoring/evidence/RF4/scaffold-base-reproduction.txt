@@ -1,0 +1,21 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q /private/tmp/rf4-scaffold-base-lx66mu5x/tests/test_contributor_preparation.py::test_contributor_controls_reject[broken_reference] --tb=short
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_contributor_controls_reject[broken_reference] ______________
+<temporary-root>/rf4-scaffold-base-lx66mu5x/tests/test_contributor_preparation.py:59: in test_contributor_controls_reject
+    check_current(tmp_path)
+<temporary-root>/rf4-scaffold-base-lx66mu5x/tests/test_contributor_preparation.py:41: in check_current
+    check_links(p)
+<temporary-root>/rf4-scaffold-base-lx66mu5x/tests/test_contributor_preparation.py:14: in check_links
+    assert (path.parent / href.split('#')[0]).exists(), (path, href)
+E   AssertionError: (PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4325/test_contributor_controls_reje0/CONTRIBUTING.md'), 'tools/gnd_layers.json')
+E   assert False
+E    +  where False = exists()
+E    +    where exists = (PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4325/test_contributor_controls_reje0') / 'tools/gnd_layers.json').exists
+E    +      where PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4325/test_contributor_controls_reje0') = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4325/test_contributor_controls_reje0/CONTRIBUTING.md').parent
+=========================== short test summary info ============================
+FAILED ../../../../../../..<temporary-root>/rf4-scaffold-base-lx66mu5x/tests/test_contributor_preparation.py::test_contributor_controls_reject[broken_reference]
+1 failed in 0.24s
+
+Exit: 1

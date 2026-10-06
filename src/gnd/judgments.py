@@ -17,8 +17,8 @@ from gnd.artifacts import (
     read_regular_bounded_at,
     sha256_hex,
 )
-from gnd.extract.manifest import manifest_path_issue
 from gnd.json_input import JsonInputRefusal, bounded_json, validate_json_value
+from gnd.manifest_paths import manifest_path_issue
 from gnd.model import load_model_bytes
 from gnd.population import load_population_bytes
 

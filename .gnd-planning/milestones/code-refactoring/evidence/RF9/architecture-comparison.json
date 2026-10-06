@@ -1,0 +1,108 @@
+{
+  "base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+  "head": "d440b2e37449ef46647d18c491c46d9bb8d3e851",
+  "instrument": "current tools/gnd_arch.py with each source revision own layer map",
+  "before": {
+    "modules": 148,
+    "runtime_sccs": [
+      [
+        "gnd.api",
+        "gnd.diff"
+      ],
+      [
+        "gnd.assurance",
+        "gnd.assurance_claims",
+        "gnd.assurance_evidence",
+        "gnd.assurance_inheritance"
+      ],
+      [
+        "gnd.checker",
+        "gnd.correspondence",
+        "gnd.extraction_scope",
+        "gnd.model",
+        "gnd.population",
+        "gnd.popvalidate",
+        "gnd.proof_bridge",
+        "gnd.references",
+        "gnd.semantic_adapter",
+        "gnd.semantic_registry",
+        "gnd.semantic_spec",
+        "gnd.temporal_guarded",
+        "gnd.terms",
+        "gnd.transition"
+      ],
+      [
+        "gnd.exp.session",
+        "gnd.exp.session_eval",
+        "gnd.exp.session_judgments",
+        "gnd.exp.session_patch",
+        "gnd.exp.session_store",
+        "gnd.exp.session_v7",
+        "gnd.exp.tests_runner"
+      ],
+      [
+        "gnd.synth.assemble",
+        "gnd.synth.mutate"
+      ]
+    ],
+    "module_only_sccs": [],
+    "wrong_way_edges": 27,
+    "entry_violations": null,
+    "private_import_count": 242,
+    "ast_identical_groups": 15,
+    "largest_modules": [
+      {
+        "module": "gnd.cli",
+        "lines": 9088
+      },
+      {
+        "module": "gnd.model",
+        "lines": 5157
+      },
+      {
+        "module": "gnd.checker",
+        "lines": 5143
+      },
+      {
+        "module": "gnd.exp.session_store",
+        "lines": 3023
+      },
+      {
+        "module": "gnd.exp.session_eval",
+        "lines": 2698
+      }
+    ]
+  },
+  "after": {
+    "modules": 227,
+    "runtime_sccs": [],
+    "module_only_sccs": [],
+    "wrong_way_edges": 0,
+    "entry_violations": 0,
+    "private_import_count": 670,
+    "ast_identical_groups": 12,
+    "largest_modules": [
+      {
+        "module": "gnd.model._validation",
+        "lines": 4890
+      },
+      {
+        "module": "gnd.extensions",
+        "lines": 2763
+      },
+      {
+        "module": "gnd.exp.session_eval",
+        "lines": 2695
+      },
+      {
+        "module": "gnd.semantic_spec",
+        "lines": 2588
+      },
+      {
+        "module": "gnd.synth.boundary",
+        "lines": 2376
+      }
+    ]
+  },
+  "boundary": "explicit AST edges only; implicit parent execution omitted; private count includes compatibility imports and duplicate groups are heuristic candidates"
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "path": "tests/test_rf6_query_policy.py",
+    "before": {
+      "path": "tests/test_rf6_query_policy.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a-review query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 5774,
+      "public_sha256": "358be5202f3c96abe012356a7fce5f8afafddaa9e1f2769da5c426608287f7ce",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9"
+    },
+    "after": {
+      "path": "tests/test_rf6_query_policy.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF6a-hardening query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "bytes": 6614,
+      "public_sha256": "0a7b76013768760dc1a9e26ed72fcc1f1f0b000aad519e21a6cb73bc8edf8d89",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9"
+    }
+  }
+]

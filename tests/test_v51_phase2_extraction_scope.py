@@ -39,7 +39,7 @@ def test_projection_deliberately_still_admits_the_structured_fact_type() -> None
     assert 'book_is_eligible' in facts
 
 def test_three_policy_consumers_call_the_one_scope_owner() -> None:
-    consumers = [REPO_ROOT / 'src' / 'gnd' / 'extract' / 'bundle.py', REPO_ROOT / 'src' / 'gnd' / 'extract' / 'refscheme.py', REPO_ROOT / 'src' / 'gnd' / 'popvalidate.py']
+    consumers = [REPO_ROOT / 'src' / 'gnd' / 'extract' / 'bundle.py', REPO_ROOT / 'src' / 'gnd' / 'refscheme.py', REPO_ROOT / 'src' / 'gnd' / 'popvalidate.py']
     for path in consumers:
         source = path.read_text(encoding='utf-8')
         assert 'fact_type_scope(' in source, path
@@ -49,7 +49,7 @@ def test_three_policy_consumers_call_the_one_scope_owner() -> None:
 def test_three_policy_consumers_obey_a_monkeypatched_scope_owner(monkeypatch: pytest.MonkeyPatch) -> None:
     sentinel = 'test-owned exclusion'
     altered = {'book_listed': sentinel, 'book_blocked': None, 'book_is_eligible': None, 'book_ranked': None}
-    for module in (bundle_module, refscheme_module, popvalidate_module):
+    for module in (bundle_module, __import__('gnd.refscheme', fromlist=['refscheme']), popvalidate_module):
         monkeypatch.setattr(module, 'fact_type_scope', lambda _model: dict(altered))
     model = _mixed_model()
     header = bundle_module.header_template('mixed.orm.yaml', model)

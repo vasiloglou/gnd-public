@@ -1,0 +1,2450 @@
+{
+  "agent_cli": [
+    {
+      "name": "AgentAdapterId",
+      "signature": "class",
+      "line": 49,
+      "end_line": 51
+    },
+    {
+      "name": "InvocationStatus",
+      "signature": "class",
+      "line": 54,
+      "end_line": 57
+    },
+    {
+      "name": "AgentCLIError",
+      "signature": "class",
+      "line": 60,
+      "end_line": 61
+    },
+    {
+      "name": "EnvironmentFact",
+      "signature": "class",
+      "line": 64,
+      "end_line": 70
+    },
+    {
+      "name": "ProcessLimits",
+      "signature": "class",
+      "line": 73,
+      "end_line": 90
+    },
+    {
+      "name": "BoundedProcessResult",
+      "signature": "class",
+      "line": 93,
+      "end_line": 131
+    },
+    {
+      "name": "InvocationResult",
+      "signature": "class",
+      "line": 134,
+      "end_line": 212
+    },
+    {
+      "name": "build_agent_argv",
+      "signature": "adapter: AgentAdapterId, prompt: str",
+      "line": 215,
+      "end_line": 241
+    },
+    {
+      "name": "_private_environment",
+      "signature": "",
+      "line": 244,
+      "end_line": 279
+    },
+    {
+      "name": "_RetentionBudget",
+      "signature": "class",
+      "line": 283,
+      "end_line": 289
+    },
+    {
+      "name": "_DrainState",
+      "signature": "class",
+      "line": 293,
+      "end_line": 296
+    },
+    {
+      "name": "_drain",
+      "signature": "stream: asyncio.StreamReader | None, state: _DrainState, aggregate: _RetentionBudget",
+      "line": 299,
+      "end_line": 313
+    },
+    {
+      "name": "_write_stdin",
+      "signature": "writer: asyncio.StreamWriter | None, payload: bytes",
+      "line": 316,
+      "end_line": 332
+    },
+    {
+      "name": "_signal_group",
+      "signature": "pid: int, process: asyncio.subprocess.Process, sig: signal.Signals",
+      "line": 335,
+      "end_line": 342
+    },
+    {
+      "name": "_group_exists",
+      "signature": "pid: int",
+      "line": 345,
+      "end_line": 354
+    },
+    {
+      "name": "_wait_group_gone",
+      "signature": "pid: int, timeout: float",
+      "line": 357,
+      "end_line": 363
+    },
+    {
+      "name": "_wait_cleanup_targets",
+      "signature": "pid: int, direct_wait: asyncio.Task[int] | None, *, deadline: float",
+      "line": 366,
+      "end_line": 387
+    },
+    {
+      "name": "_stop_process_group",
+      "signature": "process: asyncio.subprocess.Process, grace_seconds: float",
+      "line": 390,
+      "end_line": 453
+    },
+    {
+      "name": "_argv_digest",
+      "signature": "argv: tuple[str, ...]",
+      "line": 456,
+      "end_line": 457
+    },
+    {
+      "name": "_environment_facts",
+      "signature": "env: Mapping[str, str]",
+      "line": 460,
+      "end_line": 461
+    },
+    {
+      "name": "_sensitive_values",
+      "signature": "env: Mapping[str, str]",
+      "line": 464,
+      "end_line": 473
+    },
+    {
+      "name": "_suffix_prefix_overlap",
+      "signature": "left: bytes, right: bytes, *, maximum: int",
+      "line": 476,
+      "end_line": 492
+    },
+    {
+      "name": "_redact",
+      "signature": "data: bytes, sensitive_values: tuple[bytes, ...]",
+      "line": 495,
+      "end_line": 510
+    },
+    {
+      "name": "_result",
+      "signature": "*, status: Literal['succeeded', 'failed', 'spawn-failed', 'timed-out', 'cleanup-failed'], spawned: bool, termination: Literal['not-started', 'exited', 'terminated', 'killed'], process: asyncio.subprocess.Process | None, spawn_error: str | None, started: float, argv: tuple[str, ...], env: Mapping[str, str], stdout_state: _DrainState, stderr_state: _DrainState, termination_steps: tuple[Literal['sigterm', 'sigkill'], ...]=(), process_group_cleaned: bool, did_time_out: bool=False",
+      "line": 513,
+      "end_line": 569
+    },
+    {
+      "name": "run_bounded_process",
+      "signature": "trusted_argv: tuple[str, ...], *, cwd: str | Path, env: dict[str, str], limits: ProcessLimits, stdin_bytes: bytes | None=None",
+      "line": 572,
+      "end_line": 818
+    },
+    {
+      "name": "_validate_feedback",
+      "signature": "feedback_bytes: bytes | None, feedback_sha256: str | None",
+      "line": 821,
+      "end_line": 831
+    },
+    {
+      "name": "invoke_agent",
+      "signature": "adapter: AgentAdapterId, *, prompt: str, cwd: str | Path, timeout_seconds: float, output_limit_bytes: int=DEFAULT_OUTPUT_LIMIT_BYTES, terminate_grace_seconds: float=1.0, feedback_bytes: bytes | None=None, feedback_sha256: str | None=None",
+      "line": 834,
+      "end_line": 1033
+    }
+  ],
+  "install": [
+    {
+      "name": "InstallError",
+      "signature": "class",
+      "line": 192,
+      "end_line": 193
+    },
+    {
+      "name": "InstallPathError",
+      "signature": "class",
+      "line": 196,
+      "end_line": 205
+    },
+    {
+      "name": "ManifestError",
+      "signature": "class",
+      "line": 208,
+      "end_line": 209
+    },
+    {
+      "name": "ManifestSchemaError",
+      "signature": "class",
+      "line": 212,
+      "end_line": 213
+    },
+    {
+      "name": "packaged_skills_root",
+      "signature": "",
+      "line": 221,
+      "end_line": 235
+    },
+    {
+      "name": "iter_skill_files",
+      "signature": "root: Traversable, prefix: str=''",
+      "line": 238,
+      "end_line": 255
+    },
+    {
+      "name": "InstallTarget",
+      "signature": "class",
+      "line": 265,
+      "end_line": 275
+    },
+    {
+      "name": "_claude_root",
+      "signature": "scope: str, project: Path",
+      "line": 278,
+      "end_line": 279
+    },
+    {
+      "name": "_codex_root",
+      "signature": "scope: str, project: Path",
+      "line": 282,
+      "end_line": 287
+    },
+    {
+      "name": "resolve_targets",
+      "signature": "runtimes: Iterable[str], scope: str, project: Path",
+      "line": 290,
+      "end_line": 308
+    },
+    {
+      "name": "standard_targets",
+      "signature": "project: Path",
+      "line": 311,
+      "end_line": 322
+    },
+    {
+      "name": "_reject_unsafe_relpath",
+      "signature": "relpath: str, *, source: str",
+      "line": 330,
+      "end_line": 370
+    },
+    {
+      "name": "safe_destination",
+      "signature": "root: Path, relpath: str",
+      "line": 373,
+      "end_line": 423
+    },
+    {
+      "name": "_descend",
+      "signature": "root: Path | int, parts: tuple[str, ...], *, create: bool",
+      "line": 443,
+      "end_line": 492
+    },
+    {
+      "name": "_temp_name",
+      "signature": "",
+      "line": 495,
+      "end_line": 498
+    },
+    {
+      "name": "_rename_noreplace",
+      "signature": "src_dir_fd: int, src: str, dst_dir_fd: int, dst: str",
+      "line": 504,
+      "end_line": 548
+    },
+    {
+      "name": "LeafIdentity",
+      "signature": "class",
+      "line": 551,
+      "end_line": 558
+    },
+    {
+      "name": "_matches_leaf",
+      "signature": "fd: int, name: str, expected: LeafIdentity",
+      "line": 561,
+      "end_line": 623
+    },
+    {
+      "name": "_replace_staged_leaf",
+      "signature": "fd: int, staging: str, name: str, expected: LeafIdentity | None",
+      "line": 626,
+      "end_line": 689
+    },
+    {
+      "name": "_fdopen_owned",
+      "signature": "fd: int, mode: str",
+      "line": 692,
+      "end_line": 698
+    },
+    {
+      "name": "_atomic_write",
+      "signature": "root: Path | int, relpath: str, data: bytes, *, expected: LeafIdentity | None=None",
+      "line": 701,
+      "end_line": 757
+    },
+    {
+      "name": "ManifestFile",
+      "signature": "class",
+      "line": 765,
+      "end_line": 772
+    },
+    {
+      "name": "ManifestSkill",
+      "signature": "class",
+      "line": 775,
+      "end_line": 782
+    },
+    {
+      "name": "Manifest",
+      "signature": "class",
+      "line": 785,
+      "end_line": 835
+    },
+    {
+      "name": "read_manifest",
+      "signature": "root: Path",
+      "line": 838,
+      "end_line": 890
+    },
+    {
+      "name": "write_manifest",
+      "signature": "root: Path, manifest: Manifest",
+      "line": 893,
+      "end_line": 902
+    },
+    {
+      "name": "SkillFileState",
+      "signature": "class",
+      "line": 910,
+      "end_line": 924
+    },
+    {
+      "name": "ApplyResult",
+      "signature": "class",
+      "line": 927,
+      "end_line": 949
+    },
+    {
+      "name": "_skill_of",
+      "signature": "relpath: str",
+      "line": 952,
+      "end_line": 960
+    },
+    {
+      "name": "_classify_file",
+      "signature": "root: Path, relpath: str, packaged_digest: str | None, recorded: ManifestFile | None, *, interrupted: bool=False",
+      "line": 963,
+      "end_line": 1071
+    },
+    {
+      "name": "_classify_link",
+      "signature": "root: Path, name: str, packaged: dict[str, bytes] | None, recorded: ManifestSkill | None",
+      "line": 1074,
+      "end_line": 1155
+    },
+    {
+      "name": "_packaged_index",
+      "signature": "skills_root: Traversable",
+      "line": 1158,
+      "end_line": 1170
+    },
+    {
+      "name": "plan",
+      "signature": "skills_root: Traversable, target: InstallTarget, manifest: Manifest | None=None, *, mode: str='copy'",
+      "line": 1173,
+      "end_line": 1271
+    },
+    {
+      "name": "_link_target",
+      "signature": "skills_root: Traversable, name: str",
+      "line": 1279,
+      "end_line": 1294
+    },
+    {
+      "name": "_place_symlink",
+      "signature": "root: Path, relpath: str, points_at: Path, *, relative: bool, expected: LeafIdentity | None=None",
+      "line": 1297,
+      "end_line": 1367
+    },
+    {
+      "name": "_assert_link_resolves",
+      "signature": "link: Path, value: str",
+      "line": 1370,
+      "end_line": 1382
+    },
+    {
+      "name": "_timestamp",
+      "signature": "",
+      "line": 1385,
+      "end_line": 1386
+    },
+    {
+      "name": "_build_skills_map",
+      "signature": "entries: dict[str, ManifestFile]",
+      "line": 1389,
+      "end_line": 1394
+    },
+    {
+      "name": "apply",
+      "signature": "skills_root: Traversable, target: InstallTarget, records: list[SkillFileState], *, mode: str='copy', force: bool=False, manifest: Manifest | None=None",
+      "line": 1397,
+      "end_line": 1693
+    },
+    {
+      "name": "TargetDiagnosis",
+      "signature": "class",
+      "line": 1706,
+      "end_line": 1740
+    },
+    {
+      "name": "Shadowing",
+      "signature": "class",
+      "line": 1743,
+      "end_line": 1757
+    },
+    {
+      "name": "DoctorReport",
+      "signature": "class",
+      "line": 1760,
+      "end_line": 1778
+    },
+    {
+      "name": "executable_directory",
+      "signature": "",
+      "line": 1781,
+      "end_line": 1821
+    },
+    {
+      "name": "directory_is_on_path",
+      "signature": "directory: Path, path_value: str | None=None",
+      "line": 1824,
+      "end_line": 1841
+    },
+    {
+      "name": "_alternative_root",
+      "signature": "target: InstallTarget",
+      "line": 1844,
+      "end_line": 1848
+    },
+    {
+      "name": "_placement_shape",
+      "signature": "skills_root: Traversable, root: Path",
+      "line": 1851,
+      "end_line": 1875
+    },
+    {
+      "name": "_diagnose_target",
+      "signature": "skills_root: Traversable, target: InstallTarget",
+      "line": 1878,
+      "end_line": 1918
+    },
+    {
+      "name": "_shadowing",
+      "signature": "diagnoses: list[TargetDiagnosis]",
+      "line": 1921,
+      "end_line": 1942
+    },
+    {
+      "name": "diagnose",
+      "signature": "skills_root: Traversable, targets: Iterable[InstallTarget]",
+      "line": 1945,
+      "end_line": 1969
+    },
+    {
+      "name": "RemoveResult",
+      "signature": "class",
+      "line": 1976,
+      "end_line": 1988
+    },
+    {
+      "name": "_unlink",
+      "signature": "root: Path, relpath: str, *, expected: LeafIdentity | None=None",
+      "line": 1991,
+      "end_line": 2032
+    },
+    {
+      "name": "_prune_empty_parents",
+      "signature": "root: Path, relpath: str",
+      "line": 2035,
+      "end_line": 2066
+    },
+    {
+      "name": "remove",
+      "signature": "skills_root: Traversable, target: InstallTarget, manifest: Manifest",
+      "line": 2069,
+      "end_line": 2192
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "ArtifactError",
+      "signature": "class",
+      "line": 75,
+      "end_line": 76
+    },
+    {
+      "name": "ArtifactIdentityError",
+      "signature": "class",
+      "line": 79,
+      "end_line": 80
+    },
+    {
+      "name": "LeafSnapshot",
+      "signature": "class",
+      "line": 83,
+      "end_line": 95
+    },
+    {
+      "name": "TreeFile",
+      "signature": "class",
+      "line": 98,
+      "end_line": 107
+    },
+    {
+      "name": "TrackedRegularEntry",
+      "signature": "class",
+      "line": 110,
+      "end_line": 122
+    },
+    {
+      "name": "TrackedSymlinkEntry",
+      "signature": "class",
+      "line": 125,
+      "end_line": 132
+    },
+    {
+      "name": "TreeInventory",
+      "signature": "class",
+      "line": 139,
+      "end_line": 161
+    },
+    {
+      "name": "is_sha256_hex",
+      "signature": "value: object",
+      "line": 164,
+      "end_line": 170
+    },
+    {
+      "name": "canonical_json_bytes",
+      "signature": "value: object, *, exact_numbers: bool=False",
+      "line": 173,
+      "end_line": 212
+    },
+    {
+      "name": "canonical_json_text",
+      "signature": "value: object",
+      "line": 215,
+      "end_line": 222
+    },
+    {
+      "name": "sha256_hex",
+      "signature": "data: bytes",
+      "line": 225,
+      "end_line": 228
+    },
+    {
+      "name": "_safe_fs_coordinate",
+      "signature": "value: str",
+      "line": 231,
+      "end_line": 234
+    },
+    {
+      "name": "tree_sha256_from_inventory",
+      "signature": "files: Sequence[BaseModel]",
+      "line": 237,
+      "end_line": 247
+    },
+    {
+      "name": "read_regular_file_bytes",
+      "signature": "root: str | Path, relative: str, *, label: str, max_bytes: int | None=None, expected_root: tuple[int, int] | None=None",
+      "line": 250,
+      "end_line": 277
+    },
+    {
+      "name": "tree_sha256_from_directory",
+      "signature": "root: Path, *, label: str, max_entries: int, max_bytes: int, relative: str | None=None",
+      "line": 280,
+      "end_line": 467
+    },
+    {
+      "name": "_safe_parts",
+      "signature": "relative: str, *, field: str='artifact path'",
+      "line": 470,
+      "end_line": 494
+    },
+    {
+      "name": "_open_root",
+      "signature": "root: Path, *, expected_identity: tuple[int, int] | None=None",
+      "line": 497,
+      "end_line": 531
+    },
+    {
+      "name": "_descend",
+      "signature": "directory_fd: int, parts: tuple[str, ...]",
+      "line": 534,
+      "end_line": 572
+    },
+    {
+      "name": "_read_fd",
+      "signature": "descriptor: int, *, relative: str, before: os.stat_result, max_bytes: int",
+      "line": 575,
+      "end_line": 617
+    },
+    {
+      "name": "_read_regular_bounded_fd",
+      "signature": "root_fd: int, relative: str, *, max_bytes: int, expected: LeafSnapshot | None=None, expected_stat: os.stat_result | None=None",
+      "line": 620,
+      "end_line": 705
+    },
+    {
+      "name": "read_regular_bounded_at",
+      "signature": "root_fd: int, relative: str, *, max_bytes: int, expected: LeafSnapshot | None=None, expected_stat: os.stat_result | None=None",
+      "line": 708,
+      "end_line": 729
+    },
+    {
+      "name": "stat_leaf_at",
+      "signature": "root_fd: int, relative: str",
+      "line": 732,
+      "end_line": 757
+    },
+    {
+      "name": "readlink_at",
+      "signature": "root_fd: int, relative: str, *, expected_stat: os.stat_result | None=None",
+      "line": 766,
+      "end_line": 811
+    },
+    {
+      "name": "_bounded",
+      "signature": "value: str, limit: int=96",
+      "line": 814,
+      "end_line": 817
+    },
+    {
+      "name": "snapshot_tracked_roster",
+      "signature": "root: Path, roster: Sequence[str], *, label: str, relative: str | None=None, max_entries: int=DEFAULT_MAX_FILES, max_file_bytes: int=DEFAULT_MAX_FILE_BYTES, max_total_bytes: int=DEFAULT_MAX_TOTAL_BYTES",
+      "line": 820,
+      "end_line": 896
+    },
+    {
+      "name": "read_regular_bounded",
+      "signature": "root: str | Path, relative: str, *, max_bytes: int, expected: LeafSnapshot | None=None, expected_root: tuple[int, int] | None=None",
+      "line": 899,
+      "end_line": 927
+    },
+    {
+      "name": "_inventory_tree_fd",
+      "signature": "root_fd: int, *, max_files: int=DEFAULT_MAX_FILES, max_file_bytes: int=DEFAULT_MAX_FILE_BYTES, max_total_bytes: int=DEFAULT_MAX_TOTAL_BYTES, max_depth: int=DEFAULT_MAX_DEPTH",
+      "line": 930,
+      "end_line": 1066
+    },
+    {
+      "name": "inventory_tree",
+      "signature": "root: str | Path, *, max_files: int=DEFAULT_MAX_FILES, max_file_bytes: int=DEFAULT_MAX_FILE_BYTES, max_total_bytes: int=DEFAULT_MAX_TOTAL_BYTES, max_depth: int=DEFAULT_MAX_DEPTH, expected_root: tuple[int, int] | None=None",
+      "line": 1069,
+      "end_line": 1101
+    },
+    {
+      "name": "_write_new_file",
+      "signature": "path: Path, data: bytes, *, root: Path | None=None, mode: int=FILE_MODE, expected_root: tuple[int, int] | None=None",
+      "line": 1104,
+      "end_line": 1124
+    },
+    {
+      "name": "_write_new_file_at",
+      "signature": "root_fd: int, parts: tuple[str, ...], data: bytes, *, mode: int=FILE_MODE",
+      "line": 1127,
+      "end_line": 1156
+    },
+    {
+      "name": "_leaf_at_fd",
+      "signature": "parent_fd: int, name: str, relative: str, cap: int",
+      "line": 1159,
+      "end_line": 1180
+    },
+    {
+      "name": "_create_parent_at",
+      "signature": "root_fd: int, parts: tuple[str, ...]",
+      "line": 1183,
+      "end_line": 1218
+    },
+    {
+      "name": "_create_parent",
+      "signature": "root: Path, parts: tuple[str, ...], *, expected_root: tuple[int, int] | None=None",
+      "line": 1221,
+      "end_line": 1233
+    },
+    {
+      "name": "_mkdir_directory_once",
+      "signature": "parent_fd: int, name: str",
+      "line": 1236,
+      "end_line": 1244
+    },
+    {
+      "name": "_clear_directory_fd",
+      "signature": "directory_fd: int",
+      "line": 1247,
+      "end_line": 1266
+    },
+    {
+      "name": "_unlink_leaf_at",
+      "signature": "root_fd: int, parts: tuple[str, ...]",
+      "line": 1269,
+      "end_line": 1277
+    },
+    {
+      "name": "remove_regular_if_unchanged",
+      "signature": "root: str | Path, relative: str, *, expected: LeafSnapshot, expected_root: tuple[int, int] | None=None",
+      "line": 1280,
+      "end_line": 1341
+    },
+    {
+      "name": "_exchange_paths_atomic",
+      "signature": "first_fd: int, first_name: str, second_fd: int, second_name: str",
+      "line": 1344,
+      "end_line": 1382
+    },
+    {
+      "name": "publish_leaf_atomic",
+      "signature": "root: str | Path, relative: str, data: bytes, *, expected: LeafSnapshot | None=None, expected_root: tuple[int, int] | None=None",
+      "line": 1385,
+      "end_line": 1512
+    },
+    {
+      "name": "publish_directory_once",
+      "signature": "root: str | Path, relative: str, files: dict[str, bytes], *, manifest_name: str, max_files: int=DEFAULT_MAX_FILES, max_file_bytes: int=DEFAULT_MAX_FILE_BYTES, max_total_bytes: int=DEFAULT_MAX_TOTAL_BYTES, max_depth: int=DEFAULT_MAX_DEPTH, expected_root: tuple[int, int] | None=None, executable_paths: set[str] | frozenset[str] | None=None, empty_directories: tuple[str, ...]=(), _published_identity: list[tuple[int, int]] | None=None",
+      "line": 1515,
+      "end_line": 1724
+    },
+    {
+      "name": "canonical_report_text",
+      "signature": "payload: Mapping[str, Any]",
+      "line": 1727,
+      "end_line": 1735
+    },
+    {
+      "name": "reject_json_constant",
+      "signature": "token: str",
+      "line": 1738,
+      "end_line": 1739
+    },
+    {
+      "name": "reject_json_duplicate_pairs",
+      "signature": "pairs: list[tuple[str, Any]]",
+      "line": 1742,
+      "end_line": 1748
+    },
+    {
+      "name": "reject_json_duplicate_pairs_result",
+      "signature": "pairs: list[tuple[str, Any]]",
+      "line": 1751,
+      "end_line": 1757
+    }
+  ],
+  "assurance": [
+    {
+      "name": "CorrespondenceDigests",
+      "signature": "class",
+      "line": 35,
+      "end_line": 40
+    },
+    {
+      "name": "CorrespondenceEvidence",
+      "signature": "class",
+      "line": 44,
+      "end_line": 70
+    },
+    {
+      "name": "ValidatedScopeWalk",
+      "signature": "class",
+      "line": 74,
+      "end_line": 80
+    },
+    {
+      "name": "AssuranceBlock",
+      "signature": "class",
+      "line": 84,
+      "end_line": 93
+    },
+    {
+      "name": "_unique_sorted",
+      "signature": "values: tuple[str, ...]",
+      "line": 96,
+      "end_line": 100
+    },
+    {
+      "name": "_sorted_set",
+      "signature": "values: tuple[str, ...]",
+      "line": 103,
+      "end_line": 104
+    },
+    {
+      "name": "_currency_valid",
+      "signature": "evidence: CorrespondenceEvidence",
+      "line": 107,
+      "end_line": 108
+    },
+    {
+      "name": "_phase3_target",
+      "signature": "row: Branch",
+      "line": 111,
+      "end_line": 150
+    },
+    {
+      "name": "phase3_scope_ids",
+      "signature": "",
+      "line": 153,
+      "end_line": 155
+    },
+    {
+      "name": "walk_snapshot_scope",
+      "signature": "adapted: AdaptedSnapshot, decision: SnapshotDecision, evidence: CorrespondenceEvidence",
+      "line": 158,
+      "end_line": 205
+    },
+    {
+      "name": "certify_snapshot",
+      "signature": "decision: SnapshotDecision, *, scope: ValidatedScopeWalk, extraction_route: ExtractionRoute",
+      "line": 208,
+      "end_line": 247
+    },
+    {
+      "name": "assurance_prerequisites",
+      "signature": "surface: AssuranceSurface, consumer: AssuranceConsumer",
+      "line": 256,
+      "end_line": 275
+    },
+    {
+      "name": "_assurance_outcome",
+      "signature": "applicable: int, covered: int, guards_valid: bool",
+      "line": 278,
+      "end_line": 284
+    },
+    {
+      "name": "_assurance_policy",
+      "signature": "applicable: frozenset[str], covered: frozenset[str], *, required: frozenset[str], proved_infrastructure: frozenset[str], guards_valid: bool",
+      "line": 287,
+      "end_line": 303
+    },
+    {
+      "name": "AssuranceBlockV1",
+      "signature": "class",
+      "line": 307,
+      "end_line": 357
+    },
+    {
+      "name": "semantic_decision_for_band",
+      "signature": "band: int",
+      "line": 360,
+      "end_line": 369
+    },
+    {
+      "name": "AuthenticatedExecution",
+      "signature": "class",
+      "line": 373,
+      "end_line": 384
+    },
+    {
+      "name": "AssuranceScope",
+      "signature": "class",
+      "line": 388,
+      "end_line": 398
+    },
+    {
+      "name": "_internal_value",
+      "signature": "cls, **fields",
+      "line": 401,
+      "end_line": 405
+    },
+    {
+      "name": "_mint_execution",
+      "signature": "model, populations, result, band, trace, *, steps=None, extraction_route='not-applicable'",
+      "line": 408,
+      "end_line": 497
+    },
+    {
+      "name": "_result_obligation",
+      "signature": "row: Branch, surface: AssuranceSurface, consumer: AssuranceConsumer",
+      "line": 500,
+      "end_line": 517
+    },
+    {
+      "name": "derive_assurance_scope",
+      "signature": "execution: AuthenticatedExecution, *, consumer: AssuranceConsumer",
+      "line": 520,
+      "end_line": 548
+    },
+    {
+      "name": "certify_result",
+      "signature": "execution: AuthenticatedExecution, *, scope: AssuranceScope, evidence",
+      "line": 551,
+      "end_line": 596
+    }
+  ],
+  "assurance_claims": [
+    {
+      "name": "_closed",
+      "signature": "document, fields, label",
+      "line": 44,
+      "end_line": 46
+    },
+    {
+      "name": "_strings",
+      "signature": "value, label",
+      "line": 49,
+      "end_line": 56
+    },
+    {
+      "name": "_validate_inputs",
+      "signature": "result, manifest, addresses, raw_documents, roles, production",
+      "line": 59,
+      "end_line": 128
+    },
+    {
+      "name": "validate_claim_graph",
+      "signature": "manifest, addresses, raw_documents",
+      "line": 131,
+      "end_line": 270
+    }
+  ],
+  "assurance_inheritance": [
+    {
+      "name": "_canonical",
+      "signature": "value",
+      "line": 64,
+      "end_line": 67
+    },
+    {
+      "name": "_index",
+      "signature": "rows: list[dict], keys: tuple[str, ...]",
+      "line": 70,
+      "end_line": 74
+    },
+    {
+      "name": "_phase3_output",
+      "signature": "read_document, row: dict",
+      "line": 77,
+      "end_line": 87
+    },
+    {
+      "name": "compare_observations",
+      "signature": "family, prior, observations, mutations, read_document",
+      "line": 90,
+      "end_line": 170
+    },
+    {
+      "name": "_Documents",
+      "signature": "class",
+      "line": 173,
+      "end_line": 198
+    },
+    {
+      "name": "_exports",
+      "signature": "documents, reference, provider",
+      "line": 201,
+      "end_line": 208
+    },
+    {
+      "name": "_mathematical_basis",
+      "signature": "documents, mapping, family, prior",
+      "line": 211,
+      "end_line": 300
+    },
+    {
+      "name": "validate_result",
+      "signature": "result, manifest, addresses, raw, inputs",
+      "line": 303,
+      "end_line": 470
+    }
+  ],
+  "assurance_evidence": [
+    {
+      "name": "enforce_bundle_limits",
+      "signature": "total_bytes: int, file_count: int",
+      "line": 47,
+      "end_line": 52
+    },
+    {
+      "name": "_pairs",
+      "signature": "pairs: list[tuple[str, Any]]",
+      "line": 57,
+      "end_line": 63
+    },
+    {
+      "name": "_finite",
+      "signature": "value: str",
+      "line": 66,
+      "end_line": 70
+    },
+    {
+      "name": "_constant",
+      "signature": "value: str",
+      "line": 73,
+      "end_line": 74
+    },
+    {
+      "name": "_integer",
+      "signature": "value: str",
+      "line": 77,
+      "end_line": 80
+    },
+    {
+      "name": "_json",
+      "signature": "data: bytes",
+      "line": 83,
+      "end_line": 112
+    },
+    {
+      "name": "_read",
+      "signature": "path: Any, limit: int=MAX_DOCUMENT_BYTES",
+      "line": 115,
+      "end_line": 122
+    },
+    {
+      "name": "_children",
+      "signature": "directory: Any",
+      "line": 125,
+      "end_line": 132
+    },
+    {
+      "name": "_relative",
+      "signature": "value: str",
+      "line": 135,
+      "end_line": 144
+    },
+    {
+      "name": "_sorted_strings",
+      "signature": "values: list[str]",
+      "line": 147,
+      "end_line": 150
+    },
+    {
+      "name": "dependency_identity",
+      "signature": "name: str",
+      "line": 153,
+      "end_line": 185
+    },
+    {
+      "name": "production_roster",
+      "signature": "package=None",
+      "line": 188,
+      "end_line": 219
+    },
+    {
+      "name": "roster_digest",
+      "signature": "rows: list[dict[str, Any]]",
+      "line": 222,
+      "end_line": 225
+    },
+    {
+      "name": "production_identity",
+      "signature": "",
+      "line": 228,
+      "end_line": 229
+    },
+    {
+      "name": "runtime_identity",
+      "signature": "dependencies: list[str]",
+      "line": 232,
+      "end_line": 244
+    },
+    {
+      "name": "AuthenticatedAssuranceEvidence",
+      "signature": "class",
+      "line": 248,
+      "end_line": 257
+    },
+    {
+      "name": "_capability",
+      "signature": "*, manifest: dict | None=None, reason: str | None=None",
+      "line": 260,
+      "end_line": 289
+    },
+    {
+      "name": "_load",
+      "signature": "package: Any",
+      "line": 292,
+      "end_line": 458
+    },
+    {
+      "name": "_CacheFingerprint",
+      "signature": "class",
+      "line": 462,
+      "end_line": 469
+    },
+    {
+      "name": "_CacheEntry",
+      "signature": "class",
+      "line": 473,
+      "end_line": 475
+    },
+    {
+      "name": "_stat_identity",
+      "signature": "path: Path",
+      "line": 482,
+      "end_line": 486
+    },
+    {
+      "name": "_bundle_census",
+      "signature": "bundle: Path",
+      "line": 489,
+      "end_line": 513
+    },
+    {
+      "name": "_fingerprint",
+      "signature": "package: Path",
+      "line": 516,
+      "end_line": 548
+    },
+    {
+      "name": "_try_fingerprint",
+      "signature": "package: Path",
+      "line": 551,
+      "end_line": 555
+    },
+    {
+      "name": "_preflight_read_inputs",
+      "signature": "package: Any",
+      "line": 558,
+      "end_line": 572
+    },
+    {
+      "name": "_cached_load",
+      "signature": "package: Path",
+      "line": 575,
+      "end_line": 598
+    },
+    {
+      "name": "load_assurance_evidence",
+      "signature": "",
+      "line": 601,
+      "end_line": 618
+    }
+  ],
+  "assurance_transport": [
+    {
+      "name": "producer_identity",
+      "signature": "",
+      "line": 31,
+      "end_line": 41
+    },
+    {
+      "name": "prepare_execution",
+      "signature": "execution: AuthenticatedExecution | None",
+      "line": 44,
+      "end_line": 45
+    },
+    {
+      "name": "emit_receipt",
+      "signature": "raw: bytes",
+      "line": 48,
+      "end_line": 76
+    },
+    {
+      "name": "VerifiedPayload",
+      "signature": "class",
+      "line": 79,
+      "end_line": 83
+    },
+    {
+      "name": "consume_receipt",
+      "signature": "path: Path, *, nonce: str, producer: str, raw: bytes, case_id: str",
+      "line": 86,
+      "end_line": 146
+    },
+    {
+      "name": "bind_verified_execution",
+      "signature": "raw: bytes, evaluation: Any",
+      "line": 149,
+      "end_line": 171
+    },
+    {
+      "name": "ArchivedExecution",
+      "signature": "class",
+      "line": 178,
+      "end_line": 194
+    },
+    {
+      "name": "ArchivedProcessReceipt",
+      "signature": "class",
+      "line": 197,
+      "end_line": 204
+    },
+    {
+      "name": "ArchivedAssuranceReceipt",
+      "signature": "class",
+      "line": 207,
+      "end_line": 212
+    }
+  ],
+  "synth/assemble": [
+    {
+      "name": "GeneratorError",
+      "signature": "class",
+      "line": 109,
+      "end_line": 115
+    },
+    {
+      "name": "_TermGenerationUnavailable",
+      "signature": "class",
+      "line": 118,
+      "end_line": 119
+    },
+    {
+      "name": "CheckerWitnessDiscrepancy",
+      "signature": "class",
+      "line": 122,
+      "end_line": 148
+    },
+    {
+      "name": "Assembly",
+      "signature": "class",
+      "line": 152,
+      "end_line": 163
+    },
+    {
+      "name": "ExpectedStateData",
+      "signature": "class",
+      "line": 167,
+      "end_line": 172
+    },
+    {
+      "name": "_object_types_by_id",
+      "signature": "model: Model",
+      "line": 180,
+      "end_line": 181
+    },
+    {
+      "name": "_role_object",
+      "signature": "model: Model",
+      "line": 184,
+      "end_line": 193
+    },
+    {
+      "name": "_direct_subtypes",
+      "signature": "model: Model",
+      "line": 196,
+      "end_line": 202
+    },
+    {
+      "name": "_descendants",
+      "signature": "model: Model, ot_id: str, children: dict[str, set[str]]",
+      "line": 205,
+      "end_line": 214
+    },
+    {
+      "name": "_denoting_types",
+      "signature": "covered: set[str], model: Model",
+      "line": 218,
+      "end_line": 244
+    },
+    {
+      "name": "_universe",
+      "signature": "doc: dict[str, Any], model: Model, ot_id: str, children: dict[str, set[str]]",
+      "line": 247,
+      "end_line": 271
+    },
+    {
+      "name": "_project",
+      "signature": "doc: dict[str, Any], ft_id: str, role_names: list[str]",
+      "line": 274,
+      "end_line": 279
+    },
+    {
+      "name": "_join",
+      "signature": "doc: dict[str, Any], model: Model, role_refs: list[dict[str, Any]]",
+      "line": 282,
+      "end_line": 327
+    },
+    {
+      "name": "_seq_tuples",
+      "signature": "doc: dict[str, Any], model: Model, seq: list[dict[str, Any]]",
+      "line": 330,
+      "end_line": 335
+    },
+    {
+      "name": "_ring_satisfied",
+      "signature": "variant: str, pairs: set[tuple[Any, Any]]",
+      "line": 355,
+      "end_line": 376
+    },
+    {
+      "name": "_ring_component_ok",
+      "signature": "component: str, pairs: set[tuple[Any, Any]], elements: set[Any]",
+      "line": 379,
+      "end_line": 402
+    },
+    {
+      "name": "_acyclic",
+      "signature": "pairs: set[tuple[Any, Any]]",
+      "line": 405,
+      "end_line": 426
+    },
+    {
+      "name": "_ordered_pair",
+      "signature": "value: Any, bound: Any, primitive: str | None",
+      "line": 437,
+      "end_line": 471
+    },
+    {
+      "name": "_instant_pair",
+      "signature": "value: str, bound: str, primitive: str | None",
+      "line": 474,
+      "end_line": 492
+    },
+    {
+      "name": "_in_range",
+      "signature": "value: Any, rng: dict[str, Any], primitive: str | None=None",
+      "line": 495,
+      "end_line": 534
+    },
+    {
+      "name": "_range_union_claim",
+      "signature": "value: Any, ranges: list[dict[str, Any]], primitive: str | None",
+      "line": 537,
+      "end_line": 552
+    },
+    {
+      "name": "_value_witness",
+      "signature": "constraint: dict[str, Any], values: list[Any], primitive: str | None=None",
+      "line": 555,
+      "end_line": 620
+    },
+    {
+      "name": "_comparison_literal",
+      "signature": "constraint: dict[str, Any], fact_type: dict[str, Any], model: Model",
+      "line": 623,
+      "end_line": 637
+    },
+    {
+      "name": "_witness",
+      "signature": "constraint: dict[str, Any], fact_type: dict[str, Any] | None, doc: dict[str, Any], model: Model, children: dict[str, set[str]]",
+      "line": 640,
+      "end_line": 831
+    },
+    {
+      "name": "_compare_scalar",
+      "signature": "a: Any, op: str, b: Any, primitive_a: str | None=None, primitive_b: str | None=None",
+      "line": 835,
+      "end_line": 883
+    },
+    {
+      "name": "_kind",
+      "signature": "model: Model, oid: str",
+      "line": 891,
+      "end_line": 893
+    },
+    {
+      "name": "_identity_unique",
+      "signature": "values",
+      "line": 896,
+      "end_line": 903
+    },
+    {
+      "name": "_is_external_entity",
+      "signature": "model: Model, oid: str",
+      "line": 906,
+      "end_line": 908
+    },
+    {
+      "name": "_fact_type_constraints",
+      "signature": "ft: dict[str, Any]",
+      "line": 911,
+      "end_line": 912
+    },
+    {
+      "name": "_Builder",
+      "signature": "class",
+      "line": 915,
+      "end_line": 1629
+    },
+    {
+      "name": "_join_scoped_sequences",
+      "signature": "model: Model",
+      "line": 1637,
+      "end_line": 1673
+    },
+    {
+      "name": "assert_non_degenerate",
+      "signature": "model: Model, population: Population",
+      "line": 1676,
+      "end_line": 1692
+    },
+    {
+      "name": "measure_distinct_ratios",
+      "signature": "model: Model, doc: dict[str, Any]",
+      "line": 1695,
+      "end_line": 1714
+    },
+    {
+      "name": "_constraint_iter_with_ref",
+      "signature": "model: Model",
+      "line": 1722,
+      "end_line": 1727
+    },
+    {
+      "name": "_build_expectations",
+      "signature": "model: Model, doc: dict[str, Any], children: dict[str, set[str]]",
+      "line": 1730,
+      "end_line": 1783
+    },
+    {
+      "name": "_load_temp",
+      "signature": "doc: dict[str, Any], model: Model",
+      "line": 1791,
+      "end_line": 1798
+    },
+    {
+      "name": "_alethic_fails",
+      "signature": "report",
+      "line": 1801,
+      "end_line": 1802
+    },
+    {
+      "name": "_witness_map",
+      "signature": "model: Model, doc: dict[str, Any], children: dict[str, set[str]]",
+      "line": 1805,
+      "end_line": 1811
+    },
+    {
+      "name": "_false_pass_discrepancies",
+      "signature": "broken: list[str], report",
+      "line": 1814,
+      "end_line": 1831
+    },
+    {
+      "name": "_alethic_refs",
+      "signature": "model: Model",
+      "line": 1834,
+      "end_line": 1843
+    },
+    {
+      "name": "assemble_conforming",
+      "signature": "model: Model, seed: int, *, pool: Pool | None=None, pool_size: int=8, rows_per_fact_type: int=6, max_rounds: int=20, model_ref: str='model.orm.yaml', fault: Callable[[dict[str, Any]], None] | None=None",
+      "line": 1846,
+      "end_line": 2003
+    },
+    {
+      "name": "_materialize_structured_claims",
+      "signature": "doc: dict[str, Any], model: Model",
+      "line": 2006,
+      "end_line": 2037
+    },
+    {
+      "name": "_repair",
+      "signature": "builder: _Builder, fails: list[Any], model: Model, children: dict[str, set[str]]",
+      "line": 2045,
+      "end_line": 2086
+    },
+    {
+      "name": "_seed_guarded_exists",
+      "signature": "builder: _Builder, model: Model, *, only_ref: str | None=None",
+      "line": 2089,
+      "end_line": 2145
+    },
+    {
+      "name": "_repair_uniqueness",
+      "signature": "builder: _Builder, constraint: dict[str, Any], ft, model: Model",
+      "line": 2148,
+      "end_line": 2165
+    },
+    {
+      "name": "_repair_frequency",
+      "signature": "builder: _Builder, constraint: dict[str, Any], ft, model: Model",
+      "line": 2168,
+      "end_line": 2188
+    },
+    {
+      "name": "_repair_cardinality",
+      "signature": "builder: _Builder, constraint: dict[str, Any]",
+      "line": 2191,
+      "end_line": 2210
+    },
+    {
+      "name": "_repair_value",
+      "signature": "builder: _Builder, constraint: dict[str, Any], ft",
+      "line": 2213,
+      "end_line": 2237
+    },
+    {
+      "name": "_repair_disjunctive",
+      "signature": "builder: _Builder, constraint: dict[str, Any], model: Model, children",
+      "line": 2240,
+      "end_line": 2264
+    }
+  ],
+  "synth/mutate": [
+    {
+      "name": "_resolve",
+      "signature": "model: Model, ref: str",
+      "line": 151,
+      "end_line": 155
+    },
+    {
+      "name": "_ft_by_id",
+      "signature": "model: Model, ftid: str",
+      "line": 158,
+      "end_line": 162
+    },
+    {
+      "name": "_facts_of",
+      "signature": "doc: dict[str, Any], ftid: str",
+      "line": 165,
+      "end_line": 166
+    },
+    {
+      "name": "_is_entity",
+      "signature": "model: Model, oid: str",
+      "line": 169,
+      "end_line": 173
+    },
+    {
+      "name": "_existing_members",
+      "signature": "doc: dict[str, Any], model: Model, oid: str",
+      "line": 176,
+      "end_line": 186
+    },
+    {
+      "name": "_fresh_identifier",
+      "signature": "doc: dict[str, Any], model: Model, oid: str, rng: Random",
+      "line": 189,
+      "end_line": 220
+    },
+    {
+      "name": "_value_spec_for",
+      "signature": "model: Model, ftid: str, role_name: str, oid: str",
+      "line": 223,
+      "end_line": 229
+    },
+    {
+      "name": "_valid_value",
+      "signature": "model: Model, ftid: str, role_name: str, oid: str, rng: Random, avoid: tuple[Any, ...]=()",
+      "line": 232,
+      "end_line": 257
+    },
+    {
+      "name": "_out_of_spec_value",
+      "signature": "constraint: dict[str, Any]",
+      "line": 260,
+      "end_line": 283
+    },
+    {
+      "name": "_enforce_value_comparisons",
+      "signature": "model: Model, ft: dict[str, Any], row: dict[str, Any]",
+      "line": 286,
+      "end_line": 329
+    },
+    {
+      "name": "_complete_row",
+      "signature": "doc: dict[str, Any], model: Model, ft: dict[str, Any], fixed: dict[str, Any], rng: Random, *, fresh_entities: bool=False",
+      "line": 332,
+      "end_line": 359
+    },
+    {
+      "name": "_scope_fts",
+      "signature": "constraint: dict[str, Any], ctype: str, model: Model, ft: dict[str, Any] | None",
+      "line": 367,
+      "end_line": 414
+    },
+    {
+      "name": "_subject_sequences",
+      "signature": "constraint: dict[str, Any], ctype: str",
+      "line": 430,
+      "end_line": 446
+    },
+    {
+      "name": "_join_vacuous",
+      "signature": "constraint: dict[str, Any], ctype: str, doc: dict[str, Any], model: Model",
+      "line": 449,
+      "end_line": 458
+    },
+    {
+      "name": "_subtype_partition_witness",
+      "signature": "constraint: dict[str, Any], doc: dict[str, Any], model: Model, children: dict[str, set[str]]",
+      "line": 461,
+      "end_line": 487
+    },
+    {
+      "name": "_witness_ext",
+      "signature": "constraint: dict[str, Any], ft: dict[str, Any] | None, doc: dict[str, Any], model: Model, children: dict[str, set[str]]",
+      "line": 490,
+      "end_line": 499
+    },
+    {
+      "name": "_guarded_atoms_have_derived_source",
+      "signature": "atoms: object, model: Model",
+      "line": 502,
+      "end_line": 519
+    },
+    {
+      "name": "_guarded_exists_has_derived_source",
+      "signature": "constraint: dict[str, Any], model: Model",
+      "line": 522,
+      "end_line": 528
+    },
+    {
+      "name": "expected_state",
+      "signature": "constraint: dict[str, Any], ft: dict[str, Any] | None, doc: dict[str, Any], model: Model, children: dict[str, set[str]]",
+      "line": 531,
+      "end_line": 665
+    },
+    {
+      "name": "predict_violations",
+      "signature": "model: Model, baseline_doc: dict[str, Any], mutated_doc: dict[str, Any]",
+      "line": 668,
+      "end_line": 717
+    },
+    {
+      "name": "Mutation",
+      "signature": "class",
+      "line": 726,
+      "end_line": 741
+    },
+    {
+      "name": "_Template",
+      "signature": "class",
+      "line": 745,
+      "end_line": 749
+    },
+    {
+      "name": "_applies_duplicate_covered",
+      "signature": "model, constraint, ft, doc",
+      "line": 757,
+      "end_line": 767
+    },
+    {
+      "name": "_apply_duplicate_covered",
+      "signature": "doc, model, ref, rng",
+      "line": 770,
+      "end_line": 790
+    },
+    {
+      "name": "_applies_exact_duplicate",
+      "signature": "model, constraint, ft, doc",
+      "line": 793,
+      "end_line": 803
+    },
+    {
+      "name": "_apply_exact_duplicate",
+      "signature": "doc, model, ref, rng",
+      "line": 806,
+      "end_line": 813
+    },
+    {
+      "name": "_applies_duplicate_joined",
+      "signature": "model, constraint, ft, doc",
+      "line": 816,
+      "end_line": 824
+    },
+    {
+      "name": "_apply_duplicate_joined",
+      "signature": "doc, model, ref, rng",
+      "line": 827,
+      "end_line": 853
+    },
+    {
+      "name": "_mandatory_role_type",
+      "signature": "model, constraint, ft",
+      "line": 861,
+      "end_line": 863
+    },
+    {
+      "name": "_applies_roster_add",
+      "signature": "model, constraint, ft, doc",
+      "line": 866,
+      "end_line": 872
+    },
+    {
+      "name": "_apply_roster_add",
+      "signature": "doc, model, ref, rng",
+      "line": 875,
+      "end_line": 880
+    },
+    {
+      "name": "_other_ft_with_role",
+      "signature": "model, host_ftid: str, oid: str",
+      "line": 883,
+      "end_line": 890
+    },
+    {
+      "name": "_applies_new_entity_plays",
+      "signature": "model, constraint, ft, doc",
+      "line": 893,
+      "end_line": 904
+    },
+    {
+      "name": "_apply_new_entity_plays",
+      "signature": "doc, model, ref, rng",
+      "line": 907,
+      "end_line": 914
+    },
+    {
+      "name": "_pick_disjunctive_member",
+      "signature": "model, constraint, doc",
+      "line": 917,
+      "end_line": 952
+    },
+    {
+      "name": "_applies_remove_disjunctive",
+      "signature": "model, constraint, ft, doc",
+      "line": 955,
+      "end_line": 965
+    },
+    {
+      "name": "_apply_remove_disjunctive",
+      "signature": "doc, model, ref, rng",
+      "line": 968,
+      "end_line": 979
+    },
+    {
+      "name": "_internal_frequency_groups",
+      "signature": "constraint, ft, doc",
+      "line": 987,
+      "end_line": 997
+    },
+    {
+      "name": "_frequency_min_gate",
+      "signature": "constraint",
+      "line": 1000,
+      "end_line": 1010
+    },
+    {
+      "name": "_applies_drop_from_group",
+      "signature": "model, constraint, ft, doc",
+      "line": 1013,
+      "end_line": 1023
+    },
+    {
+      "name": "_remove_one_from_min_group",
+      "signature": "doc, model, ref, *, last: bool",
+      "line": 1026,
+      "end_line": 1041
+    },
+    {
+      "name": "_apply_drop_from_group",
+      "signature": "doc, model, ref, rng",
+      "line": 1044,
+      "end_line": 1045
+    },
+    {
+      "name": "_apply_remove_last_covering",
+      "signature": "doc, model, ref, rng",
+      "line": 1048,
+      "end_line": 1049
+    },
+    {
+      "name": "_applies_add_past_ceiling",
+      "signature": "model, constraint, ft, doc",
+      "line": 1052,
+      "end_line": 1071
+    },
+    {
+      "name": "_apply_add_past_ceiling",
+      "signature": "doc, model, ref, rng",
+      "line": 1074,
+      "end_line": 1087
+    },
+    {
+      "name": "_applies_drop_joined_below_min",
+      "signature": "model, constraint, ft, doc",
+      "line": 1090,
+      "end_line": 1093
+    },
+    {
+      "name": "_apply_drop_joined_below_min",
+      "signature": "doc, model, ref, rng",
+      "line": 1096,
+      "end_line": 1120
+    },
+    {
+      "name": "_ring_components_of",
+      "signature": "constraint",
+      "line": 1128,
+      "end_line": 1132
+    },
+    {
+      "name": "_ring_edges",
+      "signature": "doc, model, ft",
+      "line": 1135,
+      "end_line": 1143
+    },
+    {
+      "name": "_ring_gate",
+      "signature": "ft",
+      "line": 1146,
+      "end_line": 1150
+    },
+    {
+      "name": "_applies_close_3_cycle",
+      "signature": "model, constraint, ft, doc",
+      "line": 1153,
+      "end_line": 1169
+    },
+    {
+      "name": "_apply_close_3_cycle",
+      "signature": "doc, model, ref, rng",
+      "line": 1172,
+      "end_line": 1185
+    },
+    {
+      "name": "_applies_close_2_cycle",
+      "signature": "model, constraint, ft, doc",
+      "line": 1188,
+      "end_line": 1200
+    },
+    {
+      "name": "_apply_close_2_cycle",
+      "signature": "doc, model, ref, rng",
+      "line": 1203,
+      "end_line": 1216
+    },
+    {
+      "name": "_applies_add_self_loop",
+      "signature": "model, constraint, ft, doc",
+      "line": 1219,
+      "end_line": 1232
+    },
+    {
+      "name": "_apply_add_self_loop",
+      "signature": "doc, model, ref, rng",
+      "line": 1235,
+      "end_line": 1245
+    },
+    {
+      "name": "_value_occurrence",
+      "signature": "constraint, model, doc",
+      "line": 1253,
+      "end_line": 1272
+    },
+    {
+      "name": "_applies_edit_out_of_range",
+      "signature": "model, constraint, ft, doc",
+      "line": 1275,
+      "end_line": 1284
+    },
+    {
+      "name": "_apply_edit_out_of_range",
+      "signature": "doc, model, ref, rng",
+      "line": 1287,
+      "end_line": 1295
+    },
+    {
+      "name": "_governed_ft_with_entity_role",
+      "signature": "constraint, model",
+      "line": 1298,
+      "end_line": 1315
+    },
+    {
+      "name": "_applies_add_out_of_range_new_entity",
+      "signature": "model, constraint, ft, doc",
+      "line": 1318,
+      "end_line": 1327
+    },
+    {
+      "name": "_apply_add_out_of_range_new_entity",
+      "signature": "doc, model, ref, rng",
+      "line": 1330,
+      "end_line": 1336
+    },
+    {
+      "name": "_applies_introduce_distinct",
+      "signature": "model, constraint, ft, doc",
+      "line": 1344,
+      "end_line": 1368
+    },
+    {
+      "name": "_apply_introduce_distinct",
+      "signature": "doc, model, ref, rng",
+      "line": 1371,
+      "end_line": 1396
+    },
+    {
+      "name": "_uniqueness_conflict",
+      "signature": "model, ft, doc, row",
+      "line": 1404,
+      "end_line": 1417
+    },
+    {
+      "name": "_subset_candidate",
+      "signature": "model, constraint, doc",
+      "line": 1420,
+      "end_line": 1445
+    },
+    {
+      "name": "_applies_add_missing_subset",
+      "signature": "model, constraint, ft, doc",
+      "line": 1448,
+      "end_line": 1457
+    },
+    {
+      "name": "_apply_add_missing_subset",
+      "signature": "doc, model, ref, rng",
+      "line": 1460,
+      "end_line": 1466
+    },
+    {
+      "name": "_equality_side_removal",
+      "signature": "model, constraint, doc",
+      "line": 1469,
+      "end_line": 1497
+    },
+    {
+      "name": "_applies_remove_equality_side",
+      "signature": "model, constraint, ft, doc",
+      "line": 1500,
+      "end_line": 1510
+    },
+    {
+      "name": "_apply_remove_equality_side",
+      "signature": "doc, model, ref, rng",
+      "line": 1513,
+      "end_line": 1517
+    },
+    {
+      "name": "_applies_add_overlap",
+      "signature": "model, constraint, ft, doc",
+      "line": 1520,
+      "end_line": 1531
+    },
+    {
+      "name": "_apply_add_overlap",
+      "signature": "doc, model, ref, rng",
+      "line": 1534,
+      "end_line": 1544
+    },
+    {
+      "name": "_xor_single_role",
+      "signature": "constraint",
+      "line": 1552,
+      "end_line": 1556
+    },
+    {
+      "name": "_xor_player_sets",
+      "signature": "refs, doc",
+      "line": 1565,
+      "end_line": 1574
+    },
+    {
+      "name": "_applies_play_both",
+      "signature": "model, constraint, ft, doc",
+      "line": 1577,
+      "end_line": 1586
+    },
+    {
+      "name": "_apply_play_both",
+      "signature": "doc, model, ref, rng",
+      "line": 1589,
+      "end_line": 1604
+    },
+    {
+      "name": "_pick_xor_removable",
+      "signature": "model, constraint, doc",
+      "line": 1607,
+      "end_line": 1635
+    },
+    {
+      "name": "_applies_play_neither",
+      "signature": "model, constraint, ft, doc",
+      "line": 1638,
+      "end_line": 1648
+    },
+    {
+      "name": "_apply_play_neither",
+      "signature": "doc, model, ref, rng",
+      "line": 1651,
+      "end_line": 1662
+    },
+    {
+      "name": "_invertible_fact",
+      "signature": "model, constraint, ft, doc",
+      "line": 1670,
+      "end_line": 1685
+    },
+    {
+      "name": "_applies_invert_vc",
+      "signature": "model, constraint, ft, doc",
+      "line": 1688,
+      "end_line": 1699
+    },
+    {
+      "name": "_apply_invert_vc",
+      "signature": "doc, model, ref, rng",
+      "line": 1702,
+      "end_line": 1711
+    },
+    {
+      "name": "_applies_place_two_subtypes",
+      "signature": "model, constraint, ft, doc",
+      "line": 1714,
+      "end_line": 1724
+    },
+    {
+      "name": "_apply_place_two_subtypes",
+      "signature": "doc, model, ref, rng",
+      "line": 1727,
+      "end_line": 1734
+    },
+    {
+      "name": "_subtype_assertions",
+      "signature": "model, constraint, doc",
+      "line": 1737,
+      "end_line": 1743
+    },
+    {
+      "name": "_applies_remove_all_subtypes",
+      "signature": "model, constraint, ft, doc",
+      "line": 1746,
+      "end_line": 1756
+    },
+    {
+      "name": "_apply_remove_all_subtypes",
+      "signature": "doc, model, ref, rng",
+      "line": 1759,
+      "end_line": 1768
+    },
+    {
+      "name": "_coverage_target_ft",
+      "signature": "constraint, ft",
+      "line": 1776,
+      "end_line": 1782
+    },
+    {
+      "name": "_applies_drop_covers",
+      "signature": "model, constraint, ft, doc",
+      "line": 1785,
+      "end_line": 1792
+    },
+    {
+      "name": "_apply_drop_covers",
+      "signature": "doc, model, ref, rng",
+      "line": 1795,
+      "end_line": 1800
+    },
+    {
+      "name": "first_implemented_inline_ref",
+      "signature": "model: Model, ftid: str",
+      "line": 1803,
+      "end_line": 1810
+    },
+    {
+      "name": "_applies_empty_ft",
+      "signature": "model, constraint, ft, doc",
+      "line": 1813,
+      "end_line": 1819
+    },
+    {
+      "name": "_apply_empty_ft",
+      "signature": "doc, model, ref, rng",
+      "line": 1822,
+      "end_line": 1825
+    },
+    {
+      "name": "_exists_atom_safe_for_removal",
+      "signature": "model: Model, constraint: dict[str, Any]",
+      "line": 1828,
+      "end_line": 1830
+    },
+    {
+      "name": "_applies_remove_exists_witness",
+      "signature": "model, constraint, _ft, doc",
+      "line": 1833,
+      "end_line": 1876
+    },
+    {
+      "name": "_apply_remove_exists_witness",
+      "signature": "doc, model, ref, rng",
+      "line": 1879,
+      "end_line": 1913
+    },
+    {
+      "name": "_templates_for",
+      "signature": "model: Model, ref: str, constraint: dict[str, Any], ft: dict[str, Any] | None",
+      "line": 1984,
+      "end_line": 1991
+    },
+    {
+      "name": "operators_for",
+      "signature": "model: Model, constraint_ref: str, baseline_doc: dict[str, Any]",
+      "line": 1994,
+      "end_line": 2098
+    },
+    {
+      "name": "enumerate_violating",
+      "signature": "model: Model, baseline_doc: dict[str, Any]",
+      "line": 2101,
+      "end_line": 2112
+    },
+    {
+      "name": "family_coverage",
+      "signature": "model: Model, baseline_doc: dict[str, Any]",
+      "line": 2115,
+      "end_line": 2130
+    },
+    {
+      "name": "compare_observed",
+      "signature": "predicted: dict[str, ExpectedState], baseline_report: CheckReport, report: CheckReport, *, target: str",
+      "line": 2138,
+      "end_line": 2204
+    },
+    {
+      "name": "PredictionMismatch",
+      "signature": "class",
+      "line": 2207,
+      "end_line": 2236
+    },
+    {
+      "name": "ViolatingCase",
+      "signature": "class",
+      "line": 2240,
+      "end_line": 2248
+    },
+    {
+      "name": "emit_violating",
+      "signature": "model: Model, baseline_doc: dict[str, Any], baseline_report: CheckReport, mutation: Mutation, constraint_ref: str, path: str | Path, rng: Random",
+      "line": 2251,
+      "end_line": 2308
+    }
+  ],
+  "report": [
+    {
+      "name": "_error_record",
+      "signature": "error: BaseException | None",
+      "line": 115,
+      "end_line": 118
+    },
+    {
+      "name": "_issue_records",
+      "signature": "issues: list[ValidationIssue] | None",
+      "line": 121,
+      "end_line": 128
+    },
+    {
+      "name": "payload_schema_version",
+      "signature": "model: Model | None",
+      "line": 131,
+      "end_line": 143
+    },
+    {
+      "name": "model_bound_payload_schema_version",
+      "signature": "model: Model",
+      "line": 146,
+      "end_line": 160
+    },
+    {
+      "name": "_base_payload",
+      "signature": "command: str, exit_code: int, model_path: str | None, population_path: str | None, *, schema_version: ReportSchemaVersion, model_digest: str | None, issues: list[ValidationIssue] | None, warnings: list[ValidationIssue] | None, error: BaseException | None",
+      "line": 163,
+      "end_line": 234
+    },
+    {
+      "name": "_plain_containers",
+      "signature": "value: Any",
+      "line": 237,
+      "end_line": 250
+    },
+    {
+      "name": "_serializable_verdicts",
+      "signature": "verdicts: list[dict[str, Any]]",
+      "line": 253,
+      "end_line": 276
+    },
+    {
+      "name": "build_check_payload",
+      "signature": "exit_code: int, model_path: str, population_path: str, *, schema_version: ReportSchemaVersion=BASE_PAYLOAD_SCHEMA_VERSION, model_digest: str | None=None, assurance: AssuranceBlockV1 | None=None, structured: bool=False, _assurance_surface: str | None=None, report: CheckReport | None=None, issues: list[ValidationIssue] | None=None, warnings: list[ValidationIssue] | None=None, error: BaseException | None=None",
+      "line": 279,
+      "end_line": 359
+    },
+    {
+      "name": "build_verify_payload",
+      "signature": "exit_code: int, model_path: str, population_path: str, *, extraction: Mapping[str, Any], schema_version: ReportSchemaVersion=BASE_PAYLOAD_SCHEMA_VERSION, model_digest: str | None=None, assurance: AssuranceBlockV1 | None=None, structured: bool=False, report: CheckReport | None=None, issues: list[ValidationIssue] | None=None, warnings: list[ValidationIssue] | None=None, error: BaseException | None=None",
+      "line": 362,
+      "end_line": 398
+    },
+    {
+      "name": "_serializable_transition_document",
+      "signature": "report: Any",
+      "line": 401,
+      "end_line": 471
+    },
+    {
+      "name": "build_transition_payload",
+      "signature": "exit_code: int, model_path: str, *, evaluated: bool, schema_version: ReportSchemaVersion=BASE_PAYLOAD_SCHEMA_VERSION, model_digest: str | None=None, assurance: AssuranceBlockV1 | None=None, structured: bool=False, supplied_digests: dict[str, Any] | None=None, transition_report: Any=None, report: CheckReport | None=None, issues: list[ValidationIssue] | None=None, warnings: list[ValidationIssue] | None=None, error: BaseException | None=None",
+      "line": 474,
+      "end_line": 565
+    },
+    {
+      "name": "build_plan_transition_payload",
+      "signature": "exit_code: int, model_path: str | None, *, evaluated: bool, model_digest: str | None=None, structured: bool=False, supplied_digests: dict[str, Any] | None=None, transition_report: Any=None, computed_post: Mapping[str, Any] | None=None, post_snapshot_evaluated: bool=True, issues: list[ValidationIssue] | None=None, warnings: list[ValidationIssue] | None=None, error: BaseException | None=None",
+      "line": 568,
+      "end_line": 620
+    },
+    {
+      "name": "build_validate_payload",
+      "signature": "exit_code: int, model_path: str, *, schema_version: ReportSchemaVersion=BASE_PAYLOAD_SCHEMA_VERSION, issues: list[ValidationIssue] | None=None, warnings: list[ValidationIssue] | None=None, error: BaseException | None=None",
+      "line": 623,
+      "end_line": 647
+    },
+    {
+      "name": "NonJsonValueError",
+      "signature": "class",
+      "line": 650,
+      "end_line": 666
+    },
+    {
+      "name": "render_json",
+      "signature": "payload: Mapping[str, Any]",
+      "line": 669,
+      "end_line": 676
+    },
+    {
+      "name": "emit",
+      "signature": "payload: dict[str, Any]",
+      "line": 679,
+      "end_line": 694
+    },
+    {
+      "name": "legacy_report_projection",
+      "signature": "payload: Mapping[str, Any], version: ReportSchemaVersion",
+      "line": 697,
+      "end_line": 714
+    },
+    {
+      "name": "CurrentReportVersion",
+      "signature": "class",
+      "line": 717,
+      "end_line": 732
+    },
+    {
+      "name": "current_payload_schema_version",
+      "signature": "model: Model",
+      "line": 735,
+      "end_line": 746
+    },
+    {
+      "name": "requested_check_schema_version",
+      "signature": "model: Model | None, *, admission: bool",
+      "line": 749,
+      "end_line": 763
+    }
+  ],
+  "api": [
+    {
+      "name": "_RunResult",
+      "signature": "class",
+      "line": 49,
+      "end_line": 60
+    },
+    {
+      "name": "_path",
+      "signature": "value: object, *, name: str",
+      "line": 63,
+      "end_line": 69
+    },
+    {
+      "name": "_check_model_input",
+      "signature": "value: object",
+      "line": 72,
+      "end_line": 74
+    },
+    {
+      "name": "_check_population_input",
+      "signature": "value: object, *, name: str",
+      "line": 77,
+      "end_line": 79
+    },
+    {
+      "name": "_check_steps_input",
+      "signature": "value: object",
+      "line": 82,
+      "end_line": 84
+    },
+    {
+      "name": "_resolve_model",
+      "signature": "value: str | os.PathLike[str] | Model, *, safe: bool=False",
+      "line": 87,
+      "end_line": 95
+    },
+    {
+      "name": "_resolve_population",
+      "signature": "value: str | os.PathLike[str] | Population, *, model: Model, name: str",
+      "line": 98,
+      "end_line": 107
+    },
+    {
+      "name": "_finalize",
+      "signature": "payload: dict[str, Any], *, exit_code: int, fallback, **result: Any",
+      "line": 110,
+      "end_line": 129
+    },
+    {
+      "name": "_certify_assurance",
+      "signature": "model: Model, populations: list[Population], result: Any, band: int, trace: set[str], *, steps: list[dict[str, Any]] | None=None, extraction_route: str='not-applicable'",
+      "line": 132,
+      "end_line": 157
+    },
+    {
+      "name": "_run_validate_raw",
+      "signature": "model_input: str | os.PathLike[str] | Model, *, references: BoundReferenceContext | None=None",
+      "line": 160,
+      "end_line": 225
+    },
+    {
+      "name": "_run_check_raw",
+      "signature": "model_input: str | os.PathLike[str] | Model, population_input: str | os.PathLike[str] | Population, *, evaluator: Callable[[Model, Population], CheckReport] | None=None, anchors: Any=None, document: bytes | str | os.PathLike[str] | None=None, population_bytes: bytes | None=None, admission: bool=False, references: BoundReferenceContext | None=None",
+      "line": 228,
+      "end_line": 438
+    },
+    {
+      "name": "_run_transition_raw",
+      "signature": "model_input: str | os.PathLike[str] | Model, pre_input: str | os.PathLike[str] | Population, steps_input: str | os.PathLike[str] | Mapping[str, Any], post_input: str | os.PathLike[str] | Population | None=None, *, references: BoundReferenceContext | None=None",
+      "line": 441,
+      "end_line": 675
+    },
+    {
+      "name": "_projection_failure_base",
+      "signature": "result: _RunResult, kind: redaction_module.OutputKind, failure: BaseException",
+      "line": 678,
+      "end_line": 727
+    },
+    {
+      "name": "_project_result",
+      "signature": "result: _RunResult, kind: redaction_module.OutputKind, *, unredacted: bool",
+      "line": 730,
+      "end_line": 801
+    },
+    {
+      "name": "_reference_wrap",
+      "signature": "result: _RunResult",
+      "line": 804,
+      "end_line": 873
+    },
+    {
+      "name": "_run_validate",
+      "signature": "model_input: str | os.PathLike[str] | Model, *, unredacted: bool=False, references: BoundReferenceContext | None=None",
+      "line": 876,
+      "end_line": 886
+    },
+    {
+      "name": "_run_check",
+      "signature": "model_input: str | os.PathLike[str] | Model, population_input: str | os.PathLike[str] | Population, *, unredacted: bool=False, evaluator: Callable[[Model, Population], CheckReport] | None=None, anchors: Any=None, document: bytes | str | os.PathLike[str] | None=None, population_bytes: bytes | None=None, admission: bool=False, references: BoundReferenceContext | None=None",
+      "line": 889,
+      "end_line": 961
+    },
+    {
+      "name": "_run_transition",
+      "signature": "model_input: str | os.PathLike[str] | Model, pre_input: str | os.PathLike[str] | Population, steps_input: str | os.PathLike[str] | Mapping[str, Any], post_input: str | os.PathLike[str] | Population | None=None, *, unredacted: bool=False, references: BoundReferenceContext | None=None",
+      "line": 964,
+      "end_line": 982
+    },
+    {
+      "name": "validate",
+      "signature": "model: str | os.PathLike[str] | Model, *, unredacted: bool=False, references: BoundReferenceContext | None=None",
+      "line": 985,
+      "end_line": 993
+    },
+    {
+      "name": "check",
+      "signature": "model: str | os.PathLike[str] | Model, population: str | os.PathLike[str] | Population, *, unredacted: bool=False, anchors: Any=None, document: bytes | str | os.PathLike[str] | None=None, population_bytes: bytes | None=None, admission: bool=False, references: BoundReferenceContext | None=None",
+      "line": 996,
+      "end_line": 1019
+    },
+    {
+      "name": "diff",
+      "signature": "model_a: str | os.PathLike[str] | Model, model_b: str | os.PathLike[str] | Model, *, populations: str | os.PathLike[str] | None=None, unredacted: bool=False, seed: int=0, references: BoundReferenceContext | None=None, references_b: BoundReferenceContext | None=None",
+      "line": 1022,
+      "end_line": 1117
+    },
+    {
+      "name": "_run_verbalize",
+      "signature": "model: str | os.PathLike[str] | Model, population: str | os.PathLike[str] | Population, *, anchors: Any=None, document: bytes | str | os.PathLike[str] | None=None, population_bytes: bytes | None=None, unredacted: bool=False, emitter_id: str='api-population-verbalization'",
+      "line": 1120,
+      "end_line": 1202
+    },
+    {
+      "name": "verbalize",
+      "signature": "model: str | os.PathLike[str] | Model, population: str | os.PathLike[str] | Population, *, anchors: Any=None, document: bytes | str | os.PathLike[str] | None=None, population_bytes: bytes | None=None, unredacted: bool=False",
+      "line": 1205,
+      "end_line": 1218
+    },
+    {
+      "name": "transition",
+      "signature": "model: str | os.PathLike[str] | Model, pre: str | os.PathLike[str] | Population, steps: str | os.PathLike[str] | Mapping[str, Any], post: str | os.PathLike[str] | Population | None=None, *, unredacted: bool=False, references: BoundReferenceContext | None=None",
+      "line": 1221,
+      "end_line": 1238
+    },
+    {
+      "name": "_witness_inputs",
+      "signature": "model_path, population_path, reference_root",
+      "line": 1241,
+      "end_line": 1272
+    },
+    {
+      "name": "witness",
+      "signature": "model_path, population_path, targets_path, *, reference_root=None",
+      "line": 1275,
+      "end_line": 1301
+    },
+    {
+      "name": "replay",
+      "signature": "model_path, population_path, certificate_path, *, reference_root=None",
+      "line": 1304,
+      "end_line": 1327
+    },
+    {
+      "name": "judgments",
+      "signature": "model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root=None, unredacted=False",
+      "line": 1330,
+      "end_line": 1421
+    },
+    {
+      "name": "export_souffle",
+      "signature": "model_path, population_path, *, reference_root=None, out=None, raw=False",
+      "line": 1424,
+      "end_line": 1430
+    },
+    {
+      "name": "verify_souffle",
+      "signature": "bundle_path",
+      "line": 1433,
+      "end_line": 1437
+    },
+    {
+      "name": "run_souffle",
+      "signature": "bundle_path, *, executable='souffle', raw=False",
+      "line": 1440,
+      "end_line": 1449
+    },
+    {
+      "name": "souffle_witness",
+      "signature": "bundle_path, targets_path, *, executable='souffle', raw=False, out=None",
+      "line": 1452,
+      "end_line": 1479
+    },
+    {
+      "name": "export_lean",
+      "signature": "model_path, population_path, *, toolchain, reference_root=None, out=None, raw=False",
+      "line": 1482,
+      "end_line": 1495
+    },
+    {
+      "name": "verify_lean",
+      "signature": "bundle_path",
+      "line": 1498,
+      "end_line": 1502
+    },
+    {
+      "name": "compile_lean",
+      "signature": "bundle_path, *, executable='lake', elaborate_stubs=False",
+      "line": 1505,
+      "end_line": 1511
+    }
+  ]
+}

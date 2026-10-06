@@ -1,0 +1,90 @@
+Retained output edited to replace machine paths.
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+___________________ test_lookup_closure_variants_and_missing ___________________
+tests/test_rf6_index.py:27: in test_lookup_closure_variants_and_missing
+    q = index(built())
+        ^^^^^^^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+__________ test_cache_equal_models_detached_views_and_canonical_refs ___________
+tests/test_rf6_index.py:44: in test_cache_equal_models_detached_views_and_canonical_refs
+    q = index(m)
+        ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+_________ test_all_query_inputs_mutated_never_serve_stale[fact_types] __________
+tests/test_rf6_index.py:64: in test_all_query_inputs_mutated_never_serve_stale
+    old = index(m)
+          ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+________ test_all_query_inputs_mutated_never_serve_stale[object_types] _________
+tests/test_rf6_index.py:64: in test_all_query_inputs_mutated_never_serve_stale
+    old = index(m)
+          ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+_________ test_all_query_inputs_mutated_never_serve_stale[constraints] _________
+tests/test_rf6_index.py:64: in test_all_query_inputs_mutated_never_serve_stale
+    old = index(m)
+          ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+_________ test_all_query_inputs_mutated_never_serve_stale[operations] __________
+tests/test_rf6_index.py:64: in test_all_query_inputs_mutated_never_serve_stale
+    old = index(m)
+          ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+____ test_all_query_inputs_mutated_never_serve_stale[reference_populations] ____
+tests/test_rf6_index.py:64: in test_all_query_inputs_mutated_never_serve_stale
+    old = index(m)
+          ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+___________ test_all_query_inputs_mutated_never_serve_stale[source] ____________
+tests/test_rf6_index.py:64: in test_all_query_inputs_mutated_never_serve_stale
+    old = index(m)
+          ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+_________________ test_cycles_and_duplicate_predecessor_lookup _________________
+tests/test_rf6_index.py:83: in test_cycles_and_duplicate_predecessor_lookup
+    q = index(m)
+        ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+__________________ test_cache_bounded_and_noncanonical_bypass __________________
+tests/test_rf6_index.py:91: in test_cache_bounded_and_noncanonical_bypass
+    from gnd.model_index import cache_info
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+_______________________ test_large_index_work_is_bounded _______________________
+tests/test_rf6_index.py:108: in test_large_index_work_is_bounded
+    q = index(m)
+        ^^^^^^^^
+tests/test_rf6_index.py:22: in index
+    from gnd.model_index import ModelIndex
+E   ModuleNotFoundError: No module named 'gnd.model_index'
+=========================== short test summary info ============================
+FAILED tests/test_rf6_index.py::test_lookup_closure_variants_and_missing - Mo...
+FAILED tests/test_rf6_index.py::test_cache_equal_models_detached_views_and_canonical_refs
+FAILED tests/test_rf6_index.py::test_all_query_inputs_mutated_never_serve_stale[fact_types]
+FAILED tests/test_rf6_index.py::test_all_query_inputs_mutated_never_serve_stale[object_types]
+FAILED tests/test_rf6_index.py::test_all_query_inputs_mutated_never_serve_stale[constraints]
+FAILED tests/test_rf6_index.py::test_all_query_inputs_mutated_never_serve_stale[operations]
+FAILED tests/test_rf6_index.py::test_all_query_inputs_mutated_never_serve_stale[reference_populations]
+FAILED tests/test_rf6_index.py::test_all_query_inputs_mutated_never_serve_stale[source]
+FAILED tests/test_rf6_index.py::test_cycles_and_duplicate_predecessor_lookup
+FAILED tests/test_rf6_index.py::test_cache_bounded_and_noncanonical_bypass - ...
+FAILED tests/test_rf6_index.py::test_large_index_work_is_bounded - ModuleNotF...
+11 failed in 0.09s

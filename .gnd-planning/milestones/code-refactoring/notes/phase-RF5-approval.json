@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-05",
+  "mark": "delegated approval (auto=true)",
+  "authorization": "process-phase RF5 auto",
+  "instrument": "spec prose plus predecessor-only successor byte corpus",
+  "artifact": ".gnd-planning/milestones/code-refactoring/notes/phase-RF5-spec.md",
+  "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF5/approved-spec.md",
+  "sha256": "2dc5f35176f3028bba89a901870fd33179396553456f16f52f911331050b6938",
+  "source_base": "29915d9f7651151d3a6f3c169764c7c84ab0110d",
+  "implementability_sweep": "complete before implementation",
+  "replan": ".gnd-planning/milestones/code-refactoring/evidence/RF5/pre-phase-replan.json",
+  "review_limit": 2
+}

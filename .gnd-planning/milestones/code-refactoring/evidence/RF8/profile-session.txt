@@ -1,0 +1,6 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf1_session_pins.py --tb=short
+............................                                             [100%]
+28 passed in 28.93s
+
+Exit: 0

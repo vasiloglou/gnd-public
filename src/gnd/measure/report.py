@@ -33,7 +33,9 @@ from dataclasses import dataclass
 from importlib.resources import files
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
+from gnd.address import positional_constraint_ref
 from gnd.checker import CheckReport
 from gnd.measure.score import Observation, score_run
 from gnd.measure.truth import expectation_for, resolve_constraint_ref
@@ -105,7 +107,7 @@ def load_measurement_schema() -> dict[str, Any]:
     ``importlib.resources`` so it ships with the installed package (the
     ``report.schema.json`` / ``pool.schema.json`` precedent)."""
     schema_text = files("gnd").joinpath("measurement.schema.json").read_text(encoding="utf-8")
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
 def _canonical(payload: dict[str, Any]) -> str:
@@ -456,7 +458,7 @@ def _coverage_matrix_summary(
             for record in sidecar.unmutated_derivations
         }
         unmutated_derivations = [
-            json.loads(record) for record in sorted(unique_unmutated_derivations)
+            _rf7_input.loads(record) for record in sorted(unique_unmutated_derivations)
         ]
         boundary_entries = [
             sidecar
@@ -485,7 +487,7 @@ def _coverage_matrix_summary(
         )
 
     exists_refs = {
-        f"constraints[{index}]"
+        positional_constraint_ref(None, index)
         for index, constraint in enumerate(model.constraints or [])
         if constraint.get("type") == "guarded"
         and isinstance(constraint.get("consequent"), dict)
@@ -493,7 +495,7 @@ def _coverage_matrix_summary(
     }
     unsupported_exists_rules_by_key: dict[str, dict[str, Any]] = {}
     for raw_record in not_derivable:
-        record = json.loads(raw_record) if isinstance(raw_record, str) else raw_record
+        record = _rf7_input.loads(raw_record) if isinstance(raw_record, str) else raw_record
         if not isinstance(record, dict) or record.get("constraint_ref") not in exists_refs:
             continue
         detail = {

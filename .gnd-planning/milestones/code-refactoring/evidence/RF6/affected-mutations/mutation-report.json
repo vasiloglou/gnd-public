@@ -1,0 +1,44 @@
+{
+ "control_nodes": 6,
+ "killed": 6,
+ "rows": {
+  "M-HELP-identical-candidate-gnd-popvalidate-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-popvalidate-role-object-types": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.popvalidate:_role_object_types]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-assemble-role-object": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_role_object]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-poolfile-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.poolfile:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-resolver-is-true": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_resolver": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 6
+}

@@ -9,6 +9,7 @@ and two runs over one corpus reproduce byte-for-byte.
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import inspect
 import json
@@ -20,6 +21,7 @@ import pytest
 
 from gnd.cli import main
 from gnd.measure import report as measure_report
+from gnd.measure import service as patched_service
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GND_SRC = REPO_ROOT / "src" / "gnd"
@@ -76,11 +78,30 @@ _PROVIDER_CLIENTS = (
     "ollama",
 )
 
-_IMPORT_RE = re.compile(r"^\s*(?:import|from)\s+([\w.]+)", re.MULTILINE)
+def _imports(source: str, *, package: str | None = None) -> set[str]:
+    """All static import spellings, including local/lazy and from-import children."""
+    names: set[str] = set()
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Import):
+            names.update(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            base = node.module or ""
+            if node.level:
+                if package is None:
+                    continue  # External forbidden names cannot be relative imports.
+                parts = package.split(".")
+                if node.level > len(parts):
+                    raise ValueError("relative import climbs above its package")
+                prefix = ".".join(parts[:len(parts) - node.level + 1])
+                base = ".".join(part for part in (prefix, base) if part)
+            if base:
+                names.add(base)
+                names.update(base + "." + alias.name for alias in node.names if alias.name != "*")
+    return names
 
 
-def _imports(source: str) -> set[str]:
-    return set(_IMPORT_RE.findall(source))
+def _package(path: Path) -> str:
+    return ".".join(("gnd", *path.relative_to(GND_SRC).parent.parts))
 
 
 def _forbidden_hit(source: str, needles: tuple[str, ...]) -> list[str]:
@@ -90,7 +111,7 @@ def _forbidden_hit(source: str, needles: tuple[str, ...]) -> list[str]:
         for name in imported:
             if name == needle or name.startswith(needle + "."):
                 hits.append(needle)
-    return hits
+    return sorted(set(hits))
 
 
 # --------------------------------------------------------------------------- #
@@ -101,7 +122,7 @@ def _forbidden_hit(source: str, needles: tuple[str, ...]) -> list[str]:
 def test_measure_lane_imports_no_provider_or_network_module() -> None:
     """No module under ``src/gnd/measure/`` imports a provider or network module.
 
-    A regex-over-source scan, not a convention — it can fail. The two scans
+    An AST-over-source scan, not a convention — it can fail. The two scans
     are scoped to the METRICS lane ONLY. It deliberately
     does NOT scan ``src/gnd/synth/``: the owner's correction rescoped enforcement
     to the metrics lane, and the development (generation) lane may be live and
@@ -168,14 +189,7 @@ def _module_path(dotted: str) -> Path | None:
         return as_package
     # A `from gnd.a import name` where `name` is a symbol, not a submodule: fall
     # back to the package/module the symbols live in.
-    parent = GND_SRC.joinpath(*parts[:-1])
-    candidate = parent.with_suffix(".py")
-    if candidate.is_file():
-        return candidate
-    candidate = parent / "__init__.py"
-    if candidate.is_file():
-        return candidate
-    return None
+    return _module_path('.'.join(dotted.split('.')[:-1]))
 
 
 def test_no_network_library_is_reachable_from_the_measure_lane() -> None:
@@ -205,7 +219,7 @@ def test_no_network_library_is_reachable_from_the_measure_lane() -> None:
         hits = _forbidden_hit(source, _NETWORK_LIBS)
         if hits:
             offenders[str(path.relative_to(REPO_ROOT))] = hits
-        for dotted in _imports(source):
+        for dotted in _imports(source, package=_package(path)):
             if not dotted.startswith("gnd"):
                 continue
             target = _module_path(dotted)
@@ -269,7 +283,7 @@ def test_no_network_library_is_reachable_from_the_extraction_lane() -> None:
         hits = _forbidden_hit(source, _NETWORK_LIBS)
         if hits:
             offenders[str(path.relative_to(REPO_ROOT))] = hits
-        for dotted in _imports(source):
+        for dotted in _imports(source, package=_package(path)):
             if not dotted.startswith("gnd"):
                 continue
             target = _module_path(dotted)
@@ -316,7 +330,7 @@ def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
     ``src/gnd/exp/spec.py`` reds THIS scan while scans 1-4 stay green. Plan
     03-03 recorded the same mutation against ``src/gnd/codegen/emit.py``.
 
-    Self-check: the walk must LEAVE its root and reach ``src/gnd/model.py`` — the
+    Self-check: the walk must LEAVE its root and reach ``src/gnd/model/`` — the
     module the lane genuinely imports (``ValidationIssue`` and the untrusted-YAML
     event budget). A closure walk that never leaves its root is a scan over one
     directory wearing a closure's name (G-3).
@@ -350,7 +364,7 @@ def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
         hits = _forbidden_hit(source, _NETWORK_LIBS)
         if hits:
             offenders[str(path.relative_to(REPO_ROOT))] = hits
-        for dotted in _imports(source):
+        for dotted in _imports(source, package=_package(path)):
             if not dotted.startswith("gnd"):
                 continue
             target = _module_path(dotted)
@@ -364,8 +378,8 @@ def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
         f"Codegen and the experiment primitive derive from COMMITTED artifacts; "
         f"a live call in this closure makes a recorded conclusion irreproducible."
     )
-    assert (GND_SRC / "model.py") in seen, (
-        "the closure scan never reached src/gnd/model.py — the module the "
+    assert {GND_SRC / "model" / name for name in ("__init__.py", "_validation.py", "_operations.py")} <= seen, (
+        "the closure scan never reached src/gnd/model/ — the module the "
         "generation lane genuinely imports. The scan is not exercising its "
         "purpose; check that gnd.exp still sources ValidationIssue from gnd.model."
     )
@@ -392,6 +406,81 @@ def test_g01_g04_declared_network_edge_has_one_module_home() -> None:
         assert "gnd.declared_adapter" not in path.read_text(encoding="utf-8")
 
 
+def _markdown_sources(markdown: str) -> tuple[list[str], list[str]]:
+    """Extract strict Python bodies and prose outside any fenced block.
+
+    Track declared quote/list containers instead of stripping Python operators
+    from arbitrary body lines. The same reader owns fallback-line provenance.
+    """
+    snippets, prose = [], []
+    opening = None
+    body = []
+
+    def finish():
+        if opening is not None and opening[3]:
+            snippets.append('\n'.join(body))
+        body.clear()
+
+    for raw in markdown.splitlines():
+        line = raw
+        if opening is not None:
+            character, length, containers, python, indent = opening
+            for kind, width in containers:
+                if kind == 'quote':
+                    match = re.match(r' {0,3}>[ \t]?', line)
+                    if match is None:
+                        break
+                    line = line[match.end():]
+                elif not line.strip():
+                    line = ''
+                elif line.startswith(' ' * width):
+                    line = line[width:]
+                else:
+                    break
+            else:
+                if re.fullmatch(r' {0,3}' + re.escape(character) + '{' + str(length) + r',}[ \t]*', line):
+                    finish()
+                    opening = None
+                elif python:
+                    # Markdown removes up to the opener's indentation, while
+                    # nested Python indentation must survive AST parsing.
+                    remove = min(indent, len(line) - len(line.lstrip(' ')))
+                    body.append(line[remove:])
+                continue
+            # This line left the declared container; reconsider it as prose or
+            # a new opener, without losing an unclosed Python block.
+            finish()
+            opening = None
+            line = raw
+
+        containers = []
+        while True:
+            quote = re.match(r' {0,3}>[ \t]?', line)
+            item = re.match(r' {0,3}(?:[-+*]|[0-9]{1,9}[.)]) {1,4}(?=\S)', line)
+            match = quote or item
+            if match is None:
+                break
+            containers.append(('quote' if quote else 'list', match.end()))
+            line = line[match.end():]
+        match = re.fullmatch(r'( {0,3})(`{3,}|~{3,})([^\r\n]*)', line)
+        if match is None:
+            prose.append(raw)
+            continue
+        indent, fence, info = match.groups()
+        if fence[0] == '`' and '`' in info:
+            prose.append(raw)
+            continue
+        language = info.strip().split(maxsplit=1)
+        python = bool(language) and language[0].lower() in {'python', 'py', 'python3'}
+        opening = (fence[0], len(fence), containers, python, len(indent))
+    finish()
+    return snippets, prose
+
+
+def _python_fenced_sources(markdown: str) -> list[str]:
+    return _markdown_sources(markdown)[0]
+
+
 def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     """Both packaged workflow resources remain local, staged, and non-regenerative."""
 
@@ -403,7 +492,21 @@ def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     lowered = combined.lower()
 
     assert "http://" not in lowered and "https://" not in lowered
-    assert not _forbidden_hit(combined, _PROVIDER_CLIENTS + _NETWORK_LIBS)
+    # Prose is not Python source. Parse Python fences as full code and collect
+    # parseable import-bearing lines outside fences. Compound/nested imports
+    # share the exact strict AST grammar used by source scans.
+    snippets, prose = _markdown_sources(combined)
+    for line in prose:
+        candidate = line.strip()
+        if not re.search(r'\b(?:import|from)\b', candidate):
+            continue
+        try:
+            tree = ast.parse(candidate)
+        except SyntaxError:
+            continue  # Non-code prose; explicit Python fences remain strict.
+        if any(isinstance(node, (ast.Import, ast.ImportFrom)) for node in ast.walk(tree)):
+            snippets.append(candidate)
+    assert not any(_forbidden_hit(code, _PROVIDER_CLIENTS + _NETWORK_LIBS) for code in snippets)
     assert "gnd evolve preview" in lowered
     assert "gnd evolve apply" in lowered
     assert "gnd evolve finalize" in lowered
@@ -880,7 +983,6 @@ def test_a_constraint_with_no_verdict_anywhere_is_refused(corpus: Path, monkeypa
     Reproduced exactly as the reviewer did — drop every verdict whose ref ends
     ``constraints[0]``.
     """
-    import gnd.cli
     from gnd.checker import CheckReport
     from gnd.checker import check as real_check
 
@@ -891,7 +993,7 @@ def test_a_constraint_with_no_verdict_anywhere_is_refused(corpus: Path, monkeypa
             coverage=report.coverage,
         )
 
-    monkeypatch.setattr(gnd.cli, "check", check_dropping_constraint_zero)
+    monkeypatch.setattr(patched_service, "check", check_dropping_constraint_zero)
     code = main(["measure", str(MODEL), "--populations", str(corpus), "--format", "json"])
     assert code == 70, "an unmeasured constraint left every rate silently"
 
@@ -912,7 +1014,6 @@ def test_a_constraint_that_vanishes_from_SOME_populations_is_refused(
     Dropping the verdict on every SECOND population, so the constraint keeps a
     row (WR-01 stays green) on half the census.
     """
-    import gnd.cli
     from gnd.checker import CheckReport
     from gnd.checker import check as real_check
 
@@ -928,7 +1029,7 @@ def test_a_constraint_that_vanishes_from_SOME_populations_is_refused(
             coverage=report.coverage,
         )
 
-    monkeypatch.setattr(gnd.cli, "check", check_dropping_constraint_zero_on_alternate_populations)
+    monkeypatch.setattr(patched_service, "check", check_dropping_constraint_zero_on_alternate_populations)
     code = main(["measure", str(MODEL), "--populations", str(corpus), "--format", "json"])
     assert code == 70, "a rate over half the evidence reads exactly like a rate over all of it"
 

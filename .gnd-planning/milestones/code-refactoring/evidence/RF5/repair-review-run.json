@@ -1,0 +1,25 @@
+{
+  "command": [
+    "codex",
+    "exec",
+    "--ephemeral",
+    "--model",
+    "gpt-6-sol",
+    "--config",
+    "model_reasoning_effort=\"xhigh\"",
+    "--sandbox",
+    "read-only",
+    "--color",
+    "never",
+    "--skip-git-repo-check",
+    "--output-last-message",
+    "<temporary-root>/rf5-repair-review-output.md",
+    "-"
+  ],
+  "stdin": "evidence/RF5/repair-review-prompt.txt",
+  "exit": 0,
+  "source_head": "6a57d4e",
+  "findings": 0,
+  "review_round": "repair",
+  "total_review_rounds": 2
+}

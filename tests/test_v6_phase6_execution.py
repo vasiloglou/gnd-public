@@ -134,13 +134,17 @@ def test_a_registered_but_unexplained_consumer_event_invalidates_scope():
 
 
 def test_unreadable_producer_identity_withholds_evidence_but_preserves_scope(monkeypatch):
-    from gnd import assurance_evidence
+    from gnd.assurance import _wire as assurance_evidence
+
+    calls = []
 
     def unavailable():
+        calls.append(True)
         raise OSError("source unavailable")
 
     monkeypatch.setattr(assurance_evidence, "production_identity", unavailable)
     run = execution()
+    assert calls, "producer identity refusal patch did not reach the mint"
     scope = assurance.derive_assurance_scope(run, consumer="report")
     block = assurance.certify_result(run, scope=scope, evidence=assurance_evidence._capability())
     assert run.band == 0 and block.semantic_decision == "accept"

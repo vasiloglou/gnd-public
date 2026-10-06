@@ -1,0 +1,26 @@
+[
+  {
+    "gate": "source-base-capture",
+    "command": "<worktree>/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_session_pins.py::test_session_fresh[1] tests/test_rf1_session_pins.py::test_session_fresh[2] tests/test_rf1_session_pins.py::test_session_resume[1] tests/test_rf1_session_pins.py::test_session_resume[2] --tb=short",
+    "exit": 0,
+    "seconds": 4.53,
+    "source": "source base",
+    "capture": true
+  },
+  {
+    "gate": "source-base-replay",
+    "command": "<worktree>/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_session_pins.py::test_session_fresh[1] tests/test_rf1_session_pins.py::test_session_fresh[2] tests/test_rf1_session_pins.py::test_session_resume[1] tests/test_rf1_session_pins.py::test_session_resume[2] --tb=short",
+    "exit": 0,
+    "seconds": 5.03,
+    "source": "source base",
+    "capture": false
+  },
+  {
+    "gate": "G1-and-direct",
+    "command": "<worktree>/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py tests/test_rf2_instrument.py tests/test_rf2_digest_predicate.py tests/test_rf2_helpers.py tests/test_rf2_pre_move_pins.py tests/test_rf2_review_regressions.py --tb=short",
+    "exit": 0,
+    "seconds": 70.74,
+    "source": "current worktree",
+    "capture": false
+  }
+]

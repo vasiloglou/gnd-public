@@ -1,0 +1,32 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf1_layering.py tests/test_rf4_peripheral.py tests/test_rf4_premove.py tests/test_public_api.py tests/test_v61_phase2_api.py tests/test_public_exact_scope_guards.py tests/test_v62_phase4_assurance.py tests/test_v63_phase2_cache.py tests/test_report_json.py --tb=short -x
+........................................................................ [  6%]
+........................................................................ [ 13%]
+........................................................................ [ 20%]
+........................................................................ [ 26%]
+........................................................................ [ 33%]
+........................................................................ [ 40%]
+........................................................................ [ 46%]
+........................................................................ [ 53%]
+........................................................................ [ 60%]
+........................................................................ [ 66%]
+........................................................................ [ 73%]
+........................................................................ [ 80%]
+........................................................................ [ 86%]
+........................................................................ [ 93%]
+...................................................F
+=================================== FAILURES ===================================
+____________ test_population_warnings_are_forwarded_to_the_payload _____________
+tests/test_report_json.py:363: in test_population_warnings_are_forwarded_to_the_payload
+    assert payload["warnings"] == [warning.model_dump()], (
+E   AssertionError: population warnings must reach the payload, not be dropped
+E   assert [] == [{'path': '$....': 'warning'}]
+E     
+E     Right contains one more item: {'path': '$.population.model_id', 'message': 'synthetic warning', 'rule_id': 'population:test-only', 'severity': 'warning'}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_report_json.py::test_population_warnings_are_forwarded_to_the_payload
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 1059 passed in 36.08s
+
+Exit: 1

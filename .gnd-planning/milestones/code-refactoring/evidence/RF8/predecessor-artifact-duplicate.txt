@@ -1,0 +1,19 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q /private/tmp/rf8-base/tests/test_artifacts.py::test_no_module_redefines_a_promoted_artifact_primitive --tb=short
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_no_module_redefines_a_promoted_artifact_primitive ____________
+/private/tmp/rf8-base/tests/test_artifacts.py:1110: in test_no_module_redefines_a_promoted_artifact_primitive
+    assert findings == [], (
+E   AssertionError: promoted artifact primitives are redefined outside gnd/artifacts.py:
+E     safefs.py:522 redefines promoted primitive 'read_regular_file_bytes'
+E     Import them from gnd.artifacts instead of reimplementing them.
+E   assert ["safefs.py:5..._file_bytes'"] == []
+E     
+E     Left contains one more item: "safefs.py:522 redefines promoted primitive 'read_regular_file_bytes'"
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED ../../../../../../../private/tmp/rf8-base/tests/test_artifacts.py::test_no_module_redefines_a_promoted_artifact_primitive
+1 failed in 0.37s
+
+Exit: 1

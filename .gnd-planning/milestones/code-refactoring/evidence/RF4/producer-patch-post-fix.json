@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_v6_phase6_execution.py",
+    "tests/test_v6_phase6_runtime_identity.py",
+    "tests/test_public_assurance_feedback.py",
+    "tests/test_public_assurance_feedback_surfaces.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 0.6651251316070557
+}

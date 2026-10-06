@@ -1,0 +1,16 @@
+Retention note: absolute machine paths sanitized to placeholders; summaries and findings retained.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________________ test_session_fresh[1] _____________________________
+tests/test_rf1_session_pins.py:348: in test_session_fresh
+    assert_successor(f"v{version}-fresh", observed, captures, built, run, tmp_path,
+tests/support/rf2_session_pins.py:170: in assert_successor
+    assert answer == expected, f"RF2 successor changed: {key}"
+           ^^^^^^^^^^^^^^^^^^
+E   AssertionError: RF2 successor changed: v1-fresh
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4222/test_session_fresh_1_0/EXP-401-session/SPEC.md
+  declares Q1: Did the bounded session establish the contract?
+=========================== short test summary info ============================
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[1] - AssertionError...
+1 failed in 1.42s

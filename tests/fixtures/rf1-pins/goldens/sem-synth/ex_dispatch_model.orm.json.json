@@ -1,0 +1,18 @@
+{
+ "argv": [
+  "synth",
+  "src/gnd/examples/dispatch/model.orm.json",
+  "--class",
+  "all",
+  "--seed",
+  "0",
+  "--out",
+  "<tmp>/synth",
+  "--format",
+  "json"
+ ],
+ "exit": 3,
+ "files": null,
+ "stderr": "",
+ "stdout": "{\"command\": \"synth\", \"exit_code\": 3, \"error\": \"src/gnd/examples/dispatch/model.orm.json: model validation failed: $: synth does not support temporal models in Phase 1\"}\n"
+}

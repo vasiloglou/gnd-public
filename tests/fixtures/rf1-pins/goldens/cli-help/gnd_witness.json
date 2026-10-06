@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd witness [-h] --targets TARGETS [--reference-root REFERENCE_ROOT]\n                   [--raw] [--out OUT]\n                   model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --targets TARGETS\n  --reference-root REFERENCE_ROOT\n  --raw                 explicitly expose replayable raw values\n  --out OUT             create a new raw certificate; requires --raw\n",
+ "path": "gnd witness"
+}

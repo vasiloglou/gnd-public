@@ -1,0 +1,26 @@
+Edited evidence: absolute worktree/baseline paths sanitized.
+Exact archived26dbff6 source with unchanged current RF1 test; inherited desktop environment.
+Command: PYTHONDONTWRITEBYTECODE=1 PATH=<worktree>/.venv/bin:$PATH PYTHONPATH=<baseline>/src:<worktree>/tests <worktree>/.venv/bin/python -m pytest -q <worktree>/tests/test_rf1_session_pins.py::test_session_fresh[1] --tb=short -p no:cacheprovider
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________________ test_session_fresh[1] _____________________________
+tests/test_rf1_session_pins.py:349: in test_session_fresh
+    assert_successor(f"v{version}-fresh", observed, captures, built, run, tmp_path,
+tests/support/rf2_session_pins.py:165: in assert_successor
+    assert answer == expected, f"RF2 successor changed: {key}"
+           ^^^^^^^^^^^^^^^^^^
+E   AssertionError: RF2 successor changed: v1-fresh
+----------------------------- Captured stdout call -----------------------------
+CREATED <pytest-temp>/pytest-4539/test_session_fresh_1_0/EXP-401-session/SPEC.md
+  declares Q1: Did the bounded session establish the contract?
+=========================== short test summary info ============================
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[1] - AssertionError...
+1 failed in 1.81s
+
+Exit:1
+
+Same archived source and command; remove only LANG, LC_ALL, TERM:
+.                                                                        [100%]
+1 passed in 1.26s
+
+Exit:0

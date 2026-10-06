@@ -1,0 +1,322 @@
+{
+  "base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+  "status": "pre-commit budget; commit comparison required",
+  "measurements": {
+    "production_files": 32,
+    "production_moved_lines": 78,
+    "production_added_lines": 236,
+    "handwritten_test_added_lines": 718,
+    "non_evidence_files": 52,
+    "new_golden_bytes": 1114331
+  },
+  "ceilings": {
+    "production_files": 40,
+    "production_moved_lines": 350,
+    "production_added_lines": 300,
+    "handwritten_test_added_lines": 1000,
+    "non_evidence_files": 70,
+    "new_golden_bytes": 2097152
+  },
+  "production_compare": {
+    "schema_version": 1,
+    "base": "f5a83186f7c2215ac2b2afb0a010c2294eaa433a",
+    "head": "uncommitted worktree; final commit comparison required",
+    "files": [
+      {
+        "path": "src/gnd/admission_validation.py",
+        "added": 2,
+        "removed": 2,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/api.py",
+        "added": 4,
+        "removed": 4,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/artifacts.py",
+        "added": 50,
+        "removed": 2,
+        "moved_in": 24,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/assurance.py",
+        "added": 3,
+        "removed": 6,
+        "moved_in": 0,
+        "moved_out": 3
+      },
+      {
+        "path": "src/gnd/assurance_evidence.py",
+        "added": 1,
+        "removed": 3,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/cli.py",
+        "added": 15,
+        "removed": 48,
+        "moved_in": 0,
+        "moved_out": 43
+      },
+      {
+        "path": "src/gnd/conformance/currency.py",
+        "added": 5,
+        "removed": 2,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/conformance/report.py",
+        "added": 1,
+        "removed": 9,
+        "moved_in": 0,
+        "moved_out": 7
+      },
+      {
+        "path": "src/gnd/conformance/service.py",
+        "added": 10,
+        "removed": 6,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/coverage.py",
+        "added": 6,
+        "removed": 6,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/declared_adapter.py",
+        "added": 3,
+        "removed": 13,
+        "moved_in": 0,
+        "moved_out": 7
+      },
+      {
+        "path": "src/gnd/diff.py",
+        "added": 1,
+        "removed": 3,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/exits.py",
+        "added": 66,
+        "removed": 3,
+        "moved_in": 43,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/exp/adapter_policy.py",
+        "added": 3,
+        "removed": 11,
+        "moved_in": 0,
+        "moved_out": 6
+      },
+      {
+        "path": "src/gnd/exp/conclusions.py",
+        "added": 2,
+        "removed": 9,
+        "moved_in": 0,
+        "moved_out": 7
+      },
+      {
+        "path": "src/gnd/exp/session_eval.py",
+        "added": 9,
+        "removed": 13,
+        "moved_in": 1,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/exp/session_patch.py",
+        "added": 2,
+        "removed": 6,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/exp/session_store.py",
+        "added": 6,
+        "removed": 12,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/exp/spec.py",
+        "added": 2,
+        "removed": 9,
+        "moved_in": 0,
+        "moved_out": 1
+      },
+      {
+        "path": "src/gnd/extract/manifest.py",
+        "added": 1,
+        "removed": 11,
+        "moved_in": 0,
+        "moved_out": 4
+      },
+      {
+        "path": "src/gnd/fidelity/report.py",
+        "added": 1,
+        "removed": 9,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/install.py",
+        "added": 1,
+        "removed": 8,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/measure/report.py",
+        "added": 2,
+        "removed": 1,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/model.py",
+        "added": 14,
+        "removed": 1,
+        "moved_in": 10,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/recovery/report.py",
+        "added": 3,
+        "removed": 1,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/recovery/verify.py",
+        "added": 1,
+        "removed": 3,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/review/request.py",
+        "added": 1,
+        "removed": 7,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/solve.py",
+        "added": 2,
+        "removed": 1,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/synth/assemble.py",
+        "added": 8,
+        "removed": 7,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/synth/mutate.py",
+        "added": 2,
+        "removed": 1,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/synth/provenance.py",
+        "added": 4,
+        "removed": 1,
+        "moved_in": 0,
+        "moved_out": 0
+      },
+      {
+        "path": "src/gnd/transition.py",
+        "added": 5,
+        "removed": 2,
+        "moved_in": 0,
+        "moved_out": 0
+      }
+    ],
+    "totals": {
+      "added": 236,
+      "removed": 220,
+      "moved_in": 78,
+      "moved_out": 78
+    }
+  },
+  "test_added_lines": {
+    "tests/test_rf2_instrument.py": 115,
+    "tests/test_rf2_helpers.py": 247,
+    "tests/test_rf2_review_regressions.py": 64,
+    "tests/test_rf1_cli_pins.py": 3,
+    "tests/test_conformance_payload.py": 1,
+    "tests/support/rf2_session_pins.py": 164,
+    "tests/test_rf2_digest_predicate.py": 28,
+    "tests/test_rf1_session_pins.py": 14,
+    "tests/test_rf2_pre_move_pins.py": 82
+  },
+  "non_evidence_paths": [
+    ".gnd-planning/milestones/code-refactoring/notes/phase-RF2-codex-review-repair.md",
+    ".gnd-planning/milestones/code-refactoring/notes/phase-RF2-codex-review.md",
+    ".gnd-planning/milestones/code-refactoring/notes/phase-RF2-instrument-amendment.md",
+    ".gnd-planning/milestones/code-refactoring/notes/phase-RF2-spec.md",
+    ".gnd-planning/milestones/code-refactoring/notes/shim-inventory.md",
+    ".gnd-planning/milestones/public-launch/migration/b3-files.json",
+    "src/gnd/admission_validation.py",
+    "src/gnd/api.py",
+    "src/gnd/artifacts.py",
+    "src/gnd/assurance.py",
+    "src/gnd/assurance_evidence.py",
+    "src/gnd/cli.py",
+    "src/gnd/conformance/currency.py",
+    "src/gnd/conformance/report.py",
+    "src/gnd/conformance/service.py",
+    "src/gnd/coverage.py",
+    "src/gnd/declared_adapter.py",
+    "src/gnd/diff.py",
+    "src/gnd/exits.py",
+    "src/gnd/exp/adapter_policy.py",
+    "src/gnd/exp/conclusions.py",
+    "src/gnd/exp/session_eval.py",
+    "src/gnd/exp/session_patch.py",
+    "src/gnd/exp/session_store.py",
+    "src/gnd/exp/spec.py",
+    "src/gnd/extract/manifest.py",
+    "src/gnd/fidelity/report.py",
+    "src/gnd/install.py",
+    "src/gnd/measure/report.py",
+    "src/gnd/model.py",
+    "src/gnd/recovery/report.py",
+    "src/gnd/recovery/verify.py",
+    "src/gnd/review/request.py",
+    "src/gnd/solve.py",
+    "src/gnd/synth/assemble.py",
+    "src/gnd/synth/mutate.py",
+    "src/gnd/synth/provenance.py",
+    "src/gnd/transition.py",
+    "tests/fixtures/rf1-pins/mutations.json",
+    "tests/fixtures/rf2-pins/group-bodies.json",
+    "tests/fixtures/rf2-pins/pre-move.json",
+    "tests/fixtures/rf2-pins/session-successors.json",
+    "tests/fixtures/rf2-pins/variant-encoders.json",
+    "tests/support/rf2_session_pins.py",
+    "tests/test_conformance_payload.py",
+    "tests/test_rf1_cli_pins.py",
+    "tests/test_rf1_session_pins.py",
+    "tests/test_rf2_digest_predicate.py",
+    "tests/test_rf2_helpers.py",
+    "tests/test_rf2_instrument.py",
+    "tests/test_rf2_pre_move_pins.py",
+    "tests/test_rf2_review_regressions.py"
+  ]
+}

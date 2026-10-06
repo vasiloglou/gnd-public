@@ -1,0 +1,46 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "verifier payload invalid: payload JSON root must be an object",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "deep": {
+   "message": "verifier payload invalid: payload is not one strict JSON document: JSON depth exceeds cap",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "duplicate-key": {
+   "message": "verifier payload invalid: payload is not one strict JSON document: duplicate JSON key 'a'",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "fenced": {
+   "message": "verifier payload invalid: payload is not one strict JSON document: Expecting value: line 1 column 1 (char 0)",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "invalid-utf8": {
+   "message": "verifier payload invalid: payload is not UTF-8: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "nan": {
+   "message": "verifier payload invalid: payload is not one strict JSON document: non-finite JSON number 'NaN' is forbidden",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "object": {
+   "ok": {
+    "a": 1
+   }
+  },
+  "over-cap": {
+   "message": "verifier payload invalid: payload is 10485768 bytes, over the 10485760-byte verifier cap",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "overflow": {
+   "message": "verifier payload invalid: payload is not one strict JSON document: nonfinite JSON number",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  },
+  "trailing-data": {
+   "message": "verifier payload invalid: payload contains trailing bytes after its JSON document",
+   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+  }
+ },
+ "site": "strict_json|gnd.exp.session_eval:_strict_object"
+}

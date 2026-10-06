@@ -1,0 +1,104 @@
+{
+ "control_nodes": 16,
+ "killed": 16,
+ "rows": {
+  "M-CLI-exit-drift": {
+   "nodes": {
+    "tests/test_rf1_cli_pins.py::test_cli_exit_map": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-conformance-report-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.conformance.report:canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-coverage-canonical-payload": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.coverage:canonical_payload]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-fidelity-report-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.fidelity.report:canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-conformance-currency-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.conformance.currency:model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-synth-provenance-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.synth.provenance:model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-model-digest-gnd-transition-model-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[model_digest|gnd.transition:model_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-assurance-evidence-sha": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.assurance_evidence:_sha]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-diff-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.diff:_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-install-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.install:_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-recovery-verify-sha256": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.recovery.verify:_sha256]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-declared-adapter-bundle-rows": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.declared_adapter:_bundle_rows]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-review-request-reject-duplicate-object-pairs": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.request:_reject_duplicate_object_pairs]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-conclusions-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.conclusions:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-exp-spec-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.exp.spec:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-validation-issues-gnd-extract-manifest-validation-issues": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.extract.manifest:_validation_issues]": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 16
+}

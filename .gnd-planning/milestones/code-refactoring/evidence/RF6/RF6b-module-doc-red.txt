@@ -1,0 +1,16 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_packages.py::test_original_module_documentation_is_preserved --tb=short
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_original_module_documentation_is_preserved ________________
+tests/test_rf6_packages.py:179: in test_original_module_documentation_is_preserved
+    assert importlib.import_module(name).__doc__ == doc
+E   AssertionError: assert None == 'Model loading with two-layer validation.\n\nLayer 1: jsonschema Draft 2020-12 meta-schema (structure, enums, discrimi...content is the\nfixed, linear-time placeholder regex below; no regex is ever taken FROM the\ndocument and evaluated.\n'
+E    +  where None = <module 'gnd.model' from '<worktree>/src/gnd/model/__init__.py'>.__doc__
+E    +    where <module 'gnd.model' from '<worktree>/src/gnd/model/__init__.py'> = <function import_module at 0x104ceca90>('gnd.model')
+E    +      where <function import_module at 0x104ceca90> = importlib.import_module
+=========================== short test summary info ============================
+FAILED tests/test_rf6_packages.py::test_original_module_documentation_is_preserved
+1 failed in 0.07s
+
+Exit: 1

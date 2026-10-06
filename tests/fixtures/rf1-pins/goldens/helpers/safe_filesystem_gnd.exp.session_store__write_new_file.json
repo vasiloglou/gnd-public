@@ -1,0 +1,45 @@
+{
+ "observed": {
+  "d": {
+   "outcome": {
+    "message": "[Errno 17] File exists: 'd'",
+    "raises": "builtins.FileExistsError"
+   },
+   "target_after": null
+  },
+  "d/existing": {
+   "outcome": {
+    "message": "[Errno 17] File exists: 'existing'",
+    "raises": "builtins.FileExistsError"
+   },
+   "target_after": "old\n"
+  },
+  "d/new": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  },
+  "link_file": {
+   "outcome": {
+    "message": "[Errno 17] File exists: 'link_file'",
+    "raises": "builtins.FileExistsError"
+   },
+   "target_after": null
+  },
+  "link_to_d/new": {
+   "outcome": {
+    "message": "evidence directory component 'link_to_d' is not real",
+    "raises": "builtins.ValueError"
+   },
+   "target_after": null
+  },
+  "missing/new": {
+   "outcome": {
+    "ok": null
+   },
+   "target_after": "new\n"
+  }
+ },
+ "site": "safe_filesystem|gnd.exp.session_store:_write_new_file"
+}

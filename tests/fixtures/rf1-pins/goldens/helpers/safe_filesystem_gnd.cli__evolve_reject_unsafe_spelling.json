@@ -1,0 +1,66 @@
+{
+ "observed": {
+  "absolute": {
+   "ok": null
+  },
+  "backslash": {
+   "ok": null
+  },
+  "backslash-parent": {
+   "message": "rf1 contains a refused '..' component",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "dot": {
+   "ok": null
+  },
+  "dot-slash": {
+   "ok": null
+  },
+  "dotdot": {
+   "message": "rf1 contains a refused '..' component",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "double-slash": {
+   "ok": null
+  },
+  "drive-absolute": {
+   "ok": null
+  },
+  "drive-relative": {
+   "message": "rf1 is a refused drive-relative path",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "empty": {
+   "message": "rf1 is empty or contains a NUL byte",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "inner-parent": {
+   "message": "rf1 contains a refused '..' component",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "nested": {
+   "ok": null
+  },
+  "non-ascii": {
+   "ok": null
+  },
+  "nul": {
+   "message": "rf1 is empty or contains a NUL byte",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "parent": {
+   "message": "rf1 contains a refused '..' component",
+   "raises": "gnd.cli._EvolutionCLIError"
+  },
+  "plain": {
+   "ok": null
+  },
+  "tilde": {
+   "ok": null
+  },
+  "trailing-slash": {
+   "ok": null
+  }
+ },
+ "site": "safe_filesystem|gnd.cli:_evolve_reject_unsafe_spelling"
+}

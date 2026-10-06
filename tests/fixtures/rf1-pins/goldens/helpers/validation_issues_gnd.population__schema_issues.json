@@ -1,0 +1,58 @@
+{
+ "observed": {
+  "empty": {
+   "ok": [
+    {
+     "data": {
+      "message": "'population' is a required property",
+      "path": "$",
+      "rule_id": "jsonschema:required",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    },
+    {
+     "data": {
+      "message": "'facts' is a required property",
+      "path": "$",
+      "rule_id": "jsonschema:required",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    }
+   ]
+  },
+  "wrong-types": {
+   "ok": [
+    {
+     "data": {
+      "message": "'population' is a required property",
+      "path": "$",
+      "rule_id": "jsonschema:required",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    },
+    {
+     "data": {
+      "message": "Additional properties are not allowed ('model_id' was unexpected)",
+      "path": "$",
+      "rule_id": "jsonschema:additionalProperties",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    },
+    {
+     "data": {
+      "message": "'x' is not of type 'object'",
+      "path": "$.facts",
+      "rule_id": "jsonschema:type",
+      "severity": "error"
+     },
+     "model": "ValidationIssue"
+    }
+   ]
+  }
+ },
+ "site": "validation_issues|gnd.population:_schema_issues"
+}

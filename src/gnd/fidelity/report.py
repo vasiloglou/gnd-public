@@ -36,12 +36,14 @@ rate; ``gnd fidelity`` emits rates and never a verdict, a band or an
 
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from collections.abc import Mapping, Sequence
 from importlib.resources import files
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
+from gnd.artifacts import canonical_report_text as canonical  # noqa: F401 -- compatibility
 from gnd.fidelity.match import FactTypeMatch
 from gnd.model_identity import stable_model_identifier
 
@@ -147,18 +149,9 @@ def load_fidelity_schema() -> dict[str, Any]:
     schema_text = files("gnd").joinpath("fidelity.schema.json").read_text(
         encoding="utf-8"
     )
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
-def canonical(payload: Mapping[str, Any]) -> str:
-    """The payload as canonical JSON: sorted keys, no NaN, stable separators.
-
-    ``sort_keys`` fixes every object's key order and every list is pre-sorted by
-    its builder, so two runs over one case set are byte-identical.
-    """
-    return json.dumps(
-        payload, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False
-    )
 
 
 # `stable_model_identifier` moved to `gnd.model_identity` in v5.1 Phase 1

@@ -1,0 +1,13 @@
+{
+ "argv": [
+  "check",
+  "tests/fixtures/checker/setfam.orm.yaml",
+  "--populations",
+  "<tmp>/batch",
+  "--format",
+  "json"
+ ],
+ "exit": 1,
+ "stderr": "",
+ "stdout": "{\"command\":\"check-batch\",\"issues\":[],\"model\":{\"filename\":\"setfam.orm.yaml\",\"sha256\":\"36e0b7de814162e137c9ae29871d1ac35327629cba3318c1465f212d545e44c9\"},\"rows\":[{\"counts\":{\"fail\":0,\"pass\":13,\"unchecked\":0,\"vacuous\":1,\"warning\":0},\"exit_code\":2,\"failing_constraints\":[],\"issues\":[],\"outcome\":\"inadequate\",\"population\":\"population.coverage_omission.yaml\"},{\"counts\":{\"fail\":0,\"pass\":0,\"unchecked\":0,\"vacuous\":14,\"warning\":0},\"exit_code\":2,\"failing_constraints\":[],\"issues\":[],\"outcome\":\"inadequate\",\"population\":\"population.covers_none.yaml\"},{\"counts\":{\"fail\":0,\"pass\":0,\"unchecked\":0,\"vacuous\":14,\"warning\":0},\"exit_code\":2,\"failing_constraints\":[],\"issues\":[],\"outcome\":\"inadequate\",\"population\":\"population.empty.yaml\"},{\"counts\":{\"fail\":1,\"pass\":1,\"unchecked\":0,\"vacuous\":12,\"warning\":0},\"exit_code\":1,\"failing_constraints\":[\"fact_types[booking_by_person].constraints[0]\"],\"issues\":[],\"outcome\":\"violated\",\"population\":\"population.precedence.yaml\"},{\"counts\":{\"fail\":11,\"pass\":3,\"unchecked\":0,\"vacuous\":0,\"warning\":0},\"exit_code\":1,\"failing_constraints\":[\"fact_types[person_takes_course].constraints[0]\",\"constraints[0]\",\"constraints[1]\",\"constraints[2]\",\"constraints[3]\",\"constraints[4]\",\"constraints[5]\",\"constraints[6]\",\"constraints[7]\",\"constraints[8]\",\"constraints[9]\"],\"issues\":[],\"outcome\":\"violated\",\"population\":\"population.setfam_fail.yaml\"},{\"counts\":{\"fail\":0,\"pass\":14,\"unchecked\":0,\"vacuous\":0,\"warning\":0},\"exit_code\":0,\"failing_constraints\":[],\"issues\":[],\"outcome\":\"accepted\",\"population\":\"population.setfam_pass.yaml\"}],\"schema_version\":1,\"summary\":{\"aggregate_exit\":1,\"outcomes\":{\"accepted\":1,\"ill_formed\":0,\"inadequate\":3,\"indeterminate\":0,\"violated\":2},\"projections\":6},\"tool\":\"gnd\"}\n"
+}

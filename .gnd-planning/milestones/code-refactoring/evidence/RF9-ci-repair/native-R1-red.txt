@@ -1,0 +1,22 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_review_titled_python_fence_detects_multiline_import[```python title=example.py] _
+tests/test_rf9_ci_repairs.py:255: in test_review_titled_python_fence_detects_multiline_import
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_review_titled_python_fence_detects_multiline_import[~~~python title=example.py] _
+tests/test_rf9_ci_repairs.py:255: in test_review_titled_python_fence_detects_multiline_import
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_review_titled_python_fence_detects_multiline_import[    ignored\n   ````PYTHON title=example.py] _
+tests/test_rf9_ci_repairs.py:255: in test_review_titled_python_fence_detects_multiline_import
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf9_ci_repairs.py::test_review_titled_python_fence_detects_multiline_import[```python title=example.py]
+FAILED tests/test_rf9_ci_repairs.py::test_review_titled_python_fence_detects_multiline_import[~~~python title=example.py]
+FAILED tests/test_rf9_ci_repairs.py::test_review_titled_python_fence_detects_multiline_import[    ignored\n   ````PYTHON title=example.py]
+3 failed in 0.22s

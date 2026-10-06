@@ -1,0 +1,978 @@
+[
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance:_sorted_set]"
+      ],
+      "file": "src/gnd/assurance.py",
+      "id": "M-HELP-canonical-json-gnd-assurance-sorted-set",
+      "new": "def _sorted_set(values: tuple[str, ...]) -> tuple[str, ...]:\n    raise RuntimeError(\"rf1-mutant\")\n    return tuple(sorted(set(values)))\n",
+      "old": "def _sorted_set(values: tuple[str, ...]) -> tuple[str, ...]:\n    return tuple(sorted(set(values)))\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance:_sorted_set]"
+      ],
+      "file": "src/gnd/assurance/core.py",
+      "id": "M-HELP-canonical-json-gnd-assurance-sorted-set",
+      "new": "def _sorted_set(values: tuple[str, ...]) -> tuple[str, ...]:\n    raise RuntimeError(\"rf1-mutant\")\n    return tuple(sorted(set(values)))\n",
+      "old": "def _sorted_set(values: tuple[str, ...]) -> tuple[str, ...]:\n    return tuple(sorted(set(values)))\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance_inheritance:_canonical]"
+      ],
+      "file": "src/gnd/assurance_inheritance.py",
+      "id": "M-HELP-canonical-json-gnd-assurance-inheritance-canonical",
+      "new": "def _canonical(value):\n    raise RuntimeError(\"rf1-mutant\")\n    return json.dumps(\n",
+      "old": "def _canonical(value):\n    return json.dumps(\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance_inheritance:_canonical]"
+      ],
+      "file": "src/gnd/assurance/inheritance.py",
+      "id": "M-HELP-canonical-json-gnd-assurance-inheritance-canonical",
+      "new": "def _canonical(value):\n    raise RuntimeError(\"rf1-mutant\")\n    return json.dumps(\n",
+      "old": "def _canonical(value):\n    return json.dumps(\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_object_types_by_id]"
+      ],
+      "file": "src/gnd/synth/assemble.py",
+      "id": "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id",
+      "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n",
+      "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_object_types_by_id]"
+      ],
+      "file": "src/gnd/synth/oracle/constructive.py",
+      "id": "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id",
+      "new": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n",
+      "old": "def _object_types_by_id(model: Model) -> dict[str, dict[str, Any]]:\n    return {str(ot.get(\"id\")): ot for ot in model.object_types or [] if ot.get(\"id\") is not None}\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_role_object]"
+      ],
+      "file": "src/gnd/synth/assemble.py",
+      "id": "M-HELP-identical-candidate-gnd-synth-assemble-role-object",
+      "new": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+      "old": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    return {\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_role_object]"
+      ],
+      "file": "src/gnd/synth/oracle/constructive.py",
+      "id": "M-HELP-identical-candidate-gnd-synth-assemble-role-object",
+      "new": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    raise RuntimeError(\"rf1-mutant\")\n    return {\n",
+      "old": "def _role_object(model: Model) -> dict[str, dict[str, str]]:\n    return {\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_atomic_write]"
+      ],
+      "file": "src/gnd/install.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-atomic-write",
+      "new": "def _atomic_write(\n    root: Path | int,\n    relpath: str,\n    data: bytes,\n    *,\n    expected: LeafIdentity | None = None,\n) -> None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Write ``data`` to ``root / relpath`` atomically within one filesystem.\n",
+      "old": "def _atomic_write(\n    root: Path | int,\n    relpath: str,\n    data: bytes,\n    *,\n    expected: LeafIdentity | None = None,\n) -> None:\n    \"\"\"Write ``data`` to ``root / relpath`` atomically within one filesystem.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_atomic_write]"
+      ],
+      "file": "src/gnd/safefs.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-atomic-write",
+      "new": "def _atomic_write(\n    root: Path | int,\n    relpath: str,\n    data: bytes,\n    *,\n    expected: LeafIdentity | None = None,\n) -> None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Write ``data`` to ``root / relpath`` atomically within one filesystem.\n",
+      "old": "def _atomic_write(\n    root: Path | int,\n    relpath: str,\n    data: bytes,\n    *,\n    expected: LeafIdentity | None = None,\n) -> None:\n    \"\"\"Write ``data`` to ``root / relpath`` atomically within one filesystem.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend]"
+      ],
+      "file": "src/gnd/install.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-descend",
+      "new": "def _descend(root: Path | int, parts: tuple[str, ...], *, create: bool) -> int:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"A descriptor for ``root / *parts``, refusing to follow any symlink below ``root``.\n",
+      "old": "def _descend(root: Path | int, parts: tuple[str, ...], *, create: bool) -> int:\n    \"\"\"A descriptor for ``root / *parts``, refusing to follow any symlink below ``root``.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend]"
+      ],
+      "file": "src/gnd/safefs.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-descend",
+      "new": "def _descend(root: Path | int, parts: tuple[str, ...], *, create: bool) -> int:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"A descriptor for ``root / *parts``, refusing to follow any symlink below ``root``.\n",
+      "old": "def _descend(root: Path | int, parts: tuple[str, ...], *, create: bool) -> int:\n    \"\"\"A descriptor for ``root / *parts``, refusing to follow any symlink below ``root``.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend[create]]"
+      ],
+      "file": "src/gnd/install.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-descend-create",
+      "new": "            if not create:\n                with suppress(FileExistsError):\n",
+      "old": "            if create:\n                with suppress(FileExistsError):\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend[create]]"
+      ],
+      "file": "src/gnd/safefs.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-descend-create",
+      "new": "            if not create:\n                with suppress(FileExistsError):\n",
+      "old": "            if create:\n                with suppress(FileExistsError):\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_reject_unsafe_relpath]"
+      ],
+      "file": "src/gnd/install.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-reject-unsafe-relpath",
+      "new": "def _reject_unsafe_relpath(relpath: str, *, source: str) -> PurePosixPath:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"String-level half of the guard: reject anything that is not a plain\n",
+      "old": "def _reject_unsafe_relpath(relpath: str, *, source: str) -> PurePosixPath:\n    \"\"\"String-level half of the guard: reject anything that is not a plain\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_reject_unsafe_relpath]"
+      ],
+      "file": "src/gnd/safefs.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-reject-unsafe-relpath",
+      "new": "def _reject_unsafe_relpath(relpath: str, *, source: str) -> PurePosixPath:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"String-level half of the guard: reject anything that is not a plain\n",
+      "old": "def _reject_unsafe_relpath(relpath: str, *, source: str) -> PurePosixPath:\n    \"\"\"String-level half of the guard: reject anything that is not a plain\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:safe_destination]"
+      ],
+      "file": "src/gnd/install.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-safe-destination",
+      "new": "def safe_destination(root: Path, relpath: str) -> Path:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The destination ``root / relpath``, or :class:`InstallPathError`.\n",
+      "old": "def safe_destination(root: Path, relpath: str) -> Path:\n    \"\"\"The destination ``root / relpath``, or :class:`InstallPathError`.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:safe_destination]"
+      ],
+      "file": "src/gnd/safefs.py",
+      "id": "M-HELP-safe-filesystem-gnd-install-safe-destination",
+      "new": "def safe_destination(root: Path, relpath: str) -> Path:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The destination ``root / relpath``, or :class:`InstallPathError`.\n",
+      "old": "def safe_destination(root: Path, relpath: str) -> Path:\n    \"\"\"The destination ``root / relpath``, or :class:`InstallPathError`.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_datetime_site[synth.assemble._instant_pair]"
+      ],
+      "file": "src/gnd/synth/assemble.py",
+      "id": "M-SEM-datetime-synth-assemble-_instant_pair",
+      "new": "def _instant_pair(value: str, bound: str, primitive: str | None) -> tuple[Any, Any] | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Two ISO-8601 strings as instants, or ``None`` when they do not compare.\n",
+      "old": "def _instant_pair(value: str, bound: str, primitive: str | None) -> tuple[Any, Any] | None:\n    \"\"\"Two ISO-8601 strings as instants, or ``None`` when they do not compare.\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_datetime_site[synth.assemble._instant_pair]"
+      ],
+      "file": "src/gnd/synth/oracle/constructive.py",
+      "id": "M-SEM-datetime-synth-assemble-_instant_pair",
+      "new": "def _instant_pair(value: str, bound: str, primitive: str | None) -> tuple[Any, Any] | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Two ISO-8601 strings as instants, or ``None`` when they do not compare.\n",
+      "old": "def _instant_pair(value: str, bound: str, primitive: str | None) -> tuple[Any, Any] | None:\n    \"\"\"Two ISO-8601 strings as instants, or ``None`` when they do not compare.\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-pass-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-pass-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-fail-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-fail-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-pass-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-pass-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-fail-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-fail-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-pass-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-pass-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-fail-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-fail-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-empty-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-empty-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-coverage-omission-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-coverage-omission-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-covers-none-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-covers-none-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-precedence-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-precedence-yaml",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/seed.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-seed-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/seed.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-seed-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/adult-for-minor.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-adult-for-minor-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/adult-for-minor.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-adult-for-minor-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/already-read.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-already-read-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/already-read.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-already-read-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/genre-warning.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-genre-warning-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/genre-warning.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-genre-warning-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/complete.orm.yaml|ex/bookrec/complete.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-bookrec-complete-orm-yaml-ex-bookrec-complete-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/complete.orm.yaml|ex/bookrec/complete.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-bookrec-complete-orm-yaml-ex-bookrec-complete-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/seed.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-seed-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/seed.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-seed-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/approved.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-approved-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/approved.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-approved-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-chain.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-chain-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-chain.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-chain-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-meal.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-meal-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-meal.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-meal-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency-missing.population.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-missing-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency-missing.population.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-missing-population-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/seed.pop.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-seed-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/seed.pop.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-seed-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/repaired.pop.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-repaired-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/repaired.pop.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-repaired-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/seed.pop.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-release-model-orm-json-ex-release-seed-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/seed.pop.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-release-model-orm-json-ex-release-seed-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/repaired.pop.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-test-check-ex-release-model-orm-json-ex-release-repaired-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/repaired.pop.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-test-check-ex-release-model-orm-json-ex-release-repaired-pop-json",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check_transition",
+        "tests/test_rf1_semantic_pins.py::test_check_anchored"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-check-arms",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_check_transition",
+        "tests/test_rf1_semantic_pins.py::test_check_anchored"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-check-arms",
+      "new": "\"acceptance_ready\": exit_code != 0,",
+      "old": "\"acceptance_ready\": exit_code == 0,"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_assurance_blocks"
+      ],
+      "file": "src/gnd/assurance.py",
+      "id": "M-SEM-assurance-block",
+      "new": "result = {\"schema_version\": 2, **asdict(self)}",
+      "old": "result = {\"schema_version\": 1, **asdict(self)}"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_assurance_blocks"
+      ],
+      "file": "src/gnd/assurance/core.py",
+      "id": "M-SEM-assurance-block",
+      "new": "result = {\"schema_version\": 2, **asdict(self)}",
+      "old": "result = {\"schema_version\": 1, **asdict(self)}"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_assurance_inheritance_comparison"
+      ],
+      "file": "src/gnd/assurance_inheritance.py",
+      "id": "M-SEM-inheritance-compare",
+      "new": "def compare_observations(family, prior, observations, mutations, read_document):\n    raise RuntimeError(\"rf1-mutant\")\n    if (len(observations), len(mutations)) != COUNTS[family]:\n",
+      "old": "def compare_observations(family, prior, observations, mutations, read_document):\n    if (len(observations), len(mutations)) != COUNTS[family]:\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_assurance_inheritance_comparison"
+      ],
+      "file": "src/gnd/assurance/inheritance.py",
+      "id": "M-SEM-inheritance-compare",
+      "new": "def compare_observations(family, prior, observations, mutations, read_document):\n    raise RuntimeError(\"rf1-mutant\")\n    if (len(observations), len(mutations)) != COUNTS[family]:\n",
+      "old": "def compare_observations(family, prior, observations, mutations, read_document):\n    if (len(observations), len(mutations)) != COUNTS[family]:\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_predict_violations[misc.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_predict_violations[ring.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_predict_violations[setfam.orm.yaml]"
+      ],
+      "file": "src/gnd/synth/mutate.py",
+      "id": "M-SEM-oracle-expected-state",
+      "new": "def expected_state(\n    constraint: dict[str, Any],\n    ft: dict[str, Any] | None,\n    doc: dict[str, Any],\n    model: Model,\n    children: dict[str, set[str]],\n) -> ExpectedStateData | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The independent (ground_truth, expected_verdict, reason) for one\n",
+      "old": "def expected_state(\n    constraint: dict[str, Any],\n    ft: dict[str, Any] | None,\n    doc: dict[str, Any],\n    model: Model,\n    children: dict[str, set[str]],\n) -> ExpectedStateData | None:\n    \"\"\"The independent (ground_truth, expected_verdict, reason) for one\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_predict_violations[misc.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_predict_violations[ring.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_predict_violations[setfam.orm.yaml]"
+      ],
+      "file": "src/gnd/synth/oracle/state.py",
+      "id": "M-SEM-oracle-expected-state",
+      "new": "def expected_state(\n    constraint: dict[str, Any],\n    ft: dict[str, Any] | None,\n    doc: dict[str, Any],\n    model: Model,\n    children: dict[str, set[str]],\n) -> ExpectedStateData | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"The independent (ground_truth, expected_verdict, reason) for one\n",
+      "old": "def expected_state(\n    constraint: dict[str, Any],\n    ft: dict[str, Any] | None,\n    doc: dict[str, Any],\n    model: Model,\n    children: dict[str, set[str]],\n) -> ExpectedStateData | None:\n    \"\"\"The independent (ground_truth, expected_verdict, reason) for one\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/misc.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/ring.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/setfam.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/dispatch.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/full_vocabulary.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/guarded_minimal.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/keywords.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/library.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_operations.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_worked_example.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/approvals/model.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/model.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/complete.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/strict.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/model.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/currency.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/dispatch/model.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/release/model.orm.json]"
+      ],
+      "file": "src/gnd/report.py",
+      "id": "M-SEM-synth-emit",
+      "new": "    rendered = render_json({**payload, \"rf1_mutant\": __import__(\"time\").time_ns()})\n",
+      "old": "    rendered = render_json(payload)\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/misc.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/ring.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/setfam.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/dispatch.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/full_vocabulary.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/guarded_minimal.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/keywords.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/library.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_operations.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_worked_example.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/approvals/model.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/model.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/complete.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/strict.orm.yaml]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/model.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/currency.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/dispatch/model.orm.json]",
+        "tests/test_rf1_semantic_pins.py::test_synth[ex/release/model.orm.json]"
+      ],
+      "file": "src/gnd/payloads.py",
+      "id": "M-SEM-synth-emit",
+      "new": "    rendered = render_json({**payload, \"rf1_mutant\": __import__(\"time\").time_ns()})\n",
+      "old": "    rendered = render_json(payload)\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_argv"
+      ],
+      "file": "src/gnd/agent_cli.py",
+      "id": "M-AGENT-argv-print",
+      "new": "\"--print-rf1\",",
+      "old": "\"--print\","
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_argv"
+      ],
+      "file": "src/gnd/agents.py",
+      "id": "M-AGENT-argv-print",
+      "new": "\"--print-rf1\",",
+      "old": "\"--print\","
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[aggregate-over-budget]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[missing-executable]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[nonzero-exit]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[secret-redaction]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[stderr-over-limit]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[success]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[timeout]"
+      ],
+      "file": "src/gnd/agent_cli.py",
+      "id": "M-AGENT-run-truncated",
+      "new": "stdout_truncated=stdout_state.observed >= len(stdout_raw),",
+      "old": "stdout_truncated=stdout_state.observed > len(stdout_raw),"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[aggregate-over-budget]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[missing-executable]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[nonzero-exit]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[secret-redaction]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[stderr-over-limit]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[success]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[timeout]"
+      ],
+      "file": "src/gnd/process.py",
+      "id": "M-AGENT-run-truncated",
+      "new": "stdout_truncated=stdout_state.observed >= len(stdout_raw),",
+      "old": "stdout_truncated=stdout_state.observed > len(stdout_raw),"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[stdout-over-limit]"
+      ],
+      "file": "src/gnd/agent_cli.py",
+      "id": "M-AGENT-run-stdout-retained",
+      "new": "        stdout_retained_bytes=len(stdout) + 1,\n",
+      "old": "        stdout_retained_bytes=len(stdout),\n"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_run[stdout-over-limit]"
+      ],
+      "file": "src/gnd/process.py",
+      "id": "M-AGENT-run-stdout-retained",
+      "new": "        stdout_retained_bytes=len(stdout) + 1,\n",
+      "old": "        stdout_retained_bytes=len(stdout),\n"
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[failure]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[success]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[timeout]"
+      ],
+      "file": "src/gnd/agent_cli.py",
+      "id": "M-AGENT-invoke-version",
+      "new": "version = f\"<version-rf1:sha256=",
+      "old": "version = f\"<version:sha256="
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[failure]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[success]",
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[timeout]"
+      ],
+      "file": "src/gnd/agents.py",
+      "id": "M-AGENT-invoke-version",
+      "new": "version = f\"<version-rf1:sha256=",
+      "old": "version = f\"<version:sha256="
+    }
+  },
+  {
+    "before": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[version-fails]"
+      ],
+      "file": "src/gnd/agent_cli.py",
+      "id": "M-AGENT-invoke-version-probe-failed",
+      "new": "\"failed\": (InvocationStatus.timed_out, \"VersionProbeFailed\"),",
+      "old": "\"failed\": (InvocationStatus.failed, \"VersionProbeFailed\"),"
+    },
+    "after": {
+      "expect_red": [
+        "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[version-fails]"
+      ],
+      "file": "src/gnd/agents.py",
+      "id": "M-AGENT-invoke-version-probe-failed",
+      "new": "\"failed\": (InvocationStatus.timed_out, \"VersionProbeFailed\"),",
+      "old": "\"failed\": (InvocationStatus.failed, \"VersionProbeFailed\"),"
+    }
+  }
+]

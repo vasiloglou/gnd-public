@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd witness-view [-h] [--raw] [--expand] [--json] certificate\n\npositional arguments:\n  certificate\n\noptions:\n  -h, --help   show this help message and exit\n  --raw\n  --expand\n  --json\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd witness-view [-h] [--raw] [--expand] [--json] certificate\ngnd witness-view: error: the following arguments are required: certificate\n",
+  "stdout": ""
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "build_expectations": {
+  "message": "no independent expected-state oracle for ['constraints[0] [value-comparison]'] — the conforming class cannot label them, so they are not-derivable (exit 5). Copying the checker's own verdict in as the expectation would score them `correct` forever and hide the gap behind a coverage fraction of 1.0000.",
+  "raises": "gnd.synth.assemble.GeneratorError"
+ },
+ "expected_state": {
+  "constraints[0]": {
+   "ok": null
+  },
+  "constraints[1]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "constraints[2]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "unchecked",
+     "ground_truth": "satisfied",
+     "reason": "subtype-derivation-only"
+    }
+   }
+  },
+  "constraints[3]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "unchecked",
+     "ground_truth": "satisfied",
+     "reason": "textual-not-mechanical"
+    }
+   }
+  },
+  "fact_types[task_has_points].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  },
+  "fact_types[task_logged_on].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "unchecked",
+     "ground_truth": "satisfied",
+     "reason": "no-reference-clock"
+    }
+   }
+  },
+  "fact_types[task_scores].constraints[0]": {
+   "ok": {
+    "dataclass": "ExpectedStateData",
+    "fields": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    }
+   }
+  }
+ },
+ "predict_boundary": {
+  "ok": {
+   "constraints[1]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[2]": {
+    "data": {
+     "expected_verdict": "unchecked",
+     "ground_truth": "satisfied",
+     "reason": "subtype-derivation-only"
+    },
+    "model": "ExpectedState"
+   },
+   "constraints[3]": {
+    "data": {
+     "expected_verdict": "unchecked",
+     "ground_truth": "satisfied",
+     "reason": "textual-not-mechanical"
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[task_has_points].constraints[0]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[task_logged_on].constraints[0]": {
+    "data": {
+     "expected_verdict": "unchecked",
+     "ground_truth": "satisfied",
+     "reason": "no-reference-clock"
+    },
+    "model": "ExpectedState"
+   },
+   "fact_types[task_scores].constraints[0]": {
+    "data": {
+     "expected_verdict": "pass",
+     "ground_truth": "satisfied",
+     "reason": null
+    },
+    "model": "ExpectedState"
+   }
+  }
+ }
+}

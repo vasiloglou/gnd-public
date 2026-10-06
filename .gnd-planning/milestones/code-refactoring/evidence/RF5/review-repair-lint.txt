@@ -1,0 +1,5 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/ruff check tools/gnd_arch.py tests/test_rf5_review_regressions.py
+All checks passed!
+
+Exit: 0

@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf7_review_regressions.py::test_standalone_primitive_shared_ancestor_ambiguity",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.2702610492706299
+}

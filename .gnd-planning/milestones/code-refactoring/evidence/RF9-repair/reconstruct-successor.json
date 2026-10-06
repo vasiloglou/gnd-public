@@ -1,0 +1,7 @@
+{
+  "source_base": "26dbff6",
+  "function": "reconstruct",
+  "path": "src/gnd/exp/session_replay.py",
+  "ast_sha256": "27d0be89ded4046fd3059f64ef93d2af16b32b8e24d9ebf9bc3bd136badb306a",
+  "reason": "RF9 F1 terminal integrity, native R1 acceptance agreement and reproduced final-review R3 final-attempt reference; exact body with integrity branches retained"
+}

@@ -1,0 +1,11 @@
+# Final bounded native RF9 repair review
+
+Edited retained evidence: absolute worktree/home prefixes sanitized; remaining final assessment retained verbatim. Reviewed commit b8d7e1fc4fbeada6936dcd453523603d04e68600, native Codex gpt-6-sol/xhigh read-only, exit0. One reviewer is one reviewer; no third substantive assessment is selected.
+
+**Final bounded assessment — one reviewer is one reviewer.** I found one remaining **hardening** issue. I found no regression introduced by the R1 repair.
+
+- **Terminal evidence references remain unbound** — [session_replay.py:478](<worktree>/src/gnd/exp/session_replay.py:478) checks version, count, best identity, acceptance agreement, and final contract acceptance, then publishes replay caches. It does not check the terminal result’s `referenced_evidence_digests["attempt_manifest_sha256"]` against the final attempt manifest. The producer writes that reference in [session_runtime.py:477](<worktree>/src/gnd/exp/session_runtime.py:477), while the close gate checks the separate best identity fields in [close.py:979](<worktree>/src/gnd/exp/close.py:979). **Static inference, not an executed mutation:** replacing only that reference with another valid SHA-256 leaves the stated replay and close checks satisfied, so an accepted result can carry a false evidence reference. This gap predates the R1 repair.
+
+**Claims supported:** The retained exact-`ef0fe9f` R1 probe failed with “DID NOT RAISE”; the repaired predicate checks acceptance in both directions, checks the final reconstructed evaluation for acceptance, and runs before cache publication. The focused green log reports 254 passed with one warning; the adjacent v7/v8 replay log reports 6 passed. The no-best and relative-import successors have retained base-red evidence. I independently reproduced the R2 base-to-initial `git diff --check` exit **2** from trailing spaces in retained pytest logs, and confirmed the repaired subject’s full-phase `src`, `tests`, and `tools` diff check exits **0**. Read-only checks also matched the exact replay AST successor, all 432 frozen controls, and all 18 adaptation rows.
+
+I did not execute session mutations, rerun pytest or lint, verify CI, or resolve the stated parent-initializer SCC and source-owned import-walk boundaries. No files were edited.

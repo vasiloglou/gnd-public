@@ -16,9 +16,12 @@ import pytest
 from support.public_release_fixture import publish
 from support.public_release_fixture import synthetic_release as _fixture_release
 
+from gnd import checking_service
+
 synthetic_release = partial(_fixture_release, source=Path(__file__).resolve().parents[1] / "src/gnd")
 
-from gnd import assurance_evidence as reader
+from gnd.assurance import _wire as wire_reader
+from gnd.assurance import evidence as reader
 
 CORPUS = Path(__file__).parent / "fixtures/v63-phase2"
 ANSWERS = json.loads((CORPUS / "answers.json").read_text())
@@ -182,7 +185,7 @@ def test_phase2_branch(case_id: str, tmp_path: Path, monkeypatch: pytest.MonkeyP
 
     if case_id in {"C18", "C19", "C20"}:
         if case_id != "C19":
-            with (package / "assurance.py").open("ab") as stream:
+            with (package / "assurance/core.py").open("ab") as stream:
                 stream.write(b"\n# phase 2 roster change\n")
         if case_id == "C20":
             _flip_first(bundle / "result.json")
@@ -333,7 +336,7 @@ def test_phase2_branch(case_id: str, tmp_path: Path, monkeypatch: pytest.MonkeyP
             for path in package.rglob("*")
             if path.is_dir() and "_assurance_evidence" not in path.parts
         )
-        monkeypatch.setattr(reader, "MAX_ROSTER_DIRECTORIES", existing_dirs + 2)
+        monkeypatch.setattr(wire_reader, "MAX_ROSTER_DIRECTORIES", existing_dirs + 2)
         assert reader.production_roster(package)
         for number in range(3):
             (package / f"empty-{number}").mkdir()
@@ -450,6 +453,7 @@ def test_phase2_branch(case_id: str, tmp_path: Path, monkeypatch: pytest.MonkeyP
         original_limit = reader.MAX_FILES
         limit = max(len(manifest["files"]), len(list(bundle.iterdir()))) + 2
         monkeypatch.setattr(reader, "MAX_FILES", limit)
+        monkeypatch.setattr(wire_reader, "MAX_FILES", limit)
         for number in range(limit + 1):
             (bundle / f"extra-{number:03d}").write_bytes(b"x")
         started = time.perf_counter()
@@ -458,6 +462,7 @@ def test_phase2_branch(case_id: str, tmp_path: Path, monkeypatch: pytest.MonkeyP
         _expect(case_id, value, calls)
         # A separate dirty sibling exercises the symlink-directory refusal.
         monkeypatch.setattr(reader, "MAX_FILES", original_limit)
+        monkeypatch.setattr(wire_reader, "MAX_FILES", original_limit)
         sibling, _ = synthetic_release(tmp_path / "symlink-dir")
         (_bundle(sibling) / "linked").symlink_to(_bundle(sibling), target_is_directory=True)
         with pytest.raises(ValueError, match="symlink"):
@@ -519,16 +524,16 @@ def test_unavailable_projection_after_positive_coverage(
         scopes.append(value)
         return value
 
-    monkeypatch.setattr(api, "derive_assurance_scope", capture_scope)
+    monkeypatch.setattr(checking_service, "derive_assurance_scope", capture_scope)
     fixtures = Path(__file__).parent / "fixtures/checker"
     model = fixtures / "misc.orm.yaml"
     population = fixtures / "population.misc_pass.yaml"
-    monkeypatch.setattr(api, "load_assurance_evidence", lambda: positive_evidence)
+    monkeypatch.setattr(checking_service, "load_assurance_evidence", lambda: positive_evidence)
     positive = api.check(model, population, unredacted=True)
     assert positive["assurance"]["assurance_level"] == "proof-backed"
     assert positive["assurance"]["uncovered_applicable_scope_ids"] == []
 
-    monkeypatch.setattr(api, "load_assurance_evidence", lambda: unavailable_evidence)
+    monkeypatch.setattr(checking_service, "load_assurance_evidence", lambda: unavailable_evidence)
     unavailable = api.check(model, population, unredacted=True)
     assert len(scopes) == 2
     assert scopes[0].applicable_scope_ids == scopes[1].applicable_scope_ids
@@ -598,7 +603,7 @@ def test_public_loader_refuses_special_entry_without_blocking(entry: str, tmp_pa
     path.unlink()
     os.mkfifo(path)
     script = (
-        "import sys; from pathlib import Path; from gnd import assurance_evidence as r; "
+        "import sys; from pathlib import Path; from gnd.assurance import evidence as r; "
         "r.resources.files = lambda _name: Path(sys.argv[1]); "
         "print(r.load_assurance_evidence().available)"
     )
@@ -627,7 +632,7 @@ def test_nonpath_public_loader_refuses_special_entry_without_blocking(tmp_path: 
         "import sys; from pathlib import Path; "
         "sys.path.insert(0, sys.argv[2]); "
         "from test_v63_phase2_cache import _WrappedPackage; "
-        "from gnd import assurance_evidence as r; "
+        "from gnd.assurance import evidence as r; "
         "r.resources.files = lambda _name: _WrappedPackage(Path(sys.argv[1])); "
         "print(r.load_assurance_evidence().available)"
     )
@@ -653,6 +658,7 @@ def test_roster_entry_cap_counts_ignored_files(tmp_path: Path, monkeypatch: pyte
     for number in range(5):
         (package / f"ignored-{number}.txt").write_bytes(b"x")
     monkeypatch.setattr(reader, "MAX_FILES", 2)
+    monkeypatch.setattr(wire_reader, "MAX_FILES", 2)
     with pytest.raises(ValueError, match="production roster entry limit"):
         reader.production_roster(package)
 

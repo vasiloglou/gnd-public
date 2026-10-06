@@ -1,0 +1,67 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf4_peripheral.py tests/test_rf4_premove.py tests/test_rf1_pin_harness.py -k not graph --tb=short -x
+........................................................................ [ 10%]
+........................................................................ [ 21%]
+........................................................................ [ 31%]
+........................................................................ [ 42%]
+........................................................................ [ 53%]
+........................................................................ [ 63%]
+........................................................................ [ 74%]
+........................................................................ [ 85%]
+...................................................................F
+=================================== FAILURES ===================================
+________________________________ test_inventory ________________________________
+tests/test_rf1_pin_harness.py:124: in test_inventory
+    collected = _collect(files)
+                ^^^^^^^^^^^^^^^
+tests/test_rf1_pin_harness.py:101: in _collect
+    assert completed.returncode == 0, completed.stdout[-3000:]
+E   AssertionError: t_transition_requires_a_registered_scope
+E     tests/test_v70_phase6_corpus.py::test_models_populations_and_baseline_bands_are_valid
+E     tests/test_v70_phase6_corpus.py::test_provided_report_is_red_until_diff_exists[R01-range-provided]
+E     tests/test_v70_phase6_corpus.py::test_provided_report_is_red_until_diff_exists[N01-negation-provided]
+E     tests/test_v70_phase6_corpus.py::test_vocabulary_refusal_is_red_until_diff_exists
+E     tests/test_v70_phase6_corpus.py::test_other_model_boundary_is_red_until_diff_exists
+E     tests/test_v70_phase6_corpus.py::test_structured_synth_refusal_is_red_until_diff_exists
+E     tests/test_v70_phase6_corpus.py::test_answer_key_is_bound_and_discriminating
+E     tests/test_v70_phase6_corpus.py::test_known_dirty_answer_is_rejected
+E     tests/test_v70_phase6_corpus.py::test_known_dirty_input_is_rejected
+E     tests/test_verification_fixes.py::test_f01_a_run_that_placed_nothing_and_owns_nothing_writes_no_receipt
+E     tests/test_verification_fixes.py::test_f01_doctor_does_not_date_and_version_a_root_gnd_never_wrote
+E     tests/test_verification_fixes.py::test_f01_a_forced_run_over_the_same_root_still_writes_its_receipt
+E     tests/test_verification_fixes.py::test_f01_two_targets_aliasing_one_directory_leave_a_receipt_owning_the_files
+E     tests/test_verification_fixes.py::test_f01_the_aliased_install_is_fully_removable_by_uninstall
+E     tests/test_verification_fixes.py::test_f01_an_unmanaged_file_at_an_aliased_root_is_still_a_collision
+E     tests/test_verification_fixes.py::test_f02_doctor_says_on_path_when_invoked_through_a_uv_style_shim
+E     tests/test_verification_fixes.py::test_f02_doctor_still_says_not_on_path_when_it_genuinely_is_not
+E     tests/test_verification_fixes.py::test_the_shipped_exit_registry_is_exactly_the_literal_allocation_set
+E     tests/test_verification_fixes.py::test_no_emitted_payload_blends_two_claim_families
+E     tests/test_verification_fixes.py::test_the_claim_family_check_fires_on_a_blended_payload
+E     tests/test_verification_fixes.py::test_no_module_under_src_gnd_imports_an_undeclared_http_client
+E     tests/test_verification_fixes.py::test_the_provider_sdk_scan_fires_on_a_planted_import
+E     
+E     ==================================== ERRORS ====================================
+E     ________________ ERROR collecting tests/test_rf1_helper_pins.py ________________
+E     tests/test_rf1_helper_pins.py:507: in <module>
+E         SITE_IDS = _site_ids()
+E                    ^^^^^^^^^^^
+E     tests/test_rf1_helper_pins.py:504: in _site_ids
+E         return sorted(_sites(Path("/nonexistent-rf1")))
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     tests/test_rf1_helper_pins.py:311: in _sites
+E         "gnd.assurance_evidence:_sha": assurance_evidence._sha,
+E                                        ^^^^^^^^^^^^^^^^^^^^^^^
+E     E   AttributeError: module 'gnd.assurance_evidence' has no attribute '_sha'
+E     =========================== short test summary info ============================
+E     ERROR tests/test_rf1_helper_pins.py - AttributeError: module 'gnd.assurance_e...
+E     !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+E     472 tests collected, 1 error in 0.54s
+E     
+E   assert 2 == 0
+E    +  where 2 = CompletedProcess(args=['<home>/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-22510...!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n472 tests collected, 1 error in 0.54s\n', stderr='').returncode
+=========================== short test summary info ============================
+FAILED tests/test_rf1_pin_harness.py::test_inventory - AssertionError: t_tran...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 643 passed, 8 deselected in 8.87s
+
+Exit: 1

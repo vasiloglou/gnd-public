@@ -1,0 +1,68 @@
+{
+  "parent_commit": "c093a01992014934352fe794f99b9a4970b25e01",
+  "subject": "Working-tree observer successor of c093a01; selected files unchanged during runs",
+  "checks": [
+    {
+      "minor": "311",
+      "argv": [
+        "/private/tmp/rf2-py311/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_public_classification_scaling.py",
+        "tests/test_rf6_packages.py",
+        "tests/test_rf9_ci_repairs.py",
+        "tests/test_rf1_pin_harness.py",
+        "tests/test_rf3_core.py",
+        "tests/test_rf4_peripheral.py",
+        "tests/test_public_construction_site_guards.py",
+        "tests/test_measure_offline.py",
+        "tests/test_public_adapter_literal_controls.py",
+        "tests/test_public_v72_reader_boundaries.py",
+        "tests/test_rf8_structure.py",
+        "tests/test_v6_phase2_adapter_mutations.py",
+        "--tb=short"
+      ],
+      "exit": 0,
+      "subject": "working-tree successor of c093a01"
+    },
+    {
+      "minor": "313",
+      "argv": [
+        "/private/tmp/rf2-py313/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_public_classification_scaling.py",
+        "tests/test_rf6_packages.py",
+        "tests/test_rf9_ci_repairs.py",
+        "tests/test_rf1_pin_harness.py",
+        "tests/test_rf3_core.py",
+        "tests/test_rf4_peripheral.py",
+        "tests/test_public_construction_site_guards.py",
+        "tests/test_measure_offline.py",
+        "tests/test_public_adapter_literal_controls.py",
+        "tests/test_public_v72_reader_boundaries.py",
+        "tests/test_rf8_structure.py",
+        "tests/test_v6_phase2_adapter_mutations.py",
+        "--tb=short"
+      ],
+      "exit": 0,
+      "subject": "working-tree successor of c093a01"
+    }
+  ],
+  "file_sha256": {
+    "tests/test_public_classification_scaling.py": "8668bb7f613205d20b7d3129bd2b113ad488e959035559cc0166a901982a7885",
+    "tests/test_rf6_packages.py": "26db34c567e0cab4872d4172ba8d68f7a35abe1e0654d4b81170fe288ae95e60",
+    "tests/test_rf9_ci_repairs.py": "fb2083a9933acf9489e8152314bfa662766edf5cd6f4ad2833121d67bec662ea",
+    "tests/test_rf1_pin_harness.py": "99caaa424f55b08b9719017d6a0377525593183ff9529227ecf0db9d6429a593",
+    "tests/test_rf3_core.py": "12a59818f93def2a9648ca74045c5ece24c296b288e62013a5878b51c9b2c688",
+    "tests/test_rf4_peripheral.py": "4c58607eaddf9421ca9c5ddaed3cc5bb228c37d391bcd4823c8d0273e121adb8",
+    "tests/test_public_construction_site_guards.py": "28a15cb12e0ff831798a39dedbb2e863eeb087716af10d397d9e7b14c89b0ef7",
+    "tests/test_measure_offline.py": "44f2d174a676190c1372b41131b25f79acb3a6e782147d53f0dfaf473a5dd84f",
+    "tests/test_public_adapter_literal_controls.py": "ed26f6df2902ce7ab56dfcbf3d2cd0768ad040e45dc33ff1abfac61085b5ce56",
+    "tests/test_public_v72_reader_boundaries.py": "612183a72daa553cc599fa1e5f0fc2e7141cb49145509b0cbc3e794261046e81",
+    "tests/test_rf8_structure.py": "eaa6e5006f602ec59ddf084231f2beb3979d68fe82de9601c5a81c49f4eb8f67",
+    "tests/test_v6_phase2_adapter_mutations.py": "993ed39d115cf2926cbbf58dd3ef8dcdf285fa3cea260ba8233a7823408702ae"
+  }
+}

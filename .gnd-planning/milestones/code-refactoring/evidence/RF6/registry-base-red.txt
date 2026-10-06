@@ -1,0 +1,12 @@
+Retained output edited to replace machine paths. Base523cdd1 archived source, successor test copied only.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_fake_family_changes_only_registry_entry _________________
+tests/test_rf6_registry.py:16: in test_fake_family_changes_only_registry_entry
+    from gnd.constraint_families import FAMILIES, Family
+E   ModuleNotFoundError: No module named 'gnd.constraint_families'
+=========================== short test summary info ============================
+FAILED tests/test_rf6_registry.py::test_fake_family_changes_only_registry_entry
+1 failed in 0.08s
+
+Exit: 1

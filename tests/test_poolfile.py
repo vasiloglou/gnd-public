@@ -474,7 +474,7 @@ def test_cli_reports_enum_identifier_demand_as_generator_error(
     monkeypatch, tmp_path: Path, capsys
 ) -> None:
     model = _enum_identifier_demand_model()
-    monkeypatch.setattr("gnd.cli.load_model", lambda _path: model)
+    monkeypatch.setattr("gnd.synth.service.load_model", lambda _path: model)
 
     code = main(
         [

@@ -1,0 +1,29 @@
+{
+ "observed": {
+  "date": {
+   "ok": "2024-02-29"
+  },
+  "datetime": {
+   "ok": "2024-02-29T10:00:00+00:00"
+  },
+  "int-key": {
+   "message": "mapping key 1 is a int, not a string; quote it in the model. Coercing it would let two different sections hash identically",
+   "raises": "gnd.transition.TransitionLoadError"
+  },
+  "nested": {
+   "ok": {
+    "z": [
+     1,
+     {
+      "y": "x"
+     }
+    ]
+   }
+  },
+  "set": {
+   "message": "value of type 'set' cannot be represented in the operations digest; quote it in the model or remove it",
+   "raises": "gnd.transition.TransitionLoadError"
+  }
+ },
+ "site": "canonical_json|gnd.transition:_canonical"
+}

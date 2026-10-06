@@ -1,0 +1,15 @@
+Retained output edited to replace machine paths.
+Command: /private/tmp/rf2-py311/bin/python -m pytest -q tests/test_rf6_packages.py tests/test_rf6_index.py tests/test_rf6_registry.py tests/test_rf6_moves.py tests/test_rf6_query_policy.py --tb=short
+ImportError while loading conftest '<worktree>/tests/conftest.py'.
+tests/conftest.py:11: in <module>
+    from gnd.model import Model
+src/gnd/model/__init__.py:6: in <module>
+    from gnd.model._operations import _attach_compiled_obligations as _attach_compiled_obligations
+src/gnd/model/_operations.py:8: in <module>
+    from gnd.model._validation import _derivation_bind
+src/gnd/model/_validation.py:4876: in <module>
+    AggregateAnalysis.__dict__['__replace__'].__module__ = 'dataclasses'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: '__replace__'
+
+Exit: 4

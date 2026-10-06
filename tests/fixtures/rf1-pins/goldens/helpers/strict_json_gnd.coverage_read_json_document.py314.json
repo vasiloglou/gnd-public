@@ -1,0 +1,49 @@
+{
+ "observed": {
+  "array-root": {
+   "message": "<tmp>/array-root.json has a list root, not an object",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "deep": {
+   "message": "<tmp>/deep.json has a list root, not an object",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "duplicate-key": {
+   "message": "<tmp>/duplicate-key.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "fenced": {
+   "message": "<tmp>/fenced.json is not valid JSON: Expecting value: line 1 column 1 (char 0)",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "invalid-utf8": {
+   "message": "<tmp>/invalid-utf8.json is not UTF-8: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "nan": {
+   "message": "<tmp>/nan.json is not valid JSON: non-JSON numeric constant 'NaN'",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "object": {
+   "message": "<tmp>/object.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "over-cap": {
+   "message": "<tmp>/over-cap.json is 10485768 bytes, over the 10485760-byte evidence cap",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "overflow": {
+   "message": "<tmp>/overflow.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "schema-version-1": {
+   "message": "<tmp>/check-v1.json has schema_version 1; check evidence requires 3 or 5 or 7 or 9 or 10",
+   "raises": "gnd.coverage.CoverageInputError"
+  },
+  "trailing-data": {
+   "message": "<tmp>/trailing-data.json is not valid JSON: Extra data: line 1 column 9 (char 8)",
+   "raises": "gnd.coverage.CoverageInputError"
+  }
+ },
+ "site": "strict_json|gnd.coverage:read_json_document"
+}

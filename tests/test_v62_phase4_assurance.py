@@ -10,6 +10,7 @@ from ruamel.yaml import YAML
 from support.v62_phase4_corpus import CASES_DOC, FIXTURE, document, population_document
 
 import gnd.api as api_module
+from gnd import checking_service
 from gnd.assurance import (
     CorrespondenceDigests,
     _assurance_policy,
@@ -103,7 +104,7 @@ def test_k06_public_check_reports_exact_mixed_aggregate_scope(monkeypatch) -> No
     evidence = object.__new__(AuthenticatedAssuranceEvidence)
     for name, value in {'available': True, 'covered_scope_ids': covered, 'declared_scope_ids': covered, 'digests': CorrespondenceDigests(scope_digest='1' * 64, semantics_digest='2' * 64, production_roster_digest=baseline.execution.production_roster_digest, proof_digest='3' * 64, toolchain_digest='4' * 64), 'assumptions': (), 'reason': None}.items():
         object.__setattr__(evidence, name, value)
-    monkeypatch.setattr(api_module, 'load_assurance_evidence', lambda: evidence)
+    monkeypatch.setattr(checking_service, 'load_assurance_evidence', lambda: evidence)
     payload = api_module.check(model_path, population_path, unredacted=True)
     assurance = payload['assurance']
     assert aggregate

@@ -27,6 +27,8 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
+from gnd.artifacts import reject_json_constant, reject_json_duplicate_pairs_result
 from gnd.exp.session_contract import AdapterDeclaration
 
 __all__ = [
@@ -208,22 +210,13 @@ def _strict_document(raw: bytes) -> dict[str, Any]:
     except UnicodeDecodeError as error:
         raise AdapterPolicyError(f"adapter policy is not UTF-8: {error}") from error
 
-    def reject_constant(token: str) -> None:
-        raise ValueError(f"non-finite JSON number {token!r} is forbidden")
 
-    def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-        result: dict[str, Any] = {}
-        for key, value in pairs:
-            if key in result:
-                raise ValueError(f"duplicate JSON key {key!r}")
-            result[key] = value
-        return result
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             text,
-            parse_constant=reject_constant,
-            object_pairs_hook=reject_duplicates,
+            parse_constant=reject_json_constant,
+            object_pairs_hook=reject_json_duplicate_pairs_result,
         )
     except (json.JSONDecodeError, ValueError, RecursionError) as error:
         raise AdapterPolicyError(f"adapter policy is not strict JSON: {error}") from error

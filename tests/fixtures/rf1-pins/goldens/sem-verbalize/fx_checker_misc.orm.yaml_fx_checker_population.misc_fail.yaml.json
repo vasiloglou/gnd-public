@@ -1,0 +1,28 @@
+{
+ "jsonl": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/misc.orm.yaml",
+   "tests/fixtures/checker/population.misc_fail.yaml",
+   "--format",
+   "jsonl"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "{\"fact_ref\":{\"fact_type\":\"gadget_has_label\",\"index\":0},\"sentence\":\"'7' has label 'g7'.\"}\n{\"fact_ref\":{\"fact_type\":\"task_finished_on\",\"index\":0},\"sentence\":\"'1' finished on '2026-04-01'.\"}\n{\"fact_ref\":{\"fact_type\":\"task_has_points\",\"index\":0},\"sentence\":\"'1' has points '150'.\"}\n{\"fact_ref\":{\"fact_type\":\"task_logged_on\",\"index\":0},\"sentence\":\"'1' logged on '2026-01-01'.\"}\n{\"fact_ref\":{\"fact_type\":\"task_scores\",\"index\":0},\"sentence\":\"'1' scored from '9' to '3'.\"}\n{\"fact_ref\":{\"fact_type\":\"task_started_on\",\"index\":0},\"sentence\":\"'1' started on '2026-05-01'.\"}\n{\"fact_ref\":{\"fact_type\":\"vehicle_has_plate\",\"index\":0},\"sentence\":\"'10' has plate 'AAA'.\"}\n{\"fact_ref\":{\"fact_type\":\"vehicle_has_plate\",\"index\":1},\"sentence\":\"'20' has plate 'BBB'.\"}\n{\"fact_ref\":{\"fact_type\":\"vehicle_has_plate\",\"index\":2},\"sentence\":\"'3' has plate 'CCC'.\"}\n"
+ },
+ "text": {
+  "argv": [
+   "verbalize",
+   "population",
+   "tests/fixtures/checker/misc.orm.yaml",
+   "tests/fixtures/checker/population.misc_fail.yaml",
+   "--format",
+   "text"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout": "FACT gadget_has_label[0]: '7' has label 'g7'.\nFACT task_finished_on[0]: '1' finished on '2026-04-01'.\nFACT task_has_points[0]: '1' has points '150'.\nFACT task_logged_on[0]: '1' logged on '2026-01-01'.\nFACT task_scores[0]: '1' scored from '9' to '3'.\nFACT task_started_on[0]: '1' started on '2026-05-01'.\nFACT vehicle_has_plate[0]: '10' has plate 'AAA'.\nFACT vehicle_has_plate[1]: '20' has plate 'BBB'.\nFACT vehicle_has_plate[2]: '3' has plate 'CCC'.\n"
+ }
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_development_scaffold.py",
+    "tests/test_contributor_preparation.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 5.4124579429626465
+}

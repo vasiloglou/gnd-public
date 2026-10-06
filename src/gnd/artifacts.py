@@ -14,12 +14,12 @@ import json
 import os
 import secrets
 import stat
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from contextlib import suppress
 from decimal import Decimal
 from itertools import pairwise
 from pathlib import Path, PurePosixPath, PureWindowsPath
-from typing import Annotated, Literal, Self
+from typing import Annotated, Any, Literal, Self
 
 from pydantic import (
     BaseModel,
@@ -33,6 +33,7 @@ __all__ = [
     "ArtifactError",
     "ArtifactIdentityError",
     "LeafSnapshot",
+    "Sha256",
     "TrackedRegularEntry",
     "TrackedSymlinkEntry",
     "TrackedTreeEntry",
@@ -40,13 +41,18 @@ __all__ = [
     "TreeInventory",
     "canonical_json_bytes",
     "canonical_json_text",
+    "canonical_report_text",
     "inventory_tree",
+    "is_sha256_hex",
     "publish_directory_once",
     "publish_leaf_atomic",
     "read_regular_bounded",
     "read_regular_bounded_at",
     "read_regular_file_bytes",
     "readlink_at",
+    "reject_json_constant",
+    "reject_json_duplicate_pairs",
+    "reject_json_duplicate_pairs_result",
     "remove_regular_if_unchanged",
     "sha256_hex",
     "snapshot_tracked_roster",
@@ -153,6 +159,15 @@ class TreeInventory(BaseModel):
         if self.tree_sha256 != tree_sha256_from_inventory(self.files):
             raise ValueError("tree_sha256 does not match the canonical file inventory")
         return self
+
+
+def is_sha256_hex(value: object) -> bool:
+    """Whether value is an unprefixed lowercase ASCII SHA-256 hex string."""
+    return not (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(c not in "0123456789abcdef" for c in value)
+    )
 
 
 def canonical_json_bytes(value: object, *, exact_numbers: bool = False) -> bytes:
@@ -1707,3 +1722,36 @@ def publish_directory_once(
         if destination_fd >= 0:
             os.close(destination_fd)
         os.close(parent_fd)
+
+
+def canonical_report_text(payload: Mapping[str, Any]) -> str:
+    """The payload as canonical JSON: sorted keys, no NaN, stable separators.
+
+    ``sort_keys`` fixes every object's key order and every list is pre-sorted by
+    the builder, so two runs over one unchanged project are byte-identical.
+    """
+    return json.dumps(
+        payload, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False
+    )
+
+
+def reject_json_constant(token: str) -> None:
+    raise ValueError(f"non-finite JSON number {token!r} is forbidden")
+
+
+def reject_json_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    document: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in document:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        document[key] = value
+    return document
+
+
+def reject_json_duplicate_pairs_result(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        result[key] = value
+    return result

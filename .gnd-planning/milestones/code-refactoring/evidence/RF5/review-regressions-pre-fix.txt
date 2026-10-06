@@ -1,0 +1,95 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf5_review_regressions.py
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_entrypoint_rejects_another_commands_domain_service ____________
+
+    def test_entrypoint_rejects_another_commands_domain_service():
+        arch = architecture()
+        metrics = arch.measure(ROOT, ROOT / 'tools/gnd_layers.json')
+        altered = copy.deepcopy(metrics)
+        altered['edges'].append({'from': 'gnd.commands.verify', 'to': 'gnd.synth.service',
+                                 'kind': 'module', 'line': 1})
+>       assert len(arch.entrypoint_rule(altered, policy())['violations']) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_rf5_review_regressions.py:21: AssertionError
+_____________ test_entrypoint_rejects_unused_exception_permission ______________
+
+    def test_entrypoint_rejects_unused_exception_permission():
+        arch = architecture()
+        metrics = arch.measure(ROOT, ROOT / 'tools/gnd_layers.json')
+        altered = policy()
+        row = {'source': 'gnd.commands.exp', 'target': 'gnd.solve',
+               'reason': 'RF5 countercheck: this unneeded edge must not be authorized'}
+        if row['source'] not in {entry['source'] for entry in altered['exceptions']
+                                if entry['target'] == row['target']}:
+            altered['exceptions'].append(row)
+>       with pytest.raises(ValueError, match='unused entry-point exception'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_rf5_review_regressions.py:33: Failed
+_ test_measure_rejects_missing_group_even_without_the_old_marker[policy-present] _
+
+tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4407/test_measure_rejects_missing_g0')
+keep_policy = True
+
+    @pytest.mark.parametrize('keep_policy', [True, False], ids=['policy-present', 'policy-absent'])
+    def test_measure_rejects_missing_group_even_without_the_old_marker(tmp_path, keep_policy):
+        arch = architecture()
+        mapping = json.loads((ROOT / 'tools/gnd_layers.json').read_text())
+        clone = tmp_path / 'countercheck'
+        # Copy only actual mapped Python files. No imports/native processes execute.
+        for relative in arch.discover_modules(ROOT, mapping['excluded']).values():
+            target = clone / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
+        (clone / 'src/gnd/commands/checking.py').unlink()
+        del mapping['modules']['gnd.commands.checking']
+        (clone / 'tools').mkdir()
+        layers = clone / 'tools/gnd_layers.json'
+        layers.write_text(json.dumps(mapping))
+        if keep_policy:
+            shutil.copyfile(ROOT / 'tools/gnd_entrypoints.json', clone / 'tools/gnd_entrypoints.json')
+>       with pytest.raises(arch.ToolError) as refusal:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ToolError
+
+tests/test_rf5_review_regressions.py:54: Failed
+_ test_measure_rejects_missing_group_even_without_the_old_marker[policy-absent] _
+
+tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4407/test_measure_rejects_missing_g1')
+keep_policy = False
+
+    @pytest.mark.parametrize('keep_policy', [True, False], ids=['policy-present', 'policy-absent'])
+    def test_measure_rejects_missing_group_even_without_the_old_marker(tmp_path, keep_policy):
+        arch = architecture()
+        mapping = json.loads((ROOT / 'tools/gnd_layers.json').read_text())
+        clone = tmp_path / 'countercheck'
+        # Copy only actual mapped Python files. No imports/native processes execute.
+        for relative in arch.discover_modules(ROOT, mapping['excluded']).values():
+            target = clone / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
+        (clone / 'src/gnd/commands/checking.py').unlink()
+        del mapping['modules']['gnd.commands.checking']
+        (clone / 'tools').mkdir()
+        layers = clone / 'tools/gnd_layers.json'
+        layers.write_text(json.dumps(mapping))
+        if keep_policy:
+            shutil.copyfile(ROOT / 'tools/gnd_entrypoints.json', clone / 'tools/gnd_entrypoints.json')
+>       with pytest.raises(arch.ToolError) as refusal:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ToolError
+
+tests/test_rf5_review_regressions.py:54: Failed
+=========================== short test summary info ============================
+FAILED tests/test_rf5_review_regressions.py::test_entrypoint_rejects_another_commands_domain_service
+FAILED tests/test_rf5_review_regressions.py::test_entrypoint_rejects_unused_exception_permission
+FAILED tests/test_rf5_review_regressions.py::test_measure_rejects_missing_group_even_without_the_old_marker[policy-present]
+FAILED tests/test_rf5_review_regressions.py::test_measure_rejects_missing_group_even_without_the_old_marker[policy-absent]
+4 failed in 4.34s
+
+Exit: 1

@@ -11,6 +11,8 @@ import json
 import os
 from pathlib import Path
 
+from support.rf5_sources import owner
+
 import gnd.cli
 from gnd.cli import main
 from gnd.model import load_model
@@ -88,7 +90,7 @@ def test_extract_cli_refuses_escaping_out_path(tmp_path: Path, monkeypatch) -> N
     an escaping stem is simulated by patching the stem derivation — proving
     the backstop in the command body refuses it even when the front line is
     bypassed (T-02.1-03)."""
-    monkeypatch.setattr(gnd.cli, "_extract_stem", lambda _path: "../escape")
+    monkeypatch.setattr(owner("_extract_stem"), "_extract_stem", lambda _path: "../escape")
     out = tmp_path / "bundle"
     out.mkdir()
     assert main(["extract", str(FULL_VOCAB), "--out", str(out)]) == 74

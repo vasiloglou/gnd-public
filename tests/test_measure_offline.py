@@ -20,6 +20,7 @@ import pytest
 
 from gnd.cli import main
 from gnd.measure import report as measure_report
+from gnd.measure import service as patched_service
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 GND_SRC = REPO_ROOT / "src" / "gnd"
@@ -880,7 +881,6 @@ def test_a_constraint_with_no_verdict_anywhere_is_refused(corpus: Path, monkeypa
     Reproduced exactly as the reviewer did — drop every verdict whose ref ends
     ``constraints[0]``.
     """
-    import gnd.cli
     from gnd.checker import CheckReport
     from gnd.checker import check as real_check
 
@@ -891,7 +891,7 @@ def test_a_constraint_with_no_verdict_anywhere_is_refused(corpus: Path, monkeypa
             coverage=report.coverage,
         )
 
-    monkeypatch.setattr(gnd.cli, "check", check_dropping_constraint_zero)
+    monkeypatch.setattr(patched_service, "check", check_dropping_constraint_zero)
     code = main(["measure", str(MODEL), "--populations", str(corpus), "--format", "json"])
     assert code == 70, "an unmeasured constraint left every rate silently"
 
@@ -912,7 +912,6 @@ def test_a_constraint_that_vanishes_from_SOME_populations_is_refused(
     Dropping the verdict on every SECOND population, so the constraint keeps a
     row (WR-01 stays green) on half the census.
     """
-    import gnd.cli
     from gnd.checker import CheckReport
     from gnd.checker import check as real_check
 
@@ -928,7 +927,7 @@ def test_a_constraint_that_vanishes_from_SOME_populations_is_refused(
             coverage=report.coverage,
         )
 
-    monkeypatch.setattr(gnd.cli, "check", check_dropping_constraint_zero_on_alternate_populations)
+    monkeypatch.setattr(patched_service, "check", check_dropping_constraint_zero_on_alternate_populations)
     code = main(["measure", str(MODEL), "--populations", str(corpus), "--format", "json"])
     assert code == 70, "a rate over half the evidence reads exactly like a rate over all of it"
 

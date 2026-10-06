@@ -14,5 +14,12 @@
     "authorization": "process-phase RF5 auto",
     "sha256": "ae47111f0b8dbbe38de72598e10f7467eed803a67941175ab2abf980fbced13e",
     "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A2-spec.md"
+  },
+  {
+    "id": "A3",
+    "authorization": "process-phase RF5 auto",
+    "decision": "delegated approval (auto=true)",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A3-spec.md",
+    "sha256": "f00fabca826bdcca85bfb49cdd81524b48082a6b797b03b4d84d92e55aa45956"
   }
 ]

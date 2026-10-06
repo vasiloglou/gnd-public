@@ -3,6 +3,8 @@ import atexit
 import tempfile
 from pathlib import Path
 
+from support.rf5_sources import cli_sources
+
 import gnd
 
 _HOLDER = tempfile.TemporaryDirectory(prefix="gnd-public-payload-alias-")
@@ -43,7 +45,7 @@ def test_the_payload_version_alias_sites_are_the_declared_compat_defaults() -> N
     }
 
     # And the CLI paths thread MODEL-derived versions, not the alias.
-    cli_text = (REPO_ROOT / "src/gnd/cli.py").read_text(encoding="utf-8")
+    cli_text = cli_sources()
     assert "case_payload_versions(contract, root)" in cli_text
     coverage_text = (REPO_ROOT / "src/gnd/coverage.py").read_text(encoding="utf-8")
     assert "payload_schema_version(model)" in coverage_text

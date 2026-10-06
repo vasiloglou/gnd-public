@@ -16,6 +16,7 @@ every payload is validated against ``report.schema.json`` with
 from __future__ import annotations
 
 import hashlib
+import inspect
 import json
 from pathlib import Path
 from typing import Any
@@ -25,8 +26,8 @@ from jsonschema import Draft202012Validator
 from support.cli_runner import run_gnd_text as _run_cli
 from support.digests import sha256_file as _sha256
 from support.documents import write_population
-from support.repository import REPO_ROOT
 
+from gnd import cli
 from gnd.cli import main
 from gnd.report import load_report_schema
 
@@ -427,9 +428,9 @@ def test_verify_band_is_delegated_to_the_one_owner() -> None:
     """Source-level acceptance: ``_cmd_verify`` delegates its band decision to
     ``_band(report)`` (checker.band, the ONE owner) and never re-derives it
     with a comprehension over verdicts."""
-    source = (REPO_ROOT / "src" / "gnd" / "cli.py").read_text(encoding="utf-8")
+    source = inspect.getsource(cli._cmd_verify)
     start = source.index("def _cmd_verify")
-    end = source.index("\ndef ", start + 1)
+    end = len(source)
     body = source[start:end]
     assert "_band(report)" in body
     assert "for verdict in report.verdicts" not in body

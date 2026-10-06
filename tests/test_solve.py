@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any, BinaryIO
 
 import pytest
+from support.rf5_sources import cli_source_paths
 
 from gnd import cli, exits, solve
 
@@ -80,7 +81,7 @@ def _bounded_jsonl_objects(raw: bytes) -> list[dict[str, Any]] | None:
                 return None
             records.append(value)
         return records
-    except Exception:  # noqa: BLE001 - The hostile-input observer must fail closed for every exception.
+    except Exception:  # noqa: BLE001 -- preserve predecessor refusal contract
         return None
 
 def _authorization_matches(value: object) -> bool:
@@ -250,7 +251,7 @@ def b5_failures(raw: bytes) -> frozenset[int]:
                     failures.add(8)
                     break
         return frozenset(failures)
-    except Exception:  # noqa: BLE001 - The hostile-input observer must fail closed for every exception.
+    except Exception:  # noqa: BLE001 -- preserve predecessor refusal contract
         return ALL_B5_FAILURES
 
 def _object_has_forbidden_key(value: object) -> bool:
@@ -1081,7 +1082,7 @@ def test_d02_conformance_accepts_thirteen_and_only_conformance_does(tmp_path: Pa
             assert station.accepted_exits == frozenset({0}), station.name
 
 def test_t26_exit_walk_halted_does_not_collide_with_another_exit_constant() -> None:
-    sources = [CLI_SOURCE, REPO_ROOT / 'src' / 'gnd' / 'exits.py']
+    sources = [*cli_source_paths(), REPO_ROOT / 'src' / 'gnd' / 'exits.py']
     values: dict[str, int] = {}
     nodes = [node for source in sources for node in ast.parse(source.read_text(encoding='utf-8')).body]
     for node in nodes:

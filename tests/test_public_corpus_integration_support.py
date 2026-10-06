@@ -15,6 +15,7 @@ from unittest.mock import patch
 from test_public_assurance_inputs_support import contained
 
 from gnd.assurance_evidence import _json, _read
+from gnd.commands import checking as checking_commands
 
 inputs = SimpleNamespace(_json=_json, _read=_read, contained=contained)
 
@@ -85,7 +86,7 @@ def integration(
         captured = io.StringIO()
         with (
             patch.object(
-                cli,
+                checking_commands,
                 "check",
                 side_effect=RuntimeError(recipe["message"]),
             ),

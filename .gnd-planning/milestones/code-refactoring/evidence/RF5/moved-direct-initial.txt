@@ -1,0 +1,30 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf5_commands.py tests/test_rf1_cli_pins.py tests/test_rf1_layering.py --tb=short -x
+........................................................................ [ 18%]
+..............................................................F
+=================================== FAILURES ===================================
+__ test_relocated_algorithm_and_qualification_are_unchanged[CorpusPathError] ___
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/inspect.py:985: in findsource
+    lnum = vars(object)['__firstlineno__'] - 1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: '__firstlineno__'
+
+During handling of the above exception, another exception occurred:
+tests/test_rf5_commands.py:31: in test_relocated_algorithm_and_qualification_are_unchanged
+    node = ast.parse(inspect.getsource(value)).body[0]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/inspect.py:1161: in getsource
+    lines, lnum = getsourcelines(object)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/inspect.py:1143: in getsourcelines
+    lines, lnum = findsource(object)
+                  ^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/inspect.py:987: in findsource
+    raise OSError('source code not available')
+E   OSError: source code not available
+=========================== short test summary info ============================
+FAILED tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[CorpusPathError]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 134 passed in 0.33s
+
+Exit: 1

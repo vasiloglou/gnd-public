@@ -1,0 +1,224 @@
+Retained output edited to replace absolute machine paths.
+Frozen git archive 29915d9; three named P2 branch controls; PYTHONPATH=archive/src
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_phase2_branch[P2-054] __________________________
+
+case = {'branch': 'constraint:all-extensions-before-constraints', 'expected': 'After all extensions and comparisons, one isol...nal-order verdict for this branch.', 'id': 'P2-054', 'path': 'cases/constraint-all-extensions-before-constraints', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098defd0>
+
+    @pytest.mark.parametrize("case", RED_CASES, ids=[str(case["id"]) for case in RED_CASES])
+    def test_phase2_branch(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch):
+        branch = str(case["branch"])
+        if branch in A8_MIGRATED_BRANCHES:
+            _assert_preconditions(case)
+        elif branch.startswith("wire:"):
+            _assert_wire(case)
+        elif branch.startswith("obligation:"):
+            _assert_obligation(case)
+        elif branch.startswith("eval:"):
+            _assert_evaluation(case)
+        elif branch.startswith(("constraint:", "band:")):
+>           _assert_constraint_or_band(case, monkeypatch)
+
+tests/test_public_derivation_evaluation_complete.py:785: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'branch': 'constraint:all-extensions-before-constraints', 'expected': 'After all extensions and comparisons, one isol...nal-order verdict for this branch.', 'id': 'P2-054', 'path': 'cases/constraint-all-extensions-before-constraints', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098defd0>
+
+    def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch) -> None:
+        model, population = _loaded(case)
+        branch = str(case["branch"])
+        extensions, derivations = _evaluate_derivations(model, population)
+        if branch == "constraint:evaluator-view-isolated":
+            base = _base_relations(model, population)
+            assert all(not base[fact_type].rows for fact_type in extensions)
+        elif branch in {
+            "constraint:constraint-view-isolated",
+            "constraint:derived-claim-view",
+            "constraint:semiderived-computed-view",
+            "constraint:unlisted-derived-claim-inert",
+        }:
+            view = _constraint_view(model, population, extensions)
+            if branch == "constraint:unlisted-derived-claim-inert":
+                assert view.facts["result"] == ()
+            elif "semi_result" in view.facts:
+                assert [dict(row) for row in view.facts["semi_result"]] == [{"item": "alpha"}]
+            else:
+                assert view.facts["result"]
+            assert view.facts is not population.facts
+        elif branch in {
+            "constraint:all-extensions-before-constraints",
+            "constraint:one-final-walk",
+            "constraint:duplicate-final-walk-red",
+        }:
+            target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
+            target_model, target_population = _loaded(target_case)
+            calls: list[str] = []
+            original_evaluate = extension_core.evaluate_derivations
+            original_message = checker._correspondence_message
+    
+            def traced_evaluate(*args: Any, **kwargs: Any):
+                result = original_evaluate(*args, **kwargs)
+                calls.extend(f"extension:{fact_type}" for fact_type in result[0])
+                calls.extend(f"comparison:{row.fact_type}" for row in result[1])
+                return result
+    
+            def traced_message(*args: Any, **kwargs: Any):
+                calls.append(f"constraint:{args[2].constraint_id}")
+                return original_message(*args, **kwargs)
+    
+>           monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+E           AttributeError: mappingproxy({'low': _TypedRelation(fact_type='low', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'middle': _TypedRelation(fact_type='middle', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'top': _TypedRelation(fact_type='top', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) has no attribute 'evaluate_derivations'
+
+tests/test_public_derivation_evaluation_complete.py:561: AttributeError
+__________________________ test_phase2_branch[P2-055] __________________________
+
+case = {'branch': 'constraint:one-final-walk', 'expected': 'After all extensions and comparisons, one isolated constraint vie...s exactly one original-order verdict for this branch.', 'id': 'P2-055', 'path': 'cases/constraint-one-final-walk', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098df490>
+
+    @pytest.mark.parametrize("case", RED_CASES, ids=[str(case["id"]) for case in RED_CASES])
+    def test_phase2_branch(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch):
+        branch = str(case["branch"])
+        if branch in A8_MIGRATED_BRANCHES:
+            _assert_preconditions(case)
+        elif branch.startswith("wire:"):
+            _assert_wire(case)
+        elif branch.startswith("obligation:"):
+            _assert_obligation(case)
+        elif branch.startswith("eval:"):
+            _assert_evaluation(case)
+        elif branch.startswith(("constraint:", "band:")):
+>           _assert_constraint_or_band(case, monkeypatch)
+
+tests/test_public_derivation_evaluation_complete.py:785: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'branch': 'constraint:one-final-walk', 'expected': 'After all extensions and comparisons, one isolated constraint vie...s exactly one original-order verdict for this branch.', 'id': 'P2-055', 'path': 'cases/constraint-one-final-walk', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098df490>
+
+    def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch) -> None:
+        model, population = _loaded(case)
+        branch = str(case["branch"])
+        extensions, derivations = _evaluate_derivations(model, population)
+        if branch == "constraint:evaluator-view-isolated":
+            base = _base_relations(model, population)
+            assert all(not base[fact_type].rows for fact_type in extensions)
+        elif branch in {
+            "constraint:constraint-view-isolated",
+            "constraint:derived-claim-view",
+            "constraint:semiderived-computed-view",
+            "constraint:unlisted-derived-claim-inert",
+        }:
+            view = _constraint_view(model, population, extensions)
+            if branch == "constraint:unlisted-derived-claim-inert":
+                assert view.facts["result"] == ()
+            elif "semi_result" in view.facts:
+                assert [dict(row) for row in view.facts["semi_result"]] == [{"item": "alpha"}]
+            else:
+                assert view.facts["result"]
+            assert view.facts is not population.facts
+        elif branch in {
+            "constraint:all-extensions-before-constraints",
+            "constraint:one-final-walk",
+            "constraint:duplicate-final-walk-red",
+        }:
+            target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
+            target_model, target_population = _loaded(target_case)
+            calls: list[str] = []
+            original_evaluate = extension_core.evaluate_derivations
+            original_message = checker._correspondence_message
+    
+            def traced_evaluate(*args: Any, **kwargs: Any):
+                result = original_evaluate(*args, **kwargs)
+                calls.extend(f"extension:{fact_type}" for fact_type in result[0])
+                calls.extend(f"comparison:{row.fact_type}" for row in result[1])
+                return result
+    
+            def traced_message(*args: Any, **kwargs: Any):
+                calls.append(f"constraint:{args[2].constraint_id}")
+                return original_message(*args, **kwargs)
+    
+>           monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+E           AttributeError: mappingproxy({'result': _TypedRelation(fact_type='result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'semi_result': _TypedRelation(fact_type='semi_result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) has no attribute 'evaluate_derivations'
+
+tests/test_public_derivation_evaluation_complete.py:561: AttributeError
+__________________________ test_phase2_branch[P2-056] __________________________
+
+case = {'branch': 'constraint:duplicate-final-walk-red', 'expected': 'After all extensions and comparisons, one isolated cons...one original-order verdict for this branch.', 'id': 'P2-056', 'path': 'cases/constraint-duplicate-final-walk-red', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10999d370>
+
+    @pytest.mark.parametrize("case", RED_CASES, ids=[str(case["id"]) for case in RED_CASES])
+    def test_phase2_branch(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch):
+        branch = str(case["branch"])
+        if branch in A8_MIGRATED_BRANCHES:
+            _assert_preconditions(case)
+        elif branch.startswith("wire:"):
+            _assert_wire(case)
+        elif branch.startswith("obligation:"):
+            _assert_obligation(case)
+        elif branch.startswith("eval:"):
+            _assert_evaluation(case)
+        elif branch.startswith(("constraint:", "band:")):
+>           _assert_constraint_or_band(case, monkeypatch)
+
+tests/test_public_derivation_evaluation_complete.py:785: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'branch': 'constraint:duplicate-final-walk-red', 'expected': 'After all extensions and comparisons, one isolated cons...one original-order verdict for this branch.', 'id': 'P2-056', 'path': 'cases/constraint-duplicate-final-walk-red', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10999d370>
+
+    def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyPatch) -> None:
+        model, population = _loaded(case)
+        branch = str(case["branch"])
+        extensions, derivations = _evaluate_derivations(model, population)
+        if branch == "constraint:evaluator-view-isolated":
+            base = _base_relations(model, population)
+            assert all(not base[fact_type].rows for fact_type in extensions)
+        elif branch in {
+            "constraint:constraint-view-isolated",
+            "constraint:derived-claim-view",
+            "constraint:semiderived-computed-view",
+            "constraint:unlisted-derived-claim-inert",
+        }:
+            view = _constraint_view(model, population, extensions)
+            if branch == "constraint:unlisted-derived-claim-inert":
+                assert view.facts["result"] == ()
+            elif "semi_result" in view.facts:
+                assert [dict(row) for row in view.facts["semi_result"]] == [{"item": "alpha"}]
+            else:
+                assert view.facts["result"]
+            assert view.facts is not population.facts
+        elif branch in {
+            "constraint:all-extensions-before-constraints",
+            "constraint:one-final-walk",
+            "constraint:duplicate-final-walk-red",
+        }:
+            target_case = next(item for item in CASES if item["branch"] == "constraint:one-final-walk")
+            target_model, target_population = _loaded(target_case)
+            calls: list[str] = []
+            original_evaluate = extension_core.evaluate_derivations
+            original_message = checker._correspondence_message
+    
+            def traced_evaluate(*args: Any, **kwargs: Any):
+                result = original_evaluate(*args, **kwargs)
+                calls.extend(f"extension:{fact_type}" for fact_type in result[0])
+                calls.extend(f"comparison:{row.fact_type}" for row in result[1])
+                return result
+    
+            def traced_message(*args: Any, **kwargs: Any):
+                calls.append(f"constraint:{args[2].constraint_id}")
+                return original_message(*args, **kwargs)
+    
+>           monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+E           AttributeError: mappingproxy({'result': _TypedRelation(fact_type='result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1'), 'semi_result': _TypedRelation(fact_type='semi_result', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) has no attribute 'evaluate_derivations'
+
+tests/test_public_derivation_evaluation_complete.py:561: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_public_derivation_evaluation_complete.py::test_phase2_branch[P2-054]
+FAILED tests/test_public_derivation_evaluation_complete.py::test_phase2_branch[P2-055]
+FAILED tests/test_public_derivation_evaluation_complete.py::test_phase2_branch[P2-056]
+3 failed in 0.83s
+
+Exit: 1

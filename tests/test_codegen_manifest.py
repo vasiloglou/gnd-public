@@ -30,6 +30,7 @@ from pathlib import Path
 from typing import Any, get_args
 
 import pytest
+from support.rf5_sources import cli_sources
 
 from gnd.codegen.emit import emit_project, write_project
 from gnd.codegen.manifest import (
@@ -808,7 +809,7 @@ def test_the_bundle_owner_is_one_module_with_two_callers() -> None:
     emit_source = (REPO_ROOT / "src" / "gnd" / "codegen" / "emit.py").read_text(
         encoding="utf-8"
     )
-    cli_source = (REPO_ROOT / "src" / "gnd" / "cli.py").read_text(encoding="utf-8")
+    cli_source = cli_sources()
     assert "from gnd.extract.bundle import" in emit_source
     assert "gnd.extract.bundle" in cli_source
     assert "from gnd.cli import" not in emit_source, (

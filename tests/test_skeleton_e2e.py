@@ -18,6 +18,7 @@ import pytest
 from support.cli_runner import run_gnd_text as _run_cli
 
 from gnd.checker import check
+from gnd.commands import checking as patched_service
 from gnd.model import ModelValidationError, load_model
 from gnd.population import load_population
 
@@ -226,6 +227,6 @@ def test_internal_checker_error_exits_70_not_band_1(monkeypatch):
     def _boom(model, population):
         raise ValueError("synthetic checker bug")
 
-    monkeypatch.setattr(gnd.cli, "check", _boom)
+    monkeypatch.setattr(patched_service, "check", _boom)
     code = gnd.cli.main(["check", str(MODEL), str(POP_GOOD_YAML)])
     assert code == 70

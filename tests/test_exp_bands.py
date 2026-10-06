@@ -25,11 +25,12 @@ import stat
 from pathlib import Path
 
 import pytest
+from support.rf5_sources import cli_sources
 
 from gnd import cli
 from gnd.cli import main
 
-CLI_SOURCE = Path(cli.__file__).read_text(encoding="utf-8")
+CLI_SOURCE = cli_sources()
 
 
 EXITS_SOURCE = (Path(cli.__file__).parent / "exits.py").read_text(encoding="utf-8")

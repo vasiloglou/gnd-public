@@ -16,6 +16,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from support.rf5_sources import cli_sources
 
 from gnd.exp.spec import (
     EXPERIMENT_DIR_PATTERN,
@@ -228,10 +229,9 @@ def test_the_three_replaced_kind_literals_are_gone_from_their_call_sites() -> No
 
     import inspect
 
-    from gnd import cli
     from gnd.exp import close
 
-    cli_source = inspect.getsource(cli)
+    cli_source = cli_sources()
     for guard in ('spec.kind != "data-driven"', "spec.kind != 'data-driven'"):
         assert guard not in cli_source, (
             f"{guard} survives in gnd/cli.py; KIND_POLICY is no longer the one "
@@ -268,10 +268,9 @@ def test_every_kind_policy_consumer_indexes_the_table() -> None:
 
     import inspect
 
-    from gnd import cli
     from gnd.exp import close
 
-    cli_source = inspect.getsource(cli)
+    cli_source = cli_sources()
     assert "KIND_POLICY[spec.kind].expectation_authorable" in cli_source
     assert "KIND_POLICY[spec.kind].session_runnable" in cli_source
     assert "KIND_POLICY[spec.kind].close_obligations" in inspect.getsource(close)

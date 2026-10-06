@@ -10,6 +10,8 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path, PurePosixPath
 
+from support.rf5_sources import HOMES
+
 from gnd import semantic_registry
 
 
@@ -153,6 +155,8 @@ _FORWARDERS = {
 
 def _owner(module: str, name: str) -> str:
     """Resolve defining modules to the unchanged semantic registry identities."""
+    if HOMES.get(name.split(".")[0]) == module:
+        module = "gnd.cli"
     module = {"gnd.payloads": "gnd.report", "gnd.extensions": "gnd.checker"}.get(module, module)
     return module + "." + name
 

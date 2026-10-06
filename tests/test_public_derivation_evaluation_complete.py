@@ -42,7 +42,9 @@ from gnd.checker import (
     _TypedRelation,
     band,
 )
+from gnd.commands import checking as checking_commands
 from gnd.exp.session_eval import VerifierPayloadError, validate_verifier_payload
+from gnd.export import verification_service
 from gnd.model import ModelValidationError, load_model
 from gnd.population import PopulationValidationError, load_population
 from gnd.report import (
@@ -237,7 +239,8 @@ def _assert_wire(case: dict[str, Any]) -> None:
         output = io.StringIO()
         with pytest.MonkeyPatch.context() as mutation:
             mutation.setattr(cli_module.api_module.checker_module, "check", injected_failure)
-            mutation.setattr(cli_module, "check", injected_failure)
+            mutation.setattr(checking_commands, "check", injected_failure)
+            mutation.setattr(verification_service, "check", injected_failure)
             with contextlib.redirect_stdout(output):
                 if branch == "wire:v4-check-internal":
                     exit_code = cli_module._cmd_check(
@@ -558,7 +561,7 @@ def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyP
             calls.append(f"constraint:{args[2].constraint_id}")
             return original_message(*args, **kwargs)
 
-        monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
+        monkeypatch.setattr(extension_core, "evaluate_derivations", traced_evaluate)
         monkeypatch.setattr(checker, "_correspondence_message", traced_message)
         report = checker.check(target_model, target_population)
         constraint_calls = [event for event in calls if event.startswith("constraint:")]

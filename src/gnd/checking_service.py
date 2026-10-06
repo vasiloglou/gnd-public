@@ -645,3 +645,6 @@ run_check = _run_check
 check_report = _run_check
 
 mint_execution = _mint_execution
+
+# Historical lookup name for the unchanged CLI assurance closure.
+_certify_assurance = certify_assurance

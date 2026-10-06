@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_rf5_commands.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.9234969615936279
+}

@@ -33,6 +33,7 @@ from support.rf1_pins import (
     tree_digests,
 )
 from support.rf2_session_pins import assert_successor, install_capture
+from support.rf5_sources import owner
 
 from gnd import cli
 from gnd.exp.session import case_payload_versions
@@ -358,7 +359,7 @@ def test_session_resume(version, tmp_path, monkeypatch):
     (run / "result.json").unlink()
     before = sorted(path.relative_to(run).as_posix() for path in run.rglob("*"))
     state = _resume_state(built, run, tmp_path)
-    monkeypatch.setattr(cli, "_next_session_run_root", lambda _root: run)
+    monkeypatch.setattr(owner("_next_session_run_root"), "_next_session_run_root", lambda _root: run)
     result = run_main(built.argv, cwd=tmp_path)
     after = sorted(path.relative_to(run).as_posix() for path in run.rglob("*"))
     observed = {

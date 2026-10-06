@@ -12,6 +12,7 @@ from test_public_slice_runtime import CORPUS as SLICE_CORPUS
 from test_public_transition_walks import MODEL
 
 import gnd
+from gnd.commands import checking as patched_service
 
 
 def _generic_registry_root():
@@ -57,7 +58,7 @@ def test_unknown_branch_maps_to_cli_internal_error(registry, monkeypatch, capsys
     def broken(*args, **kwargs):
         registry.record_branch("snapshot:invented:n-a:clean")
 
-    monkeypatch.setattr(cli, "check", broken)
+    monkeypatch.setattr(patched_service, "check", broken)
     root = Path(__file__).resolve().parents[1]
     corpus = root / "proof/v6/phase1/corpus"
     case = json.loads((corpus / "cases.json").read_text())["cases"][0]

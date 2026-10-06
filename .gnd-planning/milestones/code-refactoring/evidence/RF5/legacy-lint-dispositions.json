@@ -1,0 +1,1370 @@
+[
+  {
+    "path": "src/gnd/checking_service.py",
+    "line": 190,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/checking_service.py",
+    "line": 234,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/checking_service.py",
+    "line": 316,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/checking_service.py",
+    "line": 459,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/checking_service.py",
+    "line": 590,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 132,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 133,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 134,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 135,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 136,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 137,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 138,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 139,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 140,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 141,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 147,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 149,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 151,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 153,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 154,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 158,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 159,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 162,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 163,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 164,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 166,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 168,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 171,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 174,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 177,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 180,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 183,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 186,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 189,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 192,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 194,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 196,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 199,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 202,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 205,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 208,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 211,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 214,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 217,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 220,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 223,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 226,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 229,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 232,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 235,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 238,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 241,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 243,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 245,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 248,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 251,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 254,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 256,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 258,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 261,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 264,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 267,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 270,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 273,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 276,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 279,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 282,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 285,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 288,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 291,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 294,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 297,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 300,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 303,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 306,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 308,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 309,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 311,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 314,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 317,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 320,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 323,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 326,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 329,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 332,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 335,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 338,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 341,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 344,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 347,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 350,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 353,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 356,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 359,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 362,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 365,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 368,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 371,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 374,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 377,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 380,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 381,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 382,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 383,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 384,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 385,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 386,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 387,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 388,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 389,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 390,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 391,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 392,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 393,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 394,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 395,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 416,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 419,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 422,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 425,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 428,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 431,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 434,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 437,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 440,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 443,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 446,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 449,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 452,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 455,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 458,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 461,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 464,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 467,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 470,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 473,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 476,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 479,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 482,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 485,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 488,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 489,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 490,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 491,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 492,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 493,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 496,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 497,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 500,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 503,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 506,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 509,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 512,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 515,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 518,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 521,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 524,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 527,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 530,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 533,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 536,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 539,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 542,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 545,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 547,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 549,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 552,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 555,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 558,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 561,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 564,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 566,
+    "code": "F401",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 568,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 571,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 574,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 577,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 580,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 583,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 586,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 589,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 592,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 595,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 598,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 601,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 603,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/cli.py",
+    "line": 605,
+    "code": "PLC0414",
+    "reason": "historical CLI binding retained by RF-R5"
+  },
+  {
+    "path": "src/gnd/codegen/service.py",
+    "line": 129,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/checking.py",
+    "line": 102,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/checking.py",
+    "line": 263,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/checking.py",
+    "line": 317,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/checking.py",
+    "line": 343,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/checking.py",
+    "line": 374,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/exp.py",
+    "line": 297,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/exp.py",
+    "line": 377,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/export.py",
+    "line": 23,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/commands/export.py",
+    "line": 31,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/evolve/cli_service.py",
+    "line": 541,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/evolve/cli_service.py",
+    "line": 662,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/evolve/cli_service.py",
+    "line": 704,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/export/verification_service.py",
+    "line": 418,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/export/verification_service.py",
+    "line": 445,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/export/verification_service.py",
+    "line": 520,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/extract/service.py",
+    "line": 116,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/fidelity/doccheck_service.py",
+    "line": 57,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/fidelity/doccheck_service.py",
+    "line": 159,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/fidelity/service.py",
+    "line": 91,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/fidelity/service.py",
+    "line": 316,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/measure/service.py",
+    "line": 80,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/measure/service.py",
+    "line": 178,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/measure/service.py",
+    "line": 193,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/review/service.py",
+    "line": 154,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/review/service.py",
+    "line": 253,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 84,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 126,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 171,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 286,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 330,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 338,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 416,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 472,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 479,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 493,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 540,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 566,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 616,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "src/gnd/synth/service.py",
+    "line": 659,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "tests/test_solve.py",
+    "line": 84,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  },
+  {
+    "path": "tests/test_solve.py",
+    "line": 254,
+    "code": "BLE001",
+    "reason": "preserve predecessor refusal contract"
+  }
+]

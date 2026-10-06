@@ -46,8 +46,7 @@ def assert_scanned(homes):
 def test_actual_source_observers_cover_new_query_homes():
     homes = {ROOT / 'src/gnd/model_queries.py'}
     for name in ('model_index.py', 'constraint_families.py'):
-        if (ROOT / 'src/gnd' / name).exists():
-            homes.add(ROOT / 'src/gnd' / name)
+        homes.add(ROOT / 'src/gnd' / name)
     assert_scanned(homes)
 
 

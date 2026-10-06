@@ -1,0 +1,5 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python tools/gnd_arch.py measure --out .gnd-planning/milestones/code-refactoring/evidence/metrics-RF6.json
+ERROR: --out already exists: .gnd-planning/milestones/code-refactoring/evidence/metrics-RF6.json
+
+Exit: 11

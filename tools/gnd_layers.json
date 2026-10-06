@@ -151,6 +151,12 @@
     "gnd.checker": {
       "layer": "checking"
     },
+    "gnd.checker._core": {
+      "layer": "checking"
+    },
+    "gnd.checker._reports": {
+      "layer": "checking"
+    },
     "gnd.checking_service": {
       "layer": "semantics"
     },
@@ -560,6 +566,12 @@
       "layer": "lanes"
     },
     "gnd.model": {
+      "layer": "model"
+    },
+    "gnd.model._operations": {
+      "layer": "model"
+    },
+    "gnd.model._validation": {
       "layer": "model"
     },
     "gnd.model_identity": {

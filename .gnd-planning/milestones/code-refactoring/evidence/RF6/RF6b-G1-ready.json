@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf6_packages.py",
+    "tests/test_rf6_index.py",
+    "tests/test_rf6_registry.py",
+    "tests/test_rf6_moves.py",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_gnd_arch.py",
+    "tests/test_rf1_pin_harness.py",
+    "tests/test_public_derivation_parity_local.py::test_duckdb_is_exact_pinned_and_absent_from_production",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 23.085735082626343
+}

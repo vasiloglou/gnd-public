@@ -317,7 +317,7 @@ def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
     ``src/gnd/exp/spec.py`` reds THIS scan while scans 1-4 stay green. Plan
     03-03 recorded the same mutation against ``src/gnd/codegen/emit.py``.
 
-    Self-check: the walk must LEAVE its root and reach ``src/gnd/model.py`` — the
+    Self-check: the walk must LEAVE its root and reach ``src/gnd/model/`` — the
     module the lane genuinely imports (``ValidationIssue`` and the untrusted-YAML
     event budget). A closure walk that never leaves its root is a scan over one
     directory wearing a closure's name (G-3).
@@ -365,8 +365,8 @@ def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
         f"Codegen and the experiment primitive derive from COMMITTED artifacts; "
         f"a live call in this closure makes a recorded conclusion irreproducible."
     )
-    assert (GND_SRC / "model.py") in seen, (
-        "the closure scan never reached src/gnd/model.py — the module the "
+    assert {GND_SRC / "model" / name for name in ("__init__.py", "_validation.py", "_operations.py")} <= seen, (
+        "the closure scan never reached src/gnd/model/ — the module the "
         "generation lane genuinely imports. The scan is not exercising its "
         "purpose; check that gnd.exp still sources ValidationIssue from gnd.model."
     )

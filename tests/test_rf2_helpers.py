@@ -238,11 +238,11 @@ def test_affected_scan_scopes_cover_moved_definitions():
         return original(path, *args, **kwargs)
     with patch.object(Path, "read_text", observe):
         scans.test_no_network_library_is_reachable_from_the_measure_lane()
-        assert {ROOT / "src/gnd/artifacts.py", ROOT / "src/gnd/model.py"} <= visited
+        assert {ROOT / "src/gnd/artifacts.py", ROOT / "src/gnd/model/__init__.py"} <= visited
         visited.clear()
         scans.test_no_provider_client_anywhere_in_the_package()
         assert {ROOT / "src/gnd" / name for name in
-                ("artifacts.py", "model.py", "exits.py", "checker.py", "verbalize.py")} <= visited
+                ("artifacts.py", "model/__init__.py", "model/_validation.py", "model/_operations.py",  "exits.py", "checker/__init__.py", "checker/_core.py", "checker/_reports.py", "verbalize.py")} <= visited
     # Imported dependency closure is tested by test_measure_offline; here pin
     # the absence of dynamic evaluators in the moved helper bodies themselves.
     for function in [getattr(artifacts, name) for name in GROUPS.values()]:

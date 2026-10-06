@@ -792,7 +792,7 @@ def test_the_codegen_lane_does_not_reach_into_the_cli() -> None:
         "the closure walk did not even reach the emitter — the roots are wrong "
         "and this guard is checking nothing"
     )
-    assert "src/gnd/model.py" in relative, (
+    assert {"src/gnd/model/" + name for name in ("__init__.py", "_validation.py", "_operations.py")} <= set(relative), (
         "the closure walk never left src/gnd/codegen/ — a walk that stays inside "
         "its root is a directory listing wearing a closure's name, and it would "
         "keep passing after the reach-in came back one module deeper"

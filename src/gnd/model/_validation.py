@@ -1,3 +1,4 @@
+# ruff: noqa: F401 -- historical namespace imports retained for compatibility facade
 """Model loading with two-layer validation.
 
 Layer 1: jsonschema Draft 2020-12 meta-schema (structure, enums, discriminated
@@ -44,14 +45,14 @@ from ruamel.yaml import YAML
 from gnd import verbalize
 from gnd.atoms import atom_bind, atom_has_bind
 from gnd.documents import (
-    DeonticNote,  # noqa: F401 -- compatibility export
+    DeonticNote,  # historical compatibility export
     Model,
 )
 from gnd.errors import (
     ModelLoadError,
     ModelValidationError,
     ValidationIssue,
-    issues_from_validation_error,  # noqa: F401 -- compatibility export
+    issues_from_validation_error,  # historical compatibility export
 )
 from gnd.terms import (
     DEFAULT_LIMITS,
@@ -113,7 +114,7 @@ def yaml_stream_guard_error(path: str | Path) -> str | None:
     return None
 
 
-from gnd.documents import structured_derivation_ids  # noqa: F401 -- compatibility export
+from gnd.documents import structured_derivation_ids  # historical compatibility export
 
 
 def _load_meta_schema() -> dict[str, Any]:
@@ -4726,660 +4727,167 @@ def semantic_validate(doc: dict[str, Any]) -> list[ValidationIssue]:
         _DERIVATION_TERM_CACHE.reset(token)
 
 
-def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
-    """Validate one immutable bounded buffer; source is diagnostic metadata."""
-    from ruamel.yaml.events import AliasEvent
 
-    if len(data) > MAX_MODEL_BYTES:
-        raise ModelLoadError("model exceeds the 10 MiB input cap")
-    text = data.decode("utf-8")
-    if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
-        text = text.rstrip()
-    doc = None
-    if text.lstrip().startswith("{"):
-        from gnd.errors import PopulationLoadError
-        from gnd.population import _parse_document_bytes
-
-        try:
-            doc = _parse_document_bytes(data, suffix=".json", source=str(source))
-        except PopulationLoadError:
-            pass  # A YAML flow mapping may start with an unquoted key.
-    if doc is None:
-        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
-            if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
-                raise ModelLoadError("model YAML alias/event guard refused input")
-        doc = configure_comment_scanner(YAML(typ="rt")).load(text)
-    issues = _layer1_structural(doc)
-    if issues:
-        raise ModelValidationError(issues)
-    issues = semantic_validate(dict(doc))
-    errors = [issue for issue in issues if issue.severity == "error"]
-    warnings = [issue for issue in issues if issue.severity == "warning"]
-    if errors:
-        raise ModelValidationError(errors, warnings)
-    model = Model.model_validate({**dict(doc), "warnings": warnings})
-
-    validate_declarations(model)
-    _attach_compiled_obligations(model)
-    return model
-
-
-def _load_model_no_follow(path: Path) -> Model:
-    """Strict path intake for consumers whose contract forbids symlink traversal."""
-    from gnd import artifacts
-
-    with retained_root(path.parent) as descriptor:
-        data, _ = artifacts.read_regular_bounded_at(
-            descriptor, path.name, max_bytes=MAX_MODEL_BYTES
-        )
-        model = load_model_bytes(data, source=path)
-        if model.reference_populations:
-            try:
-                model._references = _bind_at(model, descriptor)
-            except Exception as error:
-                raise ReferenceInputError(str(error), model=model) from error
-        return model
-
-
-def load_model(path: str | Path) -> Model:
-    """Read model and reference bytes beneath a single retained directory."""
-    import os
-
-    from gnd import artifacts
-
-    path = Path(path)
-    if hasattr(os, "O_NOFOLLOW") and hasattr(os, "O_DIRECTORY"):
-        try:
-            return _load_model_no_follow(path)
-        except (OSError, artifacts.ArtifactError):
-            # Only reference-free models retain the historical symlink route.
-            pass
-    import stat
-
-    if not stat.S_ISREG(path.stat().st_mode):
-        raise ModelLoadError("model path is not a regular file")
-    with path.open("rb") as handle:
-        data = handle.read(MAX_MODEL_BYTES + 1)
-    model = load_model_bytes(data, source=path)
-    if model.reference_populations:
-        raise ReferenceInputError(
-            "safe reference descriptor traversal is unavailable or refused the model path",
-            model=model,
-        )
-    return model
-
-
-# --------------------------------------------------------------------------- #
-# Trace compilation (B2) -- in memory, per operation, never serialized
-# --------------------------------------------------------------------------- #
-
-
-def _effect_index(operations: list[dict[str, Any]]) -> dict[str, Any]:
-    """How many operations assert each fact type, and which retract it.
-
-    Both halves are needed to decide whether a precondition can be lifted into a
-    standing claim -- see :func:`compile_operation`.
-    """
-    counts: dict[str, int] = {}
-    retracted: set[str] = set()
-    for operation in operations:
-        asserted: set[str] = set()
-        for effect in operation.get("effects") or []:
-            if not isinstance(effect, dict):
-                continue
-            if isinstance(effect.get("assert"), dict) and effect["assert"].get("fact_type"):
-                asserted.add(str(effect["assert"]["fact_type"]))
-            if isinstance(effect.get("retract"), dict) and effect["retract"].get("fact_type"):
-                retracted.add(str(effect["retract"]["fact_type"]))
-        for fact_type_id in asserted:
-            counts[fact_type_id] = counts.get(fact_type_id, 0) + 1
-    return {"asserters": counts, "retracted": retracted}
-
-
-def _variables_in(atom: dict[str, Any]) -> set[str]:
-    return {
-        str(term)[1:]
-        for term in _derivation_bind(atom).values()
-        if isinstance(term, str) and term.startswith("$")
-    }
-
-
-def _roles_by_variable(atom: dict[str, Any]) -> dict[str, list[str]]:
-    """``{parameter name: [role names]}`` for the atom's variable bindings.
-
-    A MULTIMAP, because one parameter may occupy two roles: `A(left: $x, right:
-    $x)` is a legal atom, and a plain dict kept only the last role -- so a
-    compiled obligation over such an atom compared one role pair and called
-    `B(1,1)` matched by `A(2,1)`. Found by adversarial review.
-    """
-    roles: dict[str, list[str]] = {}
-    for role, term in atom_bind(atom).items():
-        if isinstance(term, str) and term.startswith("$"):
-            roles.setdefault(str(term)[1:], []).append(str(role))
-    return roles
-
-
-def _has_literal(atom: dict[str, Any]) -> bool:
-    return any(
-        not (isinstance(term, str) and term.startswith("$"))
-        for term in _derivation_bind(atom).values()
-    )
-
-
-def compile_operation(operation: dict[str, Any], effects: dict[str, Any]) -> list[dict[str, Any]]:
-    """Standing obligations derivable from one operation's preconditions.
-
-    A precondition is a claim about the instant a step runs. Some of them imply
-    something DURABLE: `reimburse_expense` requires the expense to have reached
-    Workday and records that it was reimbursed, so every reimbursed expense in
-    any population, walk or no walk, was submitted. That second sentence is
-    checkable against data at rest, and deriving it is what compilation means.
-
-    Only one shape compiles: a literal-free, single-atom precondition sharing at
-    least one parameter with an asserted fact type. The quantifier is
-    EXISTENTIAL and was measured rather than preferred -- under the universal
-    reading nothing at all compiles in the 13-operation corpus model, because
-    every all-shared precondition is disqualified for carrying a literal or for
-    being one atom of a conjunction, so the whole feature would ship with no
-    case that could observe it. Unshared parameters are quantified away, which
-    makes the result a role-projection subset: standard ORM.
-
-    TWO guards make that lift sound, and one of them was missing until an
-    adversarial review supplied the counterexample.
-
-    The SOLE-ASSERTER guard: the derived claim generalizes over facts of the
-    ASSERTED type, so it only follows if this operation is the only way such
-    facts arise.
-
-    The NO-RETRACT guard: the claim also depends on the REQUIRED fact still
-    being there. An operation that requires A, asserts B and retracts A in the
-    same step is entirely legal -- and the state it produces breaks "every B has
-    an A", so running the same walk twice reports an alethic failure against a
-    state its own operation produced. If any operation in the model retracts the
-    required fact type, the obligation is retained instead.
-
-    Both guards make an assumption mechanical instead of promised. Neither makes
-    the lift unconditionally valid: a population may contain facts with no
-    operational provenance at all, which is why these obligations are evaluated
-    inside a walk and never published as model constraints.
-
-    Everything else is retained with a ``transition-only`` reason. Retained is
-    not skipped: the transition evaluator checks it at the step, it simply
-    cannot be lifted into a claim about data at rest.
-    """
-    parameters = {str(p.get("name")) for p in operation.get("parameters") or []}
-    asserted: list[dict[str, Any]] = [
-        effect["assert"]
-        for effect in operation.get("effects") or []
-        if isinstance(effect, dict) and isinstance(effect.get("assert"), dict)
-    ]
-    compiled: list[dict[str, Any]] = []
-    for index, obligation in enumerate(operation.get("preconditions") or []):
-        atoms = obligation.get("require") or []
-        entry: dict[str, Any] = {
-            "obligation": str(obligation.get("id")),
-            "modality": str(obligation.get("modality", "")),
-            "source_index": index,
-        }
-        if len(atoms) != 1:
-            entry["transition-only"] = f"conjunctive precondition of {len(atoms)} atoms"
-            compiled.append(entry)
-            continue
-        atom = atoms[0]
-        if _has_literal(atom):
-            entry["transition-only"] = "atom carries a literal"
-            compiled.append(entry)
-            continue
-        required_type = str(atom.get("fact_type"))
-        if required_type in effects["retracted"]:
-            entry["transition-only"] = (
-                f"'{required_type}' is retracted by some operation, so the derived "
-                f"claim would not stay true of a state this model can produce"
-            )
-            compiled.append(entry)
-            continue
-        atom_roles = _roles_by_variable(atom)
-        sharing = [
-            (effect, sorted(set(atom_roles) & set(_roles_by_variable(effect)) & parameters))
-            for effect in asserted
-        ]
-        sharing = [(effect, shared) for effect, shared in sharing if shared]
-        if not sharing:
-            entry["transition-only"] = "no parameter is bound by any asserted fact type"
-            compiled.append(entry)
-            continue
-        sole = [
-            (effect, shared)
-            for effect, shared in sharing
-            if effects["asserters"].get(str(effect["fact_type"]), 0) == 1
-        ]
-        if not sole:
-            crowded = sorted({str(effect["fact_type"]) for effect, _ in sharing})
-            entry["transition-only"] = (
-                f"asserted fact type(s) {crowded} are asserted by more than one "
-                f"operation, so the derived claim would not follow"
-            )
-            compiled.append(entry)
-            continue
-        # EVERY eligible asserted fact type, not the first one sorted: an
-        # operation asserting both B and C from one precondition licenses two
-        # claims, and taking `sole[0]` silently dropped the other -- so a
-        # pre-state violating it was never checked. Found by adversarial review.
-        for effect, shared in sole:
-            effect_roles = _roles_by_variable(effect)
-            # Role PAIRS, not parameter names: the evaluator compares a role of
-            # the asserted fact type against a role of the required one, and the
-            # parameter is only the link between them. One parameter may occupy
-            # several roles on either side, so every combination is a pair the
-            # comparison must hold for.
-            pairs = [
-                (of_role, in_role)
-                for name in shared
-                for of_role in effect_roles[name]
-                for in_role in atom_roles[name]
-            ]
-            compiled.append(
-                {
-                    **entry,
-                    "subset": {"of": str(effect["fact_type"]), "in": required_type},
-                    "role_pairs": pairs,
-                    "atom": atom,
-                    "locator": (
-                        f"$.operations[id={operation.get('id')}].compiled[{len(compiled)}]"
-                    ),
-                }
-            )
-    return compiled
-
-
-def _attach_compiled_obligations(model: Model) -> None:
-    """Attach ``operation["compiled"]`` IN MEMORY, after semantic validation.
-
-    Never on ``Model.constraints``, never serialized, never in YAML, and -- after
-    a reproduced defect -- never on the operation dicts either. See
-    :attr:`Model._compiled`: writing into them moved ``operations_digest``,
-    because that digest is taken over exactly the section being written to. The
-    side table leaves the loaded document byte-for-byte as authored, so both
-    digests are stable by construction rather than by careful stripping.
-
-    Runs only when the model declares operations, so a v1 document's load path
-    is byte-identical to what it was before v2 existed.
-    """
-    if not model.operations:
-        return
-    effects = _effect_index(model.operations)
-    for operation in model.operations:
-        model._compiled[str(operation.get("id"))] = compile_operation(operation, effects)
-
-
-import hashlib
-import os
-import weakref
-from contextlib import contextmanager
-from typing import Literal
-
-from gnd import artifacts
-from gnd.values import reference_model_digest
-
-MAX_BYTES = 10 * 1024 * 1024
-
-
-MAX_SET_BYTES = 32 * 1024 * 1024
-
-
-MAX_ENTRIES = 100_000
-
-
-_TOKEN = object()
-
-
-_BOUND = weakref.WeakValueDictionary()
-
-
-_COMBINED = weakref.WeakValueDictionary()
-
-
-class ReferenceInputError(ValueError):
-    """A reference boundary refused its input before domain evaluation."""
-
-    def __init__(self, message: str, *, model: Model | None = None):
-        super().__init__(message)
-        self.model = model
-
-
-@dataclass(frozen=True)
-class ReferenceOrigin:
-    id: str
-    raw_sha256: str
-
-
-@dataclass(frozen=True)
-class OccurrenceOrigin:
-    kind: Literal["candidate", "reference"]
-    reference_id: str | None
-
-
-@dataclass(frozen=True)
-class BoundReferenceContext:
-    _model: Model
-    _digest: str
-    _snapshots: tuple[tuple[ReferenceOrigin, str, bytes], ...]
-    _owners: tuple[tuple[str, str], ...]
-    _populations: tuple[Population, ...]
-    _token: object
-
-
-@dataclass(frozen=True)
-class BoundPopulationView:
-    combined: Population
-    candidate: Population
-    occurrence_origins: tuple[dict[str, Any], ...]
-    references: BoundReferenceContext
-
-
-def validate_reference_structure(document: object) -> None:
-    stack = [(document, 0)]
-    while stack:
-        node, parent_depth = stack.pop()
-        if isinstance(node, (list, dict)):
-            depth = parent_depth + 1
-            if depth > 64:
-                raise ReferenceInputError("reference container depth exceeds 64")
-            stack.extend((v, depth) for v in (node.values() if isinstance(node, dict) else node))
-
-
-def _relative(path: object) -> str:
-    if not isinstance(path, str) or not path or len(path) > 4096:
-        raise ReferenceInputError("reference path is empty or exceeds 4096 characters")
-    parts = path.split("/")
-    if len(parts) > 32 or any(p in {"", ".", ".."} for p in parts):
-        raise ReferenceInputError(
-            "reference path must have at most 32 nonempty relative components"
-        )
-    if "\\" in path or "\x00" in path or re.match(r"^[A-Za-z]:", path):
-        raise ReferenceInputError("reference path is not a confined POSIX relative path")
-    return path
-
-
-@contextmanager
-def retained_root(root: str | Path):
-    """Open every lexical ancestor without following a symlink."""
-    if not hasattr(os, "O_NOFOLLOW") or not hasattr(os, "O_DIRECTORY"):
-        raise ReferenceInputError("safe reference descriptor traversal is unavailable")
-    absolute = Path(root)
-    if not absolute.is_absolute():
-        absolute = Path.cwd() / absolute
-    descriptor = os.open(absolute.anchor, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
-    try:
-        for part in absolute.parts[1:]:
-            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=descriptor)
-            os.close(descriptor)
-            descriptor = next_fd
-        yield descriptor
-    finally:
-        os.close(descriptor)
-
-
-def validate_declarations(model: Model) -> dict[str, str]:
-    declarations = model.reference_populations
-    if declarations:
-        from gnd.model import _layer1_structural, semantic_validate
-
-        document = model.model_dump(exclude={"warnings"})
-        if _layer1_structural(document) or any(
-            i.severity == "error" for i in semantic_validate(document)
-        ):
-            raise ReferenceInputError("reference-bearing model structure or semantics are invalid")
-    if declarations and model.version != 4:
-        raise ReferenceInputError("reference_populations requires model version 4")
-    if len(declarations) > 32:
-        raise ReferenceInputError("reference file count exceeds 32")
-    ids: set[str] = set()
-    owners: dict[str, str] = {}
-    types = {ft["id"]: ft for ft in model.fact_types}
-    for d in declarations:
-        if set(d) != {"id", "path", "sha256", "fact_types"}:
-            raise ReferenceInputError("reference declaration has missing or extra fields")
-        identifier = d["id"]
-        if not isinstance(identifier, str) or not 1 <= len(identifier) <= 128 or identifier in ids:
-            raise ReferenceInputError("reference id must be unique and 1..128 characters")
-        ids.add(identifier)
-        _relative(d["path"])
-        if not isinstance(d["sha256"], str) or not re.fullmatch("[0-9a-f]{64}", d["sha256"]):
-            raise ReferenceInputError("reference sha256 must be 64 lowercase hexadecimal digits")
-        claimed = d["fact_types"]
-        if not isinstance(claimed, list) or not claimed:
-            raise ReferenceInputError("reference fact_types must be a nonempty list")
-        for ft in claimed:
-            if not isinstance(ft, str) or ft not in types or ft in owners:
-                raise ReferenceInputError(
-                    "reference fact ownership is unknown, duplicated or overlapping"
-                )
-            if types[ft].get("derivation", "base") not in {"base", None}:
-                raise ReferenceInputError("references may own only base fact types")
-            owners[ft] = identifier
-    for operation in model.operations:
-        for effect in operation.get("effects", []):
-            for action in ("assert", "retract"):
-                if effect.get(action, {}).get("fact_type") in owners:
-                    raise ReferenceInputError(
-                        "operation effects cannot write a reference-owned fact type"
-                    )
-    return owners
-
-
-def _bind_at(model: Model, descriptor: int) -> BoundReferenceContext:
-    from gnd.population import PopulationLoadError, _build_population, _parse_document_bytes
-
-    owners = validate_declarations(model)
-    snapshots = []
-    populations = []
-    fact_entries = instance_entries = 0
-    total = 0
-    for d in sorted(model.reference_populations, key=lambda d: d["id"]):
-        raw, _leaf = artifacts.read_regular_bounded_at(descriptor, d["path"], max_bytes=MAX_BYTES)
-        total += len(raw)
-        if total > MAX_SET_BYTES:
-            raise ReferenceInputError("reference set exceeds 32 MiB")
-        digest = hashlib.sha256(raw).hexdigest()
-        if digest != d["sha256"]:
-            raise ReferenceInputError("reference raw hash does not match declared sha256")
-        doc = _parse_document_bytes(raw, suffix=Path(d["path"]).suffix, source=d["path"])
-        validate_reference_structure(doc)
-        if isinstance(doc, dict):
-            for section in ("facts", "instances"):
-                entries = doc.get(section, {})
-                if (
-                    isinstance(entries, dict)
-                    and sum(len(rows) for rows in entries.values() if isinstance(rows, list))
-                    > MAX_ENTRIES
-                ):
-                    raise ReferenceInputError("reference entries exceed 100000")
-        try:
-            pop = _build_population(doc, model=model, deduplicate_shape_rows=True)
-        except PopulationLoadError as error:
-            raise ReferenceInputError(
-                "reference population structure or types are invalid"
-            ) from error
-        if any(ft not in d["fact_types"] for ft in pop.facts):
-            raise ReferenceInputError("reference asserts an unowned fact type")
-        fact_entries += sum(map(len, pop.facts.values()))
-        instance_entries += sum(map(len, pop.instances.values()))
-        if fact_entries > MAX_ENTRIES or instance_entries > MAX_ENTRIES:
-            raise ReferenceInputError("reference fact or instance entry count exceeds 100000")
-        snapshots.append((ReferenceOrigin(d["id"], digest), d["path"], raw))
-        populations.append(pop)
-    context = BoundReferenceContext(
-        model,
-        reference_model_digest(model),
-        tuple(snapshots),
-        tuple(sorted(owners.items())),
-        tuple(populations),
-        _TOKEN,
-    )
-    _BOUND[id(context)] = context
-    return context
-
-
-def bind_references(model: Model, *, root: str | Path) -> BoundReferenceContext:
-    validate_declarations(model)
-    with retained_root(root) as descriptor:
-        return _bind_at(model, descriptor)
-
-
-def resolve_context(
-    model: Model, references: BoundReferenceContext | None = None
-) -> BoundReferenceContext:
-    context = references if references is not None else model._references
-    if (
-        not isinstance(context, BoundReferenceContext)
-        or context._token is not _TOKEN
-        or _BOUND.get(id(context)) is not context
-    ):
-        raise ReferenceInputError("reference-bearing model requires a bound reference context")
-    if context._model is not model or context._digest != reference_model_digest(model):
-        raise ReferenceInputError("reference context does not match this model's current identity")
-    owners = validate_declarations(model)
-    expected = {d["id"]: d for d in model.reference_populations}
-    if tuple(sorted(owners.items())) != context._owners or len(expected) != len(context._snapshots):
-        raise ReferenceInputError("reference context ownership or snapshot roster changed")
-    if len(context._populations) != len(context._snapshots) or any(
-        not pop.matches_validation_marker(model) for pop in context._populations
-    ):
-        raise ReferenceInputError("reference context validated population changed")
-    for origin, path, raw in context._snapshots:
-        declaration = expected.get(origin.id)
-        if (
-            declaration is None
-            or path != declaration["path"]
-            or origin.raw_sha256 != declaration["sha256"]
-            or hashlib.sha256(raw).hexdigest() != origin.raw_sha256
-        ):
-            raise ReferenceInputError("reference context snapshot identity changed")
-    return context
-
-
-def bind_population(
-    model: Model, candidate: Population, *, references: BoundReferenceContext
-) -> BoundPopulationView:
-    from gnd.population import _combine_validated_populations
-    from gnd.values import identity_key as _identity_key
-
-    context = resolve_context(model, references)
-    owners = dict(context._owners)
-    if any(ft in owners for ft in candidate.facts):
-        raise ReferenceInputError("candidate cannot mention a reference-owned fact type")
-    if not candidate.matches_validation_marker(model):
-        raise ReferenceInputError("candidate population is not validated against the current model")
-    facts = {ft: [dict(row) for row in rows] for ft, rows in candidate.facts.items()}
-    instances = {ot: list(values) for ot, values in candidate.instances.items()}
-    covers = list(candidate.covers)
-    format_version = candidate.format_version
-    origins = [
-        {"origin": {"kind": "candidate", "reference_id": None}, "fact_type": ft, "index": i}
-        for ft, rows in candidate.facts.items()
-        for i in range(len(rows))
-    ]
-    for (origin, _path, _raw), pop in zip(context._snapshots, context._populations, strict=True):
-        format_version = max(format_version, pop.format_version)
-        for ot, values in pop.instances.items():
-            instances.setdefault(ot, []).extend(values)
-        for ft, rows in pop.facts.items():
-            facts[ft] = [dict(row) for row in rows]
-            origins.extend(
-                {
-                    "origin": {"kind": "reference", "reference_id": origin.id},
-                    "fact_type": ft,
-                    "index": i,
-                }
-                for i in range(len(rows))
-            )
-        covers.extend(ft for ft in pop.covers if ft not in covers)
-    if (
-        sum(map(len, facts.values())) > MAX_ENTRIES
-        or sum(map(len, instances.values())) > MAX_ENTRIES
-    ):
-        raise ReferenceInputError("combined fact or instance entry count exceeds 100000")
-    instances = {
-        ot: list({_identity_key(value): value for value in values}.values())
-        for ot, values in instances.items()
-    }
-    combined = _combine_validated_populations(
-        model,
-        (candidate, *context._populations),
-        {
-            "format_version": format_version,
-            "population": {
-                "model": candidate.model,
-                "model_id": candidate.model_id,
-                "source": candidate.source,
-                "covers": covers,
-            },
-            "facts": facts,
-            "instances": instances,
-        },
-    )
-    combined._reference_combined = True
-    combined._reference_context = context
-    _COMBINED[id(combined)] = combined
-    origins.sort(
-        key=lambda row: (
-            row["origin"]["kind"],
-            row["origin"]["reference_id"] or "",
-            row["fact_type"],
-            row["index"],
-        )
-    )
-    return BoundPopulationView(combined, candidate, tuple(origins), context)
-
-
-def candidate_fact_count(view: BoundPopulationView) -> int:
-    return sum(map(len, view.candidate.facts.values()))
-
-
-def is_bound_population(
-    model: Model, population: Population, context: BoundReferenceContext
-) -> bool:
-    """Recognize only a current combined population created by this binder."""
-    return (
-        _COMBINED.get(id(population)) is population
-        and population._reference_context is context
-        and population.matches_validation_marker(model)
-    )
-
-
-BOUND = _BOUND
-COMBINED = _COMBINED
-TOKEN = _TOKEN
-bind_at = _bind_at
-relative = _relative
-
-ReferenceInputError.__module__ = 'gnd.references'
-
-ReferenceOrigin.__module__ = 'gnd.references'
-
-OccurrenceOrigin.__module__ = 'gnd.references'
-
-BoundReferenceContext.__module__ = 'gnd.references'
-
-BoundPopulationView.__module__ = 'gnd.references'
-
-validate_reference_structure.__module__ = 'gnd.references'
-
-_relative.__module__ = 'gnd.references'
-
-retained_root.__module__ = 'gnd.references'
-
-validate_declarations.__module__ = 'gnd.references'
-
-_bind_at.__module__ = 'gnd.references'
-
-bind_references.__module__ = 'gnd.references'
-
-resolve_context.__module__ = 'gnd.references'
-
-bind_population.__module__ = 'gnd.references'
-
-candidate_fact_count.__module__ = 'gnd.references'
-
-is_bound_population.__module__ = 'gnd.references'
+yaml_stream_guard_error.__module__ = 'gnd.model'
+_load_meta_schema.__module__ = 'gnd.model'
+_derivation_rule_hint.__module__ = 'gnd.model'
+_layer1_structural.__module__ = 'gnd.model'
+_iter_constraints.__module__ = 'gnd.model'
+_iter_role_refs.__module__ = 'gnd.model'
+_rule_id_unique.__module__ = 'gnd.model'
+_rule_role_ref.__module__ = 'gnd.model'
+_rule_cross_ref.__module__ = 'gnd.model'
+_rule_depends_on.__module__ = 'gnd.model'
+_rule_reading_placeholders.__module__ = 'gnd.model'
+_rule_fact_type_arity.__module__ = 'gnd.model'
+_rule_role_names_distinct.__module__ = 'gnd.model'
+_rule_subtype_ref.__module__ = 'gnd.model'
+_rule_external_ref_uc.__module__ = 'gnd.model'
+_rule_reference_value_type.__module__ = 'gnd.model'
+_temporal_literal_valid.__module__ = 'gnd.model'
+_range_endpoints_valid.__module__ = 'gnd.model'
+_rule_value_range_type.__module__ = 'gnd.model'
+_rule_value_range_order.__module__ = 'gnd.model'
+_rule_count_bound_order.__module__ = 'gnd.model'
+_rule_status_source.__module__ = 'gnd.model'
+_rule_string_ref.__module__ = 'gnd.model'
+_ancestor_closure.__module__ = 'gnd.model'
+_rule_ring_binary.__module__ = 'gnd.model'
+_constraint_role_seqs.__module__ = 'gnd.model'
+_joining_sequences.__module__ = 'gnd.model'
+_rule_join_anchor_unambiguous.__module__ = 'gnd.model'
+_role_object_types.__module__ = 'gnd.model'
+_rule_role_seq_arity.__module__ = 'gnd.model'
+_rule_role_seq_type_compat.__module__ = 'gnd.model'
+_rule_disjunctive_subject_type.__module__ = 'gnd.model'
+_rule_partition_asserts_something.__module__ = 'gnd.model'
+_rule_anchored_role_and_recogniser.__module__ = 'gnd.model'
+_rule_textual_alethic.__module__ = 'gnd.model'
+_rule_modality_policy.__module__ = 'gnd.model'
+_iter_operations.__module__ = 'gnd.model'
+_operation_parameters.__module__ = 'gnd.model'
+_iter_operation_obligations.__module__ = 'gnd.model'
+_iter_operation_atoms.__module__ = 'gnd.model'
+_iter_operation_terms.__module__ = 'gnd.model'
+_variable_name.__module__ = 'gnd.model'
+_rule_op_param_ref.__module__ = 'gnd.model'
+_rule_op_param_names_distinct.__module__ = 'gnd.model'
+_rule_op_reading_placeholders.__module__ = 'gnd.model'
+_atom_reference_issues.__module__ = 'gnd.model'
+_rule_op_atom_ref.__module__ = 'gnd.model'
+_rule_op_term_ref.__module__ = 'gnd.model'
+_rule_op_term_type_compat.__module__ = 'gnd.model'
+_rule_op_effect_ground.__module__ = 'gnd.model'
+_rule_op_create_param.__module__ = 'gnd.model'
+_rule_op_create_ref_mode.__module__ = 'gnd.model'
+_rule_op_obligation_ids_distinct.__module__ = 'gnd.model'
+_iter_provenance_bearing.__module__ = 'gnd.model'
+_provenance_bearing_label.__module__ = 'gnd.model'
+_rule_imported_provenance.__module__ = 'gnd.model'
+_rule_imported_confirmed_reviewed.__module__ = 'gnd.model'
+_internal_uniqueness_keys.__module__ = 'gnd.model'
+dynamic_subject_is_functional.__module__ = 'gnd.model'
+_rule_op_dynamic_functional.__module__ = 'gnd.model'
+_rule_op_dynamic_untouched.__module__ = 'gnd.model'
+_rule_op_modality_policy.__module__ = 'gnd.model'
+_iter_guarded_constraints.__module__ = 'gnd.model'
+_iter_guarded_atoms.__module__ = 'gnd.model'
+_iter_guarded_consequent_terms.__module__ = 'gnd.model'
+_rule_guarded_term_ref.__module__ = 'gnd.model'
+_rule_guarded_role_claim.__module__ = 'gnd.model'
+_rule_guarded_consequent_ground.__module__ = 'gnd.model'
+_guarded_nested_function_variables.__module__ = 'gnd.model'
+_rule_guarded_exists_range.__module__ = 'gnd.model'
+_rule_guarded_exists_where_bound.__module__ = 'gnd.model'
+_guarded_primitives_compatible.__module__ = 'gnd.model'
+_guarded_literal_matches_primitive.__module__ = 'gnd.model'
+_guarded_literal_kinds_compatible.__module__ = 'gnd.model'
+_rule_guarded_comparison_type.__module__ = 'gnd.model'
+_rule_guarded_exists_where_type.__module__ = 'gnd.model'
+iter_derivation_clauses.__module__ = 'gnd.model'
+_is_structured_rule.__module__ = 'gnd.model'
+_iter_structured_fact_derivations.__module__ = 'gnd.model'
+_derivation_atoms.__module__ = 'gnd.model'
+_safe_key.__module__ = 'gnd.model'
+_derivation_id.__module__ = 'gnd.model'
+_derivation_bind.__module__ = 'gnd.model'
+_derivation_variable.__module__ = 'gnd.model'
+_derivation_positive_variables.__module__ = 'gnd.model'
+_aggregate_variables.__module__ = 'gnd.model'
+AggregateAnalysis.__module__ = 'gnd.model'
+analyze_aggregate.__module__ = 'gnd.model'
+_derivation_scope_variables.__module__ = 'gnd.model'
+_primitive_maps.__module__ = 'gnd.model'
+_derivation_variable_primitives.__module__ = 'gnd.model'
+analyze_declared_aggregate.__module__ = 'gnd.model'
+body_components.__module__ = 'gnd.model'
+derivation_dependencies.__module__ = 'gnd.model'
+DerivationEdge.__module__ = 'gnd.model'
+derivation_dependency_edges.__module__ = 'gnd.model'
+DerivationClassification.__module__ = 'gnd.model'
+derivation_dependency_closure.__module__ = 'gnd.model'
+_derivation_dependency_closures.__module__ = 'gnd.model'
+derivation_classifications.__module__ = 'gnd.model'
+_derivation_components.__module__ = 'gnd.model'
+derivation_strata.__module__ = 'gnd.model'
+_rule_derivation_term_ref.__module__ = 'gnd.model'
+_rule_derivation_rule_shape.__module__ = 'gnd.model'
+_aggregate_issues.__module__ = 'gnd.model'
+_rule_aggregate_shape.__module__ = 'gnd.model'
+_rule_aggregate_function.__module__ = 'gnd.model'
+_rule_aggregate_of_unbound.__module__ = 'gnd.model'
+_rule_aggregate_over_unbound.__module__ = 'gnd.model'
+_rule_aggregate_over_duplicate.__module__ = 'gnd.model'
+_rule_aggregate_as_not_fresh.__module__ = 'gnd.model'
+_rule_aggregate_input_type.__module__ = 'gnd.model'
+_rule_aggregate_where_scope.__module__ = 'gnd.model'
+_rule_aggregate_head_scope.__module__ = 'gnd.model'
+_rule_aggregate_head_needs_round.__module__ = 'gnd.model'
+_rule_derivation_structured_on_object_type.__module__ = 'gnd.model'
+_rule_derivation_effect_on_derived.__module__ = 'gnd.model'
+_rule_derivation_effect_on_semiderived.__module__ = 'gnd.model'
+_rule_derivation_dynamic_dependency_incomplete.__module__ = 'gnd.model'
+_rule_derivation_role_claim.__module__ = 'gnd.model'
+_rule_derivation_head_role_claim.__module__ = 'gnd.model'
+_derivation_head_term_issues.__module__ = 'gnd.model'
+_filter_derivation_term_issues.__module__ = 'gnd.model'
+_rule_term_function_name.__module__ = 'gnd.model'
+_rule_term_function_arity.__module__ = 'gnd.model'
+_rule_term_argument_type.__module__ = 'gnd.model'
+_rule_term_non_finite_number.__module__ = 'gnd.model'
+_rule_term_node_budget.__module__ = 'gnd.model'
+_rule_term_depth_budget.__module__ = 'gnd.model'
+_rule_term_shape.__module__ = 'gnd.model'
+_rule_term_unbound.__module__ = 'gnd.model'
+_rule_derivation_head_term_type.__module__ = 'gnd.model'
+_rule_derivation_head_needs_round.__module__ = 'gnd.model'
+_rule_derivation_float_head_unquantized.__module__ = 'gnd.model'
+_rule_derivation_term_unbound.__module__ = 'gnd.model'
+_rule_term_comparison_type.__module__ = 'gnd.model'
+_rule_derivation_head_unbound.__module__ = 'gnd.model'
+_rule_derivation_negate_unbound.__module__ = 'gnd.model'
+_rule_derivation_body_component_unused.__module__ = 'gnd.model'
+_rule_derivation_term_type.__module__ = 'gnd.model'
+_rule_derivation_opaque_dependency.__module__ = 'gnd.model'
+_derivation_cycles.__module__ = 'gnd.model'
+_rule_derivation_unstratified.__module__ = 'gnd.model'
+_rule_temporal_language.__module__ = 'gnd.model'
+semantic_validate.__module__ = 'gnd.model'
+AggregateAnalysis.__dict__['__hash__'].__module__ = 'gnd.model'
+AggregateAnalysis.__dict__['__init__'].__module__ = 'gnd.model'
+AggregateAnalysis.__dict__['__repr__'].__module__ = 'gnd.model'
+AggregateAnalysis.__dict__['__eq__'].__module__ = 'gnd.model'
+AggregateAnalysis.__dict__['__setattr__'].__module__ = 'gnd.model'
+AggregateAnalysis.__dict__['__delattr__'].__module__ = 'gnd.model'
+DerivationEdge.__dict__['__hash__'].__module__ = 'gnd.model'
+DerivationEdge.__dict__['__init__'].__module__ = 'gnd.model'
+DerivationEdge.__dict__['__repr__'].__module__ = 'gnd.model'
+DerivationEdge.__dict__['__eq__'].__module__ = 'gnd.model'
+DerivationEdge.__dict__['__setattr__'].__module__ = 'gnd.model'
+DerivationEdge.__dict__['__delattr__'].__module__ = 'gnd.model'
+DerivationClassification.__dict__['__hash__'].__module__ = 'gnd.model'
+DerivationClassification.__dict__['__init__'].__module__ = 'gnd.model'
+DerivationClassification.__dict__['__repr__'].__module__ = 'gnd.model'
+DerivationClassification.__dict__['__eq__'].__module__ = 'gnd.model'
+DerivationClassification.__dict__['__setattr__'].__module__ = 'gnd.model'
+DerivationClassification.__dict__['__delattr__'].__module__ = 'gnd.model'

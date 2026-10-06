@@ -1,0 +1,33 @@
+Retained output edited to replace machine paths.
+Command: /private/tmp/rf2-py311/bin/python -m pytest -q tests/test_rf6_packages.py tests/test_rf6_index.py tests/test_rf6_registry.py tests/test_rf6_moves.py tests/test_rf6_query_policy.py --tb=short
+FF...................................................................... [ 25%]
+........................................................................ [ 50%]
+........................................................................ [ 75%]
+......................................................................   [100%]
+=================================== FAILURES ===================================
+______________ test_all_predecessor_import_bindings_and_metadata _______________
+tests/test_rf6_packages.py:48: in test_all_predecessor_import_bindings_and_metadata
+    assert_bindings(baseline)
+tests/test_rf6_packages.py:33: in assert_bindings
+    assert type(value).__name__ == row['kind'], row
+E   AssertionError: {'name': 'Literal', 'kind': '_TypedCacheSpecialForm', 'module': 'typing', 'qualname': 'Literal'}
+E   assert '_LiteralSpecialForm' == '_TypedCacheSpecialForm'
+E     
+E     - _TypedCacheSpecialForm
+E     + _LiteralSpecialForm
+_______________________ test_deleted_binding_is_observed _______________________
+tests/test_rf6_packages.py:56: in test_deleted_binding_is_observed
+    assert_bindings(baseline)
+tests/test_rf6_packages.py:33: in assert_bindings
+    assert type(value).__name__ == row['kind'], row
+E   AssertionError: {'name': 'Literal', 'kind': '_TypedCacheSpecialForm', 'module': 'typing', 'qualname': 'Literal'}
+E   assert '_LiteralSpecialForm' == '_TypedCacheSpecialForm'
+E     
+E     - _TypedCacheSpecialForm
+E     + _LiteralSpecialForm
+=========================== short test summary info ============================
+FAILED tests/test_rf6_packages.py::test_all_predecessor_import_bindings_and_metadata
+FAILED tests/test_rf6_packages.py::test_deleted_binding_is_observed - Asserti...
+2 failed, 284 passed in 11.55s
+
+Exit: 1

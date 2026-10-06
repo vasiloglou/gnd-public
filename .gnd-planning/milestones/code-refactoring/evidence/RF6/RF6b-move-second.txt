@@ -1,0 +1,32 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_packages.py --tb=short
+........................................................................ [ 30%]
+........................................................................ [ 60%]
+........................................................................ [ 90%]
+....................FF..                                                 [100%]
+=================================== FAILURES ===================================
+_____________ test_package_size_targets_and_over_ceiling_negative ______________
+tests/test_rf6_packages.py:117: in test_package_size_targets_and_over_ceiling_negative
+    check(model_sizes, checker_sizes)
+tests/test_rf6_packages.py:114: in check
+    assert max(m.values()) <= 5000  # strictly below measured5385
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: assert 5073 <= 5000
+E    +  where 5073 = max(dict_values([239, 5073, 219, 576]))
+E    +    where dict_values([239, 5073, 219, 576]) = <built-in method values of dict object at 0x10b4cd900>()
+E    +      where <built-in method values of dict object at 0x10b4cd900> = {'__init__.py': 239, '_validation.py': 5073, '_operations.py': 219, '_intake.py': 576}.values
+_____________ test_actual_source_observers_cover_all_package_homes _____________
+tests/test_rf6_packages.py:124: in test_actual_source_observers_cover_all_package_homes
+    assert_scanned(split_homes())
+tests/test_rf6_moves.py:42: in assert_scanned
+    run()
+tests/test_measure_offline.py:368: in test_no_network_library_is_reachable_from_the_generation_lane
+    assert (GND_SRC / "model.py") in seen, (
+E   AssertionError: the closure scan never reached src/gnd/model.py — the module the generation lane genuinely imports. The scan is not exercising its purpose; check that gnd.exp still sources ValidationIssue from gnd.model.
+E   assert (PosixPath('<worktree>/src/gnd') / 'model.py') in {PosixPath('<worktree>/src/gnd/__...laosvasiloglou/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109/src/gnd/anchor_identity.py'), ...}
+=========================== short test summary info ============================
+FAILED tests/test_rf6_packages.py::test_package_size_targets_and_over_ceiling_negative
+FAILED tests/test_rf6_packages.py::test_actual_source_observers_cover_all_package_homes
+2 failed, 238 passed in 3.27s
+
+Exit: 1

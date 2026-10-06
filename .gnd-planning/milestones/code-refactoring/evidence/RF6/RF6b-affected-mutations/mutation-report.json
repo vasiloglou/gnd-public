@@ -1,0 +1,32 @@
+{
+ "control_nodes": 4,
+ "killed": 4,
+ "rows": {
+  "M-HELP-yaml-guard-gnd-model-yaml-stream-guard-error": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.model:yaml_stream_guard_error]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-check-coverage-anchored": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check_coverage": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-checker-_typed_comparison_values": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[checker._typed_comparison_values]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-model-_temporal_literal_valid": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[model._temporal_literal_valid]": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 4
+}

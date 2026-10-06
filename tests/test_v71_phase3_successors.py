@@ -1,7 +1,9 @@
+
 from copy import deepcopy
 
 from support.v71_witness_cases import bundle
 
+import gnd.model._validation as validation_home
 from gnd import model as model_module
 
 
@@ -25,7 +27,7 @@ def test_repeated_type_intake_work_is_linear(tmp_path, monkeypatch):
         nonlocal calls
         calls += 1
         return original(*args, **kwargs)
-    monkeypatch.setattr(model_module, '_ancestor_closure', counted)
+    monkeypatch.setattr(validation_home, '_ancestor_closure', counted)
     assert model_module._rule_derivation_term_type(document) == []
     assert calls <= 410, 'repeated compatible types must not repeat pairwise ancestor work'
 
@@ -86,7 +88,7 @@ def test_term_intake_analysis_is_once_per_validation(tmp_path, monkeypatch):
         nonlocal calls
         calls += 1
         return original(doc)
-    monkeypatch.setattr(model_module, '_derivation_head_term_issues', counted)
+    monkeypatch.setattr(validation_home, '_derivation_head_term_issues', counted)
     assert model_module.semantic_validate(document) == []
     assert calls == 1, 'one validation must not repeat the same whole-model term analysis'
     assert model_module.semantic_validate(document) == []

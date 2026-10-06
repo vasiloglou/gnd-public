@@ -14,6 +14,7 @@ import pytest
 import test_rf1_layering as layering
 from test_rf1_semantic_pins import RESOLVER_VALUES, _resolver_model
 
+import gnd.model._validation as validation_home
 from gnd import applicability, checker, documents, extensions, model, population, universe
 from gnd import semantic_registry as registry
 from gnd.errors import UnvalidatedPopulationError, ValidationIssue
@@ -222,7 +223,7 @@ def test_shared_context_cache_identity_and_reset(monkeypatch):
     prior = context.get()
     doc = {'object_types': [], 'fact_types': []}
     calls = []
-    monkeypatch.setattr(model, '_derivation_head_term_issues', lambda d: calls.append(d) or [
+    monkeypatch.setattr(validation_home, '_derivation_head_term_issues', lambda d: calls.append(d) or [
         ValidationIssue(path='$', message='tag', rule_id='semantic:term-function-name')])
     token = context.set({'document': doc})
     try:
@@ -249,8 +250,9 @@ def test_remaining_document_moves_are_verbatim_and_aliased():
 
 
 def test_duplicate_checker_function_rebinding_is_absent():
-    source = (ROOT / 'src/gnd/checker.py').read_text()
-    names = [n.name for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)]
+    paths = set((ROOT / 'src/gnd/checker').rglob('*.py'))
+    assert paths == {ROOT / 'src/gnd/checker' / name for name in ('__init__.py', '_core.py', '_reports.py')}
+    names = [n.name for path in paths for n in ast.parse(path.read_text()).body if isinstance(n, ast.FunctionDef)]
     assert len(names) == len(set(names))
 
 
@@ -264,7 +266,7 @@ def test_validation_resets_shared_context_after_a_rule_raises(monkeypatch):
         assert cache.get()['document'] is actual is doc
         raise ValueError('dirty control')
 
-    monkeypatch.setattr(model, '_SEMANTIC_RULES', (raises,))
+    monkeypatch.setattr(validation_home, '_SEMANTIC_RULES', (raises,))
     try:
         issues = model.semantic_validate(doc)
         assert [issue.rule_id for issue in issues] == ['internal:rule-raised']

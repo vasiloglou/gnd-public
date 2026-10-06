@@ -26,7 +26,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 #: internally built population documents; widening this static policy to that
 #: separate production surface would force an assurance recertification without
 #: improving malformed-input handling.
-BIND_CONSUMERS = ("model.py", "checker.py", "model_verbalization.py")
+BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operations.py",
+                  "checker/__init__.py", "checker/_reports.py", "checker/_core.py", "model_verbalization.py")
 
 #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
 #: boundary two reviewers enforced against an earlier draft and
@@ -128,6 +129,9 @@ def test_no_raw_bind_access_remains_in_the_ruled_scope() -> None:
     assurance evidence without making an untrusted input safer. The falsifier
     is a raw read returning to one of the three actual input consumers.
     """
+    scope = {REPO_ROOT / 'src/gnd' / name for name in BIND_CONSUMERS}
+    actual = set((REPO_ROOT / 'src/gnd/model').rglob('*.py')) | set((REPO_ROOT / 'src/gnd/checker').rglob('*.py'))
+    assert actual | {REPO_ROOT / 'src/gnd/model_verbalization.py'} == scope
     offenders = {}
     for name in BIND_CONSUMERS:
         path = REPO_ROOT / "src" / "gnd" / name
@@ -181,7 +185,8 @@ def test_every_consumer_reaches_the_binding_through_the_one_reader() -> None:
     """The complement of the scan above: the four modules that read bindings
     import the reader, so 'no raw access' cannot be satisfied by a module that
     stopped reading bindings altogether."""
-    for name in BIND_CONSUMERS:
-        text = (REPO_ROOT / "src" / "gnd" / name).read_text(encoding="utf-8")
-        assert "from gnd.atoms import" in text, name
-        assert "atom_bind(" in text, name
+    texts = {name: (REPO_ROOT / 'src/gnd' / name).read_text(encoding='utf-8') for name in BIND_CONSUMERS}
+    active = {name for name, text in texts.items() if 'atom_bind(' in text}
+    assert active == {'model/_validation.py', 'model/_operations.py', 'checker/_core.py', 'model_verbalization.py'}
+    for name in active:
+        assert "from gnd.atoms import" in texts[name], name

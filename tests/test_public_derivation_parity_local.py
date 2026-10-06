@@ -201,6 +201,8 @@ def test_duckdb_is_exact_pinned_and_absent_from_production() -> None:
     project = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert '"duckdb==1.5.5"' in project
     assert "not derivation_oracle" in project
-    checker_source = (REPO_ROOT / "src" / "gnd" / "checker.py").read_text(encoding="utf-8")
+    paths = set((REPO_ROOT / "src/gnd/checker").rglob("*.py"))
+    assert {p.name for p in paths} == {"__init__.py", "_core.py", "_reports.py"}
+    checker_source = "\n".join(p.read_text(encoding="utf-8") for p in paths)
     assert "import duckdb" not in checker_source
 

@@ -1,0 +1,11 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "tools/gnd_arch.py",
+    "measure",
+    "--out",
+    ".gnd-planning/milestones/code-refactoring/evidence/metrics-RF6.json"
+  ],
+  "exit": 0,
+  "seconds": 1.3963358402252197
+}

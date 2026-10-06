@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/private/tmp/rf2-py311/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf6_packages.py",
+    "tests/test_rf6_index.py",
+    "tests/test_rf6_registry.py",
+    "tests/test_rf6_moves.py",
+    "tests/test_rf6_query_policy.py",
+    "--tb=short"
+  ],
+  "exit": 4,
+  "seconds": 0.3774099349975586
+}

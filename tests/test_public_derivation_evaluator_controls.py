@@ -9,6 +9,7 @@ from typing import Any
 
 import pytest
 
+import gnd.checker._core as checker_core
 from gnd import checker, extensions
 from gnd import cli as cli_module
 from gnd.checker import (
@@ -342,7 +343,7 @@ def test_constraints_run_once_after_all_extensions(monkeypatch: pytest.MonkeyPat
         return original_message(*args, **kwargs)
 
     monkeypatch.setattr(extensions, "evaluate_derivations", traced_evaluate)
-    monkeypatch.setattr(checker, "_correspondence_message", traced_message)
+    monkeypatch.setattr(checker_core, "_correspondence_message", traced_message)
     report = checker.check(model, population)
     assert len(report.verdicts) == 1
     assert calls == [

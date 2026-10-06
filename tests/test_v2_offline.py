@@ -48,7 +48,7 @@ def test_every_root_of_this_scan_exists() -> None:
 
 def test_the_closure_leaves_its_roots() -> None:
     closure = _closure(TRANSITION_LANE_ROOTS)
-    for expected in ('checker.py', 'model.py', 'population.py'):
+    for expected in ('checker/__init__.py', 'checker/_core.py', 'checker/_reports.py', 'model/__init__.py', 'model/_validation.py', 'model/_operations.py',  'population.py'):
         assert SRC / expected in closure, f'the closure never reached {expected}'
 
 @pytest.mark.parametrize('library', sorted(_NETWORK_LIBS | _PROVIDER_CLIENTS))

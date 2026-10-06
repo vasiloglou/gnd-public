@@ -1,0 +1,2705 @@
+{
+  "gnd.model": [
+    {
+      "name": "annotations",
+      "kind": "_Feature"
+    },
+    {
+      "name": "TYPE_CHECKING",
+      "kind": "bool"
+    },
+    {
+      "name": "json",
+      "kind": "module",
+      "module": "json"
+    },
+    {
+      "name": "math",
+      "kind": "module",
+      "module": "math"
+    },
+    {
+      "name": "re",
+      "kind": "module",
+      "module": "re"
+    },
+    {
+      "name": "Mapping",
+      "kind": "ABCMeta",
+      "module": "collections.abc",
+      "qualname": "Mapping"
+    },
+    {
+      "name": "dataclass",
+      "kind": "function",
+      "module": "dataclasses",
+      "qualname": "dataclass"
+    },
+    {
+      "name": "UTC",
+      "kind": "timezone"
+    },
+    {
+      "name": "date",
+      "kind": "type",
+      "module": "datetime",
+      "qualname": "date"
+    },
+    {
+      "name": "datetime",
+      "kind": "type",
+      "module": "datetime",
+      "qualname": "datetime"
+    },
+    {
+      "name": "files",
+      "kind": "function",
+      "module": "importlib.resources._common",
+      "qualname": "files"
+    },
+    {
+      "name": "Path",
+      "kind": "type",
+      "module": "pathlib",
+      "qualname": "Path"
+    },
+    {
+      "name": "Any",
+      "kind": "_AnyMeta",
+      "module": "typing",
+      "qualname": "Any"
+    },
+    {
+      "name": "Literal",
+      "kind": "_LiteralSpecialForm",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "Draft202012Validator",
+      "kind": "type",
+      "module": "jsonschema.validators",
+      "qualname": "Draft202012Validator"
+    },
+    {
+      "name": "YAML",
+      "kind": "type",
+      "module": "ruamel.yaml.main",
+      "qualname": "YAML"
+    },
+    {
+      "name": "verbalize",
+      "kind": "module",
+      "module": "gnd.verbalize"
+    },
+    {
+      "name": "atom_bind",
+      "kind": "function",
+      "module": "gnd.atoms",
+      "qualname": "atom_bind"
+    },
+    {
+      "name": "atom_has_bind",
+      "kind": "function",
+      "module": "gnd.atoms",
+      "qualname": "atom_has_bind"
+    },
+    {
+      "name": "DeonticNote",
+      "kind": "ModelMetaclass",
+      "module": "gnd.model",
+      "qualname": "DeonticNote"
+    },
+    {
+      "name": "Model",
+      "kind": "ModelMetaclass",
+      "module": "gnd.model",
+      "qualname": "Model"
+    },
+    {
+      "name": "ModelLoadError",
+      "kind": "type",
+      "module": "gnd.model",
+      "qualname": "ModelLoadError"
+    },
+    {
+      "name": "ModelValidationError",
+      "kind": "type",
+      "module": "gnd.model",
+      "qualname": "ModelValidationError"
+    },
+    {
+      "name": "ValidationIssue",
+      "kind": "ModelMetaclass",
+      "module": "gnd.model",
+      "qualname": "ValidationIssue"
+    },
+    {
+      "name": "issues_from_validation_error",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "issues_from_validation_error"
+    },
+    {
+      "name": "DEFAULT_LIMITS",
+      "kind": "ExactTermLimits"
+    },
+    {
+      "name": "FLOAT_FUNCTION_ARITY",
+      "kind": "dict"
+    },
+    {
+      "name": "NUMERIC_PRIMITIVES",
+      "kind": "frozenset"
+    },
+    {
+      "name": "analyze_term",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "analyze_term"
+    },
+    {
+      "name": "is_function_term",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "is_function_term"
+    },
+    {
+      "name": "term_variables",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "term_variables"
+    },
+    {
+      "name": "_DERIVATION_TERM_CACHE",
+      "kind": "ContextVar"
+    },
+    {
+      "name": "_fact_type_roles",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_fact_type_roles"
+    },
+    {
+      "name": "_resolved_primitive",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_resolved_primitive"
+    },
+    {
+      "name": "_supertype_parents",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_supertype_parents"
+    },
+    {
+      "name": "configure_comment_scanner",
+      "kind": "function",
+      "module": "gnd.yaml_comments",
+      "qualname": "configure_comment_scanner"
+    },
+    {
+      "name": "_PLACEHOLDER",
+      "kind": "Pattern"
+    },
+    {
+      "name": "MAX_MODEL_BYTES",
+      "kind": "int"
+    },
+    {
+      "name": "MAX_YAML_EVENTS",
+      "kind": "int"
+    },
+    {
+      "name": "yaml_stream_guard_error",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "yaml_stream_guard_error"
+    },
+    {
+      "name": "structured_derivation_ids",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "structured_derivation_ids"
+    },
+    {
+      "name": "_load_meta_schema",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_load_meta_schema"
+    },
+    {
+      "name": "_DERIVATION_ARM_KEYS",
+      "kind": "tuple"
+    },
+    {
+      "name": "_derivation_rule_hint",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_rule_hint"
+    },
+    {
+      "name": "_layer1_structural",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_layer1_structural"
+    },
+    {
+      "name": "_iter_constraints",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_constraints"
+    },
+    {
+      "name": "_iter_role_refs",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_role_refs"
+    },
+    {
+      "name": "_rule_id_unique",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_id_unique"
+    },
+    {
+      "name": "_rule_role_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_role_ref"
+    },
+    {
+      "name": "_rule_cross_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_cross_ref"
+    },
+    {
+      "name": "_rule_depends_on",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_depends_on"
+    },
+    {
+      "name": "_rule_reading_placeholders",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_reading_placeholders"
+    },
+    {
+      "name": "_rule_fact_type_arity",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_fact_type_arity"
+    },
+    {
+      "name": "_rule_role_names_distinct",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_role_names_distinct"
+    },
+    {
+      "name": "_rule_subtype_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_subtype_ref"
+    },
+    {
+      "name": "_rule_external_ref_uc",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_external_ref_uc"
+    },
+    {
+      "name": "_rule_reference_value_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_reference_value_type"
+    },
+    {
+      "name": "_temporal_literal_valid",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_temporal_literal_valid"
+    },
+    {
+      "name": "_NUMERIC_PRIMITIVES",
+      "kind": "set"
+    },
+    {
+      "name": "_range_endpoints_valid",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_range_endpoints_valid"
+    },
+    {
+      "name": "_rule_value_range_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_value_range_type"
+    },
+    {
+      "name": "_rule_value_range_order",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_value_range_order"
+    },
+    {
+      "name": "_rule_count_bound_order",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_count_bound_order"
+    },
+    {
+      "name": "_rule_status_source",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_status_source"
+    },
+    {
+      "name": "_rule_string_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_string_ref"
+    },
+    {
+      "name": "_ancestor_closure",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_ancestor_closure"
+    },
+    {
+      "name": "_rule_ring_binary",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_ring_binary"
+    },
+    {
+      "name": "_ROLE_SEQ_FIELDS",
+      "kind": "dict"
+    },
+    {
+      "name": "_constraint_role_seqs",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_constraint_role_seqs"
+    },
+    {
+      "name": "_joining_sequences",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_joining_sequences"
+    },
+    {
+      "name": "_rule_join_anchor_unambiguous",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_join_anchor_unambiguous"
+    },
+    {
+      "name": "_role_object_types",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_role_object_types"
+    },
+    {
+      "name": "_rule_role_seq_arity",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_role_seq_arity"
+    },
+    {
+      "name": "_rule_role_seq_type_compat",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_role_seq_type_compat"
+    },
+    {
+      "name": "_rule_disjunctive_subject_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_disjunctive_subject_type"
+    },
+    {
+      "name": "_rule_partition_asserts_something",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_partition_asserts_something"
+    },
+    {
+      "name": "NEVER_MECHANICAL_FAMILIES",
+      "kind": "frozenset"
+    },
+    {
+      "name": "_rule_anchored_role_and_recogniser",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_anchored_role_and_recogniser"
+    },
+    {
+      "name": "_rule_textual_alethic",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_textual_alethic"
+    },
+    {
+      "name": "_rule_modality_policy",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_modality_policy"
+    },
+    {
+      "name": "_iter_operations",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_operations"
+    },
+    {
+      "name": "_operation_parameters",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_operation_parameters"
+    },
+    {
+      "name": "_iter_operation_obligations",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_operation_obligations"
+    },
+    {
+      "name": "_iter_operation_atoms",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_operation_atoms"
+    },
+    {
+      "name": "_iter_operation_terms",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_operation_terms"
+    },
+    {
+      "name": "_variable_name",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_variable_name"
+    },
+    {
+      "name": "_rule_op_param_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_param_ref"
+    },
+    {
+      "name": "_rule_op_param_names_distinct",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_param_names_distinct"
+    },
+    {
+      "name": "_REPORTED_PARAMETER_LIMIT",
+      "kind": "int"
+    },
+    {
+      "name": "_rule_op_reading_placeholders",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_reading_placeholders"
+    },
+    {
+      "name": "_atom_reference_issues",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_atom_reference_issues"
+    },
+    {
+      "name": "_rule_op_atom_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_atom_ref"
+    },
+    {
+      "name": "_rule_op_term_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_term_ref"
+    },
+    {
+      "name": "_rule_op_term_type_compat",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_term_type_compat"
+    },
+    {
+      "name": "_rule_op_effect_ground",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_effect_ground"
+    },
+    {
+      "name": "_rule_op_create_param",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_create_param"
+    },
+    {
+      "name": "_rule_op_create_ref_mode",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_create_ref_mode"
+    },
+    {
+      "name": "_rule_op_obligation_ids_distinct",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_obligation_ids_distinct"
+    },
+    {
+      "name": "IMPORTED_PROVENANCE_FIELDS",
+      "kind": "tuple"
+    },
+    {
+      "name": "_iter_provenance_bearing",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_provenance_bearing"
+    },
+    {
+      "name": "_provenance_bearing_label",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_provenance_bearing_label"
+    },
+    {
+      "name": "_rule_imported_provenance",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_imported_provenance"
+    },
+    {
+      "name": "_rule_imported_confirmed_reviewed",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_imported_confirmed_reviewed"
+    },
+    {
+      "name": "_internal_uniqueness_keys",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_internal_uniqueness_keys"
+    },
+    {
+      "name": "dynamic_subject_is_functional",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "dynamic_subject_is_functional"
+    },
+    {
+      "name": "_rule_op_dynamic_functional",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_dynamic_functional"
+    },
+    {
+      "name": "_rule_op_dynamic_untouched",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_dynamic_untouched"
+    },
+    {
+      "name": "_rule_op_modality_policy",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_op_modality_policy"
+    },
+    {
+      "name": "_iter_guarded_constraints",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_guarded_constraints"
+    },
+    {
+      "name": "_iter_guarded_atoms",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_guarded_atoms"
+    },
+    {
+      "name": "_iter_guarded_consequent_terms",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_guarded_consequent_terms"
+    },
+    {
+      "name": "_rule_guarded_term_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_term_ref"
+    },
+    {
+      "name": "_rule_guarded_role_claim",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_role_claim"
+    },
+    {
+      "name": "_rule_guarded_consequent_ground",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_consequent_ground"
+    },
+    {
+      "name": "_guarded_nested_function_variables",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_guarded_nested_function_variables"
+    },
+    {
+      "name": "_rule_guarded_exists_range",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_exists_range"
+    },
+    {
+      "name": "_rule_guarded_exists_where_bound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_exists_where_bound"
+    },
+    {
+      "name": "_guarded_primitives_compatible",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_guarded_primitives_compatible"
+    },
+    {
+      "name": "_guarded_literal_matches_primitive",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_guarded_literal_matches_primitive"
+    },
+    {
+      "name": "_guarded_literal_kinds_compatible",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_guarded_literal_kinds_compatible"
+    },
+    {
+      "name": "_rule_guarded_comparison_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_comparison_type"
+    },
+    {
+      "name": "_rule_guarded_exists_where_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_guarded_exists_where_type"
+    },
+    {
+      "name": "_DERIVATION_RULE_KEYS",
+      "kind": "frozenset"
+    },
+    {
+      "name": "iter_derivation_clauses",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "iter_derivation_clauses"
+    },
+    {
+      "name": "_is_structured_rule",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_is_structured_rule"
+    },
+    {
+      "name": "_iter_structured_fact_derivations",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_iter_structured_fact_derivations"
+    },
+    {
+      "name": "_DERIVATION_ATOM_VISITS",
+      "kind": "int"
+    },
+    {
+      "name": "_DERIVATION_WORK",
+      "kind": "int"
+    },
+    {
+      "name": "_DERIVATION_CLASSIFICATION_WORK",
+      "kind": "int"
+    },
+    {
+      "name": "_derivation_atoms",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_atoms"
+    },
+    {
+      "name": "_safe_key",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_safe_key"
+    },
+    {
+      "name": "_derivation_id",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_id"
+    },
+    {
+      "name": "_derivation_bind",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_bind"
+    },
+    {
+      "name": "_derivation_variable",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_variable"
+    },
+    {
+      "name": "_derivation_positive_variables",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_positive_variables"
+    },
+    {
+      "name": "_aggregate_variables",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_aggregate_variables"
+    },
+    {
+      "name": "AggregateAnalysis",
+      "kind": "type",
+      "module": "gnd.model",
+      "qualname": "AggregateAnalysis"
+    },
+    {
+      "name": "analyze_aggregate",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "analyze_aggregate"
+    },
+    {
+      "name": "_derivation_scope_variables",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_scope_variables"
+    },
+    {
+      "name": "_primitive_maps",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_primitive_maps"
+    },
+    {
+      "name": "_derivation_variable_primitives",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_variable_primitives"
+    },
+    {
+      "name": "analyze_declared_aggregate",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "analyze_declared_aggregate"
+    },
+    {
+      "name": "body_components",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "body_components"
+    },
+    {
+      "name": "derivation_dependencies",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_dependencies"
+    },
+    {
+      "name": "DerivationEdge",
+      "kind": "type",
+      "module": "gnd.model",
+      "qualname": "DerivationEdge"
+    },
+    {
+      "name": "derivation_dependency_edges",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_dependency_edges"
+    },
+    {
+      "name": "DerivationStability",
+      "kind": "_LiteralGenericAlias",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "DerivationClassification",
+      "kind": "type",
+      "module": "gnd.model",
+      "qualname": "DerivationClassification"
+    },
+    {
+      "name": "derivation_dependency_closure",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_dependency_closure"
+    },
+    {
+      "name": "_derivation_dependency_closures",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_dependency_closures"
+    },
+    {
+      "name": "derivation_classifications",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_classifications"
+    },
+    {
+      "name": "_derivation_components",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_components"
+    },
+    {
+      "name": "derivation_strata",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_strata"
+    },
+    {
+      "name": "_rule_derivation_term_ref",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_term_ref"
+    },
+    {
+      "name": "_rule_derivation_rule_shape",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_rule_shape"
+    },
+    {
+      "name": "_aggregate_issues",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_aggregate_issues"
+    },
+    {
+      "name": "_rule_aggregate_shape",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_shape"
+    },
+    {
+      "name": "_rule_aggregate_function",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_function"
+    },
+    {
+      "name": "_rule_aggregate_of_unbound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_of_unbound"
+    },
+    {
+      "name": "_rule_aggregate_over_unbound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_over_unbound"
+    },
+    {
+      "name": "_rule_aggregate_over_duplicate",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_over_duplicate"
+    },
+    {
+      "name": "_rule_aggregate_as_not_fresh",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_as_not_fresh"
+    },
+    {
+      "name": "_rule_aggregate_input_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_input_type"
+    },
+    {
+      "name": "_rule_aggregate_where_scope",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_where_scope"
+    },
+    {
+      "name": "_rule_aggregate_head_scope",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_head_scope"
+    },
+    {
+      "name": "_rule_aggregate_head_needs_round",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_aggregate_head_needs_round"
+    },
+    {
+      "name": "_rule_derivation_structured_on_object_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_structured_on_object_type"
+    },
+    {
+      "name": "_rule_derivation_effect_on_derived",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_effect_on_derived"
+    },
+    {
+      "name": "_rule_derivation_effect_on_semiderived",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_effect_on_semiderived"
+    },
+    {
+      "name": "_rule_derivation_dynamic_dependency_incomplete",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_dynamic_dependency_incomplete"
+    },
+    {
+      "name": "_rule_derivation_role_claim",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_role_claim"
+    },
+    {
+      "name": "_rule_derivation_head_role_claim",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_head_role_claim"
+    },
+    {
+      "name": "_derivation_head_term_issues",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_head_term_issues"
+    },
+    {
+      "name": "_filter_derivation_term_issues",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_filter_derivation_term_issues"
+    },
+    {
+      "name": "_rule_term_function_name",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_function_name"
+    },
+    {
+      "name": "_rule_term_function_arity",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_function_arity"
+    },
+    {
+      "name": "_rule_term_argument_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_argument_type"
+    },
+    {
+      "name": "_rule_term_non_finite_number",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_non_finite_number"
+    },
+    {
+      "name": "_rule_term_node_budget",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_node_budget"
+    },
+    {
+      "name": "_rule_term_depth_budget",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_depth_budget"
+    },
+    {
+      "name": "_rule_term_shape",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_shape"
+    },
+    {
+      "name": "_rule_term_unbound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_unbound"
+    },
+    {
+      "name": "_rule_derivation_head_term_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_head_term_type"
+    },
+    {
+      "name": "_rule_derivation_head_needs_round",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_head_needs_round"
+    },
+    {
+      "name": "_rule_derivation_float_head_unquantized",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_float_head_unquantized"
+    },
+    {
+      "name": "_rule_derivation_term_unbound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_term_unbound"
+    },
+    {
+      "name": "_rule_term_comparison_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_term_comparison_type"
+    },
+    {
+      "name": "_rule_derivation_head_unbound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_head_unbound"
+    },
+    {
+      "name": "_rule_derivation_negate_unbound",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_negate_unbound"
+    },
+    {
+      "name": "_rule_derivation_body_component_unused",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_body_component_unused"
+    },
+    {
+      "name": "_rule_derivation_term_type",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_term_type"
+    },
+    {
+      "name": "_rule_derivation_opaque_dependency",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_opaque_dependency"
+    },
+    {
+      "name": "_derivation_cycles",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_cycles"
+    },
+    {
+      "name": "_rule_derivation_unstratified",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_derivation_unstratified"
+    },
+    {
+      "name": "_rule_temporal_language",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_rule_temporal_language"
+    },
+    {
+      "name": "_SEMANTIC_RULES",
+      "kind": "tuple"
+    },
+    {
+      "name": "semantic_validate",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "semantic_validate"
+    },
+    {
+      "name": "load_model_bytes",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "load_model_bytes"
+    },
+    {
+      "name": "_load_model_no_follow",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_load_model_no_follow"
+    },
+    {
+      "name": "load_model",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "load_model"
+    },
+    {
+      "name": "_effect_index",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_effect_index"
+    },
+    {
+      "name": "_variables_in",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_variables_in"
+    },
+    {
+      "name": "_roles_by_variable",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_roles_by_variable"
+    },
+    {
+      "name": "_has_literal",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_has_literal"
+    },
+    {
+      "name": "compile_operation",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "compile_operation"
+    },
+    {
+      "name": "_attach_compiled_obligations",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_attach_compiled_obligations"
+    },
+    {
+      "name": "hashlib",
+      "kind": "module",
+      "module": "hashlib"
+    },
+    {
+      "name": "os",
+      "kind": "module",
+      "module": "os"
+    },
+    {
+      "name": "weakref",
+      "kind": "module",
+      "module": "weakref"
+    },
+    {
+      "name": "contextmanager",
+      "kind": "function",
+      "module": "contextlib",
+      "qualname": "contextmanager"
+    },
+    {
+      "name": "artifacts",
+      "kind": "module",
+      "module": "gnd.artifacts"
+    },
+    {
+      "name": "reference_model_digest",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "reference_model_digest"
+    },
+    {
+      "name": "MAX_BYTES",
+      "kind": "int"
+    },
+    {
+      "name": "MAX_SET_BYTES",
+      "kind": "int"
+    },
+    {
+      "name": "MAX_ENTRIES",
+      "kind": "int"
+    },
+    {
+      "name": "_TOKEN",
+      "kind": "object"
+    },
+    {
+      "name": "_BOUND",
+      "kind": "WeakValueDictionary"
+    },
+    {
+      "name": "_COMBINED",
+      "kind": "WeakValueDictionary"
+    },
+    {
+      "name": "ReferenceInputError",
+      "kind": "type",
+      "module": "gnd.references",
+      "qualname": "ReferenceInputError"
+    },
+    {
+      "name": "ReferenceOrigin",
+      "kind": "type",
+      "module": "gnd.references",
+      "qualname": "ReferenceOrigin"
+    },
+    {
+      "name": "OccurrenceOrigin",
+      "kind": "type",
+      "module": "gnd.references",
+      "qualname": "OccurrenceOrigin"
+    },
+    {
+      "name": "BoundReferenceContext",
+      "kind": "type",
+      "module": "gnd.references",
+      "qualname": "BoundReferenceContext"
+    },
+    {
+      "name": "BoundPopulationView",
+      "kind": "type",
+      "module": "gnd.references",
+      "qualname": "BoundPopulationView"
+    },
+    {
+      "name": "validate_reference_structure",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "validate_reference_structure"
+    },
+    {
+      "name": "_relative",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "_relative"
+    },
+    {
+      "name": "retained_root",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "retained_root"
+    },
+    {
+      "name": "validate_declarations",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "validate_declarations"
+    },
+    {
+      "name": "_bind_at",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "_bind_at"
+    },
+    {
+      "name": "bind_references",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "bind_references"
+    },
+    {
+      "name": "resolve_context",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "resolve_context"
+    },
+    {
+      "name": "bind_population",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "bind_population"
+    },
+    {
+      "name": "candidate_fact_count",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "candidate_fact_count"
+    },
+    {
+      "name": "is_bound_population",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "is_bound_population"
+    },
+    {
+      "name": "BOUND",
+      "kind": "WeakValueDictionary"
+    },
+    {
+      "name": "COMBINED",
+      "kind": "WeakValueDictionary"
+    },
+    {
+      "name": "TOKEN",
+      "kind": "object"
+    },
+    {
+      "name": "bind_at",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "_bind_at"
+    },
+    {
+      "name": "relative",
+      "kind": "function",
+      "module": "gnd.references",
+      "qualname": "_relative"
+    }
+  ],
+  "gnd.checker": [
+    {
+      "name": "annotations",
+      "kind": "_Feature"
+    },
+    {
+      "name": "math",
+      "kind": "module",
+      "module": "math"
+    },
+    {
+      "name": "Iterable",
+      "kind": "ABCMeta",
+      "module": "collections.abc",
+      "qualname": "Iterable"
+    },
+    {
+      "name": "Mapping",
+      "kind": "ABCMeta",
+      "module": "collections.abc",
+      "qualname": "Mapping"
+    },
+    {
+      "name": "Sequence",
+      "kind": "ABCMeta",
+      "module": "collections.abc",
+      "qualname": "Sequence"
+    },
+    {
+      "name": "dataclass",
+      "kind": "function",
+      "module": "dataclasses",
+      "qualname": "dataclass"
+    },
+    {
+      "name": "replace",
+      "kind": "function",
+      "module": "dataclasses",
+      "qualname": "replace"
+    },
+    {
+      "name": "UTC",
+      "kind": "timezone"
+    },
+    {
+      "name": "date",
+      "kind": "type",
+      "module": "datetime",
+      "qualname": "date"
+    },
+    {
+      "name": "datetime",
+      "kind": "type",
+      "module": "datetime",
+      "qualname": "datetime"
+    },
+    {
+      "name": "CycleError",
+      "kind": "type",
+      "module": "graphlib",
+      "qualname": "CycleError"
+    },
+    {
+      "name": "TopologicalSorter",
+      "kind": "type",
+      "module": "graphlib",
+      "qualname": "TopologicalSorter"
+    },
+    {
+      "name": "MappingProxyType",
+      "kind": "type",
+      "module": "builtins",
+      "qualname": "mappingproxy"
+    },
+    {
+      "name": "Any",
+      "kind": "_AnyMeta",
+      "module": "typing",
+      "qualname": "Any"
+    },
+    {
+      "name": "Literal",
+      "kind": "_LiteralSpecialForm",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "NamedTuple",
+      "kind": "function",
+      "module": "typing",
+      "qualname": "NamedTuple"
+    },
+    {
+      "name": "Protocol",
+      "kind": "_ProtocolMeta",
+      "module": "typing",
+      "qualname": "Protocol"
+    },
+    {
+      "name": "BaseModel",
+      "kind": "ModelMetaclass",
+      "module": "pydantic.main",
+      "qualname": "BaseModel"
+    },
+    {
+      "name": "Field",
+      "kind": "function",
+      "module": "pydantic.fields",
+      "qualname": "Field"
+    },
+    {
+      "name": "ValidationInfo",
+      "kind": "_ProtocolMeta",
+      "module": "pydantic_core.core_schema",
+      "qualname": "ValidationInfo"
+    },
+    {
+      "name": "model_validator",
+      "kind": "function",
+      "module": "pydantic.functional_validators",
+      "qualname": "model_validator"
+    },
+    {
+      "name": "extension_core",
+      "kind": "module",
+      "module": "gnd.extensions"
+    },
+    {
+      "name": "verbalize",
+      "kind": "module",
+      "module": "gnd.verbalize"
+    },
+    {
+      "name": "derivation_address",
+      "kind": "function",
+      "module": "gnd.address",
+      "qualname": "derivation_address"
+    },
+    {
+      "name": "positional_constraint_ref",
+      "kind": "function",
+      "module": "gnd.address",
+      "qualname": "positional_constraint_ref"
+    },
+    {
+      "name": "atom_bind",
+      "kind": "function",
+      "module": "gnd.atoms",
+      "qualname": "atom_bind"
+    },
+    {
+      "name": "atom_has_bind",
+      "kind": "function",
+      "module": "gnd.atoms",
+      "qualname": "atom_has_bind"
+    },
+    {
+      "name": "UnregisteredBranchError",
+      "kind": "type",
+      "module": "gnd.semantic_registry",
+      "qualname": "UnregisteredBranchError"
+    },
+    {
+      "name": "branch",
+      "kind": "function",
+      "module": "gnd.semantic_registry",
+      "qualname": "branch"
+    },
+    {
+      "name": "constraint_variant",
+      "kind": "function",
+      "module": "gnd.semantic_registry",
+      "qualname": "constraint_variant"
+    },
+    {
+      "name": "record_branch",
+      "kind": "function",
+      "module": "gnd.semantic_registry",
+      "qualname": "record_branch"
+    },
+    {
+      "name": "time_relative_operand",
+      "kind": "function",
+      "module": "gnd.semantic_registry",
+      "qualname": "time_relative_operand"
+    },
+    {
+      "name": "FAMILIES",
+      "kind": "dict"
+    },
+    {
+      "name": "resolve_hook",
+      "kind": "function",
+      "module": "gnd.constraint_families",
+      "qualname": "resolve_hook"
+    },
+    {
+      "name": "Model",
+      "kind": "ModelMetaclass",
+      "module": "gnd.model",
+      "qualname": "Model"
+    },
+    {
+      "name": "UnvalidatedPopulationError",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "UnvalidatedPopulationError"
+    },
+    {
+      "name": "DERIVATION_REASON_CODES",
+      "kind": "tuple"
+    },
+    {
+      "name": "EXACT_DERIVATION_REASON_CODES",
+      "kind": "tuple"
+    },
+    {
+      "name": "DerivationFinding",
+      "kind": "ModelMetaclass",
+      "module": "gnd.checker",
+      "qualname": "DerivationFinding"
+    },
+    {
+      "name": "DerivationKind",
+      "kind": "_LiteralGenericAlias",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "DerivationReason",
+      "kind": "_LiteralGenericAlias",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "DerivationVerdict",
+      "kind": "ModelMetaclass",
+      "module": "gnd.checker",
+      "qualname": "DerivationVerdict"
+    },
+    {
+      "name": "DynamicRefreshWork",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "DynamicRefreshWork"
+    },
+    {
+      "name": "ExtensionCalculator",
+      "kind": "_CallableGenericAlias",
+      "module": "collections.abc",
+      "qualname": "Callable"
+    },
+    {
+      "name": "FactPath",
+      "kind": "GenericAlias",
+      "module": "builtins",
+      "qualname": "tuple"
+    },
+    {
+      "name": "IdentityCodecVersion",
+      "kind": "_LiteralGenericAlias",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "JoinDisconnectedError",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "JoinDisconnectedError"
+    },
+    {
+      "name": "RelationUnavailable",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "RelationUnavailable"
+    },
+    {
+      "name": "RowLineage",
+      "kind": "GenericAlias",
+      "module": "builtins",
+      "qualname": "tuple"
+    },
+    {
+      "name": "Scalar",
+      "kind": "UnionType"
+    },
+    {
+      "name": "StructuredExtensionView",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "StructuredExtensionView"
+    },
+    {
+      "name": "VariableResolver",
+      "kind": "_CallableGenericAlias",
+      "module": "collections.abc",
+      "qualname": "Callable"
+    },
+    {
+      "name": "constraint_view_legacy",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "constraint_view_legacy"
+    },
+    {
+      "name": "derivation_claims_against",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "derivation_claims_against"
+    },
+    {
+      "name": "evaluate_derivations_legacy",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "evaluate_derivations_legacy"
+    },
+    {
+      "name": "exact_extension_envelope",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "exact_extension_envelope"
+    },
+    {
+      "name": "structured_extension_view",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "structured_extension_view"
+    },
+    {
+      "name": "_PARTIAL_OPAQUE",
+      "kind": "ContextVar"
+    },
+    {
+      "name": "_PHASE3_LEGACY_CONSTRAINT_VIEW",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "constraint_view_legacy"
+    },
+    {
+      "name": "_PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "evaluate_derivations_legacy"
+    },
+    {
+      "name": "_REFERENCE_PRESENTATION_WORK",
+      "kind": "ContextVar"
+    },
+    {
+      "name": "_WITNESS_TRACE",
+      "kind": "ContextVar"
+    },
+    {
+      "name": "_ExactExtensionResult",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_ExactExtensionResult"
+    },
+    {
+      "name": "_ExactExtensions",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_ExactExtensions"
+    },
+    {
+      "name": "_ExactJoinWork",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_ExactJoinWork"
+    },
+    {
+      "name": "_ExtensionResult",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_ExtensionResult"
+    },
+    {
+      "name": "_FixpointJoinWork",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_FixpointJoinWork"
+    },
+    {
+      "name": "_JoinWork",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_JoinWork"
+    },
+    {
+      "name": "_PartialExtensions",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_PartialExtensions"
+    },
+    {
+      "name": "_PartialTermFailure",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_PartialTermFailure"
+    },
+    {
+      "name": "_RuledFactView",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_RuledFactView"
+    },
+    {
+      "name": "_TypedRelation",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_TypedRelation"
+    },
+    {
+      "name": "_Wildcard",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_Wildcard"
+    },
+    {
+      "name": "_aggregate_bindings",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_aggregate_bindings"
+    },
+    {
+      "name": "_aggregate_identity_token",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_aggregate_identity_token"
+    },
+    {
+      "name": "_apply_negation",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_apply_negation"
+    },
+    {
+      "name": "_base_relations",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_base_relations"
+    },
+    {
+      "name": "_binding_lineages",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_binding_lineages"
+    },
+    {
+      "name": "_clause_bindings",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_clause_bindings"
+    },
+    {
+      "name": "_component_atoms",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_component_atoms"
+    },
+    {
+      "name": "_component_product",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_component_product"
+    },
+    {
+      "name": "_constraint_view",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_constraint_view_dispatch"
+    },
+    {
+      "name": "_constraint_view_dispatch",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_constraint_view_dispatch"
+    },
+    {
+      "name": "_count_term_work",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_count_term_work"
+    },
+    {
+      "name": "_derivation_obligation",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_derivation_obligation"
+    },
+    {
+      "name": "_evaluate_derivations",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_evaluate_derivations_dispatch"
+    },
+    {
+      "name": "_evaluate_derivations_dispatch",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_evaluate_derivations_dispatch"
+    },
+    {
+      "name": "_evaluate_stratified_extensions",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_evaluate_stratified_extensions"
+    },
+    {
+      "name": "_exact_derivation_obligation",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_exact_derivation_obligation"
+    },
+    {
+      "name": "_exact_extension_calculator",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_exact_extension_calculator"
+    },
+    {
+      "name": "_extension_fact_map",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_extension_fact_map"
+    },
+    {
+      "name": "_identity_token",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_identity_token"
+    },
+    {
+      "name": "_joined_atom_candidates",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_joined_atom_candidates"
+    },
+    {
+      "name": "_joined_bindings",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_joined_bindings"
+    },
+    {
+      "name": "_model_uses_exact_derivations",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_model_uses_exact_derivations"
+    },
+    {
+      "name": "_partial_binding_shape",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_binding_shape"
+    },
+    {
+      "name": "_partial_bindings",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_bindings"
+    },
+    {
+      "name": "_partial_clause_rows",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_clause_rows"
+    },
+    {
+      "name": "_partial_compatible",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_compatible"
+    },
+    {
+      "name": "_partial_merge",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_merge"
+    },
+    {
+      "name": "_partial_negation",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_negation"
+    },
+    {
+      "name": "_partial_row_facts",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_row_facts"
+    },
+    {
+      "name": "_partial_token",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_token"
+    },
+    {
+      "name": "_project_extension",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_project_extension"
+    },
+    {
+      "name": "_project_lineage",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_project_lineage"
+    },
+    {
+      "name": "_public_refresh_work",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_public_refresh_work"
+    },
+    {
+      "name": "_python_extension_calculator",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_python_extension_calculator"
+    },
+    {
+      "name": "_relation_facts",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_relation_facts"
+    },
+    {
+      "name": "_relation_roles",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_relation_roles"
+    },
+    {
+      "name": "_requires_fixpoint",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_requires_fixpoint"
+    },
+    {
+      "name": "_rows_by_identity",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_rows_by_identity"
+    },
+    {
+      "name": "_rows_from_facts",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_rows_from_facts"
+    },
+    {
+      "name": "_rule_uses_exact_terms",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_rule_uses_exact_terms"
+    },
+    {
+      "name": "_scalar_primitive_compatible",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_scalar_primitive_compatible"
+    },
+    {
+      "name": "_symbolic_value",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_symbolic_value"
+    },
+    {
+      "name": "_witness",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_witness"
+    },
+    {
+      "name": "_witness_charge",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_witness_charge"
+    },
+    {
+      "name": "_witness_row",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_witness_row"
+    },
+    {
+      "name": "AggregateAnalysis",
+      "kind": "type",
+      "module": "gnd.model",
+      "qualname": "AggregateAnalysis"
+    },
+    {
+      "name": "BoundReferenceContext",
+      "kind": "type",
+      "module": "gnd.references",
+      "qualname": "BoundReferenceContext"
+    },
+    {
+      "name": "_derivation_variable",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "_derivation_variable"
+    },
+    {
+      "name": "analyze_declared_aggregate",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "analyze_declared_aggregate"
+    },
+    {
+      "name": "body_components",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "body_components"
+    },
+    {
+      "name": "derivation_classifications",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_classifications"
+    },
+    {
+      "name": "derivation_dependencies",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_dependencies"
+    },
+    {
+      "name": "derivation_strata",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "derivation_strata"
+    },
+    {
+      "name": "iter_derivation_clauses",
+      "kind": "function",
+      "module": "gnd.model",
+      "qualname": "iter_derivation_clauses"
+    },
+    {
+      "name": "ModelIndex",
+      "kind": "type",
+      "module": "gnd.model_index",
+      "qualname": "ModelIndex"
+    },
+    {
+      "name": "Population",
+      "kind": "ModelMetaclass",
+      "module": "gnd.population",
+      "qualname": "Population"
+    },
+    {
+      "name": "adapt_phase1_slice",
+      "kind": "function",
+      "module": "gnd.proof_bridge",
+      "qualname": "adapt_phase1_slice"
+    },
+    {
+      "name": "phase1_refusal_reason",
+      "kind": "function",
+      "module": "gnd.proof_bridge",
+      "qualname": "phase1_refusal_reason"
+    },
+    {
+      "name": "MAX_SLICE_CONSTRAINTS",
+      "kind": "int"
+    },
+    {
+      "name": "SliceInput",
+      "kind": "type",
+      "module": "gnd.proof_kernel",
+      "qualname": "SliceInput"
+    },
+    {
+      "name": "SliceVerdict",
+      "kind": "type",
+      "module": "gnd.proof_kernel",
+      "qualname": "SliceVerdict"
+    },
+    {
+      "name": "phase1_decide",
+      "kind": "function",
+      "module": "gnd.proof_kernel",
+      "qualname": "phase1_decide"
+    },
+    {
+      "name": "DEFAULT_LIMITS",
+      "kind": "ExactTermLimits"
+    },
+    {
+      "name": "compare_terms",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "compare_terms"
+    },
+    {
+      "name": "evaluate_term",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "evaluate_term"
+    },
+    {
+      "name": "is_function_term",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "is_function_term"
+    },
+    {
+      "name": "materialize_scalar",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "materialize_scalar"
+    },
+    {
+      "name": "term_variables",
+      "kind": "function",
+      "module": "gnd.terms",
+      "qualname": "term_variables"
+    },
+    {
+      "name": "IMPLEMENTED_FAMILIES",
+      "kind": "set"
+    },
+    {
+      "name": "resolve_primitive",
+      "kind": "function",
+      "module": "gnd.popvalidate",
+      "qualname": "resolve_primitive"
+    },
+    {
+      "name": "resolve_reference_value_type",
+      "kind": "function",
+      "module": "gnd.popvalidate",
+      "qualname": "resolve_reference_value_type"
+    },
+    {
+      "name": "_RING_VARIANTS",
+      "kind": "set"
+    },
+    {
+      "name": "_constraint_role_refs",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_constraint_role_refs"
+    },
+    {
+      "name": "_denoting_types",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_denoting_types"
+    },
+    {
+      "name": "_descendant_closure",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_descendant_closure"
+    },
+    {
+      "name": "_fact_type_by_id",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_fact_type_by_id"
+    },
+    {
+      "name": "_instance_values_of",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_instance_values_of"
+    },
+    {
+      "name": "_instances_of",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_instances_of"
+    },
+    {
+      "name": "_is_implemented",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_is_implemented"
+    },
+    {
+      "name": "_kind_of",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_kind_of"
+    },
+    {
+      "name": "_role_object_type",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_role_object_type"
+    },
+    {
+      "name": "_scope_fact_types",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_scope_fact_types"
+    },
+    {
+      "name": "_INVALID_LITERAL",
+      "kind": "object"
+    },
+    {
+      "name": "_IdentitySet",
+      "kind": "ABCMeta",
+      "module": "gnd.checker",
+      "qualname": "_IdentitySet"
+    },
+    {
+      "name": "_identity_key",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_identity_key"
+    },
+    {
+      "name": "_literal",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_literal"
+    },
+    {
+      "name": "Verdict",
+      "kind": "_LiteralGenericAlias",
+      "module": "typing",
+      "qualname": "Literal"
+    },
+    {
+      "name": "_RING_COMPONENTS",
+      "kind": "dict"
+    },
+    {
+      "name": "ConstraintVerdict",
+      "kind": "ModelMetaclass",
+      "module": "gnd.checker",
+      "qualname": "ConstraintVerdict"
+    },
+    {
+      "name": "CoverageEntry",
+      "kind": "ModelMetaclass",
+      "module": "gnd.checker",
+      "qualname": "CoverageEntry"
+    },
+    {
+      "name": "Phase1Trace",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "Phase1Trace"
+    },
+    {
+      "name": "CheckReport",
+      "kind": "ModelMetaclass",
+      "module": "gnd.checker",
+      "qualname": "CheckReport"
+    },
+    {
+      "name": "band",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "band"
+    },
+    {
+      "name": "check_legacy",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "check_legacy"
+    },
+    {
+      "name": "_observe_phase1_compatibility",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_observe_phase1_compatibility"
+    },
+    {
+      "name": "_plain_projected_witness",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_plain_projected_witness"
+    },
+    {
+      "name": "_correspondence_message",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_correspondence_message"
+    },
+    {
+      "name": "_value_comparison_message_inputs",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_value_comparison_message_inputs"
+    },
+    {
+      "name": "_compatibility_trace",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_compatibility_trace"
+    },
+    {
+      "name": "_OBJECT_TYPE_SCOPED",
+      "kind": "dict"
+    },
+    {
+      "name": "_no_observable_subjects_message",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_no_observable_subjects_message"
+    },
+    {
+      "name": "_JoinSubjectRow",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "_JoinSubjectRow"
+    },
+    {
+      "name": "_JOIN_SUBJECT_SEQS",
+      "kind": "dict"
+    },
+    {
+      "name": "_joining_subject_sequences",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_joining_subject_sequences"
+    },
+    {
+      "name": "_no_joined_rows_message",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_no_joined_rows_message"
+    },
+    {
+      "name": "_MANDATORY_RELEVANT",
+      "kind": "set"
+    },
+    {
+      "name": "_vacuity_message",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_vacuity_message"
+    },
+    {
+      "name": "JoinAmbiguousError",
+      "kind": "type",
+      "module": "gnd.checker",
+      "qualname": "JoinAmbiguousError"
+    },
+    {
+      "name": "_project",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_project"
+    },
+    {
+      "name": "_identity_counts",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_identity_counts"
+    },
+    {
+      "name": "_join_rows",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_join_rows"
+    },
+    {
+      "name": "_require_joinable",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_require_joinable"
+    },
+    {
+      "name": "_role_seq_tuples",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_role_seq_tuples"
+    },
+    {
+      "name": "_ref_labels",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_ref_labels"
+    },
+    {
+      "name": "_violation_verdict",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_violation_verdict"
+    },
+    {
+      "name": "_orderable",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_orderable"
+    },
+    {
+      "name": "_in_range",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_in_range"
+    },
+    {
+      "name": "_find_cycle",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_find_cycle"
+    },
+    {
+      "name": "_dfs_cycle",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_dfs_cycle"
+    },
+    {
+      "name": "_ring_component_violations",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_ring_component_violations"
+    },
+    {
+      "name": "_COMPARATORS",
+      "kind": "dict"
+    },
+    {
+      "name": "_typed_comparison_values",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_typed_comparison_values"
+    },
+    {
+      "name": "_compare",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_compare"
+    },
+    {
+      "name": "_guarded_variable",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_guarded_variable"
+    },
+    {
+      "name": "_FactView",
+      "kind": "_ProtocolMeta",
+      "module": "gnd.checker",
+      "qualname": "_FactView"
+    },
+    {
+      "name": "_guarded_bindings",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_guarded_bindings"
+    },
+    {
+      "name": "structured_extension_facts",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "structured_extension_facts"
+    },
+    {
+      "name": "_guarded_variable_primitives",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_guarded_variable_primitives"
+    },
+    {
+      "name": "_guarded_ground_atom",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_guarded_ground_atom"
+    },
+    {
+      "name": "_guarded_atom_index",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_guarded_atom_index"
+    },
+    {
+      "name": "_PHASE3_LEGACY_CHECK",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "check_legacy"
+    },
+    {
+      "name": "_guarded_term_failure",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_guarded_term_failure"
+    },
+    {
+      "name": "_term_unavailable_constraint_verdict",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_term_unavailable_constraint_verdict"
+    },
+    {
+      "name": "_record_aggregate_guarded_outcomes",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_record_aggregate_guarded_outcomes"
+    },
+    {
+      "name": "_partial_constraint_report",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_partial_constraint_report"
+    },
+    {
+      "name": "_check_dispatch",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_check_dispatch"
+    },
+    {
+      "name": "_anchored_verdicts",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_anchored_verdicts"
+    },
+    {
+      "name": "check_with_anchors",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "check_with_anchors"
+    },
+    {
+      "name": "check",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "check"
+    },
+    {
+      "name": "check_partial",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "check_partial"
+    },
+    {
+      "name": "check_with_anchors_partial",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "check_with_anchors_partial"
+    },
+    {
+      "name": "effective_view",
+      "kind": "function",
+      "module": "gnd.extensions",
+      "qualname": "effective_view"
+    },
+    {
+      "name": "_family_message_ring",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_ring"
+    },
+    {
+      "name": "_family_message_mandatory",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_mandatory"
+    },
+    {
+      "name": "_family_message_mandatory_disjunctive",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_mandatory_disjunctive"
+    },
+    {
+      "name": "_family_message_uniqueness",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_uniqueness"
+    },
+    {
+      "name": "_family_message_value",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_value"
+    },
+    {
+      "name": "_family_message_frequency",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_frequency"
+    },
+    {
+      "name": "_family_message_subset",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_subset"
+    },
+    {
+      "name": "_family_message_exclusive_or",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_exclusive_or"
+    },
+    {
+      "name": "_family_message_value_comparison",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_value_comparison"
+    },
+    {
+      "name": "_family_message_cardinality",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_cardinality"
+    },
+    {
+      "name": "_family_message_subtype_partition",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_subtype_partition"
+    },
+    {
+      "name": "_family_message_guarded",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_guarded"
+    },
+    {
+      "name": "_flat_projected_witness",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_flat_projected_witness"
+    },
+    {
+      "name": "_row_projected_witness",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_row_projected_witness"
+    },
+    {
+      "name": "_family_message_default",
+      "kind": "function",
+      "module": "gnd.checker",
+      "qualname": "_family_message_default"
+    }
+  ]
+}

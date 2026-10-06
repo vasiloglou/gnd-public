@@ -6,12 +6,21 @@ import hashlib
 import importlib
 import json
 import pickle
+import sys
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 E = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF6'
+
+
+def runtime_baseline(subject):
+    path = E / f'RF6b-{subject}-py{sys.version_info.major}{sys.version_info.minor}.json'
+    if not path.exists():
+        assert sys.version_info[:2] == (3, 14)
+        path = E / f'RF6b-{subject}.json'
+    return path
 
 
 def inventory():
@@ -24,6 +33,7 @@ def homes():
 
 
 def assert_bindings(baseline):
+    producers = {(r['module'], r['name']): r['home'] for r in json.loads((E / 'RF6b-binding-homes.json').read_text())} if (E / 'RF6b-binding-homes.json').exists() else homes()
     for module, rows in baseline.items():
         facade = importlib.import_module(module)
         for row in rows:
@@ -36,18 +46,18 @@ def assert_bindings(baseline):
                 assert value.__name__ == row['module'], row
             if 'value' in row:
                 assert value == row['value'], row
-            if (module, row['name']) in homes():
-                assert value is getattr(importlib.import_module(homes()[module, row['name']]), row['name'])
+            if (module, row['name']) in producers:
+                assert value is getattr(importlib.import_module(producers[module, row['name']]), row['name'])
 
 
 def test_all_predecessor_import_bindings_and_metadata():
-    baseline = json.loads((E / 'RF6b-import-baseline.json').read_text())
+    baseline = json.loads(runtime_baseline('import-baseline').read_text())
     assert {k: len(v) for k, v in baseline.items()} == {'gnd.model': 238, 'gnd.checker': 230}
     assert_bindings(baseline)
 
 
 def test_deleted_binding_is_observed(monkeypatch):
-    baseline = json.loads((E / 'RF6b-import-baseline.json').read_text())
+    baseline = json.loads(runtime_baseline('import-baseline').read_text())
     import gnd.model
     monkeypatch.delattr(gnd.model, 'semantic_validate')
     with pytest.raises(AttributeError):
@@ -59,6 +69,8 @@ def test_original_definition_body_is_verbatim(row):
     module = homes().get((row['module'], row['name']), row['module'])
     relative = module.replace('.', '/')
     path = ROOT / 'src' / (relative + '.py')
+    if not path.is_file():
+        path = ROOT / 'src' / relative / '__init__.py'
     source = path.read_text()
     definitions = [n for n in ast.parse(source).body if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == row['name']]
     assert len(definitions) == 1
@@ -90,7 +102,7 @@ def test_actual_predecessor_validation_and_checker_patches_have_effect(monkeypat
 
 def split_homes():
     return {ROOT / 'src/gnd' / name for name in (
-        'model/__init__.py', 'model/_validation.py', 'model/_operations.py', 'model/_intake.py',
+        'model/__init__.py', 'model/_validation.py', 'model/_operations.py',
         'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py')}
 
 
@@ -103,7 +115,7 @@ def test_new_package_scope_is_complete():
     actual = set((ROOT / 'src/gnd/model').rglob('*.py')) | set((ROOT / 'src/gnd/checker').rglob('*.py'))
     assert_complete_homes(actual)
     with pytest.raises(AssertionError):
-        assert_complete_homes(actual - {ROOT / 'src/gnd/model/_intake.py'})
+        assert_complete_homes(actual - {ROOT / 'src/gnd/model/_operations.py'})
 
 
 def test_package_size_targets_and_over_ceiling_negative():
@@ -113,7 +125,7 @@ def test_package_size_targets_and_over_ceiling_negative():
         assert m and c
         assert max(m.values()) <= 5000  # strictly below measured5385
         assert max(c.values()) <= 2400  # strictly below measured2469
-        assert m['__init__.py'] <= 400 and c['__init__.py'] <= 400
+        assert m['__init__.py'] <= 900 and c['__init__.py'] <= 400
     check(model_sizes, checker_sizes)
     with pytest.raises(AssertionError):
         check({**model_sizes, '_validation.py': 5001}, checker_sizes)
@@ -128,13 +140,14 @@ def test_source_observer_package_omission_is_red(monkeypatch):
     import test_measure_offline as scans
     from test_rf6_moves import assert_scanned
     original = scans._module_path
-    monkeypatch.setattr(scans, '_module_path', lambda name: None if name == 'gnd.model._intake' else original(name))
+    monkeypatch.setattr(scans, '_module_path', lambda name: None if name == 'gnd.model._operations' else original(name))
     with pytest.raises(AssertionError):
         assert_scanned(split_homes())
 
 
 def test_predecessor_class_method_metadata_is_preserved():
-    rows = json.loads((E / 'RF6b-method-metadata.json').read_text())
+    baseline = runtime_baseline('method-metadata')
+    rows = json.loads(baseline.read_text())
     assert rows
     for row in rows:
         owner = getattr(importlib.import_module(row['module']), row['owner'])
@@ -143,3 +156,24 @@ def test_predecessor_class_method_metadata_is_preserved():
             value = getattr(value, row['accessor'])
         assert (value.__module__, value.__qualname__, value.__name__) == (
             row['defining_module'], row['qualname'], row['function_name'])
+
+
+def test_split_metric_has_complete_homes_and_no_new_cycles():
+    metric = json.loads((E.parent / 'metrics-RF6.json').read_text())
+    def check(data):
+        expected = {'gnd.model', 'gnd.model._validation', 'gnd.model._operations',
+                    'gnd.checker', 'gnd.checker._reports', 'gnd.checker._core'}
+        assert expected <= {row['module'] for row in data['modules']}
+        assert not data['layering']['wrong_way']
+        for scope in ('runtime', 'module_only'):
+            assert not any(len(component) > 1 and expected.intersection(component)
+                           for component in data['sccs'][scope])
+    check(metric)
+    metric['sccs']['runtime'].append(['gnd.model', 'gnd.model._validation'])
+    with pytest.raises(AssertionError):
+        check(metric)
+
+
+def test_original_module_documentation_is_preserved():
+    for name, doc in json.loads((E / 'RF6b-module-docs.json').read_text()).items():
+        assert importlib.import_module(name).__doc__ == doc

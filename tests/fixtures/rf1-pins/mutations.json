@@ -792,7 +792,7 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[yaml_guard|gnd.model:yaml_stream_guard_error]"
    ],
-   "file": "src/gnd/model.py",
+   "file": "src/gnd/model/_validation.py",
    "id": "M-HELP-yaml-guard-gnd-model-yaml-stream-guard-error",
    "new": "def yaml_stream_guard_error(path: str | Path) -> str | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Pre-load guard for untrusted YAML input (T-01-02), or None when safe.\n",
    "old": "def yaml_stream_guard_error(path: str | Path) -> str | None:\n    \"\"\"Pre-load guard for untrusted YAML input (T-01-02), or None when safe.\n"
@@ -941,7 +941,7 @@
    "expect_red": [
     "tests/test_rf1_semantic_pins.py::test_datetime_site[model._temporal_literal_valid]"
    ],
-   "file": "src/gnd/model.py",
+   "file": "src/gnd/model/_validation.py",
    "id": "M-SEM-datetime-model-_temporal_literal_valid",
    "new": "def _temporal_literal_valid(value: str, primitive: str) -> bool:\n    raise RuntimeError(\"rf1-mutant\")\n    try:\n",
    "old": "def _temporal_literal_valid(value: str, primitive: str) -> bool:\n    try:\n"
@@ -950,7 +950,7 @@
    "expect_red": [
     "tests/test_rf1_semantic_pins.py::test_datetime_site[checker._typed_comparison_values]"
    ],
-   "file": "src/gnd/checker.py",
+   "file": "src/gnd/checker/_core.py",
    "id": "M-SEM-datetime-checker-_typed_comparison_values",
    "new": "def _typed_comparison_values(\n    value_a: Any,\n    value_b: Any,\n    primitive_a: str | None,\n    primitive_b: str | None,\n) -> tuple[Any, Any] | None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Coerce role values into their declared common comparison domain.\"\"\"\n",
    "old": "def _typed_comparison_values(\n    value_a: Any,\n    value_b: Any,\n    primitive_a: str | None,\n    primitive_b: str | None,\n) -> tuple[Any, Any] | None:\n    \"\"\"Coerce role values into their declared common comparison domain.\"\"\"\n"
@@ -1239,7 +1239,7 @@
    "expect_red": [
     "tests/test_rf1_semantic_pins.py::test_check_coverage"
    ],
-   "file": "src/gnd/checker.py",
+   "file": "src/gnd/checker/_core.py",
    "id": "M-SEM-check-coverage-anchored",
    "new": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n    raise RuntimeError(\"rf1-mutant\")\n",
    "old": "def _anchored_verdicts(\n    model: Model,\n    population: Population,\n    anchors: Any,\n    document_bytes: bytes | None,\n) -> dict[str, ConstraintVerdict]:\n"

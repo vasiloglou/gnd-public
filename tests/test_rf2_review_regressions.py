@@ -44,7 +44,7 @@ def test_exit_guard_rejects_other_assignment_forms(monkeypatch, declaration):
     original = Path.read_text
     def changed(path, *args, **kwargs):
         source = original(path, *args, **kwargs)
-        if path == controls.ROOT / "src/gnd/model.py":
+        if path == controls.ROOT / "src/gnd/model/_validation.py":
             source += "\n" + declaration + "\n"
         return source
     monkeypatch.setattr(Path, "read_text", changed)

@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_atom_bind.py::test_every_consumer_reaches_the_binding_through_the_one_reader",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.28301405906677246
+}

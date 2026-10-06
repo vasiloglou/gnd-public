@@ -1,0 +1,33 @@
+Retained output edited to replace machine paths.
+Command: /private/tmp/rf2-py313/bin/python -m pytest -q tests/test_rf6_packages.py tests/test_rf6_index.py tests/test_rf6_registry.py tests/test_rf6_moves.py tests/test_rf6_query_policy.py --tb=short
+FF...................................................................... [ 25%]
+........................................................................ [ 50%]
+........................................................................ [ 75%]
+......................................................................   [100%]
+=================================== FAILURES ===================================
+______________ test_all_predecessor_import_bindings_and_metadata _______________
+tests/test_rf6_packages.py:48: in test_all_predecessor_import_bindings_and_metadata
+    assert_bindings(baseline)
+tests/test_rf6_packages.py:35: in assert_bindings
+    assert getattr(value, '__module__', None) == row['module'], row
+E   AssertionError: {'name': 'Path', 'kind': 'type', 'module': 'pathlib', 'qualname': 'Path'}
+E   assert 'pathlib._local' == 'pathlib'
+E     
+E     - pathlib
+E     + pathlib._local
+_______________________ test_deleted_binding_is_observed _______________________
+tests/test_rf6_packages.py:56: in test_deleted_binding_is_observed
+    assert_bindings(baseline)
+tests/test_rf6_packages.py:35: in assert_bindings
+    assert getattr(value, '__module__', None) == row['module'], row
+E   AssertionError: {'name': 'Path', 'kind': 'type', 'module': 'pathlib', 'qualname': 'Path'}
+E   assert 'pathlib._local' == 'pathlib'
+E     
+E     - pathlib
+E     + pathlib._local
+=========================== short test summary info ============================
+FAILED tests/test_rf6_packages.py::test_all_predecessor_import_bindings_and_metadata
+FAILED tests/test_rf6_packages.py::test_deleted_binding_is_observed - Asserti...
+2 failed, 284 passed in 10.81s
+
+Exit: 1

@@ -1,0 +1,45 @@
+Retained output edited to replace machine paths.
+Command: /private/tmp/rf2-py313/bin/python -m pytest -q tests/test_rf6_packages.py tests/test_rf6_index.py tests/test_rf6_registry.py tests/test_rf6_moves.py tests/test_rf6_query_policy.py --tb=short
+
+==================================== ERRORS ====================================
+_________________ ERROR collecting tests/test_rf6_registry.py __________________
+tests/test_rf6_registry.py:7: in <module>
+    from gnd import checker, semantic_adapter, semantic_spec, universe
+src/gnd/checker/__init__.py:2: in <module>
+    from gnd.checker._core import _COMPARATORS as _COMPARATORS
+src/gnd/checker/_core.py:2371: in <module>
+    _JoinSubjectRow.__dict__['__annotate_func__'].__module__ = 'typing'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: '__annotate_func__'
+___________________ ERROR collecting tests/test_rf6_moves.py ___________________
+tests/test_rf6_moves.py:10: in <module>
+    import test_measure_offline as scans
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+/private/tmp/rf2-py313/lib/python3.13/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/test_measure_offline.py:21: in <module>
+    from gnd.cli import main
+src/gnd/cli.py:147: in <module>
+    from gnd import api as api_module  # noqa: F401 -- historical CLI binding
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/api.py:16: in <module>
+    from gnd import checker as checker_module  # noqa: F401 -- historical compatibility binding
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/checker/__init__.py:2: in <module>
+    from gnd.checker._core import _COMPARATORS as _COMPARATORS
+src/gnd/checker/_core.py:2371: in <module>
+    _JoinSubjectRow.__dict__['__annotate_func__'].__module__ = 'typing'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: '__annotate_func__'
+=========================== short test summary info ============================
+ERROR tests/test_rf6_registry.py - KeyError: '__annotate_func__'
+ERROR tests/test_rf6_moves.py - KeyError: '__annotate_func__'
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.27s
+
+Exit: 2

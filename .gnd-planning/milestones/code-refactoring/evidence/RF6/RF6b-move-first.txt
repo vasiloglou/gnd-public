@@ -1,0 +1,14 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_packages.py --tb=short
+ImportError while loading conftest '<worktree>/tests/conftest.py'.
+tests/conftest.py:11: in <module>
+    from gnd.model import Model
+src/gnd/model/__init__.py:15: in <module>
+    from gnd.model._intake import Literal as Literal
+src/gnd/model/_intake.py:22: in <module>
+    from gnd.model._operations import _attach_compiled_obligations
+src/gnd/model/_operations.py:9: in <module>
+    from gnd.model._operations import _effect_index, _has_literal, _roles_by_variable, compile_operation
+E   ImportError: cannot import name '_effect_index' from partially initialized module 'gnd.model._operations' (most likely due to a circular import) (<worktree>/src/gnd/model/_operations.py)
+
+Exit: 4

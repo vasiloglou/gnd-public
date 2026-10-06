@@ -1,0 +1,10 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_packages.py tests/test_rf6_index.py tests/test_rf6_registry.py tests/test_rf6_moves.py tests/test_rf6_query_policy.py tests/test_rf1_layering.py --tb=short
+........................................................................ [ 23%]
+........................................................................ [ 46%]
+........................................................................ [ 69%]
+........................................................................ [ 92%]
+.......................                                                  [100%]
+311 passed in 11.26s
+
+Exit: 0

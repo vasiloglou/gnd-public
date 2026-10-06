@@ -1,0 +1,44 @@
+[
+  {
+    "id": "A1",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-06",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/RF6b-A1-spec.md",
+    "sha256": "750ce87e44bc3f0ffd3a136db5ae326aa73f401ee1ba0cc7be7c9ccc90a1c13e",
+    "original_facade_ceiling": 400,
+    "revised_model_facade_ceiling": 900
+  },
+  {
+    "id": "A2",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-06",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/RF6b-A2-spec.md",
+    "sha256": "50d09a93d24bae8d8bb3553936fc463e61b2c5cdf3daa94e575c8fde62b3e296"
+  },
+  {
+    "id": "A3",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-06",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/RF6b-A3-spec.md",
+    "sha256": "70c87fc3a83e1d6f5b9f212a24b350bb8e4d7c12326a1d356322f4485a26fa45"
+  },
+  {
+    "id": "A4",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-06",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/RF6b-A4-spec.md",
+    "sha256": "8333544b33de7b5db4b10b9b14f4c810ad68ea898d9b77d0a63448e4d08d4574"
+  },
+  {
+    "id": "A5",
+    "status": "delegated approval (auto=true)",
+    "date": "2026-10-06",
+    "authorization": "process-phase RF6 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF6/RF6b-A5-spec.md",
+    "sha256": "c357ab3eb5da90fc39a2781cbb0bcf4dad1ce8edad5dccdbaf032e6912a9319f"
+  }
+]

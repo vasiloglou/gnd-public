@@ -26,6 +26,7 @@ import pytest
 from jsonschema import Draft202012Validator
 from test_public_derivation_parity_corpus import ANSWER_KEY, CORPUS
 
+import gnd.checker._core as checker_core
 from gnd import checker
 from gnd import cli as cli_module
 from gnd import extensions as extension_core
@@ -562,7 +563,7 @@ def _assert_constraint_or_band(case: dict[str, Any], monkeypatch: pytest.MonkeyP
             return original_message(*args, **kwargs)
 
         monkeypatch.setattr(extension_core, "evaluate_derivations", traced_evaluate)
-        monkeypatch.setattr(checker, "_correspondence_message", traced_message)
+        monkeypatch.setattr(checker_core, "_correspondence_message", traced_message)
         report = checker.check(target_model, target_population)
         constraint_calls = [event for event in calls if event.startswith("constraint:")]
         assert len(constraint_calls) == len(report.verdicts) == 1

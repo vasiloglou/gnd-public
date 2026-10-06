@@ -1,3 +1,4 @@
+# ruff: noqa: F401 -- historical namespace imports retained for compatibility facade
 """Deterministic constraint checker with the 5-state verdict lattice.
 
 ``check(model, population)`` walks every inline and top-level constraint and
@@ -33,12 +34,12 @@ from pydantic import BaseModel, Field, ValidationInfo, model_validator
 from gnd import extensions as extension_core
 from gnd import verbalize
 from gnd.address import (
-    derivation_address,  # noqa: F401 -- compatibility export
+    derivation_address,  # historical compatibility export
     positional_constraint_ref,
 )
 from gnd.atoms import (
     atom_bind,
-    atom_has_bind,  # noqa: F401 -- compatibility export
+    atom_has_bind,  # historical compatibility export
 )
 from gnd.branches import (
     UnregisteredBranchError,
@@ -47,246 +48,258 @@ from gnd.branches import (
     record_branch,
     time_relative_operand,
 )
+from gnd.checker._reports import (
+    CheckReport,
+    ConstraintVerdict,
+    CoverageEntry,
+    Phase1Trace,
+    Verdict,
+    band,
+)
 from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.documents import Model
 from gnd.errors import UnvalidatedPopulationError
 from gnd.extensions import (
-    DERIVATION_REASON_CODES,  # noqa: F401 -- compatibility export
-    EXACT_DERIVATION_REASON_CODES,  # noqa: F401 -- compatibility export
-    DerivationFinding,  # noqa: F401 -- compatibility export
-    DerivationKind,  # noqa: F401 -- compatibility export
-    DerivationReason,  # noqa: F401 -- compatibility export
+    DERIVATION_REASON_CODES,  # historical compatibility export
+    EXACT_DERIVATION_REASON_CODES,  # historical compatibility export
+    DerivationFinding,  # historical compatibility export
+    DerivationKind,  # historical compatibility export
+    DerivationReason,  # historical compatibility export
     DerivationVerdict,
-    DynamicRefreshWork,  # noqa: F401 -- compatibility export
-    ExtensionCalculator,  # noqa: F401 -- compatibility export
-    FactPath,  # noqa: F401 -- compatibility export
-    IdentityCodecVersion,  # noqa: F401 -- compatibility export
-    JoinDisconnectedError,  # noqa: F401 -- compatibility export
-    RelationUnavailable,  # noqa: F401 -- compatibility export
-    RowLineage,  # noqa: F401 -- compatibility export
+    DynamicRefreshWork,  # historical compatibility export
+    ExtensionCalculator,  # historical compatibility export
+    FactPath,  # historical compatibility export
+    IdentityCodecVersion,  # historical compatibility export
+    JoinDisconnectedError,  # historical compatibility export
+    RelationUnavailable,  # historical compatibility export
+    RowLineage,  # historical compatibility export
     Scalar,
-    StructuredExtensionView,  # noqa: F401 -- compatibility export
-    VariableResolver,  # noqa: F401 -- compatibility export
-    constraint_view_legacy,  # noqa: F401 -- compatibility export
-    derivation_claims_against,  # noqa: F401 -- compatibility export
-    evaluate_derivations_legacy,  # noqa: F401 -- compatibility export
-    exact_extension_envelope,  # noqa: F401 -- compatibility export
-    structured_extension_view,  # noqa: F401 -- compatibility export
+    StructuredExtensionView,  # historical compatibility export
+    VariableResolver,  # historical compatibility export
+    constraint_view_legacy,  # historical compatibility export
+    derivation_claims_against,  # historical compatibility export
+    evaluate_derivations_legacy,  # historical compatibility export
+    exact_extension_envelope,  # historical compatibility export
+    structured_extension_view,  # historical compatibility export
 )
 from gnd.extensions import (
-    PARTIAL_OPAQUE as _PARTIAL_OPAQUE,  # noqa: F401 -- compatibility export
+    PARTIAL_OPAQUE as _PARTIAL_OPAQUE,  # historical compatibility export
 )
 from gnd.extensions import (
-    PHASE3_LEGACY_CONSTRAINT_VIEW as _PHASE3_LEGACY_CONSTRAINT_VIEW,  # noqa: F401 -- compatibility export
+    PHASE3_LEGACY_CONSTRAINT_VIEW as _PHASE3_LEGACY_CONSTRAINT_VIEW,  # historical compatibility export
 )
 from gnd.extensions import (
-    PHASE3_LEGACY_EVALUATE_DERIVATIONS as _PHASE3_LEGACY_EVALUATE_DERIVATIONS,  # noqa: F401 -- compatibility export
+    PHASE3_LEGACY_EVALUATE_DERIVATIONS as _PHASE3_LEGACY_EVALUATE_DERIVATIONS,  # historical compatibility export
 )
 from gnd.extensions import (
-    REFERENCE_PRESENTATION_WORK as _REFERENCE_PRESENTATION_WORK,  # noqa: F401 -- compatibility export
+    REFERENCE_PRESENTATION_WORK as _REFERENCE_PRESENTATION_WORK,  # historical compatibility export
 )
 from gnd.extensions import (
-    WITNESS_TRACE as _WITNESS_TRACE,  # noqa: F401 -- compatibility export
+    WITNESS_TRACE as _WITNESS_TRACE,  # historical compatibility export
 )
 from gnd.extensions import (
-    ExactExtensionResult as _ExactExtensionResult,  # noqa: F401 -- compatibility export
+    ExactExtensionResult as _ExactExtensionResult,  # historical compatibility export
 )
 from gnd.extensions import (
-    ExactExtensions as _ExactExtensions,  # noqa: F401 -- compatibility export
+    ExactExtensions as _ExactExtensions,  # historical compatibility export
 )
 from gnd.extensions import (
-    ExactJoinWork as _ExactJoinWork,  # noqa: F401 -- compatibility export
+    ExactJoinWork as _ExactJoinWork,  # historical compatibility export
 )
 from gnd.extensions import (
-    ExtensionResult as _ExtensionResult,  # noqa: F401 -- compatibility export
+    ExtensionResult as _ExtensionResult,  # historical compatibility export
 )
 from gnd.extensions import (
-    FixpointJoinWork as _FixpointJoinWork,  # noqa: F401 -- compatibility export
+    FixpointJoinWork as _FixpointJoinWork,  # historical compatibility export
 )
-from gnd.extensions import JoinWork as _JoinWork  # noqa: F401 -- compatibility export
+from gnd.extensions import JoinWork as _JoinWork  # historical compatibility export
 from gnd.extensions import (
-    PartialExtensions as _PartialExtensions,  # noqa: F401 -- compatibility export
-)
-from gnd.extensions import (
-    PartialTermFailure as _PartialTermFailure,  # noqa: F401 -- compatibility export
+    PartialExtensions as _PartialExtensions,  # historical compatibility export
 )
 from gnd.extensions import (
-    RuledFactView as _RuledFactView,  # noqa: F401 -- compatibility export
+    PartialTermFailure as _PartialTermFailure,  # historical compatibility export
 )
 from gnd.extensions import (
-    TypedRelation as _TypedRelation,  # noqa: F401 -- compatibility export
-)
-from gnd.extensions import Wildcard as _Wildcard  # noqa: F401 -- compatibility export
-from gnd.extensions import (
-    aggregate_bindings as _aggregate_bindings,  # noqa: F401 -- compatibility export
+    RuledFactView as _RuledFactView,  # historical compatibility export
 )
 from gnd.extensions import (
-    aggregate_identity_token as _aggregate_identity_token,  # noqa: F401 -- compatibility export
+    TypedRelation as _TypedRelation,  # historical compatibility export
+)
+from gnd.extensions import Wildcard as _Wildcard  # historical compatibility export
+from gnd.extensions import (
+    aggregate_bindings as _aggregate_bindings,  # historical compatibility export
 )
 from gnd.extensions import (
-    apply_negation as _apply_negation,  # noqa: F401 -- compatibility export
+    aggregate_identity_token as _aggregate_identity_token,  # historical compatibility export
 )
 from gnd.extensions import (
-    base_relations as _base_relations,  # noqa: F401 -- compatibility export
+    apply_negation as _apply_negation,  # historical compatibility export
 )
 from gnd.extensions import (
-    binding_lineages as _binding_lineages,  # noqa: F401 -- compatibility export
+    base_relations as _base_relations,  # historical compatibility export
 )
 from gnd.extensions import (
-    clause_bindings as _clause_bindings,  # noqa: F401 -- compatibility export
+    binding_lineages as _binding_lineages,  # historical compatibility export
 )
 from gnd.extensions import (
-    component_atoms as _component_atoms,  # noqa: F401 -- compatibility export
+    clause_bindings as _clause_bindings,  # historical compatibility export
 )
 from gnd.extensions import (
-    component_product as _component_product,  # noqa: F401 -- compatibility export
+    component_atoms as _component_atoms,  # historical compatibility export
 )
 from gnd.extensions import (
-    constraint_view as _constraint_view,  # noqa: F401 -- compatibility export
+    component_product as _component_product,  # historical compatibility export
 )
 from gnd.extensions import (
-    constraint_view_dispatch as _constraint_view_dispatch,  # noqa: F401 -- compatibility export
+    constraint_view as _constraint_view,  # historical compatibility export
 )
 from gnd.extensions import (
-    count_term_work as _count_term_work,  # noqa: F401 -- compatibility export
+    constraint_view_dispatch as _constraint_view_dispatch,  # historical compatibility export
 )
 from gnd.extensions import (
-    derivation_obligation as _derivation_obligation,  # noqa: F401 -- compatibility export
+    count_term_work as _count_term_work,  # historical compatibility export
 )
 from gnd.extensions import (
-    evaluate_derivations as _evaluate_derivations,  # noqa: F401 -- compatibility export
+    derivation_obligation as _derivation_obligation,  # historical compatibility export
 )
 from gnd.extensions import (
-    evaluate_derivations_dispatch as _evaluate_derivations_dispatch,  # noqa: F401 -- compatibility export
+    evaluate_derivations as _evaluate_derivations,  # historical compatibility export
 )
 from gnd.extensions import (
-    evaluate_stratified_extensions as _evaluate_stratified_extensions,  # noqa: F401 -- compatibility export
+    evaluate_derivations_dispatch as _evaluate_derivations_dispatch,  # historical compatibility export
 )
 from gnd.extensions import (
-    exact_derivation_obligation as _exact_derivation_obligation,  # noqa: F401 -- compatibility export
+    evaluate_stratified_extensions as _evaluate_stratified_extensions,  # historical compatibility export
 )
 from gnd.extensions import (
-    exact_extension_calculator as _exact_extension_calculator,  # noqa: F401 -- compatibility export
+    exact_derivation_obligation as _exact_derivation_obligation,  # historical compatibility export
 )
 from gnd.extensions import (
-    extension_fact_map as _extension_fact_map,  # noqa: F401 -- compatibility export
+    exact_extension_calculator as _exact_extension_calculator,  # historical compatibility export
 )
 from gnd.extensions import (
-    identity_token as _identity_token,  # noqa: F401 -- compatibility export
+    extension_fact_map as _extension_fact_map,  # historical compatibility export
 )
 from gnd.extensions import (
-    joined_atom_candidates as _joined_atom_candidates,  # noqa: F401 -- compatibility export
+    identity_token as _identity_token,  # historical compatibility export
 )
 from gnd.extensions import (
-    joined_bindings as _joined_bindings,  # noqa: F401 -- compatibility export
+    joined_atom_candidates as _joined_atom_candidates,  # historical compatibility export
 )
 from gnd.extensions import (
-    model_uses_exact_derivations as _model_uses_exact_derivations,  # noqa: F401 -- compatibility export
+    joined_bindings as _joined_bindings,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_binding_shape as _partial_binding_shape,  # noqa: F401 -- compatibility export
+    model_uses_exact_derivations as _model_uses_exact_derivations,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_bindings as _partial_bindings,  # noqa: F401 -- compatibility export
+    partial_binding_shape as _partial_binding_shape,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_clause_rows as _partial_clause_rows,  # noqa: F401 -- compatibility export
+    partial_bindings as _partial_bindings,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_compatible as _partial_compatible,  # noqa: F401 -- compatibility export
+    partial_clause_rows as _partial_clause_rows,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_merge as _partial_merge,  # noqa: F401 -- compatibility export
+    partial_compatible as _partial_compatible,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_negation as _partial_negation,  # noqa: F401 -- compatibility export
+    partial_merge as _partial_merge,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_row_facts as _partial_row_facts,  # noqa: F401 -- compatibility export
+    partial_negation as _partial_negation,  # historical compatibility export
 )
 from gnd.extensions import (
-    partial_token as _partial_token,  # noqa: F401 -- compatibility export
+    partial_row_facts as _partial_row_facts,  # historical compatibility export
 )
 from gnd.extensions import (
-    project_extension as _project_extension,  # noqa: F401 -- compatibility export
+    partial_token as _partial_token,  # historical compatibility export
 )
 from gnd.extensions import (
-    project_lineage as _project_lineage,  # noqa: F401 -- compatibility export
+    project_extension as _project_extension,  # historical compatibility export
 )
 from gnd.extensions import (
-    public_refresh_work as _public_refresh_work,  # noqa: F401 -- compatibility export
+    project_lineage as _project_lineage,  # historical compatibility export
 )
 from gnd.extensions import (
-    python_extension_calculator as _python_extension_calculator,  # noqa: F401 -- compatibility export
+    public_refresh_work as _public_refresh_work,  # historical compatibility export
 )
 from gnd.extensions import (
-    relation_facts as _relation_facts,  # noqa: F401 -- compatibility export
+    python_extension_calculator as _python_extension_calculator,  # historical compatibility export
 )
 from gnd.extensions import (
-    relation_roles as _relation_roles,  # noqa: F401 -- compatibility export
+    relation_facts as _relation_facts,  # historical compatibility export
 )
 from gnd.extensions import (
-    requires_fixpoint as _requires_fixpoint,  # noqa: F401 -- compatibility export
+    relation_roles as _relation_roles,  # historical compatibility export
 )
 from gnd.extensions import (
-    rows_by_identity as _rows_by_identity,  # noqa: F401 -- compatibility export
+    requires_fixpoint as _requires_fixpoint,  # historical compatibility export
 )
 from gnd.extensions import (
-    rows_from_facts as _rows_from_facts,  # noqa: F401 -- compatibility export
+    rows_by_identity as _rows_by_identity,  # historical compatibility export
 )
 from gnd.extensions import (
-    rule_uses_exact_terms as _rule_uses_exact_terms,  # noqa: F401 -- compatibility export
+    rows_from_facts as _rows_from_facts,  # historical compatibility export
 )
 from gnd.extensions import (
-    scalar_primitive_compatible as _scalar_primitive_compatible,  # noqa: F401 -- compatibility export
+    rule_uses_exact_terms as _rule_uses_exact_terms,  # historical compatibility export
 )
 from gnd.extensions import (
-    symbolic_value as _symbolic_value,  # noqa: F401 -- compatibility export
+    scalar_primitive_compatible as _scalar_primitive_compatible,  # historical compatibility export
 )
-from gnd.extensions import witness as _witness  # noqa: F401 -- compatibility export
 from gnd.extensions import (
-    witness_charge as _witness_charge,  # noqa: F401 -- compatibility export
+    symbolic_value as _symbolic_value,  # historical compatibility export
 )
-from gnd.extensions import witness_row as _witness_row  # noqa: F401 -- compatibility export
+from gnd.extensions import witness as _witness  # historical compatibility export
+from gnd.extensions import (
+    witness_charge as _witness_charge,  # historical compatibility export
+)
+from gnd.extensions import witness_row as _witness_row  # historical compatibility export
 from gnd.model import (
-    AggregateAnalysis,  # noqa: F401 -- compatibility export
+    AggregateAnalysis,  # historical compatibility export
     BoundReferenceContext,
-    _derivation_variable,  # noqa: F401 -- compatibility export
-    analyze_declared_aggregate,  # noqa: F401 -- compatibility export
-    body_components,  # noqa: F401 -- compatibility export
-    derivation_classifications,  # noqa: F401 -- compatibility export
-    derivation_dependencies,  # noqa: F401 -- compatibility export
-    derivation_strata,  # noqa: F401 -- compatibility export
-    iter_derivation_clauses,  # noqa: F401 -- compatibility export
+    _derivation_variable,  # historical compatibility export
+    analyze_declared_aggregate,  # historical compatibility export
+    body_components,  # historical compatibility export
+    derivation_classifications,  # historical compatibility export
+    derivation_dependencies,  # historical compatibility export
+    derivation_strata,  # historical compatibility export
+    iter_derivation_clauses,  # historical compatibility export
 )
 from gnd.model_index import ModelIndex
 from gnd.population import Population
 from gnd.proof_bridge import adapt_phase1_slice, phase1_refusal_reason
 from gnd.proof_kernel import MAX_SLICE_CONSTRAINTS, SliceInput, SliceVerdict, phase1_decide
 from gnd.terms import (
-    DEFAULT_LIMITS,  # noqa: F401 -- compatibility export
-    compare_terms,  # noqa: F401 -- compatibility export
+    DEFAULT_LIMITS,  # historical compatibility export
+    compare_terms,  # historical compatibility export
     evaluate_term,
     is_function_term,
-    materialize_scalar,  # noqa: F401 -- compatibility export
-    term_variables,  # noqa: F401 -- compatibility export
+    materialize_scalar,  # historical compatibility export
+    term_variables,  # historical compatibility export
 )
 from gnd.universe import (
-    IMPLEMENTED_FAMILIES,  # noqa: F401 -- compatibility export
+    IMPLEMENTED_FAMILIES,  # historical compatibility export
     resolve_primitive,
-    resolve_reference_value_type,  # noqa: F401 -- compatibility export
+    resolve_reference_value_type,  # historical compatibility export
+)
+
+#: Constraint families the checker implements (all others -> unchecked, D-02).
+#: Combined ring variants -> their component variants (each evaluated).
+from gnd.universe import RING_COMPONENTS as _RING_COMPONENTS  # historical compatibility export
+from gnd.universe import (
+    RING_VARIANTS as _RING_VARIANTS,  # historical compatibility export
 )
 from gnd.universe import (
-    RING_VARIANTS as _RING_VARIANTS,  # noqa: F401 -- compatibility export
+    constraint_role_refs as _constraint_role_refs,  # historical compatibility export
 )
 from gnd.universe import (
-    constraint_role_refs as _constraint_role_refs,  # noqa: F401 -- compatibility export
+    denoting_types as _denoting_types,  # historical compatibility export
 )
 from gnd.universe import (
-    denoting_types as _denoting_types,  # noqa: F401 -- compatibility export
-)
-from gnd.universe import (
-    descendant_closure as _descendant_closure,  # noqa: F401 -- compatibility export
+    descendant_closure as _descendant_closure,  # historical compatibility export
 )
 from gnd.universe import (
     fact_type_by_id as _fact_type_by_id,
@@ -296,9 +309,9 @@ from gnd.universe import (
 )
 from gnd.universe import instances_of as _instances_of
 from gnd.universe import (
-    is_implemented as _is_implemented,  # noqa: F401 -- compatibility export
+    is_implemented as _is_implemented,  # historical compatibility export
 )
-from gnd.universe import kind_of as _kind_of  # noqa: F401 -- compatibility export
+from gnd.universe import kind_of as _kind_of  # historical compatibility export
 from gnd.universe import (
     role_object_type as _role_object_type,
 )
@@ -311,185 +324,6 @@ from gnd.values import (
 from gnd.values import IdentitySet as _IdentitySet
 from gnd.values import identity_key as _identity_key
 from gnd.values import literal as _literal
-
-Verdict = Literal["pass", "fail", "warning", "unchecked", "vacuous"]
-
-
-#: Constraint families the checker implements (all others -> unchecked, D-02).
-
-#: Combined ring variants -> their component variants (each evaluated).
-from gnd.universe import RING_COMPONENTS as _RING_COMPONENTS  # noqa: F401 -- compatibility export
-
-
-class ConstraintVerdict(BaseModel):
-    """One verdict for one constraint."""
-
-    scope_id: str = Field(exclude=True)
-    constraint_ref: str
-    constraint_type: str
-    modality: str
-    #: The constraint's own declared provenance origin (R-01) — read straight
-    #: from the constraint dict, whose meta-schema requires it. Deliberately NO
-    #: default: a silent ``""`` is how the second construction site
-    #: (measure/promote.py) would drift out of sync (P-4). PANEL-3 scoping:
-    #: only ``source`` + ``status`` are surfaced into reports; the full
-    #: ``provenance`` block (user_quote etc.) is deliberately NOT copied.
-    source: str
-    #: The constraint's confirmation status (R-01) — same rules as ``source``:
-    #: no default, threaded from the constraint at both construction sites,
-    #: and the only other provenance field PANEL-3 admits into the payload.
-    status: str
-    verdict: Verdict
-    message: str
-    offending_facts: list[Any] = Field(default_factory=list)
-    fact_refs: list[dict[str, Any]] = Field(default_factory=list, exclude=True)
-    #: Machine-readable reason a constraint could not be evaluated (D-12).
-    #: Non-null if and only if ``verdict == "unchecked"`` — a machine-readable
-    #: sibling of ``message``, never a replacement for it. "Unimplemented
-    #: family", "join disconnected" and "no reference clock" are different
-    #: problems, and a retry loop must be able to tell them apart.
-    reason_code: str | None = None
-
-    @model_validator(mode="after")
-    def _registered_branch(self, info: ValidationInfo) -> ConstraintVerdict:
-        row = branch(self.scope_id)
-        if row.surface not in {"snapshot", "applicability", "composition"} or (
-            row.surface == "composition"
-            and row.family not in {"oracle-verdict", "verifier-verdict"}
-        ):
-            raise UnregisteredBranchError("branch cannot construct a constraint verdict")
-        if row.surface == "snapshot" and row.family != self.constraint_type:
-            raise UnregisteredBranchError("snapshot branch names another constraint family")
-        if row.modality != "any" and row.modality != self.modality:
-            raise UnregisteredBranchError("snapshot branch names another modality")
-        if row.surface != "composition" and row.reason_code != self.reason_code:
-            raise UnregisteredBranchError("verdict reason disagrees with its registered branch")
-        if not (isinstance(info.context, dict) and info.context.get("branch_already_recorded")):
-            record_branch(self.scope_id, outcome=self.verdict)
-        return self
-
-
-class CoverageEntry(BaseModel):
-    """Declared-coverage status and fact count for one fact type."""
-
-    declared: Literal["declared", "undeclared"]
-    facts: int
-
-
-@dataclass(frozen=True)
-class Phase1Trace:
-    """The v6.0 Phase 1 evidence lane for one complete in-scope result.
-
-    Present only when EVERY constraint of the checked model fell inside the
-    bounded slice, because a partial trace cannot carry a whole-result
-    assurance and pretending otherwise is the defect r2 A6 names. Excluded from
-    the report's serialization: Phase 1 adds no public wire field (section 8),
-    and the evidence runner is the only consumer.
-    """
-
-    rows: tuple[tuple[SliceInput, SliceVerdict], ...]
-    coverage: tuple[tuple[str, str, int], ...]
-    applicable: int
-    slice_decided: int
-
-
-class CheckReport(BaseModel):
-    """The full set of per-constraint verdicts for one (model, population) pair."""
-
-    verdicts: list[ConstraintVerdict] = Field(default_factory=list)
-    #: v6.0 Phase 1, spec section 5.4. Excluded, internal, and never a public
-    #: assurance field in this phase.
-    phase1_trace: Phase1Trace | None = Field(default=None, exclude=True)
-    #: A14.4's refusal ledger: one (constraint_ref, reason) row per constraint
-    #: the Phase 1 slice REFUSED to certify -- a decision the evidence lane
-    #: records, never an absence (O7; review finding R12). Excluded from the
-    #: public wire exactly like the trace.
-    phase1_refusals: tuple[tuple[str, str], ...] = Field(default=(), exclude=True)
-    #: v6.0 Phase 3 authoritative snapshot result.  This is internal evidence;
-    #: the public payload continues to serialize the stable CheckReport fields.
-    snapshot_projection: Any = Field(default=None, exclude=True)
-    admission_projection: Any = Field(default=None, exclude=True)
-    assurance_input_scope_ids: tuple[str, ...] = Field(default=(), exclude=True)
-    # Ordinary and nested model_dump calls deliberately retain the v3 shape.
-    # The v4 payload builder serializes this excluded field explicitly.
-    derivations: list[DerivationVerdict] = Field(default_factory=list, exclude=True)
-    coverage: dict[str, CoverageEntry] = Field(default_factory=dict)
-
-    @property
-    def has_alethic_fail(self) -> bool:
-        return any(v.verdict == "fail" and v.modality == "alethic" for v in self.verdicts) or any(
-            verdict.verdict == "fail" for verdict in self.derivations
-        )
-
-    @property
-    def has_vacuous(self) -> bool:
-        return any(v.verdict == "vacuous" for v in self.verdicts)
-
-    @property
-    def has_unevaluated_alethic(self) -> bool:
-        # D-07: an ALETHIC constraint the checker never mechanically evaluated
-        # means acceptance cannot be claimed — distinct from "decided, no
-        # subjects" (vacuous). Deontic constraints are feedback-only, so an
-        # unchecked deontic one never affects the band. The acceptance rule
-        # lives HERE and nowhere else: the CLI router, the JSON emitter and the
-        # corpus all read this one property, because a duplicated comprehension
-        # is how exit bands drift apart.
-        return any(
-            v.verdict == "unchecked" and v.modality == "alethic" for v in self.verdicts
-        ) or any(verdict.verdict == "unchecked" for verdict in self.derivations)
-
-    def counts(self) -> dict[str, int]:
-        totals = {"pass": 0, "fail": 0, "warning": 0, "unchecked": 0, "vacuous": 0}
-        for verdict in self.verdicts:
-            totals[verdict.verdict] += 1
-        for verdict in self.derivations:
-            totals[verdict.verdict] += 1
-        return totals
-
-
-def band(report: CheckReport) -> int:
-    """Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08).
-
-    Band 3 (load/model-relative rejection) returns earlier from the CLI's load
-    arms, so it never reaches here. This is the ONE implementation of the exit-band
-    rule: the CLI router, the JSON emitter, and the Phase 2/4 measurement harness
-    all delegate to it, because a duplicated comprehension is how exit bands drift
-    apart (see :attr:`CheckReport.has_unevaluated_alethic`). Each predicate lives on
-    :class:`CheckReport`, never as a comprehension in a caller.
-    """
-    if report.snapshot_projection is not None:
-        result = int(report.snapshot_projection.band)
-        if any(row.verdict == "fail" for row in report.derivations):
-            result = 1
-        elif result != 1 and any(row.verdict == "unchecked" for row in report.derivations):
-            result = 4
-    elif report.has_alethic_fail:
-        result = 1
-    elif report.has_unevaluated_alethic or any(
-        row.verdict == "unchecked" and row.reason_code == "reference-join-work-limit"
-        for row in report.verdicts
-    ):
-        result = 4
-    elif report.has_vacuous:
-        result = 2
-    else:
-        result = 0
-    routes = ("n-a", "phase1") if report.phase1_trace is not None else ("n-a",)
-    for selected_route in routes:
-        prefix = f"composition:band:{selected_route}:"
-        event = {1: "alethic-fail", 4: "alethic-unchecked", 2: "vacuous", 0: "clean"}[result]
-        record_branch(prefix + event)
-        if result == 1 and report.has_unevaluated_alethic and report.has_vacuous:
-            record_branch(prefix + "fail-over-unchecked-over-vacuous")
-        if result == 4 and report.has_vacuous:
-            record_branch(prefix + "unchecked-over-vacuous")
-        if result == 2 and any(row.verdict == "pass" for row in report.verdicts):
-            record_branch(prefix + "vacuous-over-clean")
-        if any(row.modality == "deontic" and row.verdict == "warning" for row in report.verdicts):
-            record_branch(prefix + "deontic-warning-keeps-band")
-        if any(row.modality == "deontic" and row.verdict == "unchecked" for row in report.verdicts):
-            record_branch(prefix + "deontic-unchecked-keeps-band")
-    return result
 
 
 def check_legacy(model: Model, population: Population) -> CheckReport:
@@ -2467,3 +2301,65 @@ def _family_message_default(
         family, verdict, fact_type_id=str((fact_type or {}).get('id')) or None,
         detail=(f'witness={witness!r}' if witness else ''),
     )
+
+
+check_legacy.__module__ = 'gnd.checker'
+_observe_phase1_compatibility.__module__ = 'gnd.checker'
+_plain_projected_witness.__module__ = 'gnd.checker'
+_correspondence_message.__module__ = 'gnd.checker'
+_value_comparison_message_inputs.__module__ = 'gnd.checker'
+_compatibility_trace.__module__ = 'gnd.checker'
+_no_observable_subjects_message.__module__ = 'gnd.checker'
+_JoinSubjectRow.__module__ = 'gnd.checker'
+_joining_subject_sequences.__module__ = 'gnd.checker'
+_no_joined_rows_message.__module__ = 'gnd.checker'
+_vacuity_message.__module__ = 'gnd.checker'
+JoinAmbiguousError.__module__ = 'gnd.checker'
+_project.__module__ = 'gnd.checker'
+_identity_counts.__module__ = 'gnd.checker'
+_join_rows.__module__ = 'gnd.checker'
+_require_joinable.__module__ = 'gnd.checker'
+_role_seq_tuples.__module__ = 'gnd.checker'
+_ref_labels.__module__ = 'gnd.checker'
+_violation_verdict.__module__ = 'gnd.checker'
+_orderable.__module__ = 'gnd.checker'
+_in_range.__module__ = 'gnd.checker'
+_find_cycle.__module__ = 'gnd.checker'
+_dfs_cycle.__module__ = 'gnd.checker'
+_ring_component_violations.__module__ = 'gnd.checker'
+_typed_comparison_values.__module__ = 'gnd.checker'
+_compare.__module__ = 'gnd.checker'
+_guarded_variable.__module__ = 'gnd.checker'
+_FactView.__module__ = 'gnd.checker'
+_guarded_bindings.__module__ = 'gnd.checker'
+structured_extension_facts.__module__ = 'gnd.checker'
+_guarded_variable_primitives.__module__ = 'gnd.checker'
+_guarded_ground_atom.__module__ = 'gnd.checker'
+_guarded_atom_index.__module__ = 'gnd.checker'
+_guarded_term_failure.__module__ = 'gnd.checker'
+_term_unavailable_constraint_verdict.__module__ = 'gnd.checker'
+_record_aggregate_guarded_outcomes.__module__ = 'gnd.checker'
+_partial_constraint_report.__module__ = 'gnd.checker'
+_check_dispatch.__module__ = 'gnd.checker'
+_anchored_verdicts.__module__ = 'gnd.checker'
+check_with_anchors.__module__ = 'gnd.checker'
+check.__module__ = 'gnd.checker'
+check_partial.__module__ = 'gnd.checker'
+check_with_anchors_partial.__module__ = 'gnd.checker'
+_family_message_ring.__module__ = 'gnd.checker'
+_family_message_mandatory.__module__ = 'gnd.checker'
+_family_message_mandatory_disjunctive.__module__ = 'gnd.checker'
+_family_message_uniqueness.__module__ = 'gnd.checker'
+_family_message_value.__module__ = 'gnd.checker'
+_family_message_frequency.__module__ = 'gnd.checker'
+_family_message_subset.__module__ = 'gnd.checker'
+_family_message_exclusive_or.__module__ = 'gnd.checker'
+_family_message_value_comparison.__module__ = 'gnd.checker'
+_family_message_cardinality.__module__ = 'gnd.checker'
+_family_message_subtype_partition.__module__ = 'gnd.checker'
+_family_message_guarded.__module__ = 'gnd.checker'
+_flat_projected_witness.__module__ = 'gnd.checker'
+_row_projected_witness.__module__ = 'gnd.checker'
+_family_message_default.__module__ = 'gnd.checker'
+_JoinSubjectRow.__dict__['__new__'].__func__.__module__ = 'namedtuple__JoinSubjectRow'
+JoinAmbiguousError.__dict__['__init__'].__module__ = 'gnd.checker'

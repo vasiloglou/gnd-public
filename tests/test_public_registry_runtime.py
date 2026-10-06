@@ -19,10 +19,11 @@ def _generic_registry_root():
     temporary = tempfile.TemporaryDirectory(prefix="gnd-public-registry-")
     root = Path(temporary.name)
     package_dir = Path(gnd.__file__).resolve().parent
-    for name in ("correspondence.py", "checker.py"):
+    for name in ("correspondence.py",):
         target = root / "src/gnd" / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(package_dir / name, target)
+    shutil.copytree(package_dir / "checker", root / "src/gnd/checker", ignore=shutil.ignore_patterns("__pycache__"))
     corpus = root / "proof/v6/phase1/corpus"
     corpus.mkdir(parents=True)
     (corpus / "cases.json").write_text(json.dumps(CASES), encoding="utf-8")
@@ -86,7 +87,9 @@ def test_every_correspondence_finding_site_requires_an_explicit_scope():
     # with one correspondence construction boundary.
     assert len(sites) == 1
     assert all(any(key.arg == "scope_id" for key in site.keywords) for site in sites)
-    checker = ast.parse((root / "src/gnd/checker.py").read_text())
+    paths = set((root / "src/gnd/checker").rglob("*.py"))
+    assert {p.name for p in paths} == {"__init__.py", "_core.py", "_reports.py"}
+    checker = ast.Module(body=[node for path in paths for node in ast.parse(path.read_text()).body], type_ignores=[])
     assert not any(
         isinstance(node, ast.FunctionDef) and node.name == "result"
         for node in ast.walk(checker)

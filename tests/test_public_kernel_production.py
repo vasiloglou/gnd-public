@@ -10,6 +10,7 @@ import pytest
 from test_public_slice_runtime import CASES, CORPUS
 from test_public_slice_runtime import EXPECTED as SLICE_EXPECTED
 
+import gnd.checker._core as checker_core
 from gnd import checker as checker_module
 from gnd import proof_bridge, proof_kernel
 from gnd.checker import band, check
@@ -61,7 +62,7 @@ def test_public_check_consumes_kernel(case_id: str, monkeypatch: pytest.MonkeyPa
     """T10. Phase 3 removed the legacy evaluators; bands remain unchanged."""
     assert not hasattr(checker_module, "_check_mandatory")
     assert not hasattr(checker_module, "_check_frequency")
-    monkeypatch.setattr(checker_module, "_vacuity_message", _raising("_vacuity_message"))
+    monkeypatch.setattr(checker_core, "_vacuity_message", _raising("_vacuity_message"))
     model, population = _load(case_id)
     report = check(model, population)
     assert band(report) == EXPECTED[case_id]["band"]
@@ -243,7 +244,7 @@ def test_a_kernel_mutation_changes_the_public_result(
     # nothing at all.
     monkeypatch.setattr(proof_kernel, target, replacement, raising=False)
     monkeypatch.setattr(proof_bridge, target, replacement, raising=False)
-    monkeypatch.setattr(checker_module, target, replacement, raising=False)
+    monkeypatch.setattr(checker_core, target, replacement, raising=False)
     from gnd.semantic_registry import UnregisteredBranchError
 
     moved = []
@@ -286,7 +287,7 @@ def test_an_adapter_mutation_changes_the_public_result(
         return None if value is None else mutate(value)
 
     monkeypatch.setattr(proof_bridge, "adapt_phase1_slice", mutated)
-    monkeypatch.setattr(checker_module, "adapt_phase1_slice", mutated)
+    monkeypatch.setattr(checker_core, "adapt_phase1_slice", mutated)
     moved = [
         case_id for case_id in IN_SCOPE_IDS if _observable_signature(case_id) != before[case_id]
     ]

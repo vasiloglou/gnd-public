@@ -1,0 +1,18 @@
+{
+  "touched_files": 132,
+  "test_data_added": 237,
+  "non_evidence_docs_added": 571,
+  "moved_production_lines_upper_bound": 7854,
+  "nonrelocated_production_lines_upper_bound": 2082,
+  "base": "a3f35a6",
+  "limit_note": "Before final review/record metadata; compare final budget at close.",
+  "ceilings": {
+    "touched_files": 170,
+    "test_data_added": 3000,
+    "non_evidence_docs_added": 1500,
+    "moved_production_lines": 9500,
+    "nonrelocated_production_lines": 2500
+  },
+  "verified_verbatim_definition_lines": 6608,
+  "production_added": 8690
+}

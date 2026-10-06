@@ -179,3 +179,10 @@ bare-language regex with a small line reader that respects matching fence kind/
 length and the first info-string language token. Whole Python bodies remain strict
 AST. No Markdown rendering/library or production change is added. Select the
 one substantive repair assessment already declared and authorized; no third run.
+
+R1 GREEN:1158 affected cases pass on each3.11/3.13, including nine fence-boundary
+inputs and malformed-code refusal. The earlier pre-R1 observer runner reported
+1145 passing cases per minor in tool output, but reused its uncommitted log names
+for R1. The committed final logs bind1158 R1 runs only; no retained raw pre-R1
+1145 stream is claimed. Exact current file identities are in observer-final-status.
+Production identity remains733389d; no golden or input restriction was changed.

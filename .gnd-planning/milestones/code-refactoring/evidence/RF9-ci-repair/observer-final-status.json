@@ -1,0 +1,57 @@
+{
+  "checks": [
+    {
+      "minor": "311",
+      "argv": [
+        "/private/tmp/rf2-py311/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_rf9_ci_repairs.py",
+        "tests/test_rf1_pin_harness.py",
+        "tests/test_rf3_core.py",
+        "tests/test_rf4_peripheral.py",
+        "tests/test_public_construction_site_guards.py",
+        "tests/test_measure_offline.py",
+        "tests/test_public_adapter_literal_controls.py",
+        "tests/test_public_v72_reader_boundaries.py",
+        "tests/test_rf8_structure.py",
+        "tests/test_v6_phase2_adapter_mutations.py",
+        "--tb=short"
+      ],
+      "exit": 0,
+      "subject": "working-tree R1 repair, parent cc1b379; exact selected file hashes below"
+    },
+    {
+      "minor": "313",
+      "argv": [
+        "/private/tmp/rf2-py313/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_rf9_ci_repairs.py",
+        "tests/test_rf1_pin_harness.py",
+        "tests/test_rf3_core.py",
+        "tests/test_rf4_peripheral.py",
+        "tests/test_public_construction_site_guards.py",
+        "tests/test_measure_offline.py",
+        "tests/test_public_adapter_literal_controls.py",
+        "tests/test_public_v72_reader_boundaries.py",
+        "tests/test_rf8_structure.py",
+        "tests/test_v6_phase2_adapter_mutations.py",
+        "--tb=short"
+      ],
+      "exit": 0,
+      "subject": "working-tree R1 repair, parent cc1b379; exact selected file hashes below"
+    }
+  ],
+  "production_commit": "733389d",
+  "file_sha256": {
+    "tests/test_measure_offline.py": "ebe63fa8b80d95e512a8ac1326489846e7324d10edc79cb1eebe5df0593448e1",
+    "tests/test_rf9_ci_repairs.py": "f5a849eac938754347ebcbfeaf8bc9555639991051eee6c7d4c1ab58573dbced",
+    "tests/support/rf9_ci_sources.py": "c722db84ba6fed7bf0db32c0da7136bde2ef58b87e50c4b5ea63ed5e3b4ff595",
+    "tests/support/rf8_sources.py": "b46d824ba5e2c1f0ff974899af22ceb358077fa915e982fe70bb36d619ad011b",
+    "tools/rf1_pins.py": "41f63ddde478fcbc15c367bec1544b5c1d563102115072e497ed49f506959767",
+    "tests/public_site_census.py": "2193fa01bd878d61029abc677c830d7b36e1abd6ccbedb6ff57832c96904be18"
+  }
+}

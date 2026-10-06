@@ -139,8 +139,8 @@
       "kind": "adaptation",
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
       "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
-      "public_sha256": "9bbd257661ca54cbb7dde175330d0e548c960346d7e51c03562ad57f2dbf7a10",
-      "bytes": 48172,
+      "public_sha256": "ebe63fa8b80d95e512a8ac1326489846e7324d10edc79cb1eebe5df0593448e1",
+      "bytes": 49269,
       "mode": 420
     }
   },
@@ -401,9 +401,9 @@
       "baseline_sha256": null,
       "source_sha256": null,
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 9716,
+      "bytes": 11740,
       "mode": 420,
-      "public_sha256": "b0fdb4244a638863d204a595cd3fe07950bb0268edc07b5fa80e949957c22e04"
+      "public_sha256": "f5a849eac938754347ebcbfeaf8bc9555639991051eee6c7d4c1ab58573dbced"
     }
   },
   {

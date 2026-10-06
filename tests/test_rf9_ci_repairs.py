@@ -242,6 +242,7 @@ def test_portable_ast_dump_keeps_nonempty_fields(before, after):
 @pytest.mark.parametrize('fence', ['```python title=example.py', '~~~python title=example.py', '    ignored\n   ````PYTHON title=example.py'])
 def test_review_titled_python_fence_detects_multiline_import(monkeypatch, fence):
     from pathlib import Path
+
     import test_measure_offline as scans
 
     closing = '~~~' if fence.startswith('~') else '````'
@@ -253,4 +254,36 @@ def test_review_titled_python_fence_detects_multiline_import(monkeypatch, fence)
         return source
     monkeypatch.setattr(Path, 'read_text', dirty)
     with pytest.raises(AssertionError):
+        scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+
+
+@pytest.mark.parametrize('markdown,expected', [
+    ('plain prose', []),
+    ('```python\npass\n```', ['pass']),
+    ('~~~py title=x\npass\n~~~', ['pass']),
+    ('   ````PYTHON3 title=x\npass\n   `````  ', ['pass']),
+    ('````text\n```python\npass\n```\n````', []),
+    ('```python title=`x`\npass\n```', []),
+    ('```python\npass', ['pass']),
+    ('````python\npass\n```\n````', ['pass\n```']),
+    ('```python\npass\n~~~\n```', ['pass\n~~~']),
+])
+def test_python_fence_reader_preserves_boundaries(markdown, expected):
+    from test_measure_offline import _python_fenced_sources
+    assert _python_fenced_sources(markdown) == expected
+
+
+def test_python_fence_parser_refuses_malformed_code(monkeypatch):
+    from pathlib import Path
+
+    import test_measure_offline as scans
+
+    actual = Path.read_text
+    def dirty(path, *args, **kwargs):
+        source = actual(path, *args, **kwargs)
+        if path == scans.MODEL_EVOLVE_SKILL_FILES[0]:
+            source += '\n```python title=x\nfrom requests import (\n```\n'
+        return source
+    monkeypatch.setattr(Path, 'read_text', dirty)
+    with pytest.raises(SyntaxError):
         scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()

@@ -406,6 +406,37 @@ def test_g01_g04_declared_network_edge_has_one_module_home() -> None:
         assert "gnd.declared_adapter" not in path.read_text(encoding="utf-8")
 
 
+def _python_fenced_sources(markdown: str) -> list[str]:
+    """Collect Python bodies from matched Markdown fences, including info text."""
+    snippets = []
+    opening = None
+    python = False
+    body = []
+    for line in markdown.splitlines():
+        if opening is not None:
+            character, length = opening
+            if re.fullmatch(r' {0,3}' + re.escape(character) + '{' + str(length) + r',}[ \t]*', line):
+                if python:
+                    snippets.append('\n'.join(body))
+                opening = None
+                body = []
+            elif python:
+                body.append(line)
+            continue
+        match = re.fullmatch(r' {0,3}(`{3,}|~{3,})([^\r\n]*)', line)
+        if match is None:
+            continue
+        fence, info = match.groups()
+        if fence[0] == '`' and '`' in info:
+            continue
+        opening = (fence[0], len(fence))
+        language = info.strip().split(maxsplit=1)
+        python = bool(language) and language[0].lower() in {'python', 'py', 'python3'}
+    if opening is not None and python:
+        snippets.append('\n'.join(body))
+    return snippets
+
+
 def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     """Both packaged workflow resources remain local, staged, and non-regenerative."""
 
@@ -420,7 +451,7 @@ def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     # Prose is not Python source. Parse Python fences as full code and collect
     # parseable import-bearing lines outside fences. Compound/nested imports
     # share the exact strict AST grammar used by source scans.
-    snippets = re.findall(r'```(?:python|py|python3)\s*\n(.*?)```', combined, re.DOTALL)
+    snippets = _python_fenced_sources(combined)
     for line in combined.splitlines():
         candidate = line.strip()
         if not re.search(r'\b(?:import|from)\b', candidate):

@@ -103,3 +103,71 @@ def test_portable_ast_dump_retains_semantic_differences():
     source = ast.dump(empty, include_attributes=False)
     portable_dump(empty)
     assert ast.dump(empty, include_attributes=False) == source
+
+
+def test_compatibility_metric_refuses_a_renamed_alias(monkeypatch):
+    import json
+    from pathlib import Path
+    from support.rf9_ci_sources import EVIDENCE, coupling_sites
+
+    aliases = json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites']
+    actual = Path.read_bytes
+    def dirty(path):
+        raw = actual(path)
+        if path.as_posix().endswith('src/gnd/checker/__init__.py'):
+            return raw.replace(b'_COMPARATORS as _COMPARATORS', b'_COMPARATORS as _rf9_not_compat')
+        return raw
+    monkeypatch.setattr(Path, 'read_bytes', dirty)
+    with pytest.raises(AssertionError):
+        coupling_sites({'private_imports': aliases})
+
+
+def test_markdown_guard_detects_conditional_python_import(monkeypatch):
+    from pathlib import Path
+    import test_measure_offline as scans
+
+    actual = Path.read_text
+    def dirty(path, *args, **kwargs):
+        source = actual(path, *args, **kwargs)
+        if path == scans.MODEL_EVOLVE_SKILL_FILES[0]:
+            source += '\n```python\nif True: import requests\n```\n'
+        return source
+    monkeypatch.setattr(Path, 'read_text', dirty)
+    with pytest.raises(AssertionError):
+        scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+
+
+def test_checker_core_producer_preserves_registered_owner(monkeypatch):
+    import public_site_census as census
+    from support.repository import REPO_ROOT
+    from gnd import semantic_registry
+    from gnd.checker import _core
+
+    sites = census.inventory(REPO_ROOT)
+    row = next(r for r in semantic_registry.REGISTRY if r.production_owner == 'gnd.checker._observe_phase1_compatibility')
+    reason = row.scope_id.removeprefix('applicability:refusal:n-a:')
+    monkeypatch.setattr(_core, 'adapt_phase1_slice', lambda *_: None)
+    monkeypatch.setattr(_core, 'phase1_refusal_reason', lambda *_: reason)
+    def run():
+        with census.capture_sites(REPO_ROOT, sites, semantic_registry.REGISTRY) as trace:
+            _core._observe_phase1_compatibility({}, 'rf9', None, None, None, [], [], {})
+        return trace
+    trace = run()
+    assert row.scope_id in trace.observed
+    assert {s.owner for s in trace.observed[row.scope_id]} == {row.production_owner}
+    actual = census._owner
+    monkeypatch.setattr(census, '_owner', lambda module, name: module + '.' + name if module == 'gnd.checker._core' else actual(module, name))
+    with pytest.raises(AssertionError, match='no producer owner frame'):
+        run()
+
+
+def test_pool_depth_refusal_keeps_boundary(tmp_path):
+    path = tmp_path / 'pool.json'
+    path.write_text('[' * 65 + '0' + ']' * 65)
+    with pytest.raises(PoolValidationError):
+        load_pool(path, None)
+
+
+def test_artifact_reader_alias_is_identical():
+    from gnd import artifacts, safefs
+    assert safefs.read_regular_file_bytes is artifacts.read_regular_file_bytes

@@ -171,3 +171,34 @@ def test_pool_depth_refusal_keeps_boundary(tmp_path):
 def test_artifact_reader_alias_is_identical():
     from gnd import artifacts, safefs
     assert safefs.read_regular_file_bytes is artifacts.read_regular_file_bytes
+
+
+@pytest.mark.parametrize('dirty', ['checksum', 'meaning', 'unknown-id', 'invalid-json', 'wrong-types', 'duplicate-id'])
+def test_mutation_retarget_refusals_are_named(monkeypatch, dirty):
+    import json
+    from pathlib import Path
+    from test_rf1_pin_harness import ROOT, tool
+
+    actual = Path.read_text
+    def altered(path, *args, **kwargs):
+        source = actual(path, *args, **kwargs)
+        if path.name != 'mutation-retargets.json':
+            return source
+        if dirty == 'invalid-json':
+            return '{'
+        data = json.loads(source)
+        if dirty == 'checksum':
+            data['table_sha256'] = '0' * 64
+        elif dirty == 'meaning':
+            data['rows'][0]['old'] += 'changed'
+        elif dirty == 'unknown-id':
+            data['rows'][0]['id'] = 'RF9-unknown-retarget'
+        elif dirty == 'wrong-types':
+            data['rows'][0]['after_old'] = []
+        else:
+            data['rows'].append(data['rows'][0])
+        return json.dumps(data)
+    monkeypatch.setattr(Path, 'read_text', altered)
+    with pytest.raises(tool.ToolError) as refusal:
+        tool.load_table(ROOT / tool.DEFAULT_TABLE)
+    assert refusal.value.code == 3

@@ -1,0 +1,35 @@
+..FFF.                                                                   [100%]
+=================================== FAILURES ===================================
+____________ test_mutation_retarget_refusals_are_named[unknown-id] _____________
+tests/test_rf9_ci_repairs.py:203: in test_mutation_retarget_refusals_are_named
+    tool.load_table(ROOT / tool.DEFAULT_TABLE)
+tools/rf1_pins.py:138: in load_table
+    original = by_id[row['id']]
+               ^^^^^^^^^^^^^^^^
+E   KeyError: 'RF9-unknown-retarget'
+___________ test_mutation_retarget_refusals_are_named[invalid-json] ____________
+tests/test_rf9_ci_repairs.py:203: in test_mutation_retarget_refusals_are_named
+    tool.load_table(ROOT / tool.DEFAULT_TABLE)
+tools/rf1_pins.py:133: in load_table
+    retarget = json.loads(retarget_path.read_text())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/__init__.py:352: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:345: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/json/decoder.py:361: in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+E   json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+____________ test_mutation_retarget_refusals_are_named[wrong-types] ____________
+tests/test_rf9_ci_repairs.py:202: in test_mutation_retarget_refusals_are_named
+    with pytest.raises(tool.ToolError) as refusal:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ToolError
+=========================== short test summary info ============================
+FAILED tests/test_rf9_ci_repairs.py::test_mutation_retarget_refusals_are_named[unknown-id]
+FAILED tests/test_rf9_ci_repairs.py::test_mutation_retarget_refusals_are_named[invalid-json]
+FAILED tests/test_rf9_ci_repairs.py::test_mutation_retarget_refusals_are_named[wrong-types]
+3 failed, 3 passed in 0.10s

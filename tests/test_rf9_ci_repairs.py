@@ -294,9 +294,16 @@ def test_python_fence_parser_refuses_malformed_code(monkeypatch):
     ('- ```python title=x\n  from requests import (\n      get,\n  )\n  ```', True),
     ('1. ```python title=x\n   from requests import (\n       get,\n   )\n   ```', True),
     ('```text\nimport requests\n```', False),
+    ('> ```text\n> import requests\n> ```', False),
+    ('- ```python\n  pass\n  ```', False),
+    ('> - ~~~py title=x\n>   from requests import (\n>       get,\n>   )\n>   ~~~', True),
+    ('- > ```python\n  > import requests\n  > ```', True),
+    ('import requests', True),
+    ('- ```text\n  import requests\n  ```\nimport requests', True),
 ])
 def test_review_container_and_text_fence_boundaries(monkeypatch, markdown, refused):
     from pathlib import Path
+
     import test_measure_offline as scans
 
     actual = Path.read_text
@@ -311,3 +318,14 @@ def test_review_container_and_text_fence_boundaries(monkeypatch, markdown, refus
             scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
     else:
         scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+
+
+@pytest.mark.parametrize('markdown,expected,prose', [
+    ('> ```python\n> pass\nplain prose', ['pass'], ['plain prose']),
+    ('- ```py\n  pass\n\n  ```', ['pass\n'], []),
+    ('  ```python\n  if True:\n      pass\n  ```', ['if True:\n    pass'], []),
+    ('- ```text\n  import requests\n  ```\nafter', [], ['after']),
+])
+def test_container_reader_preserves_body_and_prose(markdown, expected, prose):
+    from test_measure_offline import _markdown_sources
+    assert _markdown_sources(markdown) == (expected, prose)

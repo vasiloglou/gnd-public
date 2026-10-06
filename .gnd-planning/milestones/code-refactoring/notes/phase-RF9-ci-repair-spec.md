@@ -202,3 +202,18 @@ retain the public classify call and all work/time bounds. This is an additional
 explicit test adaptation, never a production setter or weakened complexity claim.
 Preserve the original26 adaptations; extend the ledger to27 with original-before
 identity. The scope ceiling and unchanged frozen432 remain binding.
+
+Delegated size amendment before final evidence retention: original80-path ceiling
+is retained above. Actual tracked footprint is75 before three new current gate
+artifacts, metadata checker/output, full CI outputs/status, final budget and017
+record. Select90 paths for those specifically named evidence artifacts; the
+production200/test-tool1800/prose1200 limits and no-move rule stay unchanged.
+Reason: preserve both failed full CI and its required repaired replay rather than
+delete evidence to fit80. The final budget reports both the original miss and
+amended limit. No new repair lane is authorized by this amendment.
+
+Both733389d full default suites fail exactly the same three counter-shadow cases
+(13,890 passing,400 deselected each). Repeat the already selected slow gate on a
+clean committed successor after the order-dependent fixture repair, including
+built wheel/sdist, platform and installed-artifact gates. This is a failure-driven
+rerun of the named CI gate, not selection of another historical/provider lane.

@@ -8658,8 +8658,8 @@
       "kind": "adaptation",
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
       "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
-      "public_sha256": "ebe63fa8b80d95e512a8ac1326489846e7324d10edc79cb1eebe5df0593448e1",
-      "bytes": 49269,
+      "public_sha256": "44f2d174a676190c1372b41131b25f79acb3a6e782147d53f0dfaf473a5dd84f",
+      "bytes": 50993,
       "mode": 420
     },
     {
@@ -10006,9 +10006,9 @@
       "baseline_sha256": null,
       "source_sha256": null,
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 11740,
+      "bytes": 13638,
       "mode": 420,
-      "public_sha256": "f5a849eac938754347ebcbfeaf8bc9555639991051eee6c7d4c1ab58573dbced"
+      "public_sha256": "fb2083a9933acf9489e8152314bfa662766edf5cd6f4ad2833121d67bec662ea"
     },
     {
       "path": "tests/test_v51_phase2_extraction_scope.py",
@@ -10049,6 +10049,16 @@
       "bytes": 18235,
       "mode": 420,
       "public_sha256": "41f63ddde478fcbc15c367bec1544b5c1d563102115072e497ed49f506959767"
+    },
+    {
+      "path": "tests/test_public_classification_scaling.py",
+      "kind": "adaptation",
+      "baseline_sha256": null,
+      "source_sha256": "8842723742da3eab763e37d1d992b7487e546ef66707e50c8acd360deb26c7b2",
+      "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
+      "bytes": 2698,
+      "mode": 420,
+      "public_sha256": "8668bb7f613205d20b7d3129bd2b113ad488e959035559cc0166a901982a7885"
     }
   ]
 }

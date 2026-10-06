@@ -406,35 +406,79 @@ def test_g01_g04_declared_network_edge_has_one_module_home() -> None:
         assert "gnd.declared_adapter" not in path.read_text(encoding="utf-8")
 
 
-def _python_fenced_sources(markdown: str) -> list[str]:
-    """Collect Python bodies from matched Markdown fences, including info text."""
-    snippets = []
+def _markdown_sources(markdown: str) -> tuple[list[str], list[str]]:
+    """Extract strict Python bodies and prose outside any fenced block.
+
+    Track declared quote/list containers instead of stripping Python operators
+    from arbitrary body lines. The same reader owns fallback-line provenance.
+    """
+    snippets, prose = [], []
     opening = None
-    python = False
     body = []
-    for line in markdown.splitlines():
+
+    def finish():
+        if opening is not None and opening[3]:
+            snippets.append('\n'.join(body))
+        body.clear()
+
+    for raw in markdown.splitlines():
+        line = raw
         if opening is not None:
-            character, length = opening
-            if re.fullmatch(r' {0,3}' + re.escape(character) + '{' + str(length) + r',}[ \t]*', line):
-                if python:
-                    snippets.append('\n'.join(body))
-                opening = None
-                body = []
-            elif python:
-                body.append(line)
-            continue
-        match = re.fullmatch(r' {0,3}(`{3,}|~{3,})([^\r\n]*)', line)
+            character, length, containers, python, indent = opening
+            for kind, width in containers:
+                if kind == 'quote':
+                    match = re.match(r' {0,3}>[ \t]?', line)
+                    if match is None:
+                        break
+                    line = line[match.end():]
+                elif not line.strip():
+                    line = ''
+                elif line.startswith(' ' * width):
+                    line = line[width:]
+                else:
+                    break
+            else:
+                if re.fullmatch(r' {0,3}' + re.escape(character) + '{' + str(length) + r',}[ \t]*', line):
+                    finish()
+                    opening = None
+                elif python:
+                    # Markdown removes up to the opener's indentation, while
+                    # nested Python indentation must survive AST parsing.
+                    remove = min(indent, len(line) - len(line.lstrip(' ')))
+                    body.append(line[remove:])
+                continue
+            # This line left the declared container; reconsider it as prose or
+            # a new opener, without losing an unclosed Python block.
+            finish()
+            opening = None
+            line = raw
+
+        containers = []
+        while True:
+            quote = re.match(r' {0,3}>[ \t]?', line)
+            item = re.match(r' {0,3}(?:[-+*]|[0-9]{1,9}[.)]) {1,4}(?=\S)', line)
+            match = quote or item
+            if match is None:
+                break
+            containers.append(('quote' if quote else 'list', match.end()))
+            line = line[match.end():]
+        match = re.fullmatch(r'( {0,3})(`{3,}|~{3,})([^\r\n]*)', line)
         if match is None:
+            prose.append(raw)
             continue
-        fence, info = match.groups()
+        indent, fence, info = match.groups()
         if fence[0] == '`' and '`' in info:
+            prose.append(raw)
             continue
-        opening = (fence[0], len(fence))
         language = info.strip().split(maxsplit=1)
         python = bool(language) and language[0].lower() in {'python', 'py', 'python3'}
-    if opening is not None and python:
-        snippets.append('\n'.join(body))
-    return snippets
+        opening = (fence[0], len(fence), containers, python, len(indent))
+    finish()
+    return snippets, prose
+
+
+def _python_fenced_sources(markdown: str) -> list[str]:
+    return _markdown_sources(markdown)[0]
 
 
 def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
@@ -451,8 +495,8 @@ def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     # Prose is not Python source. Parse Python fences as full code and collect
     # parseable import-bearing lines outside fences. Compound/nested imports
     # share the exact strict AST grammar used by source scans.
-    snippets = _python_fenced_sources(combined)
-    for line in combined.splitlines():
+    snippets, prose = _markdown_sources(combined)
+    for line in prose:
         candidate = line.strip()
         if not re.search(r'\b(?:import|from)\b', candidate):
             continue

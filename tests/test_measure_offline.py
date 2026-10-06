@@ -417,10 +417,21 @@ def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     lowered = combined.lower()
 
     assert "http://" not in lowered and "https://" not in lowered
-    # Prose is not Python source. Check explicit import lines in the resource;
-    # Python-source guards still use the strict AST parser without fallback.
-    imports = '\n'.join(re.findall(r'^\s*((?:from \S+ import|import) [^\n]+)$', combined, re.MULTILINE))
-    assert not _forbidden_hit(imports, _PROVIDER_CLIENTS + _NETWORK_LIBS)
+    # Prose is not Python source. Parse Python fences as full code and collect
+    # parseable import-bearing lines outside fences. Compound/nested imports
+    # share the exact strict AST grammar used by source scans.
+    snippets = re.findall(r'```(?:python|py|python3)\s*\n(.*?)```', combined, re.DOTALL)
+    for line in combined.splitlines():
+        candidate = line.strip()
+        if not re.search(r'\b(?:import|from)\b', candidate):
+            continue
+        try:
+            tree = ast.parse(candidate)
+        except SyntaxError:
+            continue  # Non-code prose; explicit Python fences remain strict.
+        if any(isinstance(node, (ast.Import, ast.ImportFrom)) for node in ast.walk(tree)):
+            snippets.append(candidate)
+    assert not any(_forbidden_hit(code, _PROVIDER_CLIENTS + _NETWORK_LIBS) for code in snippets)
     assert "gnd evolve preview" in lowered
     assert "gnd evolve apply" in lowered
     assert "gnd evolve finalize" in lowered

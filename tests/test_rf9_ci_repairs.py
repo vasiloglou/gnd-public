@@ -108,6 +108,7 @@ def test_portable_ast_dump_retains_semantic_differences():
 def test_compatibility_metric_refuses_a_renamed_alias(monkeypatch):
     import json
     from pathlib import Path
+
     from support.rf9_ci_sources import EVIDENCE, coupling_sites
 
     aliases = json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites']
@@ -124,6 +125,7 @@ def test_compatibility_metric_refuses_a_renamed_alias(monkeypatch):
 
 def test_markdown_guard_detects_conditional_python_import(monkeypatch):
     from pathlib import Path
+
     import test_measure_offline as scans
 
     actual = Path.read_text
@@ -140,6 +142,7 @@ def test_markdown_guard_detects_conditional_python_import(monkeypatch):
 def test_checker_core_producer_preserves_registered_owner(monkeypatch):
     import public_site_census as census
     from support.repository import REPO_ROOT
+
     from gnd import semantic_registry
     from gnd.checker import _core
 
@@ -173,10 +176,11 @@ def test_artifact_reader_alias_is_identical():
     assert safefs.read_regular_file_bytes is artifacts.read_regular_file_bytes
 
 
-@pytest.mark.parametrize('dirty', ['checksum', 'meaning', 'unknown-id', 'invalid-json', 'wrong-types', 'duplicate-id'])
+@pytest.mark.parametrize('dirty', ['checksum', 'meaning', 'unknown-id', 'invalid-json', 'wrong-types', 'duplicate-id', 'over-cap', 'duplicate-json-key', 'nonfinite-json', 'rows-type', 'missing-field', 'same-snippet', 'empty-file', 'empty-snippet', 'nonstring-new'])
 def test_mutation_retarget_refusals_are_named(monkeypatch, dirty):
     import json
     from pathlib import Path
+
     from test_rf1_pin_harness import ROOT, tool
 
     actual = Path.read_text
@@ -186,8 +190,26 @@ def test_mutation_retarget_refusals_are_named(monkeypatch, dirty):
             return source
         if dirty == 'invalid-json':
             return '{'
+        if dirty == 'over-cap':
+            return ' ' * (tool.MAX_TABLE_BYTES + 1) + source
+        if dirty == 'duplicate-json-key':
+            return source.replace('"table_sha256":', '"table_sha256": "duplicate", "table_sha256":', 1)
         data = json.loads(source)
-        if dirty == 'checksum':
+        if dirty == 'nonfinite-json':
+            data['probe'] = float('nan')
+        elif dirty == 'rows-type':
+            data['rows'] = {}
+        elif dirty == 'missing-field':
+            del data['rows'][0]['after_file']
+        elif dirty == 'same-snippet':
+            data['rows'][0]['after_new'] = data['rows'][0]['after_old']
+        elif dirty == 'empty-file':
+            data['rows'][0]['after_file'] = ''
+        elif dirty == 'empty-snippet':
+            data['rows'][0]['after_old'] = ''
+        elif dirty == 'nonstring-new':
+            data['rows'][0]['after_new'] = 1
+        elif dirty == 'checksum':
             data['table_sha256'] = '0' * 64
         elif dirty == 'meaning':
             data['rows'][0]['old'] += 'changed'
@@ -202,3 +224,16 @@ def test_mutation_retarget_refusals_are_named(monkeypatch, dirty):
     with pytest.raises(tool.ToolError) as refusal:
         tool.load_table(ROOT / tool.DEFAULT_TABLE)
     assert refusal.value.code == 3
+
+
+@pytest.mark.parametrize('before,after', [
+    ('def f():\n    return call(k=1)', 'def f():\n    return call(k=2)'),
+    ('@one\ndef f():\n    pass', '@two\ndef f():\n    pass'),
+    ('def f(x=[]):\n    return x', 'def f(x=[1]):\n    return x'),
+    ('class C:\n    pass', 'class C(B):\n    pass'),
+])
+def test_portable_ast_dump_keeps_nonempty_fields(before, after):
+    import ast
+
+    from support.rf8_sources import portable_dump
+    assert portable_dump(ast.parse(before)) != portable_dump(ast.parse(after))

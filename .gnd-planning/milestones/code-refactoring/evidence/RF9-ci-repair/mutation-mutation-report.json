@@ -1,0 +1,56 @@
+{
+ "control_nodes": 8,
+ "killed": 8,
+ "rows": {
+  "M-HELP-canonical-json-gnd-cli-canonical-payload": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_canonical_payload]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-file-digest-gnd-synth-provenance-sha256-file": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.synth.provenance:_sha256_file]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-exp-session-store-write-new-file": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.exp.session_store:_write_new_file]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-sha256-hex-gnd-measure-promote-digest": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.measure.promote:_digest]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-strict-json-gnd-exp-session-store-strict-object-bytes": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.session_store:_strict_object_bytes]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-resolver-is-true": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_resolver": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-reconstruct-7": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_reconstruct[7]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-test-session-reconstruct-8": {
+   "nodes": {
+    "tests/test_rf1_session_pins.py::test_session_reconstruct[8]": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 8
+}

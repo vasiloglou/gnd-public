@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/private/tmp/rf2-py313/bin/python",
+    "tools/rf1_pins.py",
+    "mutate",
+    "--out",
+    "/private/tmp/rf9-ci-mutation-733389d",
+    "--only",
+    "M-HELP-canonical-json-gnd-cli-canonical-payload",
+    "M-HELP-file-digest-gnd-synth-provenance-sha256-file",
+    "M-HELP-safe-filesystem-gnd-exp-session-store-write-new-file",
+    "M-HELP-sha256-hex-gnd-measure-promote-digest",
+    "M-HELP-strict-json-gnd-exp-session-store-strict-object-bytes",
+    "M-SEM-resolver-is-true",
+    "M-test-session-reconstruct-7",
+    "M-test-session-reconstruct-8",
+    "--jobs",
+    "2",
+    "--timeout",
+    "120"
+  ],
+  "exit": 0,
+  "source_commit": "733389d"
+}

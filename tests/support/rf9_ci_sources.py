@@ -12,6 +12,19 @@ def coupling_sites(metrics):
     def key(row):
         return tuple(row.get(k) for k in ('from', 'to', 'name', 'kind'))
     aliases = Counter(key(row) for row in json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites'])
+    import ast
+
+    root = EVIDENCE.parents[4]
+    explicit = set()
+    for module in {identity[0] for identity in aliases}:
+        path = root / ('src/' + module.replace('.', '/') + '.py')
+        if not path.is_file():
+            path = path.with_suffix('') / '__init__.py'
+        for node in ast.parse(path.read_bytes()).body:
+            if isinstance(node, ast.ImportFrom) and node.level == 0:
+                explicit.update((module, node.module, a.name, 'from_import') for a in node.names
+                                if a.name == a.asname)
+    assert set(aliases) <= explicit, set(aliases) - explicit
     actual = Counter(key(row) for row in metrics['private_imports'])
     assert not aliases - actual, aliases - actual
     remaining = []

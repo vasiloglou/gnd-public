@@ -130,17 +130,33 @@ def load_table(path: Path) -> dict:
     if path.resolve() == (ROOT / DEFAULT_TABLE).resolve():
         retarget_path = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json'
         if retarget_path.is_file():
-            retarget = json.loads(retarget_path.read_text())
-            if hashlib.sha256(raw).hexdigest() != retarget['table_sha256']:
-                raise _invalid('historical mutation table identity changed')
-            by_id = {r['id']: r for r in data['rows']}
-            for row in retarget['rows']:
-                original = by_id[row['id']]
-                if any(original[k] != row[k] for k in ('old', 'new', 'expect_red')) or original['file'] != row['before_file']:
-                    raise _invalid('mutation retarget changed meaning')
-                original['file'] = row['after_file']
-                original['old'] = row['after_old']
-                original['new'] = row['after_new']
+            try:
+                text = retarget_path.read_text()
+                if len(text.encode()) > MAX_TABLE_BYTES:
+                    raise ValueError('retarget over byte cap')
+                retarget = json.loads(text, object_pairs_hook=_reject_duplicates, parse_constant=_reject_constant)
+                if hashlib.sha256(raw).hexdigest() != retarget['table_sha256']:
+                    raise ValueError('historical mutation table identity changed')
+                if not isinstance(retarget['rows'], list):
+                    raise TypeError('retarget rows must be a list')
+                by_id = {r['id']: r for r in data['rows']}
+                seen_retargets = set()
+                for row in retarget['rows']:
+                    if row['id'] in seen_retargets:
+                        raise ValueError('duplicate mutation retarget')
+                    seen_retargets.add(row['id'])
+                    original = by_id[row['id']]
+                    if any(original[k] != row[k] for k in ('old', 'new', 'expect_red')) or original['file'] != row['before_file']:
+                        raise ValueError('mutation retarget changed meaning')
+                    if (not isinstance(row['after_file'], str) or not row['after_file']
+                            or not isinstance(row['after_old'], str) or not row['after_old']
+                            or not isinstance(row['after_new'], str) or row['after_old'] == row['after_new']):
+                        raise ValueError('invalid mutation successor fields')
+                    original['file'] = row['after_file']
+                    original['old'] = row['after_old']
+                    original['new'] = row['after_new']
+            except (OSError, ValueError, KeyError, TypeError) as error:
+                raise _invalid(f'invalid mutation retarget: {error}') from None
     return data
 
 

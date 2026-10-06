@@ -104,7 +104,7 @@ def test_admitted_untyped_overflow_retains_cell_position_and_refuses(tmp_path, m
     document["facts"]["observed_pair"][0]["left"] = "OVERFLOW"
     path = tmp_path / "overflow.json"
     # Standard JSON exponent syntax overflows Python's float parser. D-05
-    # leaves this role untyped, so this pair actually passes current admission.
+    # leaves this role untyped; RF7 now refuses overflow at JSON admission.
     path.write_text(json.dumps(document).replace('"OVERFLOW"', "1e999"))
     from gnd.errors import PopulationLoadError
     with pytest.raises(PopulationLoadError):

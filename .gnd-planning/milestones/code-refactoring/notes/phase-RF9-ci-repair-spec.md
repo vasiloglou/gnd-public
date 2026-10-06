@@ -148,3 +148,23 @@ The first corrected focused runner omitted its interpreter bin from PATH; two
 v3 child-verifier cases returned FileNotFoundError while117 passed. This is a
 runner defect, retained as focused-missing-path evidence. Prepending the selected
 interpreter bin restores the environment that uv run supplies; no golden changes.
+
+The mechanical branch audit reproduced three observer gaps on733389d: renamed
+aliases were still suppressed by the compatibility metric, conditional imports in
+Python Markdown fences passed, and checker-core producers lost historical owner
+identity. Three new cases were committed RED (two adjacent positive controls
+passed). Require each inventoried compatibility tuple to still have an exact
+identity ImportFrom at its actual source home; retain multiplicity checks. Parse
+Python fences and parseable import-bearing lines with the same strict AST grammar.
+Map gnd.checker._core to the historical checker owner and exercise an actual core
+producer trace plus deliberately broken mapping. Unregistered unrelated helpers
+remain visible; no invented registry owners or complete historical census claim.
+
+The default mutation retarget loader also leaked KeyError/JSONDecodeError and
+accepted non-string successor snippets. Three new refusal cases were committed
+RED; checksum/meaning/duplicate controls already refused. Add named code3 refusals,
+shared duplicate/constant hooks, byte cap, duplicate-ID and exact string/noop field
+checks. These are bounded tool repairs; all167 IDs/expected-red meanings remain.
+No production bytes changed after733389d. The completed full733389d CI will remain
+bound to that snapshot; the final reviewed observer snapshot receives its own
+current verification, with any required full replay explicitly identified.

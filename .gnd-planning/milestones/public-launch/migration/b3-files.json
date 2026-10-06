@@ -8658,8 +8658,8 @@
       "kind": "adaptation",
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
       "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
-      "public_sha256": "606791bcb7757e3b78cd83651ae8c0a87f08bd90832cf3c742abcc62d6d60ba5",
-      "bytes": 47659,
+      "public_sha256": "9bbd257661ca54cbb7dde175330d0e548c960346d7e51c03562ad57f2dbf7a10",
+      "bytes": 48172,
       "mode": 420
     },
     {
@@ -9906,9 +9906,9 @@
       "baseline_sha256": null,
       "source_sha256": "c1a60f19b82ecd02d6a87f87b175182708b04c08f2c1898b2b4cdd8971f5b0ec",
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 13104,
+      "bytes": 13154,
       "mode": 420,
-      "public_sha256": "41b075ece6c45b1ec02ad3a2925d03fa6c6e46f72966ac0c3247a9384be8fd7c"
+      "public_sha256": "2193fa01bd878d61029abc677c830d7b36e1abd6ccbedb6ff57832c96904be18"
     },
     {
       "path": "tests/support/rf9_ci_sources.py",
@@ -9916,9 +9916,9 @@
       "baseline_sha256": null,
       "source_sha256": null,
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 1222,
+      "bytes": 1837,
       "mode": 420,
-      "public_sha256": "de503d556dcb6e022d20c5e92146eeb346ce2d243f5874df61ef3d0b8373ed3b"
+      "public_sha256": "c722db84ba6fed7bf0db32c0da7136bde2ef58b87e50c4b5ea63ed5e3b4ff595"
     },
     {
       "path": "tests/test_public_adapter_derivation.py",
@@ -9936,9 +9936,9 @@
       "baseline_sha256": null,
       "source_sha256": "50288934498bda9af2f6499c6e8b6ebb210285908fa64d8b0f4bed01a238338e",
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 6545,
+      "bytes": 6541,
       "mode": 420,
-      "public_sha256": "f5fa2a161db531ccb8128c5fdf2678a9880e93b6e61173b9b824028eb5747fc5"
+      "public_sha256": "ed26f6df2902ce7ab56dfcbf3d2cd0768ad040e45dc33ff1abfac61085b5ce56"
     },
     {
       "path": "tests/test_public_correspondence_runtime.py",
@@ -10006,9 +10006,9 @@
       "baseline_sha256": null,
       "source_sha256": null,
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 4172,
+      "bytes": 9716,
       "mode": 420,
-      "public_sha256": "770b1be12c23955662668cf35666df4ec11264ee1f5282936b16fa4c5a7fcadd"
+      "public_sha256": "b0fdb4244a638863d204a595cd3fe07950bb0268edc07b5fa80e949957c22e04"
     },
     {
       "path": "tests/test_v51_phase2_extraction_scope.py",
@@ -10046,9 +10046,9 @@
       "baseline_sha256": null,
       "source_sha256": "17c8d0695b95aa6ee48a424d6f0814e55937aee6a71a5d617da5398beebf4d38",
       "reason": "Owner-authorized RF9 local CI repair and explicit current-home/restriction successors; prior release identity unavailable.",
-      "bytes": 17089,
+      "bytes": 18235,
       "mode": 420,
-      "public_sha256": "f9cf73bb986411c788ff772aa510b65d53fb2ce76b14c1766ee94f3c90bad543"
+      "public_sha256": "41f63ddde478fcbc15c367bec1544b5c1d563102115072e497ed49f506959767"
     }
   ]
 }

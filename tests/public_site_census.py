@@ -160,7 +160,8 @@ def _owner(module: str, name: str) -> str:
     if module.endswith('.__init__'):
         module = module.removesuffix('.__init__')
     module = {"gnd.payloads": "gnd.report", "gnd.extensions": "gnd.checker",
-              "gnd.checker._reports": "gnd.checker", "gnd.model._validation": "gnd.model",
+              "gnd.checker._reports": "gnd.checker", "gnd.checker._core": "gnd.checker",
+              "gnd.model._validation": "gnd.model",
               "gnd.model._operations": "gnd.model"}.get(module, module)
     return module + "." + name
 

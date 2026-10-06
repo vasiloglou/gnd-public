@@ -96,10 +96,12 @@ def _resolve_reference(
         # Only when the subtype declares that it INHERITS its supertype's
         # identification scheme. `inherits_reference: false` with no reference of
         # its own is unresolvable, and reading through anyway would be a guess.
-        resolved = {
-            _resolve_reference(parent, by_id, parents, seen, extract)
-            for parent in direct_parents
-        }
+        resolved = set()
+        initial_seen = set(seen)
+        for parent in direct_parents:
+            branch_seen = set(initial_seen)
+            resolved.add(_resolve_reference(parent, by_id, parents, branch_seen, extract))
+            seen.update(branch_seen)
         resolved.discard(None)
         return next(iter(resolved)) if len(resolved) == 1 else None
 

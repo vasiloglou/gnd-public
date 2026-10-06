@@ -1,0 +1,16 @@
+Retained output edited for declared machine-path substitutions. Exact10608c4761bae7c0989b774a20de5f43c6350912 archive.
+Command: PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=<predecessor-archive>/src <worktree>/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_model_v2.py::test_reading_validation_is_not_quadratic_in_the_parameter_count tests/test_public_souffle_successors.py::test_exited_group_cleanup_cannot_replace_output_refusal tests/test_install.py::test_iter_skill_files_yields_every_packaged_file --tb=short
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_exited_group_cleanup_cannot_replace_output_refusal ____________
+tests/test_public_souffle_successors.py:243: in test_exited_group_cleanup_cannot_replace_output_refusal
+    assert (result["exit_code"], result["reason"]) == (4, "tool-error")
+E   AssertionError: assert (0, None) == (4, 'tool-error')
+E     
+E     At index 0 diff: 0 != 4
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_public_souffle_successors.py::test_exited_group_cleanup_cannot_replace_output_refusal
+1 failed, 2 passed in 0.77s
+
+Exit: 1

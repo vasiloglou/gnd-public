@@ -13597,6 +13597,12 @@
       1
     ],
     [
+      "src/gnd/export/pyrel_runtime.py",
+      "walk",
+      "set[str]",
+      1
+    ],
+    [
       "src/gnd/export/souffle.py",
       "admit",
       "getattr(limits, k)",

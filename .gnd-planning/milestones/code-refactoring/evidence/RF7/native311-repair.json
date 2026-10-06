@@ -1,0 +1,19 @@
+{
+  "command": [
+    "env",
+    "PYTHONPATH=src",
+    "/private/tmp/rf2-py311/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf7_input_policy.py",
+    "tests/test_rf7_consumers.py",
+    "tests/test_rf7_review_regressions.py",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_rf1_semantic_pins.py::test_resolver",
+    "tests/test_rf1_semantic_pins.py::test_datetime_site",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 19.590451955795288
+}

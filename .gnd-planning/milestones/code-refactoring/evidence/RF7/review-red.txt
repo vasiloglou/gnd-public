@@ -1,0 +1,38 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf7_review_regressions.py --tb=short
+FFFFF......                                                              [100%]
+=================================== FAILURES ===================================
+__________ test_shared_ancestor_cannot_hide_parent_ambiguity[truthy] ___________
+tests/test_rf7_review_regressions.py:26: in test_shared_ancestor_cannot_hide_parent_ambiguity
+    assert primitive_for('R', types, variant=variant) is None
+E   AssertionError: assert 'String' is None
+E    +  where 'String' = primitive_for('R', {'Q': {'id': 'Q', 'kind': 'value', 'primitive': 'Integer'}, 'P': {'id': 'P', 'kind': 'value', 'primitive': 'String'}, ...lue', 'primitive': 'String'}, 'X': {'id': 'X', 'kind': 'entity', 'inherits_reference': True, 'subtype_of': ['Q']}, ...}, variant='truthy')
+__________ test_shared_ancestor_cannot_hide_parent_ambiguity[strict] ___________
+tests/test_rf7_review_regressions.py:26: in test_shared_ancestor_cannot_hide_parent_ambiguity
+    assert primitive_for('R', types, variant=variant) is None
+E   AssertionError: assert 'String' is None
+E    +  where 'String' = primitive_for('R', {'Q': {'id': 'Q', 'kind': 'value', 'primitive': 'Integer'}, 'P': {'id': 'P', 'kind': 'value', 'primitive': 'String'}, ...lue', 'primitive': 'String'}, 'X': {'id': 'X', 'kind': 'entity', 'inherits_reference': True, 'subtype_of': ['Q']}, ...}, variant='strict')
+_____ test_json_policy_refusal_does_not_become_yaml_string[m.orm.yaml-NaN] _____
+tests/test_rf7_review_regressions.py:35: in test_json_policy_refusal_does_not_become_yaml_string
+    with pytest.raises(ModelLoadError, match='JSON'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ModelLoadError
+__ test_json_policy_refusal_does_not_become_yaml_string[m.orm.yaml-Infinity] ___
+tests/test_rf7_review_regressions.py:35: in test_json_policy_refusal_does_not_become_yaml_string
+    with pytest.raises(ModelLoadError, match='JSON'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ModelLoadError
+__ test_json_policy_refusal_does_not_become_yaml_string[m.orm.yaml--Infinity] __
+tests/test_rf7_review_regressions.py:35: in test_json_policy_refusal_does_not_become_yaml_string
+    with pytest.raises(ModelLoadError, match='JSON'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ModelLoadError
+=========================== short test summary info ============================
+FAILED tests/test_rf7_review_regressions.py::test_shared_ancestor_cannot_hide_parent_ambiguity[truthy]
+FAILED tests/test_rf7_review_regressions.py::test_shared_ancestor_cannot_hide_parent_ambiguity[strict]
+FAILED tests/test_rf7_review_regressions.py::test_json_policy_refusal_does_not_become_yaml_string[m.orm.yaml-NaN]
+FAILED tests/test_rf7_review_regressions.py::test_json_policy_refusal_does_not_become_yaml_string[m.orm.yaml-Infinity]
+FAILED tests/test_rf7_review_regressions.py::test_json_policy_refusal_does_not_become_yaml_string[m.orm.yaml--Infinity]
+5 failed, 6 passed in 0.11s
+
+Exit: 1

@@ -80,7 +80,7 @@ class ModelIndex:
         """Resolve an object type to a primitive, mirroring the loader's walk."""
         seen: set[str] = set()
 
-        def walk(oid: str) -> str | None:
+        def walk(oid: str, seen: set[str]) -> str | None:
             if oid in seen or oid not in self.object_types:
                 return None
             seen.add(oid)
@@ -89,14 +89,14 @@ class ModelIndex:
                 return ot.get("primitive")
             reference = ot.get("reference") or {}
             if reference.get("value_type"):
-                return walk(reference["value_type"])
+                return walk(reference["value_type"], seen)
             if ot.get("inherits_reference") is True:
-                found = {p for p in (walk(sup) for sup in ot.get("subtype_of", [])) if p}
+                found = {p for p in (walk(sup, set(seen)) for sup in ot.get("subtype_of", [])) if p}
                 if len(found) == 1:
                     return found.pop()
             return None
 
-        return walk(ot_id)
+        return walk(ot_id, seen)
 
     def descendants(self, ot_id: str) -> set[str]:
         """The object type plus its transitive subtypes."""

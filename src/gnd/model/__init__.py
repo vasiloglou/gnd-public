@@ -294,7 +294,9 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
         except PopulationLoadError as error:
             from gnd.input_policy import InputRefusal
 
-            if Path(source).suffix == ".json" or isinstance(error.__cause__, InputRefusal):
+            if (Path(source).suffix == ".json"
+                    or not isinstance(error.__cause__, json.JSONDecodeError)
+                    or isinstance(error.__cause__, InputRefusal)):
                 raise ModelLoadError("model JSON input refused") from error
             # A YAML flow mapping may start with an unquoted key.
     if doc is None:

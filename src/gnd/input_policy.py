@@ -72,9 +72,10 @@ class JSONDecoder(json.JSONDecoder):
         constant_hook = kwargs.pop('parse_constant', None)
 
         def pairs(items):
-            # Preserve domain-specific refusals from an existing rejecting hook.
+            duplicate = len({key for key, _ in items}) != len(items)
+            # Preserve domain refusals, but callbacks cannot erase raw evidence.
             result = pairs_hook(items) if pairs_hook else dict(items)
-            if len({key for key, _ in items}) != len(items):
+            if duplicate:
                 raise InputRefusal('duplicate JSON key', '', 0)
             return object_hook(result) if object_hook and not pairs_hook else result
 

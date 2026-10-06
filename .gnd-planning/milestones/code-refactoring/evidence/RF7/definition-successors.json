@@ -28,7 +28,7 @@
     "name": "load_model_bytes",
     "home": "gnd.model",
     "before": "3f8433b131cec7cefd64a06c48383cdce1f1af9aa5c7ce149f33ddf54c4c62c7",
-    "after": "ded5be1e171b44abb9af1c6df55b1ffebbdc9e291d75fad93a97fd2858b79b86",
+    "after": "5d38b640bf8836a7033c173547f4f59226945035fd7c922a9e91f9439351e72a",
     "reason": "C2 strict JSON or C4 ISO datetime, including model JSON fallback refusal"
   },
   {

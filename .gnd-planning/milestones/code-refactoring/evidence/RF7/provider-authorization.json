@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-06",
+  "scope": "RF7 initial independent Codex review plus at most one repair review; native authentication; bounded inspected RF7 source/diff and prompt transmission to Codex provider",
+  "authorization": "User replied approve to the specific pending RF7 provider authorization request",
+  "source_head": "35aa1221ef4c725a8ffe857215dffbcc7cf387f4",
+  "prompt_sha256": "364f94dcf1444789e08b0217bc4050db3b18719e4dc6a377c228faadeb30d173",
+  "repair_prompt_sha256": "0a82318ee32d6e773778cf537f636e958fd2ba5e980b3ea0077ad8b906bc6c67",
+  "reviewed_repair_sources": {
+    "src/gnd/input_policy.py": "1ddf49be72a52035f1b536aa02bc9fc906d2db2318ed585d7ca957c9094e58eb",
+    "src/gnd/model_queries.py": "f106aba3d3b392aa54650c3070294738dc1a28bc3c1862cec9fdbb3e31867926",
+    "src/gnd/model/__init__.py": "db09d3fd6d816e7ddc7317565bb5bcf9989362c5e36babe871642fa06c44732e",
+    "src/gnd/synth/provenance.py": "2ce61dc6887d18f4da3298f5c5ed147954a6322922178706453ad498e1da04b9",
+    "src/gnd/export/pyrel_runtime.py": "6a06c83cd27123bae4e05861ee328d58b704562481223688c66ee2ea005b5380",
+    "tests/test_rf7_review_regressions.py": "6b0ed4361badf564988be72d1107ea0e0323d16725ee862a29b8ff1f5cc0f3ce"
+  }
+}

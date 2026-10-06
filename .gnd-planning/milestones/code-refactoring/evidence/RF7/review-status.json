@@ -1,7 +1,16 @@
 {
-  "status": "blocked-awaiting-explicit-provider-authorization",
-  "attempt": "native Codex ephemeral gpt-6-sol xhigh read-only stdin bounded RF7 prompt, initial plus at most one repair",
-  "result": "Automatic approval review rejected repository source/diff transmission to Codex provider: implementation approval does not explicitly authorize this disclosure.",
-  "user_question_pending": true,
-  "review_ran": false
+  "status": "review-complete",
+  "prior_rejected_attempt": {
+    "status": "blocked-awaiting-explicit-provider-authorization",
+    "attempt": "native Codex ephemeral gpt-6-sol xhigh read-only stdin bounded RF7 prompt, initial plus at most one repair",
+    "result": "Automatic approval review rejected repository source/diff transmission to Codex provider: implementation approval does not explicitly authorize this disclosure.",
+    "user_question_pending": true,
+    "review_ran": false
+  },
+  "owner_authorization": "explicit RF7 provider approval, 2026-10-06",
+  "initial_review": "three reproduced blockers fixed, one reproduced hardening issue fixed, one reproduced completeness issue deferred",
+  "repair_review": "No remaining concrete MVP blocker or hardening finding within declared five-module scope; one reviewer is one reviewer",
+  "review_count": 2,
+  "further_review_rounds": 0,
+  "verification": "Small read-only reviewer probes; no suites. Primary selected gates are separately retained."
 }

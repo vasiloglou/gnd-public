@@ -464,8 +464,8 @@
       "path": "src/gnd/export/pyrel_runtime.py",
       "kind": "adaptation",
       "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 59637,
-      "public_sha256": "8c6016790bd778d200c194ee45873a5b71f883a436e3791a45c172351e2a3cc5",
+      "bytes": 59676,
+      "public_sha256": "6a06c83cd27123bae4e05861ee328d58b704562481223688c66ee2ea005b5380",
       "mode": 420,
       "baseline_sha256": null,
       "source_path": "src/gnd/export/pyrel_runtime.py",
@@ -1219,8 +1219,8 @@
       "path": "src/gnd/synth/provenance.py",
       "kind": "adaptation",
       "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 16658,
-      "public_sha256": "971ac1cebd522e1b356c6b33a4ddd6862487061470f67eae2ce33faa89f290de",
+      "bytes": 16835,
+      "public_sha256": "2ce61dc6887d18f4da3298f5c5ed147954a6322922178706453ad498e1da04b9",
       "mode": 420,
       "baseline_sha256": null,
       "source_path": "src/gnd/synth/provenance.py",
@@ -1371,8 +1371,8 @@
       "path": "src/gnd/model_queries.py",
       "kind": "adaptation",
       "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 5079,
-      "public_sha256": "d9fbf69990459ce1adbe0a36f1bc44f8edd21af2d3114eae16e9674a447de7a3",
+      "bytes": 5205,
+      "public_sha256": "f106aba3d3b392aa54650c3070294738dc1a28bc3c1862cec9fdbb3e31867926",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "d204481a77fc41d0198e1c9f0200d2f78f07e701a88736724c8e4743511b2b52"
@@ -1440,8 +1440,8 @@
       "path": "src/gnd/model/__init__.py",
       "kind": "adaptation",
       "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 38090,
-      "public_sha256": "13fa8db0e190acdecc83af8e77ba5557cbead8d6de3fef56923e605cf2e7af94",
+      "bytes": 38189,
+      "public_sha256": "db09d3fd6d816e7ddc7317565bb5bcf9989362c5e36babe871642fa06c44732e",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "8f954412fa1c3a5b3237ef2d8eece658ac490efa4518787d10d3d135d0ef7568"
@@ -1537,11 +1537,11 @@
       "path": "src/gnd/input_policy.py",
       "kind": "adaptation",
       "reason": "Delegated RF7 shared input policy or explicit restriction control; no release identity claim.",
-      "bytes": 4943,
-      "public_sha256": "ba53c8f3fe83985e3b1314aaa81de49be6308702309fee8bacdd06c797b6b787",
+      "bytes": 4977,
+      "public_sha256": "1ddf49be72a52035f1b536aa02bc9fc906d2db2318ed585d7ca957c9094e58eb",
       "mode": 420,
       "baseline_sha256": null,
-      "source_sha256": "ba53c8f3fe83985e3b1314aaa81de49be6308702309fee8bacdd06c797b6b787"
+      "source_sha256": "1ddf49be72a52035f1b536aa02bc9fc906d2db2318ed585d7ca957c9094e58eb"
     }
   },
   {
@@ -1934,6 +1934,20 @@
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "2f5c4dce3385cbeae0826f887cd92fe275c5156507a7656687c72f416d081dce"
+    }
+  },
+  {
+    "path": "tests/test_rf7_review_regressions.py",
+    "before": null,
+    "after": {
+      "path": "tests/test_rf7_review_regressions.py",
+      "kind": "adaptation",
+      "reason": "Delegated RF7 shared input policy or explicit restriction control; no release identity claim.",
+      "bytes": 3325,
+      "public_sha256": "6b0ed4361badf564988be72d1107ea0e0323d16725ee862a29b8ff1f5cc0f3ce",
+      "mode": 420,
+      "baseline_sha256": null,
+      "source_sha256": "6b0ed4361badf564988be72d1107ea0e0323d16725ee862a29b8ff1f5cc0f3ce"
     }
   },
   {

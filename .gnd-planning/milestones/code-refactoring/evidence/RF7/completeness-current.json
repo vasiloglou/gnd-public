@@ -1,0 +1,9 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "from gnd.evolve.service import _parse_model_text\ntry:\n _parse_model_text(\"x: [1\\n\")\nexcept Exception as error:\n print(type(error).__name__)"
+  ],
+  "exit": 0,
+  "seconds": 0.12128925323486328
+}

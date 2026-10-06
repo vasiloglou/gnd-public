@@ -286,8 +286,12 @@ def read_sidecar(path: str | Path, *, verify_population_hash: bool = True) -> Si
     """
     path = Path(path)
     try:
-        document = _rf7_input.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        with path.open("rb") as handle:
+            raw = handle.read(_rf7_input.MAX_BYTES + 1)
+        if len(raw) > _rf7_input.MAX_BYTES:
+            raise ValueError("JSON input exceeds byte cap")
+        document = _rf7_input.loads(raw.decode("utf-8"))
+    except (OSError, ValueError) as error:
         raise SidecarError(f"sidecar {path} could not be read: {error}") from error
     try:
         sidecar = Sidecar.model_validate(document)

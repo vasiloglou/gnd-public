@@ -209,6 +209,10 @@ def no_evaluator(monkeypatch) -> None:
         "_python_extension_calculator",
         "_exact_extension_calculator",
         "_evaluate_stratified_extensions",
+        "evaluate_derivations_legacy",
+        "_PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+        "_evaluate_derivations",
+        "_evaluate_derivations_dispatch",
         "_compare",
         "_typed_comparison_values",
     ):

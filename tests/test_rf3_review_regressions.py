@@ -39,3 +39,26 @@ def test_replay_guard_observes_every_moved_lookup(helper, name, monkeypatch):
     importlib.import_module(helper).no_evaluator(monkeypatch)
     with pytest.raises(AssertionError, match='replay invoked'):
         getattr(extensions, name)()
+
+
+@pytest.mark.parametrize('helper', ['support.v71_witness_cases', 'support.public_v71_witness_corpus'])
+@pytest.mark.parametrize(('module', 'name'), [
+    ('gnd.checker', 'evaluate_derivations_legacy'),
+    ('gnd.checker', '_PHASE3_LEGACY_EVALUATE_DERIVATIONS'),
+    ('gnd.checker', '_evaluate_derivations'),
+    ('gnd.checker', '_evaluate_derivations_dispatch'),
+    ('gnd.extensions', 'evaluate_derivations_legacy'),
+    ('gnd.extensions', '_PHASE3_LEGACY_EVALUATE_DERIVATIONS'),
+    ('gnd.extensions', 'PHASE3_LEGACY_EVALUATE_DERIVATIONS'),
+    ('gnd.extensions', '_evaluate_derivations'),
+    ('gnd.extensions', '_evaluate_derivations_dispatch'),
+    ('gnd.extensions', 'evaluate_derivations'),
+    ('gnd.extensions', 'evaluate_derivations_dispatch'),
+])
+def test_replay_guard_blocks_captured_default_calculators(helper, module, name, monkeypatch):
+    directory = ROOT / 'tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus'
+    model = load_model(directory / 'model.orm.yaml')
+    population = load_population(directory / 'population.yaml', model=model)
+    importlib.import_module(helper).no_evaluator(monkeypatch)
+    with pytest.raises(AssertionError, match='replay invoked'):
+        getattr(importlib.import_module(module), name)(model, population)

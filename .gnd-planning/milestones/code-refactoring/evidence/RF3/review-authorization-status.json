@@ -14,5 +14,15 @@
     "exit": 0,
     "output": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-codex-review.md",
     "scope": "RF3 through ac0475f; initial plus one bounded repair review"
+  },
+  "repair_review": {
+    "exit": 0,
+    "model": "gpt-6-sol",
+    "effort": "xhigh",
+    "sandbox": "read-only",
+    "reviewed_diff": "ac0475f..355e2ae",
+    "output": ".gnd-planning/milestones/code-refactoring/notes/phase-RF3-codex-repair-review.md",
+    "finding": "Captured-default calculator guard bypass, independently reproduced and accepted as R2 hardening under A9.",
+    "round_limit": "Initial plus one bounded repair review complete; no third round or review opinion over later A9 bytes."
   }
 }

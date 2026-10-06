@@ -1,0 +1,15 @@
+{
+  "scope": "process-phase normative closure",
+  "byte_and_executable_mode_equal": true,
+  "files": [
+    "SKILL.md",
+    "references/spec-note-contract.md",
+    "references/standing-rules.md",
+    "references/review-convergence.md",
+    "references/verification-selection.md",
+    "references/agent-delegation.md",
+    "references/architect-overrides.md",
+    "references/review-and-record.md"
+  ],
+  "skill_source_edits": false
+}

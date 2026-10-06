@@ -1,0 +1,16 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_public_v71_witness_corpus.py",
+    "-k",
+    "B20",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 0.5312249660491943
+}

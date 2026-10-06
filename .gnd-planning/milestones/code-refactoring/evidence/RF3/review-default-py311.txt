@@ -1,0 +1,7 @@
+Retained output edited to replace absolute machine paths.
+Command: /private/tmp/rf2-py311/bin/python -m pytest -q -p no:cacheprovider tests/test_rf3_review_regressions.py tests/test_v6_phase2_adapter_mutations.py tests/test_public_adapter_primitive_controls.py --tb=short
+........................................................................ [ 96%]
+...                                                                      [100%]
+75 passed in 0.85s
+
+Exit: 0

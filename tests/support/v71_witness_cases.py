@@ -72,7 +72,7 @@ def no_evaluator(monkeypatch) -> None:
 
     def forbidden(*args, **kwargs):
         raise AssertionError('replay invoked a production evaluator/comparison primitive')
-    for name in ('check', 'structured_extension_view', 'structured_extension_facts', '_python_extension_calculator', '_exact_extension_calculator', '_evaluate_stratified_extensions', '_compare', '_typed_comparison_values'):
+    for name in ('check', 'structured_extension_view', 'structured_extension_facts', '_python_extension_calculator', '_exact_extension_calculator', '_evaluate_stratified_extensions', 'evaluate_derivations_legacy', '_PHASE3_LEGACY_EVALUATE_DERIVATIONS', '_evaluate_derivations', '_evaluate_derivations_dispatch', '_compare', '_typed_comparison_values'):
         if hasattr(checker, name):
             monkeypatch.setattr(checker, name, forbidden)
         for target in (name, name.removeprefix("_")):

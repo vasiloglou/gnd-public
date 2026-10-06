@@ -589,6 +589,9 @@
     "gnd.patterns": {
       "layer": "model"
     },
+    "gnd.output": {
+      "layer": "semantics"
+    },
     "gnd.payloads": {
       "layer": "semantics"
     },

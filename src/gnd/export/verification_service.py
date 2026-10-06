@@ -8,16 +8,16 @@ from gnd import payloads as report_module
 from gnd import safefs as install_module
 from gnd import transition
 from gnd.checker import CheckReport, check, check_with_anchors
-from gnd.commands._output import (
+from gnd.exits import EXIT_INTERNAL, EXIT_IO
+from gnd.extract.service import _artifact_index_issue, _extract_stem, _extraction_header_template
+from gnd.model import ModelValidationError, ValidationIssue, load_model, structured_derivation_ids
+from gnd.output import (
     _band,
     _live_assurance,
     _print_issues,
     _print_projected_text,
     _print_report,
 )
-from gnd.exits import EXIT_INTERNAL, EXIT_IO
-from gnd.extract.service import _artifact_index_issue, _extract_stem, _extraction_header_template
-from gnd.model import ModelValidationError, ValidationIssue, load_model, structured_derivation_ids
 from gnd.population import PopulationValidationError, load_population
 from gnd.semantic_registry import capture_branches
 

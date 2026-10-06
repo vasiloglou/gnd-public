@@ -19,9 +19,14 @@ class PredecessorBody(ast.NodeTransformer):
         }.get(node.module, node.module)
         return node
 
-    def visit_Assign(self, node):
-        if ast.unparse(node) == 'store._best_identity = identity':
-            return None  # New private cache: separately checked against ResumeState.
+    def visit_FunctionDef(self, node):
+        # Normalize only the one cache publication at the validated return tail.
+        writes = [n for n in ast.walk(node) if isinstance(n, ast.Assign)
+                  and ast.unparse(n) == 'store._best_identity = identity']
+        if (node.name == 'reconstruct' and len(writes) == 1 and len(node.body) >= 3
+                and ast.unparse(node.body[-3]) == 'store._v7_best = best'
+                and node.body[-2] is writes[0] and isinstance(node.body[-1], ast.Return)):
+            del node.body[-2]
         return self.generic_visit(node)
 
     def visit_If(self, node):

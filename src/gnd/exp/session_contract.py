@@ -1072,17 +1072,12 @@ class DataDrivenContract(BaseModel):
     candidate_edits: CandidateEdits | None = None
     ranking: tuple[RankingMetric, ...] | None = None
 
-    _profile: SessionProfile | None = PrivateAttr(default=None)
-
     @property
     def profile(self) -> SessionProfile:
-        """Runtime-only capabilities; copies with another version cannot go stale."""
-        if self._profile is not None and self._profile.contract_version == self.schema_version:
-            return self._profile
+        """Runtime-only shared capabilities; selection never mutates model equality."""
         profile = profile_for_version(self.schema_version)
         if profile is None:
             raise ValueError("unsupported session profile")
-        self._profile = profile
         return profile
 
     @classmethod
@@ -1132,7 +1127,6 @@ class DataDrivenContract(BaseModel):
                     acceptance["expected_outputs"] if acceptance["mode"] == "exact-bytes" else ()
                 )
         result = super().model_validate(normalized)
-        result._profile = profile
         for case in result.cases:
             case._session_version = version
         return result

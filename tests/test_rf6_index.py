@@ -33,7 +33,11 @@ def test_lookup_closure_variants_and_missing():
     assert q.role_object_type('F', 'absent') is None
     assert q.role_object_type('absent', 'x') is None
     assert q.supertype_closure('Child') == frozenset({'Base'})
-    assert q.primitive('Child', variant='truthy') == 'String'
+    assert q.primitive('Child', variant='truthy') is None
+    allowed = built()
+    allowed.object_types[2]['inherits_reference'] = True
+    assert index(allowed).primitive('Child', variant='truthy') == 'String'
+    assert index(allowed).primitive('Child', variant='strict') == 'String'
     assert q.primitive('Child', variant='strict') is None
     with pytest.raises(ValueError, match='variant'):
         q.primitive('Code', variant='bad')

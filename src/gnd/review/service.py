@@ -8,7 +8,6 @@ import stat
 from pathlib import Path, PurePosixPath
 
 from gnd import resolve_version
-from gnd.commands._output import _canonical_payload
 from gnd.exits import (
     EXIT_COLLISION,
     EXIT_INTERNAL,
@@ -16,6 +15,7 @@ from gnd.exits import (
     EXIT_NO_INPUT,
     EXIT_REVIEW_INCONCLUSIVE,
 )
+from gnd.output import _canonical_payload
 from gnd.review.constants import REVIEW_QUORUM
 
 REVIEW_ATTEMPTED_REVIEWERS = 6

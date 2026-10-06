@@ -1,0 +1,4 @@
+Edited retained gate output: absolute worktree/home and operator temporary path prefixes sanitized; other output preserved.
+........................................................................ [ 74%]
+.........................                                                [100%]
+97 passed in 4.94s

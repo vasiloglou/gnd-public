@@ -4,7 +4,6 @@ from __future__ import annotations
 import ast
 import copy
 import hashlib
-import importlib
 import json
 import os
 import runpy
@@ -87,7 +86,7 @@ def test_contract_serialization_and_copy_preserve_equality(tmp_path):
     assert first.model_copy() == first
     copied = first.model_copy(update={'schema_version': 8})
     same = DataDrivenContract(**dict(fields, schema_version=8))
-    copied.profile
+    assert copied.profile.contract_version == 8
     assert copied == same
     assert copied.profile.judgments and not first.profile.judgments
 
@@ -155,13 +154,14 @@ def test_lane_service_import_does_not_initialize_commands(module):
 
 
 def test_architecture_observes_implicit_parent_layer_violation(tmp_path):
-    from test_gnd_arch import make_tree
+    from test_gnd_arch import make_map, make_tree
 
     arch = runpy.run_path(str(ROOT / 'tools/gnd_arch.py'))
     root, map_path = make_tree(tmp_path, {
         'src/gnd/__init__.py': '', 'src/gnd/entry/__init__.py': '"entry"',
         'src/gnd/entry/shared.py': '', 'src/gnd/lane.py': 'from gnd.entry.shared import value\n',
-    }, layers={'gnd.entry': 'entry', 'gnd.lane': 'lanes'})
+    }, layer_map=make_map({'gnd': 'infrastructure', 'gnd.entry': 'entry',
+                           'gnd.entry.shared': 'infrastructure', 'gnd.lane': ('lanes', 'alpha')}))
     metrics = arch['measure'](root, map_path)
     assert any(e['from'] == 'gnd.lane' and e['to'] == 'gnd.entry'
                for e in metrics['implicit_parent_edges'])
@@ -197,3 +197,123 @@ def test_generation_closure_rejects_from_import_in_actual_runtime(monkeypatch):
     with pytest.raises(AssertionError, match='network library'):
         guard.test_no_network_library_is_reachable_from_the_generation_lane()
     assert visited
+
+
+@pytest.mark.parametrize('inherits', ['yes', 1, False, None, [], {}])
+def test_rf7_inheritance_restriction_keeps_truthy_and_strict_aligned(inherits):
+    from test_rf6_index import built, index
+
+    model = built()
+    model.object_types[2]['inherits_reference'] = inherits
+    for variant in ('truthy', 'strict'):
+        assert index(model).primitive('Child', variant=variant) is None
+    model.object_types[2]['inherits_reference'] = True
+    for variant in ('truthy', 'strict'):
+        assert index(model).primitive('Child', variant=variant) == 'String'
+
+
+def test_offline_scanner_does_not_report_clean_on_invalid_python():
+    import test_measure_offline as guard
+
+    with pytest.raises(SyntaxError):
+        guard._forbidden_hit('from urllib import (', guard._NETWORK_LIBS)
+    assert 'gnd.exp.session_replay' in guard._imports('from . import session_replay', package='gnd.exp')
+
+
+def test_honest_accepted_custom_rank_is_reconstructed(tmp_path, monkeypatch):
+    from test_rf1_session_pins import _contract, build_v7, run_main
+
+    from gnd.exp import close
+    from gnd.exp.session_eval import contract_accepts
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import SessionStore
+    from gnd.exp.spec import read_spec
+
+    monkeypatch.setenv('PATH', str(ROOT / '.venv/bin') + os.pathsep + os.environ['PATH'])
+    built = build_v7(tmp_path, monkeypatch)
+    spec_path = built.root / 'SPEC.md'
+    spec_path.write_text(spec_path.read_text().replace('kind: data-driven', 'kind: work'))
+    path = built.root / 'session.contract.json'
+    doc = json.loads(path.read_text())
+    doc['ranking'] = [{'metric': 'accepted_required_cases', 'direction': 'min'}]
+    path.write_text(json.dumps(doc))
+    assert run_main(built.argv, cwd=tmp_path).returncode == 0
+    contract = _contract(built)
+    run = built.root / 'runs/run-0001'
+    result = json.loads((run / 'result.json').read_text())
+    assert result['disposition'] == 'accepted' and result['best_attempt'] == 1
+    store = SessionStore(run, run_id=run.name, contract_id=contract.experiment_id)
+    reconstruct(store, contract, allow_terminal=True)
+    assert not contract_accepts(contract, store.best_record().evaluation)
+    assert close._work_findings(read_spec(spec_path), spec_path) == []
+
+
+def test_launched_without_eligible_best_refuses_forged_result(tmp_path, monkeypatch):
+    from test_rf1_session_pins import _contract, build_v7, run_main
+
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.exp import close
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import SessionStore
+    from gnd.exp.spec import read_spec
+
+    monkeypatch.setenv('PATH', str(ROOT / '.venv/bin') + os.pathsep + os.environ['PATH'])
+    built = build_v7(tmp_path, monkeypatch)
+    spec_path = built.root / 'SPEC.md'
+    spec_path.write_text(spec_path.read_text().replace('kind: data-driven', 'kind: work'))
+    policy = json.loads(Path(built.argv[built.argv.index('--adapter-policy') + 1]).read_text())
+    plan_path = Path(policy['argv'][1])
+    plan_path.write_text(json.dumps([{}]))
+    agent_path = Path(policy['argv'][0])
+    agent_path.write_text(agent_path.read_text() + '\nraise SystemExit(2)\n')
+    assert run_main(built.argv, cwd=tmp_path).returncode == 15
+    contract = _contract(built)
+    run = built.root / 'runs/run-0001'
+    store = SessionStore(run, run_id=run.name, contract_id=contract.experiment_id)
+    reconstruct(store, contract, allow_terminal=True)
+    assert store.best_record() is None
+    result_path = run / 'result.json'
+    doc = json.loads(result_path.read_text())
+    doc.update(disposition='accepted', terminal_reason='all required cases accepted',
+               best_attempt=1, best_attempt_manifest_sha256='a' * 64, best_candidate_sha256='b' * 64)
+    result_path.write_bytes(canonical_json_bytes(doc))
+    assert close._work_findings(read_spec(spec_path), spec_path)
+
+
+@pytest.mark.parametrize('field', ['attempt_count', 'best_attempt', 'best_attempt_manifest_sha256',
+                                   'best_candidate_sha256', 'schema_version'])
+def test_terminal_identity_and_count_are_bound_to_replay(field, failing_work_session):
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import SessionStore
+
+    _, contract, run, result_path, result = failing_work_session
+    store = SessionStore(run, run_id=run.name, contract_id=contract.experiment_id)
+    reconstruct(store, contract, allow_terminal=True)
+    before = store.best_identity()
+    value = result[field] + 1 if isinstance(result[field], int) else 'f' * 64
+    result_path.write_bytes(canonical_json_bytes(dict(result, **{field: value})))
+    with pytest.raises(ValueError):
+        reconstruct(store, contract, allow_terminal=True)
+    assert store.best_identity() == before
+
+
+def test_output_aliases_patch_owner_and_scan_scope_are_live(monkeypatch):
+    from support.rf5_sources import cli_source_paths, cli_sources
+
+    from gnd import cli, output
+    from gnd.commands import _output
+
+    evidence = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-repair'
+    names = json.loads((evidence / 'output-bindings.json').read_text())['names']
+    assert len(names) == 25
+    for name in names:
+        assert getattr(_output, name) is getattr(output, name)
+    assert cli._band is output._band
+    monkeypatch.setattr(output, 'checker_band', lambda report: 42)
+    assert cli._band(object()) == 42
+    paths = cli_source_paths()
+    defining = ROOT / 'src/gnd/output.py'
+    assert defining in paths and ROOT / 'src/gnd/commands/_output.py' in paths
+    with pytest.raises(AssertionError, match='incomplete CLI'):
+        cli_sources([path for path in paths if path != defining])

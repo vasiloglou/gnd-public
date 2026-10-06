@@ -1,0 +1,32 @@
+{
+  "names": [
+    "Any",
+    "CheckReport",
+    "Model",
+    "ValidationIssue",
+    "_band",
+    "_canonical_payload",
+    "_constraint_verdict_line",
+    "_derivation_verdict_lines",
+    "_live_assurance",
+    "_print_admission_text",
+    "_print_check_verdicts",
+    "_print_derived_change_summaries",
+    "_print_issues",
+    "_print_projected_text",
+    "_print_report",
+    "_print_trace",
+    "_print_transition",
+    "annotations",
+    "api_module",
+    "checker_band",
+    "derivation_classifications",
+    "json",
+    "report_module",
+    "transition",
+    "verbalize"
+  ],
+  "predecessor": "src/gnd/commands/_output.py",
+  "defining_home": "gnd.output",
+  "source_base": "26dbff6"
+}

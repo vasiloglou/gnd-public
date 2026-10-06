@@ -4,9 +4,9 @@ import os
 from pathlib import Path
 
 from gnd import safefs as install_module
-from gnd.commands._output import _print_issues
 from gnd.exits import EXIT_COLLISION, EXIT_INTERNAL, EXIT_IO
 from gnd.model import ModelValidationError, ValidationIssue, load_model
+from gnd.output import _print_issues
 
 
 def _stale_smoke_modules(root_fd: int | None, project: object) -> frozenset[str]:

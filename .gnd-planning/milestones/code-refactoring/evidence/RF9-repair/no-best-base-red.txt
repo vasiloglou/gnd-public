@@ -1,0 +1,21 @@
+Edited evidence: operator home/worktree/temporary prefixes sanitized; outcomes preserved.
+Exact26dbff6 archived src/gnd; current regression test; isolated PYTHONPATH.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_launched_without_eligible_best_refuses_forged_result ___________
+tests/test_rf9_repairs.py:280: in test_launched_without_eligible_best_refuses_forged_result
+    assert close._work_findings(read_spec(spec_path), spec_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<base>/src/gnd/exp/close.py:1223: in _work_findings
+    _declared_case_findings(
+<base>/src/gnd/exp/close.py:969: in _declared_case_findings
+    f"attempts/{record.attempt_index:04d}/attempt.json", cap=10 * 1024 * 1024
+                ^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute 'attempt_index'
+----------------------------- Captured stdout call -----------------------------
+CREATED <pytest-temp>/pytest-4533/test_launched_without_eligible0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_launched_without_eligible_best_refuses_forged_result
+1 failed in 0.66s
+Exit:1

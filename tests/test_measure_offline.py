@@ -9,11 +9,11 @@ and two runs over one corpus reproduce byte-for-byte.
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import inspect
 import json
 import os
-import re
 from pathlib import Path
 
 import pytest
@@ -77,11 +77,30 @@ _PROVIDER_CLIENTS = (
     "ollama",
 )
 
-_IMPORT_RE = re.compile(r"^\s*(?:import|from)\s+([\w.]+)", re.MULTILINE)
+def _imports(source: str, *, package: str | None = None) -> set[str]:
+    """All static import spellings, including local/lazy and from-import children."""
+    names: set[str] = set()
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Import):
+            names.update(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            base = node.module or ""
+            if node.level:
+                if package is None:
+                    continue  # External forbidden names cannot be relative imports.
+                parts = package.split(".")
+                if node.level > len(parts):
+                    raise ValueError("relative import climbs above its package")
+                prefix = ".".join(parts[:len(parts) - node.level + 1])
+                base = ".".join(part for part in (prefix, base) if part)
+            if base:
+                names.add(base)
+                names.update(base + "." + alias.name for alias in node.names if alias.name != "*")
+    return names
 
 
-def _imports(source: str) -> set[str]:
-    return set(_IMPORT_RE.findall(source))
+def _package(path: Path) -> str:
+    return ".".join(("gnd", *path.relative_to(GND_SRC).parent.parts))
 
 
 def _forbidden_hit(source: str, needles: tuple[str, ...]) -> list[str]:
@@ -91,7 +110,7 @@ def _forbidden_hit(source: str, needles: tuple[str, ...]) -> list[str]:
         for name in imported:
             if name == needle or name.startswith(needle + "."):
                 hits.append(needle)
-    return hits
+    return sorted(set(hits))
 
 
 # --------------------------------------------------------------------------- #
@@ -102,7 +121,7 @@ def _forbidden_hit(source: str, needles: tuple[str, ...]) -> list[str]:
 def test_measure_lane_imports_no_provider_or_network_module() -> None:
     """No module under ``src/gnd/measure/`` imports a provider or network module.
 
-    A regex-over-source scan, not a convention — it can fail. The two scans
+    An AST-over-source scan, not a convention — it can fail. The two scans
     are scoped to the METRICS lane ONLY. It deliberately
     does NOT scan ``src/gnd/synth/``: the owner's correction rescoped enforcement
     to the metrics lane, and the development (generation) lane may be live and
@@ -206,7 +225,7 @@ def test_no_network_library_is_reachable_from_the_measure_lane() -> None:
         hits = _forbidden_hit(source, _NETWORK_LIBS)
         if hits:
             offenders[str(path.relative_to(REPO_ROOT))] = hits
-        for dotted in _imports(source):
+        for dotted in _imports(source, package=_package(path)):
             if not dotted.startswith("gnd"):
                 continue
             target = _module_path(dotted)
@@ -270,7 +289,7 @@ def test_no_network_library_is_reachable_from_the_extraction_lane() -> None:
         hits = _forbidden_hit(source, _NETWORK_LIBS)
         if hits:
             offenders[str(path.relative_to(REPO_ROOT))] = hits
-        for dotted in _imports(source):
+        for dotted in _imports(source, package=_package(path)):
             if not dotted.startswith("gnd"):
                 continue
             target = _module_path(dotted)
@@ -351,7 +370,7 @@ def test_no_network_library_is_reachable_from_the_generation_lane() -> None:
         hits = _forbidden_hit(source, _NETWORK_LIBS)
         if hits:
             offenders[str(path.relative_to(REPO_ROOT))] = hits
-        for dotted in _imports(source):
+        for dotted in _imports(source, package=_package(path)):
             if not dotted.startswith("gnd"):
                 continue
             target = _module_path(dotted)

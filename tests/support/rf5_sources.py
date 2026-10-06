@@ -6,7 +6,7 @@ from pathlib import Path
 
 from support.repository import REPO_ROOT
 
-HOMES = json.loads((REPO_ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF5/planned-homes.json').read_text())
+HOMES = json.loads((REPO_ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/cli-homes.json').read_text())
 
 def owner(name):
     return sys.modules.get(HOMES[name]) or importlib.import_module(HOMES[name])

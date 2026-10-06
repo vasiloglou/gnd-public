@@ -7,9 +7,9 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from gnd.commands._output import _print_issues
 from gnd.exits import EXIT_COLLISION, EXIT_EXPERIMENT_OPEN, EXIT_IO, EXIT_NO_INPUT, EXIT_USAGE
 from gnd.model import ValidationIssue
+from gnd.output import _print_issues
 
 CLI_TEST_ARGV_REQUIRED_REASON = "cli:test-argv-required"
 

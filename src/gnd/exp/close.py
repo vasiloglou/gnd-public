@@ -965,6 +965,8 @@ def _declared_case_findings(
                     raise ValueError("v7 result requires its v7 contract")
                 reconstruct(store, contract, allow_terminal=True)
                 record = store.best_record()
+                if record is None:
+                    raise ValueError("result names a best attempt but reconstruction has none")
                 attempt_bytes = store._read_evidence_leaf(
                     f"attempts/{record.attempt_index:04d}/attempt.json", cap=10 * 1024 * 1024
                 )

@@ -1,0 +1,60 @@
+Edited retained gate output: absolute worktree/home and operator temporary path prefixes sanitized; other output preserved.
+.................F................................F..F...F...            [100%]
+=================================== FAILURES ===================================
+__________ test_architecture_observes_implicit_parent_layer_violation __________
+tests/test_rf9_repairs.py:165: in test_architecture_observes_implicit_parent_layer_violation
+    metrics = arch['measure'](root, map_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/gnd_arch.py:641: in measure
+    layer_map = load_layer_map(layers_path)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/gnd_arch.py:103: in load_layer_map
+    _validate_layer_map(data)
+tools/gnd_arch.py:156: in _validate_layer_map
+    _require(entry.get("lane") in lanes, f"{module}: lanes-layer module needs a known lane")
+tools/gnd_arch.py:109: in _require
+    raise _invalid(f"layer map: {message}")
+E   <run_path>.ToolError: layer map: gnd.lane: lanes-layer module needs a known lane
+____________ test_dynamic_candidate_inventory_is_complete_and_live _____________
+tests/test_rf6_query_policy.py:123: in test_dynamic_candidate_inventory_is_complete_and_live
+    assert_dynamic_inventory(found, rows)
+tests/test_rf6_query_policy.py:117: in assert_dynamic_inventory
+    assert found == approved
+E   assert Counter({('sr...ubtype)'): 1}) == Counter({('sr...es'][i]"): 1})
+E     
+E     Omitting 5749 identical items, use -vv to show
+E     Left contains 10 more items:
+E     {('src/gnd/output.py', '_canonical_payload', 'dict[str, Any]'): 1,
+E      ('src/gnd/output.py', '_derivation_verdict_lines', 'list[str]'): 1,
+E      ('src/gnd/output.py', '_print_admission_text', 'dict[str, Any]'): 1,
+E      ('src/gnd/output.py', '_print_issues', 'issues[:report_module.MAX_POPULATION_ISSUES]'): 1,...
+E     
+E     ...Full output truncated (18 lines hidden), use '-vv' to show
+_______________ test_dynamic_duplicate_inventory_row_is_refused ________________
+tests/test_rf6_query_policy.py:148: in test_dynamic_duplicate_inventory_row_is_refused
+    assert_dynamic_inventory(found, rows)
+tests/test_rf6_query_policy.py:117: in assert_dynamic_inventory
+    assert found == approved
+E   assert Counter({('sr...ubtype)'): 1}) == Counter({('sr...es'][i]"): 1})
+E     
+E     Omitting 5749 identical items, use -vv to show
+E     Left contains 10 more items:
+E     {('src/gnd/output.py', '_canonical_payload', 'dict[str, Any]'): 1,
+E      ('src/gnd/output.py', '_derivation_verdict_lines', 'list[str]'): 1,
+E      ('src/gnd/output.py', '_print_admission_text', 'dict[str, Any]'): 1,
+E      ('src/gnd/output.py', '_print_issues', 'issues[:report_module.MAX_POPULATION_ISSUES]'): 1,...
+E     
+E     ...Full output truncated (18 lines hidden), use '-vv' to show
+______________________ test_reader_body_observer_can_fail ______________________
+tests/test_rf8_structure.py:82: in test_reader_body_observer_can_fail
+    assert hashlib.sha256(predecessor_body(copy.deepcopy(node)).encode()).hexdigest() == row['ast_sha256']
+E   AssertionError: assert 'd12218922dce...d6857908aaaf5' == 'c64b8360fa40...b7433952d8af4'
+E     
+E     - c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4
+E     + d12218922dcecb8e6aa146d895cb58999eef5505d513f742199d6857908aaaf5
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_architecture_observes_implicit_parent_layer_violation
+FAILED tests/test_rf6_query_policy.py::test_dynamic_candidate_inventory_is_complete_and_live
+FAILED tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused
+FAILED tests/test_rf8_structure.py::test_reader_body_observer_can_fail - Asse...
+4 failed, 57 passed in 13.11s

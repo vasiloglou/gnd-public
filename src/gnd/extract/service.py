@@ -7,9 +7,9 @@ from typing import Any
 from gnd import input_policy as _rf7_input
 from gnd import resolve_version
 from gnd import safefs as install_module
-from gnd.commands._output import _print_issues
 from gnd.exits import EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT
 from gnd.model import ModelValidationError, load_model
+from gnd.output import _print_issues
 
 
 def _extract_stem(model_path: str) -> str:

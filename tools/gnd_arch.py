@@ -685,13 +685,31 @@ def measure(root: Path, layers_path: Path) -> dict:
     runtime_pairs = {(e["from"], e["to"]) for e in edges if e["kind"] in RUNTIME_KINDS}
     module_pairs = {(e["from"], e["to"]) for e in edges if e["kind"] == "module"}
 
+    # A dotted child import also executes package initializers. Keep these
+    # effects explicit so historic AST SCC counts remain separately comparable.
+    parent_rows = set()
+    for edge in edges:
+        parts = edge["to"].split(".")
+        for size in range(1, len(parts)):
+            parent = ".".join(parts[:size])
+            if (parent in paths and parent != edge["from"]
+                    and str(paths[parent]).endswith("/__init__.py")):
+                parent_rows.add((edge["from"], parent, edge["kind"], edge["line"]))
+    implicit_parent_edges = sorted(
+        ({"from": source, "to": target, "kind": kind, "line": line,
+          "implicit_parent": True} for source, target, kind, line in parent_rows), key=edge_key)
+    combined_runtime_pairs = runtime_pairs | {
+        (edge["from"], edge["to"]) for edge in implicit_parent_edges
+        if edge["kind"] in RUNTIME_KINDS
+    }
+
     fan_in, fan_out = Counter(), Counter()
     for source, target in runtime_pairs:
         fan_out[source] += 1
         fan_in[target] += 1
 
     wrong_way, cross_lane = [], []
-    for e in edges:
+    for e in edges + implicit_parent_edges:
         if e["kind"] not in RUNTIME_KINDS:
             continue
         source, target = entry[e["from"]], entry[e["to"]]
@@ -737,6 +755,8 @@ def measure(root: Path, layers_path: Path) -> dict:
         },
         "modules": module_rows,
         "edges": edges,
+        "implicit_parent_edges": implicit_parent_edges,
+        "parent_initialization_sccs": _sccs(modules, combined_runtime_pairs),
         "unresolved_dynamic": sorted(unresolved, key=lambda u: (u["from"], u["line"])),
         "sccs": {
             "runtime": _sccs(modules, runtime_pairs),

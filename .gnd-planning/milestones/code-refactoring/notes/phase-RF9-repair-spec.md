@@ -104,3 +104,55 @@ No repeated review loop. The source-owned import-walk ledger question stays open
 although the explicitly approved target guard is repaired. The migration ledger,
 original authority guard and RF1 golden bytes stay unchanged. No release, merge
 or milestone close is authorized. Existing PR#10 remains the delivery surface.
+
+## Implementation observations and delegated amendments
+
+2026-10-06, under the named repair authorization. Initial artifact approval SHA
+in approval.json remains the initial spec identity; this section records the
+concrete instrument findings rather than rewriting its history.
+
+- The initial equality case omitted its helper's tmp_path argument; the corrected
+  case was rerun RED before production (equality-red.txt). The initial parent-edge
+  fixture omitted its required lane declaration; corrected fixture evidence
+  separately proves the old scanner misses the entry initializer. Both were
+  instrument errors, not product findings.
+- A malformed candidate still creates an eligible verifier-refusal attempt.
+  The no-best real-session successor instead makes the launched producer exit2;
+  its pre-fix baseline crashes, while the repair returns a structured refusal.
+- Terminal validation also checks contract_accepts for the reconstructed final
+  evaluation, all result-version/count/best-identity fields, and preserves the
+  already published cache on refused reconstruction. An honest custom ranking
+  selecting an earlier failed best remains accepted when the final attempt meets
+  the contract. Regression siblings name these separate branches.
+- RF6's primitive-migration base is523cdd1a2ae1ad6ea0e8ca092fe29629dd10607c.
+  The expanded grammar measures375 there (371 previous forms +4 literal getattr),
+ 354 now, ceiling365. The earlier pre-refactor f5a8318 source measures374; it is
+  a different source boundary, not the375 baseline. Original attribute/get metric
+  stays299 against310/320. The successor's reasoned rows cover all four existing
+  literal-getattr reads; original policy bytes stay historical.
+- Dynamic query inventory and CLI home-map successors retarget physical output
+  definitions. The old output helper bytes move exactly; all25 aliases, observed
+  patch effect and source omission negative are explicitly checked. Contrary to
+  the review's illustrative wording, the actual map assigned the old child to
+  semantics; the implicit entry-package initializer remained the defect.
+- The replay integrity branch intentionally changes its body. Its exact successor
+  AST hash is retained; the observer normalizes only one cache write at the return
+  tail. Dirty moved/early/repeated writes remain observable.
+- The parent-edge diagnostic exposes4087 implicit edges and seven combined SCCs
+  from package reexports. Zero explicit SCCs and zero wrong-way/entry violations
+  hold; no claim of zero combined package-initialization SCCs is made. Existing
+  explicit SCC JSON keys stay stable. Seven fresh service imports confirm the
+  entry commands package is not initialized.
+- Initial legacy session pins inherited LANG, LC_ALL and TERM from the desktop
+  environment, unlike their recorded golden environment. Unsetting exactly those
+  three names yields28 passing pins; no golden or capture expectation changed.
+  Intermediate graph failures came from an added nested SCC key, corrected to a
+  separate diagnostic top-level key. Initial and corrected gate logs are retained.
+- Lint required sorting the seven changed service import blocks; their migration
+  adaptation after-identities were refreshed, preserving every before/source row.
+  All18 target adaptations have exact hashes/modes; units.json and the distribution
+  authority guard remain unchanged. This is no source-owned handoff or certificate.
+
+The approval corpus's meanings remain unchanged. Helper/fixture repairs and the
+additional positive/dirty controls are delegated amendments within RF9-F1–F9;
+no review-round or broad-suite budget was expanded.

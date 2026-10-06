@@ -62,6 +62,9 @@ def test_unchanged_moved_bodies_and_shim_identity():
                       if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
                       and n.name == row['name']]
         node = next((n for n in candidates if hashlib.sha256(predecessor_body(copy.deepcopy(n)).encode()).hexdigest() == row['ast_sha256']), candidates[-1])
+        if row['name'] == 'reconstruct':
+            successor = json.loads((EVIDENCE.parent / 'RF9-repair/reconstruct-successor.json').read_text())
+            row = dict(row, ast_sha256=successor['ast_sha256'])
         # Run's public identity lookup intentionally changes; its end-to-end matrix is G3.
         if row['name'] != 'run':
             assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']
@@ -73,6 +76,9 @@ def test_unchanged_moved_bodies_and_shim_identity():
 def test_reader_body_observer_can_fail():
     rows = json.loads((EVIDENCE / 'reader-base.json').read_text())['functions']
     for row in rows:
+        if row['function'] == 'reconstruct':
+            successor = json.loads((EVIDENCE.parent / 'RF9-repair/reconstruct-successor.json').read_text())
+            row = dict(row, ast_sha256=successor['ast_sha256'])
         source = (ROOT / row['physical_path']).read_text()
         node = next(n for n in ast.walk(ast.parse(source))
                     if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name == row['function'])

@@ -13,7 +13,7 @@ from support.repository import REPO_ROOT as ROOT
 from gnd import cli
 
 EVIDENCE = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF5'
-HOMES = json.loads((EVIDENCE / 'planned-homes.json').read_text())
+HOMES = json.loads((EVIDENCE.parent / 'RF9-repair/cli-homes.json').read_text())
 PREDECESSOR = ast.parse((EVIDENCE / 'predecessor-cli.py.txt').read_text())
 DEFINITIONS = {node.name: node for node in PREDECESSOR.body
                if isinstance(node, (ast.FunctionDef, ast.ClassDef)) and node.name != 'main'}

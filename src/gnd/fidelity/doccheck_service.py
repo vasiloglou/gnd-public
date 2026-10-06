@@ -7,10 +7,10 @@ from typing import Any
 
 from gnd import input_policy as _rf7_input
 from gnd import verbalize
-from gnd.commands._output import _print_issues
 from gnd.exits import EXIT_NO_INPUT
 from gnd.extract.service import _artifact_index_issue, _extract_stem
 from gnd.model import ModelValidationError, load_model
+from gnd.output import _print_issues
 from gnd.population import PopulationValidationError, load_population
 
 

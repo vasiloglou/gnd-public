@@ -195,7 +195,7 @@ content_digest = _content_digest
 model_digest = _model_digest
 
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ForwardRef
 
 
 def reference_model_digest(model: Model) -> str:
@@ -213,9 +213,14 @@ def reference_model_digest(model: Model) -> str:
     return "sha256:" + hashlib.sha256(artifacts.canonical_json_bytes(payload)).hexdigest()
 
 
+from gnd.documents import Model
+
 if TYPE_CHECKING:
-    from gnd.documents import Model
     from gnd.population import Population
+
+# Resolve the historical population annotation in its defining module without
+# adding a runtime values -> population import cycle.
+_content_digest.__annotations__["population"] = ForwardRef("Population", module="gnd.population")
 
 _identity_key.__module__ = 'gnd.checker'
 

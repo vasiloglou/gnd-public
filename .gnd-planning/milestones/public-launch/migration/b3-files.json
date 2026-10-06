@@ -1818,9 +1818,9 @@
     {
       "path": "src/gnd/codegen/service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
-      "bytes": 13907,
-      "public_sha256": "5969d60f5cd7efa12fb44d8319a80ab2260c33d7c0a14ac14eb0cebbde25f6db",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 13897,
+      "public_sha256": "41d30057a34105c440492be70c9b2143f0feca60dc2561b4bbe31363782802f9",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "5969d60f5cd7efa12fb44d8319a80ab2260c33d7c0a14ac14eb0cebbde25f6db"
@@ -1848,9 +1848,9 @@
     {
       "path": "src/gnd/commands/_output.py",
       "kind": "adaptation",
-      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
-      "bytes": 12851,
-      "public_sha256": "eccabb9e15fe7ef64d0d108074de06f0c94d9315dc572809e2d57d579be89401",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 2789,
+      "public_sha256": "c9eb206dbc31db8250091ba8aa36d9e68c29afcecaa07f53cc36f6ae87c1bbac",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "eccabb9e15fe7ef64d0d108074de06f0c94d9315dc572809e2d57d579be89401"
@@ -2310,9 +2310,9 @@
     {
       "path": "src/gnd/exp/cli_service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
-      "bytes": 20183,
-      "public_sha256": "c2fb3124c8606ce556c0656caab097f6b22d207ba32c942c8c2b5332a8bd4003",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 20173,
+      "public_sha256": "cba09f4d8d66f5f794adaa184c388f7c062ca162aebb66e302f8172fc56c8771",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "c2fb3124c8606ce556c0656caab097f6b22d207ba32c942c8c2b5332a8bd4003"
@@ -2320,9 +2320,9 @@
     {
       "path": "src/gnd/exp/close.py",
       "kind": "adaptation",
-      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
-      "bytes": 63662,
-      "public_sha256": "cdbf9bbb78f8c6c2f692c0298c2fea09d088a293e9fbc0241ddc8e7fcb7105ec",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 63793,
+      "public_sha256": "5d3bdff51e15809a9e3606430be9b47ab3e8d04ea9189072c81429b22112b0bf",
       "mode": 420,
       "baseline_sha256": null,
       "source_path": "src/gnd/exp/close.py",
@@ -2416,9 +2416,9 @@
     {
       "path": "src/gnd/exp/session_contract.py",
       "kind": "adaptation",
-      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
-      "bytes": 71721,
-      "public_sha256": "c5b5ac2b9b8994e7f984829289d90bda325668f4f5e5855a644bfe4e9023ec84",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 71463,
+      "public_sha256": "42570f03cdd25179e028cee0f2d3f6a7bab14125ce2c26857af19cdc016c9f3c",
       "mode": 420,
       "baseline_sha256": null,
       "source_path": "src/gnd/exp/session_contract.py",
@@ -2678,9 +2678,9 @@
     {
       "path": "src/gnd/export/verification_service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
-      "bytes": 23032,
-      "public_sha256": "4bd9136de4b7d7673718b44c702e3b7bec4bfd5905cf264caadfdcc12012f9a0",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 23022,
+      "public_sha256": "856fd3bcec5fd13f21abdc2334796b5ff646647ec47c9323496580fa86f7eea0",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "4bd9136de4b7d7673718b44c702e3b7bec4bfd5905cf264caadfdcc12012f9a0"
@@ -2772,9 +2772,9 @@
     {
       "path": "src/gnd/extract/service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 9482,
-      "public_sha256": "b6f69ab8e6854d051fc0bc01f79600af0ba232d89170c482a40f945753c1cc01",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 9472,
+      "public_sha256": "a31af182668c60c839f3a59a8e4fb31dd71a18ba56767a6044e64dd176bf2593",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "6454b8b0bd2588b326ac4c8c38e3fa2300fc06290ba7c9df4aecc77d3f38b6b3"
@@ -2830,9 +2830,9 @@
     {
       "path": "src/gnd/fidelity/doccheck_service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 14148,
-      "public_sha256": "50767d376c036d875392a4c19bbbb7d90dff7f58d1512ac4cd649bd075826b3f",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 14138,
+      "public_sha256": "a585a3326ce246b7fdbaac5abecba158514be504d9e6a0f3d27e95a47efafe70",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "b0e98fc3d07acfe4a574a82aabf41853383c46777650f5a72243c9fef8e7393f"
@@ -2864,9 +2864,9 @@
     {
       "path": "src/gnd/fidelity/service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF7 strict input policy and explicit restriction successors; prior release identity unavailable for these bytes.",
-      "bytes": 16156,
-      "public_sha256": "20049a2cd1fb90c8e80691907a06db0310c36b1d8bebed7c946155cc2bbe9571",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 16146,
+      "public_sha256": "77b87675ec7fb6897cd8adaa4f98c5f61c2cd6cc0f28748d44eb6becd577f84d",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "5515c8d183f09350f0231fc01dbcf67b70cd5acd540561b6af25c2f0dea393cb"
@@ -3346,9 +3346,9 @@
     {
       "path": "src/gnd/review/service.py",
       "kind": "adaptation",
-      "reason": "Delegated RF5 D5 new dependency home; historical CLI names retained as aliases.",
-      "bytes": 12626,
-      "public_sha256": "021521dcc59adc93e3a644994b53be47334d5f31e6aaa1ba1d7f7fcaf6fe1e90",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 12616,
+      "public_sha256": "154cdef1293292c15da9cba6dc9c8207a1a2c5c7addf62153e9681b4985c4767",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "021521dcc59adc93e3a644994b53be47334d5f31e6aaa1ba1d7f7fcaf6fe1e90"
@@ -8656,10 +8656,10 @@
     {
       "path": "tests/test_measure_offline.py",
       "kind": "adaptation",
-      "reason": "Delegated RF6b query/family/package adaptation; prior release identity unavailable for these bytes.",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
       "baseline_sha256": "a1969fc6b3f960aed8d5fd966ef3341d6c876903697768877d9faba6a7b0b8e7",
-      "public_sha256": "12895d601f1fad533fb87425be1e28be7097d5c08b3d2831be58e61de6f61539",
-      "bytes": 46500,
+      "public_sha256": "573e05f99b28541c493e1c5b0b8b4bf1d20a15cf4e88c80dca17ab269ed19350",
+      "bytes": 47577,
       "mode": 420
     },
     {
@@ -9213,9 +9213,9 @@
     {
       "path": "tests/test_rf6_index.py",
       "kind": "adaptation",
-      "reason": "Delegated RF6b-cache query/family/package adaptation; prior release identity unavailable for these bytes.",
-      "bytes": 8699,
-      "public_sha256": "15f273f84906319794c9054879bee8b030c9f7da2e0a9d549588fe06147f42ef",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 8924,
+      "public_sha256": "4b0f4633f65c012d5bf83e1ac4453f7f58a28c528d33bf16b19bc50c85085863",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "b9b9756d5bac0f23ace0de20529409d98928249272c215cc97116caed85e8f35"
@@ -9233,9 +9233,9 @@
     {
       "path": "tests/test_rf6_query_policy.py",
       "kind": "adaptation",
-      "reason": "Delegated RF8 session profile and physical move controls; prior release identity unavailable for these bytes.",
-      "bytes": 6641,
-      "public_sha256": "ca895ef59e3088431d23d62e6733d91e3ea8592055db9c62aef49ba9a3e3119f",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 7087,
+      "public_sha256": "13aa6a9183479d0394387b59de7282b09d7687fb701e95d255fe612fcc135a36",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "f6b1225d8e125445a267c0259fd34e5bbf2f4e51e0a61fd33cab3f09e1d602d9"
@@ -9713,9 +9713,9 @@
     {
       "path": "tests/test_rf5_commands.py",
       "kind": "adaptation",
-      "reason": "Delegated RF7 shared input policy or explicit restriction control; no release identity claim.",
-      "bytes": 6663,
-      "public_sha256": "e84d9b896ce7df1c23e4ad2eb59297ad53d37868ed033cc2a0badd64ae0ba5b6",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 6677,
+      "public_sha256": "e6c9ed6a739d4236f7d491a662a84007a61014949f199ebb6f3a3f2e651b1c29",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "e84d9b896ce7df1c23e4ad2eb59297ad53d37868ed033cc2a0badd64ae0ba5b6"
@@ -9813,9 +9813,9 @@
     {
       "path": "src/gnd/exp/session_replay.py",
       "kind": "adaptation",
-      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
-      "bytes": 22120,
-      "public_sha256": "ae90b5aa0ae8ae2bc5f035c2e37366c5b9470dfb053315846bf05b30216f7557",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 23056,
+      "public_sha256": "9f1d8a368fecb48837f395985dd7958ade11f1b5cdf8a8d3efdc777e887d62f3",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "ae90b5aa0ae8ae2bc5f035c2e37366c5b9470dfb053315846bf05b30216f7557"
@@ -9833,9 +9833,9 @@
     {
       "path": "tests/support/rf8_sources.py",
       "kind": "adaptation",
-      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
-      "bytes": 1888,
-      "public_sha256": "a892ea135601cabefde59193b626427683d66cc252eab856df85852ce3c470cd",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 2248,
+      "public_sha256": "2e0c609c69fef244f5359c64e31a306ec1f97627122345a87d68287b5965b96a",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "a892ea135601cabefde59193b626427683d66cc252eab856df85852ce3c470cd"
@@ -9873,9 +9873,9 @@
     {
       "path": "tests/test_rf8_structure.py",
       "kind": "adaptation",
-      "reason": "Delegated RF8 session dependency layering or compatibility control; no release identity claim.",
-      "bytes": 4937,
-      "public_sha256": "fcfc70ccdb8f95464966cd963ed2514cf9f56a5f8ec662bf98f3c6bf632144cc",
+      "reason": "Owner-approved RF9 correctness/observer repairs; prior release identity unavailable for current bytes.",
+      "bytes": 5367,
+      "public_sha256": "eaa6e5006f602ec59ddf084231f2beb3979d68fe82de9601c5a81c49f4eb8f67",
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "fcfc70ccdb8f95464966cd963ed2514cf9f56a5f8ec662bf98f3c6bf632144cc"
@@ -9889,6 +9889,16 @@
       "mode": 420,
       "baseline_sha256": null,
       "source_sha256": "a61bac83ef00b05c9988dc0e51803ebc275121c82d9b4b70cbdd82fb773ae6a4"
+    },
+    {
+      "path": "src/gnd/output.py",
+      "kind": "adaptation",
+      "reason": "Owner-approved RF9 shared output home; definitions move verbatim from commands._output; no release identity claim.",
+      "baseline_sha256": null,
+      "source_sha256": "eccabb9e15fe7ef64d0d108074de06f0c94d9315dc572809e2d57d579be89401",
+      "public_sha256": "eccabb9e15fe7ef64d0d108074de06f0c94d9315dc572809e2d57d579be89401",
+      "bytes": 12851,
+      "mode": 420
     }
   ]
 }

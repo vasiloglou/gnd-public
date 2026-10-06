@@ -873,3 +873,36 @@ compatibility aliases do not forward assignments. SessionStore._v7_best retains
 its historical tuple; production consumers use best_identity()/best_record().
 
 | gnd.exp.session_v7._HIDDEN | gnd.exp.session_replay._HIDDEN (same object) | RF8 | RF-D5 |
+
+## RF9 repair shared output home
+
+The output definitions move verbatim to gnd.output. Historical imported bindings
+and CLI qualifications remain; current scan/patch owners follow the defining home.
+
+| Old path | Defining home | Phase | Retirement |
+|---|---|---|---|
+| gnd.commands._output.Any | gnd.output.Any | RF9-repair | RF-D5 |
+| gnd.commands._output.CheckReport | gnd.output.CheckReport | RF9-repair | RF-D5 |
+| gnd.commands._output.Model | gnd.output.Model | RF9-repair | RF-D5 |
+| gnd.commands._output.ValidationIssue | gnd.output.ValidationIssue | RF9-repair | RF-D5 |
+| gnd.commands._output._band | gnd.output._band | RF9-repair | RF-D5 |
+| gnd.commands._output._canonical_payload | gnd.output._canonical_payload | RF9-repair | RF-D5 |
+| gnd.commands._output._constraint_verdict_line | gnd.output._constraint_verdict_line | RF9-repair | RF-D5 |
+| gnd.commands._output._derivation_verdict_lines | gnd.output._derivation_verdict_lines | RF9-repair | RF-D5 |
+| gnd.commands._output._live_assurance | gnd.output._live_assurance | RF9-repair | RF-D5 |
+| gnd.commands._output._print_admission_text | gnd.output._print_admission_text | RF9-repair | RF-D5 |
+| gnd.commands._output._print_check_verdicts | gnd.output._print_check_verdicts | RF9-repair | RF-D5 |
+| gnd.commands._output._print_derived_change_summaries | gnd.output._print_derived_change_summaries | RF9-repair | RF-D5 |
+| gnd.commands._output._print_issues | gnd.output._print_issues | RF9-repair | RF-D5 |
+| gnd.commands._output._print_projected_text | gnd.output._print_projected_text | RF9-repair | RF-D5 |
+| gnd.commands._output._print_report | gnd.output._print_report | RF9-repair | RF-D5 |
+| gnd.commands._output._print_trace | gnd.output._print_trace | RF9-repair | RF-D5 |
+| gnd.commands._output._print_transition | gnd.output._print_transition | RF9-repair | RF-D5 |
+| gnd.commands._output.annotations | gnd.output.annotations | RF9-repair | RF-D5 |
+| gnd.commands._output.api_module | gnd.output.api_module | RF9-repair | RF-D5 |
+| gnd.commands._output.checker_band | gnd.output.checker_band | RF9-repair | RF-D5 |
+| gnd.commands._output.derivation_classifications | gnd.output.derivation_classifications | RF9-repair | RF-D5 |
+| gnd.commands._output.json | gnd.output.json | RF9-repair | RF-D5 |
+| gnd.commands._output.report_module | gnd.output.report_module | RF9-repair | RF-D5 |
+| gnd.commands._output.transition | gnd.output.transition | RF9-repair | RF-D5 |
+| gnd.commands._output.verbalize | gnd.output.verbalize | RF9-repair | RF-D5 |

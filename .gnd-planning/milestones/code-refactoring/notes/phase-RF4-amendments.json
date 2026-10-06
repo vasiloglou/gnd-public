@@ -62,5 +62,13 @@
     "authorization": "process-phase RF4 auto",
     "sha256": "744861e9d2e90a3086801c8ca314a8b454bd032e51cec66c6671898fc52bf42b",
     "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A8-spec.md"
+  },
+  {
+    "id": "A9",
+    "date": "2026-10-05",
+    "mark": "delegated approval (auto=true)",
+    "authorization": "process-phase RF4 auto",
+    "sha256": "6cd67560a813f86a7093fb04863397a8ccc00fdad88c7309007d40fa56cff092",
+    "snapshot": ".gnd-planning/milestones/code-refactoring/evidence/RF4/A9-spec.md"
   }
 ]

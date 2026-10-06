@@ -144,3 +144,7 @@ The patch inventory found the unreadable-producer refusal control retargeted to 
 ### A8 -- contributor fixture closure (delegated auto, 2026-10-05)
 
 G5's contributor dirty-copy test fails before its mutant because CONTRIBUTING already links tools/gnd_layers.json and the shim inventory, but the copied boundary omits both. The same failure is reproduced against an isolated complete phase-base387aada snapshot (scaffold-base-reproduction,exit1). Triage: blocking for this selected G5 control, test-fixture hardening only. Copy the two existing link targets into the dirty fixture before its clean control; retain all four mutations and failure predicates. This is not a production fix or a broad historical repair. The original red and exact base are retained.
+
+### A9 -- test data accounting (delegated auto, 2026-10-05)
+
+The committed test diff adds358 Python test lines and3043 fixture/data lines (2996 are the source-base paired diff answers). The original1800 test-line ceiling passes for Python but fails if all test inputs count:3401 total. Approve3600 total added test code/data before review repair or completion edits, with the1800 Python ceiling retained. Report both categories and the original total overrun; never hide answer data as evidence or omit it from touched-file counts. Frozen corpus stimuli and answers remain unchanged; only RF4's explicitly pre-move successor data is new. This amendment changes accounting allowance, not expected answers.

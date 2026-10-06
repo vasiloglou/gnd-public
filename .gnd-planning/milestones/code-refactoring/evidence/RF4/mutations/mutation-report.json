@@ -1,0 +1,316 @@
+{
+ "control_nodes": 83,
+ "killed": 45,
+ "rows": {
+  "M-AGENT-argv-print": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_argv": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-invoke-version": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[failure]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[success]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[timeout]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-invoke-version-probe-failed": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_invoke[version-fails]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-run-stdout-retained": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[stdout-over-limit]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-AGENT-run-truncated": {
+   "nodes": {
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[aggregate-over-budget]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[missing-executable]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[nonzero-exit]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[secret-redaction]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[stderr-over-limit]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[success]": "failed",
+    "tests/test_rf1_agent_cli_pins.py::test_agent_run[timeout]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-assurance-inheritance-canonical": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance_inheritance:_canonical]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-canonical-json-gnd-assurance-sorted-set": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.assurance:_sorted_set]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-assemble-object-types-by-id": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_object_types_by_id]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-identical-candidate-gnd-synth-assemble-role-object": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[identical_candidate|gnd.synth.assemble:_role_object]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-atomic-write": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_atomic_write]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-descend": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-descend-create": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_descend[create]]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-reject-unsafe-relpath": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_reject_unsafe_relpath]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-HELP-safe-filesystem-gnd-install-safe-destination": {
+   "nodes": {
+    "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:safe_destination]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-assurance-block": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_assurance_blocks": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-check-arms": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check_anchored": "failed",
+    "tests/test_rf1_semantic_pins.py::test_check_transition": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-datetime-synth-assemble-_instant_pair": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_datetime_site[synth.assemble._instant_pair]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-inheritance-compare": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_assurance_inheritance_comparison": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-oracle-expected-state": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_oracle[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[misc.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[ring.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_predict_violations[setfam.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-synth-emit": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/approvals/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/complete.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/model.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/bookrec/strict.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/dispatch/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/currency.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/expense/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[ex/release/model.orm.json]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/misc.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/ring.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/checker/setfam.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/dispatch.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/full_vocabulary.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/guarded_minimal.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/keywords.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/library.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_operations.orm.yaml]": "failed",
+    "tests/test_rf1_semantic_pins.py::test_synth[fx/models/v2_worked_example.orm.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-complete-orm-yaml-ex-bookrec-complete-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/complete.orm.yaml|ex/bookrec/complete.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-adult-for-minor-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/adult-for-minor.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-already-read-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/already-read.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-genre-warning-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/genre-warning.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-bookrec-model-orm-yaml-ex-bookrec-seed-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/bookrec/model.orm.yaml|ex/bookrec/seed.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-repaired-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/repaired.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-dispatch-model-orm-json-ex-dispatch-seed-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/dispatch/model.orm.json|ex/dispatch/seed.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-missing-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency-missing.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-currency-orm-json-ex-expense-currency-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/currency.orm.json|ex/expense/currency.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-approved-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/approved.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-chain-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-chain.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-invalid-meal-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/invalid-meal.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-expense-model-orm-json-ex-expense-seed-population-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/expense/model.orm.json|ex/expense/seed.population.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-release-model-orm-json-ex-release-repaired-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/repaired.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-ex-release-model-orm-json-ex-release-seed-pop-json": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[ex/release/model.orm.json|ex/release/seed.pop.json]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-fail-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_fail.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-misc-orm-yaml-fx-checker-population-misc-pass-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/misc.orm.yaml|fx/checker/population.misc_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-fail-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_fail.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-ring-orm-yaml-fx-checker-population-ring-pass-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/ring.orm.yaml|fx/checker/population.ring_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-coverage-omission-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.coverage_omission.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-covers-none-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.covers_none.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-empty-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.empty.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-precedence-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.precedence.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-fail-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_fail.yaml]": "failed"
+   },
+   "status": "killed"
+  },
+  "M-SEM-test-check-fx-checker-setfam-orm-yaml-fx-checker-population-setfam-pass-yaml": {
+   "nodes": {
+    "tests/test_rf1_semantic_pins.py::test_check[fx/checker/setfam.orm.yaml|fx/checker/population.setfam_pass.yaml]": "failed"
+   },
+   "status": "killed"
+  }
+ },
+ "schema_version": 1,
+ "total": 45
+}

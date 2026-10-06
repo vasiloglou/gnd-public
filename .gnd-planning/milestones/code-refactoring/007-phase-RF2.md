@@ -542,6 +542,9 @@ edited. See the named open questions below.
 - RF1-OQ2/4 → RF8 or successor; RF1-OQ3 → milestone close; RF1-OQ5/6 → successor;
   RF1-OQ7 → next actual edit of tests/support/rf1_pins.py. Boundaries remain standing.
 - RF0-OQ5 → RF3 and RF0-OQ6 → RF8, plus source-owned
+  **RF0-OQ5 discharge annotation, 2026-10-05: 008-phase-RF3.md measures the
+  retained dynamic edge and acyclic original core/new homes. The prior
+  boundary and all other ownership below remain standing.**
   OQ-V72-P1-ARTIFACT-COPIES, OQ-V52-CLOSE-CANONJSON-1,
   OQ-V52-P1-IMPORTWALK-1 and OQ-V63-CLOSE-HELPER-TAIL-1 retain their prior ownership.
 

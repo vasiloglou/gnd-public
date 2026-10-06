@@ -134,3 +134,8 @@ No completed phase or acceptance claim yet: process-phase step4 requires adversa
 - .gnd-planning/milestones/code-refactoring/notes/phase-RF3-amendments.json: 215821c44962a89f3643c7c251362b2306c7ddb450f7a3a8e3198df0f3157310
 - .gnd-planning/milestones/code-refactoring/notes/phase-RF3-approval.json: daf50bd78b9e1021dafa4149f4cf4785d30060854b5d9b37cb2651ff0223af63
 - .gnd-planning/milestones/code-refactoring/notes/phase-RF3-spec.md: e337073ca5b36b15c8a6e5a51166b0cd81ee318ed918cc251c060acdb0df42f9
+
+
+## Dated discharge annotation — 2026-10-05
+
+The owner subsequently approved the Codex provider payload. The initial and one bounded repair review completed; reproduced R1/R2 findings and the captured-default bypass received test-only repairs and red/green evidence. Completion is recorded in ../008-phase-RF3.md. The pending statement above describes ac0475f’s historical state; it is not rewritten as prior completion.

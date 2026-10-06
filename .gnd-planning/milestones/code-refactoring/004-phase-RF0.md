@@ -139,6 +139,9 @@ cites.
 - **RF0-OQ5 → RF3 spec gate:** the dynamic `__import__` at
   `semantic_spec.py:1613` is the edge that puts `semantic_spec` in the core
   cycle (F3).
+  **Discharged 2026-10-05 by 008-phase-RF3.md:** the literal dynamic edge
+  remains measured and the original core/new homes are acyclic. RF0’s
+  original boundary remains standing; peripheral RF4/RF8 SCCs remain.
 - **RF0-OQ6 → RF8 spec gate and milestone close:** the first
   `SESSION_CONTRACT_VERSION` assignment is live (F1). RF-D8's removal is
   withdrawn, and the plan text is repaired at close.

@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_development_scaffold.py",
+    "tests/test_gnd_arch.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 9.465202808380127
+}

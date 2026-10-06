@@ -1,0 +1,2880 @@
+{
+  "base": "d6f1e8a",
+  "reason": "Exact explicit identity reexports inventoried separately from original fixed-cohort private coupling. Never suppress new sites by spelling alone.",
+  "sites": [
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_COMPARATORS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_INVALID_LITERAL",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_JOIN_SUBJECT_SEQS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_MANDATORY_RELEVANT",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_OBJECT_TYPE_SCOPED",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_PARTIAL_OPAQUE",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_PHASE3_LEGACY_CHECK",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_PHASE3_LEGACY_CONSTRAINT_VIEW",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_PHASE3_LEGACY_EVALUATE_DERIVATIONS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_REFERENCE_PRESENTATION_WORK",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_RING_COMPONENTS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_RING_VARIANTS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_WITNESS_TRACE",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_aggregate_bindings",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_aggregate_identity_token",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_anchored_verdicts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_apply_negation",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_base_relations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_binding_lineages",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_check_dispatch",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_clause_bindings",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_compare",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_compatibility_trace",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_component_atoms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_component_product",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_constraint_role_refs",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_constraint_view",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_constraint_view_dispatch",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_correspondence_message",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_count_term_work",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_denoting_types",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_derivation_obligation",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_derivation_variable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_descendant_closure",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_dfs_cycle",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_evaluate_derivations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_evaluate_derivations_dispatch",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_evaluate_stratified_extensions",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_exact_derivation_obligation",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_exact_extension_calculator",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_ExactExtensionResult",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_ExactExtensions",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_ExactJoinWork",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_extension_fact_map",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_ExtensionResult",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_fact_type_by_id",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_FactView",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_cardinality",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_default",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_exclusive_or",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_frequency",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_guarded",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_mandatory",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_mandatory_disjunctive",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_ring",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_subset",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_subtype_partition",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_uniqueness",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_value",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_family_message_value_comparison",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_find_cycle",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_FixpointJoinWork",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_flat_projected_witness",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_guarded_atom_index",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_guarded_bindings",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_guarded_ground_atom",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_guarded_term_failure",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_guarded_variable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_guarded_variable_primitives",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_identity_counts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_identity_key",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_identity_token",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_IdentitySet",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_in_range",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_instance_values_of",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_instances_of",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_is_implemented",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_join_rows",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_joined_atom_candidates",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_joined_bindings",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_joining_subject_sequences",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_JoinSubjectRow",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_JoinWork",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_kind_of",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_literal",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_model_uses_exact_derivations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_no_joined_rows_message",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_no_observable_subjects_message",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_observe_phase1_compatibility",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_orderable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_binding_shape",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_bindings",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_clause_rows",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_compatible",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_constraint_report",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_merge",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_negation",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_row_facts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_partial_token",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_PartialExtensions",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_PartialTermFailure",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_plain_projected_witness",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_project",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_project_extension",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_project_lineage",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_public_refresh_work",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_python_extension_calculator",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_record_aggregate_guarded_outcomes",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_ref_labels",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_relation_facts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_relation_roles",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_require_joinable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_requires_fixpoint",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_ring_component_violations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_role_object_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_role_seq_tuples",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_row_projected_witness",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_rows_by_identity",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_rows_from_facts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_rule_uses_exact_terms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_RuledFactView",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_scalar_primitive_compatible",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_scope_fact_types",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_symbolic_value",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_term_unavailable_constraint_verdict",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_typed_comparison_values",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_TypedRelation",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_vacuity_message",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_value_comparison_message_inputs",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_violation_verdict",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_Wildcard",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_witness",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_witness_charge",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.checker",
+      "to": "gnd.checker._core",
+      "name": "_witness_row",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.codegen.service",
+      "name": "_cmd_codegen",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.codegen.service",
+      "name": "_stale_smoke_modules",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._arguments",
+      "name": "_add_format_argument",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._arguments",
+      "name": "_add_unredacted_argument",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._arguments",
+      "name": "_BandSafeParser",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._arguments",
+      "name": "_positive_finite_float",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._arguments",
+      "name": "_positive_int",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._arguments",
+      "name": "_StoreOnce",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_band",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_canonical_payload",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_constraint_verdict_line",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_derivation_verdict_lines",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_live_assurance",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_admission_text",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_check_verdicts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_derived_change_summaries",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_issues",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_projected_text",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_report",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_trace",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands._output",
+      "name": "_print_transition",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_DEFAULT_CHECK",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_check",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_check_batch",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_coverage",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_diff",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_rai_import",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_transition",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_validate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.checking",
+      "name": "_cmd_verbalize_population",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.exp",
+      "name": "_cmd_exp_run",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.exp",
+      "name": "_next_session_run_root",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.exp",
+      "name": "_parse_covers",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.exp",
+      "name": "_parse_question",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.exp",
+      "name": "_run_tests_mode_bridge",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.exp",
+      "name": "_session_result_exit",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.export",
+      "name": "_cmd_export_pyrel",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_add_target_arguments",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_cmd_doctor",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_cmd_install",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_cmd_uninstall",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_doctor_outcome",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_install_outcome",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_render_diagnosis",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_render_states",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_render_target_result",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.lifecycle",
+      "name": "_uninstall_outcome",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.review",
+      "name": "_add_review_panel_arguments",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.solve",
+      "name": "_cmd_solve",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.commands.solve",
+      "name": "_utf8_clean",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.conformance.cli_service",
+      "name": "_cmd_conformance",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_EVOLUTION_CLAIM_MAX_BYTES",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_cmd_evolve_apply",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_cmd_evolve_finalize",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_cmd_evolve_preview",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_EvolutionCLIError",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_absolute_path",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_emit_claim",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_error_exit",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_fail",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_finish_apply",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_json_bytes",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_publish_preview",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_read_claim",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_records_root",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_reject_existing_symlinks",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_reject_unsafe_spelling",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_rooted_path",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_same_review_identity",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_service_exit",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_validate_proposal_roots",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_workspace",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.evolve.cli_service",
+      "name": "_evolve_workspace_path",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.exp.cli_service",
+      "name": "_cmd_exp_author_expectation",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.exp.cli_service",
+      "name": "_cmd_exp_close",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.exp.cli_service",
+      "name": "_cmd_exp_init",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.exp.cli_service",
+      "name": "_cmd_exp_validate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.exp.cli_service",
+      "name": "_experiment_outcome",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.export.verification_service",
+      "name": "_cmd_verify",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.extract.service",
+      "name": "_artifact_index_issue",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.extract.service",
+      "name": "_cmd_extract",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.extract.service",
+      "name": "_extract_stem",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.extract.service",
+      "name": "_extraction_header_template",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.doccheck_service",
+      "name": "_cmd_doccheck",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_CASE_DOCUMENT",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_CASE_EXTRACTED",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_CASE_MANIFEST",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_CASE_SIDECAR",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_CASE_SKIPPED",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_CASE_SOURCE",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.fidelity.service",
+      "name": "_cmd_fidelity",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.measure.service",
+      "name": "_cmd_measure",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.measure.service",
+      "name": "_promote_defects",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_RECOVERY_DIRECTORY_NAME_OBSERVATION_CAP",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_cmd_recovery_inventory",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_cmd_recovery_verify",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_parse_recovery_exclusion",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_canonical_directory_parts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_cause_is",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_json",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_open_output_parent",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_publish_absent",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_relative_argv",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_require_absent_output",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_require_existing_exclusion",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_required_canonical_leaf",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_root",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_recovery_root_still_bound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.recovery.service",
+      "name": "_RecoveryCLIError",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.review.service",
+      "name": "_cmd_review_finalize",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.review.service",
+      "name": "_cmd_review_panel",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.review.service",
+      "name": "_repository_relative_path",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.review.service",
+      "name": "_review_outcome",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_INDEX_SCHEMA",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_INDEX_VALIDATOR",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_corpus_relative",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_merge_index",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_resolve_corpus_path",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_resolve_unique_index_entries",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_SynthCorpusTransaction",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_validate_existing_synth_index",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.corpus_service",
+      "name": "_validate_index_document",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.service",
+      "name": "_bind_synth_not_derivable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.service",
+      "name": "_cmd_synth",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.cli",
+      "to": "gnd.synth.service",
+      "name": "_emit_boundary_corpus",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_band",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_canonical_payload",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_constraint_verdict_line",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_derivation_verdict_lines",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_live_assurance",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_admission_text",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_check_verdicts",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_derived_change_summaries",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_issues",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_projected_text",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_report",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_trace",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.commands._output",
+      "to": "gnd.output",
+      "name": "_print_transition",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_agent_failure_reason",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_budget_reason",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_decide_disposition",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_declared_evidence_complete",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_Disposition",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_effective_agent_prompt",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_effective_policy_sha256",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_expected_invocation_argv",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_has_verifier_harness_failure",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_policy_bound_prompt",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_required_evidence_complete",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_validated_declared_invocation_proof",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session",
+      "to": "gnd.exp.session_control",
+      "name": "_validated_invocation_proof",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_runtime",
+      "to": "gnd.exp.session_replay",
+      "name": "_entry",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_runtime",
+      "to": "gnd.exp.session_replay",
+      "name": "_evaluate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_runtime",
+      "to": "gnd.exp.session_replay",
+      "name": "_feedback",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_runtime",
+      "to": "gnd.exp.session_replay",
+      "name": "_model",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_runtime",
+      "to": "gnd.exp.session_replay",
+      "name": "_project",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_runtime",
+      "to": "gnd.exp.session_replay",
+      "name": "_read",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordBase",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV1",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV2",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV3",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV4",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV5",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV6",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV7",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV8",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV9",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_AttemptRecordV10",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_classify",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_collect_candidate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_CollectedFile",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_create_evidence_parent",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_DeclaredLaunchIntentV2",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_DeclaredLaunchIntentV3",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_DeclaredLaunchIntentV4",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_evidence_entry",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_retained_wire",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultBase",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV1",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV2",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV3",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV4",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV5",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV6",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_SessionResultV7",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_strict_object_bytes",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_version_validation_error",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_store",
+      "to": "gnd.exp.session_records",
+      "name": "_write_new_file",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_eval",
+      "name": "_case_feedback",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_store",
+      "name": "_collect_candidate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_store",
+      "name": "_evidence_entry",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_read",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_entry",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_model",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_evaluate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_HIDDEN",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_project",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_replay",
+      "name": "_feedback",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.exp.session_v7",
+      "to": "gnd.exp.session_runtime",
+      "name": "_copy_files",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._operations",
+      "name": "_attach_compiled_obligations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._operations",
+      "name": "_effect_index",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._operations",
+      "name": "_has_literal",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._operations",
+      "name": "_roles_by_variable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._operations",
+      "name": "_variables_in",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_DERIVATION_ARM_KEYS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_DERIVATION_RULE_KEYS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_DERIVATION_TERM_CACHE",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_NUMERIC_PRIMITIVES",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_PLACEHOLDER",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_REPORTED_PARAMETER_LIMIT",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_ROLE_SEQ_FIELDS",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_SEMANTIC_RULES",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_aggregate_issues",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_aggregate_variables",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_ancestor_closure",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_atom_reference_issues",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_constraint_role_seqs",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_atoms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_bind",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_components",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_cycles",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_dependency_closures",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_head_term_issues",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_id",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_positive_variables",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_rule_hint",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_scope_variables",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_variable",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_derivation_variable_primitives",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_fact_type_roles",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_filter_derivation_term_issues",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_guarded_literal_kinds_compatible",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_guarded_literal_matches_primitive",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_guarded_nested_function_variables",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_guarded_primitives_compatible",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_internal_uniqueness_keys",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_is_structured_rule",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_constraints",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_guarded_atoms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_guarded_consequent_terms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_guarded_constraints",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_operation_atoms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_operation_obligations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_operation_terms",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_operations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_provenance_bearing",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_role_refs",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_iter_structured_fact_derivations",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_joining_sequences",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_layer1_structural",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_load_meta_schema",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_operation_parameters",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_primitive_maps",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_provenance_bearing_label",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_range_endpoints_valid",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_resolved_primitive",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_role_object_types",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_as_not_fresh",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_function",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_head_needs_round",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_head_scope",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_input_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_of_unbound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_over_duplicate",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_over_unbound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_shape",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_aggregate_where_scope",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_anchored_role_and_recogniser",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_count_bound_order",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_cross_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_depends_on",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_body_component_unused",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_dynamic_dependency_incomplete",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_effect_on_derived",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_effect_on_semiderived",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_float_head_unquantized",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_head_needs_round",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_head_role_claim",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_head_term_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_head_unbound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_negate_unbound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_opaque_dependency",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_role_claim",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_rule_shape",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_structured_on_object_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_term_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_term_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_term_unbound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_derivation_unstratified",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_disjunctive_subject_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_external_ref_uc",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_fact_type_arity",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_comparison_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_consequent_ground",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_exists_range",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_exists_where_bound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_exists_where_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_role_claim",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_guarded_term_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_id_unique",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_imported_confirmed_reviewed",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_imported_provenance",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_join_anchor_unambiguous",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_modality_policy",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_atom_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_create_param",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_create_ref_mode",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_dynamic_functional",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_dynamic_untouched",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_effect_ground",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_modality_policy",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_obligation_ids_distinct",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_param_names_distinct",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_param_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_reading_placeholders",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_term_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_op_term_type_compat",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_partition_asserts_something",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_reading_placeholders",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_reference_value_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_ring_binary",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_role_names_distinct",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_role_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_role_seq_arity",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_role_seq_type_compat",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_status_source",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_string_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_subtype_ref",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_temporal_language",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_argument_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_comparison_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_depth_budget",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_function_arity",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_function_name",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_node_budget",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_non_finite_number",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_shape",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_term_unbound",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_textual_alethic",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_value_range_order",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_rule_value_range_type",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_safe_key",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_supertype_parents",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_temporal_literal_valid",
+      "kind": "from_import"
+    },
+    {
+      "from": "gnd.model",
+      "to": "gnd.model._validation",
+      "name": "_variable_name",
+      "kind": "from_import"
+    }
+  ]
+}

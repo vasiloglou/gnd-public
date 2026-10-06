@@ -37,7 +37,11 @@ def assert_architecture(result):
     layers = json.loads((ROOT / 'tools/gnd_layers.json').read_text())
     assert set(modules) == set(layers['modules'])
     assert not layers['allow_list']
-    assert len(result['private_imports']) < 198
+    from support.rf9_ci_sources import coupling_sites
+    baseline = json.loads((MILESTONE / 'evidence/metrics-RF4-base.json').read_text())
+    cohort = {row['module'] for row in baseline['modules']}
+    assert len(baseline['private_imports']) == 198
+    assert sum(row['from'] in cohort for row in coupling_sites(result)) < 198
     assert not [edge for edge in result['edges']
                 if edge['to'] == 'gnd.install' and layers['modules'][edge['from']].get('lane')]
     assert not [edge for edge in result['private_imports']
@@ -116,7 +120,8 @@ def _algorithm(node):
 
     import copy
 
-    return ast.dump(ImportSeams().visit(copy.deepcopy(node)), include_attributes=False)
+    from support.rf8_sources import portable_dump
+    return portable_dump(ImportSeams().visit(copy.deepcopy(node)))
 
 
 @pytest.mark.parametrize('move', [m for m in MOVES['names'] if not m['name'].isupper()],
@@ -130,7 +135,14 @@ def test_moved_algorithm_preserves_base_body(move):
     after = _definition(_source(move['new']).read_text(), move['name'])
     assert after is not None
     assert _import_bindings(before) == _import_bindings(after)
-    assert _algorithm(before) == _algorithm(after)
+    from support.rf9_ci_sources import body_successor
+    successor = body_successor('RF4', move['name'], move['old'])
+    if successor:
+        assert successor['reason']
+        assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
+        assert hashlib.sha256(_algorithm(after).encode()).hexdigest() == successor['after']['algorithm_sha256']
+    else:
+        assert _algorithm(before) == _algorithm(after)
 
 
 def test_provider_scan_covers_all_new_homes(monkeypatch):

@@ -103,3 +103,48 @@ These are repair ceilings, not architecture improvement targets. Corpus entry is
 this spec; expected answers are in tests/test_rf9_ci_repairs.py. Initial spec and
 corpus SHA256 are bound in approval.json before production edits. Amendments retain
 prior answers and their measured costs under the same named repair delegation.
+
+## Implementation findings and delegated amendments
+
+The local experiment refutes the initial type_params-only AST diagnosis: CPython
+3.13 ast.dump defaults to omitting empty list fields (including arguments and
+keywords), whereas3.11 prints them. The portable observer now serializes a local
+copy with exactly those empty-list fields omitted; every nonempty/body value
+remains. Original hashes are unchanged; dirty bodies and empty-versus-nonempty
+list controls distinguish differences. This is serialization, not AST semantics.
+
+Fixed original cohorts measured289/549 raw private sites after removing the
+three stale counter snapshot imports; whole inventory680. Exact explicit identity
+reexports account for479 sites, leaving9/89 in original RF3/RF4 cohorts versus
+unchanged64/198 baselines. A named479-site table separates compatibility inventory;
+unknown/duplicate sites count and any missing inventoried site refuses. New source
+homes stay under complete architecture/source controls. No raw-count improvement
+is claimed. Initial whole-module facade subtraction was insufficient158/407 and
+was discarded; retained production modules are never excluded wholesale.
+
+Mutation-site validation exposed eight stale rows, not merely output relocation:
+two digest wrappers, session write/JSON/reconstruct physical homes and the RF7
+resolver branch. Authenticated successors preserve167 IDs/expected-red meanings,
+retain original snippets and explicitly record current snippets. Seven RF4 and
+three primitive body successors are exact approved RF6/RF7 bytes, not recaptures.
+The PyRel122-byte successor diff contains only RF7 strict DateTime/literalTrue/
+branch-local visited changes in the embedded runtime; emitter and model unchanged.
+
+The actual extracted applicable_set home is gnd.refscheme (initial guessed
+universe was wrong). Patch/source tests now follow refscheme. The first in-memory
+population defense case correctly hit content-stamp refusal; the successor
+asserts that refusal, then isolates adapter defense with a test-scoped marker
+stub. Production validation remains unchanged. A broad textual test edit affected
+two unrelated cases temporarily; those were restored and the full file rerun.
+
+RF7 makes fractional-offset microseconds unreachable: retire only that arithmetic
+mutant and replace it with explicit input refusal. The canonical negative offset
+still kills day/second mutations; do not count refusal as killed arithmetic.
+The original shared mutation controls stay frozen; the harness selects the named
+current instant-coordinate successor. One module-resolver fallback now uses the
+same intercepted resolution seam, keeping all three omission controls live.
+
+The first corrected focused runner omitted its interpreter bin from PATH; two
+v3 child-verifier cases returned FileNotFoundError while117 passed. This is a
+runner defect, retained as focused-missing-path evidence. Prepending the selected
+interpreter bin restores the environment that uv run supplies; no golden changes.

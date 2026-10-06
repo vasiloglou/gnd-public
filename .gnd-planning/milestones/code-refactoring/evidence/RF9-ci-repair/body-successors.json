@@ -1,0 +1,438 @@
+[
+  {
+    "kind": "RF4",
+    "old": "gnd.install",
+    "name": "_reject_unsafe_relpath",
+    "home": "gnd.safefs",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "6eb5cbaf5063ddcdf0b68dff3aa6d9d713097b85aab5d20c5dabcaaf14a89ce7",
+      "algorithm_sha256": "04085603b2c33f2cbb696562b10db558f3e09cb1cb04b54f78716661d618102d",
+      "imports": []
+    },
+    "after": {
+      "raw_sha256": "09ab353bc0cfd32b72b525eea70f9e7a31d874aef64499f56488e2dde861f645",
+      "algorithm_sha256": "c203133667bdef48c6be10c194d7f842af6dafca2746998bdfaa9711ae6f6a9b",
+      "imports": []
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "6eb5cbaf5063ddcdf0b68dff3aa6d9d713097b85aab5d20c5dabcaaf14a89ce7",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "6eb5cbaf5063ddcdf0b68dff3aa6d9d713097b85aab5d20c5dabcaaf14a89ce7",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "09ab353bc0cfd32b72b525eea70f9e7a31d874aef64499f56488e2dde861f645",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "09ab353bc0cfd32b72b525eea70f9e7a31d874aef64499f56488e2dde861f645",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "09ab353bc0cfd32b72b525eea70f9e7a31d874aef64499f56488e2dde861f645",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF4",
+    "old": "gnd.install",
+    "name": "safe_destination",
+    "home": "gnd.safefs",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "36cd2970140c1e5970a9ae88c8ff0b83b94017db9937d3940a01e975f299b695",
+      "algorithm_sha256": "162a225bdd38fc55aafa04df5d0e1cf86225d9868380a200e20269593227ff0b",
+      "imports": []
+    },
+    "after": {
+      "raw_sha256": "f4c248b5f9c7066fd3ac50ae4f22eb21c5ebbe9afa64312702dfba9eaab53eb1",
+      "algorithm_sha256": "4810b27af75b1545234e1ddedd7b94275745b01084c6c692a27cf078c43b54db",
+      "imports": []
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "36cd2970140c1e5970a9ae88c8ff0b83b94017db9937d3940a01e975f299b695",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "36cd2970140c1e5970a9ae88c8ff0b83b94017db9937d3940a01e975f299b695",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "f4c248b5f9c7066fd3ac50ae4f22eb21c5ebbe9afa64312702dfba9eaab53eb1",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "f4c248b5f9c7066fd3ac50ae4f22eb21c5ebbe9afa64312702dfba9eaab53eb1",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "f4c248b5f9c7066fd3ac50ae4f22eb21c5ebbe9afa64312702dfba9eaab53eb1",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF4",
+    "old": "gnd.assurance_evidence",
+    "name": "_json",
+    "home": "gnd.assurance._wire",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "641fa002cc7f079f418fb78c7556af343d91036f5aac3bb20a6b1a56fdf8ccf8",
+      "algorithm_sha256": "458fd06eb63b6bfc420b31e1963d449f3104373641d2c6ca95356d3f5d597a25",
+      "imports": []
+    },
+    "after": {
+      "raw_sha256": "2e60a73b8edd9b3e8387dea782b517274fb488180cb7707da549406d903a1283",
+      "algorithm_sha256": "7beb35b795e087cf75fe177ee3ea26c85a9a92be7e309142ee8b436ff9aa16cd",
+      "imports": []
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "641fa002cc7f079f418fb78c7556af343d91036f5aac3bb20a6b1a56fdf8ccf8",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "641fa002cc7f079f418fb78c7556af343d91036f5aac3bb20a6b1a56fdf8ccf8",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "2e60a73b8edd9b3e8387dea782b517274fb488180cb7707da549406d903a1283",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "2e60a73b8edd9b3e8387dea782b517274fb488180cb7707da549406d903a1283",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "2e60a73b8edd9b3e8387dea782b517274fb488180cb7707da549406d903a1283",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF4",
+    "old": "gnd.synth.assemble",
+    "name": "_object_types_by_id",
+    "home": "gnd.synth.oracle.constructive",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "5119832a00fc90edd181fcd5f4f032cab754aef5bc0bfa3448f5c34ff5cf716c",
+      "algorithm_sha256": "a1b10cf2b628dbd759f96c1908ece0f9fcb96e48fd93088f665f23bb443aa823",
+      "imports": []
+    },
+    "after": {
+      "raw_sha256": "42a3e282b7690df1892946fc4a410b49ef0c5440f9ef2521d236b7adc45e840b",
+      "algorithm_sha256": "75189b76da0bf3b3bbe9d0d6fe619d380e38fb1f1bb6764aabfe1a7d62e3a247",
+      "imports": []
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "5119832a00fc90edd181fcd5f4f032cab754aef5bc0bfa3448f5c34ff5cf716c",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "42a3e282b7690df1892946fc4a410b49ef0c5440f9ef2521d236b7adc45e840b",
+        "same_as_current": true
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "42a3e282b7690df1892946fc4a410b49ef0c5440f9ef2521d236b7adc45e840b",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "42a3e282b7690df1892946fc4a410b49ef0c5440f9ef2521d236b7adc45e840b",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "42a3e282b7690df1892946fc4a410b49ef0c5440f9ef2521d236b7adc45e840b",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF6 approved stateless ModelIndex query"
+  },
+  {
+    "kind": "RF4",
+    "old": "gnd.synth.assemble",
+    "name": "_role_object",
+    "home": "gnd.synth.oracle.constructive",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "2ea2b57362cd007875d04dc2384458c71d99d6bd0ccb5f14405504663046ae3e",
+      "algorithm_sha256": "a9a2e855682b9ced12fc54e0907790f6adf41989760c704ec5c3a7d517fd3164",
+      "imports": []
+    },
+    "after": {
+      "raw_sha256": "4ba9b699d4a65f17d9597bfb0c55695d10f0942e822e6bf54e40acb01d5d7ccb",
+      "algorithm_sha256": "4499db77f8b7493d783fb83a928412e8d139c0c31b7b53054479c53b25fdc0c6",
+      "imports": []
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "2ea2b57362cd007875d04dc2384458c71d99d6bd0ccb5f14405504663046ae3e",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "4ba9b699d4a65f17d9597bfb0c55695d10f0942e822e6bf54e40acb01d5d7ccb",
+        "same_as_current": true
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "4ba9b699d4a65f17d9597bfb0c55695d10f0942e822e6bf54e40acb01d5d7ccb",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "4ba9b699d4a65f17d9597bfb0c55695d10f0942e822e6bf54e40acb01d5d7ccb",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "4ba9b699d4a65f17d9597bfb0c55695d10f0942e822e6bf54e40acb01d5d7ccb",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF6 approved stateless ModelIndex query"
+  },
+  {
+    "kind": "RF4",
+    "old": "gnd.synth.assemble",
+    "name": "_instant_pair",
+    "home": "gnd.synth.oracle.constructive",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "bf208208813435739ba5fbe8ffc978a4224ac04983e1b6eaf4791b73adc3b910",
+      "algorithm_sha256": "e9947c37e4f43e1c6d6878078b9fbc6f492a8683e43422adef91aa19d4f2d714",
+      "imports": []
+    },
+    "after": {
+      "raw_sha256": "57c4b351aaa2431c81c0d1c1eca5b4601401dc462617d709fe05ee21eb7b5e8f",
+      "algorithm_sha256": "63ba0d8b22ec259f7d4f9d006cecbfa74603326325cb15830920cb9d2e7b7bc5",
+      "imports": []
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "bf208208813435739ba5fbe8ffc978a4224ac04983e1b6eaf4791b73adc3b910",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "bf208208813435739ba5fbe8ffc978a4224ac04983e1b6eaf4791b73adc3b910",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "57c4b351aaa2431c81c0d1c1eca5b4601401dc462617d709fe05ee21eb7b5e8f",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "57c4b351aaa2431c81c0d1c1eca5b4601401dc462617d709fe05ee21eb7b5e8f",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "57c4b351aaa2431c81c0d1c1eca5b4601401dc462617d709fe05ee21eb7b5e8f",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF4",
+    "old": "gnd.api",
+    "name": "_witness_inputs",
+    "home": "gnd.witness.service",
+    "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+    "before": {
+      "raw_sha256": "66f2fecb7ee4dc19a2141353109be94cc38bd4974c58817802fb64cac5c867d1",
+      "algorithm_sha256": "7ba2ee83bd89dff1e002ffd32d642520a2b1f133a70ba0bc4fb01e38f2414f88",
+      "imports": [
+        "DEFAULT_LIMITS",
+        "Path",
+        "WitnessInputError",
+        "_parse_document_bytes",
+        "bind_references",
+        "load_model_bytes",
+        "load_population_bytes"
+      ]
+    },
+    "after": {
+      "raw_sha256": "2e45cd716af147b8a4b813af87ef2d7bd50446724bc193fffbf5bccd0da23657",
+      "algorithm_sha256": "23627cf91e5da37e20dc9bb17b7ce83182412d3cc30953be3eecf11a2ac85ad0",
+      "imports": [
+        "DEFAULT_LIMITS",
+        "Path",
+        "WitnessInputError",
+        "_parse_document_bytes",
+        "bind_references",
+        "load_model_bytes",
+        "load_population_bytes"
+      ]
+    },
+    "lineage": [
+      {
+        "commit": "a775f62",
+        "raw_sha256": "66f2fecb7ee4dc19a2141353109be94cc38bd4974c58817802fb64cac5c867d1",
+        "same_as_current": false
+      },
+      {
+        "commit": "e404262",
+        "raw_sha256": "66f2fecb7ee4dc19a2141353109be94cc38bd4974c58817802fb64cac5c867d1",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "2e45cd716af147b8a4b813af87ef2d7bd50446724bc193fffbf5bccd0da23657",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "2e45cd716af147b8a4b813af87ef2d7bd50446724bc193fffbf5bccd0da23657",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "2e45cd716af147b8a4b813af87ef2d7bd50446724bc193fffbf5bccd0da23657",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF6",
+    "name": "_resolved_primitive",
+    "home": "gnd.model_queries",
+    "before_raw_sha256": "7723022949e07020b9fbcf7f21391aab32606d670831222cc900699bcfe69a67",
+    "after": {
+      "raw_sha256": "8b6e065c7c1953e90832ec0f4de9603a72cc76f90a213e9f0ff5f9087ef96970",
+      "algorithm_sha256": "633c39461590560e4e0312b6b57a7b0d63bdaf66812d49e5eb89d1af74c90ca8",
+      "imports": []
+    },
+    "equal_raw": false,
+    "lineage": [
+      {
+        "commit": "e404262",
+        "raw_sha256": "7723022949e07020b9fbcf7f21391aab32606d670831222cc900699bcfe69a67",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "8b6e065c7c1953e90832ec0f4de9603a72cc76f90a213e9f0ff5f9087ef96970",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "8b6e065c7c1953e90832ec0f4de9603a72cc76f90a213e9f0ff5f9087ef96970",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "8b6e065c7c1953e90832ec0f4de9603a72cc76f90a213e9f0ff5f9087ef96970",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF6",
+    "name": "_resolve_reference",
+    "home": "gnd.model_queries",
+    "before_raw_sha256": "1b40f87dd30ae9f59e2e23d3044eb18b4177a67bc334ce4aed7ef730f985f463",
+    "after": {
+      "raw_sha256": "3478219f1f85a7d9600b8f9473ae9d59f932bb1aa19e291f1bc3ab0adfca4b08",
+      "algorithm_sha256": "72da198bf60441eab3b97792af67dc5699034ff0fb1b42be6af1b31a3b747c95",
+      "imports": []
+    },
+    "equal_raw": false,
+    "lineage": [
+      {
+        "commit": "e404262",
+        "raw_sha256": "1b40f87dd30ae9f59e2e23d3044eb18b4177a67bc334ce4aed7ef730f985f463",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "5d898c7dd8c0609efc0bc7ce446e13d7b3753fb141fc2ba62e45e7d862fb4e30",
+        "same_as_current": false
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "3478219f1f85a7d9600b8f9473ae9d59f932bb1aa19e291f1bc3ab0adfca4b08",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "3478219f1f85a7d9600b8f9473ae9d59f932bb1aa19e291f1bc3ab0adfca4b08",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  },
+  {
+    "kind": "RF6",
+    "name": "primitive_for",
+    "home": "gnd.model_queries",
+    "before_raw_sha256": "75a5a07058eded8975540c9e0211642654702c93b7974a52f38ac89cb4206472",
+    "after": {
+      "raw_sha256": "d4aad6314af53190b2108fcbc1277634fdf2f3452a381472d7af78827bc605bc",
+      "algorithm_sha256": "41c3d9d5c1d2de25f03810c6dabdc1ade78f8c2c5d1918ebb4cb2435a86966d3",
+      "imports": []
+    },
+    "equal_raw": false,
+    "lineage": [
+      {
+        "commit": "e404262",
+        "raw_sha256": "75a5a07058eded8975540c9e0211642654702c93b7974a52f38ac89cb4206472",
+        "same_as_current": false
+      },
+      {
+        "commit": "35aa122",
+        "raw_sha256": "d4aad6314af53190b2108fcbc1277634fdf2f3452a381472d7af78827bc605bc",
+        "same_as_current": true
+      },
+      {
+        "commit": "d8e5487",
+        "raw_sha256": "d4aad6314af53190b2108fcbc1277634fdf2f3452a381472d7af78827bc605bc",
+        "same_as_current": true
+      },
+      {
+        "commit": "d6f1e8a",
+        "raw_sha256": "d4aad6314af53190b2108fcbc1277634fdf2f3452a381472d7af78827bc605bc",
+        "same_as_current": true
+      }
+    ],
+    "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor"
+  }
+]

@@ -1,0 +1,109 @@
+{
+  "table_sha256": "142c6ac5f5c6050f495c24a9a83e301eef6f5c9e2d34581f97aa9ea1e39be361",
+  "rows": [
+    {
+      "id": "M-HELP-canonical-json-gnd-cli-canonical-payload",
+      "before_file": "src/gnd/commands/_output.py",
+      "after_file": "src/gnd/output.py",
+      "old": "def _canonical_payload(payload: dict[str, Any]) -> str:\n    \"\"\"One deterministic JSON line. Two runs over one unchanged panel print the\n",
+      "new": "def _canonical_payload(payload: dict[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"One deterministic JSON line. Two runs over one unchanged panel print the\n",
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_canonical_payload]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def _canonical_payload(payload: dict[str, Any]) -> str:\n    \"\"\"One deterministic JSON line. Two runs over one unchanged panel print the\n",
+      "after_new": "def _canonical_payload(payload: dict[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"One deterministic JSON line. Two runs over one unchanged panel print the\n"
+    },
+    {
+      "id": "M-HELP-file-digest-gnd-synth-provenance-sha256-file",
+      "before_file": "src/gnd/synth/provenance.py",
+      "after_file": "src/gnd/synth/provenance.py",
+      "old": "def _sha256_file(path: str | Path) -> str:\n    return hashlib.sha256(Path(path).read_bytes()).hexdigest()\n",
+      "new": "def _sha256_file(path: str | Path) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    return hashlib.sha256(Path(path).read_bytes()).hexdigest()\n",
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.synth.provenance:_sha256_file]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def _sha256_file(path: str | Path) -> str:\n",
+      "after_new": "def _sha256_file(path: str | Path) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n"
+    },
+    {
+      "id": "M-HELP-safe-filesystem-gnd-exp-session-store-write-new-file",
+      "before_file": "src/gnd/exp/session_store.py",
+      "after_file": "src/gnd/exp/session_records.py",
+      "old": "def _write_new_file(\n    path: Path,\n    data: bytes,\n    *,\n    root: Path | None = None,\n    mode: int = FILE_MODE,\n    expected_root: tuple[int, int] | None = None,\n) -> None:\n    \"\"\"Create one regular evidence leaf, refusing every existing leaf.\n",
+      "new": "def _write_new_file(\n    path: Path,\n    data: bytes,\n    *,\n    root: Path | None = None,\n    mode: int = FILE_MODE,\n    expected_root: tuple[int, int] | None = None,\n) -> None:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Create one regular evidence leaf, refusing every existing leaf.\n",
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.exp.session_store:_write_new_file]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def _write_new_file(\n    path: Path,\n    data: bytes,\n    *,\n    root: Path | None = None,\n    mode: int = FILE_MODE,\n    expected_root: tuple[int, int] | None = None,\n) -> None:\n",
+      "after_new": "def _write_new_file(\n    path: Path,\n    data: bytes,\n    *,\n    root: Path | None = None,\n    mode: int = FILE_MODE,\n    expected_root: tuple[int, int] | None = None,\n) -> None:\n    raise RuntimeError(\"rf1-mutant\")\n"
+    },
+    {
+      "id": "M-HELP-sha256-hex-gnd-measure-promote-digest",
+      "before_file": "src/gnd/measure/promote.py",
+      "after_file": "src/gnd/measure/promote.py",
+      "old": "def _digest(path: Path) -> str:\n    hasher = hashlib.sha256()\n",
+      "new": "def _digest(path: Path) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    hasher = hashlib.sha256()\n",
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.measure.promote:_digest]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def _digest(path: Path) -> str:\n",
+      "after_new": "def _digest(path: Path) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n"
+    },
+    {
+      "id": "M-HELP-strict-json-gnd-exp-session-store-strict-object-bytes",
+      "before_file": "src/gnd/exp/session_store.py",
+      "after_file": "src/gnd/exp/session_records.py",
+      "old": "def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:\n    try:\n",
+      "new": "def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:\n    raise RuntimeError(\"rf1-mutant\")\n    try:\n",
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.session_store:_strict_object_bytes]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:\n",
+      "after_new": "def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:\n    raise RuntimeError(\"rf1-mutant\")\n"
+    },
+    {
+      "id": "M-SEM-resolver-is-true",
+      "before_file": "src/gnd/model_queries.py",
+      "after_file": "src/gnd/model_queries.py",
+      "old": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\") is True:",
+      "new": "if parents.get(object_type_id) and object_type.get(\"inherits_reference\"):",
+      "expect_red": [
+        "tests/test_rf1_semantic_pins.py::test_resolver"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "if direct_parents and object_type.get(\"inherits_reference\") is True:",
+      "after_new": "if direct_parents and object_type.get(\"inherits_reference\"):"
+    },
+    {
+      "id": "M-test-session-reconstruct-7",
+      "before_file": "src/gnd/exp/session_v7.py",
+      "after_file": "src/gnd/exp/session_replay.py",
+      "old": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    \"\"\"Reject partial, stale or tampered evidence before another invocation.\"\"\"\n",
+      "new": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Reject partial, stale or tampered evidence before another invocation.\"\"\"\n",
+      "expect_red": [
+        "tests/test_rf1_session_pins.py::test_session_reconstruct[7]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n",
+      "after_new": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    raise RuntimeError(\"rf1-mutant\")\n"
+    },
+    {
+      "id": "M-test-session-reconstruct-8",
+      "before_file": "src/gnd/exp/session_v7.py",
+      "after_file": "src/gnd/exp/session_replay.py",
+      "old": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    \"\"\"Reject partial, stale or tampered evidence before another invocation.\"\"\"\n",
+      "new": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Reject partial, stale or tampered evidence before another invocation.\"\"\"\n",
+      "expect_red": [
+        "tests/test_rf1_session_pins.py::test_session_reconstruct[8]"
+      ],
+      "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
+      "after_old": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n",
+      "after_new": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    raise RuntimeError(\"rf1-mutant\")\n"
+    }
+  ]
+}

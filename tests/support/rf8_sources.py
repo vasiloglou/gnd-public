@@ -42,5 +42,32 @@ class PredecessorBody(ast.NodeTransformer):
         return ast.parse(original, mode='eval').body if original else self.generic_visit(node)
 
 
+def portable_dump(node):
+    """Use the CPython 3.13 default omission of empty list fields on 3.11 too.
+
+    Only serialization changes: a local copy retains all nonempty values. The
+    empty-list spelling cannot distinguish any two parsed source bodies.
+    """
+    import copy
+
+    local = copy.deepcopy(node)
+    for child in ast.walk(local):
+        child._fields = tuple(field for field in child._fields
+                              if not (isinstance(getattr(child, field, None), list)
+                                      and getattr(child, field) == []))
+    return ast.dump(local, include_attributes=False)
+
+
 def predecessor_body(node):
-    return ast.dump(PredecessorBody().visit(node), include_attributes=False)
+    return portable_dump(PredecessorBody().visit(node))
+
+
+def reader_expected(row):
+    if row['function'] != 'reconstruct':
+        return row['ast_sha256']
+    import json
+    from pathlib import Path
+
+    evidence = Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/code-refactoring/evidence'
+    successor = json.loads((evidence / 'RF9-repair/reconstruct-successor.json').read_text())
+    return successor['ast_sha256']

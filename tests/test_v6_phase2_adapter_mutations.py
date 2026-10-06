@@ -177,12 +177,6 @@ _MUTATIONS = (
         "0",
         "test_datetime_coordinates_retain_every_instant_component",
     ),
-    (
-        "order:DateTime:offset-microseconds",
-        "offset.microseconds",
-        "0",
-        "test_datetime_coordinates_retain_every_instant_component",
-    ),
 )
 
 
@@ -203,7 +197,12 @@ def test_each_dimension_has_a_failing_single_source_mutant(
 ):
     source = inspect.getsource(semantic_adapter)
     assert source.count(before) == 1, f"{dimension}: stale mutation site"
-    control = getattr(controls, test_name)
+    if test_name == 'test_datetime_coordinates_retain_every_instant_component':
+        import test_v6_phase2_adapter as current_controls
+        control_owner = current_controls
+    else:
+        control_owner = controls
+    control = getattr(control_owner, test_name)
     available = {"tmp_path": tmp_path, "monkeypatch": monkeypatch}
     arguments = {name: available[name] for name in inspect.signature(control).parameters}
     control(**arguments)
@@ -213,6 +212,12 @@ def test_each_dimension_has_a_failing_single_source_mutant(
         compile(source.replace(before, after), f"<adapter mutant: {dimension}>", "exec"),
         mutant.__dict__,
     )
-    monkeypatch.setattr(controls, "adapter", mutant)
+    monkeypatch.setattr(control_owner, "adapter", mutant)
     with pytest.raises(AssertionError):
         control(**arguments)
+
+
+def test_rf7_retires_fractional_offset_mutant_with_input_refusal():
+    # This RF6 arithmetic dimension is unreachable after approved RF7 C4.
+    # It is a refusal control, not a killed arithmetic mutant.
+    assert semantic_adapter.canonical_scalar('2024-02-29T12:34:56.123456-03:15:45.250000', 'DateTime') is None

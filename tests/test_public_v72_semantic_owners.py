@@ -186,6 +186,7 @@ def test_import_boundary_detects_direct_and_transitive_inference(source):
         actual = inference_imports(inventory)
     moves = json.loads((inventory.ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF3-moves.json').read_text())
     homes = {inventory.SOURCE / (r['new'].rsplit('.', 1)[0].replace('.', '/') + '.py') for r in moves}
+    homes = {p if p.is_file() else p.with_suffix('') / '__init__.py' for p in homes}
     assert homes <= visited
     # Complete reachability includes dormant imports; this is a static boundary.
     assert "gnd.universe" in actual["closure"] and "gnd.terms" in actual["closure"]

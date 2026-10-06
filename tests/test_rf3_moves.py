@@ -69,6 +69,7 @@ def test_known_dirty_body_is_rejected():
 
 def test_real_scan_closures_visit_every_new_home():
     homes = {ROOT / ('src/' + r['new'].rsplit('.', 1)[0].replace('.', '/') + '.py') for r in rows()}
+    homes = {p if p.is_file() else p.with_suffix('') / '__init__.py' for p in homes}
     visited = set()
     original = Path.read_text
 

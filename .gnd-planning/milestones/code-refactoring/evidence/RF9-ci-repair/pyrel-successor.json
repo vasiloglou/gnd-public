@@ -1,0 +1,11 @@
+{
+  "before": {
+    "sha256": "5c98a948e86ce6d0dfc2f3ddc5186272d249218add98ab9ec49de34da437584d",
+    "size_bytes": 63365
+  },
+  "after": {
+    "sha256": "9ab110abc47eeb30ca97bddcca44ba17201fc45693128a1f3be56129d4d91c3d",
+    "size_bytes": 63487
+  },
+  "reason": "Approved RF7 C4/C5 and R2 standalone runtime restrictions; emitter unchanged"
+}

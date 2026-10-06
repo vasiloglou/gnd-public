@@ -225,5 +225,6 @@
       "seconds": 884.24,
       "log": "/private/tmp/gnd-local-ci-20261006-d6f1e8a/installed-corrected-311.log"
     }
-  ]
+  ],
+  "_retained_evidence_edit": "Operator/worktree paths sanitized. Embedded hashes bind original raw temporary evidence, not this edited copy."
 }

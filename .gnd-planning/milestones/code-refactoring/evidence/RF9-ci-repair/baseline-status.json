@@ -9,7 +9,7 @@
         "clone",
         "--shared",
         "--no-checkout",
-        "/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109",
+        "<worktree>",
         "/private/tmp/gnd-local-ci-20261006-d6f1e8a/build"
       ],
       "cwd": "/private/tmp/gnd-local-ci-20261006-d6f1e8a",
@@ -83,7 +83,7 @@
         "clone",
         "--shared",
         "--no-checkout",
-        "/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109",
+        "<worktree>",
         "/private/tmp/gnd-local-ci-20261006-d6f1e8a/py313"
       ],
       "cwd": "/private/tmp/gnd-local-ci-20261006-d6f1e8a",
@@ -98,7 +98,7 @@
         "clone",
         "--shared",
         "--no-checkout",
-        "/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/rf1-code-refactoring-225109",
+        "<worktree>",
         "/private/tmp/gnd-local-ci-20261006-d6f1e8a/py311"
       ],
       "cwd": "/private/tmp/gnd-local-ci-20261006-d6f1e8a",
@@ -356,5 +356,6 @@
       "seconds": 0.31,
       "log": "/private/tmp/gnd-local-ci-20261006-d6f1e8a/installed-311.log"
     }
-  ]
+  ],
+  "_retained_evidence_edit": "Operator/worktree paths sanitized. Embedded hashes bind original raw temporary evidence, not this edited copy."
 }

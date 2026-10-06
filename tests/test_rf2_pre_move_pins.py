@@ -28,6 +28,11 @@ def pin(name, value):
         target.write_text(json.dumps(value, sort_keys=True, indent=2) + "\n")
     else:
         expected = json.loads(ANSWERS.read_text())[name]
+        if name == 'standalone_pyrel_output_bytes':
+            from support.rf9_ci_sources import EVIDENCE
+            successor = json.loads((EVIDENCE / 'pyrel-successor.json').read_text())
+            assert successor['before'] == expected and successor['reason']
+            expected = successor['after']
         assert value == expected
 
 

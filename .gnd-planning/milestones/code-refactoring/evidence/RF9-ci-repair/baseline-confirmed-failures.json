@@ -189,5 +189,6 @@
       "tests/test_v6_phase2_adapter.py": 1,
       "tests/test_v6_phase2_adapter_mutations.py": 8
     }
-  }
+  },
+  "_retained_evidence_edit": "Operator/worktree paths sanitized. Embedded hashes bind original raw temporary evidence, not this edited copy."
 }

@@ -157,7 +157,11 @@ def _owner(module: str, name: str) -> str:
     """Resolve defining modules to the unchanged semantic registry identities."""
     if HOMES.get(name.split(".")[0]) == module:
         module = "gnd.cli"
-    module = {"gnd.payloads": "gnd.report", "gnd.extensions": "gnd.checker"}.get(module, module)
+    if module.endswith('.__init__'):
+        module = module.removesuffix('.__init__')
+    module = {"gnd.payloads": "gnd.report", "gnd.extensions": "gnd.checker",
+              "gnd.checker._reports": "gnd.checker", "gnd.model._validation": "gnd.model",
+              "gnd.model._operations": "gnd.model"}.get(module, module)
     return module + "." + name
 
 

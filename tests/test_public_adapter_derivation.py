@@ -72,7 +72,12 @@ def test_admitted_nonfinite_derivation_literal_is_refused_without_crashing(tmp_p
         rule['body'][0]['bind']['tag'] = 'OVERFLOW'
     model_path = tmp_path / 'model.orm.yaml'
     model_path.write_text(json.dumps(document).replace('"OVERFLOW"', '1e999'))
+    from gnd.errors import ModelLoadError
+    with pytest.raises(ModelLoadError):
+        load_model(model_path)
+    model_path.write_text(json.dumps(document).replace('"OVERFLOW"', '1'))
     model = load_model(model_path)
+    model.fact_types[1]['derivation_rule'][section][0]['bind']['tag'] = float('inf')
     population_path = tmp_path / 'population.json'
     population_path.write_text(json.dumps({'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming'}, 'facts': {}}))
     population = load_population(population_path, model=model)

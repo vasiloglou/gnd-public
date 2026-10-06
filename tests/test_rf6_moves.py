@@ -23,8 +23,13 @@ def test_primitive_move_aliases_and_bodies():
         s = p.read_text()
         n = next(n for n in ast.parse(s).body if isinstance(n, ast.FunctionDef)
                  and n.name == row['new'].rsplit('.', 1)[1])
+        from support.rf9_ci_sources import body_successor
+        successor = body_successor('RF6', n.name)
+        if successor:
+            assert successor['before_raw_sha256'] == row['body_sha256'] and successor['reason']
+        expected = successor['after']['raw_sha256'] if successor else row['body_sha256']
         assert hashlib.sha256(''.join(s.splitlines(keepends=True)[n.lineno-1:n.end_lineno])
-                              .encode()).hexdigest() == row['body_sha256']
+                              .encode()).hexdigest() == expected
 
 
 def assert_scanned(homes):

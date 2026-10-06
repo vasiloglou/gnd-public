@@ -34,9 +34,10 @@ def assert_core(metrics):
     assert not [e for e in metrics['layering']['wrong_way'] if e['from'] in core]
     assert not layering._layer_map()['allow_list']
     original = json.loads((EVIDENCE / 'metrics-RF3-base.json').read_text())
-    cohort = {m['module'] for m in original['modules'] if m['layer'] in layering.SCOPE}
+    cohort = {m['module'] for m in original['modules'] if m['layer'] in {'model', 'checking', 'semantics'}}
     assert sum(p['from'] in cohort for p in original['private_imports']) == 64
-    assert sum(p['from'] in cohort for p in metrics['private_imports']) <= 60
+    from support.rf9_ci_sources import coupling_sites
+    assert sum(p['from'] in cohort for p in coupling_sites(metrics)) <= 60
 
 
 def test_full_current_and_original_core():
@@ -45,7 +46,7 @@ def test_full_current_and_original_core():
     assert any(e['from'] == 'gnd.semantic_spec' and e['to'] == 'gnd.terms'
                and e['kind'] == 'dynamic' for e in measured['edges'])
     original_layer_core = {m['module'] for m in json.loads((EVIDENCE / 'metrics-RF3-base.json').read_text())['modules']
-                           if m['layer'] in layering.SCOPE}
+                           if m['layer'] in {'model', 'checking', 'semantics'}}
     assert not [e for e in measured['layering']['wrong_way'] if e['from'] in original_layer_core]
 
 

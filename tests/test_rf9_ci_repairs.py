@@ -17,7 +17,7 @@ def test_model_counter_lookup_is_live(monkeypatch, name):
 
 def test_unknown_model_lookup_refuses():
     with pytest.raises(AttributeError):
-        getattr(model, '_rf9_unknown_counter')
+        _ = model._rf9_unknown_counter
 
 
 @pytest.mark.parametrize('raw', ['{"x": NaN}', '{"x": 1e999}', '{"x": 1, "x": 2}'])
@@ -33,3 +33,73 @@ def test_pool_malformed_json_keeps_decoder_exception(tmp_path):
     path.write_text('{')
     with pytest.raises(json.JSONDecodeError):
         load_pool(path, None)
+
+
+def test_compatibility_site_accounting_does_not_hide_new_or_missing_edges():
+    import json
+
+    from support.rf9_ci_sources import EVIDENCE, coupling_sites
+
+    aliases = json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites']
+    assert coupling_sites({'private_imports': aliases}) == []
+    duplicate = dict(aliases[0], line=99999)
+    assert coupling_sites({'private_imports': [*aliases, duplicate]}) == [duplicate]
+    unknown = dict(duplicate, name='_rf9_uninventoried')
+    assert coupling_sites({'private_imports': [*aliases, unknown]}) == [unknown]
+    with pytest.raises(AssertionError):
+        coupling_sites({'private_imports': aliases[1:]})
+
+
+@pytest.mark.parametrize('kind,old,name,home', [
+    ('RF4', 'gnd.install', '_reject_unsafe_relpath', 'gnd.safefs'),
+    ('RF4', 'gnd.install', 'safe_destination', 'gnd.safefs'),
+    ('RF4', 'gnd.assurance_evidence', '_json', 'gnd.assurance._wire'),
+    ('RF4', 'gnd.synth.assemble', '_instant_pair', 'gnd.synth.oracle.constructive'),
+    ('RF4', 'gnd.synth.assemble', '_object_types_by_id', 'gnd.synth.oracle.constructive'),
+    ('RF4', 'gnd.synth.assemble', '_role_object', 'gnd.synth.oracle.constructive'),
+    ('RF4', 'gnd.api', '_witness_inputs', 'gnd.witness.service'),
+    ('RF6', None, '_resolved_primitive', 'gnd.model_queries'),
+    ('RF6', None, '_resolve_reference', 'gnd.model_queries'),
+    ('RF6', None, 'primitive_for', 'gnd.model_queries'),
+])
+def test_body_successors_reject_changed_bodies(monkeypatch, kind, old, name, home):
+    import ast
+    from pathlib import Path
+
+    import test_rf4_peripheral as rf4
+    import test_rf6_moves as rf6
+
+    def control():
+        if kind == 'RF4':
+            row = next(row for row in rf4.MOVES['names'] if row['old'] == old and row['name'] == name)
+            rf4.test_moved_algorithm_preserves_base_body(row)
+        else:
+            rf6.test_primitive_move_aliases_and_bodies()
+
+    control()
+    actual = Path.read_text
+    path = rf4.ROOT / ('src/' + home.replace('.', '/') + '.py')
+    def dirty(current, *args, **kwargs):
+        source = actual(current, *args, **kwargs)
+        if current == path:
+            node = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name == name)
+            lines = source.splitlines(keepends=True)
+            lines.insert(node.end_lineno, '    raise RuntimeError("RF9 dirty successor")\n')
+            source = ''.join(lines)
+        return source
+    monkeypatch.setattr(Path, 'read_text', dirty)
+    with pytest.raises(AssertionError):
+        control()
+
+
+def test_portable_ast_dump_retains_semantic_differences():
+    import ast
+
+    from support.rf8_sources import portable_dump
+
+    empty = ast.parse('def f():\n    return []').body[0]
+    dirty = ast.parse('def f():\n    return [1]').body[0]
+    assert portable_dump(empty) != portable_dump(dirty)
+    source = ast.dump(empty, include_attributes=False)
+    portable_dump(empty)
+    assert ast.dump(empty, include_attributes=False) == source

@@ -14,6 +14,10 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
+from gnd.artifacts import (
+    read_regular_file_bytes as read_regular_file_bytes,  # noqa: PLC0414 -- compatibility export
+)
+
 FILE_MODE = 0o644
 
 
@@ -519,7 +523,6 @@ temp_name = _temp_name
 # Unqualified public read seams retain the artifact-specific algorithm.
 read_regular_bounded = _artifacts.read_regular_bounded
 read_regular_bounded_at = _artifacts.read_regular_bounded_at
-read_regular_file_bytes = _artifacts.read_regular_file_bytes
 
 
 def file_sha256(path: str | Path) -> str:

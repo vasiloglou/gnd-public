@@ -216,11 +216,15 @@ def test_diverged_encoder_source_unchanged():
     rows = json.loads((ROOT / "tests/fixtures/rf2-pins/variant-encoders.json").read_text())
     assert len(rows) == 14
     for row in rows:
-        source = (ROOT / row["path"]).read_text()
-        moved = {("src/gnd/extract/anchors.py", "_canonical"): "gnd.anchors",
-                 ("src/gnd/transition.py", "_canonical"): "gnd.values"}
-        if (row["path"], row["name"]) in moved:
-            source = inspect.getsource(getattr(importlib.import_module(moved[(row["path"], row["name"])]), row["name"]))
+        moved = {
+            ("src/gnd/assurance_inheritance.py", "_canonical"): "src/gnd/assurance/inheritance.py",
+            ("src/gnd/extract/anchors.py", "_canonical"): "src/gnd/anchors.py",
+            ("src/gnd/transition.py", "_canonical"): "src/gnd/values.py",
+            ("src/gnd/cli.py", "_canonical_payload"): "src/gnd/output.py",
+            ("src/gnd/cli.py", "_evolve_json_bytes"): "src/gnd/evolve/cli_service.py",
+            ("src/gnd/cli.py", "canonical"): "src/gnd/extract/service.py",
+        }
+        source = (ROOT / moved.get((row["path"], row["name"]), row["path"])).read_text()
         found = [node for node in ast.walk(ast.parse(source))
                  if isinstance(node, ast.FunctionDef) and node.name == row["name"]]
         assert len(found) == 1

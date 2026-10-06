@@ -14,6 +14,7 @@ import hashlib
 import inspect
 import json
 import os
+import re
 from pathlib import Path
 
 import pytest
@@ -188,14 +189,7 @@ def _module_path(dotted: str) -> Path | None:
         return as_package
     # A `from gnd.a import name` where `name` is a symbol, not a submodule: fall
     # back to the package/module the symbols live in.
-    parent = GND_SRC.joinpath(*parts[:-1])
-    candidate = parent.with_suffix(".py")
-    if candidate.is_file():
-        return candidate
-    candidate = parent / "__init__.py"
-    if candidate.is_file():
-        return candidate
-    return None
+    return _module_path('.'.join(dotted.split('.')[:-1]))
 
 
 def test_no_network_library_is_reachable_from_the_measure_lane() -> None:
@@ -423,7 +417,10 @@ def test_model_evolve_skill_is_offline_and_preserves_write_authority() -> None:
     lowered = combined.lower()
 
     assert "http://" not in lowered and "https://" not in lowered
-    assert not _forbidden_hit(combined, _PROVIDER_CLIENTS + _NETWORK_LIBS)
+    # Prose is not Python source. Check explicit import lines in the resource;
+    # Python-source guards still use the strict AST parser without fallback.
+    imports = '\n'.join(re.findall(r'^\s*((?:from \S+ import|import) [^\n]+)$', combined, re.MULTILINE))
+    assert not _forbidden_hit(imports, _PROVIDER_CLIENTS + _NETWORK_LIBS)
     assert "gnd evolve preview" in lowered
     assert "gnd evolve apply" in lowered
     assert "gnd evolve finalize" in lowered

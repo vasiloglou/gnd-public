@@ -1,3 +1,5 @@
+Retained evidence edit: operator/worktree paths sanitized; embedded bindings describe original raw evidence.
+
 # Local development CI — failed
 
 Source: `d6f1e8aeacab902914e22b2dab799b65f879fdda` on `claude/rf1-code-refactoring-225109`.

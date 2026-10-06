@@ -408,7 +408,11 @@ def load_pool(path: str | Path, model: Model) -> Pool:
     be coherence-checked meaningfully.
     """
     text = Path(path).read_text(encoding="utf-8")
-    document = _rf7_input.loads(text)
+    try:
+        document = _rf7_input.loads(text)
+    except _rf7_input.InputRefusal as error:
+        message = str(error).replace('nonfinite', 'non-finite')
+        raise PoolValidationError([f"input: {message}"]) from error
 
     finite_failures = _non_finite_failures(document)
     if finite_failures:

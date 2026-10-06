@@ -9,5 +9,6 @@
   "failed-corrected-311.log": "9d4e291fd7141494505c57d0599ce3083a055ba5d8a430b3fb939cfcd0962635",
   "failed-corrected-313.log": "cf315e2677d3919733c9a81da21ac6589777928cc1fb41e65dce5cc631055c35",
   "installed-corrected-311.log": "64d820ab5febd894576d29b40bc95b6a6fb89ad52bba9108a4341e4aaa3e1684",
-  "installed-corrected-313.log": "4ec1071d7fe8ebc2123cb5f319f5af10146bf5612e3de2c5f4d22f780f5db12b"
+  "installed-corrected-313.log": "4ec1071d7fe8ebc2123cb5f319f5af10146bf5612e3de2c5f4d22f780f5db12b",
+  "_retained_evidence_edit": "Operator/worktree paths sanitized. Embedded hashes bind original raw temporary evidence, not this edited copy."
 }

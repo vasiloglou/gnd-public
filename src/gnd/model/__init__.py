@@ -30,11 +30,8 @@ from gnd.model._operations import _roles_by_variable as _roles_by_variable
 from gnd.model._operations import _variables_in as _variables_in
 from gnd.model._operations import compile_operation as compile_operation
 from gnd.model._validation import _DERIVATION_ARM_KEYS as _DERIVATION_ARM_KEYS
-from gnd.model._validation import _DERIVATION_ATOM_VISITS as _DERIVATION_ATOM_VISITS
-from gnd.model._validation import _DERIVATION_CLASSIFICATION_WORK as _DERIVATION_CLASSIFICATION_WORK
 from gnd.model._validation import _DERIVATION_RULE_KEYS as _DERIVATION_RULE_KEYS
 from gnd.model._validation import _DERIVATION_TERM_CACHE as _DERIVATION_TERM_CACHE
-from gnd.model._validation import _DERIVATION_WORK as _DERIVATION_WORK
 from gnd.model._validation import _NUMERIC_PRIMITIVES as _NUMERIC_PRIMITIVES
 from gnd.model._validation import _PLACEHOLDER as _PLACEHOLDER
 from gnd.model._validation import _REPORTED_PARAMETER_LIMIT as _REPORTED_PARAMETER_LIMIT
@@ -762,3 +759,12 @@ BoundPopulationView.__dict__['__repr__'].__module__ = 'gnd.model'
 BoundPopulationView.__dict__['__eq__'].__module__ = 'gnd.model'
 BoundPopulationView.__dict__['__setattr__'].__module__ = 'gnd.model'
 BoundPopulationView.__dict__['__delattr__'].__module__ = 'gnd.model'
+
+
+def __getattr__(name: str):
+    """Expose mutable validation counters at their current defining state."""
+    if name in {'_DERIVATION_WORK', '_DERIVATION_ATOM_VISITS', '_DERIVATION_CLASSIFICATION_WORK'}:
+        from gnd.model import _validation
+
+        return getattr(_validation, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

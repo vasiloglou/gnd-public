@@ -127,6 +127,20 @@ def load_table(path: Path) -> dict:
         if row["id"] in seen:
             raise _invalid(f"{where}: duplicate id {row['id']!r}")
         seen.add(row["id"])
+    if path.resolve() == (ROOT / DEFAULT_TABLE).resolve():
+        retarget_path = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/mutation-retargets.json'
+        if retarget_path.is_file():
+            retarget = json.loads(retarget_path.read_text())
+            if hashlib.sha256(raw).hexdigest() != retarget['table_sha256']:
+                raise _invalid('historical mutation table identity changed')
+            by_id = {r['id']: r for r in data['rows']}
+            for row in retarget['rows']:
+                original = by_id[row['id']]
+                if any(original[k] != row[k] for k in ('old', 'new', 'expect_red')) or original['file'] != row['before_file']:
+                    raise _invalid('mutation retarget changed meaning')
+                original['file'] = row['after_file']
+                original['old'] = row['after_old']
+                original['new'] = row['after_new']
     return data
 
 

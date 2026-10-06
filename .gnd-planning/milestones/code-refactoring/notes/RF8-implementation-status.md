@@ -1,5 +1,7 @@
 # RF8 implementation — pending independent review
 
+Historical pre-review status, superseded by014-phase-RF8.md on2026-10-06. Original claims and rejected transmission below are retained; the missing sentinel/cache findings are recorded in the completion record.
+
 2026-10-06. This is an implementation status note, not a completion record.
 
 Base: de4eed6ec143fdf03a39ab7a64b95a4e4013d24a.

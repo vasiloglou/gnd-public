@@ -1,20 +1,20 @@
 {
   "base": "de4eed6",
-  "measured_head": "6a0875097ae3547bf829c3818606487cc63b4060",
-  "touched_files": 116,
-  "touched_ceiling": 120,
-  "source_added": 3246,
+  "measured_head": "5bd3ea2fcda859c3528d4a419d2fdf487fe39fe7",
+  "touched_files": 136,
+  "touched_ceiling": 140,
+  "source_added": 3248,
   "moved_lines": 2243,
   "moved_ceiling": 4000,
-  "nonrelocated_source_additions": 1003,
+  "nonrelocated_source_additions": 1005,
   "nonrelocated_source_ceiling": 1100,
-  "test_data_additions": 299,
+  "test_data_additions": 327,
   "test_data_ceiling": 1600,
-  "non_evidence_doc_additions": 435,
+  "non_evidence_doc_additions": 868,
   "doc_ceiling": 1600,
   "original_misses": {
     "touched_files": 90,
     "nonrelocated_source_additions": 650
   },
-  "pending_completion_record": true
+  "pending_completion_record": false
 }

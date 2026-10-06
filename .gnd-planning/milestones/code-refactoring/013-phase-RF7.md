@@ -357,6 +357,8 @@ Current graph:221modules, zero wrong-way layer violations, zero CLI entry violat
 
 Original touched-file ceiling180 was exceeded by retained review/native/red/green observations at183. Explicit delegated amendment raised only that ceiling to210, before remaining artifacts, with183+27 arithmetic. Other ceilings stay source4000, test/data5000, non-evidence-doc1800, moved1000. Final measured values are bound in budget-final.json; this record does not claim the old180 ceiling passed. Production scope unchanged; most extra files are required evidence.
 
+Owed session profile/merge/SCC work discharged2026-10-06 by014-phase-RF8.md. This annotation does not widen RF7 verification or discharge RF1-OQ2/OQ4 correctness/portability questions.
+
 ## Refactoring review
 
 Refactors EXECUTED: consolidated input validators/reference traversal and regular-file digest reading preserve accepted-policy behavior behind the same direct/downstream gates. Newly restricted inputs are intentional observable changes, not behavior-preserving moves. Lazy parent access and independent sibling state remove needless repeated indexing and traversal coupling. Distinct canonical encoders/newline/preprocessing/digest meanings remain separate because their bytes are contractual. The private YAML error adapter is seen but deferred with its named target below.

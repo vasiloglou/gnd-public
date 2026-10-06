@@ -15,37 +15,37 @@ bytes to which the attempt manifest points.
 
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import math
-import mimetypes
+import mimetypes  # noqa: F401 -- historical compatibility binding
 import os
 import secrets
 import shutil
 import stat
 from collections.abc import Mapping
 from contextlib import suppress
-from dataclasses import dataclass, field
-from enum import StrEnum
+from dataclasses import dataclass, field  # noqa: F401 -- historical compatibility binding
+from enum import StrEnum  # noqa: F401 -- historical compatibility binding
 from pathlib import Path, PurePosixPath
-from typing import Annotated, Any, Literal, Self
+from typing import Annotated, Any, Literal, Self  # noqa: F401 -- historical compatibility binding
 
 from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StringConstraints,
+    BaseModel,  # noqa: F401 -- historical compatibility binding
+    ConfigDict,  # noqa: F401 -- historical compatibility binding
+    Field,  # noqa: F401 -- historical compatibility binding
+    StringConstraints,  # noqa: F401 -- historical compatibility binding
     ValidationError,
-    field_validator,
-    model_serializer,
-    model_validator,
+    field_validator,  # noqa: F401 -- historical compatibility binding
+    model_serializer,  # noqa: F401 -- historical compatibility binding
+    model_validator,  # noqa: F401 -- historical compatibility binding
 )
 
-from gnd import input_policy as _rf7_input
+from gnd import input_policy as _rf7_input  # noqa: F401 -- historical compatibility binding
 from gnd.agents import AgentAdapterId, InvocationResult
 from gnd.artifacts import (
     ArtifactError,
     LeafSnapshot,
-    Sha256,
+    Sha256,  # noqa: F401 -- historical compatibility binding
     _clear_directory_fd,
     _exchange_paths_atomic,
     _read_regular_bounded_fd,
@@ -53,23 +53,25 @@ from gnd.artifacts import (
     publish_directory_once,
     publish_leaf_atomic,
     read_regular_bounded,
-    reject_json_constant,
-    reject_json_duplicate_pairs,
+    reject_json_constant,  # noqa: F401 -- historical compatibility binding
+    reject_json_duplicate_pairs,  # noqa: F401 -- historical compatibility binding
     sha256_hex,
-    tree_sha256_from_inventory,
+    tree_sha256_from_inventory,  # noqa: F401 -- historical compatibility binding
 )
-from gnd.assurance_transport import ArchivedAssuranceReceipt
+from gnd.assurance_transport import (
+    ArchivedAssuranceReceipt,  # noqa: F401 -- historical compatibility binding
+)
 from gnd.exp.declared_invocation import DeclaredInvocationResult
 from gnd.exp.session_contract import (
     DataDrivenContract,
-    RankingMetric,
+    RankingMetric,  # noqa: F401 -- historical compatibility binding
     TestsAcceptance,
     TransitionAcceptance,
 )
 from gnd.exp.session_eval import (
     AttemptEvaluation,
     AttemptFeedback,
-    SessionRedaction,
+    SessionRedaction,  # noqa: F401 -- historical compatibility binding
     VerifierPayloadError,
     attach_walk_floor_steps,
     best_key,
@@ -79,87 +81,235 @@ from gnd.exp.session_eval import (
     validate_transition_payload,
     validate_verifier_payload,
 )
-from gnd.payloads import (
-    MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS,
-    PAYLOAD_SCHEMA_VERSION,
+from gnd.exp.session_records import (
+    ASSURANCE_EVIDENCE_SCHEMA_VERSION as ASSURANCE_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
 )
-
-from gnd.exp.session_records import FIXED_STORE_SCHEMA_VERSION as FIXED_STORE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import LEGACY_EVIDENCE_SCHEMA_VERSION as LEGACY_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import EVIDENCE_SCHEMA_VERSION as EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import DERIVATION_EVIDENCE_SCHEMA_VERSION as DERIVATION_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import ASSURANCE_EVIDENCE_SCHEMA_VERSION as ASSURANCE_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import TRANSITION_EVIDENCE_SCHEMA_VERSION as TRANSITION_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import REDACTION_EVIDENCE_SCHEMA_VERSION as REDACTION_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import WALK_FLOOR_EVIDENCE_SCHEMA_VERSION as WALK_FLOOR_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import DECLARED_ADAPTER_EVIDENCE_SCHEMA_VERSION as DECLARED_ADAPTER_EVIDENCE_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import DECLARED_LAUNCH_SCHEMA_VERSION as DECLARED_LAUNCH_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import TRANSITION_RESULT_SCHEMA_VERSION as TRANSITION_RESULT_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import REDACTION_RESULT_SCHEMA_VERSION as REDACTION_RESULT_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import WALK_FLOOR_RESULT_SCHEMA_VERSION as WALK_FLOOR_RESULT_SCHEMA_VERSION  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_CANDIDATE_FILES as MAX_CANDIDATE_FILES  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_CANDIDATE_FILE_BYTES as MAX_CANDIDATE_FILE_BYTES  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_CANDIDATE_TOTAL_BYTES as MAX_CANDIDATE_TOTAL_BYTES  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_CANDIDATE_DEPTH as MAX_CANDIDATE_DEPTH  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_RETAINED_STREAM_BYTES as MAX_RETAINED_STREAM_BYTES  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_VERIFIER_PAYLOAD_BYTES as MAX_VERIFIER_PAYLOAD_BYTES  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import MAX_SESSION_RESULT_BYTES as MAX_SESSION_RESULT_BYTES  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import FILE_MODE as FILE_MODE  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import SNAPSHOT_FILE_MODE as SNAPSHOT_FILE_MODE  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _evidence_entry as _evidence_entry  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _version_validation_error as _version_validation_error  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import SNAPSHOT_EXECUTABLE_FILE_MODE as SNAPSHOT_EXECUTABLE_FILE_MODE  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import DIRECTORY_MODE as DIRECTORY_MODE  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import NonEmptyString as NonEmptyString  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _strict_object_bytes as _strict_object_bytes  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _create_evidence_parent as _create_evidence_parent  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _write_new_file as _write_new_file  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import CandidateFile as CandidateFile  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import CandidateInventory as CandidateInventory  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import EvidenceFile as EvidenceFile  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import VerifierPayloadEvidence as VerifierPayloadEvidence  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import LaunchIntent as LaunchIntent  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import DeclaredLaunchIntent as DeclaredLaunchIntent  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _DeclaredLaunchIntentV2 as _DeclaredLaunchIntentV2  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _DeclaredLaunchIntentV3 as _DeclaredLaunchIntentV3  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _DeclaredLaunchIntentV4 as _DeclaredLaunchIntentV4  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import DeclaredLaunchIntent as DeclaredLaunchIntent  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import CandidateEdit as CandidateEdit  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import RankingObservation as RankingObservation  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordBase as _AttemptRecordBase  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV1 as _AttemptRecordV1  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV2 as _AttemptRecordV2  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV3 as _AttemptRecordV3  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV4 as _AttemptRecordV4  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV5 as _AttemptRecordV5  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV6 as _AttemptRecordV6  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV7 as _AttemptRecordV7  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV8 as _AttemptRecordV8  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV9 as _AttemptRecordV9  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import JudgmentEvidence as JudgmentEvidence  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _AttemptRecordV10 as _AttemptRecordV10  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import AttemptRecord as AttemptRecord  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import SessionOutcome as SessionOutcome  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import LegacyAcceptanceMode as LegacyAcceptanceMode  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import AcceptanceMode as AcceptanceMode  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultBase as _SessionResultBase  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV1 as _SessionResultV1  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV2 as _SessionResultV2  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV3 as _SessionResultV3  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV4 as _SessionResultV4  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import WalkFloorResult as WalkFloorResult  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV5 as _SessionResultV5  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV6 as _SessionResultV6  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _SessionResultV7 as _SessionResultV7  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import SessionResult as SessionResult  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import BestAttemptIdentity as BestAttemptIdentity  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import RecurrencePair as RecurrencePair  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import ResumeState as ResumeState  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import StagedCandidate as StagedCandidate  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _CollectedFile as _CollectedFile  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _classify as _classify  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _collect_candidate as _collect_candidate  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_records import _retained_wire as _retained_wire  # noqa: PLC0414 -- compatibility re-export
+from gnd.exp.session_records import (
+    DECLARED_ADAPTER_EVIDENCE_SCHEMA_VERSION as DECLARED_ADAPTER_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    DECLARED_LAUNCH_SCHEMA_VERSION as DECLARED_LAUNCH_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    DERIVATION_EVIDENCE_SCHEMA_VERSION as DERIVATION_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    DIRECTORY_MODE as DIRECTORY_MODE,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    EVIDENCE_SCHEMA_VERSION as EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    FILE_MODE as FILE_MODE,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    FIXED_STORE_SCHEMA_VERSION as FIXED_STORE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    LEGACY_EVIDENCE_SCHEMA_VERSION as LEGACY_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_CANDIDATE_DEPTH as MAX_CANDIDATE_DEPTH,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_CANDIDATE_FILE_BYTES as MAX_CANDIDATE_FILE_BYTES,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_CANDIDATE_FILES as MAX_CANDIDATE_FILES,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_CANDIDATE_TOTAL_BYTES as MAX_CANDIDATE_TOTAL_BYTES,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_RETAINED_STREAM_BYTES as MAX_RETAINED_STREAM_BYTES,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_SESSION_RESULT_BYTES as MAX_SESSION_RESULT_BYTES,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    MAX_VERIFIER_PAYLOAD_BYTES as MAX_VERIFIER_PAYLOAD_BYTES,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    REDACTION_EVIDENCE_SCHEMA_VERSION as REDACTION_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    REDACTION_RESULT_SCHEMA_VERSION as REDACTION_RESULT_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    SNAPSHOT_EXECUTABLE_FILE_MODE as SNAPSHOT_EXECUTABLE_FILE_MODE,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    SNAPSHOT_FILE_MODE as SNAPSHOT_FILE_MODE,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    TRANSITION_EVIDENCE_SCHEMA_VERSION as TRANSITION_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    TRANSITION_RESULT_SCHEMA_VERSION as TRANSITION_RESULT_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    WALK_FLOOR_EVIDENCE_SCHEMA_VERSION as WALK_FLOOR_EVIDENCE_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    WALK_FLOOR_RESULT_SCHEMA_VERSION as WALK_FLOOR_RESULT_SCHEMA_VERSION,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    AcceptanceMode as AcceptanceMode,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    AttemptRecord as AttemptRecord,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    BestAttemptIdentity as BestAttemptIdentity,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    CandidateEdit as CandidateEdit,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    CandidateFile as CandidateFile,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    CandidateInventory as CandidateInventory,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    DeclaredLaunchIntent as DeclaredLaunchIntent,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    EvidenceFile as EvidenceFile,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    JudgmentEvidence as JudgmentEvidence,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    LaunchIntent as LaunchIntent,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    LegacyAcceptanceMode as LegacyAcceptanceMode,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    NonEmptyString as NonEmptyString,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    RankingObservation as RankingObservation,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    RecurrencePair as RecurrencePair,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    ResumeState as ResumeState,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    SessionOutcome as SessionOutcome,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    SessionResult as SessionResult,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    StagedCandidate as StagedCandidate,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    VerifierPayloadEvidence as VerifierPayloadEvidence,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    WalkFloorResult as WalkFloorResult,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordBase as _AttemptRecordBase,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV1 as _AttemptRecordV1,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV2 as _AttemptRecordV2,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV3 as _AttemptRecordV3,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV4 as _AttemptRecordV4,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV5 as _AttemptRecordV5,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV6 as _AttemptRecordV6,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV7 as _AttemptRecordV7,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV8 as _AttemptRecordV8,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV9 as _AttemptRecordV9,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _AttemptRecordV10 as _AttemptRecordV10,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _classify as _classify,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _collect_candidate as _collect_candidate,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _CollectedFile as _CollectedFile,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _create_evidence_parent as _create_evidence_parent,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _DeclaredLaunchIntentV2 as _DeclaredLaunchIntentV2,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _DeclaredLaunchIntentV3 as _DeclaredLaunchIntentV3,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _DeclaredLaunchIntentV4 as _DeclaredLaunchIntentV4,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _evidence_entry as _evidence_entry,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _retained_wire as _retained_wire,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultBase as _SessionResultBase,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV1 as _SessionResultV1,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV2 as _SessionResultV2,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV3 as _SessionResultV3,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV4 as _SessionResultV4,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV5 as _SessionResultV5,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV6 as _SessionResultV6,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _SessionResultV7 as _SessionResultV7,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _strict_object_bytes as _strict_object_bytes,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _version_validation_error as _version_validation_error,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_records import (
+    _write_new_file as _write_new_file,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.payloads import (
+    MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS,  # noqa: F401 -- historical compatibility binding
+    PAYLOAD_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+)
 
 __all__ = [
     "MAX_SESSION_RESULT_BYTES",
@@ -1540,6 +1690,15 @@ class SessionStore:
             raise ValueError("attempt evidence digest index is incomplete or stale")
         return record, attempt_bytes, feedback, feedback_bytes
 
+    def best_identity(self) -> BestAttemptIdentity | None:
+        """Identity selected by the most recent validated reconstruction."""
+        return getattr(self, "_best_identity", None)
+
+    def best_record(self) -> AttemptRecord | None:
+        """Selected patch-session attempt, after validated reconstruction."""
+        best = getattr(self, "_v7_best", None)
+        return None if best is None else best[0]
+
     def read_resume_state(
         self,
         contract: DataDrivenContract,
@@ -1553,7 +1712,7 @@ class SessionStore:
         repaired, renamed, or silently skipped.
         """
 
-        if contract.schema_version in {7, 8}:
+        if contract.profile.patch:
             from gnd.exp.session_replay import reconstruct
 
             return reconstruct(self, contract)
@@ -1563,7 +1722,7 @@ class SessionStore:
         launches_fd = self._open_owned_directory(self._launches_root)
         staging_fd = self._open_owned_directory(self._staging_root)
         try:
-            return self._read_resume_state_bound(
+            state = self._read_resume_state_bound(
                 root_fd=root_fd,
                 attempts_fd=attempts_fd,
                 launches_fd=launches_fd,
@@ -1571,6 +1730,8 @@ class SessionStore:
                 contract=contract,
                 expected_payload_versions=expected_payload_versions,
             )
+            self._best_identity = state.best_attempt_identity
+            return state
         finally:
             os.close(staging_fd)
             os.close(launches_fd)

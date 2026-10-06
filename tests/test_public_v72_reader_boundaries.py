@@ -37,10 +37,8 @@ def test_reader_decisions_remain_independent_of_producer_declarations():
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
             and node.name == row["function"]
         )
-        for dependency in ast.walk(node):
-            if isinstance(dependency, ast.ImportFrom) and dependency.module == "gnd.exp.session_records":
-                dependency.module = "gnd.exp.session_store"
-        assert hashlib.sha256(ast.dump(node, include_attributes=False).encode()).hexdigest() == row["ast_sha256"]
+        from support.rf8_sources import predecessor_body
+        assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row["ast_sha256"]
         assert not row["calls_entry_helper"]
     for path, name in [
         ("src/gnd/exp/session_replay.py", "_entry"),

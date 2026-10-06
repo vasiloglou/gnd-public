@@ -44,12 +44,18 @@ from gnd.exp.session_records import (
     _collect_candidate,
 )
 from gnd.exp.session_replay import _entry as _entry  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_replay import _evaluate as _evaluate  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_replay import _feedback as _feedback  # noqa: PLC0414 -- compatibility re-export
+from gnd.exp.session_replay import (
+    _evaluate as _evaluate,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_replay import (
+    _feedback as _feedback,  # noqa: PLC0414 -- compatibility re-export
+)
 from gnd.exp.session_replay import _model as _model  # noqa: PLC0414 -- compatibility re-export
 from gnd.exp.session_replay import _project as _project  # noqa: PLC0414 -- compatibility re-export
 from gnd.exp.session_replay import _read as _read  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_replay import reconstruct as reconstruct  # noqa: PLC0414 -- compatibility re-export
+from gnd.exp.session_replay import (
+    reconstruct as reconstruct,  # noqa: PLC0414 -- compatibility re-export
+)
 from gnd.exp.session_store import SessionStore
 
 
@@ -87,7 +93,7 @@ async def run(
     candidate = Path(candidate_root).absolute()
     experiment = candidate.parent
     store = SessionStore(run_root, run_id=Path(run_root).name, contract_id=contract.experiment_id)
-    if contract.schema_version == 8:
+    if contract.profile.judgments:
         from gnd.exp.session_judgments import prepare
 
         prepare(contract, experiment, store.root)
@@ -96,7 +102,7 @@ async def run(
         (p.candidate_sha256, p.normalized_verifier_signature): p.first_attempt_index
         for p in state.seen_recurrence_pairs
     }
-    best = getattr(store, "_v7_best", None)
+    best = None if store.best_record() is None else (store.best_record(), store.best_identity().attempt_manifest_sha256)
     feedback_raw = state.prior_feedback_bytes
     wall = state.accounted_wall_seconds
     if state.next_attempt_index > contract.max_attempts or wall >= (contract.wall_seconds or 60):
@@ -132,7 +138,7 @@ async def run(
             effective_prompt_sha256=_sha(effective.encode()),
             feedback_sha256=feedback_sha,
             candidate_root=candidate,
-            schema_version=4 if contract.schema_version == 8 else 3,
+            schema_version=contract.profile.launch_version,
             judgment_policy_sha256={
                 c.case_id: c.judgment_gate.policy.sha256
                 for c in contract.cases
@@ -236,7 +242,7 @@ async def run(
             if refusal is None and invocation.status is InvocationStatus.succeeded:
                 for case in contract.cases:
                     try:
-                        if contract.schema_version == 8:
+                        if contract.profile.judgments:
                             from gnd.exp.session_judgments import verify_authority
 
                             verify_authority(contract, experiment, store.root)
@@ -356,8 +362,8 @@ async def run(
                     files.update(r._judgment_files[0])
                     judgment_evidence[r.case_id] = r._judgment_files[1]
             record = AttemptRecord(
-                schema_version=10 if contract.schema_version == 8 else 9,
-                feedback_schema_version=9 if contract.schema_version == 8 else 8,
+                schema_version=contract.profile.attempt_version,
+                feedback_schema_version=contract.profile.feedback_version,
                 judgment_evidence=judgment_evidence,
                 run_id=store.run_id,
                 attempt_index=index,
@@ -441,13 +447,13 @@ async def run(
                     else read_regular_bounded(store.root, "best.json", max_bytes=1024 * 1024)[1],
                     expected_root=store._directory_identities[store.root],
                 )
-            if not (contract.schema_version == 8 and verifier_failed):
+            if not (contract.profile.judgments and verifier_failed):
                 reconstruct(store, contract, policy_sha256=adapter_policy.policy_sha256)
             if disposition != "retry":
                 result = SessionResult(
-                    schema_version=7 if contract.schema_version == 8 else 6,
+                    schema_version=contract.profile.result_version,
                     judgment_admission=None
-                    if contract.schema_version != 8 or best is None
+                    if not contract.profile.judgments or best is None
                     else {
                         r.case_id: bool(
                             r._judgment_report

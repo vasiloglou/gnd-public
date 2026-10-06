@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf8_sessions.py::test_empty_reconstruction_returns_state_and_public_identity",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 0.7423131465911865
+}

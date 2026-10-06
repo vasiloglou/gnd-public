@@ -9341,7 +9341,7 @@
     [
       "src/gnd/exp/session_contract.py",
       "DataDrivenContract",
-      "Literal[LEGACY_SESSION_CONTRACT_VERSION, V2_SESSION_CONTRACT_VERSION, SESSION_CONTRACT_VERSION, TRANSITION_SESSION_CONTRACT_VERSION, WALK_SESSION_CONTRACT_VERSION, DECLARED_ADAPTER_SESSION_CONTRACT_VERSION, PATCH_SESSION_CONTRACT_VERSION, 8]",
+      "Literal[LEGACY_SESSION_CONTRACT_VERSION, V2_SESSION_CONTRACT_VERSION, SESSION_CONTRACT_VERSION, TRANSITION_SESSION_CONTRACT_VERSION, WALK_SESSION_CONTRACT_VERSION, DECLARED_ADAPTER_SESSION_CONTRACT_VERSION, PATCH_SESSION_CONTRACT_VERSION, JUDGMENT_SESSION_CONTRACT_VERSION]",
       1
     ],
     [
@@ -9521,6 +9521,12 @@
     [
       "src/gnd/exp/session_contract.py",
       "_DataDrivenContractV8",
+      "Literal[JUDGMENT_SESSION_CONTRACT_VERSION]",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "_DataDrivenContractV8",
       "tuple[_SessionCaseV8, ...]",
       1
     ],
@@ -9611,7 +9617,7 @@
     [
       "src/gnd/exp/session_contract.py",
       "model_validate",
-      "type[_DataDrivenContractV1 | _DataDrivenContractV2 | _DataDrivenContractV3 | _DataDrivenContractV4 | _DataDrivenContractV5 | _DataDrivenContractV6 | _DataDrivenContractV7]",
+      "_CONTRACT_READERS[profile.contract_version]",
       1
     ],
     [

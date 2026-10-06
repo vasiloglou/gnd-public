@@ -19,7 +19,7 @@ def test_every_version_dispatcher_in_this_lane_covers_both_entry_points() -> Non
 
     import inspect
 
-    from gnd.exp import session_contract, session_eval, session_store, session_records
+    from gnd.exp import session_contract, session_eval, session_records, session_store
 
     unpaired: list[str] = []
     for module in (session_contract, session_eval, session_store, session_records):

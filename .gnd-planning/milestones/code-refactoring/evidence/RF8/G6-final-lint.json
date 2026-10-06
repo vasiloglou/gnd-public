@@ -1,0 +1,32 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "src/gnd/exp/session.py",
+    "src/gnd/exp/session_contract.py",
+    "src/gnd/exp/session_store.py",
+    "src/gnd/exp/session_eval.py",
+    "src/gnd/exp/session_replay.py",
+    "src/gnd/exp/session_runtime.py",
+    "src/gnd/exp/session_profile.py",
+    "src/gnd/exp/session_records.py",
+    "src/gnd/exp/session_control.py",
+    "src/gnd/exp/session_environment.py",
+    "src/gnd/exp/session_patch.py",
+    "src/gnd/exp/session_judgments.py",
+    "src/gnd/exp/session_v7.py",
+    "src/gnd/exp/tests_runner.py",
+    "src/gnd/exp/close.py",
+    "tests/test_rf8_sessions.py",
+    "tests/test_rf8_structure.py",
+    "tests/support/rf8_sources.py",
+    "tests/test_artifacts.py",
+    "tests/test_exp_session_evidence_compat.py",
+    "tests/test_public_payload_alias_sites.py",
+    "tests/test_public_v72_reader_boundaries.py",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_v71_phase4_successors.py"
+  ],
+  "exit": 0,
+  "seconds": 0.01017308235168457
+}

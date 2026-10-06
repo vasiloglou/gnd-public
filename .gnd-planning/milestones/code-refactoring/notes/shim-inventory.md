@@ -866,3 +866,8 @@ All predecessor namespace bindings remain explicit aliases. Retirement requires 
 | gnd.exp.session_v7.reconstruct | gnd.exp.session_replay.reconstruct | RF8 | RF-D5; original qualification retained |
 | gnd.exp.session_v7._copy_files | gnd.exp.session_runtime._copy_files | RF8 | RF-D5; original qualification retained |
 | gnd.exp.session_v7.run | gnd.exp.session_runtime.run | RF8 | RF-D5; original qualification retained |
+
+RF8 also preserves all47 pre-existing imported session_v7 bindings listed in
+evidence/RF8/v7-bindings.json. Publisher monkeypatch writes target session_runtime;
+compatibility aliases do not forward assignments. SessionStore._v7_best retains
+its historical tuple; production consumers use best_identity()/best_record().

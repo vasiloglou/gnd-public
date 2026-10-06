@@ -211,7 +211,7 @@ def _feedback(contract, evaluation, invocation, disposition, experiment, redacti
         "allowed_fixes": ["add-fact", "replace-fact", "delete-fact", "replace-artifact"],
     }
     common = {
-        "schema_version": 9 if contract.schema_version == 8 else 8,
+        "schema_version": contract.profile.feedback_version,
         "run_id": experiment.name if not evaluation.results else None,
         "contract_id": contract.experiment_id,
         "contract_sha256": evaluation.contract_sha256,
@@ -250,7 +250,7 @@ def _feedback(contract, evaluation, invocation, disposition, experiment, redacti
                 "diagnostic": [r for r in rows if r["role"] == "diagnostic"],
             }
         )
-    if contract.schema_version == 8:
+    if contract.profile.judgments:
         from gnd.exp.session_judgments import feedback
 
         outputs[0]["judgments"] = feedback(evaluation.results)
@@ -271,7 +271,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
         if not any(store._attempts_root.iterdir()) and not any(store._launches_root.iterdir()):
             return ResumeState(1, None, (), 0.0, None, None)
         raise ValueError("retained run requires its bound contract")
-    if contract.schema_version == 8:
+    if contract.profile.judgments:
         from gnd.exp.session_judgments import verify_authority
 
         verify_authority(contract, experiment, store.root)
@@ -328,7 +328,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
 
         launch = DeclaredLaunchIntent.model_validate_json(launch_raw)
         if (
-            launch.schema_version != (4 if contract.schema_version == 8 else 3)
+            launch.schema_version != (contract.profile.launch_version)
             or launch.contract_sha256 != contract_sha
             or launch.feedback_sha256 != record.invocation.feedback_sha256
             or launch.policy_sha256 != record.invocation.policy_sha256
@@ -402,7 +402,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
             r.model_dump(mode="json") for r in record.ranking
         ]:
             raise ValueError("retained evaluation or ranking differs")
-        if contract.schema_version == 8:
+        if contract.profile.judgments:
             from gnd.exp.session_judgments import replay
 
             replay(record, rebuilt, directory)
@@ -473,7 +473,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
         raise ValueError("best pointer differs from reconstructed rank")
     from gnd.exp.session_records import RecurrencePair
 
-    if contract.schema_version == 8 and allow_terminal and (store.root / "result.json").exists():
+    if contract.profile.judgments and allow_terminal and (store.root / "result.json").exists():
         terminal = SessionResult.model_validate_json(_read(store.root, "result.json"))
         observed = (
             None
@@ -497,6 +497,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
         ):
             raise ValueError("terminal judgment identity differs")
     store._v7_best = best
+    store._best_identity = identity
     return ResumeState(
         len(directories) + 1,
         identity,

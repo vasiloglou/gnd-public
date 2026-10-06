@@ -959,12 +959,12 @@ def _declared_case_findings(
                 contract_id=contract.experiment_id,
             )
             if session_result.schema_version in {6, 7}:
-                from gnd.exp.session_v7 import reconstruct
+                from gnd.exp.session_replay import reconstruct
 
-                if contract.schema_version not in {7, 8}:
+                if not contract.profile.patch:
                     raise ValueError("v7 result requires its v7 contract")
                 reconstruct(store, contract, allow_terminal=True)
-                record, _ = store._v7_best
+                record = store.best_record()
                 attempt_bytes = store._read_evidence_leaf(
                     f"attempts/{record.attempt_index:04d}/attempt.json", cap=10 * 1024 * 1024
                 )

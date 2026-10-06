@@ -1348,3 +1348,23 @@ _classify.__module__ = "gnd.exp.session_store"
 _collect_candidate.__module__ = "gnd.exp.session_store"
 _retained_wire.__module__ = "gnd.exp.session_store"
 _DeclaredLaunchIntentV2.__module__ = "gnd.exp.session_store"
+
+# Preserve qualification on methods as well as their containing wire types.
+for _wire_type in (
+    CandidateFile, CandidateInventory, EvidenceFile, VerifierPayloadEvidence,
+    LaunchIntent, _DeclaredLaunchIntentV2, _DeclaredLaunchIntentV3,
+    _DeclaredLaunchIntentV4, DeclaredLaunchIntent, CandidateEdit, RankingObservation,
+    _AttemptRecordBase, _AttemptRecordV1, _AttemptRecordV2, _AttemptRecordV3,
+    _AttemptRecordV4, _AttemptRecordV5, _AttemptRecordV6, _AttemptRecordV7,
+    _AttemptRecordV8, _AttemptRecordV9, JudgmentEvidence, _AttemptRecordV10,
+    AttemptRecord, SessionOutcome, _SessionResultBase, _SessionResultV1,
+    _SessionResultV2, _SessionResultV3, _SessionResultV4, WalkFloorResult,
+    _SessionResultV5, _SessionResultV6, _SessionResultV7, SessionResult,
+    BestAttemptIdentity, RecurrencePair, ResumeState, StagedCandidate, _CollectedFile,
+):
+    for _method in vars(_wire_type).values():
+        if isinstance(_method, (classmethod, staticmethod)):
+            _method = _method.__func__
+        if getattr(_method, '__module__', None) == __name__:
+            _method.__module__ = 'gnd.exp.session_store'
+del _wire_type, _method

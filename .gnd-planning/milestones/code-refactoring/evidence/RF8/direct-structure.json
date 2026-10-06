@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf8_sessions.py",
+    "tests/test_rf8_structure.py",
+    "tests/test_public_v72_reader_boundaries.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 2.3862550258636475
+}

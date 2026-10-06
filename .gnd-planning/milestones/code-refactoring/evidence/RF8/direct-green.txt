@@ -1,0 +1,18 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf8_sessions.py tests/test_rf8_structure.py tests/test_public_v72_reader_boundaries.py tests/test_exp_session_contract.py --tb=short
+.............F.......................................................... [ 81%]
+................                                                         [100%]
+=================================== FAILURES ===================================
+________________ test_unchanged_moved_bodies_and_shim_identity _________________
+tests/test_rf8_structure.py:67: in test_unchanged_moved_bodies_and_shim_identity
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']
+E   AssertionError: reconstruct
+E   assert 'c64b8360fa40...b7433952d8af4' == 'eb76d13dc1f5...eae1d5b445dcd'
+E     
+E     - eb76d13dc1f56a01ba680163703a8f7be69406b547eb92b3520eae1d5b445dcd
+E     + c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4
+=========================== short test summary info ============================
+FAILED tests/test_rf8_structure.py::test_unchanged_moved_bodies_and_shim_identity
+1 failed, 87 passed in 2.60s
+
+Exit: 1

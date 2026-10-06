@@ -2117,7 +2117,7 @@ def best_key(
 ) -> tuple[int, ...]:
     """Return the locked ascending rank from the shared case decision seam."""
 
-    if contract.schema_version in {7, 8} and contract.ranking:
+    if contract.profile.patch and contract.ranking:
         pairs = tuple(
             item
             for row in ranking_observations(contract, attempt)

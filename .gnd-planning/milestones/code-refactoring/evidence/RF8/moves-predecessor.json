@@ -1,0 +1,428 @@
+[
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_evidence_entry",
+    "ast_sha256": "2c0cae3b6f0b4cd0629c0d32d92d763d1dac274d2fa6fa8444dc2210f87d8840"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_version_validation_error",
+    "ast_sha256": "d46d27630775d3ddf46afac8aedaf1818e28f0b8c03229834b5862db149d6322"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_strict_object_bytes",
+    "ast_sha256": "184193e798af0a81d1f76ae0878b647572bbefff66a917b6cbd789b522c67606"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_create_evidence_parent",
+    "ast_sha256": "66c8334226c0340fa23c07f145121ef45dbb772c1849883267d12636fb4fa6f3"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_write_new_file",
+    "ast_sha256": "86d5c3fbe2bb0c7274085db2215260643f3c99f7317b183375d27aac7287ae54"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "CandidateFile",
+    "ast_sha256": "7f9ded833effe9fe50912ac1cce2ee8a911e55b2a37f37e04156453c42b39586"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "CandidateInventory",
+    "ast_sha256": "fbfcd8c001f3d2a59f12ec689e931f9e2e03327ab48f46f3469c9c32c2a659db"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "EvidenceFile",
+    "ast_sha256": "35f411b592aaa7d0edf780615e0bb9ada988ae71a43b8986bec9b5e74bf866f6"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "VerifierPayloadEvidence",
+    "ast_sha256": "6e0a9d23b7f6b659967857f820a3052a209652046acedbaecb449d67d3973522"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "LaunchIntent",
+    "ast_sha256": "f1a7072efc2f09b79c447a204c4a3ee705b46bf83b5f9922b842b6eb933aa372"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "DeclaredLaunchIntent",
+    "ast_sha256": "fdf5c8a3f3024c1daf12feaf8c0845aceb6009737f9ade6ec3a475f3eb9e512c"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_DeclaredLaunchIntentV3",
+    "ast_sha256": "c0d3833bd32ba34ae97fde7ec0e73b84c142333efd562ad61963c15425869e82"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_DeclaredLaunchIntentV4",
+    "ast_sha256": "0de746da095b4310872fb28cdffe8536cbcdc5c9355de5036a14a389a98d8ca4"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "DeclaredLaunchIntent",
+    "ast_sha256": "2f3ad52a340dae2ec0c8af13379ff8dfd347274406a01ff6c700bb71efc102dd"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "CandidateEdit",
+    "ast_sha256": "aa755aa51298164919b26e9fc30fd2f418b218548d656c4ba6bbc73e5c267b3d"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "RankingObservation",
+    "ast_sha256": "773f7f16eb699d13cb3e295aaa623aae265ae79dedf71e8867dc8e7f39f40762"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordBase",
+    "ast_sha256": "b4c4d41ab9b027817237e7d741854ee8edbbd86c21fb1a1359267cfe5add06c4"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV1",
+    "ast_sha256": "c339983c7af3f38798a648d34f51d7d1f885b00250ca449bf7662fb7c2d14721"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV2",
+    "ast_sha256": "2131fa1f1bf11df2ffe1adc179da7cf489608ae8251eb48203521636a4fb000a"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV3",
+    "ast_sha256": "b24d20a729323c96bfc381b730c3fe40e576a2f9221b11f96ab5496046000d9a"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV4",
+    "ast_sha256": "154281cbf07e09d949c08fe1ee57d98e9ccc51ad869e1ba4bb18fa0f1d81a88a"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV5",
+    "ast_sha256": "744095c0f13a7099991f0920a751a66ee3e3dee0527b2f63ab489a0c0f9a82a5"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV6",
+    "ast_sha256": "7bddc259267f070f60572f2d3e1baa8ca2e8a916eaf6805bba36f72beeee5b2f"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV7",
+    "ast_sha256": "4b0abf7d7ea00644ccf6728988f206fa462e3e2228b357bf371bbe139a2f8ffd"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV8",
+    "ast_sha256": "fa824947baf4059018f5e184b3a31deecfcb13e0771849144b31eeaba567fb3c"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV9",
+    "ast_sha256": "c31895353ccfbb56b1a69ca9fd935cdbbb08d0baa206d33c8093fa0925e3a6a9"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "JudgmentEvidence",
+    "ast_sha256": "14b4a337723d74f30878051972c874dabe30fd56f76c7192af363a6b51ce1087"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_AttemptRecordV10",
+    "ast_sha256": "3305543d67fbabb21e954f1660befe62ef9962bfc3794ffb17055086ee7b36da"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "AttemptRecord",
+    "ast_sha256": "26dbcae8eedd633e29390ad05e4b2536629140bce2982e29b623fffd1e82360a"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "SessionOutcome",
+    "ast_sha256": "a07ae1661823045d64d6fb4e9eb533094d2137af2a7b65e694b5a10f826fea6e"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultBase",
+    "ast_sha256": "62115ee2cb4a2ea422a88a36fd7a3b79c66003b123dca30167dec37badc3ce0b"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV1",
+    "ast_sha256": "99d0ac6ab86f1551f542a9b165cb3d043e25e4c9e9248b52a686217c7ab6de16"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV2",
+    "ast_sha256": "9754a2b562e58d10babea380111c8f862c5f7f65783e2dc808f2bc1787b244b9"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV3",
+    "ast_sha256": "df5f495eb4f33adc83d733bd8d4dbcd631914b1dc97d0e1b8deca4b40ae9b22e"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV4",
+    "ast_sha256": "e500dffa7a2e0778baa33a4a33e73a12b10514cd1fd97030895b2081a9836d8d"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "WalkFloorResult",
+    "ast_sha256": "469a47ba652d341f520d5d9cd3732d436220c079dc929f29f63b6facce5256ef"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV5",
+    "ast_sha256": "e23911815a5ac8db0301d8387902cb352348a4b49e0dfcb067b2a0b3b6019d3f"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV6",
+    "ast_sha256": "3518a4e5710023e2b8ecf0a1b1465bb7aa4aa421c40683decbd92e9e48f74ecd"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_SessionResultV7",
+    "ast_sha256": "2ca142b340400bf53f647764d30df7566a15cfed559d052520f7f7ca40645312"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "SessionResult",
+    "ast_sha256": "d576cb9fff2404aa6fbbc43ab5ffd38f72b63e0d2901c279053318a2c04b1c71"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "BestAttemptIdentity",
+    "ast_sha256": "0b04223bb085d02db113de2fd03352ebae0d4c484b0783a0c59787ac69aa5130"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "RecurrencePair",
+    "ast_sha256": "81cb4938dfb417404015d2f0a5fc3802d51d77defbaea1ab38371f8f35ced24e"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "ResumeState",
+    "ast_sha256": "d15e314b5a59d045567a9b193c86d5d9236fb1228aa852d851afea50eb40b7d0"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "StagedCandidate",
+    "ast_sha256": "302831345832cb1f98405b0cf4e2d873a344421185829dcac3fde07ca9f612f9"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_CollectedFile",
+    "ast_sha256": "b06f931c63541bc8cdf3400c25c7a93336c92eccafed37a6775b3ab7cdee0cc2"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_classify",
+    "ast_sha256": "f86cab2b9d6709f75309e62a6ac7e5e05d6cf76dc3007b5a01adf2bf821bd6f6"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_collect_candidate",
+    "ast_sha256": "fe6d23f292e8844ac9e5190e7de43ea2bf7de36052ef5398f021f9d2c729a5c6"
+  },
+  {
+    "old": "src/gnd/exp/session_store.py",
+    "new": "src/gnd/exp/session_records.py",
+    "name": "_retained_wire",
+    "ast_sha256": "52f803d1517d6862227dbe88ae07feee43f13b7b98a2bbc0afe52a5441a8b1e8"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_environment.py",
+    "name": "verifier_environment",
+    "ast_sha256": "a715da78c9d721a7f4e92b21ae03d121c2bbf241d7b477f7655f5ca79c7bd2ea"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_required_evidence_complete",
+    "ast_sha256": "f8c8b78f4dbe420ec5f96ab2516c3e265522c89433390f65cc1ebc65ecab2eca"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_has_verifier_harness_failure",
+    "ast_sha256": "9e0316476bedff8f3cf493949f986ca2aabb8d02b52861b4f57b19a9b116de50"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_declared_evidence_complete",
+    "ast_sha256": "4d5d34f804bc777efa23c6027b59a4cc6ce32afdacd360da01e2855d63106ee0"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_agent_failure_reason",
+    "ast_sha256": "5cee7e5831217e772b9b9258601f13f166f2b25ebbc812a3d836f12b74a84783"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_expected_invocation_argv",
+    "ast_sha256": "6231f34647f69b2e0d18415347e881449e96d190bb6aed714dfe820b8311f88f"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_effective_agent_prompt",
+    "ast_sha256": "faa4cc8269421f779e42d184f0931fa04aacc79381d34eb8125df7989e59d936"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_effective_policy_sha256",
+    "ast_sha256": "b964cefcaec390111d538425d561971c13c9553b6c8a1ce2e5e4465d5c08cd49"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_policy_bound_prompt",
+    "ast_sha256": "8eba1d755490b15034183c145aa3458bbf0cbbe1deb030c05bcd0e8d8b3d3c94"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_validated_invocation_proof",
+    "ast_sha256": "d330fa28b4eb80721c7673c93005e685f05100b778ef670b0def03b56d29bdae"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_validated_declared_invocation_proof",
+    "ast_sha256": "870fc8e877d408f9749762d0ea951c5ad66862ee91e6e0472422406e861f3a98"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_budget_reason",
+    "ast_sha256": "925b0b23ddaadf4d15b0bf3d6bc9b542743bd5b051117e03e9a547a45970d76b"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_Disposition",
+    "ast_sha256": "4a7a8dfcf032e378dd02dda9ec4f080dfd12186f3f1dc5de698af34212b86561"
+  },
+  {
+    "old": "src/gnd/exp/session.py",
+    "new": "src/gnd/exp/session_control.py",
+    "name": "_decide_disposition",
+    "ast_sha256": "7909911fbddd9760bb8c63126152cda4a34e18118a867390843297b7d29728f4"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "_read",
+    "ast_sha256": "d293959cba8cf4aa0297bc5833f8a9d7773eaa03a8442942ab0f54bce23a6896"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "_entry",
+    "ast_sha256": "25a78792c26ae853bcd7f5356ee1bf904be6fb58f12cb799ea3f68ed63a7fd20"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "_model",
+    "ast_sha256": "7c6347a783b79bbb9cfee3904f6f8ee01840da04b0c0f720f391958ec9bdc756"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "_evaluate",
+    "ast_sha256": "02c7bf76fb6af560335555f3f38354f333d6bf3ded069d0db1a59f529e6c1899"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "_project",
+    "ast_sha256": "2fc02a9ddee90b79187d5322be4eb0172b6dcd45571714b1a11f7fd7308475e7"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "_feedback",
+    "ast_sha256": "639ff7d994f5c4ad32d08ebe8a6a2879b4701c9cc5714b5e8e8efd8c7d4edac8"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_replay.py",
+    "name": "reconstruct",
+    "ast_sha256": "c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_runtime.py",
+    "name": "_copy_files",
+    "ast_sha256": "1b4eb763bf24a6400aa28e9ea89bd90b5c781cfa0183c27e05f1100c15bc7fcf"
+  },
+  {
+    "old": "src/gnd/exp/session_v7.py",
+    "new": "src/gnd/exp/session_runtime.py",
+    "name": "run",
+    "ast_sha256": "d04ee59759e66d01ae632fb72d18c78e9713732ab9ff59a56a3186b0df4eb594"
+  }
+]

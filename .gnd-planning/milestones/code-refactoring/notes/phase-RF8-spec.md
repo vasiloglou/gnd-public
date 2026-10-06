@@ -150,3 +150,39 @@ AST hashes separately in reader-base.json, preserve frozen fixture bytes, normal
 only physical dependency imports for pure moves. Qualification scan caught a
 frozen launch-v2 alias rebound before the final class: preserve its module explicitly.
 Full corrected baseline28passed; move session+qualification29passed.
+
+### Implementation findings — profile lane
+A scoped-edit script initially placed the new identity cache assignment in the wrong
+wrapper and omitted the legacy reconstruction return. Direct empty reconstruction
+controls reproduced3 legacy failures before correction; the v8 test additionally needed
+the existing judgment preparation precondition. Both source errors corrected before
+consumer gates; no reader-body meaning/fixture answer changed. Pure move observer
+normalizes only listed capability expressions/import paths and exact identity cache
+assignment, with dirty-body sibling controls. Preserve frozen launch-v2 alias and
+wire method qualification as well as top-level class/function qualification.
+
+### A3 — Focused verification/environment dispositions, delegated approval(auto=true),2026-10-06
+G4:515passed; descendant cleanup observer could not execute ps under sandbox.
+Select exact unchanged observer once with required process inspection permission;
+this is a test environment retry, no source/test expected-answer amendment.
+G5:427passed1deselected; unchanged package-wide primitive-name guard refuses
+safefs.read_regular_file_bytes, independently reproduced on exact archived de4eed6
+source and original test. It mistakes the RF4 public safety helper for artifact
+ownership. Do not add a blanket bypass or rewrite old answer. G5 passing selection
+excludes this one proven predecessor red; retain original failed command and exact
+baseline evidence. Focused primitive/move/negative guards remain selected. Carry
+its ownership decision to milestone close. This is narrower than broad suite repair.
+
+### A4 — Evidence file budget, delegated approval(auto=true),2026-10-06
+Measured91 touchedfiles against original90 ceiling before final review/record.
+The original estimate omitted diagnostic retention and per-minor metadata controls.
+Re-target touchedfiles to120:91 existing +2 in-flightG5 outputs +2 lint outputs
++2 review notes +6 bounded review transport/result artifacts +1 record +1 budget
++1 committed compare +2 namespace controls +2 final verification outputs =110,
+leaving10 for at most one repair regression/gate and final hash binding. This is
+an evidence-accounting completion ceiling amendment; source/move/test/doc ceilings
+and strict SCC0/shim≤60 targets do not increase. Original90 miss remains for close.
+Prior RF6b original400 facade target and RF7 file ceiling amendment are retained;
+RF8 work is re-bounded here under the explicit delegated scope, not an implicit
+plan rewrite or permission to grow source work. Plan/retarget integration stays
+with milestone close. No further work is authorized beyond this phase.

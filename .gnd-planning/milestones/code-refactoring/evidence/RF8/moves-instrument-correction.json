@@ -1,0 +1,17 @@
+{
+  "reason": "Original move tool mistakenly hashed two bodies after physical import retargeting; corrected AST observations computed independently from exact de4eed6 source, original moves.json retained.",
+  "changes": [
+    {
+      "old": "src/gnd/exp/session_v7.py",
+      "name": "reconstruct",
+      "recorded_after_import_retarget_sha256": "eb76d13dc1f56a01ba680163703a8f7be69406b547eb92b3520eae1d5b445dcd",
+      "original_base_sha256": "c64b8360fa40b8a5cb694c8c935e4cfe00033041e7e9f0e3929b7433952d8af4"
+    },
+    {
+      "old": "src/gnd/exp/session_v7.py",
+      "name": "run",
+      "recorded_after_import_retarget_sha256": "da73f79ce186e6187cd12a1dc9a58a4d965cb4e7034cf207cb27cc3fec6cab0c",
+      "original_base_sha256": "d04ee59759e66d01ae632fb72d18c78e9713732ab9ff59a56a3186b0df4eb594"
+    }
+  ]
+}

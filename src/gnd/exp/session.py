@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import math
-import os
+import os  # noqa: F401 -- historical compatibility binding
 import shutil
 import sys
 import tempfile
@@ -21,7 +21,7 @@ from gnd.agents import (
     AgentCLIError,
     InvocationResult,
     InvocationStatus,
-    build_agent_argv,
+    build_agent_argv,  # noqa: F401 -- historical compatibility binding
     invoke_agent,
 )
 from gnd.exp.adapter_policy import ResolvedAdapterPolicy
@@ -30,7 +30,7 @@ from gnd.exp.declared_invocation import (
     declared_effective_prompt,
 )
 from gnd.exp.session_contract import (
-    DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,
+    DECLARED_ADAPTER_SESSION_CONTRACT_VERSION,  # noqa: F401 -- historical compatibility binding
     ConstraintSatisfactionAcceptance,
     DataDrivenContract,
     SessionCase,
@@ -38,12 +38,12 @@ from gnd.exp.session_contract import (
     TransitionAcceptance,
 )
 from gnd.exp.session_eval import (
-    ASSURANCE_FEEDBACK_SCHEMA_VERSION,
-    DERIVATION_FEEDBACK_SCHEMA_VERSION,
+    ASSURANCE_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    DERIVATION_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
     FEEDBACK_SCHEMA_VERSION,
-    REDACTION_FEEDBACK_SCHEMA_VERSION,
-    TRANSITION_FEEDBACK_SCHEMA_VERSION,
-    WALK_FLOOR_FEEDBACK_SCHEMA_VERSION,
+    REDACTION_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    TRANSITION_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    WALK_FLOOR_FEEDBACK_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
     AttemptEvaluation,
     CaseEvaluation,
     SessionRedaction,
@@ -61,10 +61,11 @@ from gnd.exp.session_eval import (
     validate_transition_payload,
     validate_verifier_payload,
 )
+from gnd.exp.session_profile import profile_for_version
 from gnd.exp.session_store import (
-    REDACTION_RESULT_SCHEMA_VERSION,
-    TRANSITION_RESULT_SCHEMA_VERSION,
-    WALK_FLOOR_RESULT_SCHEMA_VERSION,
+    REDACTION_RESULT_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    TRANSITION_RESULT_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
+    WALK_FLOOR_RESULT_SCHEMA_VERSION,  # noqa: F401 -- historical compatibility binding
     AttemptRecord,
     SessionResult,
     SessionStore,
@@ -72,7 +73,7 @@ from gnd.exp.session_store import (
     WalkFloorResult,
 )
 from gnd.payloads import (
-    DERIVATION_PAYLOAD_SCHEMA_VERSIONS,
+    DERIVATION_PAYLOAD_SCHEMA_VERSIONS,  # noqa: F401 -- historical compatibility binding
     PAYLOAD_SCHEMA_VERSION,
 )
 from gnd.process import ProcessLimits, run_bounded_process
@@ -93,20 +94,49 @@ InvocationEvidence = InvocationResult | DeclaredInvocationResult
 _VERIFIER_FAILURE_REASON = "one or more declared verifier cases did not produce valid evidence"
 
 
-from gnd.exp.session_control import _required_evidence_complete as _required_evidence_complete  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _has_verifier_harness_failure as _has_verifier_harness_failure  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _declared_evidence_complete as _declared_evidence_complete  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _agent_failure_reason as _agent_failure_reason  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _expected_invocation_argv as _expected_invocation_argv  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _effective_agent_prompt as _effective_agent_prompt  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _effective_policy_sha256 as _effective_policy_sha256  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _policy_bound_prompt as _policy_bound_prompt  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _validated_invocation_proof as _validated_invocation_proof  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _validated_declared_invocation_proof as _validated_declared_invocation_proof  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _budget_reason as _budget_reason  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _Disposition as _Disposition  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_control import _decide_disposition as _decide_disposition  # noqa: PLC0414 -- compatibility re-export
-from gnd.exp.session_environment import verifier_environment as verifier_environment  # noqa: PLC0414 -- compatibility re-export
+from gnd.exp.session_control import (
+    _agent_failure_reason as _agent_failure_reason,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _budget_reason as _budget_reason,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _decide_disposition as _decide_disposition,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _declared_evidence_complete as _declared_evidence_complete,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _Disposition as _Disposition,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _effective_agent_prompt as _effective_agent_prompt,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _effective_policy_sha256 as _effective_policy_sha256,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _expected_invocation_argv as _expected_invocation_argv,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _has_verifier_harness_failure as _has_verifier_harness_failure,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _policy_bound_prompt as _policy_bound_prompt,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _required_evidence_complete as _required_evidence_complete,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _validated_declared_invocation_proof as _validated_declared_invocation_proof,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_control import (
+    _validated_invocation_proof as _validated_invocation_proof,  # noqa: PLC0414 -- compatibility re-export
+)
+from gnd.exp.session_environment import (
+    verifier_environment as verifier_environment,  # noqa: PLC0414 -- compatibility re-export
+)
+
 
 def _discard_unpublished_stage(
     store: SessionStore,
@@ -308,7 +338,7 @@ def _case_models(
     from gnd.extract.manifest import open_manifest_relative_path
     from gnd.model import load_model
 
-    if contract.schema_version in {7, 8}:
+    if contract.profile.patch:
         from gnd.exp.session_replay import _model
 
         return [
@@ -362,7 +392,7 @@ def case_payload_versions(
 
     versions: dict[str, int] = {}
     for case, model in _case_models(contract, experiment_root):
-        if contract.schema_version in {7, 8} and isinstance(
+        if contract.profile.patch and isinstance(
             case.acceptance, ConstraintSatisfactionAcceptance
         ):
             from gnd.terms import uses_temporal
@@ -427,7 +457,7 @@ async def run_gnd_verifier(
         view = Path(temporary) / "view"
         shutil.copytree(snapshot, view, dirs_exist_ok=True)
         _copy_bound_model(case, experiment_root, view)
-        if case._session_version in {7, 8} and case.reference_root is not None:
+        if (profile := profile_for_version(case._session_version)) is not None and profile.patch and case.reference_root is not None:
             from gnd.exp.session_replay import _model
 
             _selected_model, context = _model(case, experiment_root)
@@ -444,7 +474,7 @@ async def run_gnd_verifier(
                 argv.extend(("--post", case.verify.post))
         else:
             argv.append(case.verify.subject)
-        if case._session_version in {7, 8} and isinstance(
+        if (profile := profile_for_version(case._session_version)) is not None and profile.patch and isinstance(
             case.acceptance, ConstraintSatisfactionAcceptance
         ):
             argv.append("--admission")
@@ -523,7 +553,7 @@ async def run_session(
     pair.
     """
 
-    if contract.schema_version in {7, 8}:
+    if contract.profile.patch:
         if (
             adapter_policy is None
             or declared_invoker is None
@@ -544,7 +574,7 @@ async def run_session(
             declared_invoker=declared_invoker,
             redaction=redaction,
         )
-    declared_session = contract.schema_version == DECLARED_ADAPTER_SESSION_CONTRACT_VERSION
+    declared_session = contract.profile.declared_adapter
     if declared_session:
         if (
             adapter_policy is None
@@ -587,20 +617,10 @@ async def run_session(
         isinstance(case.acceptance, TransitionAcceptance) and case.acceptance.walk is not None
         for case in contract.cases
     )
-    feedback_schema_version = (
-        WALK_FLOOR_FEEDBACK_SCHEMA_VERSION
-        if has_walk_floor
-        else REDACTION_FEEDBACK_SCHEMA_VERSION
-        if redaction is not None
-        else TRANSITION_FEEDBACK_SCHEMA_VERSION
-        if any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases)
-        else ASSURANCE_FEEDBACK_SCHEMA_VERSION
-        if any(version == 7 for version in payload_versions.values())
-        else DERIVATION_FEEDBACK_SCHEMA_VERSION
-        if any(
-            version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS for version in payload_versions.values()
-        )
-        else FEEDBACK_SCHEMA_VERSION
+    feedback_schema_version = contract.profile.select_feedback(
+        walk=has_walk_floor, redaction=redaction is not None,
+        transition=any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases),
+        payload_versions=payload_versions.values(),
     )
     store = SessionStore(
         root,
@@ -755,14 +775,9 @@ async def run_session(
         if identity != best_identity:
             raise ValueError("best pointer changed before result publication")
         result = SessionResult(
-            schema_version=(
-                WALK_FLOOR_RESULT_SCHEMA_VERSION
-                if has_walk_floor
-                else REDACTION_RESULT_SCHEMA_VERSION
-                if redaction is not None
-                else TRANSITION_RESULT_SCHEMA_VERSION
-                if any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases)
-                else 2
+            schema_version=contract.profile.select_result(
+                walk=has_walk_floor, redaction=redaction is not None,
+                transition=any(isinstance(case.acceptance, TransitionAcceptance) for case in contract.cases),
             ),
             run_id=root.name,
             disposition=disposition,

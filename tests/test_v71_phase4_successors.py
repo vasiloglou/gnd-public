@@ -177,7 +177,7 @@ def test_v7_wall_bound_can_be_tightened(tmp_path, monkeypatch):
 def test_v7_proposal_and_terminal_publication_boundaries(variant, tmp_path, monkeypatch):
     import support.v71_session_cases as helper
 
-    from gnd.exp import session_v7
+    from gnd.exp import session_v7  # noqa: F401 -- historical compatibility binding
     if variant in {'symlink', 'over-cap'}:
         producer = helper.producer_source()
         statement = "pathlib.Path('.gnd-patch.json').write_bytes(b'x' * (10 * 1024 * 1024 + 1))"

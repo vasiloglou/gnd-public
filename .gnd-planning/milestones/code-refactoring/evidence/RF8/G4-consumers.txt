@@ -1,0 +1,40 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_exp_session_store.py tests/test_exp_session_eval.py tests/test_exp_session_rank.py tests/test_exp_session_recurrence.py tests/test_exp_session_e2e.py tests/test_public_session_wire_guards.py tests/test_public_retained_session_results.py tests/test_public_session_version_relabel.py tests/test_public_v72_session_staging.py tests/test_public_patch_publication_identity.py tests/test_v72_phase5_session_mechanics.py tests/test_v71_phase4_successors.py tests/test_public_v71_judgment_successor_guards.py tests/test_public_payload_alias_sites.py tests/test_public_v72_reader_boundaries.py tests/test_public_v72_ownership_direct.py tests/test_public_v72_status.py tests/test_exp_close_work_gate.py tests/test_exp_close.py --tb=short
+........................................................................ [ 13%]
+............................................F........................... [ 27%]
+........................................................................ [ 41%]
+........................................................................ [ 55%]
+........................................................................ [ 69%]
+........................................................................ [ 83%]
+........................................................................ [ 97%]
+............                                                             [100%]
+=================================== FAILURES ===================================
+__________ test_timeout_kills_and_drains_descendants_before_returning __________
+tests/test_exp_session_eval.py:1549: in test_timeout_kills_and_drains_descendants_before_returning
+    child_status = subprocess.run(
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:554: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1038: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1989: in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+E   PermissionError: [Errno 1] Operation not permitted: 'ps'
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  <worktree>/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_exp_session_eval.py::test_timeout_kills_and_drains_descendants_before_returning
+1 failed, 515 passed, 1 warning in 48.56s
+
+Exit: 1

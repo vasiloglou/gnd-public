@@ -209,6 +209,10 @@ questions. Dispositions: [phase-RF1-codex-review.md](notes/phase-RF1-codex-revie
   command surfaces, with 43 effective disabling controls before routing.
   These selected leaf observations do not establish every internal branch.
   RF6 import-path responsibilities and RF1's original boundary remain standing.
+  RF6 discharge annotation (2026-10-06): [012-phase-RF6b.md](012-phase-RF6b.md)
+  supplies pre-move pins for all468 model/checker bindings and232 bodies,
+  effective patch controls, complete observed package homes and deletion/omission
+  negatives. These selected successor checks leave RF1's original boundary standing.
 - **RF1-OQ2 → RF8 spec gate:** resume through the CLI refuses for v2, v3, v7
   and v8 after a completed run's result is removed (F12). This is pinned as
   found; RF8 should decide whether it is intended.

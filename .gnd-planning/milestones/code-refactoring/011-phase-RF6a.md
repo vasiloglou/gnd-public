@@ -231,3 +231,13 @@ Counts overlap and do not define a combined acceptance universe. Exact sanitized
     19 passed, 1 deselected in 4.64s
     
     Exit: 0
+
+## Later bounded-cache successor annotation -- 2026-10-06
+
+[012-phase-RF6b.md](012-phase-RF6b.md) records a post-move cyclic-metadata
+cacheability-walk timeout in the new RF6a index. A timed regression observed red
+before the separate60559aa successor fix; dict/list cycles now take an uncached
+detached snapshot with freshness and retained-snapshot controls on captured
+interpreters. This annotation states the limitation of011's old verified bytes
+and its later discharge. It does not widen011's gates, reviewer opinions or
+original boundary, and it is not a third RF6a review.

@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime  # noqa: F401 -- historical compatibility binding
 from itertools import product
 from random import Random
 from typing import Any
 
 from gnd import checker as checker_module
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 from gnd.address import positional_constraint_ref
 from gnd.model import Model
@@ -382,7 +383,7 @@ def _instant_pair(value: str, bound: str, primitive: str | None) -> tuple[Any, A
     on the second rather than inventing an offset for the naive one, and an
     oracle that guessed would decide a constraint on a fiction.
     """
-    parser = date.fromisoformat if primitive == "Date" else datetime.fromisoformat
+    parser = date.fromisoformat if primitive == "Date" else _rf7_input.parse_datetime
     parsed: list[Any] = []
     for text in (value, bound):
         try:

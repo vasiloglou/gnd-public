@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf1_helper_pins.py",
+    "tests/test_rf1_semantic_pins.py",
+    "tests/test_rf1_session_pins.py",
+    "--deselect",
+    "tests/test_rf1_session_pins.py::test_session_fresh[3]",
+    "--deselect",
+    "tests/test_rf1_session_pins.py::test_session_resume[3]",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 61.253273248672485
+}

@@ -20,6 +20,7 @@ from pydantic import (
 )
 
 from gnd import checker
+from gnd import input_policy as _rf7_input
 from gnd.agents import InvocationResult
 from gnd.artifacts import (
     Sha256,
@@ -1317,7 +1318,7 @@ class AttemptFeedback(BaseModel):
         """
         if isinstance(json_data, bytearray):
             json_data = bytes(json_data)
-        return cls.model_validate(json.loads(json_data), *args, **kwargs)
+        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_validator(mode="after")
     def _ordered_current_case_sets(self) -> Self:
@@ -1383,7 +1384,7 @@ def _strict_object(raw: bytes) -> dict[str, Any]:
 
 
 
-    decoder = json.JSONDecoder(
+    decoder = _rf7_input.JSONDecoder(
         parse_constant=reject_json_constant,
         object_pairs_hook=reject_json_duplicate_pairs_result,
     )

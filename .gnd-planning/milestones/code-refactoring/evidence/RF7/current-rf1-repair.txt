@@ -1,0 +1,810 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf1_helper_pins.py tests/test_rf1_semantic_pins.py tests/test_rf1_session_pins.py --tb=short
+......................FF.......FF.....................FF.........F...FFF [ 30%]
+FF.FF.............FFFFF.F............................................... [ 61%]
+...............................................................F.......F [ 92%]
+.......FF........                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_helper[file_digest|gnd.synth.provenance:_sha256_file] __________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/file_digest|gnd.synth.provenance:_sha256_file
+E   --- golden
+E   +++ observed
+E   @@ -2,6 +2,6 @@
+E     "observed": {
+E      "dir": {
+E   -   "message": "[Errno 21] Is a directory: '<tmp>/files/dir'",
+E   -   "raises": "builtins.IsADirectoryError"
+E   +   "message": "digest input is not a regular file",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "empty": {
+________ test_helper[file_digest|gnd.transition:population_file_digest] ________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/file_digest|gnd.transition:population_file_digest
+E   --- golden
+E   +++ observed
+E   @@ -2,6 +2,6 @@
+E     "observed": {
+E      "dir": {
+E   -   "message": "[Errno 21] Is a directory: '<tmp>/files/dir'",
+E   -   "raises": "builtins.IsADirectoryError"
+E   +   "message": "digest input is not a regular file",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "empty": {
+____________ test_helper[iso_datetime|gnd.popvalidate:_is_datetime] ____________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/iso_datetime|gnd.popvalidate:_is_datetime
+E   --- golden
+E   +++ observed
+E   @@ -8,5 +8,5 @@
+E      },
+E      "hour-24": {
+E   -   "ok": true
+E   +   "ok": false
+E      },
+E      "integer": {
+E   @@ -26,8 +26,8 @@
+E      },
+E      "space-separator": {
+E   -   "ok": true
+E   +   "ok": false
+E      },
+E      "utc-lower-z": {
+E   -   "ok": true
+E   +   "ok": false
+E      },
+E      "utc-z": {
+__________ test_helper[iso_datetime|gnd.synth.values:_parse_datetime] __________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/iso_datetime|gnd.synth.values:_parse_datetime
+E   --- golden
+E   +++ observed
+E   @@ -2,8 +2,6 @@
+E     "observed": {
+E      "date-only": {
+E   -   "ok": {
+E   -    "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+E   -    "type": "datetime"
+E   -   }
+E   +   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01'",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "fractional": {
+E   @@ -14,8 +12,6 @@
+E      },
+E      "hour-24": {
+E   -   "ok": {
+E   -    "repr": "datetime.datetime(2024, 1, 2, 0, 0)",
+E   -    "type": "datetime"
+E   -   }
+E   +   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01T24:00:00'",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "integer": {
+E   @@ -44,14 +40,10 @@
+E      },
+E      "space-separator": {
+E   -   "ok": {
+E   -    "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+E   -    "type": "datetime"
+E   -   }
+E   +   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01 00:00:00'",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "utc-lower-z": {
+E   -   "ok": {
+E   -    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+E   -    "type": "datetime"
+E   -   }
+E   +   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01T00:00:00z'",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "utc-z": {
+E   @@ -62,8 +54,6 @@
+E      },
+E      "week-date": {
+E   -   "ok": {
+E   -    "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+E   -    "type": "datetime"
+E   -   }
+E   +   "message": "DateTime range rf1 is not valid ISO-8601: '2024-W01-1'",
+E   +   "raises": "builtins.ValueError"
+E      }
+E     },
+_______ test_helper[safe_filesystem|gnd.install:_reject_unsafe_relpath] ________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/safe_filesystem|gnd.install:_reject_unsafe_relpath
+E   --- golden
+E   +++ observed
+E   @@ -6,7 +6,6 @@
+E      },
+E      "backslash": {
+E   -   "ok": {
+E   -    "path": "a\\b"
+E   -   }
+E   +   "message": "rf1: refusing noncanonical relative path 'a\\b'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "backslash-parent": {
+E   @@ -19,7 +18,6 @@
+E      },
+E      "dot-slash": {
+E   -   "ok": {
+E   -    "path": "a"
+E   -   }
+E   +   "message": "rf1: refusing noncanonical relative path './a'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "dotdot": {
+E   @@ -28,7 +26,6 @@
+E      },
+E      "double-slash": {
+E   -   "ok": {
+E   -    "path": "a/b"
+E   -   }
+E   +   "message": "rf1: refusing noncanonical relative path 'a//b'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "drive-absolute": {
+E   @@ -77,7 +74,6 @@
+E      },
+E      "trailing-slash": {
+E   -   "ok": {
+E   -    "path": "a"
+E   -   }
+E   +   "message": "rf1: refusing noncanonical relative path 'a/'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      }
+E     },
+__________ test_helper[safe_filesystem|gnd.install:safe_destination] ___________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/safe_filesystem|gnd.install:safe_destination
+E   --- golden
+E   +++ observed
+E   @@ -6,7 +6,6 @@
+E      },
+E      "backslash": {
+E   -   "ok": {
+E   -    "path": "<tmp>/dest/tree/a\\b"
+E   -   }
+E   +   "message": "install destination: refusing noncanonical relative path 'a\\b'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "backslash-parent": {
+E   @@ -19,7 +18,6 @@
+E      },
+E      "dot-slash": {
+E   -   "ok": {
+E   -    "path": "<tmp>/dest/tree/a"
+E   -   }
+E   +   "message": "install destination: refusing noncanonical relative path './a'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "dotdot": {
+E   @@ -28,7 +26,6 @@
+E      },
+E      "double-slash": {
+E   -   "ok": {
+E   -    "path": "<tmp>/dest/tree/a/b"
+E   -   }
+E   +   "message": "install destination: refusing noncanonical relative path 'a//b'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "drive-absolute": {
+E   @@ -77,7 +74,6 @@
+E      },
+E      "trailing-slash": {
+E   -   "ok": {
+E   -    "path": "<tmp>/dest/tree/a"
+E   -   }
+E   +   "message": "install destination: refusing noncanonical relative path 'a/'",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "tree:d/existing": {
+E   @@ -87,7 +83,6 @@
+E      },
+E      "tree:file/x": {
+E   -   "ok": {
+E   -    "path": "<tmp>/dest/tree/file/x"
+E   -   }
+E   +   "message": "install destination: parent '<tmp>/dest/tree/file' is not a directory",
+E   +   "raises": "gnd.install.InstallPathError"
+E      },
+E      "tree:link_file": {
+_____________ test_helper[sha256_hex|gnd.measure.promote:_digest] ______________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/sha256_hex|gnd.measure.promote:_digest
+E   --- golden
+E   +++ observed
+E   @@ -2,6 +2,6 @@
+E     "observed": {
+E      "dir": {
+E   -   "message": "[Errno 21] Is a directory: '<tmp>/files/dir'",
+E   -   "raises": "builtins.IsADirectoryError"
+E   +   "message": "digest input is not a regular file",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "empty": {
+___________ test_helper[strict_json|gnd.coverage:read_json_document] ___________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.coverage:read_json_document
+E   --- golden
+E   +++ observed
+E   @@ -6,9 +6,9 @@
+E      },
+E      "deep": {
+E   -   "message": "<tmp>/deep.json has a list root, not an object",
+E   +   "message": "<tmp>/deep.json is not valid JSON: JSON depth exceeds cap",
+E       "raises": "gnd.coverage.CoverageInputError"
+E      },
+E      "duplicate-key": {
+E   -   "message": "<tmp>/duplicate-key.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+E   +   "message": "<tmp>/duplicate-key.json is not valid JSON: duplicate JSON key",
+E       "raises": "gnd.coverage.CoverageInputError"
+E      },
+E   @@ -34,5 +34,5 @@
+E      },
+E      "overflow": {
+E   -   "message": "<tmp>/overflow.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+E   +   "message": "<tmp>/overflow.json is not valid JSON: nonfinite JSON number",
+E       "raises": "gnd.coverage.CoverageInputError"
+E      },
+__________ test_helper[strict_json|gnd.declared_adapter:_bundle_rows] __________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.declared_adapter:_bundle_rows
+E   --- golden
+E   +++ observed
+E   @@ -6,5 +6,5 @@
+E      },
+E      "deep": {
+E   -   "message": "bundle requires exactly schema_version and files",
+E   +   "message": "assistant content is not bundle JSON: JSON depth exceeds cap",
+E       "raises": "gnd.declared_adapter.CandidateBundleError"
+E      },
+E   @@ -30,5 +30,5 @@
+E      },
+E      "overflow": {
+E   -   "message": "bundle requires exactly schema_version and files",
+E   +   "message": "assistant content is not bundle JSON: nonfinite JSON number",
+E       "raises": "gnd.declared_adapter.CandidateBundleError"
+E      },
+_______ test_helper[strict_json|gnd.exp.adapter_policy:_strict_document] _______
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.exp.adapter_policy:_strict_document
+E   --- golden
+E   +++ observed
+E   @@ -6,5 +6,5 @@
+E      },
+E      "deep": {
+E   -   "message": "adapter policy must contain a JSON object",
+E   +   "message": "adapter policy is not strict JSON: JSON depth exceeds cap",
+E       "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+E      },
+E   @@ -31,9 +31,6 @@
+E      },
+E      "overflow": {
+E   -   "ok": {
+E   -    "a": {
+E   -     "float": "inf"
+E   -    }
+E   -   }
+E   +   "message": "adapter policy is not strict JSON: nonfinite JSON number",
+E   +   "raises": "gnd.exp.adapter_policy.AdapterPolicyError"
+E      },
+E      "trailing-data": {
+_________ test_helper[strict_json|gnd.exp.session_eval:_strict_object] _________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.exp.session_eval:_strict_object
+E   --- golden
+E   +++ observed
+E   @@ -6,5 +6,5 @@
+E      },
+E      "deep": {
+E   -   "message": "verifier payload invalid: payload JSON root must be an object",
+E   +   "message": "verifier payload invalid: payload is not one strict JSON document: JSON depth exceeds cap",
+E       "raises": "gnd.exp.session_eval.VerifierPayloadError"
+E      },
+E   @@ -35,9 +35,6 @@
+E      },
+E      "overflow": {
+E   -   "ok": {
+E   -    "a": {
+E   -     "float": "inf"
+E   -    }
+E   -   }
+E   +   "message": "verifier payload invalid: payload is not one strict JSON document: nonfinite JSON number",
+E   +   "raises": "gnd.exp.session_eval.VerifierPayloadError"
+E      },
+E      "trailing-data": {
+_____ test_helper[strict_json|gnd.exp.session_store:_strict_object_bytes] ______
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.exp.session_store:_strict_object_bytes
+E   --- golden
+E   +++ observed
+E   @@ -6,5 +6,5 @@
+E      },
+E      "deep": {
+E   -   "message": "rf1 must contain a JSON object",
+E   +   "message": "rf1 is not strict JSON: JSON depth exceeds cap",
+E       "raises": "builtins.ValueError"
+E      },
+E   @@ -31,9 +31,6 @@
+E      },
+E      "overflow": {
+E   -   "ok": {
+E   -    "a": {
+E   -     "float": "inf"
+E   -    }
+E   -   }
+E   +   "message": "rf1 is not strict JSON: nonfinite JSON number",
+E   +   "raises": "builtins.ValueError"
+E      },
+E      "trailing-data": {
+_______ test_helper[strict_json|gnd.review.request:_strict_json_object] ________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.review.request:_strict_json_object
+E   --- golden
+E   +++ observed
+E   @@ -6,5 +6,5 @@
+E      },
+E      "deep": {
+E   -   "message": "invalid rf1 JSON: top level must be an object",
+E   +   "message": "invalid rf1 JSON: JSON depth exceeds cap",
+E       "raises": "gnd.review.request.ReviewRequestError"
+E      },
+E   @@ -32,9 +32,6 @@
+E      },
+E      "overflow": {
+E   -   "ok": {
+E   -    "a": {
+E   -     "float": "inf"
+E   -    }
+E   -   }
+E   +   "message": "invalid rf1 JSON: nonfinite JSON number",
+E   +   "raises": "gnd.review.request.ReviewRequestError"
+E      },
+E      "trailing-data": {
+___________ test_helper[strict_json|gnd.review.runner:_strict_json] ____________
+tests/test_rf1_helper_pins.py:513: in test_helper
+    assert_golden("helpers", site, {"site": site, "observed": observed})
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: helpers/strict_json|gnd.review.runner:_strict_json
+E   --- golden
+E   +++ observed
+E   @@ -6,5 +6,5 @@
+E      },
+E      "deep": {
+E   -   "message": "rf1 must contain exactly one JSON object",
+E   +   "message": "rf1 is invalid JSON: JSON depth exceeds cap",
+E       "raises": "gnd.review.runner.ReviewRunError"
+E      },
+E   @@ -31,9 +31,6 @@
+E      },
+E      "overflow": {
+E   -   "ok": {
+E   -    "a": {
+E   -     "float": "inf"
+E   -    }
+E   -   }
+E   +   "message": "rf1 is invalid JSON: nonfinite JSON number",
+E   +   "raises": "gnd.review.runner.ReviewRunError"
+E      },
+E      "trailing-data": {
+________________________________ test_resolver _________________________________
+tests/test_rf1_semantic_pins.py:96: in test_resolver
+    assert_golden("sem", "resolver", observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem/resolver
+E   --- golden
+E   +++ observed
+E   @@ -97,8 +97,8 @@
+E      },
+E      "model._resolved_primitive": {
+E   -   "ok": "String"
+E   +   "ok": null
+E      },
+E      "model_verbalization._object_type_cnl": {
+E   -   "ok": "Child is a kind of Base, inheriting the reference of Base."
+E   +   "ok": "Child is a kind of Base."
+E      },
+E      "popvalidate.resolve_primitive": {
+E   @@ -109,8 +109,8 @@
+E      },
+E      "pyrel_runtime.ModelIndex.primitive": {
+E   -   "ok": "String"
+E   +   "ok": null
+E      },
+E      "pyrel_runtime.ModelIndex.reference_value_type": {
+E   -   "ok": "Code"
+E   +   "ok": null
+E      }
+E     },
+E   @@ -143,8 +143,8 @@
+E      },
+E      "model._resolved_primitive": {
+E   -   "ok": "String"
+E   +   "ok": null
+E      },
+E      "model_verbalization._object_type_cnl": {
+E   -   "ok": "Child is a kind of Base, inheriting the reference of Base."
+E   +   "ok": "Child is a kind of Base."
+E      },
+E      "popvalidate.resolve_primitive": {
+E   @@ -155,8 +155,8 @@
+E      },
+E      "pyrel_runtime.ModelIndex.primitive": {
+E   -   "ok": "String"
+E   +   "ok": null
+E      },
+E      "pyrel_runtime.ModelIndex.reference_value_type": {
+E   -   "ok": "Code"
+E   +   "ok": null
+E      }
+E     },
+_____________ test_datetime_site[checker._typed_comparison_values] _____________
+tests/test_rf1_semantic_pins.py:115: in test_datetime_site
+    assert_golden("sem-datetime", site, observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-datetime/checker._typed_comparison_values
+E   --- golden
+E   +++ observed
+E   @@ -46,14 +46,5 @@
+E     },
+E     "utc-lower-z": {
+E   -  "ok": [
+E   -   {
+E   -    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+E   -    "type": "datetime"
+E   -   },
+E   -   {
+E   -    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+E   -    "type": "datetime"
+E   -   }
+E   -  ]
+E   +  "ok": null
+E     },
+E     "utc-z": {
+___________ test_datetime_site[export.pyrel_runtime._valid_temporal] ___________
+tests/test_rf1_semantic_pins.py:115: in test_datetime_site
+    assert_golden("sem-datetime", site, observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-datetime/export.pyrel_runtime._valid_temporal
+E   --- golden
+E   +++ observed
+E   @@ -7,5 +7,5 @@
+E     },
+E     "hour-24": {
+E   -  "ok": true
+E   +  "ok": false
+E     },
+E     "integer": {
+E   @@ -25,8 +25,8 @@
+E     },
+E     "space-separator": {
+E   -  "ok": true
+E   +  "ok": false
+E     },
+E     "utc-lower-z": {
+E   -  "ok": true
+E   +  "ok": false
+E     },
+E     "utc-z": {
+______________ test_datetime_site[model._temporal_literal_valid] _______________
+tests/test_rf1_semantic_pins.py:115: in test_datetime_site
+    assert_golden("sem-datetime", site, observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-datetime/model._temporal_literal_valid
+E   --- golden
+E   +++ observed
+E   @@ -7,5 +7,5 @@
+E     },
+E     "hour-24": {
+E   -  "ok": true
+E   +  "ok": false
+E     },
+E     "integer": {
+E   @@ -27,8 +27,8 @@
+E     },
+E     "space-separator": {
+E   -  "ok": true
+E   +  "ok": false
+E     },
+E     "utc-lower-z": {
+E   -  "ok": true
+E   +  "ok": false
+E     },
+E     "utc-z": {
+____________ test_datetime_site[semantic_adapter.canonical_scalar] _____________
+tests/test_rf1_semantic_pins.py:115: in test_datetime_site
+    assert_golden("sem-datetime", site, observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-datetime/semantic_adapter.canonical_scalar
+E   --- golden
+E   +++ observed
+E   @@ -1,15 +1,5 @@
+E    {
+E     "date-only": {
+E   -  "ok": {
+E   -   "dataclass": "Scalar",
+E   -   "fields": {
+E   -    "den": 1,
+E   -    "identity_kind": "string",
+E   -    "kind": "datetime-naive",
+E   -    "num": 63839664000000000,
+E   -    "ordered": true,
+E   -    "token": "2024-01-01"
+E   -   }
+E   -  }
+E   +  "ok": null
+E     },
+E     "fractional": {
+E   @@ -27,15 +17,5 @@
+E     },
+E     "hour-24": {
+E   -  "ok": {
+E   -   "dataclass": "Scalar",
+E   -   "fields": {
+E   -    "den": 1,
+E   -    "identity_kind": "string",
+E   -    "kind": "datetime-naive",
+E   -    "num": 63839750400000000,
+E   -    "ordered": true,
+E   -    "token": "2024-01-01T24:00:00"
+E   -   }
+E   -  }
+E   +  "ok": null
+E     },
+E     "integer": {
+E   @@ -95,28 +75,8 @@
+E     },
+E     "space-separator": {
+E   -  "ok": {
+E   -   "dataclass": "Scalar",
+E   -   "fields": {
+E   -    "den": 1,
+E   -    "identity_kind": "string",
+E   -    "kind": "datetime-naive",
+E   -    "num": 63839664000000000,
+E   -    "ordered": true,
+E   -    "token": "2024-01-01 00:00:00"
+E   -   }
+E   -  }
+E   +  "ok": null
+E     },
+E     "utc-lower-z": {
+E   -  "ok": {
+E   -   "dataclass": "Scalar",
+E   -   "fields": {
+E   -    "den": 1,
+E   -    "identity_kind": "string",
+E   -    "kind": "datetime-aware",
+E   -    "num": 63839664000000000,
+E   -    "ordered": true,
+E   -    "token": "2024-01-01T00:00:00z"
+E   -   }
+E   -  }
+E   +  "ok": null
+E     },
+E     "utc-z": {
+E   @@ -134,15 +94,5 @@
+E     },
+E     "week-date": {
+E   -  "ok": {
+E   -   "dataclass": "Scalar",
+E   -   "fields": {
+E   -    "den": 1,
+E   -    "identity_kind": "string",
+E   -    "kind": "datetime-naive",
+E   -    "num": 63839664000000000,
+E   -    "ordered": true,
+E   -    "token": "2024-W01-1"
+E   -   }
+E   -  }
+E   +  "ok": null
+E     }
+E    }
+____________ test_datetime_site[synth.boundary.boundary_neighbour] _____________
+tests/test_rf1_semantic_pins.py:115: in test_datetime_site
+    assert_golden("sem-datetime", site, observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: sem-datetime/synth.boundary.boundary_neighbour
+E   --- golden
+E   +++ observed
+E   @@ -1,8 +1,6 @@
+E    {
+E     "date-only": {
+E   -  "ok": [
+E   -   "2024-01-01T00:00:00.000001",
+E   -   "PT0.000001S"
+E   -  ]
+E   +  "message": "'2024-01-01' is not an ISO-8601 datetime bound",
+E   +  "raises": "gnd.synth.boundary.NoOrdering"
+E     },
+E     "fractional": {
+E   @@ -13,8 +11,6 @@
+E     },
+E     "hour-24": {
+E   -  "ok": [
+E   -   "2024-01-02T00:00:00.000001",
+E   -   "PT0.000001S"
+E   -  ]
+E   +  "message": "'2024-01-01T24:00:00' is not an ISO-8601 datetime bound",
+E   +  "raises": "gnd.synth.boundary.NoOrdering"
+E     },
+E     "integer": {
+E   @@ -43,8 +39,6 @@
+E     },
+E     "space-separator": {
+E   -  "ok": [
+E   -   "2024-01-01T00:00:00.000001",
+E   -   "PT0.000001S"
+E   -  ]
+E   +  "message": "'2024-01-01 00:00:00' is not an ISO-8601 datetime bound",
+E   +  "raises": "gnd.synth.boundary.NoOrdering"
+E     },
+E     "utc-lower-z": {
+E   @@ -59,8 +53,6 @@
+E     },
+E     "week-date": {
+E   -  "ok": [
+E   -   "2024-01-01T00:00:00.000001",
+E   -   "PT0.000001S"
+E   -  ]
+E   +  "message": "'2024-W01-1' is not an ISO-8601 datetime bound",
+E   +  "raises": "gnd.synth.boundary.NoOrdering"
+E     }
+E    }
+____________________________ test_session_fresh[3] _____________________________
+tests/test_rf1_session_pins.py:352: in test_session_fresh
+    assert_golden("session", f"v{version}-fresh", observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: session/v3-fresh
+E   --- golden
+E   +++ observed
+E   @@ -2,14 +2,14 @@
+E     "evidence": {
+E      "launches/0001.json": {
+E   -   "text": "{\"argv\":[\"python\",\"-m\",\"pytest\",\"test_gate.py::test_pass\",\"--junitxml\",\"results/results.xml\"],\"argv_sha256\":\"837f5780b3f408505774a228d929e6548d698e6e9458ccb6d021369b39f8a915\",\"child\":{\"argv_count\":6,\"argv_sha256\":\"5990f5f07de162f74a29e720f5b9dcc4c529e511995aafe57b694b1925a7cfd1\",\"cwd\":\"<working-directory>\",\"elapsed_seconds\":\"<seconds>\",\"ended_monotonic\":\"<monotonic>\",\"environment\":[{\"name\":\"HOME\",\"provenance\":\"supplied\"},{\"name\":\"PATH\",\"provenance\":\"supplied\"},{\"name\":\"TMPDIR\",\"provenance\":\"supplied\"}],\"process_group_cleaned\":true,\"return_code\":0,\"signal\":null,\"spawn_error\":null,\"spawned\":true,\"started_monotonic\":\"<monotonic>\",\"status\":\"succeeded\",\"stderr_observed_bytes\":0,\"stderr_retained_bytes\":0,\"stderr_truncated\":false,\"stdout_observed_bytes\":570,\"stdout_retained_bytes\":478,\"stdout_truncated\":false,\"termination\":\"exited\",\"termination_steps\":[],\"timed_out\":false},\"contract_sha256\":\"6fb3eede14068a3b495bb8b28589307964d8daa48eebd2e79d862c76f0897bd5\",\"experiment_after_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"experiment_before_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[\"test_gate.py::test_pass\"],\"present\":[\"test_gate.py::test_pass\"],\"reason\":null,\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"reason\":null,\"result_sha256\":{\"results/results.xml\":\"<junit-sha256>\"},\"run_id\":\"run-0001\",\"schema_version\":1,\"scratch_after_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\",\"scratch_before_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\"}\n"
+E   +   "text": "{\"argv\":[\"python\",\"-m\",\"pytest\",\"test_gate.py::test_pass\",\"--junitxml\",\"results/results.xml\"],\"argv_sha256\":\"837f5780b3f408505774a228d929e6548d698e6e9458ccb6d021369b39f8a915\",\"child\":{\"argv_count\":6,\"argv_sha256\":\"5990f5f07de162f74a29e720f5b9dcc4c529e511995aafe57b694b1925a7cfd1\",\"cwd\":\"<working-directory>\",\"elapsed_seconds\":\"<seconds>\",\"ended_monotonic\":\"<monotonic>\",\"environment\":[{\"name\":\"HOME\",\"provenance\":\"supplied\"},{\"name\":\"PATH\",\"provenance\":\"supplied\"},{\"name\":\"TMPDIR\",\"provenance\":\"supplied\"}],\"process_group_cleaned\":true,\"return_code\":null,\"signal\":null,\"spawn_error\":\"FileNotFoundError\",\"spawned\":false,\"started_monotonic\":\"<monotonic>\",\"status\":\"spawn-failed\",\"stderr_observed_bytes\":0,\"stderr_retained_bytes\":0,\"stderr_truncated\":false,\"stdout_observed_bytes\":0,\"stdout_retained_bytes\":0,\"stdout_truncated\":false,\"termination\":\"not-started\",\"termination_steps\":[],\"timed_out\":false},\"contract_sha256\":\"6fb3eede14068a3b495bb8b28589307964d8daa48eebd2e79d862c76f0897bd5\",\"experiment_after_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"experiment_before_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[],\"present\":[],\"reason\":\"tests:verifier-io\",\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"reason\":\"tests:verifier-io\",\"result_sha256\":{\"results/results.xml\":null},\"run_id\":\"run-0001\",\"schema_version\":1,\"scratch_after_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\",\"scratch_before_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\"}\n"
+E      },
+E      "result.json": {
+E   -   "text": "{\"acceptance_modes\":[\"tests\"],\"disposition\":\"accepted\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[\"test_gate.py::test_pass\"],\"present\":[\"test_gate.py::test_pass\"],\"reason\":null,\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"launch_sha256\":\"<sha256:launches/0001.json>\",\"reason\":null,\"run_id\":\"run-0001\",\"schema_version\":1}\n"
+E   +   "text": "{\"acceptance_modes\":[\"tests\"],\"disposition\":\"verifier-failure\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[],\"present\":[],\"reason\":\"tests:verifier-io\",\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"launch_sha256\":\"<sha256:launches/0001.json>\",\"reason\":\"tests:verifier-io\",\"run_id\":\"run-0001\",\"schema_version\":1}\n"
+E      }
+E     },
+E     "streams": {
+E   -  "exit": 0,
+E   +  "exit": 15,
+E      "stderr": "",
+E   -  "stdout": "{\"acceptance_modes\":[\"tests\"],\"disposition\":\"accepted\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[\"test_gate.py::test_pass\"],\"present\":[\"test_gate.py::test_pass\"],\"reason\":null,\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"launch_sha256\":\"<sha256:launches/0001.json>\",\"reason\":null,\"run_id\":\"run-0001\",\"schema_version\":1}\n"
+E   +  "stdout": "{\"acceptance_modes\":[\"tests\"],\"disposition\":\"verifier-failure\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[],\"present\":[],\"reason\":\"tests:verifier-io\",\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"launch_sha256\":\"<sha256:launches/0001.json>\",\"reason\":\"tests:verifier-io\",\"run_id\":\"run-0001\",\"schema_version\":1}\n"
+E     }
+E    }
+____________________________ test_session_resume[3] ____________________________
+tests/test_rf1_session_pins.py:375: in test_session_resume
+    assert_golden("session", f"v{version}-resume", observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: session/v3-resume
+E   --- golden
+E   +++ observed
+E   @@ -2,5 +2,5 @@
+E     "evidence_after": {
+E      "launches/0001.json": {
+E   -   "text": "{\"argv\":[\"python\",\"-m\",\"pytest\",\"test_gate.py::test_pass\",\"--junitxml\",\"results/results.xml\"],\"argv_sha256\":\"837f5780b3f408505774a228d929e6548d698e6e9458ccb6d021369b39f8a915\",\"child\":{\"argv_count\":6,\"argv_sha256\":\"5990f5f07de162f74a29e720f5b9dcc4c529e511995aafe57b694b1925a7cfd1\",\"cwd\":\"<working-directory>\",\"elapsed_seconds\":\"<seconds>\",\"ended_monotonic\":\"<monotonic>\",\"environment\":[{\"name\":\"HOME\",\"provenance\":\"supplied\"},{\"name\":\"PATH\",\"provenance\":\"supplied\"},{\"name\":\"TMPDIR\",\"provenance\":\"supplied\"}],\"process_group_cleaned\":true,\"return_code\":0,\"signal\":null,\"spawn_error\":null,\"spawned\":true,\"started_monotonic\":\"<monotonic>\",\"status\":\"succeeded\",\"stderr_observed_bytes\":0,\"stderr_retained_bytes\":0,\"stderr_truncated\":false,\"stdout_observed_bytes\":570,\"stdout_retained_bytes\":478,\"stdout_truncated\":false,\"termination\":\"exited\",\"termination_steps\":[],\"timed_out\":false},\"contract_sha256\":\"6fb3eede14068a3b495bb8b28589307964d8daa48eebd2e79d862c76f0897bd5\",\"experiment_after_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"experiment_before_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[\"test_gate.py::test_pass\"],\"present\":[\"test_gate.py::test_pass\"],\"reason\":null,\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"reason\":null,\"result_sha256\":{\"results/results.xml\":\"<junit-sha256>\"},\"run_id\":\"run-0001\",\"schema_version\":1,\"scratch_after_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\",\"scratch_before_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\"}\n"
+E   +   "text": "{\"argv\":[\"python\",\"-m\",\"pytest\",\"test_gate.py::test_pass\",\"--junitxml\",\"results/results.xml\"],\"argv_sha256\":\"837f5780b3f408505774a228d929e6548d698e6e9458ccb6d021369b39f8a915\",\"child\":{\"argv_count\":6,\"argv_sha256\":\"5990f5f07de162f74a29e720f5b9dcc4c529e511995aafe57b694b1925a7cfd1\",\"cwd\":\"<working-directory>\",\"elapsed_seconds\":\"<seconds>\",\"ended_monotonic\":\"<monotonic>\",\"environment\":[{\"name\":\"HOME\",\"provenance\":\"supplied\"},{\"name\":\"PATH\",\"provenance\":\"supplied\"},{\"name\":\"TMPDIR\",\"provenance\":\"supplied\"}],\"process_group_cleaned\":true,\"return_code\":null,\"signal\":null,\"spawn_error\":\"FileNotFoundError\",\"spawned\":false,\"started_monotonic\":\"<monotonic>\",\"status\":\"spawn-failed\",\"stderr_observed_bytes\":0,\"stderr_retained_bytes\":0,\"stderr_truncated\":false,\"stdout_observed_bytes\":0,\"stdout_retained_bytes\":0,\"stdout_truncated\":false,\"termination\":\"not-started\",\"termination_steps\":[],\"timed_out\":false},\"contract_sha256\":\"6fb3eede14068a3b495bb8b28589307964d8daa48eebd2e79d862c76f0897bd5\",\"experiment_after_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"experiment_before_sha256\":\"3bf5cdbf0ae027bff3604fbf4ce762aefc0b1e231dfc8a6312a406c29c8a4e86\",\"feedback\":[{\"case_id\":\"gate\",\"mode\":\"tests\",\"passing\":[],\"present\":[],\"reason\":\"tests:verifier-io\",\"required\":[\"test_gate.py::test_pass\"],\"role\":\"required\"}],\"reason\":\"tests:verifier-io\",\"result_sha256\":{\"results/results.xml\":null},\"run_id\":\"run-0001\",\"schema_version\":1,\"scratch_after_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\",\"scratch_before_sha256\":\"b729a806fbae46f2484e37b1ceebd693bc16a7e17fb8c219219c5a7cb63b9e5c\"}\n"
+E      }
+E     },
+_______________________ test_session_unknown_version[0] ________________________
+tests/test_rf1_session_pins.py:413: in test_session_unknown_version
+    assert_golden("session", f"unknown-v{version}", observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: session/unknown-v0
+E   --- golden
+E   +++ observed
+E   @@ -3,5 +3,5 @@
+E      "exit": 3,
+E      "stderr": "",
+E   -  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [contract:shape]\n"
+E   +  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7, or 8 [contract:shape]\n"
+E     },
+E     "reader": {
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4466/test_session_unknown_version_00/EXP-703-constraint-acceptance/SPEC.md
+  declares Q1: Did the public session meet its declared acceptance relation?
+_______________________ test_session_unknown_version[9] ________________________
+tests/test_rf1_session_pins.py:413: in test_session_unknown_version
+    assert_golden("session", f"unknown-v{version}", observed)
+tests/support/rf1_pins.py:166: in assert_golden
+    raise AssertionError(f"RF1 pin changed: {lane}/{key}\n{diff[:6000]}")
+E   AssertionError: RF1 pin changed: session/unknown-v9
+E   --- golden
+E   +++ observed
+E   @@ -3,5 +3,5 @@
+E      "exit": 3,
+E      "stderr": "",
+E   -  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [contract:shape]\n"
+E   +  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7, or 8 [contract:shape]\n"
+E     },
+E     "reader": {
+----------------------------- Captured stdout call -----------------------------
+CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4466/test_session_unknown_version_90/EXP-703-constraint-acceptance/SPEC.md
+  declares Q1: Did the public session meet its declared acceptance relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.synth.provenance:_sha256_file]
+FAILED tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.transition:population_file_digest]
+FAILED tests/test_rf1_helper_pins.py::test_helper[iso_datetime|gnd.popvalidate:_is_datetime]
+FAILED tests/test_rf1_helper_pins.py::test_helper[iso_datetime|gnd.synth.values:_parse_datetime]
+FAILED tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:_reject_unsafe_relpath]
+FAILED tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.install:safe_destination]
+FAILED tests/test_rf1_helper_pins.py::test_helper[sha256_hex|gnd.measure.promote:_digest]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.coverage:read_json_document]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.declared_adapter:_bundle_rows]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.adapter_policy:_strict_document]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.session_eval:_strict_object]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.exp.session_store:_strict_object_bytes]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.request:_strict_json_object]
+FAILED tests/test_rf1_helper_pins.py::test_helper[strict_json|gnd.review.runner:_strict_json]
+FAILED tests/test_rf1_semantic_pins.py::test_resolver - AssertionError: RF1 p...
+FAILED tests/test_rf1_semantic_pins.py::test_datetime_site[checker._typed_comparison_values]
+FAILED tests/test_rf1_semantic_pins.py::test_datetime_site[export.pyrel_runtime._valid_temporal]
+FAILED tests/test_rf1_semantic_pins.py::test_datetime_site[model._temporal_literal_valid]
+FAILED tests/test_rf1_semantic_pins.py::test_datetime_site[semantic_adapter.canonical_scalar]
+FAILED tests/test_rf1_semantic_pins.py::test_datetime_site[synth.boundary.boundary_neighbour]
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[3] - AssertionError...
+FAILED tests/test_rf1_session_pins.py::test_session_resume[3] - AssertionErro...
+FAILED tests/test_rf1_session_pins.py::test_session_unknown_version[0] - Asse...
+FAILED tests/test_rf1_session_pins.py::test_session_unknown_version[9] - Asse...
+24 failed, 209 passed in 62.49s (0:01:02)
+
+Exit: 1

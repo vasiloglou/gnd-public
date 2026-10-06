@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import payloads as report_module
 from gnd import resolve_version
 from gnd.checker import band as checker_band
@@ -85,7 +86,7 @@ def _cmd_measure(
     if not index_path.exists():
         return fail(3, f"no index.json under {populations_dir} — nothing to measure.")
     try:
-        index = _validate_index_document(json.loads(index_path.read_text(encoding="utf-8")))
+        index = _validate_index_document(_rf7_input.loads(index_path.read_text(encoding="utf-8")))
     except (OSError, json.JSONDecodeError) as error:
         return fail(3, f"could not read {index_path}: {error}")
     except IndexValidationError as error:

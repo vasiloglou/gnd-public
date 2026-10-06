@@ -255,6 +255,16 @@
       "source": "gnd.commands.witness",
       "target": "gnd.witness.cli",
       "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.input_policy",
+      "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.input_policy",
+      "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
     }
   ],
   "service_bindings": {

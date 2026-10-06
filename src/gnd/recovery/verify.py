@@ -13,6 +13,7 @@ from typing import Any
 from pydantic import ValidationError
 from ruamel.yaml import YAMLError
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import ArtifactError, read_regular_bounded
 from gnd.artifacts import sha256_hex as _sha256
 from gnd.model import ModelValidationError, load_model
@@ -252,7 +253,7 @@ def _resolve_locator(evidence: EvidenceRecord, data: bytes) -> bytes:
         return _line_excerpt(data, start, end)
     if isinstance(locator, JsonPointerLocator):
         try:
-            document = json.loads(data.decode("utf-8"), parse_constant=_reject_json_constant)
+            document = _rf7_input.loads(data.decode("utf-8"), parse_constant=_reject_json_constant)
             _validate_structured_data(document)
         except (
             UnicodeDecodeError,
@@ -523,7 +524,7 @@ def verify_recovery_bundle(
         )
         report_digest = _sha256(report_bytes)
         try:
-            document = json.loads(
+            document = _rf7_input.loads(
                 report_bytes.decode("utf-8"), parse_constant=_reject_json_constant
             )
             report = RecoveryReport.model_validate(document)

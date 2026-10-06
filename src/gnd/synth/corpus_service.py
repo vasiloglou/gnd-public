@@ -6,6 +6,8 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
+from gnd import input_policy as _rf7_input
+
 
 class IndexValidationError(ValueError):
     """The synthesis corpus manifest is not a supported closed document."""
@@ -183,7 +185,7 @@ def _validate_existing_synth_index(out_root: Path) -> None:
     if not index_path.exists():
         return
     try:
-        document = _validate_index_document(json.loads(index_path.read_text(encoding="utf-8")))
+        document = _validate_index_document(_rf7_input.loads(index_path.read_text(encoding="utf-8")))
         _resolve_unique_index_entries(out_root, document)
     except json.JSONDecodeError as error:
         raise IndexValidationError(f"index.json is not valid JSON: {error}") from error
@@ -324,7 +326,7 @@ def _merge_index(
     existing_downs: dict[tuple[str, str], dict[str, Any]] = {}
     if index_path.exists():
         try:
-            document = _validate_index_document(json.loads(index_path.read_text(encoding="utf-8")))
+            document = _validate_index_document(_rf7_input.loads(index_path.read_text(encoding="utf-8")))
             _resolve_unique_index_entries(out_root, document)
             for entry in document["populations"]:
                 existing[entry["population"]] = entry

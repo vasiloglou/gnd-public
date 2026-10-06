@@ -45,6 +45,7 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
 from gnd.errors import ValidationIssue
 from gnd.errors import issues_from_validation_error as _validation_issues
 from gnd.manifest_paths import manifest_path_issue
@@ -341,7 +342,7 @@ def _read_document(path: Path, rule_id: str) -> Any:
             [ValidationIssue(path=str(path), message=message, rule_id=rule_id)],
         )
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return _rf7_input.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ManifestError(
             f"{path} is not parseable JSON: {error}",

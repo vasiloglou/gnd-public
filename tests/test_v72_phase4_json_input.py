@@ -80,6 +80,8 @@ def test_core_refusal_controls_discriminate_disabled_policy(variant, monkeypatch
     payload = CHARACTERIZE.raw(variant)
     with pytest.raises(json_input.JsonInputRefusal):
         json_input.bounded_json(payload, max_bytes=maximum)
+    from gnd import input_policy
+    monkeypatch.setattr(input_policy, 'loads', json.loads)
     monkeypatch.setattr(json_input, '_refuse', lambda *args: None)
     assert json_input.bounded_json(payload, max_bytes=maximum) is not None
 
@@ -88,10 +90,10 @@ def test_neutral_owner_and_fresh_import_direction():
     tree = ast.parse(target.read_text())
     imports = {node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)}
     imports |= {alias.name for node in ast.walk(tree) if isinstance(node, ast.Import) for alias in node.names}
-    assert imports <= {'__future__', 'json', 'math', 'decimal'}
+    assert imports <= {'__future__', 'json', 'math', 'decimal', 'gnd'}
     code = "import json,sys; import gnd.json_input; print(json.dumps(sorted(n for n in sys.modules if n.startswith('gnd'))))"
     completed = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True, timeout=10, check=True, cwd=ROOT)
-    assert json.loads(completed.stdout) == ['gnd', 'gnd.json_input']
+    assert json.loads(completed.stdout) == ['gnd', 'gnd.input_policy', 'gnd.json_input']
     wrappers = ast.parse((ROOT / 'src/gnd/exp/session_patch.py').read_text())
     for node in wrappers.body:
         if isinstance(node, ast.FunctionDef) and node.name in {'bounded_json', 'validate_json_value'}:

@@ -14,7 +14,8 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-from support.rf1_pins import assert_golden, build, inputs, load_cases, observe, raised, scrub
+from support.rf1_pins import build, inputs, load_cases, observe, raised, scrub
+from support.rf7_pins import assert_golden
 
 from gnd import (
     architecture,

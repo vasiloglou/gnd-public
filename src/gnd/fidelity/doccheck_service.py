@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
 from gnd.commands._output import _print_issues
 from gnd.exits import EXIT_NO_INPUT
@@ -134,7 +135,7 @@ def _cmd_doccheck(model_path: str, manifest_path: str, artifacts_dir: str) -> in
             )
 
     try:
-        applicable = json.loads(applicable_bytes.decode("utf-8"))
+        applicable = _rf7_input.loads(applicable_bytes.decode("utf-8"))
         if applicable != applicable_set(model):
             print(
                 "VIOLATION applicable-set: artifact does not match the "

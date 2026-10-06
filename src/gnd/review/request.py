@@ -30,6 +30,7 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import ArtifactError, read_regular_bounded
 from gnd.artifacts import reject_json_duplicate_pairs as _reject_duplicate_object_pairs
 
@@ -660,7 +661,7 @@ def _unfence(text: str) -> str:
 def _strict_json_object(raw: bytes, *, label: str) -> dict[str, Any]:
     try:
         text = _unfence(raw.decode("utf-8"))
-        document = json.loads(
+        document = _rf7_input.loads(
             text,
             object_pairs_hook=_reject_duplicate_object_pairs,
             parse_constant=_reject_nonfinite_constant,
@@ -862,7 +863,7 @@ def _json_object_or_none(text: str) -> dict[str, Any] | None:
     """
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             text,
             object_pairs_hook=_reject_duplicate_object_pairs,
             parse_constant=_reject_nonfinite_constant,

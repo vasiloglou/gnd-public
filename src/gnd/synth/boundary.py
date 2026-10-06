@@ -51,11 +51,12 @@ import copy
 import json
 import math
 from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta  # noqa: F401 -- historical compatibility binding
 from pathlib import Path
 from random import Random
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 from gnd.checker import IMPLEMENTED_FAMILIES, CheckReport, check
 from gnd.model import Model
@@ -346,7 +347,7 @@ def boundary_neighbour(value: Any, primitive: str | None, direction: int) -> tup
         epsilon = "P1D"
     elif name == "DateTime":
         try:
-            parsed = datetime.fromisoformat(str(value))
+            parsed = _rf7_input.parse_datetime(value)
         except ValueError as error:
             raise NoOrdering(f"{value!r} is not an ISO-8601 datetime bound") from error
         try:

@@ -25,6 +25,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from gnd import input_policy as _rf7_input
+
 if TYPE_CHECKING:
     from gnd.population import Population
 import json
@@ -119,7 +121,7 @@ from gnd.documents import structured_derivation_ids  # historical compatibility 
 
 def _load_meta_schema() -> dict[str, Any]:
     schema_text = files("gnd").joinpath("schema/orm-meta.schema.json").read_text(encoding="utf-8")
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
 #: The keys the structured derivation arm admits. Named here as well as in the
@@ -626,8 +628,7 @@ def _temporal_literal_valid(value: str, primitive: str) -> bool:
                 is None
             ):
                 return False
-            normalized = value[:-1] + "+00:00" if value[-1:] in ("Z", "z") else value
-            return bool(datetime.fromisoformat(normalized))
+            return bool(_rf7_input.parse_datetime(value))
     except ValueError:
         return False
     return False
@@ -732,11 +733,7 @@ def _rule_value_range_order(doc: dict[str, Any]) -> list[ValidationIssue]:
                 ordered_min = date.fromisoformat(minimum)
                 ordered_max = date.fromisoformat(maximum)
             elif primitive == "DateTime":
-                normalized = [
-                    value[:-1] + "+00:00" if value[-1:] in ("Z", "z") else value
-                    for value in (minimum, maximum)
-                ]
-                ordered_min, ordered_max = map(datetime.fromisoformat, normalized)
+                ordered_min, ordered_max = map(_rf7_input.parse_datetime, (minimum, maximum))
                 awareness = (
                     ordered_min.utcoffset() is not None,
                     ordered_max.utcoffset() is not None,

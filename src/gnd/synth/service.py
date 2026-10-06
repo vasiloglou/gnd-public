@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import payloads as report_module
 from gnd import resolve_version
 from gnd.checker import check
@@ -196,7 +197,7 @@ def _bind_synth_not_derivable(
     records: dict[tuple[str, str], dict[str, Any]] = {}
     index_path = out_root / "index.json"
     if index_path.exists():
-        document = _validate_index_document(json.loads(index_path.read_text(encoding="utf-8")))
+        document = _validate_index_document(_rf7_input.loads(index_path.read_text(encoding="utf-8")))
         for record in document["not_derivable"]:
             records[(str(record.get("constraint_ref")), str(record.get("operator")))] = record
     for record in not_derivable:

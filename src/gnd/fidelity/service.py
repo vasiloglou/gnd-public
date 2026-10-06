@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import resolve_version, verbalize
 from gnd import safefs as install_module
 from gnd.commands._output import _print_issues
@@ -124,7 +125,7 @@ def _cmd_fidelity(
 
     try:
         applicable_bytes = applicable_path.read_bytes()
-        applicable = json.loads(applicable_bytes.decode("utf-8"))
+        applicable = _rf7_input.loads(applicable_bytes.decode("utf-8"))
         if applicable != applicable_set(model):
             print(
                 "VIOLATION applicable-set: artifact does not match the "

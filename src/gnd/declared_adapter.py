@@ -20,6 +20,7 @@ import time
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from urllib.parse import urlsplit
 
+from gnd import input_policy as _rf7_input
 from gnd.agents import AgentCLIError, InvocationStatus
 from gnd.artifacts import canonical_json_bytes, reject_json_constant, reject_json_duplicate_pairs
 from gnd.exp.adapter_policy import (
@@ -89,7 +90,7 @@ def _bundle_rows(content: str) -> list[tuple[tuple[str, ...], bytes]]:
 
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             content,
             parse_constant=reject_json_constant,
             object_pairs_hook=reject_json_duplicate_pairs,
@@ -559,7 +560,7 @@ async def _invoke_http(
             if not 200 <= http_status < 300:
                 raise OpenAIResponseError(f"HTTP response status {http_status} is not successful")
             try:
-                document = json.loads(response_body.decode("utf-8"))
+                document = _rf7_input.loads(response_body.decode("utf-8"))
                 message = document["choices"][0]["message"]
                 if message.get("tool_calls"):
                     raise OpenAIResponseError("tool-call responses are refused")

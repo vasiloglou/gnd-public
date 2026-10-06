@@ -9,6 +9,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import (
     DEFAULT_MAX_DEPTH,
     DEFAULT_MAX_FILES,
@@ -281,7 +282,7 @@ def author_expectation(
         raise ExpectationAuthorError(f"--from {source_relative!r} was refused: {error}") from error
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             original,
             parse_constant=lambda token: (_ for _ in ()).throw(
                 ValueError(f"non-finite JSON number {token!r} is forbidden")

@@ -41,6 +41,7 @@ from pathlib import Path, PurePosixPath
 from types import MappingProxyType
 from typing import BinaryIO, Literal
 
+from gnd import input_policy as _rf7_input
 from gnd.exits import (
     EXIT_INTERNAL,
     EXIT_IO,
@@ -1273,7 +1274,7 @@ def _exp_run_index_from_stdout(spawn: StationSpawn) -> int | None:
             chunks.extend(block)
         if len(chunks) > _MAX_RESULT_STDOUT_BYTES:
             return None
-        document = json.loads(bytes(chunks))
+        document = _rf7_input.loads(bytes(chunks))
         if not isinstance(document, dict):
             return None
         run_id = document.get("run_id")

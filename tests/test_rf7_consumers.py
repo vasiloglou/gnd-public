@@ -44,8 +44,8 @@ def test_primitive_nonboolean_inheritance(flag):
 def test_yaml_alias_actual_reader_refuses(which):
     raw = 'x: &a [1]\ny: *a\n'
     if which == 'evolve':
-        from gnd.evolve.service import _parse_model_text
-        with pytest.raises(ValueError, match='alias'):
+        from gnd.evolve.service import EvolutionError, _parse_model_text
+        with pytest.raises(EvolutionError, match='alias'):
             _parse_model_text(raw)
     else:
         from gnd.export.souffle import parse
@@ -57,8 +57,8 @@ def test_yaml_alias_actual_reader_refuses(which):
 def test_json_actual_reader_overflow_refuses(which):
     raw = b'{"x":1e999}'
     if which == 'population':
-        from gnd.population import _parse_document_bytes
-        with pytest.raises(Exception):
+        from gnd.population import PopulationLoadError, _parse_document_bytes
+        with pytest.raises(PopulationLoadError):
             _parse_document_bytes(raw, suffix='.json', source='rf7')
     elif which == 'adapter':
         from gnd.exp.adapter_policy import _strict_document
@@ -113,3 +113,40 @@ def test_unknown_version_includes_eight():
     with pytest.raises(ValueError) as error:
         DataDrivenContract.model_validate({'schema_version': 9})
     assert 'or 8' in str(error.value)
+
+
+def test_model_json_refusal_cannot_fall_back_to_yaml():
+    from gnd.errors import ModelLoadError
+    from gnd.model import load_model_bytes
+    with pytest.raises(ModelLoadError, match='JSON'):
+        load_model_bytes(b'{"x":1e999}', source='rf7.json')
+
+
+def test_digest_change_refusal_closes_descriptor(tmp_path, monkeypatch):
+    path = tmp_path / 'changing'
+    path.write_bytes(b'first')
+    read = os.read
+    close = os.close
+    closed = []
+    changed = False
+
+    def mutate(fd, limit):
+        nonlocal changed
+        chunk = read(fd, limit)
+        if not changed:
+            changed = True
+            with path.open('ab') as handle:
+                handle.write(b'second')
+        return chunk
+
+    def observe_close(fd):
+        closed.append(fd)
+        close(fd)
+
+    monkeypatch.setattr(os, 'read', mutate)
+    monkeypatch.setattr(os, 'close', observe_close)
+    with pytest.raises(ValueError, match='changed while reading'):
+        safefs.file_sha256(path)
+    assert len(closed) == 1
+    with pytest.raises(OSError):
+        os.fstat(closed[0])

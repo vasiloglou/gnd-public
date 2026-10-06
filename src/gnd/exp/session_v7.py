@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import asyncio
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import stat
 import tempfile
 import time
 from pathlib import Path
 
+from gnd import input_policy as _rf7_input
 from gnd.admission_validation import constraint_annotations, validate_reference_transport
 from gnd.agents import InvocationStatus
 from gnd.artifacts import (
@@ -109,7 +110,7 @@ def _evaluate(case, raw, process_exit, snapshot, experiment, digest, contract_sh
     )
     if len(raw) > 10 * 1024 * 1024:
         raise ValueError("verifier transport exceeds byte cap")
-    payload = json.loads(raw)
+    payload = _rf7_input.loads(raw)
     if not isinstance(payload, dict):
         raise ValueError("verifier transport must be an object")  # noqa: TRY004 - public refusal seam
     if refs is not None:
@@ -132,7 +133,7 @@ def _evaluate(case, raw, process_exit, snapshot, experiment, digest, contract_sh
     }
     encoded = canonical_json_bytes(inner) if "report" in payload else bytes(raw)
     if isinstance(case.acceptance, TransitionAcceptance):
-        steps = json.loads(_read(snapshot, case.verify.steps))
+        steps = _rf7_input.loads(_read(snapshot, case.verify.steps))
         result = validate_transition_payload(
             encoded, expected_post=case.verify.post, submitted_steps=steps, **args
         )
@@ -312,7 +313,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
         if directory.name != f"{index:04d}":
             raise ValueError("attempt sequence has a gap")
         raw = _read(store._attempts_root, f"{directory.name}/attempt.json")
-        document = json.loads(raw)
+        document = _rf7_input.loads(raw)
         document["invocation"]["stdout"] = _read(directory, document["agent_stdout"]["path"])
         document["invocation"]["stderr"] = _read(directory, document["agent_stderr"]["path"])
         record = AttemptRecord.model_validate(document)
@@ -479,7 +480,7 @@ def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):
     pointer = store.root / "best.json"
     if pointer.exists() != (identity is not None):
         raise ValueError("best pointer presence differs")
-    if identity is not None and json.loads(_read(store.root, "best.json")) != identity.model_dump(
+    if identity is not None and _rf7_input.loads(_read(store.root, "best.json")) != identity.model_dump(
         mode="json"
     ):
         raise ValueError("best pointer differs from reconstructed rank")

@@ -40,6 +40,7 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
 from gnd.agents import AgentAdapterId, InvocationResult
 from gnd.artifacts import (
     ArtifactError,
@@ -174,7 +175,7 @@ def _strict_object_bytes(data: bytes, *, label: str) -> dict[str, Any]:
 
 
 
-    decoder = json.JSONDecoder(
+    decoder = _rf7_input.JSONDecoder(
         parse_constant=reject_json_constant,
         object_pairs_hook=reject_json_duplicate_pairs,
     )
@@ -458,7 +459,7 @@ class DeclaredLaunchIntent(_DeclaredLaunchIntentV2):
 
     @classmethod
     def model_validate_json(cls, raw, *args, **kwargs):
-        return cls.model_validate(json.loads(raw), *args, **kwargs)
+        return cls.model_validate(_rf7_input.loads(raw), *args, **kwargs)
 
     @model_serializer(mode="wrap")
     def _wire(self, handler):
@@ -722,7 +723,7 @@ class AttemptRecord(_AttemptRecordBase):
         """
         if isinstance(json_data, bytearray):
             json_data = bytes(json_data)
-        return cls.model_validate(json.loads(json_data), *args, **kwargs)
+        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):
@@ -1022,7 +1023,7 @@ class SessionResult(_SessionResultBase):
         """
         if isinstance(json_data, bytearray):
             json_data = bytes(json_data)
-        return cls.model_validate(json.loads(json_data), *args, **kwargs)
+        return cls.model_validate(_rf7_input.loads(json_data), *args, **kwargs)
 
     @model_serializer(mode="wrap")
     def _serialize_wire_version(self, handler):
@@ -1337,7 +1338,7 @@ def _retained_wire(raw: bytes, declared: Mapping[str, int], case_id: str) -> int
         return PAYLOAD_SCHEMA_VERSION
     wire = declared[case_id]
     try:
-        payload = json.loads(raw)
+        payload = _rf7_input.loads(raw)
     except ValueError:
         return wire
     version = payload.get("schema_version") if isinstance(payload, dict) else None

@@ -1,8 +1,9 @@
 """Bounded witness/replay input orchestration."""
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 
+from gnd import input_policy as _rf7_input
 from gnd import model as model_module
 from gnd.errors import ModelValidationError, PopulationLoadError
 
@@ -34,7 +35,7 @@ def _witness_inputs(model_path, population_path, reference_root):
         else None
     )
     try:
-        md = json.loads(mr)
+        md = _rf7_input.loads(mr)
     except ValueError:
         md = _parse_document_bytes(mr, suffix=Path(model_path).suffix, source=str(model_path))
     pd = _parse_document_bytes(pr, suffix=Path(population_path).suffix, source=str(population_path))

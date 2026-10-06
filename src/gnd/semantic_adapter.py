@@ -10,9 +10,10 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, replace
-from datetime import date, datetime
+from datetime import date, datetime  # noqa: F401 -- historical compatibility binding
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import semantic_spec, universe
 from gnd import values as scalar_values
 from gnd.address import positional_constraint_ref
@@ -132,9 +133,7 @@ def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | 
             return Scalar("date", value, ordinal, 1, True, "string")
         if primitive == "DateTime":
             try:
-                parsed = datetime.fromisoformat(
-                    value[:-1] + "+00:00" if value[-1:] in ("Z", "z") else value
-                )
+                parsed = _rf7_input.parse_datetime(value)
                 offset = parsed.utcoffset()
             except ValueError:
                 return None

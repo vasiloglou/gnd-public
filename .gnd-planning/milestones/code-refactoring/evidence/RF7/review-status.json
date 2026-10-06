@@ -1,0 +1,7 @@
+{
+  "status": "blocked-awaiting-explicit-provider-authorization",
+  "attempt": "native Codex ephemeral gpt-6-sol xhigh read-only stdin bounded RF7 prompt, initial plus at most one repair",
+  "result": "Automatic approval review rejected repository source/diff transmission to Codex provider: implementation approval does not explicitly authorize this disclosure.",
+  "user_question_pending": true,
+  "review_ran": false
+}

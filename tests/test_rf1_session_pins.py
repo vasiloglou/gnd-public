@@ -24,7 +24,6 @@ from pathlib import Path
 import pytest
 from support.cli_runner import run_main
 from support.rf1_pins import (
-    assert_golden,
     encode,
     evidence_tree,
     normalize_text,
@@ -34,6 +33,7 @@ from support.rf1_pins import (
 )
 from support.rf2_session_pins import assert_successor, install_capture
 from support.rf5_sources import owner
+from support.rf7_pins import assert_golden
 
 from gnd import cli
 from gnd.exp.session import case_payload_versions

@@ -45,6 +45,7 @@ from jsonschema import Draft202012Validator
 from pydantic import BaseModel, Field, model_serializer, model_validator
 
 from gnd import artifacts, patterns, transition_kernel
+from gnd import input_policy as _rf7_input
 from gnd.branches import UnregisteredBranchError, branch, record_branch
 
 # D1: THE single import of the checker's private helpers, in this module and
@@ -128,7 +129,9 @@ def population_file_digest(path: str | Path) -> str:
     ``sha256sum`` by a client that has never seen this code, which the private
     ``repr``-based content digest is not.
     """
-    return "sha256:" + artifacts.sha256_hex(Path(path).read_bytes())
+    from gnd.safefs import file_sha256
+
+    return 'sha256:' + file_sha256(path)
 
 
 # --------------------------------------------------------------------------- #
@@ -141,7 +144,7 @@ def _refuse_json_constant(token: str) -> Any:
 
 
 def _load_schema() -> dict[str, Any]:
-    return json.loads(_SCHEMA_PATH.read_text(encoding="utf-8"))
+    return _rf7_input.loads(_SCHEMA_PATH.read_text(encoding="utf-8"))
 
 
 def _json_pointer(error: Any) -> str:
@@ -177,7 +180,7 @@ def read_steps_document(path: str | Path) -> dict[str, Any]:
             "transition:steps-too-large",
         )
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             raw.decode("utf-8"),
             # NaN and Infinity are not JSON. Python writes and reads them by
             # default, so a walk could carry a value no other parser accepts and
@@ -2095,7 +2098,7 @@ def evaluate_plan(
            for rows in state.values() for row in rows for value in row.values()):
         loadable_document["format_version"] = 2
     canonical = artifacts.canonical_json_bytes(loadable_document)
-    computed_document = json.loads(canonical)
+    computed_document = _rf7_input.loads(canonical)
     computed_document["population"]["model_id"] = pre.model_id
     try:
         computed = load_population_bytes(canonical, source="<computed post>", model=model)

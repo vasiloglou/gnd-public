@@ -73,6 +73,10 @@ def _reject_unsafe_relpath(relpath: str, *, source: str) -> PurePosixPath:
         )
     if not posix.parts:
         raise InstallPathError(f"{source}: '{relpath}' is empty after normalisation")
+    if relpath != relpath.strip() or "\\" in relpath or any(
+        part in ("", ".", "..") for part in relpath.split("/")
+    ):
+        raise InstallPathError(f"{source}: refusing noncanonical relative path '{relpath}'")
     return posix
 
 
@@ -126,6 +130,8 @@ def safe_destination(root: Path, relpath: str) -> Path:
                 f"{current}. A planted link must not be able to redirect a write out "
                 f"of the target root (T-01.2-06)."
             )
+        if current.exists() and not current.is_dir():
+            raise InstallPathError(f"install destination: parent '{current}' is not a directory")
     return dest
 
 
@@ -514,3 +520,27 @@ temp_name = _temp_name
 read_regular_bounded = _artifacts.read_regular_bounded
 read_regular_bounded_at = _artifacts.read_regular_bounded_at
 read_regular_file_bytes = _artifacts.read_regular_file_bytes
+
+
+def file_sha256(path: str | Path) -> str:
+    """Stream a stable regular leaf; never block waiting for a FIFO writer."""
+    fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NONBLOCK', 0))
+    try:
+        before = os.fstat(fd)
+        if stat.S_ISDIR(before.st_mode):
+            raise IsADirectoryError(21, 'Is a directory', str(path))
+        if not stat.S_ISREG(before.st_mode):
+            raise ValueError('digest input is not a regular file')
+        hasher = hashlib.sha256()
+        size = 0
+        while chunk := os.read(fd, 1024 * 1024):
+            hasher.update(chunk)
+            size += len(chunk)
+        after = os.fstat(fd)
+        if (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns) != (
+            after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns
+        ) or size != after.st_size:
+            raise ValueError('digest input changed while reading')
+        return hasher.hexdigest()
+    finally:
+        os.close(fd)

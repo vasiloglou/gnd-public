@@ -34,6 +34,14 @@ def test_relocated_algorithm_and_qualification_are_unchanged(name):
                     if isinstance(node, ast.ClassDef) and node.name == name)
     else:
         node = ast.parse(inspect.getsource(value)).body[0]
+    # RF7 deliberately changes decoder admission; every other AST node remains pinned.
+    class ReaderSeam(ast.NodeTransformer):
+        def visit_Attribute(self, child):
+            if (isinstance(child.value, ast.Name) and child.value.id == '_rf7_input'
+                    and child.attr in ('loads', 'load', 'JSONDecoder')):
+                child.value.id = 'json'
+            return self.generic_visit(child)
+    node = ReaderSeam().visit(node)
     assert ast.dump(node, include_attributes=False) == ast.dump(DEFINITIONS[name], include_attributes=False)
     assert value.__module__ == 'gnd.cli'
 

@@ -15,6 +15,7 @@ from typing import Any, Literal
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import best_match
 
+from gnd import input_policy as _rf7_input
 from gnd.address import (
     Addressing,
     ElementClass,
@@ -463,7 +464,7 @@ def read_json_document(
     except UnicodeDecodeError as error:
         raise CoverageInputError(f"{path} is not UTF-8: {error}") from error
     try:
-        document = json.loads(text, parse_constant=_reject_json_constant)
+        document = _rf7_input.loads(text, parse_constant=_reject_json_constant)
     except (json.JSONDecodeError, ValueError, RecursionError) as error:
         raise CoverageInputError(f"{path} is not valid JSON: {error}") from error
     if not isinstance(document, dict):
@@ -481,7 +482,7 @@ def read_json_document(
 @lru_cache(maxsize=2)
 def _schema(kind: Literal["report", "conformance"]) -> dict[str, Any]:
     name = "report.schema.json" if kind == "report" else "conformance.schema.json"
-    return json.loads(files("gnd").joinpath(name).read_text(encoding="utf-8"))
+    return _rf7_input.loads(files("gnd").joinpath(name).read_text(encoding="utf-8"))
 
 
 def _declared_arm_errors(

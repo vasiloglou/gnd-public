@@ -1,0 +1,61 @@
+{
+ "observed": {
+  "date-only": {
+   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01'",
+   "raises": "builtins.ValueError"
+  },
+  "fractional": {
+   "ok": {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, 0, 123456, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  },
+  "hour-24": {
+   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01T24:00:00'",
+   "raises": "builtins.ValueError"
+  },
+  "integer": {
+   "message": "DateTime range rf1 must be an ISO datetime: {}",
+   "raises": "builtins.TypeError"
+  },
+  "leading-space": {
+   "message": "DateTime range rf1 is not valid ISO-8601: ' 2024-01-01T00:00:00Z'",
+   "raises": "builtins.ValueError"
+  },
+  "naive": {
+   "ok": {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+    "type": "datetime"
+   }
+  },
+  "none": {
+   "message": "DateTime range rf1 must be an ISO datetime: {}",
+   "raises": "builtins.TypeError"
+  },
+  "offset": {
+   "ok": {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  },
+  "space-separator": {
+   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01 00:00:00'",
+   "raises": "builtins.ValueError"
+  },
+  "utc-lower-z": {
+   "message": "DateTime range rf1 is not valid ISO-8601: '2024-01-01T00:00:00z'",
+   "raises": "builtins.ValueError"
+  },
+  "utc-z": {
+   "ok": {
+    "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+    "type": "datetime"
+   }
+  },
+  "week-date": {
+   "message": "DateTime range rf1 is not valid ISO-8601: '2024-W01-1'",
+   "raises": "builtins.ValueError"
+  }
+ },
+ "site": "iso_datetime|gnd.synth.values:_parse_datetime"
+}

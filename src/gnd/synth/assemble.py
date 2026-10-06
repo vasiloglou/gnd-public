@@ -72,6 +72,7 @@ from random import Random
 from typing import Any
 
 from gnd import checker as checker_module  # noqa: F401 -- historical compatibility binding
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 from gnd.address import positional_constraint_ref
 from gnd.checker import check, structured_extension_view
@@ -620,7 +621,7 @@ def _materialize_structured_claims(doc: dict[str, Any], model: Model) -> dict[st
             f"'{first.relation}' is unavailable because {first.reason}; "
             f"binding={dict(first.binding)!r}"
         )
-    materialized = json.loads(json.dumps(asserted))
+    materialized = _rf7_input.loads(json.dumps(asserted))
     for fact_type in structured:
         rows = view.facts.get(fact_type, ())
         if rows:

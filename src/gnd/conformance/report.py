@@ -39,12 +39,13 @@ consumer must parse, exactly which files it never looked at.
 
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from collections.abc import Mapping, Sequence
 from importlib.resources import files
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
 from gnd.artifacts import canonical_report_text as canonical
 from gnd.codegen.manifest import INTEGRITY_LIMITS, CodegenManifest
@@ -176,7 +177,7 @@ def load_conformance_schema() -> dict[str, Any]:
     schema_text = (
         files("gnd").joinpath("conformance.schema.json").read_text(encoding="utf-8")
     )
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
 

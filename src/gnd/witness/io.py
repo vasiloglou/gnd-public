@@ -13,6 +13,7 @@ import re
 from datetime import date
 from pathlib import Path
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import canonical_json_bytes
 from gnd.model import iter_derivation_clauses, load_model_bytes
 from gnd.population import _build_population, _parse_document_bytes, load_population_bytes
@@ -95,7 +96,7 @@ def parse_wire(raw: bytes, *, limits=DEFAULT_LIMITS):
     if len(raw) > limits.bytes:
         raise WitnessInputError("wire bytes exceed ceiling")
     try:
-        doc = json.loads(
+        doc = _rf7_input.loads(
             raw,
             object_pairs_hook=_pairs,
             parse_constant=lambda _: (_ for _ in ()).throw(WitnessInputError("nonfinite")),

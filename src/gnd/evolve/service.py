@@ -13,6 +13,7 @@ from typing import Any
 from pydantic import ValidationError
 from ruamel.yaml import YAML
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import (
     ArtifactError,
     canonical_json_bytes,
@@ -190,6 +191,10 @@ def _load_model_bytes(data: bytes, *, label: str) -> Any:
 
 
 def _parse_model_text(text: str) -> dict[str, Any]:
+    try:
+        _rf7_input.guard_yaml(text)
+    except ValueError as error:
+        raise EvolutionError(str(error)) from error
     parsed = YAML(typ="safe").load(text)
     if not isinstance(parsed, dict):
         raise EvolutionError("candidate model is not a mapping")
@@ -862,7 +867,7 @@ def _read_evolution_claim(
             f"{label} exceeds the {MAX_EVOLUTION_PROPOSAL_BYTES}-byte cap"
         )
     try:
-        value = json.loads(raw)
+        value = _rf7_input.loads(raw)
         return reader(value)
     except (UnicodeDecodeError, json.JSONDecodeError, ValidationError, ValueError) as error:
         raise EvolutionError(f"invalid {label} at {claim_path}: {error}") from error
@@ -1288,7 +1293,7 @@ class EvolutionService:
     ) -> Any:
         relpath = self._proposal_relpath(proposal_id, leaf)
         try:
-            value = json.loads(
+            value = _rf7_input.loads(
                 _regular_bytes(
                     self.evidence_root,
                     relpath,
@@ -1675,7 +1680,7 @@ class EvolutionService:
             raise EvolutionError("pending intent identity does not match staged intent")
         try:
             intent = read_evolution_intent_document(
-                json.loads(intent_bytes.decode("utf-8"))
+                _rf7_input.loads(intent_bytes.decode("utf-8"))
             )
         except (UnicodeDecodeError, json.JSONDecodeError, ValidationError, ValueError) as error:
             raise EvolutionError(f"staged intent is unreadable: {error}") from error
@@ -1726,7 +1731,7 @@ class EvolutionService:
         if record_bytes is not None:
             try:
                 completed = read_evolution_record_document(
-                    json.loads(record_bytes.decode("utf-8"))
+                    _rf7_input.loads(record_bytes.decode("utf-8"))
                 )
             except (UnicodeDecodeError, json.JSONDecodeError, ValidationError, ValueError) as error:
                 raise EvolutionError(f"final record is invalid: {error}") from error

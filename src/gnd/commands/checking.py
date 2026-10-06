@@ -7,6 +7,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 
 from gnd import api as api_module
+from gnd import input_policy as _rf7_input
 from gnd import report as report_module
 from gnd import resolve_version, verbalize
 from gnd.checker import check
@@ -353,7 +354,7 @@ def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool 
                 mode="unredacted" if unredacted else "applied",
                 emitter_id="cli-batch-json",
             )
-        schema = json.loads(
+        schema = _rf7_input.loads(
             files("gnd").joinpath("batch-report.schema.json").read_text(encoding="utf-8")
         )
         Draft202012Validator(schema).validate(payload)

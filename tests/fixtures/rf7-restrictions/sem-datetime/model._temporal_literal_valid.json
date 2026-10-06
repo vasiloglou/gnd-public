@@ -1,0 +1,40 @@
+{
+ "date-only": {
+  "ok": false
+ },
+ "fractional": {
+  "ok": true
+ },
+ "hour-24": {
+  "ok": false
+ },
+ "integer": {
+  "message": "expected string or bytes-like object, got 'int'",
+  "raises": "builtins.TypeError"
+ },
+ "leading-space": {
+  "ok": false
+ },
+ "naive": {
+  "ok": true
+ },
+ "none": {
+  "message": "expected string or bytes-like object, got 'NoneType'",
+  "raises": "builtins.TypeError"
+ },
+ "offset": {
+  "ok": true
+ },
+ "space-separator": {
+  "ok": false
+ },
+ "utc-lower-z": {
+  "ok": false
+ },
+ "utc-z": {
+  "ok": true
+ },
+ "week-date": {
+  "ok": false
+ }
+}

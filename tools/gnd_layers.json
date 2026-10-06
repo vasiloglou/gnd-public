@@ -838,6 +838,9 @@
     },
     "gnd.yaml_comments": {
       "layer": "infrastructure"
+    },
+    "gnd.input_policy": {
+      "layer": "infrastructure"
     }
   },
   "schema_version": 1

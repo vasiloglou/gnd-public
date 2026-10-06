@@ -101,7 +101,7 @@ def test_unknown_owner_is_rejected():
 def test_explicit_resolver_variants_preserve_flags(flag):
     types, built = _resolver_model(flag)
     by_id = {t['id']: t for t in types}
-    expected_truthy = 'String' if flag != 'absent' and RESOLVER_VALUES[flag] else None
+    expected_truthy = 'String' if flag == 'true' else None
     expected_strict = 'String' if flag == 'true' else None
     assert universe.primitive_for('Child', by_id, variant='truthy') == expected_truthy
     assert universe.primitive_for('Child', by_id, variant='strict') == expected_strict
@@ -127,7 +127,7 @@ def test_resolver_failure_and_agreement_routes(variant, shape):
 def test_resolver_preserves_direct_reference_policy_and_seen():
     types = {'e': {'id': 'e', 'kind': 'entity', 'reference': {'mode': 'popular', 'value_type': 0}},
              '0': {'id': '0', 'kind': 'value', 'primitive': 'Integer'}}
-    assert universe.primitive_for('e', types, variant='truthy') is None
+    assert universe.primitive_for('e', types, variant='truthy') == 'Integer'
     assert universe.primitive_for('e', types, variant='strict') == 'Integer'
     assert universe.primitive_for('0', types, variant='truthy', seen={'0'}) is None
     with pytest.raises(ValueError, match='unknown primitive resolver variant'):

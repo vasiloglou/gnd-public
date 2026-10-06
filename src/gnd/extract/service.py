@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import resolve_version
 from gnd import safefs as install_module
 from gnd.commands._output import _print_issues
@@ -53,7 +54,7 @@ def _artifact_index_issue(
     try:
         if index_path.stat().st_size > 1024 * 1024:
             return (3, f"the extraction bundle index at {index_path} exceeds 1 MiB")
-        index = json.loads(index_path.read_text(encoding="utf-8"))
+        index = _rf7_input.loads(index_path.read_text(encoding="utf-8"))
         model_actual = _hashlib.sha256(Path(model_path).read_bytes()).hexdigest()
         model_recorded = str(index["model"]["sha256"])
         if model_recorded != model_actual:

@@ -27,6 +27,7 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import reject_json_constant, reject_json_duplicate_pairs_result
 from gnd.exp.session_contract import AdapterDeclaration
 
@@ -212,7 +213,7 @@ def _strict_document(raw: bytes) -> dict[str, Any]:
 
 
     try:
-        document = json.loads(
+        document = _rf7_input.loads(
             text,
             parse_constant=reject_json_constant,
             object_pairs_hook=reject_json_duplicate_pairs_result,

@@ -1,0 +1,319 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_population_load.py tests/test_popvalidate.py tests/test_model_validation.py tests/test_model_v2.py tests/test_model_guarded.py tests/test_model_identity.py tests/test_synth_values.py tests/test_synth_boundary.py tests/test_model_evolution.py tests/test_evolution_conformance.py tests/test_public_evolution_legacy_readers.py tests/test_public_evolution_drift_readers.py tests/test_public_souffle_successors.py tests/test_public_souffle_input_contract.py tests/test_v72_phase4_json_input.py tests/test_public_v72_full_json_boundary.py tests/test_exp_session_contract.py tests/test_exp_session_store.py tests/test_review_request.py tests/test_public_local_adapter_policy_controls.py tests/test_measure_offline.py tests/test_public_transition_contract.py tests/test_codegen_manifest.py tests/test_install.py --tb=short
+........................................................................ [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 19%]
+........................F............................................... [ 25%]
+........................................................................ [ 31%]
+........................................................................ [ 38%]
+........................................................................ [ 44%]
+........................................................................ [ 51%]
+.......F.............FF.F..F..................F...................F..... [ 57%]
+.......................................F...F...F...F.................... [ 63%]
+........................................................................ [ 70%]
+........................................................................ [ 76%]
+........................................................................ [ 83%]
+........................................................................ [ 89%]
+.............................F....................F.FFFFF...F.........F. [ 95%]
+..................................F..........F.                          [100%]
+=================================== FAILURES ===================================
+_______ test_reading_validation_is_not_quadratic_in_the_parameter_count ________
+tests/test_model_v2.py:300: in test_reading_validation_is_not_quadratic_in_the_parameter_count
+    assert elapsed < 2.0, f'semantic validation of {size} parameters took {elapsed:.2f}s — the placeholder rule is scanning the parameter list again'
+E   AssertionError: semantic validation of 4000 parameters took 4.07s — the placeholder rule is scanning the parameter list again
+E   assert 4.0746960419928655 < 2.0
+___________ test_exited_group_cleanup_cannot_replace_output_refusal ____________
+tests/test_public_souffle_successors.py:243: in test_exited_group_cleanup_cannot_replace_output_refusal
+    assert (result["exit_code"], result["reason"]) == (4, "tool-error")
+E   AssertionError: assert (0, None) == (4, 'tool-error')
+E     
+E     At index 0 diff: 0 != 4
+E     Use -v to get more diff
+______ test_core_refusal_controls_discriminate_disabled_policy[duplicate] ______
+tests/test_v72_phase4_json_input.py:84: in test_core_refusal_controls_discriminate_disabled_policy
+    assert json_input.bounded_json(payload, max_bytes=maximum) is not None
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/json_input.py:78: in bounded_json
+    validate_json_value(doc)
+                        ^^^
+E   UnboundLocalError: cannot access local variable 'doc' where it is not associated with a value
+_______ test_core_refusal_controls_discriminate_disabled_policy[depth65] _______
+tests/test_v72_phase4_json_input.py:84: in test_core_refusal_controls_discriminate_disabled_policy
+    assert json_input.bounded_json(payload, max_bytes=maximum) is not None
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/json_input.py:78: in bounded_json
+    validate_json_value(doc)
+                        ^^^
+E   UnboundLocalError: cannot access local variable 'doc' where it is not associated with a value
+______ test_core_refusal_controls_discriminate_disabled_policy[nonfinite] ______
+tests/test_v72_phase4_json_input.py:84: in test_core_refusal_controls_discriminate_disabled_policy
+    assert json_input.bounded_json(payload, max_bytes=maximum) is not None
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/json_input.py:78: in bounded_json
+    validate_json_value(doc)
+                        ^^^
+E   UnboundLocalError: cannot access local variable 'doc' where it is not associated with a value
+________________ test_neutral_owner_and_fresh_import_direction _________________
+tests/test_v72_phase4_json_input.py:91: in test_neutral_owner_and_fresh_import_direction
+    assert imports <= {'__future__', 'json', 'math', 'decimal'}
+E   AssertionError: assert {'__future__'...json', 'math'} <= {'__future__'...json', 'math'}
+E     
+E     Extra items in the left set:
+E     'gnd'
+_____________ test_json_input_boundary[patch-raw-extreme-exponent] _____________
+tests/test_public_v72_full_json_boundary.py:82: in test_json_input_boundary
+    assert actual["message"] == before["message"]
+E   AssertionError: assert 'malformed JSON' == 'unsupported ...ric magnitude'
+E     
+E     - unsupported numeric magnitude
+E     + malformed JSON
+____________ test_json_input_boundary[neutral-raw-extreme-exponent] ____________
+tests/test_public_v72_full_json_boundary.py:82: in test_json_input_boundary
+    assert actual["message"] == before["message"]
+E   AssertionError: assert 'malformed JSON' == 'unsupported ...ric magnitude'
+E     
+E     - unsupported numeric magnitude
+E     + malformed JSON
+________________ test_json_input_boundary[contract-7-duplicate] ________________
+<worktree>/tests/test_public_v72_full_json_boundary.py:82: in test_json_input_boundary
+    assert actual["message"] == before["message"]
+E   AssertionError: assert 'session cont...mn 1 (char 0)' == 'session cont...cate JSON key'
+E     
+E     Skipping 76 identical leading characters in diff, use -v to show
+E     - te JSON key
+E     + te JSON key: line 1 column 1 (char 0)
+_________________ test_json_input_boundary[contract-7-depth65] _________________
+<worktree>/tests/test_public_v72_full_json_boundary.py:82: in test_json_input_boundary
+    assert actual["message"] == before["message"]
+E   AssertionError: assert 'session cont...mn 1 (char 0)' == 'session cont...h exceeds cap'
+E     
+E     Skipping 80 identical leading characters in diff, use -v to show
+E     - exceeds cap
+E     + exceeds cap: line 1 column 1 (char 0)
+________________ test_json_input_boundary[contract-8-duplicate] ________________
+<worktree>/tests/test_public_v72_full_json_boundary.py:82: in test_json_input_boundary
+    assert actual["message"] == before["message"]
+E   AssertionError: assert 'session cont...mn 1 (char 0)' == 'session cont...cate JSON key'
+E     
+E     Skipping 76 identical leading characters in diff, use -v to show
+E     - te JSON key
+E     + te JSON key: line 1 column 1 (char 0)
+_________________ test_json_input_boundary[contract-8-depth65] _________________
+<worktree>/tests/test_public_v72_full_json_boundary.py:82: in test_json_input_boundary
+    assert actual["message"] == before["message"]
+E   AssertionError: assert 'session cont...mn 1 (char 0)' == 'session cont...h exceeds cap'
+E     
+E     Skipping 80 identical leading characters in diff, use -v to show
+E     - exceeds cap
+E     + exceeds cap: line 1 column 1 (char 0)
+_______________ test_iter_skill_files_yields_every_packaged_file _______________
+tests/test_install.py:187: in test_iter_skill_files_yields_every_packaged_file
+    assert len(found) == EXPECTED_SKILL_FILE_COUNT, (
+E   AssertionError: iter_skill_files yielded 68 entries, expected 65. A partial walk installs a partial skill set, and the 37 cross-skill links only resolve when the set is whole (Pitfall 7). Found:
+E       gnd-adopt/SKILL.md
+E       gnd-adopt/migration.schema.json
+E       gnd-adopt/references/gsd-environment-cleanup.md
+E       gnd-adopt/references/gsd-mapping.md
+E       gnd-adopt/scripts/__pycache__/verify_migration.cpython-314.pyc
+E       gnd-adopt/scripts/verify_migration.py
+E       gnd-codegen/SKILL.md
+E       gnd-codegen/references/architecture-contract.md
+E       gnd-codegen/references/codegen-contract.md
+E       gnd-conformance/SKILL.md
+E       gnd-conformance/references/conformance-contract.md
+E       gnd-dev-session/SKILL.md
+E       gnd-dev-session/references/judgment-contract.md
+E       gnd-dev-session/references/session-v7-contract.md
+E       gnd-export/SKILL.md
+E       gnd-export/references/export-contract.md
+E       gnd-export/references/witness-contract.md
+E       gnd-export/references/witness.schema.json
+E       gnd-extract/SKILL.md
+E       gnd-extract/references/extraction-contract.md
+E       gnd-model-evolve/SKILL.md
+E       gnd-model-evolve/references/evolution-contract.md
+E       gnd-model-from-code/SKILL.md
+E       gnd-model-from-code/references/recovery-contract.md
+E       gnd-model-from-text/SKILL.md
+E       gnd-model-from-text/USAGE.md
+E       gnd-model-from-text/evals/README.md
+E       gnd-model-from-text/evals/cases.json
+E       gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml
+E       gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md
+E       gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md
+E       gnd-model-from-text/evals/reviewability_checklist.md
+E       gnd-model-from-text/examples/library_with_subtypes.dialogue.md
+E       gnd-model-from-text/examples/library_with_subtypes.orm.yaml
+E       gnd-model-from-text/examples/movie_catalog.dialogue.md
+E       gnd-model-from-text/examples/movie_catalog.orm.yaml
+E       gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md
+E       gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml
+E       gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md
+E       gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml
+E       gnd-model-from-text/references/csdp-workflow.md
+E       gnd-model-from-text/references/dialogue-patterns.md
+E       gnd-model-from-text/scripts/__pycache__/validate_model.cpython-314.pyc
+E       gnd-model-from-text/scripts/validate_model.py
+E       gnd-new-project/SKILL.md
+E       gnd-orm-core/SKILL.md
+E       gnd-orm-core/references/constraint-inference.md
+E       gnd-orm-core/references/constraint-reference.md
+E       gnd-orm-core/references/coverage-and-element-addressing.md
+E       gnd-orm-core/references/halpin-posture.md
+E       gnd-orm-core/references/milestone-record-format.md
+E       gnd-orm-core/references/orm-meta.schema.json
+E       gnd-orm-core/references/population-format.md
+E       gnd-orm-core/references/population.schema.json
+E       gnd-orm-core/references/provenance-and-modality.md
+E       gnd-orm-core/references/representation-format.md
+E       gnd-orm-core/references/steps.schema.json
+E       gnd-orm-core/references/verbalization-patterns.md
+E       gnd-render-doc/SKILL.md
+E       gnd-render-doc/references/rendering-contract.md
+E       gnd-review-panel-light/SKILL.md
+E       gnd-review-panel/SKILL.md
+E       gnd-review-panel/references/review-contract.md
+E       gnd-solve/SKILL.md
+E       gnd-update-review-panel/SKILL.md
+E       gnd-update-review-panel/agents/openai.yaml
+E       gnd-update-review-panel/scripts/__pycache__/update_harnesses.cpython-314.pyc
+E       gnd-update-review-panel/scripts/update_harnesses.py
+E   assert 68 == 65
+E    +  where 68 = len(['gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adop...ng.md', 'gnd-adopt/scripts/__pycache__/verify_migration.cpython-314.pyc', 'gnd-adopt/scripts/verify_migration.py', ...])
+________ test_safe_destination_rejects_hostile_relpaths[windows-drive] _________
+tests/test_install.py:328: in test_safe_destination_rejects_hostile_relpaths
+    assert relpath.strip() in str(caught.value) or "empty" in str(caught.value), (
+E   AssertionError: [windows-drive] the refusal must name the offending path so a corrupted manifest entry is diagnosable, got: install destination: refusing noncanonical relative path 'C:\\Windows\\system32\\drivers\\etc\\hosts'
+E   assert ('C:\\Windows\\system32\\drivers\\etc\\hosts' in "install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'" or 'empty' in "install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'")
+E    +  where 'C:\\Windows\\system32\\drivers\\etc\\hosts' = <built-in method strip of str object at 0x10dc8cad0>()
+E    +    where <built-in method strip of str object at 0x10dc8cad0> = 'C:\\Windows\\system32\\drivers\\etc\\hosts'.strip
+E    +  and   "install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'" = str(InstallPathError("install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'") tblen=3>.value
+E    +  and   "install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'" = str(InstallPathError("install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path 'C:\\\\Windows\\\\system32\\\\drivers\\\\etc\\\\hosts'") tblen=3>.value
+____ test_safe_destination_rejects_hostile_relpaths[windows-root-relative] _____
+tests/test_install.py:328: in test_safe_destination_rejects_hostile_relpaths
+    assert relpath.strip() in str(caught.value) or "empty" in str(caught.value), (
+E   AssertionError: [windows-root-relative] the refusal must name the offending path so a corrupted manifest entry is diagnosable, got: install destination: refusing noncanonical relative path '\\Windows\\System32'
+E   assert ('\\Windows\\System32' in "install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'" or 'empty' in "install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'")
+E    +  where '\\Windows\\System32' = <built-in method strip of str object at 0x10d48e730>()
+E    +    where <built-in method strip of str object at 0x10d48e730> = '\\Windows\\System32'.strip
+E    +  and   "install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'" = str(InstallPathError("install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'") tblen=3>.value
+E    +  and   "install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'" = str(InstallPathError("install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '\\\\Windows\\\\System32'") tblen=3>.value
+_________ test_safe_destination_rejects_hostile_relpaths[windows-unc] __________
+tests/test_install.py:328: in test_safe_destination_rejects_hostile_relpaths
+    assert relpath.strip() in str(caught.value) or "empty" in str(caught.value), (
+E   AssertionError: [windows-unc] the refusal must name the offending path so a corrupted manifest entry is diagnosable, got: install destination: refusing noncanonical relative path '\\\\server\\share\\payload'
+E   assert ('\\\\server\\share\\payload' in "install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'" or 'empty' in "install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'")
+E    +  where '\\\\server\\share\\payload' = <built-in method strip of str object at 0x10d48cd70>()
+E    +    where <built-in method strip of str object at 0x10d48cd70> = '\\\\server\\share\\payload'.strip
+E    +  and   "install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'" = str(InstallPathError("install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'") tblen=3>.value
+E    +  and   "install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'" = str(InstallPathError("install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '\\\\\\\\server\\\\share\\\\payload'") tblen=3>.value
+________ test_safe_destination_rejects_hostile_relpaths[windows-parent] ________
+tests/test_install.py:328: in test_safe_destination_rejects_hostile_relpaths
+    assert relpath.strip() in str(caught.value) or "empty" in str(caught.value), (
+E   AssertionError: [windows-parent] the refusal must name the offending path so a corrupted manifest entry is diagnosable, got: install destination: refusing noncanonical relative path '..\\escape.txt'
+E   assert ('..\\escape.txt' in "install destination: refusing noncanonical relative path '..\\\\escape.txt'" or 'empty' in "install destination: refusing noncanonical relative path '..\\\\escape.txt'")
+E    +  where '..\\escape.txt' = <built-in method strip of str object at 0x10d48e0f0>()
+E    +    where <built-in method strip of str object at 0x10d48e0f0> = '..\\escape.txt'.strip
+E    +  and   "install destination: refusing noncanonical relative path '..\\\\escape.txt'" = str(InstallPathError("install destination: refusing noncanonical relative path '..\\\\escape.txt'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '..\\\\escape.txt'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '..\\\\escape.txt'") tblen=3>.value
+E    +  and   "install destination: refusing noncanonical relative path '..\\\\escape.txt'" = str(InstallPathError("install destination: refusing noncanonical relative path '..\\\\escape.txt'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '..\\\\escape.txt'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '..\\\\escape.txt'") tblen=3>.value
+___ test_safe_destination_rejects_hostile_relpaths[backslash-nested-parent] ____
+tests/test_install.py:328: in test_safe_destination_rejects_hostile_relpaths
+    assert relpath.strip() in str(caught.value) or "empty" in str(caught.value), (
+E   AssertionError: [backslash-nested-parent] the refusal must name the offending path so a corrupted manifest entry is diagnosable, got: install destination: refusing noncanonical relative path 'gnd-orm-core\\..\\..\\escape.txt'
+E   assert ('gnd-orm-core\\..\\..\\escape.txt' in "install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'" or 'empty' in "install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'")
+E    +  where 'gnd-orm-core\\..\\..\\escape.txt' = <built-in method strip of str object at 0x10dc8cb20>()
+E    +    where <built-in method strip of str object at 0x10dc8cb20> = 'gnd-orm-core\\..\\..\\escape.txt'.strip
+E    +  and   "install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'" = str(InstallPathError("install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'") tblen=3>.value
+E    +  and   "install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'" = str(InstallPathError("install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path 'gnd-orm-core\\\\..\\\\..\\\\escape.txt'") tblen=3>.value
+___ test_safe_destination_rejects_hostile_relpaths[leading-slash-backslash] ____
+tests/test_install.py:328: in test_safe_destination_rejects_hostile_relpaths
+    assert relpath.strip() in str(caught.value) or "empty" in str(caught.value), (
+E   AssertionError: [leading-slash-backslash] the refusal must name the offending path so a corrupted manifest entry is diagnosable, got: install destination: refusing noncanonical relative path '\\etc\\passwd'
+E   assert ('\\etc\\passwd' in "install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'" or 'empty' in "install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'")
+E    +  where '\\etc\\passwd' = <built-in method strip of str object at 0x10d48ddb0>()
+E    +    where <built-in method strip of str object at 0x10d48ddb0> = '\\etc\\passwd'.strip
+E    +  and   "install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'" = str(InstallPathError("install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'") tblen=3>.value
+E    +  and   "install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'" = str(InstallPathError("install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'"))
+E    +    where InstallPathError("install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'") = <ExceptionInfo InstallPathError("install destination: refusing noncanonical relative path '\\\\etc\\\\passwd'") tblen=3>.value
+________ test_plan_against_an_empty_target_yields_create_for_every_file ________
+tests/test_install.py:394: in test_plan_against_an_empty_target_yields_create_for_every_file
+    assert len(records) == EXPECTED_SKILL_FILE_COUNT
+E   AssertionError: assert 68 == 65
+E    +  where 68 = len([SkillFileState(relpath='gnd-adopt/SKILL.md', state='create', detail=''), SkillFileState(relpath='gnd-adopt/migration....='create', detail=''), SkillFileState(relpath='gnd-adopt/scripts/verify_migration.py', state='create', detail=''), ...])
+_______ test_apply_into_an_empty_root_writes_every_file_and_one_manifest _______
+tests/test_install.py:550: in test_apply_into_an_empty_root_writes_every_file_and_one_manifest
+    assert result.writes == EXPECTED_SKILL_FILE_COUNT, (
+E   AssertionError: expected 65 writes on a first install, got 68
+E   assert 68 == 65
+E    +  where 68 = ApplyResult(writes=68, written=['gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-env...nifestFile(sha256='bf3c4c7ff42d737ccd78db4a1a6818e4f4b0a178aaf77a251d0b02ae5d65096c', size=22665)}, link_value=None)})).writes
+_____________ test_install_adversarial_case[zero-write-second-run] _____________
+tests/test_install.py:1549: in test_install_adversarial_case
+    case.run(tmp_path)
+tests/test_install.py:1196: in _case_zero_write_second_run
+    assert first.writes == EXPECTED_SKILL_FILE_COUNT
+E   AssertionError: assert 68 == 65
+E    +  where 68 = ApplyResult(writes=68, written=['gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-env...nifestFile(sha256='bf3c4c7ff42d737ccd78db4a1a6818e4f4b0a178aaf77a251d0b02ae5d65096c', size=22665)}, link_value=None)})).writes
+
+During handling of the above exception, another exception occurred:
+tests/test_install.py:1551: in test_install_adversarial_case
+    pytest.fail(f"{case.id}: {failure}\n\nWhy this case exists: {case.why}")
+E   Failed: zero-write-second-run: assert 68 == 65
+E    +  where 68 = ApplyResult(writes=68, written=['gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-env...nifestFile(sha256='bf3c4c7ff42d737ccd78db4a1a6818e4f4b0a178aaf77a251d0b02ae5d65096c', size=22665)}, link_value=None)})).writes
+E   
+E   Why this case exists: D-09 makes idempotence testable rather than asserted. A blind copytree produces identical hashes while rewriting all 29 files, so only the WRITE COUNT distinguishes 'did nothing' from 'did everything again'.
+_______ test_a_clean_install_places_every_skill_through_one_generic_path _______
+tests/test_install.py:1594: in test_a_clean_install_places_every_skill_through_one_generic_path
+    assert result.writes == EXPECTED_SKILL_FILE_COUNT
+E   AssertionError: assert 68 == 65
+E    +  where 68 = ApplyResult(writes=68, written=['gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-env...nifestFile(sha256='bf3c4c7ff42d737ccd78db4a1a6818e4f4b0a178aaf77a251d0b02ae5d65096c', size=22665)}, link_value=None)})).writes
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  <worktree>/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_model_v2.py::test_reading_validation_is_not_quadratic_in_the_parameter_count
+FAILED tests/test_public_souffle_successors.py::test_exited_group_cleanup_cannot_replace_output_refusal
+FAILED tests/test_v72_phase4_json_input.py::test_core_refusal_controls_discriminate_disabled_policy[duplicate]
+FAILED tests/test_v72_phase4_json_input.py::test_core_refusal_controls_discriminate_disabled_policy[depth65]
+FAILED tests/test_v72_phase4_json_input.py::test_core_refusal_controls_discriminate_disabled_policy[nonfinite]
+FAILED tests/test_v72_phase4_json_input.py::test_neutral_owner_and_fresh_import_direction
+FAILED tests/test_public_v72_full_json_boundary.py::test_json_input_boundary[patch-raw-extreme-exponent]
+FAILED tests/test_public_v72_full_json_boundary.py::test_json_input_boundary[neutral-raw-extreme-exponent]
+FAILED tests/test_public_v72_full_json_boundary.py::test_json_input_boundary[contract-7-duplicate]
+FAILED tests/test_public_v72_full_json_boundary.py::test_json_input_boundary[contract-7-depth65]
+FAILED tests/test_public_v72_full_json_boundary.py::test_json_input_boundary[contract-8-duplicate]
+FAILED tests/test_public_v72_full_json_boundary.py::test_json_input_boundary[contract-8-depth65]
+FAILED tests/test_install.py::test_iter_skill_files_yields_every_packaged_file
+FAILED tests/test_install.py::test_safe_destination_rejects_hostile_relpaths[windows-drive]
+FAILED tests/test_install.py::test_safe_destination_rejects_hostile_relpaths[windows-root-relative]
+FAILED tests/test_install.py::test_safe_destination_rejects_hostile_relpaths[windows-unc]
+FAILED tests/test_install.py::test_safe_destination_rejects_hostile_relpaths[windows-parent]
+FAILED tests/test_install.py::test_safe_destination_rejects_hostile_relpaths[backslash-nested-parent]
+FAILED tests/test_install.py::test_safe_destination_rejects_hostile_relpaths[leading-slash-backslash]
+FAILED tests/test_install.py::test_plan_against_an_empty_target_yields_create_for_every_file
+FAILED tests/test_install.py::test_apply_into_an_empty_root_writes_every_file_and_one_manifest
+FAILED tests/test_install.py::test_install_adversarial_case[zero-write-second-run]
+FAILED tests/test_install.py::test_a_clean_install_places_every_skill_through_one_generic_path
+23 failed, 1104 passed, 1 warning in 72.18s (0:01:12)
+
+Exit: 1

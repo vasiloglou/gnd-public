@@ -38,7 +38,7 @@ from __future__ import annotations
 
 import hashlib  # noqa: F401 -- compatibility export
 import io
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from importlib.resources import files
 from pathlib import Path
 from typing import Any, Literal
@@ -47,6 +47,7 @@ from jsonschema import Draft202012Validator
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
 from ruamel.yaml import YAML
 
+from gnd import input_policy as _rf7_input
 from gnd.documents import MAX_YAML_EVENTS, Model
 from gnd.errors import (
     MAX_SUMMARY_ISSUES,  # noqa: F401 -- compatibility export
@@ -230,7 +231,7 @@ def _load_population_schema() -> dict[str, Any]:
     schema_text = (
         files("gnd").joinpath("schema/population.schema.json").read_text(encoding="utf-8")
     )
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
 def _schema_issues(doc: Any) -> list[ValidationIssue]:
@@ -314,7 +315,7 @@ def _parse_document_bytes(data: bytes, *, suffix: str, source: str) -> Any:
             # a message. Adding a second counter would be a disagreeing cap for
             # a hazard that is already bounded.
             try:
-                return json.load(
+                return _rf7_input.load(
                     handle,
                     object_pairs_hook=_reject_duplicate_json_keys,
                     parse_constant=_reject_json_constant,

@@ -22,13 +22,14 @@ with a remediation string — never a bare ``ImportError`` traceback (modelled o
 from __future__ import annotations
 
 import base64
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import math
 from datetime import date, datetime, timedelta
 from importlib.resources import files
 from random import Random
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 
 __all__ = ["PRIMITIVES", "SynthDependencyError", "make_value"]
@@ -70,7 +71,7 @@ def _load_primitives() -> tuple[str, ...]:
     ``popvalidate._PRIMITIVE_PREDICATES`` by construction.
     """
     schema_text = files("gnd").joinpath("schema/orm-meta.schema.json").read_text(encoding="utf-8")
-    schema = json.loads(schema_text)
+    schema = _rf7_input.loads(schema_text)
     enum = schema["$defs"]["object_type"]["properties"]["primitive"]["enum"]
     return tuple(enum)
 
@@ -268,9 +269,8 @@ def _date_member(rng: Random, value_range: dict[str, Any]) -> str:
 def _parse_datetime(raw: Any, name: str, value_range: dict[str, Any]) -> datetime:
     if not isinstance(raw, str):
         raise TypeError(f"DateTime range {name} must be an ISO datetime: {value_range!r}")
-    normalized = raw[:-1] + "+00:00" if raw[-1:] in ("Z", "z") else raw
     try:
-        return datetime.fromisoformat(normalized)
+        return _rf7_input.parse_datetime(raw)
     except ValueError as error:
         raise ValueError(f"DateTime range {name} is not valid ISO-8601: {raw!r}") from error
 

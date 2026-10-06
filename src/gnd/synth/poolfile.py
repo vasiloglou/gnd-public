@@ -39,6 +39,7 @@ from pathlib import Path
 from random import Random
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import popvalidate
 from gnd.model import Model
 from gnd.model_index import ModelIndex
@@ -166,7 +167,7 @@ def _non_finite_failures(value: Any, path: str = "$") -> list[str]:
 
 def _load_pool_schema() -> dict[str, Any]:
     text = _resource_files("gnd").joinpath("pool.schema.json").read_text(encoding="utf-8")
-    return json.loads(text)
+    return _rf7_input.loads(text)
 
 
 # --------------------------------------------------------------------------- #
@@ -407,7 +408,7 @@ def load_pool(path: str | Path, model: Model) -> Pool:
     be coherence-checked meaningfully.
     """
     text = Path(path).read_text(encoding="utf-8")
-    document = json.loads(text)
+    document = _rf7_input.loads(text)
 
     finite_failures = _non_finite_failures(document)
     if finite_failures:

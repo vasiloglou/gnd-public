@@ -113,7 +113,7 @@ def assert_dynamic_inventory(found, rows):
 
 
 def test_dynamic_candidate_inventory_is_complete_and_live():
-    rows = json.loads((POLICY.parent / 'RF6b-dynamic-query-candidates.json').read_text())['rows']
+    rows = json.loads((POLICY.parent.parent / 'RF7/dynamic-query-candidates.json').read_text())['rows']
     found = dynamic_reads(sources())
     assert_dynamic_inventory(found, rows)
     found.update(dynamic_reads({'src/gnd/injected.py': 'def injected(model, key):\n    return model[key]\n'}))
@@ -138,7 +138,7 @@ def test_subscription_negative_refuses_reverted_scanner(monkeypatch):
 
 
 def test_dynamic_duplicate_inventory_row_is_refused():
-    rows = json.loads((POLICY.parent / 'RF6b-dynamic-query-candidates.json').read_text())['rows']
+    rows = json.loads((POLICY.parent.parent / 'RF7/dynamic-query-candidates.json').read_text())['rows']
     found = dynamic_reads(sources())
     assert_dynamic_inventory(found, rows)
     with pytest.raises(AssertionError):

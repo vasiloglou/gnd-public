@@ -36,11 +36,12 @@ rate; ``gnd fidelity`` emits rates and never a verdict, a band or an
 
 from __future__ import annotations
 
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from collections.abc import Mapping, Sequence
 from importlib.resources import files
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
 from gnd.artifacts import canonical_report_text as canonical  # noqa: F401 -- compatibility
 from gnd.fidelity.match import FactTypeMatch
@@ -148,7 +149,7 @@ def load_fidelity_schema() -> dict[str, Any]:
     schema_text = files("gnd").joinpath("fidelity.schema.json").read_text(
         encoding="utf-8"
     )
-    return json.loads(schema_text)
+    return _rf7_input.loads(schema_text)
 
 
 

@@ -90,7 +90,7 @@ class ModelIndex:
             reference = ot.get("reference") or {}
             if reference.get("value_type"):
                 return walk(reference["value_type"])
-            if ot.get("inherits_reference"):
+            if ot.get("inherits_reference") is True:
                 found = {p for p in (walk(sup) for sup in ot.get("subtype_of", [])) if p}
                 if len(found) == 1:
                     return found.pop()
@@ -118,7 +118,7 @@ class ModelIndex:
         reference = ot.get("reference") or {}
         if reference.get("value_type"):
             return reference["value_type"]
-        if ot.get("inherits_reference"):
+        if ot.get("inherits_reference") is True:
             found = {v for v in (self.reference_value_type(sup) for sup in ot.get("subtype_of", []))
                      if v}
             if len(found) == 1:
@@ -1041,7 +1041,7 @@ def _admit_model(document: dict[str, Any]) -> ModelIndex:
             value_type = obj["reference"].get("value_type")
             if not value_type or index.object_types[value_type]["kind"] != "value":
                 raise ExportInputError("entity reference must name a value type")
-        elif obj.get("inherits_reference"):
+        elif obj.get("inherits_reference") is True:
             candidates = {resolve(sup) for sup in obj.get("subtype_of", [])}
             if len(candidates) == 1:
                 value_type = candidates.pop()
@@ -1105,7 +1105,7 @@ def _valid_temporal(value: Any, primitive: str) -> bool:
     # Independent implementation of the population format's ISO scalar grammar.
     # Keep strings canonical for the compiler's lexical Date comparisons.
     pattern = (r"\d{4}-\d{2}-\d{2}" if primitive == "Date" else
-               r"\d{4}-\d{2}-\d{2}[Tt ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?([Zz]|[+-]\d{2}:?\d{2})?")
+               r'[0-9]{4}-[0-9]{2}-[0-9]{2}T(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9](?:\.[0-9]{1,6})?)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])?')
     if not isinstance(value, str) or re.fullmatch(pattern, value) is None:
         return False
     try:

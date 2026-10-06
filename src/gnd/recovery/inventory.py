@@ -24,6 +24,7 @@ from typing import Any
 from ruamel.yaml import YAML, YAMLError
 from ruamel.yaml.tokens import AliasToken, AnchorToken
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import canonical_json_text, sha256_hex
 from gnd.recovery.report import (
     AmbiguousProposal,
@@ -1029,7 +1030,7 @@ def scan_recovery_scope(
                 return "handled", ()
         elif suffix == ".json":
             try:
-                structured = json.loads(text, parse_constant=_reject_json_constant)
+                structured = _rf7_input.loads(text, parse_constant=_reject_json_constant)
                 _validate_structured_data(structured)
             except (
                 json.JSONDecodeError,

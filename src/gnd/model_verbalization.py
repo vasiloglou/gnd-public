@@ -57,7 +57,7 @@ def _object_type_cnl(
     parents = item.get("subtype_of") or []
     if parents:
         parent_names = " and ".join(_display(object_types, parent) for parent in parents)
-        if item.get("inherits_reference"):
+        if item.get("inherits_reference") is True:
             sentence = (
                 f"{name} is a kind of {parent_names}, inheriting the reference of {parent_names}."
             )

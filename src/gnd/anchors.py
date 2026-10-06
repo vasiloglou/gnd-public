@@ -13,6 +13,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd.anchor_identity import ANCHOR_TRANSLATION as _ANCHOR_TRANSLATION
 from gnd.artifacts import canonical_json_bytes, read_regular_file_bytes, sha256_hex
 
@@ -73,7 +74,7 @@ def _parse(raw: bytes) -> Any:
         if len(value) > 18:
             raise ValueError("oversized integer")
         return int(value)
-    value = json.loads(raw.decode("utf-8", "strict"), object_pairs_hook=_pairs,
+    value = _rf7_input.loads(raw.decode("utf-8", "strict"), object_pairs_hook=_pairs,
                        parse_constant=_reject_constant, parse_int=_integer)
     def depth(node: Any, level: int = 0) -> None:
         if level > 32:

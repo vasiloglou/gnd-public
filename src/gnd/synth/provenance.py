@@ -30,13 +30,14 @@ defined HERE, at the sidecar owner, rather than downstream.
 
 from __future__ import annotations
 
-import hashlib
+import hashlib  # noqa: F401 -- historical compatibility binding
 import json
 from pathlib import Path
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from gnd import input_policy as _rf7_input
 from gnd.population import _model_digest
 from gnd.synth import GENERATOR_VERSION
 
@@ -234,7 +235,9 @@ def validated_model_sha256(model: Any) -> str:
 
 
 def _sha256_file(path: str | Path) -> str:
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    from gnd.safefs import file_sha256
+
+    return '' + file_sha256(path)
 
 
 def write_sidecar(sidecar: Sidecar, population_path: str | Path) -> Path:
@@ -283,7 +286,7 @@ def read_sidecar(path: str | Path, *, verify_population_hash: bool = True) -> Si
     """
     path = Path(path)
     try:
-        document = json.loads(path.read_text(encoding="utf-8"))
+        document = _rf7_input.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         raise SidecarError(f"sidecar {path} could not be read: {error}") from error
     try:

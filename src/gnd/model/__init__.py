@@ -285,14 +285,18 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
     if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
         text = text.rstrip()
     doc = None
-    if text.lstrip().startswith("{"):
+    if Path(source).suffix == ".json" or text.lstrip().startswith("{"):
         from gnd.errors import PopulationLoadError
         from gnd.population import _parse_document_bytes
 
         try:
             doc = _parse_document_bytes(data, suffix=".json", source=str(source))
-        except PopulationLoadError:
-            pass  # A YAML flow mapping may start with an unquoted key.
+        except PopulationLoadError as error:
+            from gnd.input_policy import InputRefusal
+
+            if Path(source).suffix == ".json" or isinstance(error.__cause__, InputRefusal):
+                raise ModelLoadError("model JSON input refused") from error
+            # A YAML flow mapping may start with an unquoted key.
     if doc is None:
         for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
             if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):

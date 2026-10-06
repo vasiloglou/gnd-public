@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from gnd import input_policy as _rf7_input
+
 
 @dataclass(frozen=True, slots=True)
 class CorrespondenceDigests:
@@ -117,7 +119,7 @@ def _json(data: bytes) -> Any:
                 raise ValueError("evidence depth limit")
         elif char in "]}":
             depth -= 1
-    return json.loads(
+    return _rf7_input.loads(
         text,
         object_pairs_hook=_pairs,
         parse_float=_finite,

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import importlib
-import json
+import json  # noqa: F401 -- historical compatibility binding
 from decimal import Decimal
 from io import BytesIO, StringIO
 
@@ -64,3 +64,39 @@ def test_datetime_accepted(value):
 def test_datetime_refusal(value):
     with pytest.raises(ValueError):
         policy().parse_datetime(value)
+
+
+@pytest.mark.parametrize('raw', ['[12345678]', b'[12345678]', bytearray(b'[12345678]')])
+def test_json_byte_cap_before_decode(raw, monkeypatch):
+    p = policy()
+    monkeypatch.setattr(p, 'MAX_BYTES', 8)
+    with pytest.raises(ValueError, match='byte cap'):
+        p.loads(raw)
+    assert p.loads('[1]') == [1]
+
+
+def test_stream_read_is_bounded(monkeypatch):
+    p = policy()
+    monkeypatch.setattr(p, 'MAX_BYTES', 8)
+    reads = []
+
+    class Handle:
+        def read(self, limit):
+            reads.append(limit)
+            return b' ' * limit
+
+    with pytest.raises(ValueError, match='byte cap'):
+        p.load(Handle())
+    assert reads == [9]
+
+
+def test_native_encoded_bytes_and_custom_refusal():
+    p = policy()
+    for encoding in ('utf-16', 'utf-32'):
+        assert p.loads('{"x":1}'.encode(encoding)) == {'x': 1}
+
+    def refuse(token):
+        raise ValueError('caller numeric refusal')
+
+    with pytest.raises(ValueError, match='caller numeric refusal'):
+        p.loads('[1e999]', parse_float=refuse)

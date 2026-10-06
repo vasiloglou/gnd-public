@@ -63,9 +63,10 @@ from __future__ import annotations
 import math
 import re
 from collections.abc import Callable
-from datetime import date, datetime
+from datetime import date, datetime  # noqa: F401 -- historical compatibility binding
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
 from gnd.documents import Model
 from gnd.errors import ValidationIssue
@@ -185,9 +186,8 @@ def _is_date(value: Any) -> bool:
 def _is_datetime(value: Any) -> bool:
     if not isinstance(value, str) or _ISO_DATETIME.fullmatch(value) is None:
         return False
-    normalized = value[:-1] + "+00:00" if value[-1:] in ("Z", "z") else value
     try:
-        datetime.fromisoformat(normalized)
+        _rf7_input.parse_datetime(value)
     except ValueError:
         return False
     return True

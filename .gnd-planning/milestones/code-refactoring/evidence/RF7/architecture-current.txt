@@ -1,0 +1,8 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf6_query_policy.py tests/test_rf5_entrypoints.py tests/test_rf4_layers.py tests/test_rf6_packages.py tests/test_rf3_core.py tests/test_rf2_helpers.py --tb=short
+ERROR: file or directory not found: tests/test_rf5_entrypoints.py
+
+
+no tests ran in 0.01s
+
+Exit: 4

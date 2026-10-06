@@ -32,6 +32,7 @@ from typing import Any, Literal, NamedTuple, Protocol
 from pydantic import BaseModel, Field, ValidationInfo, model_validator
 
 from gnd import extensions as extension_core
+from gnd import input_policy as _rf7_input
 from gnd import verbalize
 from gnd.address import (
     derivation_address,  # historical compatibility export
@@ -1409,8 +1410,7 @@ def _typed_comparison_values(
         try:
             parsed = []
             for value in (value_a, value_b):
-                normalized = value[:-1] + "+00:00" if value[-1:] in ("Z", "z") else value
-                parsed.append(datetime.fromisoformat(normalized))
+                parsed.append(_rf7_input.parse_datetime(value))
         except (TypeError, ValueError):
             return None
         aware = [value.utcoffset() is not None for value in parsed]

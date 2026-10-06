@@ -1,0 +1,859 @@
+{
+  "approval": "delegated RF7 auto, owner permits affected restriction test updates, 2026-10-06",
+  "input_sha256": "9ae4960dba5ce401fa3336d9057c586b2f992911e720753738817aa9d9d60fe3",
+  "rows": [
+    {
+      "lane": "helpers",
+      "stem": "iso_datetime_gnd.popvalidate__is_datetime",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/iso_datetime_gnd.popvalidate__is_datetime.py314.json",
+      "before_sha256": "92301713d4624db43c7ed396d741b3fc364eceaa7110e4b77ee65acc3b7b689f",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/iso_datetime_gnd.popvalidate__is_datetime.json",
+      "after_sha256": "6f433fea52edc350dbeef89a4bc7c33811a1302cfbe6f3ae4e0d6e457ea7c712",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/observed/hour-24/ok",
+          "before": true,
+          "after": false
+        },
+        {
+          "path": "/observed/space-separator/ok",
+          "before": true,
+          "after": false
+        },
+        {
+          "path": "/observed/utc-lower-z/ok",
+          "before": true,
+          "after": false
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "iso_datetime_gnd.synth.values__parse_datetime",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/iso_datetime_gnd.synth.values__parse_datetime.py314.json",
+      "before_sha256": "318c86f5e138e0e964ccfe1810e522759f78e3a84ee755db4083e8d1fda8d64a",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/iso_datetime_gnd.synth.values__parse_datetime.json",
+      "after_sha256": "bc2981297ac1a373bfd63893705d999f87f42c167e6662086a4c0f2c4ec8419f",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/observed/date-only/message",
+          "before": null,
+          "after": "DateTime range rf1 is not valid ISO-8601: '2024-01-01'"
+        },
+        {
+          "path": "/observed/date-only/ok",
+          "before": {
+            "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+            "type": "datetime"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/date-only/raises",
+          "before": null,
+          "after": "builtins.ValueError"
+        },
+        {
+          "path": "/observed/hour-24/message",
+          "before": null,
+          "after": "DateTime range rf1 is not valid ISO-8601: '2024-01-01T24:00:00'"
+        },
+        {
+          "path": "/observed/hour-24/ok",
+          "before": {
+            "repr": "datetime.datetime(2024, 1, 2, 0, 0)",
+            "type": "datetime"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/hour-24/raises",
+          "before": null,
+          "after": "builtins.ValueError"
+        },
+        {
+          "path": "/observed/space-separator/message",
+          "before": null,
+          "after": "DateTime range rf1 is not valid ISO-8601: '2024-01-01 00:00:00'"
+        },
+        {
+          "path": "/observed/space-separator/ok",
+          "before": {
+            "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+            "type": "datetime"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/space-separator/raises",
+          "before": null,
+          "after": "builtins.ValueError"
+        },
+        {
+          "path": "/observed/utc-lower-z/message",
+          "before": null,
+          "after": "DateTime range rf1 is not valid ISO-8601: '2024-01-01T00:00:00z'"
+        },
+        {
+          "path": "/observed/utc-lower-z/ok",
+          "before": {
+            "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+            "type": "datetime"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/utc-lower-z/raises",
+          "before": null,
+          "after": "builtins.ValueError"
+        },
+        {
+          "path": "/observed/week-date/message",
+          "before": null,
+          "after": "DateTime range rf1 is not valid ISO-8601: '2024-W01-1'"
+        },
+        {
+          "path": "/observed/week-date/ok",
+          "before": {
+            "repr": "datetime.datetime(2024, 1, 1, 0, 0)",
+            "type": "datetime"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/week-date/raises",
+          "before": null,
+          "after": "builtins.ValueError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "safe_filesystem_gnd.install__reject_unsafe_relpath",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/safe_filesystem_gnd.install__reject_unsafe_relpath.json",
+      "before_sha256": "ec488089dd8c4bd267ec87df5d6b111508f44fdd71db0e5377366bc35cbdc443",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/safe_filesystem_gnd.install__reject_unsafe_relpath.json",
+      "after_sha256": "949b472f69ecfa14d45c79f9d5d39ea3922840f8f14e54ff9b56cabee9ca9448",
+      "reason": "C1 canonical path spelling",
+      "changes": [
+        {
+          "path": "/observed/backslash/message",
+          "before": null,
+          "after": "rf1: refusing noncanonical relative path 'a\\b'"
+        },
+        {
+          "path": "/observed/backslash/ok",
+          "before": {
+            "path": "a\\b"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/backslash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/dot-slash/message",
+          "before": null,
+          "after": "rf1: refusing noncanonical relative path './a'"
+        },
+        {
+          "path": "/observed/dot-slash/ok",
+          "before": {
+            "path": "a"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/dot-slash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/double-slash/message",
+          "before": null,
+          "after": "rf1: refusing noncanonical relative path 'a//b'"
+        },
+        {
+          "path": "/observed/double-slash/ok",
+          "before": {
+            "path": "a/b"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/double-slash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/trailing-slash/message",
+          "before": null,
+          "after": "rf1: refusing noncanonical relative path 'a/'"
+        },
+        {
+          "path": "/observed/trailing-slash/ok",
+          "before": {
+            "path": "a"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/trailing-slash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "safe_filesystem_gnd.install_safe_destination",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/safe_filesystem_gnd.install_safe_destination.json",
+      "before_sha256": "90add5d2c807cc4f861e9a69f05eba5bfae5c391632862c8e5f9d3e85446cbc1",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/safe_filesystem_gnd.install_safe_destination.json",
+      "after_sha256": "f5906bd6a54c82df29da49fa60d2ce07d62b69457beff6cf41219c7d6470b2b5",
+      "reason": "C1 canonical path spelling",
+      "changes": [
+        {
+          "path": "/observed/backslash/message",
+          "before": null,
+          "after": "install destination: refusing noncanonical relative path 'a\\b'"
+        },
+        {
+          "path": "/observed/backslash/ok",
+          "before": {
+            "path": "<tmp>/dest/tree/a\\b"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/backslash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/dot-slash/message",
+          "before": null,
+          "after": "install destination: refusing noncanonical relative path './a'"
+        },
+        {
+          "path": "/observed/dot-slash/ok",
+          "before": {
+            "path": "<tmp>/dest/tree/a"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/dot-slash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/double-slash/message",
+          "before": null,
+          "after": "install destination: refusing noncanonical relative path 'a//b'"
+        },
+        {
+          "path": "/observed/double-slash/ok",
+          "before": {
+            "path": "<tmp>/dest/tree/a/b"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/double-slash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/trailing-slash/message",
+          "before": null,
+          "after": "install destination: refusing noncanonical relative path 'a/'"
+        },
+        {
+          "path": "/observed/trailing-slash/ok",
+          "before": {
+            "path": "<tmp>/dest/tree/a"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/trailing-slash/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        },
+        {
+          "path": "/observed/tree:file/x/message",
+          "before": null,
+          "after": "install destination: parent '<tmp>/dest/tree/file' is not a directory"
+        },
+        {
+          "path": "/observed/tree:file/x/ok",
+          "before": {
+            "path": "<tmp>/dest/tree/file/x"
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/tree:file/x/raises",
+          "before": null,
+          "after": "gnd.install.InstallPathError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.coverage_read_json_document",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.coverage_read_json_document.py314.json",
+      "before_sha256": "57e1d70cc84b758b7091d88a0b9b5e3566d32803fecf1658b7ba6c460b104ad1",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.coverage_read_json_document.json",
+      "after_sha256": "0f4f4723eb2e56541c60f65adb9573cbcfd49049251fec80e946899050e50698",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "<tmp>/deep.json has a list root, not an object",
+          "after": "<tmp>/deep.json is not valid JSON: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/duplicate-key/message",
+          "before": "<tmp>/duplicate-key.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+          "after": "<tmp>/duplicate-key.json is not valid JSON: duplicate JSON key"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": "<tmp>/overflow.json has schema_version None; check evidence requires 3 or 5 or 7 or 9 or 10",
+          "after": "<tmp>/overflow.json is not valid JSON: nonfinite JSON number"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.declared_adapter__bundle_rows",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.declared_adapter__bundle_rows.py314.json",
+      "before_sha256": "c240076a8fb7c5f00b1c677a247c00d38f53933d63684171624d0ca3f598864a",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.declared_adapter__bundle_rows.json",
+      "after_sha256": "7918ccc693a78515e695da07812f8dc1e4548fbd85f825084bab7e5d5d046ce3",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "bundle requires exactly schema_version and files",
+          "after": "assistant content is not bundle JSON: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": "bundle requires exactly schema_version and files",
+          "after": "assistant content is not bundle JSON: nonfinite JSON number"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.exp.adapter_policy__strict_document",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.exp.adapter_policy__strict_document.py314.json",
+      "before_sha256": "dc53c5450b9775c1ffe0ecf4ef4b288124aa48ae18c8fac468565e516f6b70e8",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.exp.adapter_policy__strict_document.json",
+      "after_sha256": "cf11f54eb44b18b523a7c49a76264d213a2a795a1e7c4bc2bcdabdf804fb8b38",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "adapter policy must contain a JSON object",
+          "after": "adapter policy is not strict JSON: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": null,
+          "after": "adapter policy is not strict JSON: nonfinite JSON number"
+        },
+        {
+          "path": "/observed/overflow/ok",
+          "before": {
+            "a": {
+              "float": "inf"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/overflow/raises",
+          "before": null,
+          "after": "gnd.exp.adapter_policy.AdapterPolicyError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.exp.session_eval__strict_object",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.exp.session_eval__strict_object.py314.json",
+      "before_sha256": "bd888bf94cd536ec5a937dd1d8ddc7d9f76f3f0c1b7e8298f65491e7db991b6f",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.exp.session_eval__strict_object.json",
+      "after_sha256": "e28d104720694a21b851dc4a1eabe86076e188976fd5b70e6f83e2b8d2e02061",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "verifier payload invalid: payload JSON root must be an object",
+          "after": "verifier payload invalid: payload is not one strict JSON document: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": null,
+          "after": "verifier payload invalid: payload is not one strict JSON document: nonfinite JSON number"
+        },
+        {
+          "path": "/observed/overflow/ok",
+          "before": {
+            "a": {
+              "float": "inf"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/overflow/raises",
+          "before": null,
+          "after": "gnd.exp.session_eval.VerifierPayloadError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.exp.session_store__strict_object_bytes",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.exp.session_store__strict_object_bytes.py314.json",
+      "before_sha256": "c1499d25dcadf75fd0b402785abb024292ced45cc4a32bfdabd99f5839558dd7",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.exp.session_store__strict_object_bytes.json",
+      "after_sha256": "4728b938069ecabd914f459678f91961ec1e0f67cc7c297538e62ed551a97767",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "rf1 must contain a JSON object",
+          "after": "rf1 is not strict JSON: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": null,
+          "after": "rf1 is not strict JSON: nonfinite JSON number"
+        },
+        {
+          "path": "/observed/overflow/ok",
+          "before": {
+            "a": {
+              "float": "inf"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/overflow/raises",
+          "before": null,
+          "after": "builtins.ValueError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.review.request__strict_json_object",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.review.request__strict_json_object.py314.json",
+      "before_sha256": "5c35ee0854a6dd0d63674193a7bc98735bbed0690cea9abc15bf516c29b7131c",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.review.request__strict_json_object.json",
+      "after_sha256": "8b210ec6fc65ec41a485caf26f0eb7cc20cd3c8ce3e7fa77f9cb0d72b99aba0c",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "invalid rf1 JSON: top level must be an object",
+          "after": "invalid rf1 JSON: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": null,
+          "after": "invalid rf1 JSON: nonfinite JSON number"
+        },
+        {
+          "path": "/observed/overflow/ok",
+          "before": {
+            "a": {
+              "float": "inf"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/overflow/raises",
+          "before": null,
+          "after": "gnd.review.request.ReviewRequestError"
+        }
+      ]
+    },
+    {
+      "lane": "helpers",
+      "stem": "strict_json_gnd.review.runner__strict_json",
+      "before_path": "tests/fixtures/rf1-pins/goldens/helpers/strict_json_gnd.review.runner__strict_json.py314.json",
+      "before_sha256": "a20f71abeaecb2068ec1dac4a2b7c355620f3c1573f5d764a9e9f9b2d4837449",
+      "after_path": "tests/fixtures/rf7-restrictions/helpers/strict_json_gnd.review.runner__strict_json.json",
+      "after_sha256": "9ee3275da4a14579d16361f0d9f17a41532d797986608db0706370432c6d585d",
+      "reason": "C2 bounded duplicate/finite/depth JSON intake",
+      "changes": [
+        {
+          "path": "/observed/deep/message",
+          "before": "rf1 must contain exactly one JSON object",
+          "after": "rf1 is invalid JSON: JSON depth exceeds cap"
+        },
+        {
+          "path": "/observed/overflow/message",
+          "before": null,
+          "after": "rf1 is invalid JSON: nonfinite JSON number"
+        },
+        {
+          "path": "/observed/overflow/ok",
+          "before": {
+            "a": {
+              "float": "inf"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/observed/overflow/raises",
+          "before": null,
+          "after": "gnd.review.runner.ReviewRunError"
+        }
+      ]
+    },
+    {
+      "lane": "sem",
+      "stem": "resolver",
+      "before_path": "tests/fixtures/rf1-pins/goldens/sem/resolver.json",
+      "before_sha256": "73766aadcf8814feef3931255f99b0277aef11486e768b188f8e0221405af33b",
+      "after_path": "tests/fixtures/rf7-restrictions/sem/resolver.json",
+      "after_sha256": "b9cd1bdc6f5e375cbb241cdbafc0d9fb95c0bccf1584714eae20d386c7e3b5a1",
+      "reason": "C5 literal True strict reference traversal",
+      "changes": [
+        {
+          "path": "/one/model._resolved_primitive/ok",
+          "before": "String",
+          "after": null
+        },
+        {
+          "path": "/one/model_verbalization._object_type_cnl/ok",
+          "before": "Child is a kind of Base, inheriting the reference of Base.",
+          "after": "Child is a kind of Base."
+        },
+        {
+          "path": "/one/pyrel_runtime.ModelIndex.primitive/ok",
+          "before": "String",
+          "after": null
+        },
+        {
+          "path": "/one/pyrel_runtime.ModelIndex.reference_value_type/ok",
+          "before": "Code",
+          "after": null
+        },
+        {
+          "path": "/yes/model._resolved_primitive/ok",
+          "before": "String",
+          "after": null
+        },
+        {
+          "path": "/yes/model_verbalization._object_type_cnl/ok",
+          "before": "Child is a kind of Base, inheriting the reference of Base.",
+          "after": "Child is a kind of Base."
+        },
+        {
+          "path": "/yes/pyrel_runtime.ModelIndex.primitive/ok",
+          "before": "String",
+          "after": null
+        },
+        {
+          "path": "/yes/pyrel_runtime.ModelIndex.reference_value_type/ok",
+          "before": "Code",
+          "after": null
+        }
+      ]
+    },
+    {
+      "lane": "sem-datetime",
+      "stem": "checker._typed_comparison_values",
+      "before_path": "tests/fixtures/rf1-pins/goldens/sem-datetime/checker._typed_comparison_values.json",
+      "before_sha256": "6410ae51e02251b7459e768dc6fe7e09b30b25e6168b0c413074a4239f9239fc",
+      "after_path": "tests/fixtures/rf7-restrictions/sem-datetime/checker._typed_comparison_values.json",
+      "after_sha256": "6128f8a682dd03381aa738328a7ccb5f4b8dd23d297bf3687a14d0db2fe28346",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/utc-lower-z/ok",
+          "before": [
+            {
+              "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+              "type": "datetime"
+            },
+            {
+              "repr": "datetime.datetime(2024, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)",
+              "type": "datetime"
+            }
+          ],
+          "after": null
+        }
+      ]
+    },
+    {
+      "lane": "sem-datetime",
+      "stem": "export.pyrel_runtime._valid_temporal",
+      "before_path": "tests/fixtures/rf1-pins/goldens/sem-datetime/export.pyrel_runtime._valid_temporal.py314.json",
+      "before_sha256": "192f9f4995b4373ec59f121bac57f55463647679d82ef27e57c7dcb71df733e3",
+      "after_path": "tests/fixtures/rf7-restrictions/sem-datetime/export.pyrel_runtime._valid_temporal.json",
+      "after_sha256": "17fe2f7a14a501149aa065482b6de42b2dadc129be6a9b563c609303e46fa3e8",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/hour-24/ok",
+          "before": true,
+          "after": false
+        },
+        {
+          "path": "/space-separator/ok",
+          "before": true,
+          "after": false
+        },
+        {
+          "path": "/utc-lower-z/ok",
+          "before": true,
+          "after": false
+        }
+      ]
+    },
+    {
+      "lane": "sem-datetime",
+      "stem": "model._temporal_literal_valid",
+      "before_path": "tests/fixtures/rf1-pins/goldens/sem-datetime/model._temporal_literal_valid.py314.json",
+      "before_sha256": "10189188110eb8536d998dad74cdf3c99bf6269ac372777b2881edd5d6a6dd97",
+      "after_path": "tests/fixtures/rf7-restrictions/sem-datetime/model._temporal_literal_valid.json",
+      "after_sha256": "58677c990da1b2620f87af29a16fa5a007ab90046a05cfa1a48c85c30d24c829",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/hour-24/ok",
+          "before": true,
+          "after": false
+        },
+        {
+          "path": "/space-separator/ok",
+          "before": true,
+          "after": false
+        },
+        {
+          "path": "/utc-lower-z/ok",
+          "before": true,
+          "after": false
+        }
+      ]
+    },
+    {
+      "lane": "sem-datetime",
+      "stem": "semantic_adapter.canonical_scalar",
+      "before_path": "tests/fixtures/rf1-pins/goldens/sem-datetime/semantic_adapter.canonical_scalar.py314.json",
+      "before_sha256": "912e1384f7f9df918a730e305634405bea5ff0d4121309386e649e43ded45c40",
+      "after_path": "tests/fixtures/rf7-restrictions/sem-datetime/semantic_adapter.canonical_scalar.json",
+      "after_sha256": "f585aad7cac3cd23408e2970345715523b3c75b4fb44cec3d831ad95010bc55d",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/date-only/ok",
+          "before": {
+            "dataclass": "Scalar",
+            "fields": {
+              "den": 1,
+              "identity_kind": "string",
+              "kind": "datetime-naive",
+              "num": 63839664000000000,
+              "ordered": true,
+              "token": "2024-01-01"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/hour-24/ok",
+          "before": {
+            "dataclass": "Scalar",
+            "fields": {
+              "den": 1,
+              "identity_kind": "string",
+              "kind": "datetime-naive",
+              "num": 63839750400000000,
+              "ordered": true,
+              "token": "2024-01-01T24:00:00"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/space-separator/ok",
+          "before": {
+            "dataclass": "Scalar",
+            "fields": {
+              "den": 1,
+              "identity_kind": "string",
+              "kind": "datetime-naive",
+              "num": 63839664000000000,
+              "ordered": true,
+              "token": "2024-01-01 00:00:00"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/utc-lower-z/ok",
+          "before": {
+            "dataclass": "Scalar",
+            "fields": {
+              "den": 1,
+              "identity_kind": "string",
+              "kind": "datetime-aware",
+              "num": 63839664000000000,
+              "ordered": true,
+              "token": "2024-01-01T00:00:00z"
+            }
+          },
+          "after": null
+        },
+        {
+          "path": "/week-date/ok",
+          "before": {
+            "dataclass": "Scalar",
+            "fields": {
+              "den": 1,
+              "identity_kind": "string",
+              "kind": "datetime-naive",
+              "num": 63839664000000000,
+              "ordered": true,
+              "token": "2024-W01-1"
+            }
+          },
+          "after": null
+        }
+      ]
+    },
+    {
+      "lane": "sem-datetime",
+      "stem": "synth.boundary.boundary_neighbour",
+      "before_path": "tests/fixtures/rf1-pins/goldens/sem-datetime/synth.boundary.boundary_neighbour.py314.json",
+      "before_sha256": "78d5e8e414821c15aa5c3ed56529bb519a619419f83fdd6bf1ba21a0455677dd",
+      "after_path": "tests/fixtures/rf7-restrictions/sem-datetime/synth.boundary.boundary_neighbour.json",
+      "after_sha256": "6a9322eb5e1eb2120f5ccacbe827fd62b50cddc840aeb34d66d26a1d260f8be0",
+      "reason": "C4 strict ISO datetime grammar",
+      "changes": [
+        {
+          "path": "/date-only/message",
+          "before": null,
+          "after": "'2024-01-01' is not an ISO-8601 datetime bound"
+        },
+        {
+          "path": "/date-only/ok",
+          "before": [
+            "2024-01-01T00:00:00.000001",
+            "PT0.000001S"
+          ],
+          "after": null
+        },
+        {
+          "path": "/date-only/raises",
+          "before": null,
+          "after": "gnd.synth.boundary.NoOrdering"
+        },
+        {
+          "path": "/hour-24/message",
+          "before": null,
+          "after": "'2024-01-01T24:00:00' is not an ISO-8601 datetime bound"
+        },
+        {
+          "path": "/hour-24/ok",
+          "before": [
+            "2024-01-02T00:00:00.000001",
+            "PT0.000001S"
+          ],
+          "after": null
+        },
+        {
+          "path": "/hour-24/raises",
+          "before": null,
+          "after": "gnd.synth.boundary.NoOrdering"
+        },
+        {
+          "path": "/space-separator/message",
+          "before": null,
+          "after": "'2024-01-01 00:00:00' is not an ISO-8601 datetime bound"
+        },
+        {
+          "path": "/space-separator/ok",
+          "before": [
+            "2024-01-01T00:00:00.000001",
+            "PT0.000001S"
+          ],
+          "after": null
+        },
+        {
+          "path": "/space-separator/raises",
+          "before": null,
+          "after": "gnd.synth.boundary.NoOrdering"
+        },
+        {
+          "path": "/week-date/message",
+          "before": null,
+          "after": "'2024-W01-1' is not an ISO-8601 datetime bound"
+        },
+        {
+          "path": "/week-date/ok",
+          "before": [
+            "2024-01-01T00:00:00.000001",
+            "PT0.000001S"
+          ],
+          "after": null
+        },
+        {
+          "path": "/week-date/raises",
+          "before": null,
+          "after": "gnd.synth.boundary.NoOrdering"
+        }
+      ]
+    },
+    {
+      "lane": "session",
+      "stem": "unknown-v0",
+      "before_path": "tests/fixtures/rf1-pins/goldens/session/unknown-v0.json",
+      "before_sha256": "604ea71b98ba39851d825a58b7c07fbf8d10356d634bf60cb1a987fb71254105",
+      "after_path": "tests/fixtures/rf7-restrictions/session/unknown-v0.json",
+      "after_sha256": "7d6c37d2edd953d0b5e0c0c237ac97c8f45bfe2cabf71c76a5dd3ba1c9ac21ea",
+      "reason": "C7 lists supported version8",
+      "changes": [
+        {
+          "path": "/cli/stdout",
+          "before": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [contract:shape]\n",
+          "after": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7, or 8 [contract:shape]\n"
+        }
+      ]
+    },
+    {
+      "lane": "session",
+      "stem": "unknown-v9",
+      "before_path": "tests/fixtures/rf1-pins/goldens/session/unknown-v9.json",
+      "before_sha256": "604ea71b98ba39851d825a58b7c07fbf8d10356d634bf60cb1a987fb71254105",
+      "after_path": "tests/fixtures/rf7-restrictions/session/unknown-v9.json",
+      "after_sha256": "7d6c37d2edd953d0b5e0c0c237ac97c8f45bfe2cabf71c76a5dd3ba1c9ac21ea",
+      "reason": "C7 lists supported version8",
+      "changes": [
+        {
+          "path": "/cli/stdout",
+          "before": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7 [contract:shape]\n",
+          "after": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 5, or 6, or 7, or 8 [contract:shape]\n"
+        }
+      ]
+    }
+  ]
+}

@@ -33,6 +33,7 @@ from pydantic import (
 )
 from pydantic_core import PydanticCustomError
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import canonical_json_text
 from gnd.extract.manifest import ManifestError, manifest_path_issue, open_manifest_relative_path
 from gnd.model import ModelLoadError, ModelValidationError, ValidationIssue, load_model
@@ -1102,7 +1103,8 @@ class DataDrivenContract(BaseModel):
                                 f"{TRANSITION_SESSION_CONTRACT_VERSION}, or "
                                 f"{WALK_SESSION_CONTRACT_VERSION}, or "
                                 f"{DECLARED_ADAPTER_SESSION_CONTRACT_VERSION}, or "
-                                f"{PATCH_SESSION_CONTRACT_VERSION}"
+                                f"{PATCH_SESSION_CONTRACT_VERSION}, or "
+                                f"{8}"
                             )
                         },
                     }
@@ -1274,7 +1276,7 @@ def _pydantic_issues(
 
 
 def _contract_json(raw):
-    document = json.loads(raw)
+    document = _rf7_input.loads(raw)
     if isinstance(document, dict) and document.get("schema_version") in (7, 8):
         from gnd.json_input import bounded_json
 
@@ -1333,11 +1335,11 @@ def _read_contract_document(path: Path, root: Path) -> object:
         text = raw.decode("utf-8")
         if (
             '"schema_version"' in text
-            and isinstance(document := json.loads(text), dict)
+            and isinstance(document := _rf7_input.loads(text), dict)
             and document.get("schema_version") in (7, 8)
         ):
             return _contract_json(text)
-        return json.loads(
+        return _rf7_input.loads(
             text,
             parse_constant=lambda token: (_ for _ in ()).throw(
                 ValueError(f"non-finite JSON number {token!r} is forbidden")

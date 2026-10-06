@@ -4,6 +4,8 @@ import argparse
 import json
 from typing import Any
 
+from gnd import input_policy as _rf7_input
+
 
 def _parse_question(value: str) -> tuple[str, str]:
     """Argparse converter for ``--question ID=TEXT``."""
@@ -23,7 +25,7 @@ def _parse_covers(value: str) -> Any:
     from gnd.exp.spec import CoversEntry
 
     try:
-        document = json.loads(value)
+        document = _rf7_input.loads(value)
         return CoversEntry.model_validate(document)
     except (json.JSONDecodeError, ValidationError, TypeError, ValueError) as error:
         raise argparse.ArgumentTypeError(

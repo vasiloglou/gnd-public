@@ -85,6 +85,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from gnd import DISTRIBUTION, resolve_version
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import sha256_hex as _sha256
 from gnd.safefs import (
     ANCHORED_MUTATION as ANCHORED_MUTATION,  # noqa: PLC0414 -- compatibility surface
@@ -507,7 +508,7 @@ def read_manifest(root: Path) -> Manifest | None:
             f"much memory and time the parser spends."
         )
     try:
-        raw: Any = json.loads(path.read_text(encoding="utf-8"))
+        raw: Any = _rf7_input.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         raise ManifestError(f"{path} could not be read as JSON: {error}") from error
     if not isinstance(raw, dict):

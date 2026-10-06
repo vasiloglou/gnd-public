@@ -21,6 +21,8 @@ from pydantic import (
     model_validator,
 )
 
+from gnd import input_policy as _rf7_input
+
 LEGACY_EVOLUTION_SCHEMA_VERSION = 1
 #: /2 the locator wire, /3 the tracked-roster wire (v5.1 Phase 3, D-P3.4). A
 #: linked project is identified by the leaves the CALLER listed. Read
@@ -120,7 +122,7 @@ def _version_validation_error(model_name: str, version: Any) -> ValidationError:
 def _json_document(value: str | bytes | bytearray) -> Any:
     if isinstance(value, bytearray):
         value = bytes(value)
-    return json.loads(value)
+    return _rf7_input.loads(value)
 
 
 def _relative_posix(value: Any, field: str) -> str:

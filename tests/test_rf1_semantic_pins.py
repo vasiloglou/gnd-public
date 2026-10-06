@@ -13,7 +13,6 @@ from ruamel.yaml import YAML
 from support.cli_runner import run_main, run_process
 from support.rf1_pins import (
     LARGE_RESULT_BYTES,
-    assert_golden,
     encode,
     inputs,
     load_cases,
@@ -21,6 +20,7 @@ from support.rf1_pins import (
     scrub,
     sha256_hex,
 )
+from support.rf7_pins import assert_golden
 
 from gnd import (
     assurance,

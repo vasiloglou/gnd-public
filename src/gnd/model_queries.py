@@ -1,4 +1,4 @@
-"""Primitive query algorithms retained verbatim from the RF3 shared home."""
+"""Shared strict reference traversal with compatibility entry points."""
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -10,29 +10,12 @@ def _resolved_primitive(
     object_types: dict[str, dict[str, Any]],
     seen: set[str] | None = None,
 ) -> str | None:
-    """Resolve a primitive without importing popvalidate (which imports Model)."""
-    seen = set(seen or ())
-    if object_type_id in seen:
-        return None
-    seen.add(object_type_id)
-    object_type = object_types.get(object_type_id)
-    if object_type is None:
-        return None
-    if object_type.get("kind") == "value":
-        primitive = object_type.get("primitive")
-        return str(primitive) if primitive is not None else None
-    reference = object_type.get("reference") or {}
-    if reference.get("mode") in ("popular", "general") and reference.get("value_type"):
-        return _resolved_primitive(str(reference["value_type"]), object_types, seen)
-    if object_type.get("inherits_reference"):
-        inherited = {
-            primitive
-            for parent in object_type.get("subtype_of") or []
-            if (primitive := _resolved_primitive(str(parent), object_types, seen)) is not None
-        }
-        if len(inherited) == 1:
-            return inherited.pop()
-    return None
+    """Compatibility entry for the consolidated strict reference walk."""
+    return _resolve_reference(
+        str(object_type_id), object_types,
+        None,
+        set() if seen is None else seen, _identifying_primitive,
+    )
 
 
 def _supertype_parents(doc: dict[str, Any]) -> dict[str, list[str]]:
@@ -63,7 +46,7 @@ def _identifying_id(object_type_id: str, _object_type: dict[str, Any]) -> str | 
 def _resolve_reference(
     object_type_id: str,
     by_id: dict[str, dict[str, Any]],
-    parents: dict[str, list[str]],
+    parents: dict[str, list[str]] | None,
     seen: set[str],
     extract: Callable[[str, dict[str, Any]], str | None],
 ) -> str | None:
@@ -107,13 +90,15 @@ def _resolve_reference(
             return None
         return extract(str(value_type), target)
 
-    if parents.get(object_type_id) and object_type.get("inherits_reference") is True:
+    direct_parents = (parents.get(object_type_id) if parents is not None
+                      else [str(parent) for parent in object_type.get("subtype_of") or []])
+    if direct_parents and object_type.get("inherits_reference") is True:
         # Only when the subtype declares that it INHERITS its supertype's
         # identification scheme. `inherits_reference: false` with no reference of
         # its own is unresolvable, and reading through anyway would be a guess.
         resolved = {
             _resolve_reference(parent, by_id, parents, seen, extract)
-            for parent in parents[object_type_id]
+            for parent in direct_parents
         }
         resolved.discard(None)
         return next(iter(resolved)) if len(resolved) == 1 else None
@@ -128,14 +113,8 @@ def primitive_for(
     variant: Literal["truthy", "strict"],
     seen: set[str] | None = None,
 ) -> str | None:
-    """Resolve with an explicit predecessor policy; the two walks remain distinct."""
-    if variant == "truthy":
+    """Retain both predecessor variant names under the approved strict policy."""
+    if variant in ("truthy", "strict"):
         return _resolved_primitive(object_type_id, object_types, seen)
-    if variant == "strict":
-        return _resolve_reference(
-            str(object_type_id), object_types,
-            _supertype_parents({"object_types": list(object_types.values())}),
-            set() if seen is None else seen, _identifying_primitive,
-        )
     raise ValueError(f"unknown primitive resolver variant: {variant!r}")
 

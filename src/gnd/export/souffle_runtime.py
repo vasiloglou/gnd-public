@@ -13,6 +13,7 @@ from dataclasses import replace
 from pathlib import Path
 
 from gnd import artifacts
+from gnd import input_policy as _rf7_input
 from gnd.model import iter_derivation_clauses
 from gnd.witness import io as witness_io
 from gnd.witness.kernel import replay_witness
@@ -412,7 +413,7 @@ def map_proof(document, target, verified):
         if match is None:
             raise UnknownProof("unknown axiom")
         try:
-            values = json.loads("[" + match[2] + "]")
+            values = _rf7_input.loads("[" + match[2] + "]")
         except ValueError:
             raise ValueError("tuple syntax") from None
         return match[1], values

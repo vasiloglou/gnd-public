@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import copy  # noqa: F401 -- historical compatibility binding
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import os
 from collections.abc import Callable, Mapping  # noqa: F401 -- historical compatibility binding
 from dataclasses import (  # noqa: F401 -- historical compatibility binding  # noqa: F401 -- historical compatibility binding
@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from gnd import checker as checker_module  # noqa: F401 -- historical compatibility binding
+from gnd import input_policy as _rf7_input
 from gnd import model as model_module
 from gnd import redaction as redaction_module
 from gnd import report as report_module
@@ -599,7 +600,7 @@ def diff(
     projected = project_output("diff", report, policy=policy,
                                mode="unredacted" if unredacted else "applied",
                                emitter_id="api-diff")
-    schema = json.loads((files("gnd") / "diff.schema.json").read_text(encoding="utf-8"))
+    schema = _rf7_input.loads((files("gnd") / "diff.schema.json").read_text(encoding="utf-8"))
     Draft202012Validator(schema).validate(projected)
     if left.reference_populations or right.reference_populations:
         from gnd.references import reference_model_digest, resolve_context

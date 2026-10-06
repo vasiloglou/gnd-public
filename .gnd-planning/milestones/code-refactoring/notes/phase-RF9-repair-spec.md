@@ -156,3 +156,14 @@ concrete instrument findings rather than rewriting its history.
 The approval corpus's meanings remain unchanged. Helper/fixture repairs and the
 additional positive/dirty controls are delegated amendments within RF9-F1–F9;
 no review-round or broad-suite budget was expanded.
+
+Coverage audit successor: the separate contract-acceptance refusal also needs an
+independent negative. A real rejected final attempt now has operator/projected
+feedback dispositions forged to accepted with matching canonical byte/hash
+bindings. Nonterminal reconstruction agrees with its feedback, but terminal
+reconstruction must still reject the failed contract. The exact26dbff6 baseline
+accepts it and fails the refusal test; current code passes. The first instrument
+mistakenly tried nonterminal reconstruction while result.json was present and
+hit the pre-existing terminal-resume guard. Its corrected sibling temporarily
+removes that file for the internal-consistency control, then restores it for the
+terminal test. Both observations are retained; production bytes did not change.

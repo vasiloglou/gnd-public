@@ -1,0 +1,12 @@
+{
+  "status": "required native repair review pending explicit transmission authorization",
+  "implementation_commit": "f5979caaaa9385faa2ad44ba10364ddb9e5d561e",
+  "initial_auto_review_rejection": {
+    "executed": false,
+    "action": "native RF9 repair independent review",
+    "reason": "Source and repair diff transmission to Codex provider was rejected because the existing repair approval did not explicitly name this payload and destination."
+  },
+  "authorization_requested": "bounded prompt and inspected source/diff to Codex provider with existing native authentication; initial review and at most one substantive repair review",
+  "credentials": "no environment file read; native authentication only",
+  "assessment_count": 0
+}

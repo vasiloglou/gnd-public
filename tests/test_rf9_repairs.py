@@ -317,3 +317,36 @@ def test_output_aliases_patch_owner_and_scan_scope_are_live(monkeypatch):
     assert defining in paths and ROOT / 'src/gnd/commands/_output.py' in paths
     with pytest.raises(AssertionError, match='incomplete CLI'):
         cli_sources([path for path in paths if path != defining])
+
+
+def test_accepted_feedback_cannot_replace_contract_acceptance(failing_work_session):
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.exp.session_replay import reconstruct
+    from gnd.exp.session_store import SessionStore
+
+    _, contract, run, result_path, result = failing_work_session
+    directory = run / 'attempts/0002'
+    attempt_path = directory / 'attempt.json'
+    attempt = json.loads(attempt_path.read_text())
+    for key in ['operator_feedback', 'feedback']:
+        leaf = attempt[key]
+        path = directory / leaf['path']
+        feedback = json.loads(path.read_text())
+        assert not feedback['acceptance_ready']
+        feedback['disposition'] = 'accepted'
+        raw = canonical_json_bytes(feedback)
+        path.write_bytes(raw)
+        leaf.update(sha256=hashlib.sha256(raw).hexdigest(), size_bytes=len(raw))
+    attempt['evidence_digests']['feedback'] = attempt['feedback']['sha256']
+    attempt_path.write_bytes(canonical_json_bytes(attempt))
+    result_path.write_bytes(canonical_json_bytes(
+        dict(result, disposition='accepted', terminal_reason='all required cases accepted')))
+    store = SessionStore(run, run_id=run.name, contract_id=contract.experiment_id)
+    terminal = result_path.read_bytes()
+    result_path.unlink()
+    reconstruct(store, contract, allow_terminal=False)  # Internal hashes/feedback now agree.
+    result_path.write_bytes(terminal)
+    before = store.best_identity()
+    with pytest.raises(ValueError, match='terminal result differs'):
+        reconstruct(store, contract, allow_terminal=True)
+    assert store.best_identity() == before

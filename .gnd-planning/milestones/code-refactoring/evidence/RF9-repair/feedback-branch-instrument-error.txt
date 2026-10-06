@@ -1,0 +1,16 @@
+Edited evidence: worktree/temporary prefixes sanitized; output preserved.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_accepted_feedback_cannot_replace_contract_acceptance ___________
+tests/test_rf9_repairs.py:345: in test_accepted_feedback_cannot_replace_contract_acceptance
+    reconstruct(store, contract, allow_terminal=False)  # Internal hashes/feedback now agree.
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/exp/session_replay.py:265: in reconstruct
+    raise ValueError("terminal runs cannot resume")
+E   ValueError: terminal runs cannot resume
+---------------------------- Captured stdout setup -----------------------------
+CREATED <pytest-temp>/pytest-4541/test_accepted_feedback_cannot_0/v7/experiment/EXP-714-corpus/SPEC.md
+  declares Q1: Does the declared candidate meet the frozen relation?
+=========================== short test summary info ============================
+FAILED tests/test_rf9_repairs.py::test_accepted_feedback_cannot_replace_contract_acceptance
+1 failed in 1.09s

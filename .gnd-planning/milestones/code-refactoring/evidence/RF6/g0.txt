@@ -1,0 +1,20 @@
+Retained output edited to replace machine paths.
+........................................................................ [ 14%]
+........................................................................ [ 28%]
+........................................................................ [ 42%]
+........................................................................ [ 56%]
+........................................................................ [ 70%]
+........................................................................ [ 84%]
+................................F....................................... [ 98%]
+......                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________ test_full_current_and_original_core ______________________
+tests/test_rf3_core.py:43: in test_full_current_and_original_core
+    assert_core(measured)
+tests/test_rf3_core.py:37: in assert_core
+    assert sum(p['from'] in cohort for p in original['private_imports']) == 64
+E   assert 242 == 64
+E    +  where 242 = sum(<generator object assert_core.<locals>.<genexpr> at 0x10909bd80>)
+=========================== short test summary info ============================
+FAILED tests/test_rf3_core.py::test_full_current_and_original_core - assert 2...
+1 failed, 509 passed in 22.64s

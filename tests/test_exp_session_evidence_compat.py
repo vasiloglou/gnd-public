@@ -19,10 +19,10 @@ def test_every_version_dispatcher_in_this_lane_covers_both_entry_points() -> Non
 
     import inspect
 
-    from gnd.exp import session_contract, session_eval, session_store
+    from gnd.exp import session_contract, session_eval, session_store, session_records
 
     unpaired: list[str] = []
-    for module in (session_contract, session_eval, session_store):
+    for module in (session_contract, session_eval, session_store, session_records):
         for name, obj in vars(module).items():
             if not inspect.isclass(obj) or getattr(obj, "__module__", "") != module.__name__:
                 continue

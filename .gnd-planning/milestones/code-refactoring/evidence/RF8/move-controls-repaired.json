@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf8_sessions.py::test_old_metadata_is_unchanged",
+    "tests/test_public_v72_reader_boundaries.py",
+    "tests/test_public_payload_alias_sites.py",
+    "tests/test_exp_session_evidence_compat.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_v71_phase4_successors.py",
+    "--tb=short"
+  ],
+  "exit": 1,
+  "seconds": 18.66512894630432
+}

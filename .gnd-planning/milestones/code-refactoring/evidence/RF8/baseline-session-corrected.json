@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rf1_session_pins.py",
+    "--tb=short"
+  ],
+  "exit": 0,
+  "seconds": 31.598405122756958
+}

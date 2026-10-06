@@ -142,7 +142,7 @@ def apply_candidate_patch(
     files = {}
     if base_root is not None:
         try:
-            from gnd.exp.session_store import _collect_candidate
+            from gnd.exp.session_records import _collect_candidate
 
             inventory, collected = _collect_candidate(base_root)
             if inventory.tree_sha256 != base_sha256:

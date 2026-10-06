@@ -186,14 +186,15 @@ def test_v7_proposal_and_terminal_publication_boundaries(variant, tmp_path, monk
         producer += '\n' + statement + '\n'
         monkeypatch.setattr(helper, 'producer_source', lambda: producer)
     if variant == 'root-swap':
-        publish = session_v7.publish_leaf_atomic
+        from gnd.exp import session_runtime
+        publish = session_runtime.publish_leaf_atomic
 
         def swapped(root, relative, data, **kwargs):
             if relative == 'result.json':
                 root.rename(root.with_name('original-run'))
                 root.mkdir()
             return publish(root, relative, data, **kwargs)
-        monkeypatch.setattr(session_v7, 'publish_leaf_atomic', swapped)
+        monkeypatch.setattr(session_runtime, 'publish_leaf_atomic', swapped)
         with pytest.raises(FileNotFoundError):
             session_case({'branch': 'B24', 'parameters': {'variant': 'patch-repair'}}, bundle('dispatch', tmp_path))
         assert not list(tmp_path.rglob('result.json'))

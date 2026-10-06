@@ -841,6 +841,30 @@
     },
     "gnd.input_policy": {
       "layer": "infrastructure"
+    },
+    "gnd.exp.session_records": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_environment": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_control": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_replay": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_runtime": {
+      "lane": "exp",
+      "layer": "lanes"
+    },
+    "gnd.exp.session_profile": {
+      "lane": "exp",
+      "layer": "lanes"
     }
   },
   "schema_version": 1

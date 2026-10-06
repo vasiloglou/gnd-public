@@ -1,0 +1,7 @@
+{
+  "mark": "delegated approval (auto=true)",
+  "date": "2026-10-06",
+  "authorization": "RF8 auto",
+  "spec_sha256": "b70d065c490359f3ec892ad9da4e5d8b1db774883c895ae91d17717c4d8df813",
+  "ruling": "G3 all28 nodes; correct venv PATH, no golden changes"
+}

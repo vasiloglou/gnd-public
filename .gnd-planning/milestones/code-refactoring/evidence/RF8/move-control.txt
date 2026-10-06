@@ -1,0 +1,24 @@
+Retained output edited to replace machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf8_sessions.py::test_old_metadata_is_unchanged tests/test_public_v72_reader_boundaries.py tests/test_public_payload_alias_sites.py tests/test_exp_session_evidence_compat.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py --tb=short
+FF......................................                                 [100%]
+=================================== FAILURES ===================================
+________________________ test_old_metadata_is_unchanged ________________________
+tests/test_rf8_sessions.py:21: in test_old_metadata_is_unchanged
+    assert {'module': obj.__module__, 'qualname': obj.__qualname__,
+E   AssertionError: ('gnd.exp.session_store', '_DeclaredLaunchIntentV2')
+E   assert {'module': 'g...e)]) -> None'} == {'module': 'g...e)]) -> None'}
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Differing items:
+E     {'module': 'gnd.exp.session_records'} != {'module': 'gnd.exp.session_store'}
+E     Use -v to get more diff
+______ test_reader_decisions_remain_independent_of_producer_declarations _______
+tests/test_public_v72_reader_boundaries.py:34: in test_reader_decisions_remain_independent_of_producer_declarations
+    node = next(
+E   StopIteration
+=========================== short test summary info ============================
+FAILED tests/test_rf8_sessions.py::test_old_metadata_is_unchanged - Assertion...
+FAILED tests/test_public_v72_reader_boundaries.py::test_reader_decisions_remain_independent_of_producer_declarations
+2 failed, 38 passed in 8.37s
+
+Exit: 1

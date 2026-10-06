@@ -282,7 +282,7 @@ class _HeldResultParent:
 def tests_environment() -> dict[str, str]:
     """Call the shipped verifier allowlist expression at execution time."""
 
-    from gnd.exp.session import verifier_environment
+    from gnd.exp.session_environment import verifier_environment
 
     return verifier_environment()
 

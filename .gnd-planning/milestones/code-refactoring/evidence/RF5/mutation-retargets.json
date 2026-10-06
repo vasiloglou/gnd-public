@@ -1,0 +1,142 @@
+[
+  {
+    "id": "M-HELP-canonical-json-gnd-cli-canonical-payload",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/_output.py"
+  },
+  {
+    "id": "M-HELP-canonical-json-gnd-cli-evolve-json-bytes",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/evolve/cli_service.py"
+  },
+  {
+    "id": "M-HELP-safe-filesystem-gnd-cli-evolve-reject-unsafe-spelling",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/evolve/cli_service.py"
+  },
+  {
+    "id": "M-SEM-extract-indent",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/extract/service.py"
+  },
+  {
+    "id": "M-test-session-fresh-1",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-2",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-3",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-4",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-5",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-6",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-7",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-fresh-8",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-1",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-2",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-3",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-4",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-5",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-6",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-7",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-determinism-8",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-1",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-2",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-3",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-4",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-5",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-6",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-7",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  },
+  {
+    "id": "M-test-session-resume-8",
+    "before": "src/gnd/cli.py",
+    "after": "src/gnd/commands/exp.py"
+  }
+]

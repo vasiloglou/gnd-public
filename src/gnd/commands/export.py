@@ -35,3 +35,51 @@ def _cmd_export_pyrel(
     return 0
 
 _cmd_export_pyrel.__module__ = "gnd.cli"
+
+
+
+
+def _register_export(subparsers):
+    export_parser = subparsers.add_parser("export", help="export an optional standalone artifact")
+    export_targets = export_parser.add_subparsers(dest="export_target", required=True)
+    from gnd.export.souffle_cli import add_parsers
+    add_parsers(export_targets)
+    from gnd.export.lean_cli import add_parsers as add_lean_parsers
+
+    add_lean_parsers(export_targets)
+    pyrel_parser = export_targets.add_parser("pyrel", help="export a standalone PyRel program")
+    pyrel_parser.add_argument("model", help="path to the model file")
+    pyrel_parser.add_argument("--out", required=True, help="new Python program path")
+    connection_group = pyrel_parser.add_mutually_exclusive_group()
+    connection_group.add_argument("--duckdb-path", default=":memory:")
+    connection_group.add_argument("--connection", help="reserved named Snowflake connection")
+
+    return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser}
+
+
+def add_parsers(subparsers, *, command: str | None = None):
+    parsers = {}
+    if command is None or command == 'export':
+        selected = _register_export(subparsers)
+        parsers.update(selected)
+        selected['export_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if not parsers:
+        raise ValueError(f"unsupported command: {command}")
+    return parsers
+
+
+def handle(args, parsers) -> int:
+    if args.command == "export":
+        if args.export_target.startswith("lean"):
+            from gnd.export.lean_cli import dispatch as lean_dispatch
+
+            return lean_dispatch(args)
+        if args.export_target != "pyrel":
+            from gnd.export.souffle_cli import dispatch
+            return dispatch(args)
+        return _cmd_export_pyrel(
+            args.model, args.out, duckdb_path=args.duckdb_path, connection=args.connection
+        )
+
+    raise ValueError(f"unsupported command: {args.command}")
+

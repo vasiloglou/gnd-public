@@ -4,6 +4,7 @@ import argparse
 import sys
 from pathlib import Path
 
+from gnd import exits as exits_module
 from gnd import solve
 from gnd.exits import EXIT_USAGE
 
@@ -104,3 +105,153 @@ def _cmd_solve(args: argparse.Namespace) -> int:
 
 _utf8_clean.__module__ = "gnd.cli"
 _cmd_solve.__module__ = "gnd.cli"
+
+from gnd.commands._arguments import _StoreOnce
+
+
+def _register_solve(subparsers):
+    solve_station_order = ", ".join(station.name for station in solve.STATIONS)
+    solve_exit_map = ", ".join(
+        f"{code} {meaning}" for code, meaning in exits_module.SOLVE_CONTROL_PLANE_EXITS
+    )
+
+    solve_parser = subparsers.add_parser(
+        "solve",
+        help="walk the CLI-pure GND stations in order, gating each, and log the walk",
+        description=(
+            f"Walk the CLI-pure GND stations in locked order -- {solve_station_order} "
+            "-- blocking for an authorization "
+            "before each one and appending an authorization record to a walk log "
+            "before the station is spawned.\n"
+            "\n"
+            "WHAT THIS GUARANTEES: sequence, gating and logging FOR WALKS THAT GO "
+            "THROUGH IT. Nothing more.\n"
+            "\n"
+            "WHAT IT DOES NOT GUARANTEE: the process in general. Running the "
+            "stations a la carte stays legal and is not a violation of anything -- "
+            "a harness that could not be bypassed would be routed around, and a "
+            "bypassed harness is worse than none, because its log's existence "
+            "would falsely imply the walk is where work happens.\n"
+            "\n"
+            "IT DOES NOT JUDGE STATION-INTERNAL AGENT WORK. The guarantee's "
+            "perimeter is the walk log's perimeter.\n"
+            "\n"
+            "A STATION'S OWN EXIT IS IN THE LOG, NOT IN THIS COMMAND'S EXIT CODE. "
+            f"The exit code is a control plane: {solve_exit_map}. "
+            "A caller scripting this command reads the code "
+            "and then reads the log; a station exiting 11 does not make gnd solve "
+            "claim a collision about itself.\n"
+            "\n"
+            "THE BROWNFIELD PROFILE ASSUMES RECOVERY ALREADY COMPLETED. "
+            "--skip synth --skip codegen --skip conformance leaves gnd validate; a "
+            "recovered model's gate is gnd recovery verify, which runs BEFORE this "
+            "harness is entered, not inside it.\n"
+            "\n"
+            "THE WALK LOG RECORDS WHAT THIS HARNESS DID; IT IS NOT PROOF THAT IT "
+            "DID IT. A log that satisfies the walk predicate is a self-consistent "
+            "document, and a file authored by hand can be self-consistent too. It "
+            "attests no spawn, no executed argv, no existing artifact and no human "
+            "presence.\n"
+            "\n"
+            "THE OUTER STATION TIMEOUT IS NOT THE CONTRACT'S INNER --wall-seconds "
+            "BOUND. --station-timeout bounds the child process; this harness passes "
+            "no --wall-seconds to gnd exp run, because a contract's own wall bound "
+            "is the contract's business."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    solve_parser.add_argument("model", help="path to the model file")
+    solve_parser.add_argument(
+        "--workspace",
+        required=True,
+        action=_StoreOnce,
+        help=(
+            "the directory every station writes into. Required: a walk that wrote "
+            "five artifacts into whatever directory the caller happened to be "
+            "standing in is the accident this argument exists to prevent"
+        ),
+    )
+    solve_parser.add_argument(
+        "--experiment",
+        action=_StoreOnce,
+        help=(
+            "the data-driven experiment directory for the exp-run station, which "
+            "must resolve strictly inside --workspace. Mandatory when exp-run is "
+            "selected and refused when it is not"
+        ),
+    )
+    solve_parser.add_argument(
+        "--from",
+        dest="from_station",
+        action=_StoreOnce,
+        help="first station to run, inclusive",
+    )
+    solve_parser.add_argument("--until", action=_StoreOnce, help="last station to run, inclusive")
+    solve_parser.add_argument(
+        "--skip",
+        action="append",
+        default=[],
+        metavar="NAME",
+        help="omit a station; repeatable, and repeating one name is not an error",
+    )
+    solve_parser.add_argument(
+        "--auto",
+        action="store_true",
+        help=(
+            "authorize every gate without blocking. The log is NOT byte-identical "
+            "to a gated walk: flags.auto is true and every authorization carries "
+            "the auto source token"
+        ),
+    )
+    solve_parser.add_argument(
+        "--adapter",
+        action=_StoreOnce,
+        choices=("claude", "codex"),
+        help="terminal-agent adapter for the exp-run station; resolves to claude",
+    )
+    solve_parser.add_argument(
+        "--adapter-policy",
+        action=_StoreOnce,
+        help="trusted local declared-adapter policy for a schema-v6 exp-run station",
+    )
+    solve_parser.add_argument(
+        "--test-argv",
+        dest="test_argv",
+        action="append",
+        default=[],
+        metavar="WORD",
+        help="forwarded to the exp-run station verbatim, in the order given",
+    )
+    solve_parser.add_argument(
+        "--station-timeout",
+        dest="station_timeout",
+        action="append",
+        default=[],
+        metavar="NAME=SECONDS",
+        help=(
+            "override one station's outer timeout. SECONDS is a positive integer "
+            f"no greater than {solve.MAX_STATION_TIMEOUT_S}: an unbounded override "
+            "is an unbounded child wearing a flag"
+        ),
+    )
+
+    return {'solve_parser': solve_parser}
+
+
+def add_parsers(subparsers, *, command: str | None = None):
+    parsers = {}
+    if command is None or command == 'solve':
+        selected = _register_solve(subparsers)
+        parsers.update(selected)
+        selected['solve_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if not parsers:
+        raise ValueError(f"unsupported command: {command}")
+    return parsers
+
+
+def handle(args, parsers) -> int:
+    if args.command == "solve":
+        return _cmd_solve(args)
+
+    raise ValueError(f"unsupported command: {args.command}")
+

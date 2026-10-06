@@ -63,7 +63,7 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_canonical_payload]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/_output.py",
    "id": "M-HELP-canonical-json-gnd-cli-canonical-payload",
    "new": "def _canonical_payload(payload: dict[str, Any]) -> str:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"One deterministic JSON line. Two runs over one unchanged panel print the\n",
    "old": "def _canonical_payload(payload: dict[str, Any]) -> str:\n    \"\"\"One deterministic JSON line. Two runs over one unchanged panel print the\n"
@@ -72,7 +72,7 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.cli:_evolve_json_bytes]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/evolve/cli_service.py",
    "id": "M-HELP-canonical-json-gnd-cli-evolve-json-bytes",
    "new": "def _evolve_json_bytes(claim: Any) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    return (\n",
    "old": "def _evolve_json_bytes(claim: Any) -> bytes:\n    return (\n"
@@ -173,8 +173,8 @@
    ],
    "file": "src/gnd/synth/poolfile.py",
    "id": "M-HELP-canonical-json-gnd-synth-poolfile-canonical-bytes",
-   "new": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON — the hash input.\n",
-   "old": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON — the hash input.\n"
+   "new": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    raise RuntimeError(\"rf1-mutant\")\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON \u2014 the hash input.\n",
+   "old": "def _canonical_bytes(payload: dict[str, Any]) -> bytes:\n    \"\"\"Deterministic, key-sorted, whitespace-free JSON \u2014 the hash input.\n"
   },
   {
    "expect_red": [
@@ -405,7 +405,7 @@
    "expect_red": [
     "tests/test_rf1_helper_pins.py::test_helper[safe_filesystem|gnd.cli:_evolve_reject_unsafe_spelling]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/evolve/cli_service.py",
    "id": "M-HELP-safe-filesystem-gnd-cli-evolve-reject-unsafe-spelling",
    "new": "def _evolve_reject_unsafe_spelling(value: str, *, label: str) -> None:\n    raise RuntimeError(\"rf1-mutant\")\n    from pathlib import PurePosixPath, PureWindowsPath\n",
    "old": "def _evolve_reject_unsafe_spelling(value: str, *, label: str) -> None:\n    from pathlib import PurePosixPath, PureWindowsPath\n"
@@ -1296,7 +1296,7 @@
     "tests/test_rf1_semantic_pins.py::test_extract[ex/expense/model.orm.json]",
     "tests/test_rf1_semantic_pins.py::test_extract[ex/expense/currency.orm.json]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/extract/service.py",
    "id": "M-SEM-extract-indent",
    "new": "json.dumps(payload, indent=3, ensure_ascii=False, sort_keys=True, allow_nan=False)",
    "old": "json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True, allow_nan=False)"
@@ -1452,7 +1452,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[1]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-1",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1461,7 +1461,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[2]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-2",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1470,7 +1470,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[3]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-3",
    "new": "print(outcome.result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(outcome.result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1479,7 +1479,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[4]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-4",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1488,7 +1488,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[5]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-5",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1497,7 +1497,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[6]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-6",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1506,7 +1506,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[7]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-7",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1515,7 +1515,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_fresh[8]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-fresh-8",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1524,7 +1524,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[1]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-1",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1533,7 +1533,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[2]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-2",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1542,7 +1542,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[3]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-3",
    "new": "print(outcome.result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(outcome.result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1551,7 +1551,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[4]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-4",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1560,7 +1560,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[5]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-5",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1569,7 +1569,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[6]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-6",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1578,7 +1578,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[7]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-7",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1587,7 +1587,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_determinism[8]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-determinism-8",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1596,7 +1596,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[1]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-1",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1605,7 +1605,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[2]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-2",
    "new": "print(f\"IO ERROR: data-driven session could not be published (rf1): {error}\")",
    "old": "print(f\"IO ERROR: data-driven session could not be published: {error}\")"
@@ -1614,7 +1614,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[3]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-3",
    "new": "print(f\"IO ERROR: tests-mode session could not be published (rf1): {error}\")",
    "old": "print(f\"IO ERROR: tests-mode session could not be published: {error}\")"
@@ -1623,7 +1623,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[4]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-4",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1632,7 +1632,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[5]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-5",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1641,7 +1641,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[6]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-6",
    "new": "print(result_bytes.decode(\"utf-8\") + str(__import__(\"time\").time_ns()), end=\"\")",
    "old": "print(result_bytes.decode(\"utf-8\"), end=\"\")"
@@ -1650,7 +1650,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[7]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-7",
    "new": "print(f\"IO ERROR: data-driven session could not be published (rf1): {error}\")",
    "old": "print(f\"IO ERROR: data-driven session could not be published: {error}\")"
@@ -1659,7 +1659,7 @@
    "expect_red": [
     "tests/test_rf1_session_pins.py::test_session_resume[8]"
    ],
-   "file": "src/gnd/cli.py",
+   "file": "src/gnd/commands/exp.py",
    "id": "M-test-session-resume-8",
    "new": "print(f\"IO ERROR: data-driven session could not be published (rf1): {error}\")",
    "old": "print(f\"IO ERROR: data-driven session could not be published: {error}\")"

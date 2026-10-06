@@ -381,3 +381,292 @@ _cmd_exp_run.__module__ = "gnd.cli"
 _next_session_run_root.__module__ = "gnd.cli"
 _run_tests_mode_bridge.__module__ = "gnd.cli"
 _session_result_exit.__module__ = "gnd.cli"
+
+from typing import get_args
+
+import gnd.exp.cli_service as _handler_exp_cli_service
+from gnd.commands._arguments import _positive_finite_float
+
+
+def _register_exp(subparsers):
+    exp_parser = subparsers.add_parser(
+        "exp",
+        help="scaffold, author, run, validate, and close experiments",
+        description=(
+            "Work with experiments — the unit that carries a question, the run "
+            "that answered it, and the evidence for the answer. This lane owns "
+            "the structural INVARIANTS (does the spec parse, does every declared "
+            "question id resolve, does every evidence pointer name a file inside "
+            "the experiment); the language — what makes a good question or a good "
+            "conclusion — belongs to the skill. Fully offline: an experiment's "
+            "recorded conclusion is only worth something if a reviewer can "
+            "recompute it from the committed tree."
+        ),
+    )
+    exp_subparsers = exp_parser.add_subparsers(dest="exp_command", required=True)
+    from gnd.exp.spec import ExperimentKind
+
+    exp_init_parser = exp_subparsers.add_parser(
+        "init",
+        help="scaffold a new experiment directory with its SPEC.md",
+        description=(
+            "Create <out>/<ID>/SPEC.md declaring the questions this experiment "
+            "will have to answer. ID must match ^EXP-\\d{3}-[a-z0-9][a-z0-9-]*$ "
+            "because the id IS the directory name, and every write goes through "
+            "the shipped traversal guard. An existing experiment directory is "
+            "REFUSED, never overwritten, and there is deliberately no --force: "
+            "an experiment directory holds recorded conclusions and evidence. "
+            "Exits 0 when the spec is written, 3 when the requested declaration "
+            "is not a valid ExperimentSpec, 11 when the experiment directory "
+            "already exists (nothing was written), 64 on usage errors including "
+            "a malformed ID or a --question that is not ID=TEXT, 74 when the "
+            "output path is refused by the guard or is unwritable."
+        ),
+    )
+    exp_init_parser.add_argument("id", help="the experiment id, e.g. EXP-001-codegen-drift")
+    exp_init_parser.add_argument(
+        "--out", required=True, help="directory the experiment directory is created in"
+    )
+    exp_init_parser.add_argument(
+        "--kind",
+        choices=get_args(ExperimentKind),
+        default="codegen",
+        help="the closed experiment kind (default: codegen)",
+    )
+    exp_init_parser.add_argument(
+        "--title", default=None, help="one line saying what this experiment is for"
+    )
+    exp_init_parser.add_argument(
+        "--question",
+        dest="questions",
+        action="append",
+        type=_parse_question,
+        default=None,
+        metavar="ID=TEXT",
+        help="a declared question; repeatable. Every id must be answered to close.",
+    )
+    exp_init_parser.add_argument(
+        "--covers",
+        action="append",
+        type=_parse_covers,
+        default=None,
+        metavar="ENTRY",
+        help=(
+            "compact JSON model-element cover with exactly one of operation, "
+            "constraint, fact_type, or derivation (which addresses "
+            "derivation:<id>); repeatable"
+        ),
+    )
+    exp_init_parser.add_argument(
+        "--session-contract",
+        default=None,
+        metavar="PATH",
+        help="contract inspected only to establish the work tests-only covers exemption",
+    )
+
+    exp_validate_parser = exp_subparsers.add_parser(
+        "validate",
+        help="check that an experiment directory is structurally well-formed",
+        description=(
+            "Read <DIR>/SPEC.md and report its structure: id, kind, title, the "
+            "declared question ids in declared order, and any follows: "
+            "references. The spec is UNTRUSTED committed metadata, so the read "
+            "is byte-capped before it happens, anchors/aliases are refused, "
+            "unknown keys are rejected (extra=forbid), the experiment kind is a "
+            "closed vocabulary, and duplicate or empty question ids are refused "
+            "— a duplicate declaration makes the close gate's declared-vs-"
+            "resolved set difference ambiguous. Exits 0 when the experiment is "
+            "well-formed, 3 when SPEC.md is unparseable, schema-invalid, or "
+            "declares an id that disagrees with its own directory name, 64 on "
+            "usage errors, 66 when SPEC.md is missing entirely (fail closed — a "
+            "directory without a spec is not an experiment with nothing wrong)."
+        ),
+    )
+    exp_validate_parser.add_argument("directory", help="the experiment directory")
+
+    exp_author_expectation_parser = exp_subparsers.add_parser(
+        "author-expectation",
+        help="hash an exact answer, remove its source, and reject any surviving copy",
+        description=(
+            "Author one answer-free exact-bytes expectation in "
+            "<DIR>/session.contract.json. --from must be an experiment-relative "
+            "regular file (an absolute path is accepted only when it remains "
+            "inside DIR). The source is read through descriptor-anchored, "
+            "no-follow traversal and the 10 MiB session-input cap, the updated "
+            "contract is production-validated before publication, the source is "
+            "deleted, and every regular file under the experiment root is scanned "
+            "for equal bytes. The contract entry contains sha256, output_id, "
+            "candidate_path, comparison, media_type, and encoding, but no path or "
+            "size_bytes. Exits 0 only after the published contract loads and no "
+            "answer copy remains; 3 when the spec, contract, case, output, source, "
+            "or answer-copy state is refused; 64 on usage errors; 66 when SPEC.md "
+            "is missing; 74 on refused or failed path/I/O."
+        ),
+    )
+    exp_author_expectation_parser.add_argument(
+        "directory", help="the data-driven experiment directory"
+    )
+    exp_author_expectation_parser.add_argument(
+        "--case", dest="case_id", required=True, help="case_id to update"
+    )
+    exp_author_expectation_parser.add_argument(
+        "--output-id", required=True, help="expected output id to insert or replace"
+    )
+    exp_author_expectation_parser.add_argument(
+        "--candidate-path",
+        required=True,
+        help="output path relative to candidate/",
+    )
+    exp_author_expectation_parser.add_argument(
+        "--from",
+        dest="source",
+        required=True,
+        help="produced answer file inside the experiment root",
+    )
+    exp_author_expectation_parser.add_argument(
+        "--media-type",
+        default="application/json",
+        help="declared media type (default: application/json)",
+    )
+    exp_author_expectation_parser.add_argument(
+        "--encoding",
+        default="utf-8",
+        help="declared encoding (default: utf-8)",
+    )
+
+    exp_run_parser = exp_subparsers.add_parser(
+        "run",
+        help="run one bounded attempt for a data-driven experiment",
+        description=(
+            "Load a kind: data-driven SPEC.md and its conventional "
+            "session.contract.json, invoke exactly one trusted terminal-agent "
+            "adapter, run GND's machine verifier over every declared case, and "
+            "publish immutable evidence under runs/. The adapter vocabulary is "
+            "closed; no executable, provider, model, argv, attempt increase, or "
+            "contract-bound loosening is accepted. This does not close the "
+            "experiment: gnd exp close remains the separate completeness gate. "
+            "Exits 0 on exact required-case acceptance, 15 on a well-formed "
+            "nonaccepted session, 3 on malformed or mismatched committed input, "
+            "64 on usage errors or a wall-bound loosening, 66 when a required "
+            "artifact or selected adapter is missing, 70 on an internal defect, "
+            "74 on refused or failed path/I/O. Child verifier exits 1 through 4 "
+            "are retained as case evidence and never become this parent exit."
+        ),
+    )
+    exp_run_parser.add_argument("directory", help="the data-driven experiment directory")
+    exp_run_parser.add_argument(
+        "--adapter",
+        choices=("claude", "codex"),
+        help="legacy trusted terminal-agent adapter (contracts v1-v5)",
+    )
+    exp_run_parser.add_argument(
+        "--adapter-policy",
+        help="trusted local declared-adapter policy path (contracts v6/v7; v7 supports bounded patches and ranking)",
+    )
+    exp_run_parser.add_argument(
+        "--wall-seconds",
+        type=_positive_finite_float,
+        default=None,
+        help="optional positive finite tightening of the contract wall bound",
+    )
+    exp_run_parser.add_argument(
+        "--test-argv",
+        action="append",
+        default=None,
+        metavar="WORD",
+        help="one exact tests-mode child argv word; repeatable and never shell-parsed",
+    )
+
+    exp_close_parser = exp_subparsers.add_parser(
+        "close",
+        help="has this experiment discharged every question it declared?",
+        description=(
+            "Refuse to close an experiment that did not finish what it declared. "
+            "The verdict is a difference of two SETS — the question ids in "
+            "SPEC.md and the resolution ids in CONCLUSIONS.md — and it fails "
+            "when EITHER difference is non-empty: a declared question left "
+            "unresolved, or an orphan answer to a question nobody asked. It also "
+            "fails when a resolution's evidence pointer does not name a file "
+            "inside the experiment directory, or when a follows: reference names "
+            "an experiment that does not exist or has not concluded. "
+            "The OUTCOME VALUES never affect the verdict. An experiment whose "
+            "every question honestly resolves to 'unanswered' with a reason and "
+            "a citation CLOSES at exit 0 — a gate that demanded success would pay "
+            "for lying, and the gate's job is that a question cannot be quietly "
+            "forgotten, not that experiments succeed. "
+            "This is a validator, not a state machine: nothing is written and no "
+            "status is recorded. Exits 0 when every obligation is discharged, 3 "
+            "when SPEC.md or CONCLUSIONS.md is unparseable, schema-invalid, or "
+            "declares another experiment's id, 14 when an obligation is "
+            "undischarged INCLUDING a missing CONCLUSIONS.md (the gate's own "
+            "verdict — the experiment is open, not the input missing), 64 on "
+            "usage errors, 66 when SPEC.md is missing entirely, 74 when the "
+            "directory cannot be read."
+        ),
+    )
+    exp_close_parser.add_argument("directory", help="the experiment directory")
+
+
+    return {'exp_author_expectation_parser': exp_author_expectation_parser, 'exp_close_parser': exp_close_parser, 'exp_init_parser': exp_init_parser, 'exp_parser': exp_parser, 'exp_run_parser': exp_run_parser, 'exp_validate_parser': exp_validate_parser}
+
+
+def add_parsers(subparsers, *, command: str | None = None):
+    parsers = {}
+    if command is None or command == 'exp':
+        selected = _register_exp(subparsers)
+        parsers.update(selected)
+        selected['exp_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if not parsers:
+        raise ValueError(f"unsupported command: {command}")
+    return parsers
+
+
+def handle(args, parsers) -> int:
+    exp_init_parser = parsers.get('exp_init_parser')
+    if args.command == "exp":
+        from gnd.exp.spec import EXPERIMENT_DIR_PATTERN
+
+        if args.exp_command == "init":
+            if not EXPERIMENT_DIR_PATTERN.match(args.id):
+                # A malformed id from argv is a USAGE error, not a verdict about
+                # a document: routed through the parser so it exits 64 like every
+                # other malformed invocation (WR-03).
+                exp_init_parser.error(
+                    f"{args.id!r} is not a legal experiment id; it must match "
+                    f"{EXPERIMENT_DIR_PATTERN.pattern} — the id IS the directory "
+                    f"name, so a separator or a '..' in it would be a path"
+                )
+            return _handler_exp_cli_service._cmd_exp_init(
+                args.id,
+                args.out,
+                args.kind,
+                args.title or args.id,
+                args.questions
+                or [("Q1", "What did this experiment establish, and by what evidence?")],
+                args.covers or [],
+                args.session_contract,
+            )
+        if args.exp_command == "validate":
+            return _handler_exp_cli_service._cmd_exp_validate(args.directory)
+        if args.exp_command == "author-expectation":
+            return _handler_exp_cli_service._cmd_exp_author_expectation(
+                args.directory,
+                args.case_id,
+                args.output_id,
+                args.candidate_path,
+                args.source,
+                args.media_type,
+                args.encoding,
+            )
+        if args.exp_command == "run":
+            return _cmd_exp_run(
+                args.directory,
+                args.adapter,
+                args.adapter_policy,
+                args.wall_seconds,
+                args.test_argv or [],
+            )
+        return _handler_exp_cli_service._cmd_exp_close(args.directory)
+
+    raise ValueError(f"unsupported command: {args.command}")
+

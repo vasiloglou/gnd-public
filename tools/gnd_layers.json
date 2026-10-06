@@ -781,6 +781,42 @@
     },
     "gnd.yaml_comments": {
       "layer": "infrastructure"
+    },
+    "gnd.commands.synth": {
+      "layer": "entry"
+    },
+    "gnd.commands.measure": {
+      "layer": "entry"
+    },
+    "gnd.commands.evolve": {
+      "layer": "entry"
+    },
+    "gnd.commands.recovery": {
+      "layer": "entry"
+    },
+    "gnd.commands.witness": {
+      "layer": "entry"
+    },
+    "gnd.commands.fidelity": {
+      "layer": "entry"
+    },
+    "gnd.commands.conformance": {
+      "layer": "entry"
+    },
+    "gnd.commands.judgments": {
+      "layer": "entry"
+    },
+    "gnd.commands.verify": {
+      "layer": "entry"
+    },
+    "gnd.commands.codegen": {
+      "layer": "entry"
+    },
+    "gnd.commands.extract": {
+      "layer": "entry"
+    },
+    "gnd.commands.doccheck": {
+      "layer": "entry"
     }
   },
   "schema_version": 1

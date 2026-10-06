@@ -71,3 +71,64 @@ def test_predecessor_import_bindings_still_exist():
     for node in imports:
         for alias in node.names:
             assert hasattr(cli, alias.asname or alias.name.split('.')[0])
+
+
+def architecture():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('rf5_arch', ROOT / 'tools/gnd_arch.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_bootstrap_ceiling_and_single_parse_dispatch():
+    source = (ROOT / 'src/gnd/cli.py').read_text()
+    assert len(source.splitlines()) <= 1500
+    main = next(node for node in ast.parse(source).body if isinstance(node, ast.FunctionDef) and node.name == 'main')
+    assert sum(isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == 'parse_args' for node in ast.walk(main)) == 1
+    assert not any(isinstance(node, ast.Name) and node.id.startswith('_cmd_') for node in ast.walk(main))
+    assert ast.unparse(main.body[-1]) == 'return args.handler(args)'
+
+
+def test_all_parser_paths_receive_command_handlers(monkeypatch):
+    from test_rf1_cli_pins import _root, _walk
+    parsers = {}
+    _walk(_root(monkeypatch), ('gnd',), parsers)
+    assert len(parsers) == 52
+    for path in parsers:
+        if path != 'gnd':
+            assert callable(parsers[' '.join(path.split()[:2])].get_default('handler')), path
+    cases = json.loads((ROOT / 'tests/fixtures/rf5-handlers/cases.json').read_text())
+    for case in cases:
+        args = parsers['gnd'].parse_args([arg.replace('<repo>', str(ROOT)) for arg in case['argv']])
+        assert callable(args.handler), case['id']
+
+
+def test_entrypoint_rule_covers_all_groups_and_rejects_forbidden_imports():
+    import copy
+    arch = architecture()
+    metrics = arch.measure(ROOT, ROOT / 'tools/gnd_layers.json')
+    policy = json.loads((ROOT / 'tools/gnd_entrypoints.json').read_text())
+    result = arch.entrypoint_rule(metrics, policy)
+    assert len(result['scope']) == 19
+    assert result['violations'] == []
+    for source, target in [('gnd.commands.verify', 'gnd.cli'), ('gnd.commands.verify', 'gnd.checker')]:
+        altered = copy.deepcopy(metrics)
+        altered['edges'].append({'from': source, 'to': target, 'kind': 'module', 'line': 1})
+        assert len(arch.entrypoint_rule(altered, policy)['violations']) == 1
+    incomplete = copy.deepcopy(policy)
+    incomplete['scope'].remove('gnd.commands.verify')
+    with pytest.raises(ValueError, match='incomplete RF5'):
+        arch.entrypoint_rule(metrics, incomplete)
+    omitted = copy.deepcopy(metrics)
+    omitted['modules'] = [row for row in omitted['modules'] if row['module'] != 'gnd.commands.verify']
+    with pytest.raises(ValueError, match='incomplete RF5'):
+        arch.entrypoint_rule(omitted, policy)
+    added = copy.deepcopy(metrics)
+    added['modules'].append({'module': 'gnd.commands.unscanned', 'layer': 'entry'})
+    with pytest.raises(ValueError, match='incomplete RF5'):
+        arch.entrypoint_rule(added, policy)
+    incomplete = copy.deepcopy(policy)
+    incomplete['service_targets'].append('gnd.cli')
+    with pytest.raises(ValueError, match='invalid entry-point service'):
+        arch.entrypoint_rule(metrics, incomplete)

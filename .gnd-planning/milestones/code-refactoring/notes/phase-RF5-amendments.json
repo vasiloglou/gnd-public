@@ -21,5 +21,12 @@
     "decision": "delegated approval (auto=true)",
     "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A3-spec.md",
     "sha256": "f00fabca826bdcca85bfb49cdd81524b48082a6b797b03b4d84d92e55aa45956"
+  },
+  {
+    "id": "A4",
+    "decision": "delegated approval (auto=true)",
+    "authorization": "process-phase RF5 auto",
+    "artifact": ".gnd-planning/milestones/code-refactoring/evidence/RF5/A4-spec.md",
+    "sha256": "68fb5e6f72b34e450388c0220e6bbf35013dec181b694c18d9c0c9ac3cb84498"
   }
 ]

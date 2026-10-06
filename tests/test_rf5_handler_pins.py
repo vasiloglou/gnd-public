@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 from support.cli_runner import run_main
 from support.repository import REPO_ROOT
+from support.rf5_sources import HOMES
 
 CORPUS = REPO_ROOT / 'tests/fixtures/rf5-handlers'
 CASES = json.loads((CORPUS / 'cases.json').read_text())
@@ -25,7 +26,10 @@ def observe(case, tmp_path, monkeypatch):
     result = run_main(argv, cwd=tmp_path)
 
     def clean(raw):
-        return (raw.decode('utf-8', errors='surrogatepass')
+        decoded = raw.decode('utf-8', errors='surrogatepass')
+        if case['id'] == 'doctor':
+            decoded = decoded.replace(str(Path(sys.executable).parent), str(REPO_ROOT / '.venv/bin'))
+        return (decoded
                 .replace(str(tmp_path), '<case>')
                 .replace(str(REPO_ROOT), '<repo>')
                 .replace(str(Path(sys.executable)), '<python>'))
@@ -41,6 +45,8 @@ def test_original_handler_bytes(case, tmp_path, monkeypatch):
 @pytest.mark.parametrize('case', CASES, ids=lambda case: case['id'])
 def test_handler_disabling_control_changes_the_observation(case, tmp_path, monkeypatch):
     module, name = case['target'].rsplit('.', 1)
+    if module == 'gnd.cli':
+        module = HOMES[name]
     monkeypatch.setattr(importlib.import_module(module), name,
                         lambda *args, **kwargs: {'outcome': 0} if case['id']=='judgments check' else 0)
     assert observe(case, tmp_path, monkeypatch) != ANSWERS[case['id']], 'pin missed its actual handler'

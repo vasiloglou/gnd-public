@@ -1,0 +1,28 @@
+Retained output edited to replace absolute machine paths.
+Command: .venv/bin/python -m pytest -q tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_rf1_cli_pins.py tests/test_rf1_layering.py tests/test_gnd_arch.py
+........................................................................ [ 13%]
+........................................................................ [ 27%]
+........................................................................ [ 40%]
+...........................................F............................ [ 54%]
+........................................................................ [ 68%]
+........................................................................ [ 81%]
+........................................................................ [ 95%]
+.........................                                                [100%]
+=================================== FAILURES ===================================
+_________________ test_predecessor_import_bindings_still_exist _________________
+
+    def test_predecessor_import_bindings_still_exist():
+        imports = [node for node in PREDECESSOR.body if isinstance(node, (ast.Import, ast.ImportFrom))]
+        for node in imports:
+            for alias in node.names:
+>               assert hasattr(cli, alias.asname or alias.name.split('.')[0])
+E               AssertionError: assert False
+E                +  where False = hasattr(cli, (None or 'Path'))
+E                +    where None = alias(name='Path', asname=None).asname
+
+tests/test_rf5_commands.py:73: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf5_commands.py::test_predecessor_import_bindings_still_exist
+1 failed, 528 passed in 8.25s
+
+Exit: 1

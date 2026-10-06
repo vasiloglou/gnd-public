@@ -446,3 +446,136 @@ _uninstall_outcome.__module__ = "gnd.cli"
 _cmd_uninstall.__module__ = "gnd.cli"
 _render_target_result.__module__ = "gnd.cli"
 _cmd_install.__module__ = "gnd.cli"
+
+
+
+
+def _register_install(subparsers):
+    install_parser = subparsers.add_parser(
+        "install",
+        help="place every packaged GND skill into your agent runtime's skills directory",
+        description=(
+            "Place every packaged GND skill into your agent runtime's skills "
+            "directory. Copies by default; a second run with no intervening change "
+            "performs zero writes, and a file GND did not place is never overwritten "
+            "without --force. Text output only: --format json exists so a retry loop "
+            "can consume VERIFIER output, and this is a human-operated setup command "
+            "with no programmatic consumer, so a machine-readable install report is "
+            "deliberately not offered (D-25)."
+        ),
+    )
+    _add_target_arguments(install_parser)
+    install_parser.add_argument(
+        "--symlink",
+        action="store_true",
+        help=(
+            "link skill directories instead of copying — DEVELOPMENT INSTALLS ONLY. "
+            "A tool environment is rebuilt on upgrade and removed on uninstall, so a "
+            "link into one is silently swapped after a same-interpreter reinstall and "
+            "dangles outright after an interpreter-version change or an uninstall"
+        ),
+    )
+    install_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="replace unmanaged files that block a write (never touches files you edited)",
+    )
+    install_parser.add_argument(
+        "--sync",
+        action="store_true",
+        help=(
+            "ignore the runtime and scope flags; refresh every standard root that "
+            "already carries an install manifest. This is the second half of "
+            "`uv tool upgrade get-nick-done && gnd install --sync`"
+        ),
+    )
+
+    return {'install_parser': install_parser}
+
+
+def _register_doctor(subparsers):
+    doctor_parser = subparsers.add_parser(
+        "doctor",
+        help="report the state of every GND skill this machine has placed",
+        description=(
+            "Report every placed asset as current, stale, missing, modified or "
+            "collided, and print the two environment facts that explain most "
+            "'it did not work' reports: the directory the running executable lives "
+            "in with an on-PATH verdict, and every target root inspected. BOTH "
+            "scopes are always inspected, whichever scope flag is given, because "
+            "skill precedence puts the user level ahead of the project level and a "
+            "shadowed project install is the most common confusing outcome. Exits 0 "
+            "when everything is current, 10 on drift, 11 on a collision, 12 when "
+            "nothing is installed anywhere. Text output only, for the reason "
+            "`gnd install --help` gives (D-25). "
+            "Scope: installed-asset state ONLY. A green doctor says nothing about "
+            "your model or its conformance state — in particular it does not report "
+            "a pending evolution finalization, which `gnd evolve` reports and "
+            "refuses. Reading exit 0 here as 'my model is fine' is the one "
+            "misreading this command cannot make for you."
+        ),
+    )
+    _add_target_arguments(doctor_parser)
+
+    return {'doctor_parser': doctor_parser}
+
+
+def _register_uninstall(subparsers):
+    uninstall_parser = subparsers.add_parser(
+        "uninstall",
+        help="remove the GND skills this machine placed, leaving your own edits alone",
+        description=(
+            "Remove every skill file GND placed at the requested target roots. A file "
+            "is deleted only when its bytes still hash to what the install receipt "
+            "recorded, so anything you edited is KEPT and named in the report — there "
+            "is deliberately no flag that overrides this. Files GND never placed are "
+            "never touched. The directories emptied by the removal are pruned and the "
+            "receipt is removed last. Unlike `doctor`, this acts on exactly the scope "
+            "you name. Exits 0 on a clean removal, 10 when something was kept, 12 when "
+            "nothing is installed, 74 when a receipt could not be trusted (in which "
+            "case nothing at all was deleted). Text output only (D-25)."
+        ),
+    )
+    _add_target_arguments(uninstall_parser)
+
+    return {'uninstall_parser': uninstall_parser}
+
+
+def add_parsers(subparsers, *, command: str | None = None):
+    parsers = {}
+    if command is None or command == 'install':
+        selected = _register_install(subparsers)
+        parsers.update(selected)
+        selected['install_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'doctor':
+        selected = _register_doctor(subparsers)
+        parsers.update(selected)
+        selected['doctor_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'uninstall':
+        selected = _register_uninstall(subparsers)
+        parsers.update(selected)
+        selected['uninstall_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if not parsers:
+        raise ValueError(f"unsupported command: {command}")
+    return parsers
+
+
+def handle(args, parsers) -> int:
+    if args.command == "doctor":
+        return _cmd_doctor(claude=args.claude, codex=args.codex)
+
+    if args.command == "uninstall":
+        return _cmd_uninstall(claude=args.claude, codex=args.codex, scope=args.scope)
+
+    if args.command == "install":
+        return _cmd_install(
+            claude=args.claude,
+            codex=args.codex,
+            scope=args.scope,
+            force=args.force,
+            symlink=args.symlink,
+            sync=args.sync,
+        )
+
+    raise ValueError(f"unsupported command: {args.command}")
+

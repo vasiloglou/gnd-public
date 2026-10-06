@@ -1,0 +1,265 @@
+{
+  "scope": [
+    "gnd.cli",
+    "gnd.commands.checking",
+    "gnd.commands.codegen",
+    "gnd.commands.conformance",
+    "gnd.commands.doccheck",
+    "gnd.commands.evolve",
+    "gnd.commands.exp",
+    "gnd.commands.export",
+    "gnd.commands.extract",
+    "gnd.commands.fidelity",
+    "gnd.commands.judgments",
+    "gnd.commands.lifecycle",
+    "gnd.commands.measure",
+    "gnd.commands.recovery",
+    "gnd.commands.review",
+    "gnd.commands.solve",
+    "gnd.commands.synth",
+    "gnd.commands.verify",
+    "gnd.commands.witness"
+  ],
+  "service_targets": [
+    "gnd.codegen.service",
+    "gnd.conformance.cli_service",
+    "gnd.evolve.cli_service",
+    "gnd.exp.cli_service",
+    "gnd.export.verification_service",
+    "gnd.extract.service",
+    "gnd.fidelity.doccheck_service",
+    "gnd.fidelity.service",
+    "gnd.measure.service",
+    "gnd.recovery.service",
+    "gnd.review.service",
+    "gnd.synth.corpus_service",
+    "gnd.synth.service"
+  ],
+  "exceptions": [
+    {
+      "source": "gnd.cli",
+      "target": "gnd",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.api",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.checker",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.install",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.model",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.population",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.report",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.review.constants",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.semantic_registry",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.solve",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.transition",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.verbalize",
+      "reason": "RF-R5 retains the predecessor CLI import binding; no implementation body remains in the bootstrap."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.api",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.assurance_transport",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.batch",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.checker",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.coverage",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.diff",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.model",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.rai_import",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.redaction",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.report",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.verbalize",
+      "reason": "Original thin check/validate/import/coverage/diff presentation adapter retains this exact payload/model/API dependency; heavy evaluation remains delegated."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.agents",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.artifacts",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.declared_adapter",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.adapter_policy",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.close",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.session",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.session_contract",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.session_store",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.spec",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.exp.tests_runner",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.exp",
+      "target": "gnd.solve",
+      "reason": "A3 keeps experiment invocation at the command boundary; this exact dependency serves the unchanged declared-adapter/session invocation closure."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.export.emit",
+      "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.export.lean_cli",
+      "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.export.pyrel_runtime",
+      "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.export.souffle_cli",
+      "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+    },
+    {
+      "source": "gnd.commands.judgments",
+      "target": "gnd.api",
+      "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+    },
+    {
+      "source": "gnd.commands.judgments",
+      "target": "gnd.artifacts",
+      "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+    },
+    {
+      "source": "gnd.commands.lifecycle",
+      "target": "gnd.install",
+      "reason": "Lifecycle command boundary invokes the existing installer and its refusal classes; not an import from a domain lane."
+    },
+    {
+      "source": "gnd.commands.review",
+      "target": "gnd.review.runner",
+      "reason": "Original command registration/usage validation or thin presentation adapter retains this exact dependency; algorithms are unchanged."
+    },
+    {
+      "source": "gnd.commands.solve",
+      "target": "gnd.solve",
+      "reason": "Solve command boundary delegates to the existing control-plane station walker and its parser labels."
+    },
+    {
+      "source": "gnd.commands.witness",
+      "target": "gnd.witness.cli",
+      "reason": "Explicit optional CLI adapter supplies the original parser/dispatch boundary; unchanged lazy loading."
+    }
+  ]
+}

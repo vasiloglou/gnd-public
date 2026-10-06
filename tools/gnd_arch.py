@@ -726,7 +726,7 @@ def measure(root: Path, layers_path: Path) -> dict:
             }
         )
 
-    return {
+    result = {
         "schema_version": SCHEMA_VERSION,
         "scope": {
             "package": PACKAGE_DIR,
@@ -762,6 +762,72 @@ def measure(root: Path, layers_path: Path) -> dict:
             "get_roles_calls": sorted(query_roles, key=lambda q: (q["module"], q["line"])),
         },
     }
+    if "gnd.commands.checking" in modules:
+        policy_path = root / "tools/gnd_entrypoints.json"
+        try:
+            raw = policy_path.read_bytes()
+            if len(raw) > MAP_READ_CAP:
+                raise ValueError("entry-point policy exceeds read bound")
+            policy = json.loads(raw.decode("utf-8"), object_pairs_hook=_reject_duplicates,
+                                parse_constant=_reject_constant)
+            result["entrypoints"] = entrypoint_rule(result, policy)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            raise _invalid(f"invalid entry-point policy: {error}") from None
+    return result
+
+
+
+RF5_COMMAND_GROUPS = frozenset({
+    "checking", "verify", "synth", "measure", "extract", "export", "codegen",
+    "conformance", "recovery", "evolve", "doccheck", "fidelity", "review", "exp",
+    "solve", "lifecycle", "judgments", "witness",
+})
+
+
+def entrypoint_rule(metrics: dict, policy: dict) -> dict:
+    """Check the nonempty RF5 entry scope against explicit import boundaries.
+
+    Exceptions name exact source/target module pairs and a reviewable reason.
+    There are no wildcard exemptions, even for historical CLI aliases.
+    """
+    expected = {"gnd.cli", *("gnd.commands." + name for name in RF5_COMMAND_GROUPS)}
+    scope = set(policy["scope"])
+    actual = {row["module"] for row in metrics["modules"]}
+    actual_groups = {module for module in actual
+                     if module.startswith("gnd.commands.")
+                     and not module.rsplit(".", 1)[-1].startswith("_")}
+    if scope != expected or not scope <= actual or actual_groups != expected - {"gnd.cli"}:
+        raise ValueError("incomplete RF5 entry-point scope")
+    mapped = {row["module"]: row for row in metrics["modules"]}
+    for target in policy["service_targets"]:
+        if target not in mapped or mapped[target]["layer"] != "lanes" or not target.endswith(
+            (".service", "_service")
+        ):
+            raise ValueError("invalid entry-point service target")
+    allowed = set(policy["service_targets"]) | {
+        "gnd.commands._arguments", "gnd.commands._output", "gnd.exits"
+    }
+    exceptions = {}
+    for row in policy["exceptions"]:
+        if set(row) != {"source", "target", "reason"} or not row["reason"].strip():
+            raise ValueError("invalid entry-point exception")
+        pair = (row["source"], row["target"])
+        if pair in exceptions or row["source"] not in scope or row["target"] not in actual:
+            raise ValueError("invalid entry-point exception scope")
+        exceptions[pair] = row["reason"]
+    violations = []
+    for edge in metrics["edges"]:
+        source, target = edge["from"], edge["to"]
+        if source not in scope:
+            continue
+        # The bootstrap imports exactly the declared command groups.
+        if source == "gnd.cli" and target in expected - {"gnd.cli"}:
+            continue
+        if target in allowed or (source, target) in exceptions:
+            continue
+        violations.append(dict(edge, rule="entry-point imports a non-service module"))
+    return {"scope": sorted(scope), "violations": violations,
+            "exceptions": policy["exceptions"]}
 
 
 # ---------------------------------------------------------------- compare

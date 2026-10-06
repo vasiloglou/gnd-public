@@ -383,3 +383,318 @@ _cmd_verbalize_population.__module__ = "gnd.cli"
 _cmd_diff.__module__ = "gnd.cli"
 _cmd_rai_import.__module__ = "gnd.cli"
 _cmd_check_batch.__module__ = "gnd.cli"
+
+from pathlib import PurePosixPath, PureWindowsPath
+
+from gnd.commands._arguments import _add_format_argument, _add_unredacted_argument
+
+
+def _register_import(subparsers):
+    import_parser = subparsers.add_parser(
+        "import", help="import a supported foreign ORM dialect create-once"
+    )
+    import_subparsers = import_parser.add_subparsers(dest="import_command", required=True)
+    rai_import_parser = import_subparsers.add_parser(
+        "rai-orm",
+        help="import the bounded rai-orm-from-schema dialect",
+    )
+    rai_import_parser.add_argument("model", help="path to the source RAI ORM YAML file")
+    rai_import_parser.add_argument(
+        "--out", required=True, help="new directory for model.orm.yaml and aliases.json"
+    )
+    rai_import_parser.add_argument(
+        "--source-artifact",
+        help="stable relative POSIX source path recorded in provenance",
+    )
+    rai_import_parser.add_argument(
+        "--source-commit",
+        help="source repository commit required when provenance must be synthesized",
+    )
+
+    return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser}
+
+
+def _register_validate(subparsers):
+    validate_parser = subparsers.add_parser(
+        "validate",
+        help="validate a model and bind declared fixed reference populations",
+        description="Validate the model; version-4 references bind beneath its parent with disjoint fixed ownership and exact raw hashes.",
+    )
+    validate_parser.add_argument("model", help="path to the model file")
+    validate_parser.add_argument(
+        "--trace",
+        action="store_true",
+        help=(
+            "report what a transition run would evaluate, WITHOUT evaluating "
+            "anything: the two digests every steps.json must carry, which "
+            "preconditions compile to standing obligations and which are "
+            "retained per-step and why, and the frame modality each fact type "
+            "would be graded with. Reports; never decides, never reads a "
+            "population. This is the only shipped producer of "
+            "operations_digest, which every steps.json is required to carry"
+        ),
+    )
+    _add_format_argument(validate_parser)
+    _add_unredacted_argument(validate_parser)
+
+    return {'validate_parser': validate_parser}
+
+
+def _register_diff(subparsers):
+    diff_parser = subparsers.add_parser("diff", help="compare two models over one vocabulary")
+    diff_parser.add_argument("model_a")
+    diff_parser.add_argument("model_b")
+    diff_parser.add_argument("--populations", metavar="DIR")
+    diff_parser.add_argument("--seed", type=int, default=0)
+    _add_format_argument(diff_parser)
+    _add_unredacted_argument(diff_parser)
+
+    return {'diff_parser': diff_parser}
+
+
+def _register_coverage(subparsers):
+    coverage_parser = subparsers.add_parser(
+        "coverage",
+        help="report claims and cited evidence for every addressable model element",
+    )
+    coverage_parser.add_argument("model", help="path to the model file")
+    coverage_parser.add_argument("--experiments", action="append", default=[], metavar="DIR")
+    coverage_parser.add_argument("--check", action="append", default=[], metavar="PATH")
+    coverage_parser.add_argument("--verify", action="append", default=[], metavar="PATH")
+    coverage_parser.add_argument("--conformance", action="append", default=[], metavar="PATH")
+    coverage_parser.add_argument("--transition", action="append", default=[], metavar="PATH")
+    _add_format_argument(coverage_parser)
+
+    return {'coverage_parser': coverage_parser}
+
+
+def _register_check(subparsers):
+    check_parser = subparsers.add_parser(
+        "check",
+        help="check a population against a model, or a walk between two populations",
+        description=(
+            "Two arms, and exactly one runs. SNAPSHOT: a positional population is "
+            "checked against the model's constraints. TRANSITION: --pre, --steps "
+            "and --post audit a WALK -- the operation invocations claimed to have "
+            "carried the pre-population to the post-population -- reporting failed "
+            "preconditions, undeclared side effects and illegal intermediate "
+            "states. Mixing the two, or supplying part of the transition triple, "
+            "is a usage error at 64: they answer different questions, and "
+            "silently preferring one would make the other's arguments decorative. "
+            "Model version 3 supports guarded Date plus/minus Duration calendar-day "
+            "terms (date_add/date_sub), selecting report v11; --admission selects temporal report v13."
+        ),
+    )
+    check_parser.add_argument(
+        "model",
+        help="path to the model file",
+    )
+    # nargs="?" so the transition arm can omit it. The parser therefore cannot
+    # enforce "one arm or the other" itself -- that check lives in the dispatch,
+    # routed back through parser.error so it exits 64 with no payload like every
+    # other malformed invocation.
+    check_parser.add_argument(
+        "population",
+        nargs="?",
+        help="path to the population file (YAML or JSON) -- the snapshot arm",
+    )
+    check_parser.add_argument(
+        "--populations",
+        help="batch arm: directory of sorted .json/.yaml/.yml population projections",
+    )
+    check_parser.add_argument(
+        "--pre",
+        help="transition arm: the population the walk starts from",
+    )
+    check_parser.add_argument(
+        "--steps",
+        help="transition arm: the steps.json document describing the walk",
+    )
+    check_parser.add_argument(
+        "--post",
+        help="transition arm: the population the walk is claimed to end in",
+    )
+    check_parser.add_argument("--anchors", help="bound source anchor sidecar for snapshot checks")
+    check_parser.add_argument("--document", help="source document for anchor spans")
+    check_parser.add_argument(
+        "--admission",
+        action="store_true",
+        help="include the occurrence admission partition in the check report",
+    )
+    _add_format_argument(check_parser)
+    _add_unredacted_argument(check_parser)
+
+    return {'check_parser': check_parser}
+
+
+def _register_verbalize(subparsers):
+    verbalize_parser = subparsers.add_parser(
+        "verbalize",
+        help="render supplied facts as deterministic sentences",
+    )
+    verbalize_targets = verbalize_parser.add_subparsers(dest="verbalize_target", required=True)
+    verbalize_population_parser = verbalize_targets.add_parser(
+        "population",
+        help="render one population in text or JSONL",
+    )
+    verbalize_population_parser.add_argument("model")
+    verbalize_population_parser.add_argument("population")
+    verbalize_population_parser.add_argument("--anchors")
+    verbalize_population_parser.add_argument("--document")
+    verbalize_population_parser.add_argument("--format", choices=("text", "jsonl"), default="text")
+    _add_unredacted_argument(verbalize_population_parser)
+
+    return {'verbalize_parser': verbalize_parser, 'verbalize_population_parser': verbalize_population_parser}
+
+
+def add_parsers(subparsers, *, command: str | None = None):
+    parsers = {}
+    if command is None or command == 'import':
+        selected = _register_import(subparsers)
+        parsers.update(selected)
+        selected['import_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'validate':
+        selected = _register_validate(subparsers)
+        parsers.update(selected)
+        selected['validate_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'diff':
+        selected = _register_diff(subparsers)
+        parsers.update(selected)
+        selected['diff_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'coverage':
+        selected = _register_coverage(subparsers)
+        parsers.update(selected)
+        selected['coverage_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'check':
+        selected = _register_check(subparsers)
+        parsers.update(selected)
+        selected['check_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'verbalize':
+        selected = _register_verbalize(subparsers)
+        parsers.update(selected)
+        selected['verbalize_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if not parsers:
+        raise ValueError(f"unsupported command: {command}")
+    return parsers
+
+
+def handle(args, parsers) -> int:
+    check_parser = parsers.get('check_parser')
+    rai_import_parser = parsers.get('rai_import_parser')
+    verbalize_population_parser = parsers.get('verbalize_population_parser')
+    if args.command == "diff":
+        return _cmd_diff(
+            args.model_a, args.model_b, args.populations, args.format, args.unredacted, args.seed
+        )
+
+    if args.command == "import":
+        source_artifact = args.source_artifact
+        if source_artifact is None:
+            supplied = args.model
+            candidate = PurePosixPath(supplied)
+            if (
+                Path(supplied).is_absolute()
+                or PureWindowsPath(supplied).is_absolute()
+                or "\\" in supplied
+                or any(part in {"", ".", ".."} for part in supplied.split("/"))
+            ):
+                rai_import_parser.error(
+                    "an absolute or unstable MODEL path requires --source-artifact"
+                )
+            source_artifact = candidate.as_posix()
+        return _cmd_rai_import(args.model, args.out, source_artifact, args.source_commit)
+
+    if args.command == "verbalize":
+        if (args.anchors is None) != (args.document is None):
+            verbalize_population_parser.error("--anchors and --document must be supplied together")
+        return _cmd_verbalize_population(
+            args.model,
+            args.population,
+            args.format,
+            anchors_path=args.anchors,
+            document_path=args.document,
+            unredacted=args.unredacted,
+        )
+
+    if args.command == "check":
+        if (args.anchors is None) != (args.document is None):
+            check_parser.error("--anchors and --document must be supplied together")
+        if (args.anchors is not None or args.document is not None) and (
+            args.populations is not None
+            or args.pre is not None
+            or args.steps is not None
+            or args.post is not None
+        ):
+            check_parser.error("--anchors and --document apply only to snapshot checks")
+        transition_arm = {"--pre": args.pre, "--steps": args.steps, "--post": args.post}
+        supplied = {flag for flag, value in transition_arm.items() if value is not None}
+        if args.populations is not None:
+            if args.admission:
+                check_parser.error("--admission applies only to snapshot checks")
+            if args.population is not None or supplied:
+                check_parser.error(
+                    "--populations is a distinct batch arm; do not combine it with "
+                    "a positional population or --pre/--steps/--post"
+                )
+            if args.format != "json":
+                check_parser.error("--populations requires --format json")
+            return _cmd_check_batch(args.model, args.populations, unredacted=args.unredacted)
+        if supplied and args.population is not None:
+            # Not a precedence question. A caller who wrote both asked two
+            # questions in one command and is owed the error, not a guess.
+            check_parser.error(
+                "a positional population and the transition arm (--pre/--steps/--post) "
+                "are different questions; supply one or the other"
+            )
+        plan_arm = supplied == {"--pre", "--steps"}
+        if supplied and len(supplied) != len(transition_arm) and not plan_arm:
+            missing = sorted(set(transition_arm) - supplied)
+            check_parser.error(
+                f"the transition arm needs --pre, --steps and --post; missing "
+                f"{', '.join(missing)}. A partial triple is a typo, not a mode"
+            )
+        if not supplied and args.population is None:
+            check_parser.error(
+                "supply a population to check, or --pre/--steps/--post to audit a walk"
+            )
+        if supplied:
+            if args.admission:
+                check_parser.error("--admission applies only to snapshot checks")
+            return _cmd_transition(
+                args.model,
+                args.pre,
+                args.steps,
+                args.post,
+                args.format,
+                unredacted=args.unredacted,
+            )
+
+    if args.command == "validate":
+        return _cmd_validate(
+            args.model,
+            args.format,
+            trace=args.trace,
+            unredacted=args.unredacted,
+        )
+
+    if args.command == "coverage":
+        return _cmd_coverage(
+            args.model,
+            args.experiments,
+            args.check,
+            args.verify,
+            args.conformance,
+            args.transition,
+            args.format,
+        )
+
+    return _cmd_check(
+        args.model,
+        args.population,
+        args.format,
+        unredacted=args.unredacted,
+        anchors_path=args.anchors,
+        document_path=args.document,
+        admission=args.admission,
+    )
+

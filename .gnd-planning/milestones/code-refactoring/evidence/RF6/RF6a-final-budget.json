@@ -1,0 +1,18 @@
+{
+  "base": "523cdd1",
+  "verified_head": "cc39b3eb11be8b6b8bbbae70fe4fc84a798613fa",
+  "touched_files_before_record": 99,
+  "touched_files_with_record_and_budget_artifact": 103,
+  "test_data_added": 483,
+  "non_evidence_docs_added": 393,
+  "production_moved": 172,
+  "production_nonrelocated_added": 804,
+  "ceilings": {
+    "touched_files": 120,
+    "test_data_added": 2500,
+    "non_evidence_docs_added": 1500,
+    "production_moved": 4000,
+    "production_nonrelocated_added": 2200
+  },
+  "count_note": "Includes the record, budget and two post-record scaffold gate artifacts; RF6b preparation files excluded."
+}

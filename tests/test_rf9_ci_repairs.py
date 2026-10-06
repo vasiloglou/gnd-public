@@ -287,3 +287,27 @@ def test_python_fence_parser_refuses_malformed_code(monkeypatch):
     monkeypatch.setattr(Path, 'read_text', dirty)
     with pytest.raises(SyntaxError):
         scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+
+
+@pytest.mark.parametrize('markdown,refused', [
+    ('> ```python title=x\n> from requests import (\n>     get,\n> )\n> ```', True),
+    ('- ```python title=x\n  from requests import (\n      get,\n  )\n  ```', True),
+    ('1. ```python title=x\n   from requests import (\n       get,\n   )\n   ```', True),
+    ('```text\nimport requests\n```', False),
+])
+def test_review_container_and_text_fence_boundaries(monkeypatch, markdown, refused):
+    from pathlib import Path
+    import test_measure_offline as scans
+
+    actual = Path.read_text
+    def dirty(path, *args, **kwargs):
+        source = actual(path, *args, **kwargs)
+        if path == scans.MODEL_EVOLVE_SKILL_FILES[0]:
+            source += '\n' + markdown + '\n'
+        return source
+    monkeypatch.setattr(Path, 'read_text', dirty)
+    if refused:
+        with pytest.raises(AssertionError):
+            scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+    else:
+        scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()

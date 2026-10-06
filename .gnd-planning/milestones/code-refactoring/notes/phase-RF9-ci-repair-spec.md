@@ -186,3 +186,19 @@ inputs and malformed-code refusal. The earlier pre-R1 observer runner reported
 for R1. The committed final logs bind1158 R1 runs only; no retained raw pre-R1
 1145 stream is claimed. Exact current file identities are in observer-final-status.
 Production identity remains733389d; no golden or input restriction was changed.
+
+Final native assessment of8c13d32 reproduced two adjacent observer defects: Python
+fences inside blockquote/list containers bypass the guard, and fallback scans
+non-Python fence bodies. Four exact inputs land RED before repair. Delegated
+approval applies to shared container-aware extraction with outside-fence provenance;
+strict Python AST remains mandatory. No third provider assessment: these successor
+bytes carry local RED/GREEN evidence, not a fresh native opinion.
+
+Full733389d regression on3.13 also exposes a live-counter shadow left by
+test_public_classification_scaling: assigning the package facade creates a stale
+integer instead of resetting the physical validation owner. Existing scaling then
+live-lookup sequence reproduces this failure. Reset/read the physical counter,
+retain the public classify call and all work/time bounds. This is an additional
+explicit test adaptation, never a production setter or weakened complexity claim.
+Preserve the original26 adaptations; extend the ledger to27 with original-before
+identity. The scope ceiling and unchanged frozen432 remain binding.

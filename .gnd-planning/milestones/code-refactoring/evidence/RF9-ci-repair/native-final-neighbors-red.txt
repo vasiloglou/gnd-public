@@ -1,0 +1,30 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_review_container_and_text_fence_boundaries[> ```python title=x\n> from requests import (\n>     get,\n> )\n> ```-True] _
+tests/test_rf9_ci_repairs.py:310: in test_review_container_and_text_fence_boundaries
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_review_container_and_text_fence_boundaries[- ```python title=x\n  from requests import (\n      get,\n  )\n  ```-True] _
+tests/test_rf9_ci_repairs.py:310: in test_review_container_and_text_fence_boundaries
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_review_container_and_text_fence_boundaries[1. ```python title=x\n   from requests import (\n       get,\n   )\n   ```-True] _
+tests/test_rf9_ci_repairs.py:310: in test_review_container_and_text_fence_boundaries
+    with pytest.raises(AssertionError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE AssertionError
+_ test_review_container_and_text_fence_boundaries[```text\nimport requests\n```-False] _
+tests/test_rf9_ci_repairs.py:313: in test_review_container_and_text_fence_boundaries
+    scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+tests/test_measure_offline.py:465: in test_model_evolve_skill_is_offline_and_preserves_write_authority
+    assert not any(_forbidden_hit(code, _PROVIDER_CLIENTS + _NETWORK_LIBS) for code in snippets)
+E   assert not True
+E    +  where True = any(<generator object test_model_evolve_skill_is_offline_and_preserves_write_authority.<locals>.<genexpr> at 0x10c36aa40>)
+=========================== short test summary info ============================
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[> ```python title=x\n> from requests import (\n>     get,\n> )\n> ```-True]
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[- ```python title=x\n  from requests import (\n      get,\n  )\n  ```-True]
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[1. ```python title=x\n   from requests import (\n       get,\n   )\n   ```-True]
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[```text\nimport requests\n```-False]
+4 failed in 0.23s

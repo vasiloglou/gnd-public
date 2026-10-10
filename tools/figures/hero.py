@@ -104,12 +104,14 @@ def storyboard() -> Scene:
     s.add(spans(54, 246, [("f-primary", "steps:")], 14), track=appear(3.5))
     s.add(spans(54, 270, [("f-muted", "  - "), ("f-accent", "reimburse_expense"), ("f-ink", "(41)")], 14),
           track=blip(3.8, 10.2))
-    for index, (start, op, args) in enumerate([(10.6, "approve_expense", "(41, alice)"),
-                                               (10.9, "submit_expense_to_workday", "(41)")]):
+    # Name the approver: Ada owns the expense, alice approves it. The longer line is set
+    # at 12.5 so it stays inside the plan card.
+    for index, (start, op, args, size) in enumerate([(10.6, "approve_expense", "(41, approver=alice)", 12.5),
+                                                     (10.9, "submit_expense_to_workday", "(41)", 14)]):
         y = 270 + 24 * index
         s.add(rect(46, y - 16, 310, 22, "f-ok-bg", rx=4),
               text(42 + 8, y, "+", "mono f-ok", 14, weight=700),
-              spans(54, y, [("f-muted", "  - "), ("f-accent", op), ("f-ink", args)], 14), track=appear(start, rise=0))
+              spans(54, y, [("f-muted", "  - "), ("f-accent", op), ("f-ink", args)], size), track=appear(start, rise=0))
     s.add(spans(54, 318, [("f-muted", "  - "), ("f-accent", "reimburse_expense"), ("f-ink", "(41)")], 14),
           track=appear(11.2, rise=0))
 

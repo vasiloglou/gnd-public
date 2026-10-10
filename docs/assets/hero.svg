@@ -42,7 +42,7 @@
   <g class="gh-k13">
     <rect class="f-ok-bg" height="22" rx="4" width="310" x="46" y="254"/>
     <text class="mono f-ok" font-size="14" font-weight="700" x="50" xml:space="preserve" y="270">+</text>
-    <text class="mono" font-size="14" x="54" xml:space="preserve" y="270"><tspan class="f-muted">  - </tspan><tspan class="f-accent">approve_expense</tspan><tspan class="f-ink">(41, alice)</tspan></text>
+    <text class="mono" font-size="12.5" x="54" xml:space="preserve" y="270"><tspan class="f-muted">  - </tspan><tspan class="f-accent">approve_expense</tspan><tspan class="f-ink">(41, approver=alice)</tspan></text>
   </g>
   <g class="gh-k14">
     <rect class="f-ok-bg" height="22" rx="4" width="310" x="46" y="278"/>

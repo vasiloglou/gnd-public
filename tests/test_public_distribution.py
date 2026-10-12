@@ -191,12 +191,17 @@ def package_probe(tmp_path_factory):
 
 
 def test_curated_manifest_and_source_owned_ledger():
-    audit_tree(ROOT)
+    # The r3 amendment retired whole-tree attribution, so new files need no
+    # manifest row; the B3 manifest must still be well-formed.
+    manifest(ROOT)
     units = json.loads((ROOT / M / "migration/units.json").read_text())
     assert not units["authority_transfer"] and not units["publisher_enabled"]
     assert all(row["state"] == "source-owned" for row in units["units"])
 
 
+# B3 snapshot check: the r3 amendment retired whole-tree attribution, so this
+# asserts the historical B3 selection and runs only in the evidence lane.
+@pytest.mark.evidence
 @pytest.mark.parametrize("mutation", ["unlisted", "changed-b1"])
 def test_curated_diff_refuses_mutants(tmp_path, mutation):
     stage = tmp_path / "stage"
@@ -262,6 +267,9 @@ def audit_archive_names(names, kind):
     assert set(names) <= files | directories, "unexpected archive directory"
 
 
+# B3 snapshot check: the r3 amendment retired whole-tree attribution, so this
+# asserts the historical B3 selection and runs only in the evidence lane.
+@pytest.mark.evidence
 def test_artifact_and_installed_resource_sets(package_probe):
     probe = package_probe
     with zipfile.ZipFile(probe["wheel"]) as archive:
@@ -351,6 +359,9 @@ def test_manifest_refuses_unhashable_kind_as_assertion(tmp_path, kind):
         manifest(tmp_path)
 
 
+# B3 snapshot check: the r3 amendment retired whole-tree attribution, so this
+# asserts the historical B3 selection and runs only in the evidence lane.
+@pytest.mark.evidence
 def test_symlink_identity_survives_linux_mode(monkeypatch):
     original = os.lstat
 
@@ -366,6 +377,9 @@ def test_symlink_identity_survives_linux_mode(monkeypatch):
     audit_tree(ROOT)
 
 
+# B3 snapshot check: the r3 amendment retired whole-tree attribution, so this
+# asserts the historical B3 selection and runs only in the evidence lane.
+@pytest.mark.evidence
 @pytest.mark.parametrize("kind", ["wheel", "sdist"])
 @pytest.mark.parametrize("mutation", ["duplicate", "extra"])
 def test_archive_members_refuse_hidden_content(package_probe, kind, mutation):

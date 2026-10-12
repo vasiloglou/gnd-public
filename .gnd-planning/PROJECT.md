@@ -1,4 +1,21 @@
-# GND public migration
+# GND public framework
+
+## Current status — public launch closed, 2026-10-12
+
+The owner accepted and closed the public launch. GND is public on GitHub;
+`get-nick-done==0.1.0` is published on PyPI and verified from a fresh install.
+The GitHub release/tag, Claude Code and Codex marketplace plugins, installation
+docs, CODEOWNERS and owner-controlled PR protections are in place.
+See [the launch close](milestones/public-launch/010-public-launch-close.md) for
+artifact identities, validation, owner decisions and maintenance boundaries.
+
+Trusted Publishing setup, announcements, a hosted docs site, interaction-limit
+renewal and separately activated transition/retirement remain maintenance choices.
+Earlier migration/refactoring checkpoints below are historical status; this
+section supersedes the earlier publication deferral.
+
+## Historical checkpoints
+
 
 Create a fresh public repository through private reviewed migration, retain the
 phase development workflow, then launch the generic framework. `public-launch`

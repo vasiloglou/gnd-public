@@ -1,0 +1,21 @@
+[
+  {
+    "origin": "release",
+    "artifact": "release/get_nick_done-0.1.0-py3-none-any.whl",
+    "sha256": "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183",
+    "payload_bytes": 6468127,
+    "result": "155 tutorial blocks passed"
+  },
+  {
+    "origin": "comparison",
+    "artifact": "comparison/get_nick_done-0.1.0-py3-none-any.whl",
+    "sha256": "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183",
+    "payload_bytes": 6468127,
+    "result": "155 tutorial blocks passed"
+  },
+  {
+    "origin": "sdist",
+    "artifact": "release/get_nick_done-0.1.0.tar.gz",
+    "sha256": "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86"
+  }
+]

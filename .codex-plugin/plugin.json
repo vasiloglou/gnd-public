@@ -1,0 +1,30 @@
+{
+  "name": "gnd",
+  "version": "0.1.0",
+  "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+  "author": {
+    "name": "Nikolaos Vasiloglou",
+    "email": "nvasil@gmail.com"
+  },
+  "homepage": "https://github.com/vasiloglou/gnd-public",
+  "repository": "https://github.com/vasiloglou/gnd-public",
+  "license": "Apache-2.0",
+  "keywords": [
+    "orm",
+    "agents",
+    "verification",
+    "data-apps"
+  ],
+  "skills": "./src/gnd/skills/",
+  "interface": {
+    "displayName": "GND \u00b7 Get Nick Done",
+    "shortDescription": "Model, build, and verify agentic data apps.",
+    "longDescription": "GND packages 16 workflows for ORM modeling, checking, code generation, bounded agent sessions, document extraction and rendering, exports, and advisory reviews. Install get-nick-done for the Python runtime.",
+    "developerName": "Nikolaos Vasiloglou",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/vasiloglou/gnd-public",
+    "defaultPrompt": [
+      "Use gnd-model-from-text to model our expense approval policy, then validate it."
+    ]
+  }
+}

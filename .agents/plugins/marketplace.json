@@ -1,0 +1,20 @@
+{
+  "name": "gnd-marketplace",
+  "interface": {
+    "displayName": "GND"
+  },
+  "plugins": [
+    {
+      "name": "gnd",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

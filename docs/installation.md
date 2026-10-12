@@ -4,10 +4,22 @@ You need Python 3.11 or newer. The distribution is **get-nick-done**; the comman
 and Python import are both **gnd**. The package name and internal milestone
 numbers are separate from the published release version.
 
-## Use the prepared release artifact
+## Install from PyPI
 
-While the public release is being prepared, obtain the selected wheel from the
-release operator. Create a fresh environment and install that exact file:
+```sh
+pip install get-nick-done==0.1.0
+gnd --help
+```
+
+For agent skills, choose [the marketplace plugin](marketplace-plugins.md) or the
+`gnd install` commands below. The marketplace route uses a separate Python
+runtime installation and does not need `gnd install`.
+
+## Install a release artifact
+
+You can instead download the wheel from the
+[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+Create a fresh environment and install that exact file:
 
 ```sh
 python3 -m venv .venv

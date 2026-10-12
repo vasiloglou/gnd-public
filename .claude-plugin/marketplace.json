@@ -1,0 +1,18 @@
+{
+  "name": "gnd-marketplace",
+  "owner": {
+    "name": "Nikolaos Vasiloglou",
+    "email": "nvasil@gmail.com"
+  },
+  "metadata": {
+    "description": "GND workflows for building agentic data apps."
+  },
+  "plugins": [
+    {
+      "name": "gnd",
+      "source": "./",
+      "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
+      "version": "0.1.0"
+    }
+  ]
+}

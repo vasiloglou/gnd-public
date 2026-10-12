@@ -41,6 +41,8 @@ gnd install --project          # place the skills for Claude Code and Codex
 gnd doctor --project           # confirm what was placed
 ```
 
+Prefer your agent's plugin manager? [Install the Claude Code or Codex marketplace plugin](docs/marketplace-plugins.md) instead of running `gnd install`.
+
 Then ask your agent, for example: *"Use gnd-model-from-text to model our expense
 approval policy, then validate it."* See
 [Work with an agent](docs/agents/index.md) for every skill and the artifacts it produces.

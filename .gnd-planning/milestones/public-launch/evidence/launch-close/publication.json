@@ -1,0 +1,86 @@
+{
+  "observed_date": "2026-10-12",
+  "source_commit": "75eda93f314e7ef82578ab4ee212d5e6d964fd71",
+  "repository": {
+    "url": "https://github.com/vasiloglou/gnd-public",
+    "visibility": "public",
+    "collaborators": [
+      "vasiloglou"
+    ]
+  },
+  "release": {
+    "url": "https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0",
+    "tag": "v0.1.0",
+    "assets": [
+      {
+        "name": "get_nick_done-0.1.0-py3-none-any.whl",
+        "digest": "sha256:cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183"
+      },
+      {
+        "name": "get_nick_done-0.1.0.tar.gz",
+        "digest": "sha256:f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "digest": "sha256:41993334b3e690101371012d237047d7e5cc771794cf2d2209468418ed5a04b2"
+      }
+    ]
+  },
+  "pypi": {
+    "url": "https://pypi.org/project/get-nick-done/0.1.0/",
+    "version": "0.1.0",
+    "files": [
+      {
+        "file": "get_nick_done-0.1.0-py3-none-any.whl",
+        "sha256": "cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183",
+        "served_bytes_verified": true
+      },
+      {
+        "file": "get_nick_done-0.1.0.tar.gz",
+        "sha256": "f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86",
+        "served_bytes_verified": true
+      }
+    ]
+  },
+  "main_protection": {
+    "pr_required": true,
+    "required_approvals": 0,
+    "code_owner_review_required": false,
+    "enforce_admins": true,
+    "force_pushes": false,
+    "deletions": false,
+    "conversation_resolution": true
+  },
+  "interaction_limit": {
+    "limit": "collaborators_only",
+    "origin": "repository",
+    "expires_at": "2027-04-12T04:33:36Z"
+  },
+  "merged_prs": [
+    {
+      "number": 8,
+      "url": "https://github.com/vasiloglou/gnd-public/pull/8",
+      "merge_commit": "bb50df4528effc10f4eb547b448c927128586f95"
+    },
+    {
+      "number": 11,
+      "url": "https://github.com/vasiloglou/gnd-public/pull/11",
+      "merge_commit": "57c3d9d51a17b320490f19381765f4325b61c997"
+    },
+    {
+      "number": 12,
+      "url": "https://github.com/vasiloglou/gnd-public/pull/12",
+      "merge_commit": "a344665af600f0a60e5740857ed5e9b3bae2a10a"
+    },
+    {
+      "number": 13,
+      "url": "https://github.com/vasiloglou/gnd-public/pull/13",
+      "merge_commit": "c281b275ea4d69d3a505d95a668e16b1161b497c"
+    },
+    {
+      "number": 14,
+      "url": "https://github.com/vasiloglou/gnd-public/pull/14",
+      "merge_commit": "88b8780693c24b735a84f1ff6b9c4af024f08bdd"
+    }
+  ]
+}

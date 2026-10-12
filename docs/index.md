@@ -36,7 +36,7 @@ rule reads back as a sentence you can confirm.
 <p class="number">02 / STRUCTURED OUTPUT</p>
 
 **The agent answers in facts.** It replies with populations and operation plans,
-such as `approve_expense(41, alice)` or `recommendation(ada, river)`, never paragraphs
+such as `approve_expense(41, approver=alice)` or `recommendation(ada, river)`, never paragraphs
 you have to trust.
 </div>
 <div markdown>

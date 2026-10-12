@@ -33,15 +33,47 @@ final state either way.
 > a GND model, with every requirement accounted for
 > ([how](docs/guides/evolution-and-recovery.md#adopt-a-gsd-project)).
 
-## Install the package and the skills
+## Install from PyPI
+
+Requires Python 3.11 or newer. With [uv](https://docs.astral.sh/uv/getting-started/installation/):
 
 ```sh
-pip install get-nick-done      # the gnd command and the gnd Python package
-gnd install --project          # place the skills for Claude Code and Codex
-gnd doctor --project           # confirm what was placed
+uv tool install get-nick-done==0.1.0
+uv tool update-shell
 ```
 
-Prefer your agent's plugin manager? [Install the Claude Code or Codex marketplace plugin](docs/marketplace-plugins.md) instead of running `gnd install`.
+Open a new shell and run `gnd --help`. For a pip virtual-environment installation,
+see the [installation guide](docs/installation.md).
+
+### Claude Code plugin
+
+Inside Claude Code:
+
+```text
+/plugin marketplace add vasiloglou/gnd-public
+/plugin install gnd@gnd-marketplace
+```
+
+### Codex plugin
+
+In your terminal:
+
+```sh
+codex plugin marketplace add vasiloglou/gnd-public --ref main
+codex plugin add gnd@gnd-marketplace
+```
+
+Start a new agent session after installing. The marketplace commands require the
+plugin entries on repository `main` and GitHub access while the repository is
+private. See [plugin installation](docs/marketplace-plugins.md) for details.
+
+Alternatively, install skill files directly from the Python package in your
+working project, choosing this route instead of a plugin:
+
+```sh
+gnd install --project          # Claude Code and Codex
+gnd doctor --project
+```
 
 Then ask your agent, for example: *"Use gnd-model-from-text to model our expense
 approval policy, then validate it."* See

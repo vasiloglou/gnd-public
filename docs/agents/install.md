@@ -6,7 +6,9 @@ of agent skills. The skills are folders with a `SKILL.md` in the open
 `.claude/skills/` and Codex reads them from `.codex/skills/`. `gnd install` copies them
 there.
 
-You can also [install through the Claude Code or Codex marketplace](../marketplace-plugins.md). Choose one skill installation method for each agent.
+Install the runtime first from [PyPI](../installation.md#1-install-the-python-runtime-from-pypi).
+Then choose direct skill files (this page) or the
+[Claude Code or Codex marketplace plugin](../marketplace-plugins.md) for each agent.
 
 Run these commands in an empty directory, or in the project where your agent works:
 

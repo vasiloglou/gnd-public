@@ -3,6 +3,8 @@
 The GND plugin exposes the same 16 workflow skills as the Python package to
 Claude Code and Codex. Install the Python runtime first, then choose your agent's
 marketplace commands below. Python 3.11 or newer is required.
+See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
+for the pip virtual-environment alternative.
 
 ```sh
 uv tool install get-nick-done==0.1.0

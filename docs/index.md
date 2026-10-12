@@ -100,10 +100,12 @@ install into both agents:
 <p class="pills"><span>Claude Code</span><span>Codex</span><span>Agent Skills format</span><span>Python ≥ 3.11</span></p>
 
 ```sh
-pip install get-nick-done
-gnd install --project
-gnd doctor --project
+uv tool install get-nick-done==0.1.0
+uv tool update-shell
 ```
+
+Open a new shell, then choose the [Claude Code plugin, Codex plugin, or direct
+skill installation](installation.md). The guide also covers installation with pip.
 
 | Ask your agent to… | Skill | It produces | GND checks it with |
 |---|---|---|---|

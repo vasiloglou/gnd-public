@@ -31,15 +31,35 @@ selection. [Bootstrap history](docs/development/bootstrap.md) is historical;
 the old original-definition accounting runner is not release acceptance under r3.
 See [release preparation](docs/releasing.md) and [security reporting](SECURITY.md).
 
-## Pull requests are required
+## Owner-controlled contributions
 
-All contributors, including coding agents and administrators, work in a fork or
-topic branch and submit a pull request. Never push directly to main, force-push
-main, or delete it. GitHub protection requires a PR and successful required CI;
-resolve review conversations before merging. Web edits also use a branch and PR.
-No standing contributor bypass is allowed. Approval to perform phase work does
-not waive this rule. Repository owners can change settings, so configuration
-must be checked before claiming enforcement.
+Contributions are by invitation. Only collaborators approved by `vasiloglou`
+receive write access. Public availability permits reading and forking; it does
+not grant permission to modify this repository.
+
+All changes, including owner and coding-agent changes, use a topic branch and a
+pull request. Never push directly to `main`, force-push it, or delete it. Resolve
+review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
+all files.
+
+While `vasiloglou` is the only collaborator, branch protection requires PRs with
+zero required approving reviews. GitHub prohibits authors from approving their
+own PRs, so the owner's explicit merge decision is the acceptance step. Coding
+agents may merge only with the owner's explicit authorization. Protection applies
+to administrators too, with no PR bypass. Cloud CI is not currently a required
+status check; run the focused checks applicable to a change and record results.
+
+Before granting another account write access, enable one required approving
+review and required code-owner review. Its PRs will then require `vasiloglou`'s
+recorded approval. PRs authored by `vasiloglou` will need another authorized code
+owner, or work must be authored through a separately controlled contributor/bot
+identity so `vasiloglou` can approve. Never create a shared reviewer identity or
+approve a PR through a token belonging to its author.
+
+For a public repository, use the collaborators-only interaction limit to prevent
+outside PRs, issues and comments. GitHub limits this setting to six months; renew
+it before its reported expiration. It cannot be enabled while the repository is
+private. Check the live settings before claiming restrictions are enforced.
 
 ## Refactoring dependencies and compatibility
 

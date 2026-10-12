@@ -50,8 +50,13 @@ stated scope; handoffs between skills require an explicit user selection.
 
 All contributors, including coding agents and administrators, work in a fork or
 topic branch and submit a pull request. Never push directly to main, force-push
-main, or delete it. GitHub protection requires a PR and successful required CI;
+main, or delete it. GitHub protection requires a PR;
 resolve review conversations before merging. Web edits also use a branch and PR.
+Only merge with the owner's explicit authorization. In the sole-owner setup,
+zero formal approving reviews are required because an author cannot approve their
+own PR; the owner's merge decision is acceptance. Run affected local checks;
+cloud CI is not currently a required status check. Before adding a write-access
+collaborator, require one approving code-owner review. See CONTRIBUTING.md.
 No standing contributor bypass is allowed. Approval to perform phase work does
 not waive this rule. Repository owners can change settings, so configuration
 must be checked before claiming enforcement.

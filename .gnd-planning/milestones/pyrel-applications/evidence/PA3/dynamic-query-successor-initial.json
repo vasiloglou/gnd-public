@@ -1,0 +1,71 @@
+{
+  "added": [
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "calculate",
+      "[pair for pair in eligible if pair[0] == user][:limit]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "calculate",
+      "oracle.computed[name]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "main",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "main",
+      "str(error)[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "main",
+      "sys.argv[1:]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "execute_application",
+      "child.stderr.decode('utf-8', errors='replace')[-300:]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "execute_application",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "execute_application",
+      "str(error)[:300]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "verify_policy_report",
+      "expected[ref]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "verify_policy_report",
+      "expected_heads[ref]",
+      1
+    ]
+  ],
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA2/dynamic-query-successor.json",
+  "predecessor_sha256": "fcd7530a3e85056817bdede703a173088fe1e3be11896fc4ca247c7fb1213169",
+  "reason": "PA3 exact counted successor for the shared native publication parent and owned BookRec query; standalone runtime bytes are unchanged, historical PA2 evidence remains immutable.",
+  "removed": [],
+  "result_distinct_rows": 5826,
+  "result_occurrences": 7349,
+  "schema_version": 1
+}

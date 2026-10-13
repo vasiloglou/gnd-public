@@ -173,3 +173,42 @@ and satisfy the sweep; SDK order/limit limitation is explicitly handled above.
 ## Delegated approval (auto=true), 2026-10-13
 
 Approve preceding specification SHA-256 0697faf06cdb9c25e85541710de0ff950d7a430633227c6056d0b8d03ba32856. Authorization: named whole-milestone delegation; PA2 completed672bf35/006. Corpus-first: 19parent controls red because shared module is absent; 6actual native CLI controls red after explicit interface-presence precondition. The initial limit test accidentally matched argparse2; that earlier receipt is historical and not native execution evidence. Models/native logic are not credited by missing flags. Source/process/filesystem homes and SDK limitation satisfy implementability sweep; no optional spec panel. Selected Claude review one initial/at most one bounded repair. Budgets600parent+300examplesource/500tests, existing strict bounds/oldPythonpath/layer0 retained. No GND policy evaluation in native branch; immutable model declaration validation is separate. Parent publishes exact captured checked bytes with expected absence, not child-writable paths. No production edit preceded this gate.
+
+## PA3 review amendment and delegated approval, 2026-10-13
+
+Claude F1/F2 actual red controls reproduce query replacement of the checker and
+erasure of an asserted rating to permit a bad recommendation. Add
+owned_relations=() to the shared library API; BookRec explicitly owns only
+recommendation. All other asserted fact multisets, instances, metadata and
+coverage remain the captured source; computed heads may be generated. This is
+source-checkpoint fidelity, not source truth or transition/actor authorization.
+Checker staging is a new private directory created after query group cleanup,
+with its own build directory and expected-absence regular runtime/candidate
+artifacts from parent-captured bytes. No query-created runtime/path is reused.
+Native children receive only selected system/locale/temp variables and explicit
+local build configuration, without ambient credential/backend variables. Query
+crash1 maps70; malformed checker candidate3 retains bounded diagnostic without
+requiring a nonexistent policy report. Existing-output guards already cover
+input/output collisions; remove the dead later collision check. These are
+review-driven hardenings within PA3 and existing budgets, not a new semantic
+checker. One bounded repair review remains; no extra reviewer is selected.
+
+Delegated approval (auto=true): preceding original specification SHA-256 905d93908acfc790270ee2ed0195d9c0e628d4b0c96e2033bcebdf42d2b3a2fb. Named whole-milestone authorization persists; this bounded interface/staging amendment is approved before owned repairs are accepted. The actual red controls were run before their fixes. No merge, certification or release is authorized.
+
+## Final bounded repair scope and delegated approval, 2026-10-13
+
+The selected repair review is exhausted. R1/R2 identify metadata scalar-type
+preservation and staged model-name collisions. Reproduce each red, then make
+owned final repairs: compare metadata/instances using type-exact JSON forms and
+use a fixed private source-model name. Extend test budget500 to560 lines for
+these regressions plus exact preservation/ownership and credential-file discovery
+controls requested in R3/R4. Parent600/examples300 remain unchanged. No third
+review round; final code is owned/verified and the review's reading limits stay
+explicit. Do not repurpose HOME; inspect the explicit Config path and measure
+credential-file access with denial instrumentation instead. No host sandbox
+claim follows from process-group cleanup or fresh artifact staging.
+
+Delegated approval (auto=true), named whole-milestone authority: preceding
+specification SHA-256 e973010b4502c7c82798cbb45ccc9b7662f1cf18041ba1393cf53f6725294464. Bounded final fixes and budget increase
+approved before production edits. Record actual red/green evidence and final
+post-repair gates before PA3 completion; no release, certificate or merge.

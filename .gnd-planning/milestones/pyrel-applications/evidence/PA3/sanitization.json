@@ -1,0 +1,55 @@
+{
+  "edits": "Only operator paths/pytest username and disclosed headers; historical committed red streams preserved, sanitized successors used for completion evidence.",
+  "receipts": [
+    {
+      "historical_predecessor_unchanged": true,
+      "raw_sha256": "ab01f3dea5ab663b78f5911510586f4573ec2d972f69f52ba10764822bc0ad31",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/native-interface-red-sanitized.txt",
+      "retained_sha256": "5aab64933ea847e913ec276edc8383d2fea3089ea8f6ebcc2d4bcca06cddf2fd",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/native-interface-red.txt"
+    },
+    {
+      "historical_predecessor_unchanged": true,
+      "raw_sha256": "44d8898d9a2b8354c3edf811bb3cea68feb24bb381700c5be1a091cf60239fb4",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/native-red-sanitized.txt",
+      "retained_sha256": "d4dfb0dc0a77841565c8786b72baf660714d608e10025f2930fdc870a783bc02",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/native-red.txt"
+    },
+    {
+      "historical_predecessor_unchanged": false,
+      "raw_sha256": "f7b305aae37321c3b9850dbcd1da2e37d85902b6bb651ddd198134cdef19ea37",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/review-native-red.txt",
+      "retained_sha256": "1eaee43f593d92ebeffd4be120efc72867d975598d9673a8585e98f9f48142f8",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/review-native-red.txt"
+    },
+    {
+      "historical_predecessor_unchanged": false,
+      "raw_sha256": "507c7838de10d8e6fd825a8be737127c3ea43c257d91e8f894a5cc0103e7b1ff",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/review-parent-red.txt",
+      "retained_sha256": "9576ef9c0d905391c118602bc82737d1015e172ae7f87ca5826178811941209c",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/review-parent-red.txt"
+    },
+    {
+      "historical_predecessor_unchanged": false,
+      "raw_sha256": "f7d5f51c5378cf31b209c2ccbbe6603ffa4b415b31c11d1413826e12a78ecfd9",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/unknown-metadata-red.txt",
+      "retained_sha256": "ed9ea7c2f0b685f670dbea53bea8d8cd8eb8e9198b22b88998eec52f6b75ce19",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/unknown-metadata-red.txt"
+    },
+    {
+      "historical_predecessor_unchanged": false,
+      "raw_sha256": "212207a59594ff49def572d79445eedfaa4627a77b23f46a5768a43663a5eb18",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/metadata-type-red.txt",
+      "retained_sha256": "7a4f31479ab9f7a20a0a70e817b2d7a2608d6929946f872bd83dbb9e13067b9b",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/metadata-type-red.txt"
+    },
+    {
+      "historical_predecessor_unchanged": false,
+      "raw_sha256": "5a0ea55c0869f9da0bf3ff68c68dfe66045d37edbeda5a7f9880101690f5bc24",
+      "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/model-filename-red.txt",
+      "retained_sha256": "0fcc92c7adc43b0fc0fc68a46d8466fd87057f4aed798f87231f4127570b5e47",
+      "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/model-filename-red.txt"
+    }
+  ],
+  "schema_version": 1
+}

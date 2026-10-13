@@ -871,6 +871,10 @@
     "gnd.exp.session_profile": {
       "lane": "exp",
       "layer": "lanes"
+    },
+    "gnd.export.applications": {
+      "lane": "export",
+      "layer": "lanes"
     }
   },
   "schema_version": 1

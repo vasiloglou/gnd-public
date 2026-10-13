@@ -1,0 +1,12 @@
+TRY004 Prefer `TypeError` exception for invalid type
+  --> src/gnd/examples/bookrec/extension/bookrec/native_query.py:29:9
+   |
+27 |     metadata = working.get('population', {})
+28 |     if not isinstance(metadata, dict):
+29 |         raise ValueError('population metadata must be an object')
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+30 |     if not isinstance(metadata.get('covers'), list):
+31 |         raise runtime['ProfileRefusal']('coverage-not-declared')
+   |
+
+Found 1 error.

@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_parent_refuses_malformed_computed_rows __________________
+
+    def test_parent_refuses_malformed_computed_rows():
+        module = application()
+        doc, report = valid_policy()
+        complete = json.loads(MODEL.with_name('complete.orm.yaml').read_bytes())
+        # Attach the real shipped heads to the otherwise baseline obligations.
+        doc['version'] = 2
+        doc['fact_types'].extend(complete['fact_types'][-2:])
+        report['derivations'] = [
+            {'derivation_ref': 'derivation:' + name, 'fact_type': name, 'status': 'satisfied',
+             'computed': [None], 'missing': [], 'extra': [], 'reason': None}
+            for name in ['book_is_blocked_for', 'book_is_eligible']]
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_pyrel_application_publication.py:204: Failed
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_publication.py::test_parent_refuses_malformed_computed_rows
+1 failed, 35 deselected in 0.08s

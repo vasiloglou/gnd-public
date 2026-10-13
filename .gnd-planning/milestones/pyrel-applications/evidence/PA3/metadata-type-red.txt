@@ -1,0 +1,29 @@
+Edited tool receipt: operator repository/temp paths and pytest username sanitized; execution/result text otherwise retained. Original raw SHA-256 212207a59594ff49def572d79445eedfaa4627a77b23f46a5768a43663a5eb18.
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_metadata_scalar_type_change_cannot_publish ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1082da8d0>
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-652/test_metadata_scalar_type_chan0')
+
+    def test_metadata_scalar_type_change_cannot_publish(monkeypatch, tmp_path):
+        module = application()
+        source = tmp_path / 'source.json'; doc = json.loads(POP.read_bytes())
+        doc['population']['revision'] = 1; source.write_text(json.dumps(doc))
+        query = tmp_path / 'query.py'; query.write_text('# owned')
+        simulated_child(module, monkeypatch)
+        def damage(candidate):
+            candidate['population']['revision'] = True
+            return candidate
+        output = tmp_path / 'out.json'
+        result = module.execute_application(MODEL, source, output, native_python=Path(sys.executable),
+                                            query_script=query, candidate_transform=damage)
+>       assert not result['published'] and not output.exists() and result['exit_code'] == 3, result
+E       AssertionError: {'exit_code': 0, 'accepted': True, 'published': True, 'policy': {'schema_version': 1, 'profile': 'applications-v1', 'backend': 'duckdb-local', 'accepted': True, ...}, ...}
+E       assert (not True)
+
+tests/test_pyrel_application_publication.py:293: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_publication.py::test_metadata_scalar_type_change_cannot_publish
+1 failed, 42 deselected in 0.10s

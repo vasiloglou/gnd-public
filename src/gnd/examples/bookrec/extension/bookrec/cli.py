@@ -44,7 +44,23 @@ def main(argv=None):
     parser.add_argument("--user")
     parser.add_argument("--limit", type=int, default=2)
     parser.add_argument("--preferred-only", action="store_true")
+    parser.add_argument("--backend", choices=["gnd", "pyrel"], default="gnd")
+    parser.add_argument("--pyrel-python", type=Path)
     args = parser.parse_args(argv)
+    if args.backend == "pyrel":
+        from gnd.export.applications import execute_application
+
+        if args.pyrel_python is None:
+            parser.error("--backend pyrel requires --pyrel-python")
+        result = execute_application(
+            args.model, args.input, args.output, native_python=args.pyrel_python,
+            query_script=Path(__file__).with_name("native_query.py"),
+            owned_relations=("recommendation",),
+            query_args=(args.command, args.user or "", str(args.limit),
+                        "true" if args.preferred_only else "false"),
+        )
+        print(json.dumps(result, indent=2))
+        return result["exit_code"]
     # Validate source structure through GND before application indexing. A nonzero
     # semantic band is repairable input here; malformed input is not.
     input_report = api.check(args.model, args.input, unredacted=True)

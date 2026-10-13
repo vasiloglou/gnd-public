@@ -1,0 +1,24 @@
+{
+  "added": [
+    [
+      "src/gnd/export/applications.py",
+      "_preserve_source",
+      "index.fact_types",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "verify_policy_report",
+      "index.fact_types",
+      1
+    ]
+  ],
+  "original_metric_current": 306,
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA2/query-successor.json",
+  "predecessor_sha256": "dcad8b16564ca1e271ae76a0d1cae6d1cbccc60d186acf8294cd215c64266ae9",
+  "reason": "PA3 exact counted publication/source-preservation parent and owned native BookRec query delta; standalone runtime bytes and historical PA2 evidence remain unchanged.",
+  "removed": [],
+  "result_distinct_rows": 292,
+  "result_occurrences": 361,
+  "schema_version": 1
+}

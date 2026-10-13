@@ -1,0 +1,14 @@
+{
+  "after": {
+    "sha256": "9d9eff25fb4f515613f49bb249c9676572609448090c2d5bc9cd736001d8542c",
+    "size_bytes": 93920
+  },
+  "before": {
+    "sha256": "9d9eff25fb4f515613f49bb249c9676572609448090c2d5bc9cd736001d8542c",
+    "size_bytes": 93920
+  },
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA2/pyrel-successor.json",
+  "predecessor_sha256": "2740e2c03a800078d665eec430ff294fbde5e1b417f07045452544fcf0afaa9a",
+  "reason": "PA3 exact counted successor for the shared native publication parent and owned BookRec query; standalone runtime bytes are unchanged, historical PA2 evidence remains immutable.",
+  "schema_version": 1
+}

@@ -1,0 +1,232 @@
+FFFFFFFFFFFFFFFFFFF                                                      [100%]
+=================================== FAILURES ===================================
+____________ test_parent_requires_complete_explicit_accepted_report ____________
+tests/test_pyrel_application_publication.py:39: in test_parent_requires_complete_explicit_accepted_report
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__________ test_parent_rejects_each_false_publication_boundary[empty] __________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+________ test_parent_rejects_each_false_publication_boundary[accepted] _________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_________ test_parent_rejects_each_false_publication_boundary[schema] __________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_________ test_parent_rejects_each_false_publication_boundary[backend] _________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_________ test_parent_rejects_each_false_publication_boundary[binding] _________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_parent_rejects_each_false_publication_boundary[missing-row] _______
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_parent_rejects_each_false_publication_boundary[duplicate-row] ______
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+________ test_parent_rejects_each_false_publication_boundary[row-type] _________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_________ test_parent_rejects_each_false_publication_boundary[row-id] __________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_parent_rejects_each_false_publication_boundary[row-modality] _______
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_parent_rejects_each_false_publication_boundary[incomplete] ________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__________ test_parent_rejects_each_false_publication_boundary[error] __________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_________ test_parent_rejects_each_false_publication_boundary[vacuous] _________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_________ test_parent_rejects_each_false_publication_boundary[status] __________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__________ test_parent_rejects_each_false_publication_boundary[exit] ___________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_parent_rejects_each_false_publication_boundary[reason-field] _______
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_parent_rejects_each_false_publication_boundary[extra-head] ________
+tests/test_pyrel_application_publication.py:48: in test_parent_rejects_each_false_publication_boundary
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+____________ test_existing_output_and_input_remain_exact_on_refusal ____________
+tests/test_pyrel_application_publication.py:77: in test_existing_output_and_input_remain_exact_on_refusal
+    module = application()
+             ^^^^^^^^^^^^^
+tests/test_pyrel_application_publication.py:17: in application
+    assert importlib.util.find_spec('gnd.export.applications') is not None, 'native publication parent is absent'
+E   AssertionError: native publication parent is absent
+E   assert None is not None
+E    +  where None = <function find_spec at 0x102ea2de0>('gnd.export.applications')
+E    +    where <function find_spec at 0x102ea2de0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_publication.py::test_parent_requires_complete_explicit_accepted_report
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[empty]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[accepted]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[schema]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[backend]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[binding]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[missing-row]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[duplicate-row]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[row-type]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[row-id]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[row-modality]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[incomplete]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[error]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[vacuous]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[status]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[exit]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[reason-field]
+FAILED tests/test_pyrel_application_publication.py::test_parent_rejects_each_false_publication_boundary[extra-head]
+FAILED tests/test_pyrel_application_publication.py::test_existing_output_and_input_remain_exact_on_refusal
+19 failed in 0.19s

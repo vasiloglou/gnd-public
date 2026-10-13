@@ -1,7 +1,7 @@
-# PA4 — Native expense reports and approval candidates (preparation)
+# PA4 — Native expense reports and approval candidates
 
-PA3 completion is a hard prerequisite. This draft authorizes no PA4 production
-edit, corpus gate or implementation before PA3's completion record.
+PA3 completed211a23f/007 and satisfies the hard prerequisite. The original
+preparation below is retained; final interfaces and delegated gate follow.
 
 ## Harvested obligations
 
@@ -120,3 +120,73 @@ PA3 closes. Draft budget:300owned query/wrapper lines,400test lines; shared pare
 stays within its existing600-line ceiling and keeps one publication implementation.
 One Claude initial and at most one bounded repair review is selected. No PA4
 implementation or delegated approval is claimed by this preparation artifact.
+
+## Final implementability sweep and interfaces
+
+The whole effective plan/A1 and records001–007 are harvested; native model
+admission, optional runtime, exact source preservation, unchanged legacy/shim
+identities and PA3 process/artifact lifecycles remain mandatory. No source model
+evolution operation or framework semantic change is needed here. Explicit SDK
+probes measured baseline3/1/2260 EUR; grouped EUR2260; repeated amounts180; zero
+approval aggregate rows[] and wholly empty totals/approval rows[]. These are
+feasibility observations, not implemented application checks.
+
+Public execute_application adds allowed_guard_kinds=(), default no guard kind
+allowed. Expense wrapper declares unknown-expense, already-approved and
+unsupported-currency. Guard envelope root has exactly schema_version/binding/
+guard_refusal, with strict version1, exact model/input SHA, and exactly
+exit_code(int1)/kind(declared bounded string)/reason(nonempty<=300). No candidate
+or calculation accompanies a refusal. Child exit0 plus a valid artifact returns
+nonaccepted application-refusal1; process1 remains70. No policy verdict is claimed
+by the application guard. The parent implements the shape/binding protocol only.
+
+Expense approve owns only expense_is_approved and expense_approved_by_chain;
+report owns no asserted relation. All remaining source multisets/instances/
+metadata/coverage retain captured bytes' meaning and scalar types. Both
+subcommands reuse the fresh independent checker and no-clobber publication.
+A report's checked snapshot publishes only inside a private temporary directory.
+CLI accepted reports contain report/accepted/policy; failed report/approval JSON
+contains refusal/policy diagnostics but no successful report arithmetic.
+Zero/empty arithmetic is observable in library calculation evidence with
+nonaccepted/vacuous2; it cannot satisfy successful reporting/acceptance.
+
+Native aggregate sum projects expense identity plus amount; currency grouping
+uses .per(currency). Only mathematical zero presentation for measured empty
+aggregate rows is Python; populated count/sum/group computations are native.
+Before totals, a native query finds non-EUR currency facts and emits the declared
+refusal. Native submitted/approved membership produces unknown/duplicate guards.
+Category caps, positive amounts, chain/category enums, submission requirements
+and approval-chain ceilings remain solely model policy, checked independently.
+
+Branches now pinned red:17 native application cases including numeric duplicates,
+zero/empty, two valid approvals and ten invalid/unknown/currency controls;9 parent
+guard envelope cases. Their interface-presence preconditions fail on current
+code; no native application execution is falsely credited by that red. Additional
+post-proposal chain/unknown-approval faults, preserved existing output, and
+currency/report absences remain required before close. Pin their controls before
+production changes too. Required affected gates: native phase cases, existing
+expense/BookRec consumers, parent guard/publication, framework acceptance/driver,
+exact query/dynamic/rendered successors and layer allowances0. No broad replay.
+
+Standing rules: total bounded reads/strict JSON and refusal responses; work/rows/
+streams/time limits inherited with native query work<=100k/results<=10k; explicit
+validation order before publication; full policy/head walk in unchanged runtime;
+one normative policy home; actual arithmetic/empty/byte/race measurements.
+Evidence remains finite/static; no actor, reimbursement, source-truth, sandbox,
+conversion or certification claim. PA5/PA6 obligations remain queued.
+Budget300new query/wrapper lines,400new phase test lines, shared parent600total.
+One Claude initial plus at most one bounded repair is selected.
+
+## Corpus completion and delegated approval, 2026-10-13
+
+The pre-production corpus now includes22 native interface/outcome controls and
+9 guard-envelope controls, all observed red. Post-proposal chain/unknown-approval
+faults, exact rule assertions, repair, existing output preservation and invalid
+currency report absences are included before any production edit. SDK
+aggregate-feasibility.txt measures all five arithmetic/empty/group scenarios.
+All homes are located: expense extension CLI, owned native query beside copied
+CLI, shared export parent, unchanged standalone checker, public process/safefs.
+Native work/result limits and mathematical empty-result presentation are explicit;
+no unimplemented SDK method, runtime upgrade or credential environment is needed.
+
+Delegated approval (auto=true): preceding specification SHA-256 d02933dd3b93b257bd1d8d29d621da530e69809e555d48d1661602e53a3c29df. Named whole-milestone owner delegation persists; PA3 completed211a23f/007. Approve the bounded interfaces and budgets300query/wrapper,400tests,parent600; one Claude initial/at most one bounded repair. Corpus red means missing native interfaces, not executed native business outcomes. No production edit preceded this gate. No merge, release or certificate authorization.

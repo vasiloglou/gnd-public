@@ -1,0 +1,917 @@
+Edited receipt: operator repository/temp paths and pytest username sanitized; result text otherwise retained. Raw SHA-256 944bdfb9f8d67ba8de3d789d67026c7363fec244a6d8818de2b636bc5fbc4e9a.
+
+FFFFFFFFFFFFFFFFFFFFFF                                                   [100%]
+=================================== FAILURES ===================================
+_______________ test_native_expense_report_arithmetic[baseline] ________________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_report_ari0/expense')
+mode = 'baseline'
+
+    @pytest.mark.parametrize('mode', ['baseline', 'currency', 'repeated-amounts'])
+    def test_native_expense_report_arithmetic(home, mode):
+        model, population = ('currency.orm.json', 'currency.population.json') if mode == 'currency' else ('model.orm.json', 'seed.population.json')
+        if mode == 'repeated-amounts':
+            source = home / population; document = json.loads(source.read_bytes())
+            for row in document['facts']['expense_has_amount']:
+                row['amount'] = 60
+            source.write_text(json.dumps(document))
+        before = (home / population).read_bytes()
+>       completed = launch(home, 'report', model=model, population=population)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_report_ari0/expense')
+command = 'report', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_______________ test_native_expense_report_arithmetic[currency] ________________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_report_ari1/expense')
+mode = 'currency'
+
+    @pytest.mark.parametrize('mode', ['baseline', 'currency', 'repeated-amounts'])
+    def test_native_expense_report_arithmetic(home, mode):
+        model, population = ('currency.orm.json', 'currency.population.json') if mode == 'currency' else ('model.orm.json', 'seed.population.json')
+        if mode == 'repeated-amounts':
+            source = home / population; document = json.loads(source.read_bytes())
+            for row in document['facts']['expense_has_amount']:
+                row['amount'] = 60
+            source.write_text(json.dumps(document))
+        before = (home / population).read_bytes()
+>       completed = launch(home, 'report', model=model, population=population)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_report_ari1/expense')
+command = 'report', model = 'currency.orm.json'
+population = 'currency.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+___________ test_native_expense_report_arithmetic[repeated-amounts] ____________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_report_ari2/expense')
+mode = 'repeated-amounts'
+
+    @pytest.mark.parametrize('mode', ['baseline', 'currency', 'repeated-amounts'])
+    def test_native_expense_report_arithmetic(home, mode):
+        model, population = ('currency.orm.json', 'currency.population.json') if mode == 'currency' else ('model.orm.json', 'seed.population.json')
+        if mode == 'repeated-amounts':
+            source = home / population; document = json.loads(source.read_bytes())
+            for row in document['facts']['expense_has_amount']:
+                row['amount'] = 60
+            source.write_text(json.dumps(document))
+        before = (home / population).read_bytes()
+>       completed = launch(home, 'report', model=model, population=population)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_report_ari2/expense')
+command = 'report', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+___________ test_native_legitimate_approval_publishes[101-team-lead] ___________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_legitimate_approva0/expense')
+expense = 101, chain = 'team-lead'
+
+    @pytest.mark.parametrize('expense,chain', [(101, 'team-lead'), (102, 'finance')])
+    def test_native_legitimate_approval_publishes(home, expense, chain):
+        before = (home / 'seed.population.json').read_bytes()
+>       completed = launch(home, 'approve', expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_legitimate_approva0/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+____________ test_native_legitimate_approval_publishes[102-finance] ____________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_legitimate_approva1/expense')
+expense = 102, chain = 'finance'
+
+    @pytest.mark.parametrize('expense,chain', [(101, 'team-lead'), (102, 'finance')])
+    def test_native_legitimate_approval_publishes(home, expense, chain):
+        before = (home / 'seed.population.json').read_bytes()
+>       completed = launch(home, 'approve', expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_legitimate_approva1/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 102, chain = 'finance'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_________ test_native_expense_refusals_preserve_inputs[chain-limit-1] __________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p0/expense')
+mode = 'chain-limit', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p0/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 102, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+________ test_native_expense_refusals_preserve_inputs[unknown-chain-1] _________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p1/expense')
+mode = 'unknown-chain', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p1/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'fast-track'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_______ test_native_expense_refusals_preserve_inputs[unknown-expense-1] ________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p2/expense')
+mode = 'unknown-expense', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p2/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 999, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+__________ test_native_expense_refusals_preserve_inputs[duplicate-1] ___________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p3/expense')
+mode = 'duplicate', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p3/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 103, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+___________ test_native_expense_refusals_preserve_inputs[meal-cap-1] ___________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p4/expense')
+mode = 'meal-cap', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p4/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+___________ test_native_expense_refusals_preserve_inputs[category-1] ___________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p5/expense')
+mode = 'category', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p5/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+______ test_native_expense_refusals_preserve_inputs[missing-submitter-1] _______
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p6/expense')
+mode = 'missing-submitter', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p6/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_______ test_native_expense_refusals_preserve_inputs[currency-missing-1] _______
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p7/expense')
+mode = 'currency-missing', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p7/expense')
+command = 'approve', model = 'currency.orm.json'
+population = 'currency.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_________ test_native_expense_refusals_preserve_inputs[currency-usd-1] _________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p8/expense')
+mode = 'currency-usd', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p8/expense')
+command = 'approve', model = 'currency.orm.json'
+population = 'currency.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_______ test_native_expense_refusals_preserve_inputs[unknown-coverage-2] _______
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p9/expense')
+mode = 'unknown-coverage', expected = 2
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_expense_refusals_p9/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+____ test_native_empty_arithmetic_is_not_policy_acceptance[zero-approvals] _____
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_empty_arithmetic_i0/expense')
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_empty_arithmetic_i0')
+mode = 'zero-approvals'
+
+    @pytest.mark.parametrize('mode', ['zero-approvals', 'empty'])
+    def test_native_empty_arithmetic_is_not_policy_acceptance(home, tmp_path, mode):
+        # Interface presence is required before the library path can receive credit.
+>       launch(home, 'report')
+
+tests/test_expense_pyrel_application.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_empty_arithmetic_i0/expense')
+command = 'report', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_________ test_native_empty_arithmetic_is_not_policy_acceptance[empty] _________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_empty_arithmetic_i1/expense')
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_empty_arithmetic_i1')
+mode = 'empty'
+
+    @pytest.mark.parametrize('mode', ['zero-approvals', 'empty'])
+    def test_native_empty_arithmetic_is_not_policy_acceptance(home, tmp_path, mode):
+        # Interface presence is required before the library path can receive credit.
+>       launch(home, 'report')
+
+tests/test_expense_pyrel_application.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_empty_arithmetic_i1/expense')
+command = 'report', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+______ test_native_post_proposal_approval_faults_and_repair[chain-limit] _______
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_post_proposal_appr0/expense')
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_post_proposal_appr0')
+fault = 'chain-limit'
+
+    @pytest.mark.parametrize('fault', ['chain-limit', 'unknown-approval'])
+    def test_native_post_proposal_approval_faults_and_repair(home, tmp_path, fault):
+>       launch(home, 'report')
+
+tests/test_expense_pyrel_application.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_post_proposal_appr0/expense')
+command = 'report', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+____ test_native_post_proposal_approval_faults_and_repair[unknown-approval] ____
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_post_proposal_appr1/expense')
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_post_proposal_appr1')
+fault = 'unknown-approval'
+
+    @pytest.mark.parametrize('fault', ['chain-limit', 'unknown-approval'])
+    def test_native_post_proposal_approval_faults_and_repair(home, tmp_path, fault):
+>       launch(home, 'report')
+
+tests/test_expense_pyrel_application.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_post_proposal_appr1/expense')
+command = 'report', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+_________________ test_native_existing_output_is_not_replaced __________________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_existing_output_is0/expense')
+
+    def test_native_existing_output_is_not_replaced(home):
+        output = home / 'result.json'; output.write_bytes(b'owner bytes')
+        before = (home / 'seed.population.json').read_bytes()
+>       completed = launch(home, 'approve')
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_native_existing_output_is0/expense')
+command = 'approve', model = 'model.orm.json'
+population = 'seed.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n')
+E        +  where 'usage: expense_cli.py approve [-h] --model MODEL --population POPULATION\n                              --expense EXP...essage and exit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...xit\n  --model MODEL\n  --population POPULATION\n  --expense EXPENSE\n  --chain CHAIN\n  --output OUTPUT\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+___________ test_invalid_currency_withholds_successful_report[False] ___________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_invalid_currency_withhold0/expense')
+missing = False
+
+    @pytest.mark.parametrize('missing', [False, True])
+    def test_invalid_currency_withholds_successful_report(home, missing):
+        source = home / 'currency.population.json'; document = json.loads(source.read_bytes())
+        if missing:
+            document['facts']['expense_has_currency'] = []
+        else:
+            document['facts']['expense_has_currency'][0]['currency'] = 'USD'
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'report', model='currency.orm.json', population=source.name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_invalid_currency_withhold0/expense')
+command = 'report', model = 'currency.orm.json'
+population = 'currency.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+___________ test_invalid_currency_withholds_successful_report[True] ____________
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_invalid_currency_withhold1/expense')
+missing = True
+
+    @pytest.mark.parametrize('missing', [False, True])
+    def test_invalid_currency_withholds_successful_report(home, missing):
+        source = home / 'currency.population.json'; document = json.loads(source.read_bytes())
+        if missing:
+            document['facts']['expense_has_currency'] = []
+        else:
+            document['facts']['expense_has_currency'][0]['currency'] = 'USD'
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+>       completed = launch(home, 'report', model='currency.orm.json', population=source.name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_expense_pyrel_application.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+home = PosixPath('<tmp>/pytest-of-user/pytest-669/test_invalid_currency_withhold1/expense')
+command = 'report', model = 'currency.orm.json'
+population = 'currency.population.json', expense = 101, chain = 'team-lead'
+
+    def launch(home, command, *, model='model.orm.json', population='seed.population.json', expense=101, chain='team-lead'):
+        help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
+                                  capture_output=True, text=True, timeout=20, check=False)
+>       assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
+E       AssertionError: native expense interface is absent
+E       assert ('--backend' in 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n')
+E        +  where 'usage: expense_cli.py report [-h] --model MODEL --population POPULATION\n\noptions:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n' = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...ns:\n  -h, --help            show this help message and exit\n  --model MODEL\n  --population POPULATION\n', stderr='').stdout
+
+tests/test_expense_pyrel_application.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_report_arithmetic[baseline]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_report_arithmetic[currency]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_report_arithmetic[repeated-amounts]
+FAILED tests/test_expense_pyrel_application.py::test_native_legitimate_approval_publishes[101-team-lead]
+FAILED tests/test_expense_pyrel_application.py::test_native_legitimate_approval_publishes[102-finance]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[chain-limit-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[unknown-chain-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[unknown-expense-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[duplicate-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[meal-cap-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[category-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[missing-submitter-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[currency-missing-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[currency-usd-1]
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[unknown-coverage-2]
+FAILED tests/test_expense_pyrel_application.py::test_native_empty_arithmetic_is_not_policy_acceptance[zero-approvals]
+FAILED tests/test_expense_pyrel_application.py::test_native_empty_arithmetic_is_not_policy_acceptance[empty]
+FAILED tests/test_expense_pyrel_application.py::test_native_post_proposal_approval_faults_and_repair[chain-limit]
+FAILED tests/test_expense_pyrel_application.py::test_native_post_proposal_approval_faults_and_repair[unknown-approval]
+FAILED tests/test_expense_pyrel_application.py::test_native_existing_output_is_not_replaced
+FAILED tests/test_expense_pyrel_application.py::test_invalid_currency_withholds_successful_report[False]
+FAILED tests/test_expense_pyrel_application.py::test_invalid_currency_withholds_successful_report[True]
+22 failed in 2.55s

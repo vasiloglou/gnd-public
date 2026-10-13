@@ -1,0 +1,7 @@
+Edited receipt: operator repository/temp paths and pytest username sanitized; result text otherwise retained. Raw SHA-256 5898a56a0e505e31c465e9071ec7485ab8366f55f18df6618ed1d3105c78ddc8.
+
+{"native_approved_rows": [[1]], "native_currency_rows": null, "native_totals_rows": [[3, 2260]], "scenario": "baseline"}
+{"native_approved_rows": [[1]], "native_currency_rows": [["EUR", 2260]], "native_totals_rows": [[3, 2260]], "scenario": "currency"}
+{"native_approved_rows": [[1]], "native_currency_rows": null, "native_totals_rows": [[3, 180]], "scenario": "repeated"}
+{"native_approved_rows": [], "native_currency_rows": null, "native_totals_rows": [[3, 2260]], "scenario": "zero"}
+{"native_approved_rows": [], "native_currency_rows": null, "native_totals_rows": [], "scenario": "empty"}

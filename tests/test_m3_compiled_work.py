@@ -5,7 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from gnd import api, compiled_obligations as implementation
+from gnd import api
+from gnd import compiled_obligations as implementation
 from gnd.model import load_model
 
 CORPUS = Path(__file__).parent / "fixtures/compiled-snapshot"

@@ -1,0 +1,21 @@
+{
+  "full_run_commit": "45d0ae380debe0c17ff43d62904151af36370484",
+  "host": "macOS",
+  "selection": "default marker exclusions preserved",
+  "runs": {
+    "3.11": {
+      "summary": "32 failed, 13962 passed, 400 deselected, 1 warning in 1753.69s (0:29:13)",
+      "exit": 1,
+      "raw_sha256": "528fc57d5ef6f0db974a7c394600a03e60ec6b378e53939927acdab4354ceb5e",
+      "raw_path": "/private/tmp/gnd-pr19-ci/final-regression-3.11.log",
+      "location": "outside git history, checkable only by holders of retained local bytes"
+    },
+    "3.13": {
+      "summary": "32 failed, 13962 passed, 400 deselected, 1 warning in 1685.69s (0:28:05)",
+      "exit": 1,
+      "raw_sha256": "003def3a10037a80ad86886f9f5b9ad9ec10e532dc4de39e4332a977ff8f443a",
+      "raw_path": "/private/tmp/gnd-pr19-ci/final-regression-3.13.log",
+      "location": "outside git history, checkable only by holders of retained local bytes"
+    }
+  }
+}

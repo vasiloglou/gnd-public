@@ -19,7 +19,12 @@ from gnd import values as scalar_values
 from gnd.address import positional_constraint_ref
 from gnd.applicability import applicable_scope_ids
 from gnd.atoms import atom_bind, atom_has_bind
-from gnd.branches import REGISTRY, constraint_variant, record_branch, time_relative_operand
+from gnd.branches import (
+    REGISTRY,  # noqa: F401 -- historical compatibility binding
+    constraint_variant,
+    record_branch,
+    time_relative_operand,
+)
 from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.documents import Model
 from gnd.errors import UnvalidatedPopulationError
@@ -48,7 +53,9 @@ from gnd.semantic_ir import (
 )
 from gnd.universe import resolve_primitive
 
-_FAMILIES = frozenset(row.family for row in REGISTRY if row.surface == "snapshot")
+# Authored constraint families have adapter hooks. Generated compiled findings
+# share the snapshot report surface but are evaluated by their own composer.
+_FAMILIES = frozenset(FAMILIES)
 _NUMERIC = ("Integer", "Float", "Number")
 _ORDERING = ("<", "<=", ">", ">=")
 

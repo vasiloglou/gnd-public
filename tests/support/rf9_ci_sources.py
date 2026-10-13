@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 EVIDENCE = Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair'
+SOURCE_SUCCESSORS = EVIDENCE.parents[2] / 'compiled-snapshot-obligations/evidence/CI/source-successors.json'
 
 
 def coupling_sites(metrics):
@@ -37,8 +38,43 @@ def coupling_sites(metrics):
     return remaining
 
 
-def body_successor(kind, name, old=None):
-    rows = json.loads((EVIDENCE / 'body-successors.json').read_text())
-    found = [r for r in rows if r['kind'] == kind and r['name'] == name and (old is None or r.get('old') == old)]
+def _unique(rows, predicate):
+    found = [row for row in rows if predicate(row)]
     assert len(found) <= 1
     return found[0] if found else None
+
+
+def _current_rows():
+    document = json.loads(SOURCE_SUCCESSORS.read_text())
+    assert document['schema_version'] == 1
+    rows = document['successors']
+    identities = [(row['kind'], row.get('old', row.get('module')), row['name']) for row in rows]
+    assert len(set(identities)) == len(identities), 'duplicate current source successor'
+    assert all(row['kind'] in {'RF4', 'RF5', 'RF6b'} and row['reason'] and row['home']
+               for row in rows)
+    return rows
+
+
+def body_successor(kind, name, old=None):
+    def match(row):
+        return row['kind'] == kind and row['name'] == name and (old is None or row.get('old') == old)
+
+    frozen = _unique(json.loads((EVIDENCE / 'body-successors.json').read_text()), match)
+    current = _unique(_current_rows(), match)
+    if frozen is not None and current is not None:
+        assert current['home'] == frozen['home']
+        assert current['before'] == frozen['after'], 'unchained body successor'
+        return {**current, 'before': frozen['before']}
+    return current if current is not None else frozen
+
+
+def definition_successor(module, name):
+    frozen = _unique(json.loads((EVIDENCE.parent / 'RF7/definition-successors.json').read_text()),
+                     lambda row: (row['module'], row['name']) == (module, name))
+    current = _unique(_current_rows(), lambda row: row['kind'] == 'RF6b'
+                      and (row['module'], row['name']) == (module, name))
+    if frozen is not None and current is not None:
+        assert current['home'] == frozen['home']
+        assert current['before'] == frozen['after'], 'unchained definition successor'
+        return {**current, 'before': frozen['before']}
+    return current if current is not None else frozen

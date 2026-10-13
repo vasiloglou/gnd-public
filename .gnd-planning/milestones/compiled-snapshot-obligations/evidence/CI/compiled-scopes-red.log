@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_compiled_findings_are_registered_outside_frozen_assurance ________
+tests/test_compiled_scope_boundaries.py:12: in test_compiled_findings_are_registered_outside_frozen_assurance
+    assert compiled.isdisjoint(phase3_scope_ids())
+E   AssertionError: assert False
+E    +  where False = <built-in method isdisjoint of set object at 0x10ab06ce0>(('applicability:adapter:n-a:boolean-in-numeric-role', 'applicability:adapter:n-a:malformed-constraint', 'applicability...n-a:opaque-value', 'applicability:adapter:n-a:unregistered-family', 'applicability:adapter:n-a:unresolvable-role', ...))
+E    +    where <built-in method isdisjoint of set object at 0x10ab06ce0> = {'snapshot:compiled-subset:n-a:clean', 'snapshot:compiled-subset:n-a:unavailable', 'snapshot:compiled-subset:n-a:uncov...et:n-a:vacuous', 'snapshot:compiled-subset:n-a:violated:alethic', 'snapshot:compiled-subset:n-a:violated:deontic', ...}.isdisjoint
+E    +    and   ('applicability:adapter:n-a:boolean-in-numeric-role', 'applicability:adapter:n-a:malformed-constraint', 'applicability...n-a:opaque-value', 'applicability:adapter:n-a:unregistered-family', 'applicability:adapter:n-a:unresolvable-role', ...) = phase3_scope_ids()
+=========================== short test summary info ============================
+FAILED tests/test_compiled_scope_boundaries.py::test_compiled_findings_are_registered_outside_frozen_assurance
+1 failed in 0.07s

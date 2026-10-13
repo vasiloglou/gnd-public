@@ -18,7 +18,10 @@ def spec():
 
 
 def test_all_snapshot_families_have_executable_predicates(spec):
-    families = sorted({row.family for row in REGISTRY if row.surface == "snapshot"} - {"textual"})
+    # Generated operation findings use the composer, outside authored predicates.
+    families = sorted({row.family for row in REGISTRY
+                       if row.surface == "snapshot" and row.family != "compiled-subset"}
+                      - {"textual"})
     assert set(families) == {"anchored", "cardinality", "equality", "exclusion", "exclusive-or", "frequency", "guarded", "mandatory", "ring", "subset", "mandatory-disjunctive", "subtype-partition", "uniqueness", "value", "value-comparison"}
     from gnd.checker import _anchored_verdicts
     assert callable(_anchored_verdicts)

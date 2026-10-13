@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/dynamic-query-candidates.json",
+  "predecessor_sha256": "5ee422365202e3c12082cd62f6b4a7666cd867d86c220a3e1a63400bc0844531",
+  "reason": "Compiled standing-obligation evaluator and redaction/branch syntax additions; shared indexed walk matching removes four predecessor candidates. Syntax census only; no model-query exception widening.",
+  "added": [
+    [
+      "src/gnd/branches.py",
+      "_compiled_snapshot_rows",
+      "Iterator[Branch]",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "compose",
+      "entry['subset'][side]",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "compose",
+      "extensions.get(head)",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "compose",
+      "operation['preconditions'][entry['source_index']]",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "compose",
+      "view.facts.get(of)",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "compose",
+      "view.facts.get(subject, ())",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "key",
+      "pair[side]",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "key",
+      "row.get(pair[side])",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "offending_rows",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "offending_rows",
+      "facts.get(str(subset['in']), ())",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "offending_rows",
+      "facts.get(str(subset['of']), ())",
+      1
+    ],
+    [
+      "src/gnd/compiled_obligations.py",
+      "offending_rows",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/redaction.py",
+      "RedactionPolicy",
+      "Mapping[str, frozenset[tuple[str, str]]]",
+      1
+    ],
+    [
+      "src/gnd/redaction.py",
+      "RedactionPolicy",
+      "frozenset[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/redaction.py",
+      "RedactionPolicy",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/redaction.py",
+      "from_model",
+      "derivation_roles.get(str(entry['subset']['of']), frozenset())",
+      1
+    ],
+    [
+      "src/gnd/redaction.py",
+      "verdict_roles",
+      "self._compiled_roles[reference]",
+      1
+    ]
+  ],
+  "removed": [
+    [
+      "src/gnd/transition.py",
+      "_compiled_verdicts",
+      "(pre.facts or {}).get(str(subset['in']), [])",
+      1
+    ],
+    [
+      "src/gnd/transition.py",
+      "_compiled_verdicts",
+      "(pre.facts or {}).get(str(subset['of']), [])",
+      1
+    ],
+    [
+      "src/gnd/transition.py",
+      "_compiled_verdicts",
+      "fact.get(of_role)",
+      1
+    ],
+    [
+      "src/gnd/transition.py",
+      "_compiled_verdicts",
+      "other.get(in_role)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 5769,
+  "result_occurrences": 7273
+}

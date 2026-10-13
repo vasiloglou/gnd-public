@@ -62,7 +62,7 @@ from gnd.errors import (
     ValidationIssue,
 )
 from gnd.extensions import Wildcard as _Wildcard
-from gnd.extensions import derivation_claims_against, structured_extension_view
+from gnd.extensions import calculation_scope, derivation_claims_against, structured_extension_view
 from gnd.extensions import partial_compatible as _partial_compatible
 from gnd.model import derivation_classifications, dynamic_subject_is_functional
 from gnd.population import Population, load_population_bytes
@@ -1917,14 +1917,15 @@ def _evaluate_to_state(
             ft: rows for ft, rows in view.combined.facts.items() if ft in dict(context._owners)
         }
     declared = _operations_by_id(model)
-    report = TransitionReport(
-        pre_snapshot=check(model, pre),
-        pre_snapshot_verdicts=_compiled_verdicts_for_dynamic_walk(model, pre),
-    )
-    covers = list(pre.covers or [])
-    state = _state_of(pre)
-    population: Population | None = pre
-    extension_view = structured_extension_view(model, pre)
+    with calculation_scope(model, pre):
+        report = TransitionReport(
+            pre_snapshot=check(model, pre),
+            pre_snapshot_verdicts=_compiled_verdicts_for_dynamic_walk(model, pre),
+        )
+        covers = list(pre.covers or [])
+        state = _state_of(pre)
+        population: Population | None = pre
+        extension_view = structured_extension_view(model, pre)
     extensions = extension_view.facts
     unavailable = extension_view.unavailable
     possible = extension_view.possible

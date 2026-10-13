@@ -96,7 +96,7 @@ def test_owner_spans_public_dispatches_and_closes_before_step_and_refresh(monkey
         return original_compiled(actual_model, population)
 
     def viewed(actual_model, population, **kwargs):
-        seen.append(("initial" if population is pre else "refresh", preparation.current_scope()))
+        seen.append(("initial" if population is pre else "post-view", preparation.current_scope()))
         return original_view(actual_model, population, **kwargs)
 
     def stepped(*args, **kwargs):
@@ -113,7 +113,7 @@ def test_owner_spans_public_dispatches_and_closes_before_step_and_refresh(monkey
     assert all(owner is initial[0] for owner in initial)
     assert initial[0].model is model and initial[0].population is pre
     assert any(stage == "step" for stage, _owner in seen)
-    assert all(owner is None for stage, owner in seen if stage in ("step", "refresh"))
+    assert all(owner is None for stage, owner in seen if stage in ("step", "post-view"))
     assert preparation.current_scope() is None
 
 
@@ -212,4 +212,71 @@ def test_ineligible_initial_calculation_is_fresh_without_changing_walk(monkeypat
     assert seen[0][1] > 0
     assert seen[0][0] is not None
     assert seen[0][0].model is model and seen[0][0].population is pre
+    assert preparation.current_scope() is None
+
+
+def test_selected_dynamic_refresh_runs_after_shared_initial_owner_ends(monkeypatch):
+    # Reuse the existing dynamic aggregate scenario and its recorded sample;
+    # do not invent another model, operation, population, or domain row here.
+    from support.v62_phase4_corpus import CASES_DOC
+    from support.v62_phase4_corpus import FIXTURE as AGGREGATE_FIXTURE
+    from test_v62_phase4_composition import _add_sample_steps, _dynamic_model
+
+    model = _dynamic_model()
+    pre = load_population(AGGREGATE_FIXTURE / CASES_DOC["population"], model=model)
+    steps = {
+        "steps_schema": 1,
+        "model": "aggregates.orm.yaml",
+        "model_digest": walk.model_digest(model),
+        "operations_digest": walk.operations_digest(model.operations),
+        "steps": _add_sample_steps(model),
+    }
+    observed_owners = []
+    initial_owners = []
+    original_check = walk.check
+    original_compiled = walk._compiled_verdicts_for_dynamic_walk
+    original_view = walk.structured_extension_view
+
+    def checked(actual_model, population, **kwargs):
+        if population is pre:
+            initial_owners.append(preparation.current_scope())
+        return original_check(actual_model, population, **kwargs)
+
+    def compiled(actual_model, population):
+        initial_owners.append(preparation.current_scope())
+        return original_compiled(actual_model, population)
+
+    def viewed(actual_model, population, **kwargs):
+        if population is pre and not kwargs:
+            initial_owners.append(preparation.current_scope())
+        if kwargs.get("refresh"):
+            observed_owners.append((tuple(kwargs["refresh"]), preparation.current_scope()))
+        return original_view(actual_model, population, **kwargs)
+
+    monkeypatch.setattr(walk, "check", checked)
+    monkeypatch.setattr(walk, "_compiled_verdicts_for_dynamic_walk", compiled)
+    monkeypatch.setattr(walk, "structured_extension_view", viewed)
+    with monkeypatch.context() as disabled:
+        disabled.setattr(preparation, "MAX_PREPARED_CALCULATIONS", 0)
+        with capture_branches() as baseline_trace:
+            baseline = api.transition(model, pre, steps, unredacted=True)
+    baseline_selected = [heads for heads, _owner in observed_owners]
+    observed_owners.clear()
+    initial_owners.clear()
+    with capture_branches() as candidate_trace:
+        candidate = api.transition(model, pre, steps, unredacted=True)
+    assert candidate == baseline
+    assert candidate_trace == baseline_trace and candidate_trace
+    assert candidate["exit_code"] == 0
+    assert len(initial_owners) == 3 and initial_owners[0] is not None
+    assert all(owner is initial_owners[0] for owner in initial_owners)
+    assert [heads for heads, _owner in observed_owners] == baseline_selected
+    assert observed_owners
+    assert {"scenario_count", "scenario_sum"} <= set(observed_owners[0][0])
+    changes = {
+        row["fact_type"]: row for row in candidate["transition"]["steps"][0]["derived_changes"]
+    }
+    assert changes["scenario_count"]["added"] == [{"scenario": "north", "count": 4}]
+    assert changes["scenario_sum"]["added"] == [{"scenario": "north", "sum": 400}]
+    assert all(owner is None for _heads, owner in observed_owners)
     assert preparation.current_scope() is None

@@ -185,6 +185,7 @@ def _cmd_check(
     anchors_path: str | None = None,
     document_path: str | None = None,
     admission: bool = False,
+    compiled_operations: bool = False,
 ) -> int:
     result = api_module._run_check(
         model_path,
@@ -194,6 +195,7 @@ def _cmd_check(
         anchors=anchors_path,
         document=document_path,
         admission=admission,
+        **({"compiled_operations": True} if compiled_operations else {}),
     )
     if output_format == "json":
         if result.execution is not None:
@@ -321,7 +323,8 @@ def _cmd_rai_import(
     print(f"IMPORTED {model_path} -> {output_dir}")
     return 0
 
-def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool = False) -> int:
+def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool = False,
+                     compiled_operations: bool = False) -> int:
     """Emit the canonical one-model/many-population matrix."""
 
     from importlib.resources import files
@@ -337,7 +340,10 @@ def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool 
     )
 
     try:
-        result = check_population_directory(Path(model_path), Path(populations_dir))
+        result = check_population_directory(
+            Path(model_path), Path(populations_dir),
+            **({"compiled_operations": True} if compiled_operations else {}),
+        )
         payload = build_batch_payload(result)
         try:
             batch_model = load_model(model_path)
@@ -515,6 +521,10 @@ def _register_check(subparsers):
         "--post",
         help="transition arm: the population the walk is claimed to end in",
     )
+    check_parser.add_argument(
+        '--compiled-operations', action='store_true',
+        help='check eligible compiled standing subsets; excludes step/frame obligations',
+    )
     check_parser.add_argument("--anchors", help="bound source anchor sidecar for snapshot checks")
     check_parser.add_argument("--document", help="source document for anchor spans")
     check_parser.add_argument(
@@ -627,6 +637,10 @@ def handle(args, parsers) -> int:
             or args.post is not None
         ):
             check_parser.error("--anchors and --document apply only to snapshot checks")
+        if args.compiled_operations and (args.admission or any(
+            value is not None for value in (args.pre, args.steps, args.post)
+        )):
+            check_parser.error('--compiled-operations cannot be combined with admission or a walk')
         transition_arm = {"--pre": args.pre, "--steps": args.steps, "--post": args.post}
         supplied = {flag for flag, value in transition_arm.items() if value is not None}
         if args.populations is not None:
@@ -639,7 +653,8 @@ def handle(args, parsers) -> int:
                 )
             if args.format != "json":
                 check_parser.error("--populations requires --format json")
-            return _cmd_check_batch(args.model, args.populations, unredacted=args.unredacted)
+            return _cmd_check_batch(args.model, args.populations, unredacted=args.unredacted,
+                                    compiled_operations=args.compiled_operations)
         if supplied and args.population is not None:
             # Not a precedence question. A caller who wrote both asked two
             # questions in one command and is owed the error, not a guess.
@@ -697,5 +712,6 @@ def handle(args, parsers) -> int:
         anchors_path=args.anchors,
         document_path=args.document,
         admission=args.admission,
+        compiled_operations=args.compiled_operations,
     )
 

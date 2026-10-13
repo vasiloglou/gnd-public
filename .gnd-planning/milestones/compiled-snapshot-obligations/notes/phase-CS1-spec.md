@@ -77,3 +77,25 @@ lines. Existing registry/report fields carry the label and reasons; composition
 invalidates incompatible evidence. The admitted two-case corpus is red for the
 missing keyword; unknown inputs and occurrence admission have explicit refusals.
 This spec's decisions are agent rulings under the owner's named delegation.
+
+## Implementation findings and delegated amendments
+
+The low-level activation flag now rejects non-booleans, matching the public API.
+A valid operation modality edit reproduced stale compiled side-table behavior;
+compile current declarations without mutating the historical side table, and use
+that same fresh inventory for witness redaction.
+
+The effective-view helper alone discarded possible extension metadata. A correct
+empty semiderived claim could pass its derivation check while the compiled subset
+falsely failed. The regression reproduced first exit 70 and then the false band 1.
+The repair selects the existing internal partial evaluator, retains calculated
+possible/unavailable metadata, and checks possible-minus-definite patterns before
+matching. It restores PARTIAL_OPAQUE on success and exception; unknown metadata
+projection visits share the 100,000 ceiling. No occurrence admission is claimed.
+
+The first derived-view control accidentally used a pure derived relation, whose
+covered claims are deliberately used by existing constraints; the intended
+computed-view control now uses semiderived, preserving the original policy.
+The first reference fixture lacked required coherent identity and used an invalid
+source tag; fix the fixture, not loader policy. Neither was an approved golden
+answer change. The two original issue/control populations remain unchanged.

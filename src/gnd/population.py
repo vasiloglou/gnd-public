@@ -197,10 +197,11 @@ class Population(BaseModel):
 #: ``warnings`` — validation OUTPUT, written onto the model after layer 2 ran;
 #: no checker verdict depends on it.
 #:
-#: ``operations`` — ORM+ v2 state transitions, which snapshot checking ignores
-#: entirely (representation-format.md, "Snapshot mode ignores operations"). This
+#: ``operations`` — ORM+ v2 state transitions, which default snapshot checking ignores
+#: (representation-format.md, "Default snapshot mode ignores operations"). This
 #: digest's contract is "everything layer 2 validated and THE CHECKER READS", so
-#: a section the checker provably never reads does not belong in it. Two
+#: a section outside default checking does not belong in it. Explicit compiled
+#: snapshot checking reads operations separately without changing this digest. Two
 #: consequences, both intended: a v1 model's digest is byte-identical to what it
 #: was before v2 existed, and editing an operation does not invalidate a
 #: population that was never checked against it. The claim a TRANSITION run

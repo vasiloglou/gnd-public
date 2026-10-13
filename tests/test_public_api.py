@@ -16,7 +16,7 @@ def test_public_exports_and_current_keyword_signatures():
     assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay")
     expected = {
         "validate": ("model", "unredacted", "references"),
-        "check": ("model", "population", "unredacted", "anchors", "document", "population_bytes", "admission", "references"),
+        "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references"),
         "transition": ("model", "pre", "steps", "post", "unredacted", "references"),
     }
     for name, parameters in expected.items():

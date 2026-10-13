@@ -2050,15 +2050,27 @@ def check_with_anchors(
 
 
 def check(
-    model: Model, population: Population, *, references: BoundReferenceContext | None = None
+    model: Model, population: Population, *, references: BoundReferenceContext | None = None,
+    compiled_operations: bool = False,
 ) -> CheckReport:
+    if not isinstance(compiled_operations, bool):
+        raise TypeError('compiled_operations must be a boolean')
     if model.reference_populations:
         from gnd.model import bind_population, is_bound_population, resolve_context
 
         context = resolve_context(model, references)
         if not is_bound_population(model, population, context):
             population = bind_population(model, population, references=context).combined
-    return _check_dispatch(model, population)
+    token = extension_core.PARTIAL_OPAQUE.set(True) if compiled_operations else None
+    try:
+        report = _check_dispatch(model, population)
+        if compiled_operations:
+            from gnd.compiled_obligations import compose
+            report = compose(model, population, report)
+        return report
+    finally:
+        if token is not None:
+            extension_core.PARTIAL_OPAQUE.reset(token)
 
 
 def check_partial(model: Model, population: Population) -> CheckReport:

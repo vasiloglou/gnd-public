@@ -34,3 +34,14 @@ Estimate under 80 documentation/source lines plus trace assertions. No packaged
 skill discovery link or real development twin is edited manually. No release,
 certificate, external app edit or full replay. Record actual results and open
 questions, including separately supported occurrence admission, at close.
+
+## Measured agreement and delegated clarification
+
+The batch schema exposes counts and failed identities, not every passing or
+warning row. CS2-C2's normalized agreement is therefore measured over exit code,
+counts and failing_constraints for both fixture populations: 2/2 agree. The
+compiled inventory is recorded per population, but no per-passing-row batch
+comparison is claimed. The full API/single-CLI rows agree separately. This
+clarification preserves the named omitted alethic-failure gate and does not add
+the separately excluded per-warning batch enhancement. Exact evidence is in
+evidence/CS2/agreement.json.

@@ -1294,10 +1294,27 @@ def _assurance_rows() -> Iterator[Branch]:
             )
 
 
+def _compiled_snapshot_rows() -> Iterator[Branch]:
+    for event, outcome, reason in (
+        ('clean', 'pass', None), ('vacuous', 'vacuous', None),
+        ('uncovered', 'unchecked', 'compiled-obligation-uncovered'),
+        ('unavailable', 'unchecked', 'compiled-obligation-unavailable'),
+        ('work-limit', 'unchecked', 'compiled-obligation-work-limit'),
+    ):
+        yield _row('snapshot', 'compiled-subset', 'n-a', event, outcome,
+                   owner='gnd.compiled_obligations.compose', reason=reason,
+                   inputs=('identity', 'role-order', 'covers', 'modality'))
+    for modality, outcome in (('alethic', 'fail'), ('deontic', 'warning')):
+        yield _row('snapshot', 'compiled-subset', 'n-a', 'violated', outcome,
+                   owner='gnd.compiled_obligations.compose', modality=modality,
+                   witness='fact-rows', inputs=('identity', 'role-order', 'covers', 'modality'))
+
+
 REGISTRY: tuple[Branch, ...] = tuple(
     sorted(
         (
             *_snapshot_rows(),
+            *_compiled_snapshot_rows(),
             *_applicability_rows(),
             *_composition_rows(),
             *_derivation_rows(),

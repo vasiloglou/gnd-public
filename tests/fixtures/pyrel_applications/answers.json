@@ -1,0 +1,4092 @@
+{
+  "m0-r0-positive": {
+    "target": "fact_types[book_has_genre].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r0-negative": {
+    "target": "fact_types[book_has_genre].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "fail",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r1-positive": {
+    "target": "fact_types[book_has_genre].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r1-negative": {
+    "target": "fact_types[book_has_genre].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r2-positive": {
+    "target": "constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r2-negative": {
+    "target": "constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "fail",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [
+        {
+          "$u": "ada",
+          "$b": "read"
+        }
+      ],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r3-positive": {
+    "target": "constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r3-negative": {
+    "target": "constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "fail",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [
+        {
+          "$u": "ada",
+          "$b": "night"
+        }
+      ],
+      "constraints[2]": []
+    }
+  },
+  "m0-r4-positive": {
+    "target": "constraints[2]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m0-r4-negative": {
+    "target": "constraints[2]",
+    "expected": "warning",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "warning"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [
+        {
+          "$u": "ada",
+          "$b": "cosmos",
+          "$g": "science"
+        }
+      ]
+    }
+  },
+  "m1-r0-positive": {
+    "target": "fact_types[book_has_genre].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r0-negative": {
+    "target": "fact_types[book_has_genre].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "fail",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r1-positive": {
+    "target": "fact_types[book_has_genre].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r1-negative": {
+    "target": "fact_types[book_has_genre].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r2-positive": {
+    "target": "constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r2-negative": {
+    "target": "constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "fail",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [
+        {
+          "$u": "ada",
+          "$b": "read"
+        }
+      ],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r3-positive": {
+    "target": "constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r3-negative": {
+    "target": "constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "fail",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [
+        {
+          "$u": "ada",
+          "$b": "night"
+        }
+      ],
+      "constraints[2]": []
+    }
+  },
+  "m1-r4-positive": {
+    "target": "constraints[2]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": []
+    }
+  },
+  "m1-r4-negative": {
+    "target": "constraints[2]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "fail"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [
+        {
+          "$u": "ada",
+          "$b": "cosmos",
+          "$g": "science"
+        }
+      ]
+    }
+  },
+  "m2-r0-positive": {
+    "target": "fact_types[book_has_genre].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r0-negative": {
+    "target": "fact_types[book_has_genre].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "fail",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r1-positive": {
+    "target": "fact_types[book_has_genre].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r1-negative": {
+    "target": "fact_types[book_has_genre].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r2-positive": {
+    "target": "constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r2-negative": {
+    "target": "constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "fail",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [
+        {
+          "$u": "ada",
+          "$b": "read"
+        }
+      ],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r3-positive": {
+    "target": "constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r3-negative": {
+    "target": "constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "fail",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [
+        {
+          "$u": "ada",
+          "$b": "night"
+        }
+      ],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r4-positive": {
+    "target": "constraints[2]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r4-negative": {
+    "target": "constraints[2]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "fail",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [
+        {
+          "$u": "ada",
+          "$b": "cosmos",
+          "$g": "science"
+        }
+      ],
+      "constraints[3]": []
+    }
+  },
+  "m2-r5-positive": {
+    "target": "constraints[3]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-r5-negative": {
+    "target": "constraints[3]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "fail",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": [
+        {
+          "$b": "river",
+          "$u": "ada"
+        }
+      ]
+    }
+  },
+  "m2-book_is_blocked_for-positive": {
+    "target": "derivation:book_is_blocked_for",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-book_is_blocked_for-missing": {
+    "target": "derivation:book_is_blocked_for",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "fail",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-book_is_blocked_for-extra": {
+    "target": "derivation:book_is_blocked_for",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "fail",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-book_is_eligible-positive": {
+    "target": "derivation:book_is_eligible",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-book_is_eligible-missing": {
+    "target": "derivation:book_is_eligible",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "fail"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": []
+    }
+  },
+  "m2-book_is_eligible-extra": {
+    "target": "derivation:book_is_eligible",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[book_has_genre].constraints[0]": "pass",
+      "fact_types[book_has_genre].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "fail",
+      "derivation:book_is_blocked_for": "pass",
+      "derivation:book_is_eligible": "fail"
+    },
+    "guarded_witnesses": {
+      "constraints[0]": [],
+      "constraints[1]": [],
+      "constraints[2]": [],
+      "constraints[3]": [
+        {
+          "$b": "night",
+          "$u": "ada"
+        }
+      ]
+    }
+  },
+  "m3-r0-positive": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r0-negative": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "fail",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r1-positive": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r1-negative": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r2-positive": {
+    "target": "fact_types[expense_has_amount].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r2-negative": {
+    "target": "fact_types[expense_has_amount].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "fail",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r3-positive": {
+    "target": "fact_types[expense_has_amount].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r3-negative": {
+    "target": "fact_types[expense_has_amount].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r4-positive": {
+    "target": "fact_types[expense_in_category].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r4-negative": {
+    "target": "fact_types[expense_in_category].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "fail",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r5-positive": {
+    "target": "fact_types[expense_in_category].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r5-negative": {
+    "target": "fact_types[expense_in_category].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r6-positive": {
+    "target": "fact_types[expense_is_approved].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r6-negative": {
+    "target": "fact_types[expense_is_approved].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "fail",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r7-positive": {
+    "target": "fact_types[expense_approved_by_chain].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r7-negative": {
+    "target": "fact_types[expense_approved_by_chain].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r8-positive": {
+    "target": "constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r8-negative": {
+    "target": "constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "fail",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r9-positive": {
+    "target": "constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r9-negative": {
+    "target": "constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "fail",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r10-positive": {
+    "target": "constraints[2]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r10-negative": {
+    "target": "constraints[2]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "fail",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [
+        {
+          "$e": 101,
+          "$a": 0
+        }
+      ],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r11-positive": {
+    "target": "constraints[3]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r11-negative": {
+    "target": "constraints[3]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "fail",
+      "constraints[4]": "fail",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r12-positive": {
+    "target": "constraints[4]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r12-negative": {
+    "target": "constraints[4]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "fail",
+      "constraints[4]": "fail",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r13-positive": {
+    "target": "constraints[5]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r13-negative": {
+    "target": "constraints[5]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "fail",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r14-positive": {
+    "target": "constraints[6]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r14-negative": {
+    "target": "constraints[6]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "fail",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [
+        {
+          "$e": 101,
+          "$a": 76
+        }
+      ],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r15-positive": {
+    "target": "constraints[7]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r15-negative": {
+    "target": "constraints[7]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "fail",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [
+        {
+          "$e": 101,
+          "$a": 1501
+        }
+      ],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r16-positive": {
+    "target": "constraints[8]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r16-negative": {
+    "target": "constraints[8]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "fail",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [
+        {
+          "$e": 101,
+          "$a": 2001
+        }
+      ],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r17-positive": {
+    "target": "constraints[9]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r17-negative": {
+    "target": "constraints[9]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "fail",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [
+        {
+          "$e": 101,
+          "$a": 3001
+        }
+      ],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r18-positive": {
+    "target": "constraints[10]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r18-negative": {
+    "target": "constraints[10]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "fail",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [
+        {
+          "$e": 101,
+          "$a": 101
+        }
+      ],
+      "constraints[11]": []
+    }
+  },
+  "m3-r19-positive": {
+    "target": "constraints[11]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m3-r19-negative": {
+    "target": "constraints[11]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "fail",
+      "constraints[10]": "pass",
+      "constraints[11]": "fail"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [
+        {
+          "$e": 101,
+          "$a": 3001
+        }
+      ],
+      "constraints[10]": [],
+      "constraints[11]": [
+        {
+          "$e": 101,
+          "$a": 3001
+        }
+      ]
+    }
+  },
+  "m4-r0-positive": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r0-negative": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "fail",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r1-positive": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r1-negative": {
+    "target": "fact_types[expense_submitted_by_employee].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r2-positive": {
+    "target": "fact_types[expense_has_amount].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r2-negative": {
+    "target": "fact_types[expense_has_amount].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "fail",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r3-positive": {
+    "target": "fact_types[expense_has_amount].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r3-negative": {
+    "target": "fact_types[expense_has_amount].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r4-positive": {
+    "target": "fact_types[expense_in_category].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r4-negative": {
+    "target": "fact_types[expense_in_category].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "fail",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r5-positive": {
+    "target": "fact_types[expense_in_category].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r5-negative": {
+    "target": "fact_types[expense_in_category].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r6-positive": {
+    "target": "fact_types[expense_is_approved].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r6-negative": {
+    "target": "fact_types[expense_is_approved].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "fail",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r7-positive": {
+    "target": "fact_types[expense_approved_by_chain].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r7-negative": {
+    "target": "fact_types[expense_approved_by_chain].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "fail",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r8-positive": {
+    "target": "fact_types[expense_has_currency].constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r8-negative": {
+    "target": "fact_types[expense_has_currency].constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "fail",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r9-positive": {
+    "target": "fact_types[expense_has_currency].constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r9-negative": {
+    "target": "fact_types[expense_has_currency].constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r10-positive": {
+    "target": "constraints[0]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r10-negative": {
+    "target": "constraints[0]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "fail",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r11-positive": {
+    "target": "constraints[1]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r11-negative": {
+    "target": "constraints[1]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "fail",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r12-positive": {
+    "target": "constraints[2]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r12-negative": {
+    "target": "constraints[2]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "fail",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [
+        {
+          "$e": 101,
+          "$a": 0
+        }
+      ],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r13-positive": {
+    "target": "constraints[3]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r13-negative": {
+    "target": "constraints[3]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "fail",
+      "constraints[4]": "fail",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r14-positive": {
+    "target": "constraints[4]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r14-negative": {
+    "target": "constraints[4]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "fail",
+      "constraints[4]": "fail",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r15-positive": {
+    "target": "constraints[5]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r15-negative": {
+    "target": "constraints[5]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "fail",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "fail",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "fail",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "fail",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "fail",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r16-positive": {
+    "target": "constraints[6]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r16-negative": {
+    "target": "constraints[6]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "fail",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [
+        {
+          "$e": 101,
+          "$a": 76
+        }
+      ],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r17-positive": {
+    "target": "constraints[7]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r17-negative": {
+    "target": "constraints[7]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "fail",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [
+        {
+          "$e": 101,
+          "$a": 1501
+        }
+      ],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r18-positive": {
+    "target": "constraints[8]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r18-negative": {
+    "target": "constraints[8]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "fail",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [
+        {
+          "$e": 101,
+          "$a": 2001
+        }
+      ],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r19-positive": {
+    "target": "constraints[9]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r19-negative": {
+    "target": "constraints[9]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "fail",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [
+        {
+          "$e": 101,
+          "$a": 3001
+        }
+      ],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r20-positive": {
+    "target": "constraints[10]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r20-negative": {
+    "target": "constraints[10]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "fail",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [
+        {
+          "$e": 101,
+          "$a": 101
+        }
+      ],
+      "constraints[11]": []
+    }
+  },
+  "m4-r21-positive": {
+    "target": "constraints[11]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r21-negative": {
+    "target": "constraints[11]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "fail",
+      "constraints[10]": "pass",
+      "constraints[11]": "fail",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [
+        {
+          "$e": 101,
+          "$a": 3001
+        }
+      ],
+      "constraints[10]": [],
+      "constraints[11]": [
+        {
+          "$e": 101,
+          "$a": 3001
+        }
+      ]
+    }
+  },
+  "m4-r22-positive": {
+    "target": "constraints[12]",
+    "expected": "pass",
+    "observed_gnd_exit": 0,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "pass"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  },
+  "m4-r22-negative": {
+    "target": "constraints[12]",
+    "expected": "fail",
+    "observed_gnd_exit": 1,
+    "observed_gnd_verdicts": {
+      "fact_types[expense_submitted_by_employee].constraints[0]": "pass",
+      "fact_types[expense_submitted_by_employee].constraints[1]": "pass",
+      "fact_types[expense_has_amount].constraints[0]": "pass",
+      "fact_types[expense_has_amount].constraints[1]": "pass",
+      "fact_types[expense_in_category].constraints[0]": "pass",
+      "fact_types[expense_in_category].constraints[1]": "pass",
+      "fact_types[expense_is_approved].constraints[0]": "pass",
+      "fact_types[expense_approved_by_chain].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[0]": "pass",
+      "fact_types[expense_has_currency].constraints[1]": "pass",
+      "constraints[0]": "pass",
+      "constraints[1]": "pass",
+      "constraints[2]": "pass",
+      "constraints[3]": "pass",
+      "constraints[4]": "pass",
+      "constraints[5]": "pass",
+      "constraints[6]": "pass",
+      "constraints[7]": "pass",
+      "constraints[8]": "pass",
+      "constraints[9]": "pass",
+      "constraints[10]": "pass",
+      "constraints[11]": "pass",
+      "constraints[12]": "fail"
+    },
+    "guarded_witnesses": {
+      "constraints[2]": [],
+      "constraints[6]": [],
+      "constraints[7]": [],
+      "constraints[8]": [],
+      "constraints[9]": [],
+      "constraints[10]": [],
+      "constraints[11]": []
+    }
+  }
+}

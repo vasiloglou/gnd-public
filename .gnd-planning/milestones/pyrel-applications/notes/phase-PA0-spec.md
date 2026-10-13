@@ -208,3 +208,30 @@ PA-D1–D6 and PA0 instrument rulings above are adopted after the implementabili
 sweep. Budget: 200 driver lines, 300 test/generator lines, 15,000 fixture lines;
 60 seconds per native process, 4 MiB report retention. No production edits in PA0.
 Subsequent measurements must record any refuted premise before amending its answer.
+
+## Implementation findings and exact corpus ruling
+
+PA0-F1: a generated dangling chain control omitted its required chain role.
+Public GND admission refused it before verdicts; the corrected control keeps
+the chain value and changes only expense identity. No invalid case was frozen
+as a negative policy control. PA0-F2: consumer inventory initially misspelled
+pyrel-export as pyrel_export; the inventory test failed (1 failed, 125 passed),
+then the actual path was corrected. baseline.json retains that earlier matrix
+digest; baseline-current.json measures the corrected inventory.
+
+Delegated corpus approval (auto=true), 2026-10-13: adopt the 61 obligations
+and 124 hand-narrated controls after checking every target against the public
+GND report, including both missing and extra derived claims. Full GND verdict
+rows are frozen measurements, not independently authored universal answers.
+The target stories and expected dispositions are the executable approval
+instrument; runtime agreement remains a separate native obligation.
+
+- tests/fixtures/pyrel_applications/matrix.json: c9c2ef19fa6ec46cf7224b616ea538c7fe70dd860e2cbc4a24f36e93752b3472
+- tests/fixtures/pyrel_applications/answers.json: 7bed9d8569ee8aec801dd816adb62d7658500c54b3c73473204db57517c1a9e4
+- tests/fixtures/pyrel_applications/README.md: f14999654e11b2caebae1a9bdec48c1898ab7cd343f51fcd57ae1f7ebac7b7b1
+
+124 population files are byte-identified by the native receipts. Fixture data
+is 5,735 lines and 317,489 bytes, within the declared 15,000-line ceiling.
+The corpus gate is 128 passed; the selected legacy gate is 72 passed,
+13 deselected under existing exclusions. Distinct-harness phase review remains
+pending owner instrument selection; no PA0 completion record is claimed yet.

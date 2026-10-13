@@ -254,6 +254,9 @@
     "gnd.commands.witness": {
       "layer": "entry"
     },
+    "gnd.compiled_obligations": {
+      "layer": "checking"
+    },
     "gnd.conformance": {
       "lane": "conformance",
       "layer": "lanes"

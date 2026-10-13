@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib
 import inspect
 import json
@@ -42,7 +43,15 @@ def test_relocated_algorithm_and_qualification_are_unchanged(name):
                 child.value.id = 'json'
             return self.generic_visit(child)
     node = ReaderSeam().visit(node)
-    assert ast.dump(node, include_attributes=False) == ast.dump(DEFINITIONS[name], include_attributes=False)
+    from support.rf8_sources import portable_dump
+    from support.rf9_ci_sources import body_successor
+    successor = body_successor('RF5', name, 'gnd.cli')
+    if successor:
+        assert successor['home'] == HOMES[name] and successor['reason']
+        assert hashlib.sha256(portable_dump(DEFINITIONS[name]).encode()).hexdigest() == successor['before']['algorithm_sha256']
+        assert hashlib.sha256(portable_dump(node).encode()).hexdigest() == successor['after']['algorithm_sha256']
+    else:
+        assert portable_dump(node) == portable_dump(DEFINITIONS[name])
     assert value.__module__ == 'gnd.cli'
 
 

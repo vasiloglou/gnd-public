@@ -137,6 +137,7 @@ def _run_check_raw(
     model_input: str | os.PathLike[str] | Model,
     population_input: str | os.PathLike[str] | Population,
     *,
+    compiled_operations: bool = False,
     evaluator: Callable[[Model, Population], CheckReport] | None = None,
     anchors: Any = None,
     document: bytes | str | os.PathLike[str] | None = None,
@@ -303,6 +304,9 @@ def _run_check_raw(
                 )
             else:
                 checked = (evaluator or checker_module.check)(model, population)
+            if compiled_operations:
+                from gnd.compiled_obligations import compose
+                checked = compose(model, population, checked)
             exit_code = checker_module.band(checked)
     except AnchorError as error:
         return _finalize(
@@ -326,13 +330,13 @@ def _run_check_raw(
     warnings = [*model.warnings, *population.warnings]
     with capture_branches() as projection_trace:
         payload = build(exit_code, report=checked, warnings=warnings)
-    assurance, execution = _certify_assurance(
-        model,
-        [population],
-        checked,
-        exit_code,
-        semantic_trace | projection_trace,
-    )
+    if compiled_operations:
+        assurance = AssuranceBlockV1(semantic_decision_for_band(exit_code))
+        execution = None
+    else:
+        assurance, execution = _certify_assurance(
+            model, [population], checked, exit_code, semantic_trace | projection_trace,
+        )
     payload["assurance"] = assurance.as_dict()
     return _finalize(
         payload,
@@ -548,6 +552,7 @@ def _run_check(
     model_input: str | os.PathLike[str] | Model,
     population_input: str | os.PathLike[str] | Population,
     *,
+    compiled_operations: bool = False,
     unredacted: bool = False,
     evaluator: Callable[[Model, Population], CheckReport] | None = None,
     anchors: Any = None,
@@ -556,11 +561,14 @@ def _run_check(
     admission: bool = False,
     references: BoundReferenceContext | None = None,
 ) -> _RunResult:
-    if admission and evaluator is None:
+    if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
+    if compiled_operations and admission:
+        raise ValueError('compiled_operations cannot be combined with admission')
     result = _run_check_raw(
         model_input,
         population_input,
+        compiled_operations=compiled_operations,
         evaluator=evaluator,
         anchors=anchors,
         document=document,

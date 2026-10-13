@@ -421,9 +421,13 @@ def test_no_flag_env_var_or_keyword_substitutes_the_checker() -> None:
     for the same reason: a bypass is the first thing a failing agent reaches
     for."""
     signature = inspect.signature(check)
-    assert list(signature.parameters) == ["model", "population", "references"]
+    assert list(signature.parameters) == [
+        "model", "population", "references", "compiled_operations",
+    ]
     assert signature.parameters["references"].kind is inspect.Parameter.KEYWORD_ONLY
     assert signature.parameters["references"].default is None
+    assert signature.parameters["compiled_operations"].kind is inspect.Parameter.KEYWORD_ONLY
+    assert signature.parameters["compiled_operations"].default is False
     assert list(inspect.signature(cli._cmd_measure).parameters) == [
         "model_path",
         "populations",

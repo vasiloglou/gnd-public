@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import argparse
+import copy
+import json
+import os
+from pathlib import Path
 
 import pytest
 from support.cli_runner import run_main
-from support.rf1_pins import assert_golden, encode
+from support.rf1_pins import CAPTURE_ENV, assert_golden, canonical, encode, golden_path
 
 from gnd import batch, cli, exits
 from gnd.conformance import service as conformance_service
@@ -15,6 +19,9 @@ from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
 EXPECTED_PARSERS = 52
+COMPILED_SUCCESSOR = json.loads(
+    (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
+)
 
 
 class _Captured(Exception):
@@ -105,12 +112,28 @@ def _paths() -> list[str]:
 PATHS = _paths()
 
 
+def _assert_successor(lane, key, observed, expected):
+    if os.environ.get(CAPTURE_ENV):
+        assert_golden(lane, key, observed)
+    else:
+        assert canonical(observed) == canonical(expected)
+
+
 def test_cli_tree(tree):
-    assert_golden("cli", "tree", tree[0])
+    # Preserve RF1's historical bytes; approve only this additive successor.
+    expected = json.loads(golden_path("cli", "tree").read_text())
+    expected["subcommands"]["check"]["actions"].insert(
+        COMPILED_SUCCESSOR["action_index"], copy.deepcopy(COMPILED_SUCCESSOR["action"])
+    )
+    _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path == "gnd check":
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": COMPILED_SUCCESSOR["help"]})
+        return
     assert_golden("cli-help", path, {"path": path, "help": tree[2][path]})
 
 
@@ -120,6 +143,17 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path == "gnd check":
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {
+                "exit": refused.returncode,
+                "stdout": refused.stdout.decode(),
+                "stderr": refused.stderr.decode(),
+            },
+        }
+        _assert_successor("cli-exit", path, observed, COMPILED_SUCCESSOR["exit_probe"])
+        return
     assert_golden(
         "cli-exit",
         path,

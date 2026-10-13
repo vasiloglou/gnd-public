@@ -381,6 +381,8 @@ def execute(row: dict, tmp_path: Path, monkeypatch, *, measurement: dict | None 
         monkeypatch.setattr(sys.modules[__name__], "save", timed(save, "fixture"))
         for module, name in (
             (model_intake, "load_model_bytes"),
+            # bind/resolve paths look up the defining module, not the alias.
+            (model_intake, "validate_declarations"),
             (pop_intake, "_build_population"),
             (pop_intake, "_parse_document_bytes"),
             (ref_intake, "validate_declarations"),

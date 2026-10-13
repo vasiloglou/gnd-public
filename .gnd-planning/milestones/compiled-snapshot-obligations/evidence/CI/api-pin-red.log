@@ -1,0 +1,13 @@
+.F...........................                                            [100%]
+=================================== FAILURES ===================================
+______________________ test_public_signatures_are_stable _______________________
+tests/test_v61_phase2_api.py:43: in test_public_signatures_are_stable
+    assert tuple(inspect.signature(api.check).parameters) == ('model', 'population', 'unredacted', 'anchors', 'document', 'population_bytes', 'admission', 'references')
+E   AssertionError: assert ('model', 'po...ocument', ...) == ('model', 'po...n_bytes', ...)
+E     
+E     At index 2 diff: 'compiled_operations' != 'unredacted'
+E     Left contains one more item: 'references'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_v61_phase2_api.py::test_public_signatures_are_stable - Asse...
+1 failed, 28 passed in 0.72s

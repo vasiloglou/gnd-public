@@ -80,9 +80,10 @@ def test_original_definition_body_is_verbatim(row):
     node = definitions[0]
     start = min([node.lineno] + [d.lineno for d in node.decorator_list])
     body = ''.join(source.splitlines(keepends=True)[start-1:node.end_lineno])
-    successors = json.loads((E.parent / 'RF7/definition-successors.json').read_text())
-    successor = next((s for s in successors if (s['module'], s['name']) == (row['module'], row['name'])), None)
+    from support.rf9_ci_sources import definition_successor
+    successor = definition_successor(row['module'], row['name'])
     if successor:
+        assert successor['home'] == module
         assert successor['before'] == row['sha256'] and successor['reason']
     assert hashlib.sha256(body.encode()).hexdigest() == (successor['after'] if successor else row['sha256'])
     value = getattr(importlib.import_module(row['module']), row['name'])

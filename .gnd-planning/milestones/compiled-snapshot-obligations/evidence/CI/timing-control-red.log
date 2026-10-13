@@ -1,0 +1,13 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________________ test_defining_reference_intake_is_counted ___________________
+tests/test_witness_timing_measurement.py:22: in test_defining_reference_intake_is_counted
+    assert ticks[0] == sum(measurement.values()), (
+E   AssertionError: ('defining-module validation escaped the inherited timing accounting', {'baseline_seconds': 13.0, 'fixture_seconds': 0.0, 'inherited_intake_seconds': 2.0})
+E   assert 17.0 == 15.0
+E    +  where 15.0 = sum(dict_values([13.0, 0.0, 2.0]))
+E    +    where dict_values([13.0, 0.0, 2.0]) = <built-in method values of dict object at 0x10a560600>()
+E    +      where <built-in method values of dict object at 0x10a560600> = {'baseline_seconds': 13.0, 'fixture_seconds': 0.0, 'inherited_intake_seconds': 2.0}.values
+=========================== short test summary info ============================
+FAILED tests/test_witness_timing_measurement.py::test_defining_reference_intake_is_counted
+1 failed in 0.27s

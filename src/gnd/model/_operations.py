@@ -94,8 +94,10 @@ def compile_operation(operation: dict[str, Any], effects: dict[str, Any]) -> lis
 
     Both guards make an assumption mechanical instead of promised. Neither makes
     the lift unconditionally valid: a population may contain facts with no
-    operational provenance at all, which is why these obligations are evaluated
-    inside a walk and never published as model constraints.
+    operational provenance at all, which is why ordinary snapshots exclude them. A caller may explicitly
+    opt into standing snapshot obligations with compiled_operations=True; this
+    asserts their applicability, not historical provenance. They are never
+    published as authored model constraints.
 
     Everything else is retained with a ``transition-only`` reason. Retained is
     not skipped: the transition evaluator checks it at the step, it simply

@@ -255,3 +255,23 @@ All rows are proposals; none is an owner ruling.
 Next actionable step after plan acceptance: author the CS0 spec and its approval
 instrument. Issue #16 stays open until the implemented outcome and accepted
 contract are recorded; a planning PR must reference it without auto-closing it.
+
+## Close amendment — delegated disposition, 2026-10-13
+
+The draft statuses above describe the original planning bytes. The owner later
+approved the opt-in CS0 contract and explicitly delegated remaining milestone
+gates (auto=true), four local subagent readers instead of the pending plan
+panel, commits and the runtime-fix PR. The four local plan readers accepted
+bounded implementation with the obligations recorded in 001-phase-CS0.md.
+No maintained provider panel or certificate is claimed.
+
+CS2-C2 is amended under that delegation: public batch output exposes exit,
+counts and failed references, so its agreement claim is limited to those exact
+observable fields (2/2 fixture populations, 23 compiled entries each). Full
+single rows and adversarial warnings/unknowns remain covered by focused tests.
+Per-warning batch identity enhancement remains excluded under section 7.
+This repairs the original unmeasurable demand for all per-row batch outcomes.
+The supported public regression recipe and exact candidate identity live in
+notes/app-regression-recipe.md. App adoption, merge, release and human acceptance
+remain separate owner actions. The close record supplies the question sweep;
+its local review findings and delegated disposition are separately retained.

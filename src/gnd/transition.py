@@ -1436,19 +1436,8 @@ def _compiled_verdicts(model: Model, pre: Population) -> list[TransitionVerdict]
             if not is_covered and coverage_decision == "pass":
                 record_branch("transition:compiled-subset:n-a:uncovered")
                 continue
-            of_facts = (pre.facts or {}).get(str(subset["of"]), [])
-            in_facts = (pre.facts or {}).get(str(subset["in"]), [])
-            offending = [
-                fact
-                for fact in of_facts
-                if not any(
-                    all(
-                        _identity_key(fact.get(of_role)) == _identity_key(other.get(in_role))
-                        for of_role, in_role in entry["role_pairs"]
-                    )
-                    for other in in_facts
-                )
-            ]
+            from gnd.compiled_obligations import offending_rows
+            offending = offending_rows(entry, pre.facts or {})
             modality = str(entry.get("modality", ""))
             decision = transition_kernel.compiled_subset_verdict(
                 True, True, bool(offending), modality == "alethic"

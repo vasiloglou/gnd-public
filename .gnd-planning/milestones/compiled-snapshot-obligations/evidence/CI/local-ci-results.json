@@ -1,0 +1,51 @@
+{
+  "source_commit": "381187e41b1220fbc6a6026512627ad9e945c40c",
+  "host": "macOS",
+  "profiles": {
+    "3.11": {
+      "python": "Python 3.11.15",
+      "uv": "uv 0.10.10 (Homebrew 2026-03-13)"
+    },
+    "3.13": {
+      "python": "Python 3.13.12",
+      "uv": "uv 0.10.10 (Homebrew 2026-03-13)"
+    }
+  },
+  "full_regression": {
+    "3.11": {
+      "command": "uv run pytest -q -ra --tb=short",
+      "exit": 0,
+      "summary": "14007 passed, 400 deselected, 1 warning in 1867.43s (0:31:07)"
+    },
+    "3.13": {
+      "command": "uv run pytest -q -ra --tb=short",
+      "exit": 0,
+      "summary": "14007 passed, 400 deselected, 1 warning in 1805.70s (0:30:05)"
+    }
+  },
+  "installed_acceptance": {
+    "3.11": {
+      "command": "GND_CANDIDATE_DIR=accepted-candidate uv run pytest -q -o addopts='' tests/test_release_acceptance.py -s --tb=short",
+      "exit": 0,
+      "summary": "10 passed in 937.02s (0:15:37)",
+      "raw_path": "/private/tmp/gnd-pr19-ci/accepted-installed-3.11.log",
+      "raw_sha256": "db016b360fd95a6840133019a9664eba4a26d4730556faebd556a7f43be2e647",
+      "raw_boundary": "Actual module and enforced source-denial paths retained outside history; checkable only by holders of those bytes."
+    },
+    "3.13": {
+      "command": "GND_CANDIDATE_DIR=accepted-candidate uv run pytest -q -o addopts='' tests/test_release_acceptance.py -s --tb=short",
+      "exit": 0,
+      "summary": "10 passed in 905.67s (0:15:05)",
+      "raw_path": "/private/tmp/gnd-pr19-ci/accepted-installed-3.13.log",
+      "raw_sha256": "c5afa5187e7265be8baa9ef5e5cd90a67ea0e13b7e5f925338d92af4f77492ac",
+      "raw_boundary": "Actual module and enforced source-denial paths retained outside history; checkable only by holders of those bytes."
+    }
+  },
+  "workflow_policy": "Owner-selected local only; automatic Development and Documentation workflows disabled manually; active cloud run canceled",
+  "boundaries": [
+    "No local Ubuntu run",
+    "No provider/native/proof/certification lanes",
+    "No external app M3 acceptance",
+    "No package release"
+  ]
+}

@@ -71,6 +71,9 @@ class RedactionPolicy:
     effective_roles: frozenset[tuple[str, str]]
     redacted_parameters: Mapping[str, frozenset[str]]
     _constraint_roles: Mapping[int, frozenset[tuple[str, str]]] = field(repr=False, compare=False)
+    _compiled_roles: Mapping[str, frozenset[tuple[str, str]]] = field(
+        default_factory=dict, repr=False, compare=False, kw_only=True
+    )
     _constraint_variable_roles: Mapping[int, Mapping[str, frozenset[tuple[str, str]]]] = field(
         repr=False, compare=False
     )
@@ -336,6 +339,8 @@ class RedactionPolicy:
                 if frozen != derivation_roles.get(fact_id):
                     derivation_roles[fact_id] = frozen
                     changed = True
+        from gnd.compiled_obligations import compiled_entries
+
         return cls(
             declarations=tuple(declarations),
             effective_roles=frozenset(effective),
@@ -345,6 +350,13 @@ class RedactionPolicy:
             _exists_constraints=frozenset(exists_constraints),
             _parameter_roles=frozen_parameter_roles,
             _derivation_roles=derivation_roles,
+            _compiled_roles={
+                str(entry['locator']): frozenset(
+                    coordinate for coordinate in effective
+                    if coordinate[0] == str(entry['subset']['of'])
+                ) | derivation_roles.get(str(entry['subset']['of']), frozenset())
+                for _op, entry in compiled_entries(model)
+            },
         )
 
     @property
@@ -373,6 +385,8 @@ class RedactionPolicy:
         if fact_type is not None:
             return self.fact_roles(fact_type) | self.derivation_roles(fact_type)
         reference = row.get("constraint_ref")
+        if isinstance(reference, str) and reference in self._compiled_roles:
+            return self._compiled_roles[reference]
         match = _TOP_LEVEL_CONSTRAINT.fullmatch(reference) if isinstance(reference, str) else None
         return (
             self._constraint_roles.get(int(match.group(1)), frozenset()) if match else frozenset()
@@ -806,6 +820,7 @@ def project_output(
                 _exists_constraints=policy._exists_constraints,
                 _parameter_roles=policy._parameter_roles,
                 _derivation_roles=policy._derivation_roles,
+                _compiled_roles=policy._compiled_roles,
             )
         _select_successor(kind, payload)
         if mode == "applied":

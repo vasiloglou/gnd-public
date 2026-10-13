@@ -1,0 +1,31 @@
+{
+ "action": {
+  "choices": null,
+  "class": "_StoreTrueAction",
+  "const": true,
+  "default": false,
+  "dest": "compiled_operations",
+  "help": "check eligible compiled standing subsets; excludes step/frame obligations",
+  "metavar": null,
+  "nargs": 0,
+  "option_strings": [
+   "--compiled-operations"
+  ],
+  "required": false,
+  "type": null
+ },
+ "action_index": 7,
+ "exit_probe": {
+  "help": {
+   "exit": 0,
+   "stderr": "",
+   "stdout": "usage: gnd check [-h] [--populations POPULATIONS] [--pre PRE] [--steps STEPS]\n                 [--post POST] [--compiled-operations] [--anchors ANCHORS]\n                 [--document DOCUMENT] [--admission] [--format {text,json}]\n                 model [population]\n\nTwo arms, and exactly one runs. SNAPSHOT: a positional population is checked\nagainst the model's constraints. TRANSITION: --pre, --steps and --post audit a\nWALK -- the operation invocations claimed to have carried the pre-population\nto the post-population -- reporting failed preconditions, undeclared side\neffects and illegal intermediate states. Mixing the two, or supplying part of\nthe transition triple, is a usage error at 64: they answer different\nquestions, and silently preferring one would make the other's arguments\ndecorative. Model version 3 supports guarded Date plus/minus Duration\ncalendar-day terms (date_add/date_sub), selecting report v11; --admission\nselects temporal report v13.\n\npositional arguments:\n  model                 path to the model file\n  population            path to the population file (YAML or JSON) -- the\n                        snapshot arm\n\noptions:\n  -h, --help            show this help message and exit\n  --populations POPULATIONS\n                        batch arm: directory of sorted .json/.yaml/.yml\n                        population projections\n  --pre PRE             transition arm: the population the walk starts from\n  --steps STEPS         transition arm: the steps.json document describing the\n                        walk\n  --post POST           transition arm: the population the walk is claimed to\n                        end in\n  --compiled-operations\n                        check eligible compiled standing subsets; excludes\n                        step/frame obligations\n  --anchors ANCHORS     bound source anchor sidecar for snapshot checks\n  --document DOCUMENT   source document for anchor spans\n  --admission           include the occurrence admission partition in the\n                        check report\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n"
+  },
+  "unknown_flag": {
+   "exit": 64,
+   "stderr": "usage: gnd check [-h] [--populations POPULATIONS] [--pre PRE] [--steps STEPS]\n                 [--post POST] [--compiled-operations] [--anchors ANCHORS]\n                 [--document DOCUMENT] [--admission] [--format {text,json}]\n                 model [population]\ngnd check: error: the following arguments are required: model\n",
+   "stdout": ""
+  }
+ },
+ "help": "usage: gnd check [-h] [--populations POPULATIONS] [--pre PRE] [--steps STEPS]\n                 [--post POST] [--compiled-operations] [--anchors ANCHORS]\n                 [--document DOCUMENT] [--admission] [--format {text,json}]\n                 model [population]\n\nTwo arms, and exactly one runs. SNAPSHOT: a positional population is checked\nagainst the model's constraints. TRANSITION: --pre, --steps and --post audit a\nWALK -- the operation invocations claimed to have carried the pre-population\nto the post-population -- reporting failed preconditions, undeclared side\neffects and illegal intermediate states. Mixing the two, or supplying part of\nthe transition triple, is a usage error at 64: they answer different\nquestions, and silently preferring one would make the other's arguments\ndecorative. Model version 3 supports guarded Date plus/minus Duration\ncalendar-day terms (date_add/date_sub), selecting report v11; --admission\nselects temporal report v13.\n\npositional arguments:\n  model                 path to the model file\n  population            path to the population file (YAML or JSON) -- the\n                        snapshot arm\n\noptions:\n  -h, --help            show this help message and exit\n  --populations POPULATIONS\n                        batch arm: directory of sorted .json/.yaml/.yml\n                        population projections\n  --pre PRE             transition arm: the population the walk starts from\n  --steps STEPS         transition arm: the steps.json document describing the\n                        walk\n  --post POST           transition arm: the population the walk is claimed to\n                        end in\n  --compiled-operations\n                        check eligible compiled standing subsets; excludes\n                        step/frame obligations\n  --anchors ANCHORS     bound source anchor sidecar for snapshot checks\n  --document DOCUMENT   source document for anchor spans\n  --admission           include the occurrence admission partition in the\n                        check report\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n"
+}

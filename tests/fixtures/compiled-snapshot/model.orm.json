@@ -1,0 +1,3666 @@
+{
+  "constraints": [
+    {
+      "allowed": [
+        "<",
+        "<=",
+        ">",
+        ">=",
+        "!="
+      ],
+      "id": "compare_ops",
+      "modality": "alethic",
+      "object_type": "compare_op",
+      "provenance": {
+        "csdp_step": 6,
+        "user_quote": "Comparisons are the five order operators; equality is its own operation."
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "value"
+    },
+    {
+      "allowed": [
+        "sum",
+        "avg",
+        "min",
+        "max"
+      ],
+      "id": "aggregate_fns",
+      "modality": "alethic",
+      "object_type": "agg_fn",
+      "provenance": {
+        "csdp_step": 6,
+        "user_quote": "Numeric aggregates are sum, avg, min and max; counting is its own operation."
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "value"
+    },
+    {
+      "id": "every_var_is_root_or_reached",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 5,
+        "user_quote": "A plan is connected: every variable is the root or is reached by a join."
+      },
+      "role_refs": [
+        {
+          "fact_type": "plan_root",
+          "role": "var"
+        },
+        {
+          "fact_type": "var_joined",
+          "role": "target"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "mandatory-disjunctive"
+    },
+    {
+      "bound": {
+        "max": 1
+      },
+      "id": "one_root",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 5,
+        "user_quote": "A plan starts once."
+      },
+      "role_ref": {
+        "fact_type": "plan_root",
+        "role": "var"
+      },
+      "scope": "role",
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "cardinality"
+    },
+    {
+      "bound": {
+        "max": 1
+      },
+      "id": "one_count_answer",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 5,
+        "user_quote": "A plan counts one thing."
+      },
+      "role_ref": {
+        "fact_type": "answer_count",
+        "role": "var"
+      },
+      "scope": "role",
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "cardinality"
+    },
+    {
+      "bound": {
+        "max": 1
+      },
+      "id": "one_aggregate_answer",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 5,
+        "user_quote": "A plan aggregates over one variable."
+      },
+      "role_ref": {
+        "fact_type": "answer_aggregate",
+        "role": "var"
+      },
+      "scope": "role",
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "cardinality"
+    },
+    {
+      "id": "listed_is_not_counted",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 5,
+        "user_quote": "A variable is listed or counted, not both."
+      },
+      "role_seq_a": [
+        {
+          "fact_type": "answer_var",
+          "role": "var"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "answer_count",
+          "role": "var"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "exclusion"
+    },
+    {
+      "id": "counted_vars_are_bound",
+      "modality": "alethic",
+      "provenance": {
+        "csdp_step": 5,
+        "user_quote": "Only a bound variable can be counted."
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "subset_role_seq": [
+        {
+          "fact_type": "var_counted",
+          "role": "var"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "var_bound",
+          "role": "var"
+        }
+      ],
+      "type": "subset"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "answer_var"
+        },
+        {
+          "bind": {
+            "n": "$n",
+            "var": "$v"
+          },
+          "fact_type": "var_count"
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "left": "$n",
+          "operator": "<=",
+          "right": 1000
+        }
+      },
+      "id": "rows_cap",
+      "modality": "deontic",
+      "provenance": {
+        "added_at_step": "7d",
+        "user_note": "Run a count before a select so you do not accidentally return a billion rows."
+      },
+      "rationale": "A listing of more than the row cap is probably not what the question asks; a filter or an aggregate is expected to follow.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "id": "mirror_plan_role_functional",
+      "modality": "alethic",
+      "provenance": {
+        "user_note": "Host mirror preserves reference-owned functionality for dynamic derivation coverage."
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "subset_role_seq": [
+        {
+          "fact_type": "plan_role_functional",
+          "role": "fact_type"
+        },
+        {
+          "fact_type": "plan_role_functional",
+          "role": "role"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "role_functional",
+          "role": "fact_type"
+        },
+        {
+          "fact_type": "role_functional",
+          "role": "role"
+        }
+      ],
+      "type": "subset"
+    },
+    {
+      "id": "mirror_role_functional",
+      "modality": "alethic",
+      "provenance": {
+        "user_note": "Host mirror preserves reference-owned functionality for dynamic derivation coverage."
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "subset_role_seq": [
+        {
+          "fact_type": "role_functional",
+          "role": "fact_type"
+        },
+        {
+          "fact_type": "role_functional",
+          "role": "role"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "plan_role_functional",
+          "role": "fact_type"
+        },
+        {
+          "fact_type": "plan_role_functional",
+          "role": "role"
+        }
+      ],
+      "type": "subset"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "kind": "list"
+          },
+          "fact_type": "question_asks"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "var": "$v"
+              },
+              "fact_type": "answer_var"
+            }
+          ]
+        }
+      },
+      "id": "q1_list",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The answer kind should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "kind": "count"
+          },
+          "fact_type": "question_asks"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "var": "$v"
+              },
+              "fact_type": "answer_count"
+            }
+          ]
+        }
+      },
+      "id": "q1_count",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The answer kind should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "kind": "sum"
+          },
+          "fact_type": "question_asks"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "anchor_role": "$a",
+                "fact_type": "$f",
+                "fn": "sum",
+                "value_role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "answer_aggregate"
+            }
+          ]
+        }
+      },
+      "id": "q1_sum",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The answer kind should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "kind": "avg"
+          },
+          "fact_type": "question_asks"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "anchor_role": "$a",
+                "fact_type": "$f",
+                "fn": "avg",
+                "value_role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "answer_aggregate"
+            }
+          ]
+        }
+      },
+      "id": "q1_avg",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The answer kind should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "kind": "min"
+          },
+          "fact_type": "question_asks"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "anchor_role": "$a",
+                "fact_type": "$f",
+                "fn": "min",
+                "value_role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "answer_aggregate"
+            }
+          ]
+        }
+      },
+      "id": "q1_min",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The answer kind should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "kind": "max"
+          },
+          "fact_type": "question_asks"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "anchor_role": "$a",
+                "fact_type": "$f",
+                "fn": "max",
+                "value_role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "answer_aggregate"
+            }
+          ]
+        }
+      },
+      "id": "q1_max",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The answer kind should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "ungrouped",
+            "kind": "count",
+            "root": "$root"
+          },
+          "fact_type": "question_answer_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "root": "$root",
+                "var": "$v"
+              },
+              "fact_type": "answer_is_scalar"
+            }
+          ]
+        }
+      },
+      "id": "q1_scalar_count",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "An ungrouped numeric/count question should have a scalar answer.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "ungrouped",
+            "kind": "sum",
+            "root": "$root"
+          },
+          "fact_type": "question_answer_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "root": "$root",
+                "var": "$v"
+              },
+              "fact_type": "answer_is_scalar"
+            }
+          ]
+        }
+      },
+      "id": "q1_scalar_sum",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "An ungrouped numeric/count question should have a scalar answer.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "ungrouped",
+            "kind": "avg",
+            "root": "$root"
+          },
+          "fact_type": "question_answer_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "root": "$root",
+                "var": "$v"
+              },
+              "fact_type": "answer_is_scalar"
+            }
+          ]
+        }
+      },
+      "id": "q1_scalar_avg",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "An ungrouped numeric/count question should have a scalar answer.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "ungrouped",
+            "kind": "min",
+            "root": "$root"
+          },
+          "fact_type": "question_answer_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "root": "$root",
+                "var": "$v"
+              },
+              "fact_type": "answer_is_scalar"
+            }
+          ]
+        }
+      },
+      "id": "q1_scalar_min",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "An ungrouped numeric/count question should have a scalar answer.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "ungrouped",
+            "kind": "max",
+            "root": "$root"
+          },
+          "fact_type": "question_answer_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "root": "$root",
+                "var": "$v"
+              },
+              "fact_type": "answer_is_scalar"
+            }
+          ]
+        }
+      },
+      "id": "q1_scalar_max",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "An ungrouped numeric/count question should have a scalar answer.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "fact_type": "$f",
+            "role": "$r"
+          },
+          "fact_type": "question_list_role"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "anchor_role": "$a",
+                "fact_type": "$f",
+                "value_role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "answer_value"
+            }
+          ]
+        }
+      },
+      "id": "q1_list_value",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The listed attribute should match the requested role.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "grouped",
+            "root": "$root"
+          },
+          "fact_type": "question_plan_context"
+        }
+      ],
+      "consequent": {
+        "atom": {
+          "bind": {
+            "root": "$root"
+          },
+          "fact_type": "plan_has_group"
+        }
+      },
+      "id": "q2_grouped",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "A breakdown needs a group key.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "ungrouped",
+            "root": "$root"
+          },
+          "fact_type": "question_plan_context"
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "bind": {
+            "root": "$root"
+          },
+          "fact_type": "plan_has_group"
+        }
+      },
+      "id": "q2_ungrouped",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "An ungrouped question should not introduce a breakdown.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "fact_type": "$f",
+            "literal": "$l",
+            "role": "$r"
+          },
+          "fact_type": "question_literal"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "fact_type": "$f",
+                "literal": "$l",
+                "role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "plan_filter_literal"
+            }
+          ]
+        }
+      },
+      "id": "q3",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Every named literal should be filtered.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "concept": "$c",
+            "source": "$source"
+          },
+          "fact_type": "question_mentions_concept"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "concept": "$c",
+                "var": "$v"
+              },
+              "fact_type": "var_bound"
+            }
+          ]
+        }
+      },
+      "id": "q4",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Every named concept should be bound.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "fact_type": "$f",
+            "kind": "$k",
+            "literal": "$l",
+            "role": "$r",
+            "var": "$v"
+          },
+          "fact_type": "question_filter_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "fact_type": "$f",
+                "literal": "$l",
+                "role": "$r"
+              },
+              "fact_type": "question_literal"
+            }
+          ]
+        }
+      },
+      "id": "q5",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Filter literals should be supported by the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "fact_type": "$f",
+            "literal": "$l",
+            "op": "$op",
+            "role": "$r"
+          },
+          "fact_type": "question_compares"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "anchor_role": "$a",
+                "fact_type": "$f",
+                "literal": "$l",
+                "op": "$op",
+                "value_role": "$r",
+                "var": "$v"
+              },
+              "fact_type": "var_filtered_compare"
+            }
+          ]
+        }
+      },
+      "id": "q6",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Comparison operators should match the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        },
+        {
+          "bind": {
+            "anchor_role": "$a",
+            "fact_type": "$f",
+            "fn": "sum",
+            "value_role": "$r",
+            "var": "$v"
+          },
+          "fact_type": "answer_aggregate"
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        }
+      },
+      "id": "p4_sum",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Structural fan-out deserves aggregate scrutiny; execution deduplicates answer identities.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        },
+        {
+          "bind": {
+            "anchor_role": "$a",
+            "fact_type": "$f",
+            "fn": "avg",
+            "value_role": "$r",
+            "var": "$v"
+          },
+          "fact_type": "answer_aggregate"
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        }
+      },
+      "id": "p4_avg",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Structural fan-out deserves aggregate scrutiny; execution deduplicates answer identities.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        },
+        {
+          "bind": {
+            "anchor_role": "$a",
+            "fact_type": "$f",
+            "fn": "min",
+            "value_role": "$r",
+            "var": "$v"
+          },
+          "fact_type": "answer_aggregate"
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        }
+      },
+      "id": "p4_min",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Structural fan-out deserves aggregate scrutiny; execution deduplicates answer identities.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        },
+        {
+          "bind": {
+            "anchor_role": "$a",
+            "fact_type": "$f",
+            "fn": "max",
+            "value_role": "$r",
+            "var": "$v"
+          },
+          "fact_type": "answer_aggregate"
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "bind": {
+            "var": "$v"
+          },
+          "fact_type": "var_fanned_out"
+        }
+      },
+      "id": "p4_max",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Structural fan-out deserves aggregate scrutiny; execution deduplicates answer identities.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "flag": "empty"
+          },
+          "fact_type": "result_empty"
+        }
+      ],
+      "consequent": {
+        "absence": {
+          "bind": {
+            "flag": "empty"
+          },
+          "fact_type": "result_empty"
+        }
+      },
+      "id": "p6",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "The full result is empty.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "max_per_source": "$n",
+            "var": "$v"
+          },
+          "fact_type": "join_multiplicity"
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "left": "$n",
+          "operator": "<=",
+          "right": 10
+        }
+      },
+      "id": "p7",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto delegated decision-rule contract."
+      },
+      "rationale": "Observed prefix join multiplicity exceeds the configured prudence threshold.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "concept": "$c",
+            "fact_type": "$f"
+          },
+          "fact_type": "question_mentions_unary"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "concept": "$c",
+                "var": "$v"
+              },
+              "fact_type": "var_bound"
+            },
+            {
+              "bind": {
+                "fact_type": "$f",
+                "var": "$v"
+              },
+              "fact_type": "var_filtered_unary"
+            }
+          ]
+        }
+      },
+      "id": "q3_unary",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto declared regression alignment ruling."
+      },
+      "rationale": "A named unary property should be applied as a filter.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "concept": "$c"
+          },
+          "fact_type": "question_target_concept"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "concept": "$c",
+                "var": "$v"
+              },
+              "fact_type": "plan_answer_binding"
+            }
+          ]
+        }
+      },
+      "id": "q4_target",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto declared regression alignment ruling."
+      },
+      "rationale": "The answer should refer to the requested entity concept.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "fact_type": "$f",
+            "kind": "$k",
+            "target": "$t"
+          },
+          "fact_type": "question_join_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "fact_type": "$f"
+              },
+              "fact_type": "question_supported_fact_type"
+            }
+          ]
+        }
+      },
+      "id": "q5_join",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto declared regression alignment ruling."
+      },
+      "rationale": "A joined relationship should have lexical reading or role support in the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "concept": "$c",
+            "fact_type": "$f",
+            "kind": "$k",
+            "var": "$v"
+          },
+          "fact_type": "question_unary_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "concept": "$c",
+                "fact_type": "$f"
+              },
+              "fact_type": "question_mentions_unary"
+            }
+          ]
+        }
+      },
+      "id": "q5_unary",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto declared regression alignment ruling."
+      },
+      "rationale": "A unary filter should be motivated by the question.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    },
+    {
+      "antecedent": [
+        {
+          "bind": {
+            "fact_type": "$f",
+            "kind": "$k",
+            "literal": "$l",
+            "role": "$r",
+            "var": "$v"
+          },
+          "fact_type": "question_filter_context"
+        }
+      ],
+      "consequent": {
+        "exists": {
+          "atoms": [
+            {
+              "bind": {
+                "fact_type": "$f"
+              },
+              "fact_type": "question_supported_fact_type"
+            }
+          ]
+        }
+      },
+      "id": "q5_filter",
+      "modality": "deontic",
+      "owner": "host",
+      "provenance": {
+        "user_note": "M2 auto declared regression alignment ruling."
+      },
+      "rationale": "A filter relationship should have lexical reading or role support, beyond an ambiguous literal.",
+      "source": "user-supplied",
+      "status": "confirmed",
+      "type": "guarded"
+    }
+  ],
+  "deontic_notes": [
+    {
+      "rationale": "Joining through a role without a uniqueness constraint repeats rows, so a plain listing or a sum after it counts some instances more than once.",
+      "text": "A plan that joins through a non-functional role and then lists rather than aggregates is usually a fan-out mistake."
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "plan_root",
+      "reading": "{Var} is the root of the plan",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        }
+      ]
+    },
+    {
+      "constraints": [
+        {
+          "id": "one_concept_per_var",
+          "modality": "alethic",
+          "preferred": true,
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "A plan variable stands for instances of exactly one concept."
+          },
+          "roles": [
+            "var"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "type": "uniqueness"
+        }
+      ],
+      "id": "var_bound",
+      "reading": "{Var} is bound to {Concept}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        }
+      ]
+    },
+    {
+      "constraints": [
+        {
+          "id": "one_join_per_target",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "A variable is introduced by at most one join."
+          },
+          "roles": [
+            "target"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "type": "uniqueness"
+        }
+      ],
+      "id": "var_joined",
+      "reading": "{Var:source} playing {RoleName:source_role} reaches {Var:target} playing {RoleName:target_role} through {FactTypeId}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "source"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "source_role"
+        },
+        {
+          "object_type": "var",
+          "role_name": "target"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "target_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "id": "var_filtered_equals",
+      "reading": "{Var} playing {RoleName:anchor_role} has {FactTypeId} role {RoleName:value_role} equal to {Literal}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "anchor_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "value_role"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "id": "var_filtered_compare",
+      "reading": "{Var} playing {RoleName:anchor_role} has {FactTypeId} role {RoleName:value_role} {CompareOp} {Literal}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "anchor_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "value_role"
+        },
+        {
+          "object_type": "compare_op",
+          "role_name": "op"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "id": "var_filtered_unary",
+      "reading": "{Var} satisfies the unary {FactTypeId}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "id": "var_counted",
+      "reading": "{Var} has been counted",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        }
+      ]
+    },
+    {
+      "constraints": [
+        {
+          "id": "one_count_per_var",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 4,
+            "user_quote": "The executor observes one row count per variable."
+          },
+          "roles": [
+            "var"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "type": "uniqueness"
+        }
+      ],
+      "id": "var_count",
+      "reading": "{Var} has {RowCount} rows",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "row_count",
+          "role_name": "n"
+        }
+      ]
+    },
+    {
+      "id": "answer_var",
+      "reading": "the answer lists {Var}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        }
+      ]
+    },
+    {
+      "id": "answer_value",
+      "reading": "the answer lists {Var} playing {RoleName:anchor_role} with {FactTypeId} role {RoleName:value_role}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "anchor_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "value_role"
+        }
+      ]
+    },
+    {
+      "id": "answer_count",
+      "reading": "the answer counts {Var}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        }
+      ]
+    },
+    {
+      "id": "answer_aggregate",
+      "reading": "the answer is {AggFn} of {Var} playing {RoleName:anchor_role} over {FactTypeId} role {RoleName:value_role}",
+      "roles": [
+        {
+          "object_type": "agg_fn",
+          "role_name": "fn"
+        },
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "anchor_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "value_role"
+        }
+      ]
+    },
+    {
+      "id": "answer_group",
+      "reading": "the answer is grouped by {Var} playing {RoleName:anchor_role} with {FactTypeId} role {RoleName:value_role}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "anchor_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "value_role"
+        }
+      ]
+    },
+    {
+      "id": "concept_exists",
+      "reading": "{Concept} exists in the domain model",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        }
+      ]
+    },
+    {
+      "id": "joinable",
+      "reading": "{Concept:source_concept} playing {RoleName:source_role} reaches {Concept:target_concept} playing {RoleName:target_role} through {FactTypeId}",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "source_concept"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "source_role"
+        },
+        {
+          "object_type": "concept",
+          "role_name": "target_concept"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "target_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "id": "concept_has_value_role",
+      "reading": "{Concept} playing {RoleName:anchor_role} has {FactTypeId} role {RoleName:value_role}",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "anchor_role"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "value_role"
+        }
+      ]
+    },
+    {
+      "id": "concept_has_unary",
+      "reading": "{Concept} has the unary {FactTypeId}",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "id": "role_is_numeric",
+      "reading": "{FactTypeId} role {RoleName} is numeric",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        }
+      ]
+    },
+    {
+      "id": "role_functional",
+      "reading": "{FactTypeId} role {RoleName} is functional",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        }
+      ]
+    },
+    {
+      "id": "role_has_value",
+      "reading": "{FactTypeId} role {RoleName} shows the value {Literal}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "id": "question_asks",
+      "reading": "question_asks {Literal:kind}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "kind"
+        }
+      ]
+    },
+    {
+      "id": "question_grouped",
+      "reading": "question grouping is {Literal:flag}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "flag"
+        }
+      ]
+    },
+    {
+      "id": "question_mentions_concept",
+      "reading": "question_mentions_concept {Concept:concept} {Literal:source}",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "source"
+        }
+      ]
+    },
+    {
+      "id": "question_mentions_literal",
+      "reading": "question_mentions_literal {FactTypeId:fact_type} {RoleName:role} {Literal:literal}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "id": "question_mentions_role",
+      "reading": "question_mentions_role {FactTypeId:fact_type} {RoleName:role}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        }
+      ]
+    },
+    {
+      "id": "question_compares",
+      "reading": "question_compares {FactTypeId:fact_type} {RoleName:role} {CompareOp:op} {Literal:literal}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        },
+        {
+          "object_type": "compare_op",
+          "role_name": "op"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "id": "plan_role_functional",
+      "reading": "plan_role_functional {FactTypeId:fact_type} {RoleName:role}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        }
+      ]
+    },
+    {
+      "id": "question_ungrouped",
+      "reading": "question_ungrouped {Literal:flag}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "flag"
+        }
+      ]
+    },
+    {
+      "id": "question_list_role",
+      "reading": "question_list_role {FactTypeId:fact_type} {RoleName:role}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        }
+      ]
+    },
+    {
+      "id": "result_rows",
+      "reading": "result_rows {RowCount:n}",
+      "roles": [
+        {
+          "object_type": "row_count",
+          "role_name": "n"
+        }
+      ]
+    },
+    {
+      "id": "result_empty",
+      "reading": "result_empty {Literal:flag}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "flag"
+        }
+      ]
+    },
+    {
+      "id": "join_multiplicity",
+      "reading": "join_multiplicity {Var:var} {RowCount:max_per_source}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "row_count",
+          "role_name": "max_per_source"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "literal": "$l",
+                  "role": "$r"
+                },
+                "fact_type": "question_mentions_literal"
+              }
+            ],
+            "head": {
+              "fact_type": "$f",
+              "literal": "$l",
+              "role": "$r"
+            }
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "literal": "$l",
+                  "op": "$op",
+                  "role": "$r"
+                },
+                "fact_type": "question_compares"
+              }
+            ],
+            "head": {
+              "fact_type": "$f",
+              "literal": "$l",
+              "role": "$r"
+            }
+          }
+        ]
+      },
+      "id": "question_literal",
+      "reading": "question_literal {FactTypeId:fact_type} {RoleName:role} {Literal:literal}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "anchor_role": "$a",
+                  "fact_type": "$f",
+                  "literal": "$l",
+                  "value_role": "$r",
+                  "var": "$v"
+                },
+                "fact_type": "var_filtered_equals"
+              }
+            ],
+            "head": {
+              "fact_type": "$f",
+              "literal": "$l",
+              "role": "$r",
+              "var": "$v"
+            }
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "anchor_role": "$a",
+                  "fact_type": "$f",
+                  "literal": "$l",
+                  "op": "$op",
+                  "value_role": "$r",
+                  "var": "$v"
+                },
+                "fact_type": "var_filtered_compare"
+              }
+            ],
+            "head": {
+              "fact_type": "$f",
+              "literal": "$l",
+              "role": "$r",
+              "var": "$v"
+            }
+          }
+        ]
+      },
+      "id": "plan_filter_literal",
+      "reading": "plan_filter_literal {Var:var} {FactTypeId:fact_type} {RoleName:role} {Literal:literal}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "kind": "$k"
+                },
+                "fact_type": "question_asks"
+              },
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "literal": "$l",
+                  "role": "$r",
+                  "var": "$v"
+                },
+                "fact_type": "plan_filter_literal"
+              }
+            ],
+            "head": {
+              "fact_type": "$f",
+              "kind": "$k",
+              "literal": "$l",
+              "role": "$r",
+              "var": "$v"
+            }
+          }
+        ]
+      },
+      "id": "question_filter_context",
+      "reading": "question_filter_context {Literal:kind} {Var:var} {FactTypeId:fact_type} {RoleName:role} {Literal:literal}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "kind"
+        },
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        },
+        {
+          "object_type": "role_name",
+          "role_name": "role"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "literal"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "var": "$root"
+                },
+                "fact_type": "plan_root"
+              },
+              {
+                "bind": {
+                  "anchor_role": "$a",
+                  "fact_type": "$f",
+                  "value_role": "$r",
+                  "var": "$g"
+                },
+                "fact_type": "answer_group"
+              }
+            ],
+            "head": {
+              "group_var": "$g",
+              "root": "$root"
+            }
+          }
+        ]
+      },
+      "id": "plan_group_context",
+      "reading": "plan_group_context {Var:root} {Var:group_var}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "root"
+        },
+        {
+          "object_type": "var",
+          "role_name": "group_var"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "group_var": "$g",
+                  "root": "$root"
+                },
+                "fact_type": "plan_group_context"
+              }
+            ],
+            "head": {
+              "root": "$root"
+            }
+          }
+        ]
+      },
+      "id": "plan_has_group",
+      "reading": "plan_has_group {Var:root}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "root"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "flag": "$flag"
+                },
+                "fact_type": "question_grouped"
+              },
+              {
+                "bind": {
+                  "var": "$root"
+                },
+                "fact_type": "plan_root"
+              }
+            ],
+            "head": {
+              "flag": "$flag",
+              "root": "$root"
+            }
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "flag": "$flag"
+                },
+                "fact_type": "question_ungrouped"
+              },
+              {
+                "bind": {
+                  "var": "$root"
+                },
+                "fact_type": "plan_root"
+              }
+            ],
+            "head": {
+              "flag": "$flag",
+              "root": "$root"
+            }
+          }
+        ]
+      },
+      "id": "question_plan_context",
+      "reading": "question_plan_context {Literal:flag} {Var:root}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "flag"
+        },
+        {
+          "object_type": "var",
+          "role_name": "root"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "kind": "$k"
+                },
+                "fact_type": "question_asks"
+              },
+              {
+                "bind": {
+                  "flag": "$flag",
+                  "root": "$root"
+                },
+                "fact_type": "question_plan_context"
+              }
+            ],
+            "head": {
+              "flag": "$flag",
+              "kind": "$k",
+              "root": "$root"
+            }
+          }
+        ]
+      },
+      "id": "question_answer_context",
+      "reading": "question_answer_context {Literal:kind} {Literal:flag} {Var:root}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "kind"
+        },
+        {
+          "object_type": "literal",
+          "role_name": "flag"
+        },
+        {
+          "object_type": "var",
+          "role_name": "root"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "var": "$root"
+                },
+                "fact_type": "plan_root"
+              },
+              {
+                "bind": {
+                  "var": "$v"
+                },
+                "fact_type": "answer_count"
+              }
+            ],
+            "head": {
+              "root": "$root",
+              "var": "$v"
+            },
+            "negate": [
+              {
+                "bind": {
+                  "root": "$root"
+                },
+                "fact_type": "plan_has_group"
+              }
+            ]
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "var": "$root"
+                },
+                "fact_type": "plan_root"
+              },
+              {
+                "bind": {
+                  "anchor_role": "$a",
+                  "fact_type": "$f",
+                  "fn": "$fn",
+                  "value_role": "$r",
+                  "var": "$v"
+                },
+                "fact_type": "answer_aggregate"
+              }
+            ],
+            "head": {
+              "root": "$root",
+              "var": "$v"
+            },
+            "negate": [
+              {
+                "bind": {
+                  "root": "$root"
+                },
+                "fact_type": "plan_has_group"
+              }
+            ]
+          }
+        ]
+      },
+      "id": "answer_is_scalar",
+      "reading": "answer_is_scalar {Var:root} {Var:var}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "root"
+        },
+        {
+          "object_type": "var",
+          "role_name": "var"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "source": "$s",
+                  "source_role": "$sr",
+                  "target": "$t",
+                  "target_role": "$tr"
+                },
+                "fact_type": "var_joined"
+              }
+            ],
+            "head": {
+              "var": "$t"
+            },
+            "negate": [
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "role": "$sr"
+                },
+                "fact_type": "plan_role_functional"
+              }
+            ]
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "var": "$s"
+                },
+                "fact_type": "var_fanned_out"
+              },
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "source": "$s",
+                  "source_role": "$sr",
+                  "target": "$t",
+                  "target_role": "$tr"
+                },
+                "fact_type": "var_joined"
+              }
+            ],
+            "head": {
+              "var": "$t"
+            }
+          }
+        ]
+      },
+      "id": "var_fanned_out",
+      "reading": "var_fanned_out {Var:var}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        }
+      ]
+    },
+    {
+      "id": "question_target_concept",
+      "reading": "question_target_concept {Concept:concept}",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        }
+      ]
+    },
+    {
+      "id": "question_mentions_unary",
+      "reading": "question_mentions_unary {Concept:concept} {FactTypeId:fact_type}",
+      "roles": [
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "id": "question_supported_fact_type",
+      "reading": "question_supported_fact_type {FactTypeId:fact_type}",
+      "roles": [
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "var": "$v"
+                },
+                "fact_type": "answer_var"
+              },
+              {
+                "bind": {
+                  "concept": "$c",
+                  "var": "$v"
+                },
+                "fact_type": "var_bound"
+              }
+            ],
+            "head": {
+              "concept": "$c",
+              "var": "$v"
+            }
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "var": "$v"
+                },
+                "fact_type": "answer_count"
+              },
+              {
+                "bind": {
+                  "concept": "$c",
+                  "var": "$v"
+                },
+                "fact_type": "var_bound"
+              }
+            ],
+            "head": {
+              "concept": "$c",
+              "var": "$v"
+            }
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "anchor_role": "$a",
+                  "fact_type": "$f",
+                  "value_role": "$r",
+                  "var": "$v"
+                },
+                "fact_type": "answer_value"
+              },
+              {
+                "bind": {
+                  "concept": "$c",
+                  "var": "$v"
+                },
+                "fact_type": "var_bound"
+              }
+            ],
+            "head": {
+              "concept": "$c",
+              "var": "$v"
+            }
+          },
+          {
+            "body": [
+              {
+                "bind": {
+                  "anchor_role": "$a",
+                  "fact_type": "$f",
+                  "fn": "$fn",
+                  "value_role": "$r",
+                  "var": "$v"
+                },
+                "fact_type": "answer_aggregate"
+              },
+              {
+                "bind": {
+                  "concept": "$c",
+                  "var": "$v"
+                },
+                "fact_type": "var_bound"
+              }
+            ],
+            "head": {
+              "concept": "$c",
+              "var": "$v"
+            }
+          }
+        ]
+      },
+      "id": "plan_answer_binding",
+      "reading": "plan_answer_binding {Var:var} {Concept:concept}",
+      "roles": [
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "kind": "$k"
+                },
+                "fact_type": "question_asks"
+              },
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "source": "$s",
+                  "source_role": "$sr",
+                  "target": "$t",
+                  "target_role": "$tr"
+                },
+                "fact_type": "var_joined"
+              }
+            ],
+            "head": {
+              "fact_type": "$f",
+              "kind": "$k",
+              "target": "$t"
+            }
+          }
+        ]
+      },
+      "id": "question_join_context",
+      "reading": "question_join_context {Literal:kind} {Var:target} {FactTypeId:fact_type}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "kind"
+        },
+        {
+          "object_type": "var",
+          "role_name": "target"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "clauses": [
+          {
+            "body": [
+              {
+                "bind": {
+                  "kind": "$k"
+                },
+                "fact_type": "question_asks"
+              },
+              {
+                "bind": {
+                  "fact_type": "$f",
+                  "var": "$v"
+                },
+                "fact_type": "var_filtered_unary"
+              },
+              {
+                "bind": {
+                  "concept": "$c",
+                  "var": "$v"
+                },
+                "fact_type": "var_bound"
+              }
+            ],
+            "head": {
+              "concept": "$c",
+              "fact_type": "$f",
+              "kind": "$k",
+              "var": "$v"
+            }
+          }
+        ]
+      },
+      "id": "question_unary_context",
+      "reading": "question_unary_context {Literal:kind} {Var:var} {Concept:concept} {FactTypeId:fact_type}",
+      "roles": [
+        {
+          "object_type": "literal",
+          "role_name": "kind"
+        },
+        {
+          "object_type": "var",
+          "role_name": "var"
+        },
+        {
+          "object_type": "concept",
+          "role_name": "concept"
+        },
+        {
+          "object_type": "fact_type_id",
+          "role_name": "fact_type"
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-analytics:plan@2",
+  "object_types": [
+    {
+      "id": "var",
+      "kind": "entity",
+      "name": "Var",
+      "reference": {
+        "mode": "popular",
+        "value_type": "var_name"
+      }
+    },
+    {
+      "id": "var_name",
+      "kind": "value",
+      "name": "VarName",
+      "primitive": "String"
+    },
+    {
+      "id": "concept",
+      "kind": "value",
+      "name": "Concept",
+      "primitive": "String"
+    },
+    {
+      "id": "fact_type_id",
+      "kind": "value",
+      "name": "FactTypeId",
+      "primitive": "String"
+    },
+    {
+      "id": "role_name",
+      "kind": "value",
+      "name": "RoleName",
+      "primitive": "String"
+    },
+    {
+      "id": "literal",
+      "kind": "value",
+      "name": "Literal",
+      "primitive": "String"
+    },
+    {
+      "id": "compare_op",
+      "kind": "value",
+      "name": "CompareOp",
+      "primitive": "String"
+    },
+    {
+      "id": "agg_fn",
+      "kind": "value",
+      "name": "AggFn",
+      "primitive": "String"
+    },
+    {
+      "id": "row_count",
+      "kind": "value",
+      "name": "RowCount",
+      "primitive": "Integer"
+    }
+  ],
+  "operations": [
+    {
+      "effects": [
+        {
+          "create": {
+            "object_type": "var",
+            "param": "var"
+          }
+        },
+        {
+          "assert": {
+            "bind": {
+              "var": "$var"
+            },
+            "fact_type": "plan_root"
+          }
+        },
+        {
+          "assert": {
+            "bind": {
+              "concept": "$concept",
+              "var": "$var"
+            },
+            "fact_type": "var_bound"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "start",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_concept_exists",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A plan can only start at a concept the model declares."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept"
+              },
+              "fact_type": "concept_exists"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "Every plan starts by binding a variable to a concept."
+      },
+      "reading": "{Var} starts at {Concept}",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "create": {
+            "object_type": "var",
+            "param": "target"
+          }
+        },
+        {
+          "assert": {
+            "bind": {
+              "concept": "$target_concept",
+              "var": "$target"
+            },
+            "fact_type": "var_bound"
+          }
+        },
+        {
+          "assert": {
+            "bind": {
+              "fact_type": "$fact_type",
+              "source": "$source",
+              "source_role": "$source_role",
+              "target": "$target",
+              "target_role": "$target_role"
+            },
+            "fact_type": "var_joined"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "join",
+      "parameters": [
+        {
+          "name": "source",
+          "object_type": "var"
+        },
+        {
+          "name": "source_concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "source_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "target",
+          "object_type": "var"
+        },
+        {
+          "name": "target_concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "target_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_source_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A join starts from a bound variable."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$source_concept",
+                "var": "$source"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_joinable",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A join follows a fact type the model declares between the two concepts."
+          },
+          "require": [
+            {
+              "bind": {
+                "fact_type": "$fact_type",
+                "source_concept": "$source_concept",
+                "source_role": "$source_role",
+                "target_concept": "$target_concept",
+                "target_role": "$target_role"
+              },
+              "fact_type": "joinable"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_no_fanout",
+          "modality": "deontic",
+          "provenance": {
+            "added_at_step": "7d",
+            "user_note": "Joining from a role without a uniqueness constraint multiplies rows; expect a count or an aggregate to follow."
+          },
+          "require": [
+            {
+              "bind": {
+                "fact_type": "$fact_type",
+                "role": "$source_role"
+              },
+              "fact_type": "role_functional"
+            }
+          ],
+          "source": "user-supplied",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "A join introduces a new variable reached from an existing one."
+      },
+      "reading": "{Var:source} reaches {Var:target} through {FactTypeId}",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "anchor_role": "$anchor_role",
+              "fact_type": "$fact_type",
+              "literal": "$literal",
+              "value_role": "$value_role",
+              "var": "$var"
+            },
+            "fact_type": "var_filtered_equals"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "filter_equals",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "anchor_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        },
+        {
+          "name": "value_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "literal",
+          "object_type": "literal"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A filter applies to a bound variable."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_role",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A filter reads a role the concept actually has."
+          },
+          "require": [
+            {
+              "bind": {
+                "anchor_role": "$anchor_role",
+                "concept": "$concept",
+                "fact_type": "$fact_type",
+                "value_role": "$value_role"
+              },
+              "fact_type": "concept_has_value_role"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_literal_known",
+          "modality": "deontic",
+          "provenance": {
+            "added_at_step": "7d",
+            "user_note": "A literal the data never shows in that role is usually the wrong role or the wrong spelling."
+          },
+          "require": [
+            {
+              "bind": {
+                "fact_type": "$fact_type",
+                "literal": "$literal",
+                "role": "$value_role"
+              },
+              "fact_type": "role_has_value"
+            }
+          ],
+          "source": "user-supplied",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "An equality filter keeps the instances whose role value equals the literal."
+      },
+      "reading": "{Var} keeps the rows whose {FactTypeId} role equals {Literal}",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "anchor_role": "$anchor_role",
+              "fact_type": "$fact_type",
+              "literal": "$literal",
+              "op": "$op",
+              "value_role": "$value_role",
+              "var": "$var"
+            },
+            "fact_type": "var_filtered_compare"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "filter_compare",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "anchor_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        },
+        {
+          "name": "value_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "op",
+          "object_type": "compare_op"
+        },
+        {
+          "name": "literal",
+          "object_type": "literal"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A filter applies to a bound variable."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_role",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A filter reads a role the concept actually has."
+          },
+          "require": [
+            {
+              "bind": {
+                "anchor_role": "$anchor_role",
+                "concept": "$concept",
+                "fact_type": "$fact_type",
+                "value_role": "$value_role"
+              },
+              "fact_type": "concept_has_value_role"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_numeric",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "An order comparison needs a numeric role."
+          },
+          "require": [
+            {
+              "bind": {
+                "fact_type": "$fact_type",
+                "role": "$value_role"
+              },
+              "fact_type": "role_is_numeric"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "A comparison filter keeps the instances whose numeric role value satisfies the comparison."
+      },
+      "reading": "{Var} keeps the rows whose {FactTypeId} role is {CompareOp} {Literal}",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "fact_type": "$fact_type",
+              "var": "$var"
+            },
+            "fact_type": "var_filtered_unary"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "filter_unary",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A filter applies to a bound variable."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_unary",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A unary filter reads a unary fact type of the concept."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "fact_type": "$fact_type"
+              },
+              "fact_type": "concept_has_unary"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "A unary filter keeps the instances that play the unary fact type."
+      },
+      "reading": "{Var} keeps the rows that satisfy {FactTypeId}",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "var": "$var"
+            },
+            "fact_type": "var_counted"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "count",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "Only a bound variable can be counted."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "Counting observes how many rows a variable currently has."
+      },
+      "reading": "{Var} is counted",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "var": "$var"
+            },
+            "fact_type": "answer_var"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "list_var",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "Only a bound variable can be listed."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_counted",
+          "modality": "deontic",
+          "provenance": {
+            "added_at_step": "7d",
+            "user_note": "Count before you list."
+          },
+          "require": [
+            {
+              "bind": {
+                "var": "$var"
+              },
+              "fact_type": "var_counted"
+            }
+          ],
+          "source": "user-supplied",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "The answer is the list of instances a variable stands for."
+      },
+      "reading": "{Var} is listed as the answer",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "anchor_role": "$anchor_role",
+              "fact_type": "$fact_type",
+              "value_role": "$value_role",
+              "var": "$var"
+            },
+            "fact_type": "answer_value"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "list_value",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "anchor_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        },
+        {
+          "name": "value_role",
+          "object_type": "role_name"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "Only a bound variable can be listed."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_role",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A listed value is a role the concept actually has."
+          },
+          "require": [
+            {
+              "bind": {
+                "anchor_role": "$anchor_role",
+                "concept": "$concept",
+                "fact_type": "$fact_type",
+                "value_role": "$value_role"
+              },
+              "fact_type": "concept_has_value_role"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_counted",
+          "modality": "deontic",
+          "provenance": {
+            "added_at_step": "7d",
+            "user_note": "Count before you list."
+          },
+          "require": [
+            {
+              "bind": {
+                "var": "$var"
+              },
+              "fact_type": "var_counted"
+            }
+          ],
+          "source": "user-supplied",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "The answer is the list of values a role takes for the variable's instances."
+      },
+      "reading": "{Var} is listed by its {FactTypeId} role",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "var": "$var"
+            },
+            "fact_type": "answer_count"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "answer_with_count",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "Only a bound variable can be counted."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "The answer is how many instances a variable stands for."
+      },
+      "reading": "the count of {Var} is the answer",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "anchor_role": "$anchor_role",
+              "fact_type": "$fact_type",
+              "fn": "$fn",
+              "value_role": "$value_role",
+              "var": "$var"
+            },
+            "fact_type": "answer_aggregate"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "aggregate",
+      "parameters": [
+        {
+          "name": "fn",
+          "object_type": "agg_fn"
+        },
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "anchor_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        },
+        {
+          "name": "value_role",
+          "object_type": "role_name"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "An aggregate ranges over a bound variable."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_role",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "An aggregate reads a role the concept actually has."
+          },
+          "require": [
+            {
+              "bind": {
+                "anchor_role": "$anchor_role",
+                "concept": "$concept",
+                "fact_type": "$fact_type",
+                "value_role": "$value_role"
+              },
+              "fact_type": "concept_has_value_role"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_numeric",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "Sum, average, minimum and maximum need a numeric role."
+          },
+          "require": [
+            {
+              "bind": {
+                "fact_type": "$fact_type",
+                "role": "$value_role"
+              },
+              "fact_type": "role_is_numeric"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "The answer is a numeric aggregate over a role of the variable's instances."
+      },
+      "reading": "the {AggFn} of the {FactTypeId} role of {Var} is the answer",
+      "source": "explicit",
+      "status": "confirmed"
+    },
+    {
+      "effects": [
+        {
+          "assert": {
+            "bind": {
+              "anchor_role": "$anchor_role",
+              "fact_type": "$fact_type",
+              "value_role": "$value_role",
+              "var": "$var"
+            },
+            "fact_type": "answer_group"
+          }
+        }
+      ],
+      "frame": {
+        "modality": "alethic"
+      },
+      "id": "group_by",
+      "parameters": [
+        {
+          "name": "var",
+          "object_type": "var"
+        },
+        {
+          "name": "concept",
+          "object_type": "concept"
+        },
+        {
+          "name": "anchor_role",
+          "object_type": "role_name"
+        },
+        {
+          "name": "fact_type",
+          "object_type": "fact_type_id"
+        },
+        {
+          "name": "value_role",
+          "object_type": "role_name"
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "pre_bound",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A grouping key belongs to a bound variable."
+          },
+          "require": [
+            {
+              "bind": {
+                "concept": "$concept",
+                "var": "$var"
+              },
+              "fact_type": "var_bound"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        },
+        {
+          "id": "pre_role",
+          "modality": "alethic",
+          "provenance": {
+            "csdp_step": 7,
+            "user_quote": "A grouping key is a role the concept actually has."
+          },
+          "require": [
+            {
+              "bind": {
+                "anchor_role": "$anchor_role",
+                "concept": "$concept",
+                "fact_type": "$fact_type",
+                "value_role": "$value_role"
+              },
+              "fact_type": "concept_has_value_role"
+            }
+          ],
+          "source": "explicit",
+          "status": "confirmed"
+        }
+      ],
+      "provenance": {
+        "csdp_step": 7,
+        "user_quote": "The answer is broken down by the values of a role."
+      },
+      "reading": "the answer is grouped by the {FactTypeId} role of {Var}",
+      "source": "explicit",
+      "status": "confirmed"
+    }
+  ],
+  "source": {
+    "confidence": "standard",
+    "kind": "text-conversation",
+    "mode": "one-shot"
+  },
+  "version": 2
+}

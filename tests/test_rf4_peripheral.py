@@ -134,15 +134,69 @@ def test_moved_algorithm_preserves_base_body(move):
         return  # constants/imported aliases are covered by identity rather than an algorithm claim
     after = _definition(_source(move['new']).read_text(), move['name'])
     assert after is not None
-    assert _import_bindings(before) == _import_bindings(after)
     from support.rf9_ci_sources import body_successor
     successor = body_successor('RF4', move['name'], move['old'])
     if successor:
         assert successor['reason']
+        assert successor['home'] == move['new']
+        assert _import_bindings(before) == successor['before']['imports']
+        assert _import_bindings(after) == successor['after']['imports']
         assert hashlib.sha256(_algorithm(before).encode()).hexdigest() == successor['before']['algorithm_sha256']
         assert hashlib.sha256(_algorithm(after).encode()).hexdigest() == successor['after']['algorithm_sha256']
     else:
+        assert _import_bindings(before) == _import_bindings(after)
         assert _algorithm(before) == _algorithm(after)
+
+
+def test_current_successor_body_and_import_controls_are_live():
+    import copy
+
+    from support.rf9_ci_sources import body_successor
+    successor = body_successor('RF4', '_run_check_raw', 'gnd.api')
+    current = _definition(_source(successor['home']).read_text(), '_run_check_raw')
+    assert hashlib.sha256(_algorithm(current).encode()).hexdigest() == successor['after']['algorithm_sha256']
+    assert _import_bindings(current) == successor['after']['imports']
+    edited = copy.deepcopy(current)
+    edited.body.append(ast.parse('raise RuntimeError("unrecorded body change")').body[0])
+    assert hashlib.sha256(_algorithm(edited).encode()).hexdigest() != successor['after']['algorithm_sha256']
+    edited = copy.deepcopy(current)
+    edited.body.append(ast.parse('from gnd import unrecorded_import').body[0])
+    assert _import_bindings(edited) != successor['after']['imports']
+    assert body_successor('RF4', 'unrecorded_name', 'gnd.api') is None
+
+
+def test_current_successor_lookup_rejects_duplicates_and_unchained_rows(monkeypatch, tmp_path):
+    import copy
+
+    from support import rf9_ci_sources as sources
+    document = json.loads(sources.SOURCE_SUCCESSORS.read_text())
+    target = next(row for row in document['successors']
+                  if row['kind'] == 'RF4' and row['name'] == '_run_check_raw')
+    current_path = tmp_path / 'current.json'
+    current_path.write_text(json.dumps(document))
+    monkeypatch.setattr(sources, 'SOURCE_SUCCESSORS', current_path)
+    frozen_dir = tmp_path / 'frozen'
+    frozen_dir.mkdir()
+    predecessor = {**copy.deepcopy(target), 'before': {'original': True},
+                   'after': copy.deepcopy(target['before'])}
+    (frozen_dir / 'body-successors.json').write_text(json.dumps([predecessor]))
+    monkeypatch.setattr(sources, 'EVIDENCE', frozen_dir)
+    assert sources.body_successor('RF4', target['name'], target['old'])['before'] == {'original': True}
+    altered = copy.deepcopy(document)
+    altered['successors'].append(copy.deepcopy(target))
+    current_path.write_text(json.dumps(altered))
+    with pytest.raises(AssertionError, match='duplicate current'):
+        sources.body_successor('RF4', target['name'], target['old'])
+    altered = copy.deepcopy(document)
+    next(row for row in altered['successors'] if row['kind'] == 'RF4'
+         and row['name'] == target['name'])['before']['algorithm_sha256'] = 'unrecorded'
+    current_path.write_text(json.dumps(altered))
+    with pytest.raises(AssertionError, match='unchained body'):
+        sources.body_successor('RF4', target['name'], target['old'])
+    current_path.write_text(json.dumps(document))
+    (frozen_dir / 'body-successors.json').write_text(json.dumps([predecessor, predecessor]))
+    with pytest.raises(AssertionError):
+        sources.body_successor('RF4', target['name'], target['old'])
 
 
 def test_provider_scan_covers_all_new_homes(monkeypatch):

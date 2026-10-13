@@ -9,6 +9,9 @@ import pytest
 import test_rf1_session_pins as sessions
 import test_rf2_helpers as helpers
 from support import rf2_session_pins as successor
+from test_rf1_session_pins import (
+    historical_session_environment as historical_session_environment,  # noqa: PLC0414 -- shared fixture
+)
 
 from gnd import exits
 
@@ -31,6 +34,31 @@ def assert_case(observed, records, built, run, root, tokens, expected):
 
 def test_successor_current_case_is_green(live_case):
     assert_case(*live_case)
+
+
+def test_explicit_optional_environment_remains_in_invocation_evidence(tmp_path, monkeypatch):
+    """The historical setup must not suppress deliberately inherited evidence."""
+    names = ("LANG", "LC_ALL", "TERM")
+    for name in names:
+        monkeypatch.setenv(name, "C" if name != "TERM" else "dumb")
+    _built, run, _observed = sessions._fresh(1, tmp_path, monkeypatch)
+    leaves = sorted(run.glob("attempts/*/attempt.json"))
+    assert len(leaves) == 2
+
+    def require_supplied_names(document):
+        environment = {row["name"]: row["provenance"]
+                       for row in document["invocation"]["environment"]}
+        assert all(environment.get(name) == "inherited" for name in names)
+
+    for leaf in leaves:
+        document = json.loads(leaf.read_text())
+        require_supplied_names(document)
+        for missing in names:
+            damaged = copy.deepcopy(document)
+            damaged["invocation"]["environment"] = [
+                row for row in damaged["invocation"]["environment"] if row["name"] != missing]
+            with pytest.raises(AssertionError):
+                require_supplied_names(damaged)
 
 
 @pytest.mark.parametrize("damage", ["digest", "stale-producer", "mint-semantics",

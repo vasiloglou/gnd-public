@@ -131,7 +131,10 @@ def _confirm_model_snapshot(model_path: Path, snapshot: LeafSnapshot) -> None:
         raise BatchIOError(f"model changed while it was loaded: {error}") from error
 
 
-def check_population_directory(model_path: Path, populations_dir: Path) -> BatchResult:
+def check_population_directory(model_path: Path, populations_dir: Path, *,
+                               compiled_operations: bool = False) -> BatchResult:
+    if not isinstance(compiled_operations, bool):
+        raise TypeError('compiled_operations must be a boolean')
     _validate_population_root(populations_dir)
     if model_path.is_symlink():
         raise BatchIOError(f"model is not a real regular file: {model_path}")
@@ -218,7 +221,8 @@ def check_population_directory(model_path: Path, populations_dir: Path) -> Batch
         except Exception as error:
             raise BatchInternalError(f"population loader failed for {relative}: {error}") from error
         try:
-            report = check(model, population)
+            report = (check(model, population, compiled_operations=True)
+                      if compiled_operations else check(model, population))
             exit_code = checker_band(report)
         except Exception as error:
             raise BatchInternalError(f"checker failed for {relative}: {error}") from error

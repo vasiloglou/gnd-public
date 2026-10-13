@@ -40,7 +40,10 @@ def test_public_all_is_exact() -> None:
 def test_public_signatures_are_stable() -> None:
     api = _api()
     assert tuple(inspect.signature(api.validate).parameters) == ('model', 'unredacted', 'references')
-    assert tuple(inspect.signature(api.check).parameters) == ('model', 'population', 'unredacted', 'anchors', 'document', 'population_bytes', 'admission', 'references')
+    assert tuple(inspect.signature(api.check).parameters) == ('model', 'population', 'compiled_operations', 'unredacted', 'anchors', 'document', 'population_bytes', 'admission', 'references')
+    compiled = inspect.signature(api.check).parameters['compiled_operations']
+    assert compiled.kind is inspect.Parameter.KEYWORD_ONLY
+    assert compiled.default is False
     assert tuple(inspect.signature(api.transition).parameters) == ('model', 'pre', 'steps', 'post', 'unredacted', 'references')
     for function in (api.validate, api.check, api.transition):
         parameter = inspect.signature(function).parameters['unredacted']

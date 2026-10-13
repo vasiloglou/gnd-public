@@ -1,0 +1,381 @@
+{
+  "facts": {
+    "answer_aggregate": [],
+    "answer_count": [],
+    "answer_group": [],
+    "answer_is_scalar": [],
+    "answer_value": [],
+    "answer_var": [],
+    "concept_exists": [
+      {
+        "concept": "expense"
+      }
+    ],
+    "concept_has_unary": [
+      {
+        "concept": "expense",
+        "fact_type": "expense_is_approved"
+      }
+    ],
+    "concept_has_value_role": [
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_approved_by_chain",
+        "value_role": "chain"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_approved_by_chain",
+        "value_role": "expense"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_has_amount",
+        "value_role": "amount"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_has_amount",
+        "value_role": "expense"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_has_currency",
+        "value_role": "currency"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_has_currency",
+        "value_role": "expense"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_in_category",
+        "value_role": "category"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_in_category",
+        "value_role": "expense"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_is_approved",
+        "value_role": "expense"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_submitted_by_employee",
+        "value_role": "employee"
+      },
+      {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_submitted_by_employee",
+        "value_role": "expense"
+      }
+    ],
+    "join_multiplicity": [],
+    "joinable": [],
+    "plan_answer_binding": [],
+    "plan_filter_literal": [],
+    "plan_group_context": [],
+    "plan_has_group": [],
+    "plan_role_functional": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "role": "expense"
+      }
+    ],
+    "plan_root": [],
+    "question_answer_context": [],
+    "question_asks": [],
+    "question_compares": [],
+    "question_filter_context": [],
+    "question_grouped": [],
+    "question_join_context": [],
+    "question_list_role": [],
+    "question_literal": [],
+    "question_mentions_concept": [],
+    "question_mentions_literal": [],
+    "question_mentions_role": [],
+    "question_mentions_unary": [],
+    "question_plan_context": [],
+    "question_supported_fact_type": [],
+    "question_target_concept": [],
+    "question_unary_context": [],
+    "question_ungrouped": [],
+    "result_empty": [],
+    "result_rows": [],
+    "role_functional": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "role": "expense"
+      }
+    ],
+    "role_has_value": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_approved_by_chain",
+        "literal": "finance",
+        "role": "chain"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "1400",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "60",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "800",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "EUR",
+        "role": "currency"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "equipment",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "meals",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "travel",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "Ari",
+        "role": "employee"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "Bea",
+        "role": "employee"
+      }
+    ],
+    "role_is_numeric": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "role": "expense"
+      }
+    ],
+    "var_bound": [],
+    "var_count": [],
+    "var_counted": [],
+    "var_fanned_out": [],
+    "var_filtered_compare": [],
+    "var_filtered_equals": [],
+    "var_filtered_unary": [],
+    "var_joined": []
+  },
+  "population": {
+    "covers": [
+      "answer_aggregate",
+      "answer_count",
+      "answer_group",
+      "answer_is_scalar",
+      "answer_value",
+      "answer_var",
+      "concept_exists",
+      "concept_has_unary",
+      "concept_has_value_role",
+      "join_multiplicity",
+      "joinable",
+      "plan_answer_binding",
+      "plan_filter_literal",
+      "plan_group_context",
+      "plan_has_group",
+      "plan_role_functional",
+      "plan_root",
+      "question_answer_context",
+      "question_asks",
+      "question_compares",
+      "question_filter_context",
+      "question_grouped",
+      "question_join_context",
+      "question_list_role",
+      "question_literal",
+      "question_mentions_concept",
+      "question_mentions_literal",
+      "question_mentions_role",
+      "question_mentions_unary",
+      "question_plan_context",
+      "question_supported_fact_type",
+      "question_target_concept",
+      "question_unary_context",
+      "question_ungrouped",
+      "result_empty",
+      "result_rows",
+      "role_functional",
+      "role_has_value",
+      "role_is_numeric",
+      "var_bound",
+      "var_count",
+      "var_counted",
+      "var_fanned_out",
+      "var_filtered_compare",
+      "var_filtered_equals",
+      "var_filtered_unary",
+      "var_joined"
+    ],
+    "model": "plan.orm.json",
+    "model_id": "urn:gnd-analytics:plan@2",
+    "source": "agent-output"
+  }
+}

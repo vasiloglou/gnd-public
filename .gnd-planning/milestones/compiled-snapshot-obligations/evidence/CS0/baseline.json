@@ -1,0 +1,103 @@
+{
+  "app_commit": "efc9c0e",
+  "boundary": "Read-only baseline diagnosis, not implementation acceptance. Generated input and driver bytes live outside Git history under /private/tmp/gnd-issue16-audit; their hashes are checkable only by holders of those bytes.",
+  "cases": [
+    {
+      "batch_exit": 2,
+      "batch_rows": [
+        {
+          "counts": {
+            "fail": 0,
+            "pass": 21,
+            "unchecked": 0,
+            "vacuous": 34,
+            "warning": 0
+          },
+          "exit_code": 2,
+          "failing_constraints": [],
+          "issues": [],
+          "outcome": "inadequate",
+          "population": "candidate.pop.json"
+        }
+      ],
+      "case": "string-role",
+      "single_counts": {
+        "fail": 0,
+        "pass": 21,
+        "unchecked": 0,
+        "vacuous": 34,
+        "warning": 0
+      },
+      "single_derivation_failures": 0,
+      "single_exit": 2,
+      "walk_exit": 1,
+      "walk_failures": [
+        {
+          "count": 1,
+          "message": "step 2 (filter_compare) requires role_is_numeric to hold for {'fact_type': 'expense_in_category', 'role': 'category'}, and it does not",
+          "obligation": "pre_numeric",
+          "operation": "filter_compare",
+          "physical_obligation": null,
+          "step": 2
+        }
+      ]
+    },
+    {
+      "batch_exit": 2,
+      "batch_rows": [
+        {
+          "counts": {
+            "fail": 0,
+            "pass": 21,
+            "unchecked": 0,
+            "vacuous": 34,
+            "warning": 0
+          },
+          "exit_code": 2,
+          "failing_constraints": [],
+          "issues": [],
+          "outcome": "inadequate",
+          "population": "candidate.pop.json"
+        }
+      ],
+      "case": "numeric-role",
+      "single_counts": {
+        "fail": 0,
+        "pass": 21,
+        "unchecked": 0,
+        "vacuous": 34,
+        "warning": 0
+      },
+      "single_derivation_failures": 0,
+      "single_exit": 2,
+      "walk_exit": 2,
+      "walk_failures": []
+    }
+  ],
+  "command": "UV_PROJECT_ENVIRONMENT=/private/tmp/gnd-issue16-audit/venv uv run --no-sync --python 3.11 python /private/tmp/gnd-issue16-audit/reproduce.py",
+  "compiled_trace_line": "[alethic] filter_compare.pre_numeric -> every var_filtered_compare fact has a matching role_is_numeric fact",
+  "external_inputs": [
+    {
+      "path": "/private/tmp/gnd-issue16-audit/reproduce.py",
+      "sha256": "2f9d5a8ace8d2f1c533153ad4195681c22ca561371bb47f9502919e2d087034b"
+    },
+    {
+      "path": "/private/tmp/gnd-issue16-audit/expense/plan.orm.json",
+      "sha256": "2aafee2d38aed67ea5954eb4c08c632bcba61cc801ea703bd3e9b5a9d68dc44e"
+    },
+    {
+      "path": "/private/tmp/gnd-issue16-audit/string-role/candidate.pop.json",
+      "sha256": "68926ae461d209cb6c56e48337860becdbd4c4c71f9b74c0713b1a4b146436b3"
+    },
+    {
+      "path": "/private/tmp/gnd-issue16-audit/numeric-role/candidate.pop.json",
+      "sha256": "80e55944d1c465869702b32bfa91951f2363a48a4ce33bfd6a86e33c3b6b736e"
+    },
+    {
+      "path": "/private/tmp/gnd-issue16-audit/trace.txt",
+      "sha256": "2e9fd2ffdb083dd891a14dbe2aeea527c30af9a5ade06126403f6b1ddee92cf3"
+    }
+  ],
+  "gnd_commit": "ab879dc5758123367be748744bbbd331e012f1e3",
+  "paid_cost_usd": 0
+}

@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "candidate": "f446dc1",
+  "successors": [
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "_run_check_raw",
+      "home": "gnd.checking_service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "before": {
+        "raw_sha256": "1dbdfbbe99fb5b9c5246d960096c2817b249216dc6437de1557d1b066736ff75",
+        "algorithm_sha256": "8b45191d46cc36c68b2c9fc2146483943194be26e6e395f0874f7dd150cd9ed0",
+        "imports": [
+          "AnchorError",
+          "AnchorSidecar",
+          "MAX_DOCUMENT_BYTES",
+          "bind_anchors",
+          "bind_population",
+          "read_anchor_sidecar",
+          "read_regular_path",
+          "resolve_context",
+          "validate_anchor_sidecar"
+        ]
+      },
+      "after": {
+        "raw_sha256": "9227524efe0046579bbb706c35e5d1cd20719ff0625121371b678dc9b1b5f9fe",
+        "algorithm_sha256": "49b7fd2a06e94bb8348dd2ac3d64119aab1ea99a1518e706bef2fb64e0082e13",
+        "imports": [
+          "AnchorError",
+          "AnchorSidecar",
+          "MAX_DOCUMENT_BYTES",
+          "bind_anchors",
+          "bind_population",
+          "compose",
+          "read_anchor_sidecar",
+          "read_regular_path",
+          "resolve_context",
+          "validate_anchor_sidecar"
+        ]
+      },
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "_run_check",
+      "home": "gnd.checking_service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "before": {
+        "raw_sha256": "6c72765eabe203426cb7b6da081225e659b90a8a72589d00b8d5842d00664b57",
+        "algorithm_sha256": "1fb1b13344d99516894cadbf3f09c7749439bfa7c19364e0391d1dd790b7f0d5",
+        "imports": [
+          "build_admission",
+          "wire_verdicts"
+        ]
+      },
+      "after": {
+        "raw_sha256": "66e01ebc05d8195cad46391bd1c897ed52ca604698d00bb42f47d4b403b7c95f",
+        "algorithm_sha256": "b74bf1b6005c34ffee01cd2fe2a7d513d7cc6f0d39a9be66677d32311c868e8e",
+        "imports": [
+          "build_admission",
+          "wire_verdicts"
+        ]
+      },
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_check",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "3e63bbd966005b77c0f6b5e8a80b1923e9bda5a906955a1db3e62d243b10a41d",
+        "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
+      },
+      "after": {
+        "raw_sha256": "21aaf53531d80ae8894cc4aac130ca955ea153a51f6cd41217aa2c873afdcf2e",
+        "algorithm_sha256": "0055d26439ce60b60b7849af2565799f28b2ea226766b688d4fd585bf5222954"
+      },
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_check_batch",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "a3401b3987d6f4804e1ad35fb94bf4781cecb1165b38bf59fe5d15e59578c97d",
+        "algorithm_sha256": "9524f7ccdca5ef73b656ad7aef21f7bb09dc07fc922345e538ad88bd84e4c292"
+      },
+      "after": {
+        "raw_sha256": "31f862e7acee0d41392e7d8498e7da3197882b5fcee94ad7c44a69ec38229238",
+        "algorithm_sha256": "53a7b94ef988803347205e2c96a75659a40fb5779584ea942dfeb013d79df319"
+      },
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_trace",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "14a42551dcbd7549970b4dce9906db4cb102a9275b182404f32ebbb9429fc5f6",
+        "algorithm_sha256": "283ff90debd22afeca14c52a212b762b55016da7cc072e059a06f580fbc1c8da"
+      },
+      "after": {
+        "raw_sha256": "5e2b9ec46324cd73a8c44ee50cdd47b8708a9d93e58e38be890aa81c5489ec6c",
+        "algorithm_sha256": "679b87cf35897b8d04dec6dbcd21afad21af20b9b82e85ed2efe2b7f320d2b3a"
+      },
+      "reason": "Approved CS2 trace clarification of explicit snapshot activation and retained walk-only obligations."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "compile_operation",
+      "home": "gnd.model._operations",
+      "before": "e3b8c9a958b3397ca9e5409e24b7ce9287e88b9933437d92c301e92fa08b853f",
+      "after": "cc838958c39a8449b036e9f68be34c2b55b3daeb9730ace5b0998a47d7fe87d6",
+      "reason": "Approved CS2 compiler provenance caveat clarification; unchanged compiler guards."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "check",
+      "home": "gnd.checker._core",
+      "before": "e2d73e23de3da792f005b89a03e385f041715aeead37906475badf24023d6630",
+      "after": "6a8da7606f0924c83fdac4e1563f95ee381b91361f8164329f32a5e0681b1978",
+      "reason": "Approved CS1 explicit checker opt-in composition; ordinary snapshots remain unchanged."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.assurance",
+      "name": "_phase3_target",
+      "home": "gnd.assurance.core",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "before": {
+        "raw_sha256": "a4b5c3f15e993fffd1774b24bea12f105e0ae3c58a4d2d19a006f59637b49371",
+        "algorithm_sha256": "2718e6ed73a01e0716f25b15511a619f3ebdc721100423dde1df112d21ad8afd",
+        "imports": []
+      },
+      "after": {
+        "raw_sha256": "916209f11a7283346e5c9c3eaf1f2406caf473888591a188328f614c9214cc66",
+        "algorithm_sha256": "ceee6e9f5060af3720af21829a1b3b8277815fb9a329097717536b6addd0db2e",
+        "imports": []
+      },
+      "reason": "CS1 compiled-subset snapshot scopes retain assurance unavailable and do not alter the frozen historical phase-3 proof denominator."
+    }
+  ]
+}

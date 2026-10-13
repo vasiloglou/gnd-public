@@ -47,6 +47,8 @@ def _print_trace(model: Model, model_path: str) -> None:
     print(f"  operations_digest {transition.operations_digest(model.operations)}")
 
     print("COMPILED OBLIGATIONS")
+    print("  Eligible standing subsets: snapshots check these only with --compiled-operations.")
+    print("  Step preconditions, dynamic rules and frames still require a walk.")
     any_compiled = False
     for operation in model.operations:
         op_id = str(operation.get("id"))

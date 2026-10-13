@@ -652,7 +652,7 @@ Version 2 adds exactly one optional top-level section, `operations:`, and change
 
 **Version rule.** `version:` accepts `1`, `2`, `3` or `4`. A document carrying `operations:` MUST declare version 2, 3 or 4 (a root `if/then` in the meta-schema; violating it is exit 3). Version 3 adds calendar terms; version 4 adds the reference populations described below. A `version: 2` document that declares no operations is behaviourally a v1 document — and every consumer feature-detects on `model.operations` being non-empty, never on `model.version`, so it stays one. Migration from v1 is: change `version: 1` to `version: 2`. Nothing else.
 
-**Snapshot mode ignores operations entirely.** `gnd check` over a population reads object types, fact types and constraints, exactly as it did before v2 existed. A v2 model's operations produce no verdict, no coverage entry, and no change to any exit band. Transition checking — the mode that does read them — is a separate CLI arm.
+**Default snapshot mode ignores operations entirely.** `gnd check` over a population reads object types, fact types and constraints, exactly as it did before v2 existed. A v2 model's operations produce no verdict, no coverage entry, and no change to any exit band. Transition checking is a separate CLI arm. Explicit `--compiled-operations` snapshot activation is defined under [Compiled obligations](#compiled-obligations).
 
 ### The construct
 
@@ -788,17 +788,17 @@ Resolution is by index, not by scanning the parameter list per placeholder. A mo
 | Field | Excluded because |
 |---|---|
 | `warnings` | Validation OUTPUT, attached after layer 2 ran. No checker verdict depends on it. |
-| `operations` | **Snapshot checking provably never reads it.** This digest's contract is "everything layer 2 validated *and the checker reads*", and a section outside that contract does not belong in it. |
+| `operations` | **Default snapshot checking never reads it.** This digest's contract is "everything layer 2 validated *and the checker reads*", and a section outside that contract does not belong in it. |
 
 Everything else — `version`, `model_id`, `source`, `object_types`, `fact_types`, `constraints`, `rejected_proposals`, `deontic_notes` — is covered, including nested content, so mutating a model in place after loading invalidates any population's validation marker against it.
 
 Three consequences, each intended:
 
 - **A v1 model's digest is unchanged by the existence of v2.** Adding `operations` to the loaded model without excluding it here would have changed the digest of every model ever authored, and every committed sidecar that records one.
-- **Editing an operation does not invalidate a population.** Correct, because that population was never checked against the operation: snapshot mode ignored it. A population and an operation make claims about different things.
+- **Editing an operation does not invalidate a population.** Correct, because that population was never checked against the operation: default snapshot mode ignored it. Opted-in operation checks must be rerun when the operations change. A population and an operation make claims about different things.
 - **A transition run needs a different claim over different bytes** — "these steps were authored against these operations" — and Phase 2's `steps.json` carries its own `operations_digest` for it, under the same exit-3 mismatch guard, rather than overloading this one.
 
-Separately, the digest is *excluded from a report's constraint verdicts*, so "a v2 model with operations produces a byte-identical snapshot `CheckReport` to the same model with `operations` stripped" holds as stated: nothing inside the verdict body varies with it.
+Separately, the digest is *excluded from a report's constraint verdicts*, so "a v2 model with operations produces a byte-identical snapshot `CheckReport` to the same model with `operations` stripped" holds for default checking: nothing inside that default verdict body varies with it.
 
 It is no longer private, though. `src/gnd/report.schema.json` has four closed arms. Report `schema_version` 3 and 4 are frozen and forbid `model_digest` — a report written before model binding existed must keep the bytes it was written with. Versions 5 and 6 require it: `gnd.transition.model_digest` over the loaded model, emitted immediately after `model` in every version 5 or 6 payload. A `validate` payload and any `check`/`verify` payload emitted before the model loads stay on a frozen version and carry none. One published identity, in one place, so a consumer never has to decide which of two spellings it is looking at.
 
@@ -1289,6 +1289,39 @@ rather than only those a given walk uses: the claim is about the population, not
 They live in memory, never on `Model.constraints`, never in YAML, and never on the operation dicts
 themselves — writing them there would move `operations_digest`, which is taken over exactly that
 section.
+
+### Opt-in compiled snapshot checks
+
+`api.check(..., compiled_operations=True)` and `gnd check ... --compiled-operations`
+evaluate compiler-eligible standing role-projection subsets without a walk. The
+flag also applies to `--populations DIR --format json`. The caller asserts that
+these operational implications are standing obligations of this population;
+GND does not infer its operational provenance. Defaults continue to exclude
+operations, and generated obligations stay outside authored `Model.constraints`.
+
+Every eligible entry is evaluated against the normal effective constraint view:
+semiderived relations use computed extensions, while derived relations use
+covered claims whose derivation consistency is checked separately. Dynamic-derived
+entries are instantaneous implications here; they do not establish dynamic step
+rules or belong to walk agreement where the walk excludes them. Missing coverage,
+unavailable/possible-only derived inputs or opaque participants produce explicit
+unchecked results. Covered empty antecedents are vacuous. Matching uses typed
+identity and every shared role pair. A global ceiling of 100,000 projected
+role-cell visits yields unchecked `compiled-obligation-work-limit` on exhaustion.
+Unknown participants are conservatively unchecked even when some known rows match.
+
+Reports identify each generated obligation by its full compiler source locator,
+with `constraint_type: compiled-subset`; messages name operation and precondition.
+Alethic violations fail, deontic violations warn, and existing band precedence
+applies. Single and batch reports use the same failure identifiers and counts.
+Opted-in reports do not inherit proof-backed assurance from ordinary snapshots.
+Occurrence admission (`--admission` / `admission=True`) and transition arguments
+cannot be combined with this mode; they are explicitly refused.
+
+Transition-only preconditions, dynamic step rules, effects, frame conditions and
+intermediate-state constraints still require a walk. A snapshot result cannot
+replace full-walk correctness, and `validate --trace` describes compiler
+eligibility, not an assertion that default snapshots evaluate operations.
 
 ## Validation — two layers
 

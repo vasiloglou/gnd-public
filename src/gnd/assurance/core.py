@@ -107,6 +107,9 @@ def _currency_valid(evidence: CorrespondenceEvidence) -> bool:
 def _phase3_target(row: Branch) -> bool:
     # This denominator is the published v6.0 Phase 3 roster, not a live census.
     # Phase 4 aggregate branches remain registered but cannot enlarge its proof.
+    # Opt-in operation implications are generated findings outside that proof.
+    if row.surface == "snapshot" and row.family == "compiled-subset":
+        return False
     if row.reason_code == "derived-unknown" or ":aggregate:" in row.scope_id:
         return False
     # Phase 6 existential consequents likewise stay outside the frozen denominator.

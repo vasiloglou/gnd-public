@@ -1,0 +1,18 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_the_constraint_band4_frontier_is_the_exact_registered_member_set _____
+tests/test_measure_derivation.py:41: in test_the_constraint_band4_frontier_is_the_exact_registered_member_set
+    assert _is_exact_constraint_band4_frontier(BAND4_REASON_CODES)
+E   AssertionError: assert False
+E    +  where False = _is_exact_constraint_band4_frontier(('bound-type-mismatch', 'compiled-obligation-unavailable', 'compiled-obligation-uncovered', 'compiled-obligation-work-limit', 'derived-unknown', 'family-unimplemented', ...))
+___________ test_no_flag_env_var_or_keyword_substitutes_the_checker ____________
+tests/test_measure_negative_control.py:424: in test_no_flag_env_var_or_keyword_substitutes_the_checker
+    assert list(signature.parameters) == ["model", "population", "references"]
+E   AssertionError: assert ['model', 'po...d_operations'] == ['model', 'po... 'references']
+E     
+E     Left contains one more item: 'compiled_operations'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_measure_derivation.py::test_the_constraint_band4_frontier_is_the_exact_registered_member_set
+FAILED tests/test_measure_negative_control.py::test_no_flag_env_var_or_keyword_substitutes_the_checker
+2 failed in 0.33s

@@ -52,6 +52,19 @@ RETRY_TAILS = {
 }
 
 
+@pytest.fixture(scope="module", autouse=True)
+def historical_session_environment():
+    """Pin the three optional ambient names absent from the historical answers.
+
+    Keep production inheritance and evidence serialization intact. This fixture
+    is exported only to the RF2 instrument that replays these same answers.
+    """
+    with pytest.MonkeyPatch.context() as patch:
+        for name in ("LANG", "LC_ALL", "TERM"):
+            patch.delenv(name, raising=False)
+        yield
+
+
 @dataclass
 class Built:
     root: Path

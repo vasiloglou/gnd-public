@@ -505,6 +505,7 @@ def check(
     model: str | os.PathLike[str] | Model,
     population: str | os.PathLike[str] | Population,
     *,
+    compiled_operations: bool = False,
     unredacted: bool = False,
     anchors: Any = None,
     document: bytes | str | os.PathLike[str] | None = None,
@@ -513,11 +514,16 @@ def check(
     references: BoundReferenceContext | None = None,
 ) -> dict[str, Any]:
     """Check one population and return the same payload emitted by the CLI."""
+    if not isinstance(compiled_operations, bool):
+        raise TypeError('compiled_operations must be a boolean')
+    if compiled_operations and admission:
+        raise ValueError('compiled_operations cannot be combined with admission')
     _check_model_input(model)
     _check_population_input(population, name="population")
     return _run_check(
         model,
         population,
+        compiled_operations=compiled_operations,
         unredacted=unredacted,
         anchors=anchors,
         document=document,

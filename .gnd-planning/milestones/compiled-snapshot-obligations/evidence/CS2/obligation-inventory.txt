@@ -1,0 +1,81 @@
+TRACE
+  model_digest      sha256:a7ab2fad27db896cbaad9120b21970856bde447259dafe0f1220214a1af1bc53
+  operations_digest sha256:2e276de231730ccfdbfb49f703a98d343cdfb42aac04425040eb5124f742d640
+COMPILED OBLIGATIONS
+  Eligible standing subsets: snapshots check these only with --compiled-operations.
+  Step preconditions, dynamic rules and frames still require a walk.
+  [alethic] join.pre_source_bound -> every var_joined fact has a matching var_bound fact
+      $.operations[id=join].compiled[0]
+  [alethic] join.pre_joinable -> every var_joined fact has a matching joinable fact
+      $.operations[id=join].compiled[1]
+  [deontic] join.pre_no_fanout -> every var_joined fact has a matching role_functional fact
+      $.operations[id=join].compiled[2]
+  [alethic] filter_equals.pre_bound -> every var_filtered_equals fact has a matching var_bound fact
+      $.operations[id=filter_equals].compiled[0]
+  [alethic] filter_equals.pre_role -> every var_filtered_equals fact has a matching concept_has_value_role fact
+      $.operations[id=filter_equals].compiled[1]
+  [deontic] filter_equals.pre_literal_known -> every var_filtered_equals fact has a matching role_has_value fact
+      $.operations[id=filter_equals].compiled[2]
+  [alethic] filter_compare.pre_bound -> every var_filtered_compare fact has a matching var_bound fact
+      $.operations[id=filter_compare].compiled[0]
+  [alethic] filter_compare.pre_role -> every var_filtered_compare fact has a matching concept_has_value_role fact
+      $.operations[id=filter_compare].compiled[1]
+  [alethic] filter_compare.pre_numeric -> every var_filtered_compare fact has a matching role_is_numeric fact
+      $.operations[id=filter_compare].compiled[2]
+  [alethic] filter_unary.pre_bound -> every var_filtered_unary fact has a matching var_bound fact
+      $.operations[id=filter_unary].compiled[0]
+  [alethic] filter_unary.pre_unary -> every var_filtered_unary fact has a matching concept_has_unary fact
+      $.operations[id=filter_unary].compiled[1]
+  [alethic] count.pre_bound -> every var_counted fact has a matching var_bound fact
+      $.operations[id=count].compiled[0]
+  [alethic] list_var.pre_bound -> every answer_var fact has a matching var_bound fact
+      $.operations[id=list_var].compiled[0]
+  [deontic] list_var.pre_counted -> every answer_var fact has a matching var_counted fact
+      $.operations[id=list_var].compiled[1]
+  [alethic] list_value.pre_bound -> every answer_value fact has a matching var_bound fact
+      $.operations[id=list_value].compiled[0]
+  [alethic] list_value.pre_role -> every answer_value fact has a matching concept_has_value_role fact
+      $.operations[id=list_value].compiled[1]
+  [deontic] list_value.pre_counted -> every answer_value fact has a matching var_counted fact
+      $.operations[id=list_value].compiled[2]
+  [alethic] answer_with_count.pre_bound -> every answer_count fact has a matching var_bound fact
+      $.operations[id=answer_with_count].compiled[0]
+  [alethic] aggregate.pre_bound -> every answer_aggregate fact has a matching var_bound fact
+      $.operations[id=aggregate].compiled[0]
+  [alethic] aggregate.pre_role -> every answer_aggregate fact has a matching concept_has_value_role fact
+      $.operations[id=aggregate].compiled[1]
+  [alethic] aggregate.pre_numeric -> every answer_aggregate fact has a matching role_is_numeric fact
+      $.operations[id=aggregate].compiled[2]
+  [alethic] group_by.pre_bound -> every answer_group fact has a matching var_bound fact
+      $.operations[id=group_by].compiled[0]
+  [alethic] group_by.pre_role -> every answer_group fact has a matching concept_has_value_role fact
+      $.operations[id=group_by].compiled[1]
+RETAINED (transition-only)
+  start.pre_concept_exists: transition-only: asserted fact type(s) ['var_bound'] are asserted by more than one operation, so the derived claim would not follow
+DERIVATION STABILITY
+  question_literal: static (dependencies: question_compares, question_mentions_literal)
+  plan_filter_literal: dynamic (dependencies: var_filtered_compare, var_filtered_equals)
+  question_filter_context: dynamic (dependencies: question_asks, var_filtered_compare, var_filtered_equals)
+  plan_group_context: dynamic (dependencies: answer_group, plan_root)
+  plan_has_group: dynamic (dependencies: answer_group, plan_root)
+  question_plan_context: dynamic (dependencies: plan_root, question_grouped, question_ungrouped)
+  question_answer_context: dynamic (dependencies: plan_root, question_asks, question_grouped, question_ungrouped)
+  answer_is_scalar: dynamic (dependencies: answer_aggregate, answer_count, answer_group, plan_root)
+  var_fanned_out: dynamic (dependencies: plan_role_functional, var_joined)
+  plan_answer_binding: dynamic (dependencies: answer_aggregate, answer_count, answer_value, answer_var, var_bound)
+  question_join_context: dynamic (dependencies: question_asks, var_joined)
+  question_unary_context: dynamic (dependencies: question_asks, var_bound, var_filtered_unary)
+FRAME MODALITY BY FACT TYPE
+  answer_aggregate: alethic (aggregate)
+  answer_count: alethic (answer_with_count)
+  answer_group: alethic (group_by)
+  answer_value: alethic (list_value)
+  answer_var: alethic (list_var)
+  plan_root: alethic (start)
+  var_bound: alethic (join, start)
+  var_counted: alethic (count)
+  var_filtered_compare: alethic (filter_compare)
+  var_filtered_equals: alethic (filter_equals)
+  var_filtered_unary: alethic (filter_unary)
+  var_joined: alethic (join)
+OK: tests/fixtures/compiled-snapshot/model.orm.json is a valid GND ORM model

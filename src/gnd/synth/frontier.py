@@ -111,6 +111,9 @@ def _constraint_band4_rows() -> tuple[Branch, ...]:
         # but they are outside the frozen predecessor BAND4 report contract.
         # Phase 6 does not claim synth/frontier coverage for this new lane.
         and not (row.family == "guarded" and row.variant == "exists")
+        # Compiled standing obligations require explicit caller activation;
+        # the predecessor synth/measure lane uses ordinary snapshot checking.
+        and row.family != "compiled-subset"
     )
 
 
@@ -119,7 +122,8 @@ def _scan_reason_codes() -> tuple[str, ...]:
 
     Derived rather than re-typed (research assumption A4): a registered route
     added without a matching case must show up as a MISSING cell in the coverage
-    matrix, except for the explicit Phase 6 guarded-exists boundary above.
+    matrix, except for the explicit guarded-exists and opt-in compiled
+    standing-obligation boundaries above.
     """
     return tuple(sorted({
         row.reason_code for row in _constraint_band4_rows()

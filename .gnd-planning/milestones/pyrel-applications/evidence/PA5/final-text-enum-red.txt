@@ -1,0 +1,56 @@
+Retained output edited: operator/checkout paths only. Raw SHA-256 322b19e31e2146b709b2d4b4d8e1ce9798c4393a3bd1280f04e1e0a447db703a
+....FFF                                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_svg_accessible_and_visible_text_spacing[flow] ______________
+
+name = 'flow'
+
+    @pytest.mark.parametrize('name',['flow','limits','currency'])
+    def test_svg_accessible_and_visible_text_spacing(name):
+        import re
+        tree=ET.fromstring((ROOT/'src/gnd/examples/expense/tutorial-assets'/(name+'.svg')).read_bytes())
+        for element in list(tree.findall('{http://www.w3.org/2000/svg}text'))+[tree.find('{http://www.w3.org/2000/svg}desc')]:
+>           assert not re.search(r'[A-Za-z][0-9]|[:;·+=][0-9]',element.text)
+E           AssertionError: assert not <re.Match object; span=(29, 31), match='l2'>
+E            +  where <re.Match object; span=(29, 31), match='l2'> = <function search at 0x103ac7560>('[A-Za-z][0-9]|[:;·+=][0-9]', 'Three submitted expenses total2260 EUR, one approved. Native aggregates compute numbers; a separate checker decides acceptance and publication.')
+E            +    where <function search at 0x103ac7560> = <module 're' from '<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/re/__init__.py'>.search
+E            +    and   'Three submitted expenses total2260 EUR, one approved. Native aggregates compute numbers; a separate checker decides acceptance and publication.' = <Element '{http://www.w3.org/2000/svg}desc' at 0x10a7c3e20>.text
+
+tests/test_pyrel_tutorial_experience.py:194: AssertionError
+_____________ test_svg_accessible_and_visible_text_spacing[limits] _____________
+
+name = 'limits'
+
+    @pytest.mark.parametrize('name',['flow','limits','currency'])
+    def test_svg_accessible_and_visible_text_spacing(name):
+        import re
+        tree=ET.fromstring((ROOT/'src/gnd/examples/expense/tutorial-assets'/(name+'.svg')).read_bytes())
+        for element in list(tree.findall('{http://www.w3.org/2000/svg}text'))+[tree.find('{http://www.w3.org/2000/svg}desc')]:
+>           assert not re.search(r'[A-Za-z][0-9]|[:;·+=][0-9]',element.text)
+E           AssertionError: assert not <re.Match object; span=(13, 15), match=':8'>
+E            +  where <re.Match object; span=(13, 15), match=':8'> = <function search at 0x103ac7560>('[A-Za-z][0-9]|[:;·+=][0-9]', 'Category PASS:800 ≤ 2000')
+E            +    where <function search at 0x103ac7560> = <module 're' from '<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/re/__init__.py'>.search
+E            +    and   'Category PASS:800 ≤ 2000' = <Element '{http://www.w3.org/2000/svg}text' at 0x10a9b4090>.text
+
+tests/test_pyrel_tutorial_experience.py:194: AssertionError
+____________ test_svg_accessible_and_visible_text_spacing[currency] ____________
+
+name = 'currency'
+
+    @pytest.mark.parametrize('name',['flow','limits','currency'])
+    def test_svg_accessible_and_visible_text_spacing(name):
+        import re
+        tree=ET.fromstring((ROOT/'src/gnd/examples/expense/tutorial-assets'/(name+'.svg')).read_bytes())
+        for element in list(tree.findall('{http://www.w3.org/2000/svg}text'))+[tree.find('{http://www.w3.org/2000/svg}desc')]:
+>           assert not re.search(r'[A-Za-z][0-9]|[:;·+=][0-9]',element.text)
+E           AssertionError: assert not <re.Match object; span=(3, 5), match='+8'>
+E            +  where <re.Match object; span=(3, 5), match='+8'> = <function search at 0x103ac7560>('[A-Za-z][0-9]|[:;·+=][0-9]', '60 +800 +1400 =2260 EUR')
+E            +    where <function search at 0x103ac7560> = <module 're' from '<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/re/__init__.py'>.search
+E            +    and   '60 +800 +1400 =2260 EUR' = <Element '{http://www.w3.org/2000/svg}text' at 0x10a7c2840>.text
+
+tests/test_pyrel_tutorial_experience.py:194: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_svg_accessible_and_visible_text_spacing[flow]
+FAILED tests/test_pyrel_tutorial_experience.py::test_svg_accessible_and_visible_text_spacing[limits]
+FAILED tests/test_pyrel_tutorial_experience.py::test_svg_accessible_and_visible_text_spacing[currency]
+3 failed, 4 passed, 23 deselected in 0.12s

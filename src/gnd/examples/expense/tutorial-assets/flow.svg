@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 680" role="img" aria-labelledby="title desc"><title id="title">Expenses: numbers and policy</title><desc id="desc">Three submitted expenses total 2260 EUR, one approved. Native aggregates compute numbers; a separate checker decides acceptance and publication.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="560" height="680" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Expenses: numbers and policy</text>
+<rect x="24" y="72" width="512" height="118" rx="12" fill="#eef5f8"/>
+<text x="40" y="102" class="strong">Submitted facts · implicit EUR</text>
+<text x="40" y="131" class="">101 · meals 60; 102 · travel 800</text>
+<text x="40" y="158" class="">103 · equipment 1400, finance-approved</text>
+<path class="edge" d="M160 190L140 222"/>
+<path class="edge" d="M400 190L420 222"/>
+<rect x="24" y="228" width="246" height="143" rx="12" fill="#eef5f8"/>
+<text x="40" y="258" class="strong">Native reporting</text>
+<text x="40" y="287" class="">Submitted 3</text>
+<text x="40" y="314" class="">Approved 1</text>
+<text x="40" y="341" class="">Total 2260 EUR</text>
+<rect x="290" y="228" width="246" height="143" rx="12" fill="#eef5f8"/>
+<text x="306" y="258" class="strong">Approval proposal</text>
+<text x="306" y="287" class="">101 / team-lead</text>
+<text x="306" y="314" class="">Append approval</text>
+<text x="306" y="341" class="">and chain facts</text>
+<path class="edge" d="M140 371L190 414"/>
+<path class="edge" d="M420 371L370 414"/>
+<rect x="24" y="420" width="512" height="112" rx="12" fill="#eef5f8"/>
+<text x="40" y="450" class="strong">Independent exported policy check</text>
+<text x="40" y="479" class="">Counts are calculation, not a policy verdict</text>
+<text x="40" y="506" class="">Validate complete snapshot before output</text>
+<path class="edge" d="M280 532L280 566"/>
+<rect x="24" y="570" width="512" height="84" rx="12" fill="#e9f4ec"/>
+<text x="40" y="600" class="strong">Accepted result</text>
+<text x="40" y="629" class="">Report privately; approval publishes new file</text>
+</svg>

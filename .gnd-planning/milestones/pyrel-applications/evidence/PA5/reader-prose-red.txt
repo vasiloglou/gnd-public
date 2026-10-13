@@ -1,0 +1,35 @@
+Retained output edited: operator/checkout paths only. Raw SHA-256 bfd8ceab0c980b966c7d4c13bb8c4e89f4d79c6136ccfacee5d70be8086943af
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_reader_prose_separates_words_and_numbers[bookrec-07-native.md] ______
+
+domain = 'bookrec', page = '07-native.md'
+
+    @pytest.mark.parametrize('domain,page',[('bookrec','07-native.md'),('expense','04-native.md')])
+    def test_reader_prose_separates_words_and_numbers(domain,page):
+        import re
+        prose=re.sub(r'```.*?```','',(ROOT/'docs'/domain/page).read_text(),flags=re.S)
+>       assert not re.search(r'[A-Za-z][0-9]',prose)
+E       assert not <re.Match object; span=(329, 331), match='r6'>
+E        +  where <re.Match object; span=(329, 331), match='r6'> = <function search at 0x105127560>('[A-Za-z][0-9]', '# 7. Compute recommendations with PyRel and audit them separately\n\nAda is a minor. A proposer that chooses `night` ... ranking quality, production storage or actor permission.\n\n??? note "Read the shipped native query source"\n\n    \n')
+E        +    where <function search at 0x105127560> = <module 're' from '<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/re/__init__.py'>.search
+
+tests/test_pyrel_tutorial_experience.py:112: AssertionError
+_____ test_reader_prose_separates_words_and_numbers[expense-04-native.md] ______
+
+domain = 'expense', page = '04-native.md'
+
+    @pytest.mark.parametrize('domain,page',[('bookrec','07-native.md'),('expense','04-native.md')])
+    def test_reader_prose_separates_words_and_numbers(domain,page):
+        import re
+        prose=re.sub(r'```.*?```','',(ROOT/'docs'/domain/page).read_text(),flags=re.S)
+>       assert not re.search(r'[A-Za-z][0-9]',prose)
+E       assert not <re.Match object; span=(62, 64), match='e1'>
+E        +  where <re.Match object; span=(62, 64), match='e1'> = <function search at 0x105127560>('[A-Za-z][0-9]', '# 4. Reuse the native path for reporting and approvals\n\nExpense102 costs800 EUR. Its travel category permits2000 EU...ples, so this learning path needs no repository checkout.\n\n??? note "Read the shipped native query source"\n\n    \n')
+E        +    where <function search at 0x105127560> = <module 're' from '<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/re/__init__.py'>.search
+
+tests/test_pyrel_tutorial_experience.py:112: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_reader_prose_separates_words_and_numbers[bookrec-07-native.md]
+FAILED tests/test_pyrel_tutorial_experience.py::test_reader_prose_separates_words_and_numbers[expense-04-native.md]
+2 failed, 18 deselected in 0.07s

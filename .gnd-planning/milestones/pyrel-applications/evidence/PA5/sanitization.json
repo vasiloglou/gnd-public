@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "edits": [
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/bookrec-bound-steps.json",
+      "raw_sha256": "0f06aca7be9fef9d5da8f777a9f8a86e6a373ccb85d9f8702ef0a3ad641ef0f9",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "a9c04a8b3e0ff982acccd890acd3ebcc5ab43569c9c5e99e072cc4dc159b3549"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/bookrec-completion-steps.json",
+      "raw_sha256": "54adb405ff3d4db4724cfd776127e08d3f8dad258fdf5bc54449f66c2de22fb4",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "80cc070a8fd742a8e5a11b3ff9e5a17b4f7e97856ae20b89f1459ff54e45100e"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/bookrec-offline-bound-steps.json",
+      "raw_sha256": "e2a4a7365b44e87161d2e6ba155b20c5c7968b8198f4e90c147410d8b11ee87b",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "81e260d28c90ad57b541e51592ad9ecbf76d226333e669c391bfb9efe3958f6b"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/expense-bound-steps.json",
+      "raw_sha256": "b0a5183a9351a84156e8b866d895e547e76450cd208cb43431198fd2d7d597b8",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "e9d6432deff1b927366cd93fcce66d2eae8ab93fa50ca84f48ff6317a4807b07"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/expense-completion-steps.json",
+      "raw_sha256": "7fa8c8a11772cb26c89626aebd7193b0524da224b0a32f21f896415a8c842538",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "f132c6ccecc438d79c3682982e9887f4a8df7f305d031a46a8b4f4fd9572e9c8"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/expense-offline-bound-steps.json",
+      "raw_sha256": "440319bcc11e675fdb51addef8db4b0684cea9c82ee367f0241e16c5a643b3b3",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "855453fcc5ffb2250168037def460b0fbe379d5ed11d2df27392c41307dafa22"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/experience-red.txt",
+      "raw_sha256": "1efd246776180886c55953b8b00473c07e012bec9554c763ddac8a0c3bf6aefe",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "6f8cc140092e8e1a43da1668f49e372e6c0842f13e79d81c4d9a1a0f0205dad3"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/final-text-enum-red.txt",
+      "raw_sha256": "322b19e31e2146b709b2d4b4d8e1ce9798c4393a3bd1280f04e1e0a447db703a",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "b370371636858d9e2c0d901e5b78af48c980a7ee2c3d09e895439844e2599a25"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/interpreter-selection-red.txt",
+      "raw_sha256": "50453e6fa6bfbfcf9b070a034e56ee86a841608c4ac179395bafeb232de20ebd",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "a5ec7017759182c9f712adf39b0f090d03bd70db30c458dc724c1f3abf01483e"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/native-path-red.txt",
+      "raw_sha256": "6cc969b94f9337a730aa5d3a2785516d0a57d4c85fe3fea7dead714ccef1e3b5",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "32b305c1b8473631e8d41b6ae4c1198d0701a1e49efe134d1d04e055ff6f0f14"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/reader-prose-red.txt",
+      "raw_sha256": "bfd8ceab0c980b966c7d4c13bb8c4e89f4d79c6136ccfacee5d70be8086943af",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "35878b341471197bc2cbf0f2b25494b7833271ef31089714094ce834b2c4a706"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/receipt-path-red.txt",
+      "raw_sha256": "b78f4aebf4e1fb4ef2498531e550c2de3ab9facd2c51a11790ef80049b956de0",
+      "edit": "Operator/checkout path strings only; interpreter roles remain distinct.",
+      "retained_sha256": "6ddc2248260f8515055887476a9aab4a17a8576cda28dfe4dc5d004dcfdd7e9e"
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/receipt-path-red.txt",
+      "predecessor_sha256": "6ddc2248260f8515055887476a9aab4a17a8576cda28dfe4dc5d004dcfdd7e9e",
+      "retained_sha256": "ec0ceceeaeca8710b2038db65a31b6321f3fb86fd38d00863a7a7c74f45549f6",
+      "edit": "pytest temporary directory operator token only; prior raw digest headers retained."
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/graphic-binding-red.txt",
+      "predecessor_sha256": "ced84c84b5d52e9ebdc92692d861a689d3b87e5355ccee7f6930878b134d78f3",
+      "retained_sha256": "70cb1d2a9c58c1d144ddad57e563968ffc010559b1181f8e8f3750af90365a09",
+      "edit": "pytest temporary directory operator token only; prior raw digest headers retained."
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/receipt-shape-red.txt",
+      "predecessor_sha256": "22acdcce67cd153a5a0fce9ab12c950a93b77a4c0259236ba001008c3c23d13b",
+      "retained_sha256": "43d6aa6a8964c3f0af421adab155d62a251232f53f764ca1f9eb713c7c54b383",
+      "edit": "pytest temporary directory operator token only; prior raw digest headers retained."
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/experience-red.txt",
+      "predecessor_sha256": "6f8cc140092e8e1a43da1668f49e372e6c0842f13e79d81c4d9a1a0f0205dad3",
+      "retained_sha256": "bfec83d09c9ac75df37248f483044e51e116091d68a19a513f043bc333437a39",
+      "edit": "pytest temporary directory operator token only; prior raw digest headers retained."
+    },
+    {
+      "path": ".gnd-planning/milestones/pyrel-applications/evidence/PA5/interpreter-selection-red.txt",
+      "predecessor_sha256": "a5ec7017759182c9f712adf39b0f090d03bd70db30c458dc724c1f3abf01483e",
+      "retained_sha256": "3a836dcb15b0c31b2812c70cc6ec6008ee496308e463f834b6a693f0abd450c4",
+      "edit": "pytest temporary directory operator token only; prior raw digest headers retained."
+    }
+  ],
+  "scope": "No expected result or executable source edit; output path strings sanitized before commit."
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source": "Actual local browser synthetic cancelable key events against pre-fix handler",
+  "observed": {
+    "modified_arrow_prevented": true,
+    "desktop": {
+      "prevented": true,
+      "overflow": 0
+    }
+  },
+  "expected": "Modified arrows and desktop no-overflow keys must not be prevented."
+}

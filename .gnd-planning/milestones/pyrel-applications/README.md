@@ -2,16 +2,15 @@
 
 ## Execution checkpoint — 2026-10-13
 
-PA0–PA4 are complete. [PA4](008-phase-PA4.md) adds native expense aggregates,
-approval candidates and source-bound application guards through BookRec's shared
-execution/check/publication path. Gates:365 focused checks,29 expense native
-cases and24 BookRec native regressions. Unchanged PA2 full137 framework evidence
-is verified and inherited, with2,321 comparable rows and two reviewed A1 differences.
+PA0–PA5 are complete. [PA5](009-phase-PA5.md) adds six source-bound accessible
+graphics, both complete native learning paths (52/34 blocks), explicit offline
+skip evidence, command timing receipts and a model-only expense policy change.
+[PA4](008-phase-PA4.md) completed native Expense using BookRec's shared machinery.
 
 The effective plan is r1 plus [A1](notes/plan-amendment-a1.md), approved in
-[003](003-plan-amendment.md). Next: PA5 executable tutorials and six explanatory
-graphics; PA6 fresh-wheel acceptance and close. Two phases remain. Named auto
-delegation persists; merge, release and certification require separate authorization.
+[003](003-plan-amendment.md). Remaining: PA6 fresh-wheel/target-only acceptance,
+full137 native agreement and four selected close reviews. Named auto delegation
+persists; merge, release and certification require separate authorization.
 
 ## Initial execution preparation
 

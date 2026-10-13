@@ -1,0 +1,72 @@
+Source-snippet controls authored after initial corpus; reproduced here against bcf9126 prefix before snippet assets existed. No claim of initial authorship. Temporary root/operator paths sanitized.
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_rendered_query_snippet_matches_owned_source[bookrec-src/gnd/examples/bookrec/extension/bookrec/native_query.py] _
+
+domain = 'bookrec'
+source = 'src/gnd/examples/bookrec/extension/bookrec/native_query.py'
+
+    @pytest.mark.parametrize('domain,source', [('bookrec','src/gnd/examples/bookrec/extension/bookrec/native_query.py'), ('expense','src/gnd/examples/expense/native_query.py')])
+    def test_rendered_query_snippet_matches_owned_source(domain, source):
+>       assert (ROOT / source).read_bytes() == (ROOT / 'docs/assets/applications' / (domain + '-native-query.txt')).read_bytes()
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<prefix-tree>/tests/test_pyrel_tutorial_experience.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1050: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private<prefix-tree>/docs/assets/applications/bookrec-native-query.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private<prefix-tree>/docs/assets/applications/bookrec-native-query.txt'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+_ test_rendered_query_snippet_matches_owned_source[expense-src/gnd/examples/expense/native_query.py] _
+
+domain = 'expense', source = 'src/gnd/examples/expense/native_query.py'
+
+    @pytest.mark.parametrize('domain,source', [('bookrec','src/gnd/examples/bookrec/extension/bookrec/native_query.py'), ('expense','src/gnd/examples/expense/native_query.py')])
+    def test_rendered_query_snippet_matches_owned_source(domain, source):
+>       assert (ROOT / source).read_bytes() == (ROOT / 'docs/assets/applications' / (domain + '-native-query.txt')).read_bytes()
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+<prefix-tree>/tests/test_pyrel_tutorial_experience.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1050: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private<prefix-tree>/docs/assets/applications/expense-native-query.txt')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private<prefix-tree>/docs/assets/applications/expense-native-query.txt'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+=========================== short test summary info ============================
+FAILED ../../../..<prefix-tree>/tests/test_pyrel_tutorial_experience.py::test_rendered_query_snippet_matches_owned_source[bookrec-src/gnd/examples/bookrec/extension/bookrec/native_query.py]
+FAILED ../../../..<prefix-tree>/tests/test_pyrel_tutorial_experience.py::test_rendered_query_snippet_matches_owned_source[expense-src/gnd/examples/expense/native_query.py]
+2 failed, 24 deselected in 0.06s

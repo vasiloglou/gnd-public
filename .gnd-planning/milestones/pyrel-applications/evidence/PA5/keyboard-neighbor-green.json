@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "source": "Actual local browser after guard repair; modified synthetic cancelable keys and real mobile keys",
+  "observed": {
+    "modified": [
+      {
+        "modifier": "altKey",
+        "prevented": false
+      },
+      {
+        "modifier": "metaKey",
+        "prevented": false
+      },
+      {
+        "modifier": "ctrlKey",
+        "prevented": false
+      },
+      {
+        "modifier": "shiftKey",
+        "prevented": false
+      }
+    ],
+    "mobile_arrow_right": 120,
+    "mobile_end": 202,
+    "desktop": {
+      "prevented": false,
+      "overflow": 0
+    }
+  }
+}

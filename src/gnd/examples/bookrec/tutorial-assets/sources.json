@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic shipped facts and measured native checkpoint reports; no source truth, actor authority or conversion.",
+  "graphics": {
+    "flow": {
+      "sha256": "cbb4d607b6c96b22684e98b749e11836b7363a44e9d06236ea7a8890055d03fd",
+      "labels": [
+        "preferred_genre",
+        "Advisory \u00b7 accepted",
+        "Strict \u00b7 rejected"
+      ],
+      "checks": [
+        {
+          "file": "tutorial-assets/checkpoints/advisory.json",
+          "sha256": "167b663325b3fe73317f746cecc20ca4ddf3471da78029bbf9fcba6d1d91ce70",
+          "path": [
+            "policy",
+            "status"
+          ],
+          "expected": "accepted_with_warnings"
+        },
+        {
+          "file": "tutorial-assets/checkpoints/strict.json",
+          "sha256": "6528b160f86889f041c90da642d28b0fe3aeb2b45cbd4c6df43d872b2611df24",
+          "path": [
+            "accepted"
+          ],
+          "expected": false
+        }
+      ],
+      "caption": "BookRec: compute, then check"
+    },
+    "eligibility": {
+      "sha256": "66a76ca2c6f3bdd2b9c5b0f7a51465a0ef1fe38daac399abd4474ce82115bd79",
+      "labels": [
+        "age_appropriate",
+        "unread_only",
+        "map \u00b7 fantasy",
+        "cosmos \u00b7 science",
+        "Ben / read"
+      ],
+      "checks": [
+        {
+          "file": "tutorial-assets/checkpoints/complete.json",
+          "sha256": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e",
+          "path": [
+            "calculation",
+            "eligible_pairs"
+          ],
+          "expected": [
+            {
+              "book": "map",
+              "user": "ada"
+            },
+            {
+              "book": "river",
+              "user": "ada"
+            },
+            {
+              "book": "map",
+              "user": "ben"
+            },
+            {
+              "book": "night",
+              "user": "ben"
+            },
+            {
+              "book": "river",
+              "user": "ben"
+            }
+          ]
+        },
+        {
+          "file": "tutorial-assets/checkpoints/complete.json",
+          "sha256": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e",
+          "path": [
+            "calculation",
+            "blocked_pairs"
+          ],
+          "expected": [
+            {
+              "book": "night",
+              "user": "ada"
+            }
+          ]
+        },
+        {
+          "file": "tutorial-assets/checkpoints/complete.json",
+          "sha256": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e",
+          "path": [
+            "calculation",
+            "already_read_pairs"
+          ],
+          "expected": [
+            {
+              "book": "read",
+              "user": "ada"
+            },
+            {
+              "book": "read",
+              "user": "ben"
+            }
+          ]
+        },
+        {
+          "file": "tutorial-assets/checkpoints/already-read-refusal.json",
+          "sha256": "2a01d4b18473fd7e94b2ea9f6c73029910340629014d33fb420f1cb42b04b588",
+          "path": [
+            "policy",
+            "verdicts",
+            2
+          ],
+          "expected": {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "id": "unread_only",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              {
+                "$b": "read",
+                "$u": "ada"
+              }
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/adult-refusal.json",
+          "sha256": "eb7dad17ed7c34238fac748070c14e5464adb40ef3067b7ac80a01bea8fe0c3e",
+          "path": [
+            "policy",
+            "verdicts",
+            3
+          ],
+          "expected": {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "guarded",
+            "id": "age_appropriate",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              {
+                "$b": "night",
+                "$u": "ada"
+              }
+            ]
+          }
+        }
+      ],
+      "caption": "Who can receive which book?",
+      "value_labels": [
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "book_has_genre",
+            0,
+            "genre"
+          ],
+          "expected": "science",
+          "template": "cosmos \u00b7 {value}"
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "book_has_genre",
+            1,
+            "genre"
+          ],
+          "expected": "fantasy",
+          "template": "map \u00b7 {value}"
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "book_has_genre",
+            2,
+            "genre"
+          ],
+          "expected": "fantasy",
+          "template": "night \u00b7 {value}"
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "book_has_genre",
+            3,
+            "genre"
+          ],
+          "expected": "fantasy",
+          "template": "read \u00b7 {value}"
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "book_has_genre",
+            4,
+            "genre"
+          ],
+          "expected": "fantasy",
+          "template": "river \u00b7 {value}"
+        }
+      ]
+    },
+    "evolution": {
+      "sha256": "9354fdfed8e538b1ebc8a9a98ea0c84d11ecd082d5ff34df96cf0af508dc2616",
+      "labels": [
+        "preferred_genre",
+        "all_eligible"
+      ],
+      "checks": [
+        {
+          "file": "tutorial-assets/checkpoints/advisory.json",
+          "sha256": "167b663325b3fe73317f746cecc20ca4ddf3471da78029bbf9fcba6d1d91ce70",
+          "path": [
+            "policy",
+            "verdicts",
+            4
+          ],
+          "expected": {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "id": "preferred_genre",
+            "modality": "deontic",
+            "reason": null,
+            "status": "warning",
+            "witnesses": [
+              {
+                "$b": "cosmos",
+                "$g": "science",
+                "$u": "ada"
+              }
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/strict.json",
+          "sha256": "6528b160f86889f041c90da642d28b0fe3aeb2b45cbd4c6df43d872b2611df24",
+          "path": [
+            "policy",
+            "verdicts",
+            4
+          ],
+          "expected": {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "id": "preferred_genre",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              {
+                "$b": "cosmos",
+                "$g": "science",
+                "$u": "ada"
+              }
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/preferred.json",
+          "sha256": "c4621dfc0974bcceccaa23f5914ce4ab86dd72c8d835e9f819add6a4f36019cc",
+          "path": [
+            "accepted"
+          ],
+          "expected": true
+        },
+        {
+          "file": "tutorial-assets/checkpoints/complete.json",
+          "sha256": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e",
+          "path": [
+            "calculation",
+            "eligible_pairs"
+          ],
+          "expected": [
+            {
+              "book": "map",
+              "user": "ada"
+            },
+            {
+              "book": "river",
+              "user": "ada"
+            },
+            {
+              "book": "map",
+              "user": "ben"
+            },
+            {
+              "book": "night",
+              "user": "ben"
+            },
+            {
+              "book": "river",
+              "user": "ben"
+            }
+          ]
+        },
+        {
+          "file": "tutorial-assets/checkpoints/omission-refusal.json",
+          "sha256": "954dd3f85aa4859fc1e1651609d1fe85b425daa8a1dc41e9d203c38b9ffb00cc",
+          "path": [
+            "policy",
+            "verdicts",
+            5
+          ],
+          "expected": {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "guarded",
+            "id": "all_eligible",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              {
+                "$b": "river",
+                "$u": "ada"
+              }
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/advisory.candidate.json",
+          "sha256": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305",
+          "path": [
+            "facts",
+            "recommendation"
+          ],
+          "expected": [
+            {
+              "book": "night",
+              "user": "ben"
+            },
+            {
+              "book": "cosmos",
+              "user": "ada"
+            },
+            {
+              "book": "map",
+              "user": "ada"
+            }
+          ]
+        }
+      ],
+      "caption": "Rules evolve; queries remain owned"
+    }
+  },
+  "sources": {
+    "tutorial-assets/checkpoints/advisory.json": "167b663325b3fe73317f746cecc20ca4ddf3471da78029bbf9fcba6d1d91ce70",
+    "tutorial-assets/checkpoints/strict.json": "6528b160f86889f041c90da642d28b0fe3aeb2b45cbd4c6df43d872b2611df24",
+    "tutorial-assets/checkpoints/complete.json": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e",
+    "tutorial-assets/checkpoints/already-read-refusal.json": "2a01d4b18473fd7e94b2ea9f6c73029910340629014d33fb420f1cb42b04b588",
+    "tutorial-assets/checkpoints/adult-refusal.json": "eb7dad17ed7c34238fac748070c14e5464adb40ef3067b7ac80a01bea8fe0c3e",
+    "tutorial-assets/checkpoints/preferred.json": "c4621dfc0974bcceccaa23f5914ce4ab86dd72c8d835e9f819add6a4f36019cc",
+    "tutorial-assets/checkpoints/omission-refusal.json": "954dd3f85aa4859fc1e1651609d1fe85b425daa8a1dc41e9d203c38b9ffb00cc",
+    "model.orm.yaml": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+    "strict.orm.yaml": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+    "complete.orm.yaml": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+    "seed.population.json": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+    "tutorial-assets/checkpoints/already-read-refusal.input.json": "75ebd4ea8b0403f783f69c30a260b7e1f0ef8821a24b727a75dc189fc91c778f",
+    "tutorial-assets/checkpoints/adult-refusal.input.json": "9d9f9bd989a34a3ea722c2a33ddddb365bc5dae0bb671b1220e9bae967369e62",
+    "tutorial-assets/checkpoints/omission-refusal.input.json": "be5ce520195f10368f7b51bd73a9b852990f4192f7e67b162c807484e2fdb679",
+    "tutorial-assets/checkpoints/advisory.candidate.json": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305",
+    "tutorial-assets/checkpoints/preferred.candidate.json": "1e6f53d90b15abb43a85c55388df99d35d5e4057d5fd7a38a833ac4227cb3b0c",
+    "tutorial-assets/checkpoints/complete.candidate.json": "0d8617807ed9ecf395a0de1a1b2473cf57d356e1e11398a52468a57b80de7a99"
+  },
+  "bindings": [
+    {
+      "report": "tutorial-assets/checkpoints/advisory.json",
+      "model": "model.orm.yaml",
+      "input": "seed.population.json",
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "input_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+      "candidate": "tutorial-assets/checkpoints/advisory.candidate.json",
+      "candidate_sha256": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/strict.json",
+      "model": "strict.orm.yaml",
+      "input": "seed.population.json",
+      "model_sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+      "input_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+      "candidate": "tutorial-assets/checkpoints/advisory.candidate.json",
+      "candidate_sha256": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/preferred.json",
+      "model": "strict.orm.yaml",
+      "input": "seed.population.json",
+      "model_sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+      "input_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+      "candidate": "tutorial-assets/checkpoints/preferred.candidate.json",
+      "candidate_sha256": "1e6f53d90b15abb43a85c55388df99d35d5e4057d5fd7a38a833ac4227cb3b0c"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/complete.json",
+      "model": "complete.orm.yaml",
+      "input": "seed.population.json",
+      "model_sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+      "input_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+      "candidate": "tutorial-assets/checkpoints/complete.candidate.json",
+      "candidate_sha256": "0d8617807ed9ecf395a0de1a1b2473cf57d356e1e11398a52468a57b80de7a99"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/already-read-refusal.json",
+      "model": "model.orm.yaml",
+      "input": "tutorial-assets/checkpoints/already-read-refusal.input.json",
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "input_sha256": "75ebd4ea8b0403f783f69c30a260b7e1f0ef8821a24b727a75dc189fc91c778f",
+      "audit_input": true
+    },
+    {
+      "report": "tutorial-assets/checkpoints/adult-refusal.json",
+      "model": "model.orm.yaml",
+      "input": "tutorial-assets/checkpoints/adult-refusal.input.json",
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "input_sha256": "9d9f9bd989a34a3ea722c2a33ddddb365bc5dae0bb671b1220e9bae967369e62",
+      "audit_input": true
+    },
+    {
+      "report": "tutorial-assets/checkpoints/omission-refusal.json",
+      "model": "complete.orm.yaml",
+      "input": "tutorial-assets/checkpoints/omission-refusal.input.json",
+      "model_sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+      "input_sha256": "be5ce520195f10368f7b51bd73a9b852990f4192f7e67b162c807484e2fdb679",
+      "audit_input": true
+    }
+  ]
+}

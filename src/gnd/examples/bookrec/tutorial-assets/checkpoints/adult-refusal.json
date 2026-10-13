@@ -1,0 +1,71 @@
+{
+  "policy": {
+    "accepted": false,
+    "backend": "duckdb-local",
+    "binding": {
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "population_sha256": "9d9f9bd989a34a3ea722c2a33ddddb365bc5dae0bb671b1220e9bae967369e62"
+    },
+    "derivations": [],
+    "exit_code": 1,
+    "profile": "applications-v1",
+    "schema_version": 1,
+    "status": "rejected",
+    "verdicts": [
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "fact_types[book_has_genre].constraints[0]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "fact_types[book_has_genre].constraints[1]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[0]",
+        "constraint_type": "guarded",
+        "id": "unread_only",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[1]",
+        "constraint_type": "guarded",
+        "id": "age_appropriate",
+        "modality": "alethic",
+        "reason": null,
+        "status": "violated",
+        "witnesses": [
+          {
+            "$b": "night",
+            "$u": "ada"
+          }
+        ]
+      },
+      {
+        "constraint_ref": "constraints[2]",
+        "constraint_type": "guarded",
+        "id": "preferred_genre",
+        "modality": "deontic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      }
+    ]
+  },
+  "case": "m0-r3-negative",
+  "matched": true,
+  "process_exit": 1,
+  "provenance": "PA2 full137 measured native corpus, unchanged runtime"
+}

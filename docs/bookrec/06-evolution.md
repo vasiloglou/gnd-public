@@ -314,3 +314,5 @@ published an explicit rule change, and checked complete derived output. Continue
 with [expense approvals](../expense/01-model.md), explore the
 [capability map](../reference/capabilities.md), or read the
 [agent skill handoffs](../agents/index.md).
+
+[Next: native queries and independent audit](07-native.md).

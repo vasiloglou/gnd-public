@@ -1,0 +1,7 @@
+{
+  "source": "Served built-site SVG after final desc-only rebuild",
+  "observed": {
+    "desc": "Ada/read and Ben/read are excluded by unread_only; Ada/night by age_appropriate. Preferred complete set: Ada/map, Ada/river; Ben/map, Ben/night, Ben/river.",
+    "has_ben_read": true
+  }
+}

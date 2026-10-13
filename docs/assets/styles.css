@@ -47,3 +47,7 @@
 @media (prefers-reduced-motion: reduce) { .md-typeset .gnd-figure * { animation: none !important; } }
 @media (max-width: 960px) { .md-typeset .runtimes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .md-typeset .gallery--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .md-typeset .steps, .md-typeset .orm-teaser, .md-typeset .orm-pair, .md-typeset .runtimes, .md-typeset .gallery--3 { grid-template-columns: 1fr; } }
+
+/* Source-bound tutorial diagrams keep readable labels in either site theme. */
+.md-typeset .app-figure { overflow-x: auto; margin: 1.4rem 0 .6rem; }
+.md-typeset .app-figure img { display: block; width: 100%; min-width: 560px; max-width: none; background: #fff; border-radius: 12px; }

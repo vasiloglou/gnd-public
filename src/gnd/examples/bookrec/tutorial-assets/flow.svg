@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 680" role="img" aria-labelledby="title desc"><title id="title">BookRec: compute, then check</title><desc id="desc">Facts drive native queries; a separate exported checker audits the candidate. Warning publishes, strict failure withholds output.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="560" height="680" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">BookRec: compute, then check</text>
+<rect x="24" y="70" width="512" height="104" rx="12" fill="#eef5f8"/>
+<text x="40" y="100" class="strong">1 · Source facts</text>
+<text x="40" y="129" class="">Catalogue + preferred genres + ratings</text>
+<text x="40" y="156" class="">Ada is a minor; night is adult-only</text>
+<path class="edge" d="M280 174L280 204"/>
+<rect x="24" y="208" width="512" height="102" rx="12" fill="#eef5f8"/>
+<text x="40" y="238" class="strong">2 · Native query</text>
+<text x="40" y="267" class="">Exclude rated and blocked pairs</text>
+<text x="40" y="294" class="">Choose Ada: cosmos, map (limit 2)</text>
+<path class="edge" d="M280 310L280 340"/>
+<rect x="24" y="344" width="512" height="104" rx="12" fill="#eef5f8"/>
+<text x="40" y="374" class="strong">3 · Independent policy audit</text>
+<text x="40" y="403" class="">Check exact proposed recommendation facts</text>
+<text x="40" y="430" class="">preferred_genre → warning or failure</text>
+<path class="edge" d="M180 448L140 488"/>
+<path class="edge" d="M380 448L420 488"/>
+<rect x="24" y="492" width="246" height="133" rx="12" fill="#e9f4ec"/>
+<text x="40" y="522" class="strong">Advisory · accepted</text>
+<text x="40" y="551" class="">WARNING: cosmos</text>
+<text x="40" y="578" class="">Publish checked bytes</text>
+<rect x="290" y="492" width="246" height="133" rx="12" fill="#fff0e4"/>
+<text x="306" y="522" class="strong">Strict · rejected</text>
+<text x="306" y="551" class="">FAIL: preferred_genre</text>
+<text x="306" y="578" class="">No output published</text>
+</svg>

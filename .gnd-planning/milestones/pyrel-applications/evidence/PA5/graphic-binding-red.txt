@@ -1,0 +1,92 @@
+Additional retained-output edit: pytest temporary operator-name token only; predecessor SHA-256 ced84c84b5d52e9ebdc92692d861a689d3b87e5355ccee7f6930878b134d78f3
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_graphic_binding_mutations_fail[expense-currency-model] __________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-715/test_graphic_binding_mutations0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109e81dd0>
+domain = 'expense', mutation = 'currency-model'
+
+    @pytest.mark.parametrize('domain,mutation',[('expense','currency-model'),('expense','limit-label'),('bookrec','refusal-input')])
+    def test_graphic_binding_mutations_fail(tmp_path,monkeypatch,domain,mutation):
+        import shutil
+        home=tmp_path/'src/gnd/examples'/domain
+        shutil.copytree(ROOT/'src/gnd/examples'/domain,home)
+        target=tmp_path/'docs/assets/applications';target.mkdir(parents=True)
+        for source in (ROOT/'docs/assets/applications').glob(domain+'-*.svg'):shutil.copy2(source,target/source.name)
+        monkeypatch.setitem(globals(),'ROOT',tmp_path)
+        name='currency' if mutation=='currency-model' else 'limits' if mutation=='limit-label' else 'eligibility'
+        if mutation=='currency-model':
+            p=home/'currency.orm.json';p.write_text(p.read_text().replace('"EUR"','"USD"'))
+        elif mutation=='refusal-input':
+            p=home/'tutorial-assets/checkpoints/adult-refusal.input.json';p.write_text('{}')
+        else:
+            p=home/'tutorial-assets/limits.svg';p.write_text(p.read_text().replace('category 75','category 70'))
+            shutil.copy2(p,target/'expense-limits.svg')
+            manifest=home/'tutorial-assets/sources.json';data=json.loads(manifest.read_text())
+            data['graphics']['limits']['sha256']=hashlib.sha256(p.read_bytes()).hexdigest();manifest.write_text(json.dumps(data))
+>       with pytest.raises(AssertionError):verify_graphic(domain,name)
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:133: Failed
+___________ test_graphic_binding_mutations_fail[expense-limit-label] ___________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-715/test_graphic_binding_mutations1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109ea6810>
+domain = 'expense', mutation = 'limit-label'
+
+    @pytest.mark.parametrize('domain,mutation',[('expense','currency-model'),('expense','limit-label'),('bookrec','refusal-input')])
+    def test_graphic_binding_mutations_fail(tmp_path,monkeypatch,domain,mutation):
+        import shutil
+        home=tmp_path/'src/gnd/examples'/domain
+        shutil.copytree(ROOT/'src/gnd/examples'/domain,home)
+        target=tmp_path/'docs/assets/applications';target.mkdir(parents=True)
+        for source in (ROOT/'docs/assets/applications').glob(domain+'-*.svg'):shutil.copy2(source,target/source.name)
+        monkeypatch.setitem(globals(),'ROOT',tmp_path)
+        name='currency' if mutation=='currency-model' else 'limits' if mutation=='limit-label' else 'eligibility'
+        if mutation=='currency-model':
+            p=home/'currency.orm.json';p.write_text(p.read_text().replace('"EUR"','"USD"'))
+        elif mutation=='refusal-input':
+            p=home/'tutorial-assets/checkpoints/adult-refusal.input.json';p.write_text('{}')
+        else:
+            p=home/'tutorial-assets/limits.svg';p.write_text(p.read_text().replace('category 75','category 70'))
+            shutil.copy2(p,target/'expense-limits.svg')
+            manifest=home/'tutorial-assets/sources.json';data=json.loads(manifest.read_text())
+            data['graphics']['limits']['sha256']=hashlib.sha256(p.read_bytes()).hexdigest();manifest.write_text(json.dumps(data))
+>       with pytest.raises(AssertionError):verify_graphic(domain,name)
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:133: Failed
+__________ test_graphic_binding_mutations_fail[bookrec-refusal-input] __________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-715/test_graphic_binding_mutations2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109f11110>
+domain = 'bookrec', mutation = 'refusal-input'
+
+    @pytest.mark.parametrize('domain,mutation',[('expense','currency-model'),('expense','limit-label'),('bookrec','refusal-input')])
+    def test_graphic_binding_mutations_fail(tmp_path,monkeypatch,domain,mutation):
+        import shutil
+        home=tmp_path/'src/gnd/examples'/domain
+        shutil.copytree(ROOT/'src/gnd/examples'/domain,home)
+        target=tmp_path/'docs/assets/applications';target.mkdir(parents=True)
+        for source in (ROOT/'docs/assets/applications').glob(domain+'-*.svg'):shutil.copy2(source,target/source.name)
+        monkeypatch.setitem(globals(),'ROOT',tmp_path)
+        name='currency' if mutation=='currency-model' else 'limits' if mutation=='limit-label' else 'eligibility'
+        if mutation=='currency-model':
+            p=home/'currency.orm.json';p.write_text(p.read_text().replace('"EUR"','"USD"'))
+        elif mutation=='refusal-input':
+            p=home/'tutorial-assets/checkpoints/adult-refusal.input.json';p.write_text('{}')
+        else:
+            p=home/'tutorial-assets/limits.svg';p.write_text(p.read_text().replace('category 75','category 70'))
+            shutil.copy2(p,target/'expense-limits.svg')
+            manifest=home/'tutorial-assets/sources.json';data=json.loads(manifest.read_text())
+            data['graphics']['limits']['sha256']=hashlib.sha256(p.read_bytes()).hexdigest();manifest.write_text(json.dumps(data))
+>       with pytest.raises(AssertionError):verify_graphic(domain,name)
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:133: Failed
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_binding_mutations_fail[expense-currency-model]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_binding_mutations_fail[expense-limit-label]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_binding_mutations_fail[bookrec-refusal-input]
+3 failed, 20 deselected in 0.08s

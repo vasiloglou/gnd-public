@@ -239,3 +239,5 @@ and brownfield workflows, or [data and transitions](../guides/data-and-transitio
 for operation checks that audit how a state changes. The
 [agent skill guide](../agents/index.md) explains explicit handoffs between
 these workflows.
+
+[Next: native reporting and approvals](04-native.md).

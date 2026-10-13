@@ -1,0 +1,71 @@
+{
+  "policy": {
+    "accepted": false,
+    "backend": "duckdb-local",
+    "binding": {
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "population_sha256": "75ebd4ea8b0403f783f69c30a260b7e1f0ef8821a24b727a75dc189fc91c778f"
+    },
+    "derivations": [],
+    "exit_code": 1,
+    "profile": "applications-v1",
+    "schema_version": 1,
+    "status": "rejected",
+    "verdicts": [
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "fact_types[book_has_genre].constraints[0]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "fact_types[book_has_genre].constraints[1]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[0]",
+        "constraint_type": "guarded",
+        "id": "unread_only",
+        "modality": "alethic",
+        "reason": null,
+        "status": "violated",
+        "witnesses": [
+          {
+            "$b": "read",
+            "$u": "ada"
+          }
+        ]
+      },
+      {
+        "constraint_ref": "constraints[1]",
+        "constraint_type": "guarded",
+        "id": "age_appropriate",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[2]",
+        "constraint_type": "guarded",
+        "id": "preferred_genre",
+        "modality": "deontic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      }
+    ]
+  },
+  "case": "m0-r2-negative",
+  "matched": true,
+  "process_exit": 1,
+  "provenance": "PA2 full137 measured native corpus, unchanged runtime"
+}

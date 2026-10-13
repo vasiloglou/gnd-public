@@ -1,0 +1,8 @@
+{
+  "source": "Actual local Playwright observation on BookRec mobile390x844, focused tabindex0 region before custom keyboard helper",
+  "key": "ArrowRight",
+  "scroll_left": 0,
+  "scroll_max": 202,
+  "expected": "scroll_left >0",
+  "result": "red"
+}

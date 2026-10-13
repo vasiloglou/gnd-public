@@ -96,7 +96,7 @@ def test_documented_learning_path(group, tmp_path):
     pages = runner.groups(ROOT)[group]
     assert pages
     if group in {'bookrec', 'expense'}:
-        assert len(pages) == (6 if group == 'bookrec' else 3)
+        assert len(pages) == (7 if group == 'bookrec' else 4)
     python = Path(os.environ.get('GND_TUTORIAL_PYTHON', sys.executable)).absolute()
     assert runner.run_pages(pages, tmp_path, python) > 0
 

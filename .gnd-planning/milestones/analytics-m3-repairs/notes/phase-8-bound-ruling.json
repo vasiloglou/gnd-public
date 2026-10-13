@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto",
+  "scope": "added work-bound scalar-schema successor control, no production change after review",
+  "original_approval_sha256": "ed8e3848a66b113d0d5287db553ac722b3b86cc923cafd9c8579527363135415",
+  "current_test_sha256": "f63a3ed8c7b306b19d279003550b0bc9289dbc296be457e3e54a9075d7c4c6f8",
+  "bound_control": "mutant removes only4096-node cap; red1 failed; unchanged production30 passed",
+  "new_domain_data": false
+}

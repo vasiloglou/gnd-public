@@ -88,3 +88,9 @@ def test_unsupported_schema_uses_original_validator(unsupported):
 @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
 def test_hostile_schema_preparation_is_total(schema):
     assert population._prepared_population_schema(schema) is schema
+
+
+def test_schema_preparation_work_bound_falls_back():
+    schema = population._load_population_schema()
+    schema["$defs"]["scalar"] = {"anyOf": [{"type": "string"}] * 5000}
+    assert population._prepared_population_schema(schema) is schema

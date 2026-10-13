@@ -235,8 +235,78 @@ def _load_population_schema() -> dict[str, Any]:
     return _rf7_input.loads(schema_text)
 
 
+def _prepared_population_schema(schema: Any) -> Any:
+    """Expand the bundled schema's finite local refs, or retain the original.
+
+    Only schema positions are traversed; enum/const/annotation values remain
+    literals. Unknown resource/ref structures use the ordinary resolver. This
+    prepares the same validator, never a population or validation marker.
+    """
+    if not isinstance(schema, dict):
+        return schema
+    definitions = schema.get("$defs")
+    if (
+        schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema"
+        or schema.get("$id") != "https://gnd.dev/schema/population.schema.json"
+        or not isinstance(definitions, dict)
+        or set(definitions) != {"scalar", "opaque_marker", "fact_value"}
+    ):
+        return schema
+    work = [0]
+    maps = {"properties", "$defs"}
+    sequences = {"anyOf", "allOf"}
+    children = {"items", "additionalProperties", "if", "else"}
+    literals = {"type", "required", "enum", "const", "title", "description", "minLength"}
+
+    def expand(node: Any, active: tuple[str, ...], depth: int) -> Any:
+        work[0] += 1
+        if depth > 48 or work[0] > 4096:
+            raise ValueError("population schema preparation bound")
+        if isinstance(node, bool):
+            return node
+        if not isinstance(node, dict):
+            raise TypeError("unsupported schema node")
+        if "$ref" in node:
+            reference = node["$ref"]
+            if (
+                len(node) != 1
+                or not isinstance(reference, str)
+                or not reference.startswith("#/$defs/")
+            ):
+                raise ValueError("unsupported schema reference")
+            name = reference.removeprefix("#/$defs/")
+            if name not in definitions or name in active:
+                raise ValueError("unknown or recursive schema reference")
+            return expand(definitions[name], (*active, name), depth + 1)
+        result = {}
+        for key, value in node.items():
+            if depth == 0 and key in {"$schema", "$id"}:
+                result[key] = value
+            elif key in maps:
+                if not isinstance(value, dict):
+                    raise ValueError("unsupported schema map")
+                result[key] = {name: expand(child, active, depth + 1)
+                               for name, child in value.items()}
+            elif key in sequences:
+                if not isinstance(value, list):
+                    raise ValueError("unsupported schema sequence")
+                result[key] = [expand(child, active, depth + 1) for child in value]
+            elif key in children:
+                result[key] = expand(value, active, depth + 1)
+            elif key in literals:
+                result[key] = value
+            else:
+                raise ValueError("unsupported schema keyword or nested resource")
+        return result
+
+    try:
+        return expand(schema, (), 0)
+    except (TypeError, ValueError):
+        return schema
+
+
 def _schema_issues(doc: Any) -> list[ValidationIssue]:
-    validator = Draft202012Validator(_load_population_schema())
+    validator = Draft202012Validator(_prepared_population_schema(_load_population_schema()))
     return [
         ValidationIssue(
             path=error.json_path,

@@ -1,0 +1,16 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_schema_preparation_work_bound_falls_back _________________
+
+    def test_schema_preparation_work_bound_falls_back():
+        schema = population._load_population_schema()
+        schema["$defs"]["scalar"] = {"anyOf": [{"type": "string"}] * 5000}
+>       assert population._prepared_population_schema(schema) is schema
+E       AssertionError: assert {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'https://gnd.dev/schema/population.schema.json', 't...object-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.', ...} is {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'https://gnd.dev/schema/population.schema.json', 't...object-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.', ...}
+E        +  where {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'https://gnd.dev/schema/population.schema.json', 't...object-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.', ...} = <function _prepared_population_schema at 0x1083dba00>({'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'https://gnd.dev/schema/population.schema.json', 't...object-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.', ...})
+E        +    where <function _prepared_population_schema at 0x1083dba00> = population._prepared_population_schema
+
+tests/test_m3_population_schema.py:96: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_schema.py::test_schema_preparation_work_bound_falls_back
+1 failed in 0.06s

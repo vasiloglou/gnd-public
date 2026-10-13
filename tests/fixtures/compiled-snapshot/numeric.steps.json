@@ -1,0 +1,34 @@
+{
+  "model": "model.orm.json",
+  "model_digest": "sha256:a7ab2fad27db896cbaad9120b21970856bde447259dafe0f1220214a1af1bc53",
+  "operations_digest": "sha256:2e276de231730ccfdbfb49f703a98d343cdfb42aac04425040eb5124f742d640",
+  "steps": [
+    {
+      "bindings": {
+        "concept": "expense",
+        "var": "v1"
+      },
+      "op": "start"
+    },
+    {
+      "bindings": {
+        "anchor_role": "expense",
+        "concept": "expense",
+        "fact_type": "expense_has_amount",
+        "literal": "5",
+        "op": ">",
+        "value_role": "amount",
+        "var": "v1"
+      },
+      "op": "filter_compare"
+    },
+    {
+      "bindings": {
+        "concept": "expense",
+        "var": "v1"
+      },
+      "op": "answer_with_count"
+    }
+  ],
+  "steps_schema": 1
+}

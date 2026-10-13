@@ -1,0 +1,21 @@
+..FFF..                                                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_opt_in_single_and_batch[nonnumeric-1] __________________
+tests/test_compiled_snapshot_obligations.py:47: in test_opt_in_single_and_batch
+    result = api.check(model, population, compiled_operations=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: check() got an unexpected keyword argument 'compiled_operations'
+___________________ test_opt_in_single_and_batch[numeric-2] ____________________
+tests/test_compiled_snapshot_obligations.py:47: in test_opt_in_single_and_batch
+    result = api.check(model, population, compiled_operations=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: check() got an unexpected keyword argument 'compiled_operations'
+_____________ test_opt_in_cannot_be_silently_ignored_by_admission ______________
+tests/test_compiled_snapshot_obligations.py:67: in test_opt_in_cannot_be_silently_ignored_by_admission
+    api.check(CORPUS / 'model.orm.json', CORPUS / 'nonnumeric.pop.json',
+E   TypeError: check() got an unexpected keyword argument 'compiled_operations'
+=========================== short test summary info ============================
+FAILED tests/test_compiled_snapshot_obligations.py::test_opt_in_single_and_batch[nonnumeric-1]
+FAILED tests/test_compiled_snapshot_obligations.py::test_opt_in_single_and_batch[numeric-2]
+FAILED tests/test_compiled_snapshot_obligations.py::test_opt_in_cannot_be_silently_ignored_by_admission
+3 failed, 4 passed in 3.37s

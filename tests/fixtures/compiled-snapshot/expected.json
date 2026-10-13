@@ -1,0 +1,13 @@
+{
+  "nonnumeric": {
+    "baseline_snapshot_exit": 2,
+    "walk_exit": 1,
+    "activated_snapshot_exit": 1,
+    "obligation": "filter_compare.pre_numeric"
+  },
+  "numeric": {
+    "baseline_snapshot_exit": 2,
+    "walk_exit": 2,
+    "activated_snapshot_exit": 2
+  }
+}

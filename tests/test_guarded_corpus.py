@@ -128,16 +128,21 @@ def _guarded_timing_samples() -> list[list[float]]:
         for pair in range(-1, 9):
             for index in ((0, 1) if pair % 2 == 0 or pair == -1 else (1, 0)):
                 model, population, expected_bindings = workloads[index]
-                started = time.perf_counter()
-                report = check(model, population)
-                duration = time.perf_counter() - started
-                verdict = next(row for row in report.verdicts
-                               if row.constraint_ref == 'constraints[0]')
-                assert verdict.verdict == 'pass'
-                assert f'bindings={expected_bindings}' in verdict.message
-                assert duration < 2.0, f'individual check exceeded two seconds: {duration}'
+                durations = []
+                # Fixed consecutive batches smooth scheduling/GC noise without
+                # discarding samples, disabling GC or relaxing any bound.
+                for _ in range(5):
+                    started = time.perf_counter()
+                    report = check(model, population)
+                    duration = time.perf_counter() - started
+                    verdict = next(row for row in report.verdicts
+                                   if row.constraint_ref == 'constraints[0]')
+                    assert verdict.verdict == 'pass'
+                    assert f'bindings={expected_bindings}' in verdict.message
+                    assert duration < 2.0, f'individual check exceeded two seconds: {duration}'
+                    durations.append(duration)
                 if pair >= 0:
-                    samples[index].append(duration)
+                    samples[index].append(statistics.mean(durations))
     return samples
 
 
@@ -444,12 +449,13 @@ def test_guarded_measurement_pairs_and_checks_every_report(monkeypatch):
     times = iter(i * .1 for i in range(1000))
     monkeypatch.setattr(time, 'perf_counter', lambda: next(times))
     samples = _guarded_timing_samples()
-    assert calls == [10000, 20000] + [n for i in range(9)
+    order = [10000, 20000] + [n for i in range(9)
         for n in ([10000, 20000] if i % 2 == 0 else [20000, 10000])]
+    assert calls == [n for n in order for _ in range(5)]
     assert [len(x) for x in samples] == [9, 9]
-    for bad_call in (0, 2, 19):
+    for bad_call in (0, 10, 99):
         for bad_verdict, bad_count in [('fail', False), ('pass', True)]:
-            call_index = iter(range(20))
+            call_index = iter(range(100))
             def faulty(model, population, *, call_index=call_index, bad_call=bad_call,
                        bad_verdict=bad_verdict, bad_count=bad_count):
                 broken = next(call_index) == bad_call

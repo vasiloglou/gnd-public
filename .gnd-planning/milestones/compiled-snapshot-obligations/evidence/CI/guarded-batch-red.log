@@ -1,0 +1,10 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_batches_include_all_observations _____________________
+tests/test_guarded_timing_batches.py:33: in test_batches_include_all_observations
+    assert all(row == pytest.approx([.3] * 9) for row in samples)
+E   assert False
+E    +  where False = all(<generator object test_batches_include_all_observations.<locals>.<genexpr> at 0x10ca39e40>)
+=========================== short test summary info ============================
+FAILED tests/test_guarded_timing_batches.py::test_batches_include_all_observations
+1 failed, 1 passed in 0.12s

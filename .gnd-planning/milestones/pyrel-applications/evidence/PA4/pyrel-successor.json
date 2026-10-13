@@ -1,0 +1,14 @@
+{
+  "after": {
+    "sha256": "9d9eff25fb4f515613f49bb249c9676572609448090c2d5bc9cd736001d8542c",
+    "size_bytes": 93920
+  },
+  "before": {
+    "sha256": "9d9eff25fb4f515613f49bb249c9676572609448090c2d5bc9cd736001d8542c",
+    "size_bytes": 93920
+  },
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/pyrel-successor.json",
+  "predecessor_sha256": "482c4f1bdaa18714bc963147cc2ad62dd8bb167d1c599f01021441398af9c01b",
+  "reason": "PA4 exact counted native expense query/aggregate and bound guard-envelope delta; shared parent performs no model-policy evaluation. EUR-only reporting is an explicit application feature boundary. Historical predecessors and runtime bytes remain unchanged.",
+  "schema_version": 1
+}

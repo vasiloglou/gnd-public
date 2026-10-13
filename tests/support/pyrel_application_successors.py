@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = ROOT / '.gnd-planning/milestones/pyrel-applications/evidence'
-PHASES = ['PA1', 'PA2', 'PA3']
+PHASES = ['PA1', 'PA2', 'PA3', 'PA4']
 
 
 def authenticated(name, predecessor, phase):

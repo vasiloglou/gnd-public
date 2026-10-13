@@ -1,0 +1,100 @@
+{
+  "graphics": {
+    "caps-chains": "source model policy_meals75/approval_limit_team_lead100/approval_limit_finance3000 EUR; meal-cap90 and chain-limit800 native witnesses",
+    "currency-evolution": "baseline implicit EUR2260; currency-missing required_expense_has_currency witnesses101/102; currency-explicit native EUR2260 accepted",
+    "reporting-flow": "baseline native calculation.report + accepted policy; team-lead/finance checked candidates"
+  },
+  "limits": "Calculation evidence on rejected inputs is not a successful CLI report or actor/payment authorization.",
+  "parent_sha256": "7ebe05dcf70f6e4229497b3507b8ba6b214aaa74a245fc2337177aa2a1950ad0",
+  "query_sha256": "51393f24d7ad3d1864525a1aa59835c0ef1536abc975becc7ba49414e627fc18",
+  "runtime_sha256": "1ff982e08fe41c0623ad6d62436ba205a6a490046c5e47112ac314689a2f76b8",
+  "scenarios": [
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/baseline.population.json",
+      "candidate_sha256": "abd190e872e1acf0524ce94557ae7f10233154dec33d5814c3fb9180f85d1be5",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/seed.population.json",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/baseline.report.json",
+      "report_sha256": "10cec9d6e4076a25fc00992f71b58e374b52a410cf762afb44cbaa9e9cdaea1f",
+      "scenario": "baseline"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/team-lead.population.json",
+      "candidate_sha256": "43b6e477b1c9da59587ae3bc264b8cc9f60330412e9cdd3e553f48714611d3fa",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/seed.population.json",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/team-lead.report.json",
+      "report_sha256": "774f662877069405389b04d8b13e78cd654bf68e05136099eac147a4542ca036",
+      "scenario": "team-lead"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/finance.population.json",
+      "candidate_sha256": "8d966310b97fcf7c42acfa71b91f857bfc05e4f81ca9fb6219fcc97aeab695b6",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/seed.population.json",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/finance.report.json",
+      "report_sha256": "7cab1130cae4eaabceb10ffc6a02ab8c03491b37d126196278601a00572016e8",
+      "scenario": "finance"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "input": "src/gnd/examples/expense/invalid-meal.population.json",
+      "input_sha256": "1f85a8d9708f93446f81ac89abb7a76fe726c5944c55160e3735cc57e8e8b891",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/meal-cap.report.json",
+      "report_sha256": "96564eecd0d489f35fbcbbcb62874afb4630a9257f77ae53e925f0945d91efb6",
+      "scenario": "meal-cap"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "input": "src/gnd/examples/expense/invalid-chain.population.json",
+      "input_sha256": "f72267d7d18f6fdd29a6f676b7d8ed5a555c0a2fdef8e74831e0aedf0173e312",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/chain-limit.report.json",
+      "report_sha256": "49ab7ca1bed0042e00adeea2c89d9f55cab91b9ee560ae07243349eb5703c2cb",
+      "scenario": "chain-limit"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "input": "src/gnd/examples/expense/currency-missing.population.json",
+      "input_sha256": "fe74784f419c6a7154187ad44fa715860da4c933b08e5322d7c617ddef15b580",
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/currency-missing.report.json",
+      "report_sha256": "187dc246b54ba1f8e770a70442441fff9d023b23e605e96545b68bbf371f0aa4",
+      "scenario": "currency-missing"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/currency-explicit.population.json",
+      "candidate_sha256": "84608300d0a2aabeb25596ab42ac22f8810343e04e2463caa8e77d8ce643f174",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/currency.population.json",
+      "input_sha256": "47e86d8a4ad0a7233929f1a047afa0a5a81de154d55c5baf57a2eb5f143a5b38",
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source/currency-explicit.report.json",
+      "report_sha256": "3a297287c4992a706ad55f54dab88646fa6627984c92814fad7e33ca5c01189a",
+      "scenario": "currency-explicit"
+    }
+  ],
+  "schema_version": 1,
+  "source": "Synthetic shipped expense facts/model limits and actual independent native calculation/checker outputs",
+  "unit": "EUR, whole-number amounts; no conversion"
+}

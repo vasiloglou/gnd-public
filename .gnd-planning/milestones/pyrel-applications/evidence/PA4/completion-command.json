@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_pyrel_application_guards.py",
+    "tests/test_pyrel_application_publication.py",
+    "tests/test_expense_tutorial.py",
+    "tests/test_bookrec_tutorial.py",
+    "tests/test_pyrel_application_acceptance.py",
+    "tests/test_pyrel_application_derivations.py",
+    "tests/test_pyrel_application_driver.py",
+    "tests/test_pyrel_application_corpus.py",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_rf2_pre_move_pins.py",
+    "-k",
+    "not measure"
+  ],
+  "exit": 0
+}

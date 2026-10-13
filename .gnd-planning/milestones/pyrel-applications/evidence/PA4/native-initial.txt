@@ -1,0 +1,72 @@
+Edited receipt: operator paths/pytest username sanitized; result text otherwise retained. Original raw SHA-256 9f64e5ad6f79f1c48ef797e2e564595d36fd873aa5f1c777376b71ed04a6d2b6.
+
+............F........F                                                   [100%]
+=================================== FAILURES ===================================
+_______ test_native_expense_refusals_preserve_inputs[currency-missing-1] _______
+
+home = PosixPath('/private<tmp>/pytest-of-user/pytest-671/test_native_expense_refusals_p7/expense')
+mode = 'currency-missing', expected = 1
+
+    @pytest.mark.parametrize('mode,expected', [('chain-limit', 1), ('unknown-chain', 1), ('unknown-expense', 1),
+                                             ('duplicate', 1), ('meal-cap', 1), ('category', 1),
+                                             ('missing-submitter', 1), ('currency-missing', 1), ('currency-usd', 1),
+                                             ('unknown-coverage', 2)])
+    def test_native_expense_refusals_preserve_inputs(home, mode, expected):
+        model = 'currency.orm.json' if mode.startswith('currency') else 'model.orm.json'
+        population = 'currency.population.json' if mode.startswith('currency') else 'seed.population.json'
+        source = home / population; document = json.loads(source.read_bytes()); facts = document['facts']
+        expense, chain = 101, 'team-lead'
+        if mode == 'chain-limit':
+            expense = 102
+        elif mode == 'unknown-chain':
+            chain = 'fast-track'
+        elif mode == 'unknown-expense':
+            expense = 999
+        elif mode == 'duplicate':
+            expense = 103
+        elif mode == 'meal-cap':
+            facts['expense_has_amount'][0]['amount'] = 76
+        elif mode == 'category':
+            facts['expense_in_category'][0]['category'] = 'unknown'
+        elif mode == 'missing-submitter':
+            facts['expense_submitted_by_employee'] = facts['expense_submitted_by_employee'][1:]
+        elif mode == 'currency-missing':
+            facts['expense_has_currency'] = []
+        elif mode == 'currency-usd':
+            facts['expense_has_currency'][0]['currency'] = 'USD'
+        else:
+            document['population']['covers'].remove('expense_has_amount'); facts['expense_has_amount'] = []
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+        completed = launch(home, 'approve', model=model, population=population, expense=expense, chain=chain)
+>       assert completed.returncode == expected, completed.stderr + completed.stdout
+E       AssertionError: {"accepted": false, "exit_code": 2, "policy": {"accepted": false, "backend": "duckdb-local", "binding": {"model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e", "population_sha256": "eeb8a6aa23a58d370124c2eaec80b43377b0690391427527fb1af8580fa55d0c"}, "derivations": [], "exit_code": 2, "profile": "applications-v1", "schema_version": 1, "status": "incomplete", "verdicts": [{"constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_submitted_by_employee", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_submitted_by_employee", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_amount].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_has_amount", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_amount].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_has_amount", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_in_category].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_in_category", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_in_category].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_in_category", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_is_approved].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_is_approved", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_approved_by_chain", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_currency].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_has_currency", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_currency].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_has_currency", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}, {"constraint_ref": "constraints[0]", "constraint_type": "value", "id": "known_categories", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[1]", "constraint_type": "value", "id": "known_chains", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[2]", "constraint_type": "guarded", "id": "positive_amount", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[3]", "constraint_type": "subset", "id": "approval_needs_submission", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[4]", "constraint_type": "subset", "id": "approval_needs_chain", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[5]", "constraint_type": "subset", "id": "chain_needs_approval", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[6]", "constraint_type": "guarded", "id": "policy_meals", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[7]", "constraint_type": "guarded", "id": "policy_training", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[8]", "constraint_type": "guarded", "id": "policy_travel", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[9]", "constraint_type": "guarded", "id": "policy_equipment", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[10]", "constraint_type": "guarded", "id": "approval_limit_team_lead", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[11]", "constraint_type": "guarded", "id": "approval_limit_finance", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[12]", "constraint_type": "value", "id": "supported_currency", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}]}, "published": false}
+E         
+E       assert 2 == 1
+E        +  where 2 = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...cy", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}]}, "published": false}\n', stderr='').returncode
+
+tests/test_expense_pyrel_application.py:106: AssertionError
+___________ test_invalid_currency_withholds_successful_report[True] ____________
+
+home = PosixPath('/private<tmp>/pytest-of-user/pytest-671/test_invalid_currency_withhold1/expense')
+missing = True
+
+    @pytest.mark.parametrize('missing', [False, True])
+    def test_invalid_currency_withholds_successful_report(home, missing):
+        source = home / 'currency.population.json'; document = json.loads(source.read_bytes())
+        if missing:
+            document['facts']['expense_has_currency'] = []
+        else:
+            document['facts']['expense_has_currency'][0]['currency'] = 'USD'
+        source.write_text(json.dumps(document)); before = source.read_bytes()
+        completed = launch(home, 'report', model='currency.orm.json', population=source.name)
+>       assert completed.returncode == 1, completed.stdout + completed.stderr
+E       AssertionError: {"accepted": false, "exit_code": 2, "policy": {"accepted": false, "backend": "duckdb-local", "binding": {"model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e", "population_sha256": "d84f8769fd54706ae3081ad02cb047c1519a5179d113103aced10b1d102ed4fc"}, "derivations": [], "exit_code": 2, "profile": "applications-v1", "schema_version": 1, "status": "incomplete", "verdicts": [{"constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_submitted_by_employee", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_submitted_by_employee", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_amount].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_has_amount", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_amount].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_has_amount", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_in_category].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_in_category", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_in_category].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_in_category", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_is_approved].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_is_approved", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_approved_by_chain", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_currency].constraints[0]", "constraint_type": "uniqueness", "id": "one_expense_has_currency", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}, {"constraint_ref": "fact_types[expense_has_currency].constraints[1]", "constraint_type": "mandatory", "id": "required_expense_has_currency", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}, {"constraint_ref": "constraints[0]", "constraint_type": "value", "id": "known_categories", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[1]", "constraint_type": "value", "id": "known_chains", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[2]", "constraint_type": "guarded", "id": "positive_amount", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[3]", "constraint_type": "subset", "id": "approval_needs_submission", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[4]", "constraint_type": "subset", "id": "approval_needs_chain", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[5]", "constraint_type": "subset", "id": "chain_needs_approval", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[6]", "constraint_type": "guarded", "id": "policy_meals", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[7]", "constraint_type": "guarded", "id": "policy_training", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[8]", "constraint_type": "guarded", "id": "policy_travel", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[9]", "constraint_type": "guarded", "id": "policy_equipment", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[10]", "constraint_type": "guarded", "id": "approval_limit_team_lead", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[11]", "constraint_type": "guarded", "id": "approval_limit_finance", "modality": "alethic", "reason": null, "status": "satisfied", "witnesses": []}, {"constraint_ref": "constraints[12]", "constraint_type": "value", "id": "supported_currency", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}]}, "published": false}
+E         
+E       assert 2 == 1
+E        +  where 2 = CompletedProcess(args=['<repo>/.venv/bin/python', '-m', 'cli.expense_cli', ...cy", "modality": "alethic", "reason": null, "status": "vacuous", "witnesses": []}]}, "published": false}\n', stderr='').returncode
+
+tests/test_expense_pyrel_application.py:181: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_expense_pyrel_application.py::test_native_expense_refusals_preserve_inputs[currency-missing-1]
+FAILED tests/test_expense_pyrel_application.py::test_invalid_currency_withholds_successful_report[True]
+2 failed, 20 passed in 71.05s (0:01:11)

@@ -1,0 +1,29 @@
+{
+  "added": [
+    [
+      "src/gnd/examples/expense/native_query.py",
+      "main",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/expense/native_query.py",
+      "main",
+      "str(error)[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/expense/native_query.py",
+      "main",
+      "sys.argv[1:]",
+      1
+    ]
+  ],
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/dynamic-query-successor.json",
+  "predecessor_sha256": "335d122be8be2b342c648df7b8414ff70ad78a806925173213dabc956809c2ac",
+  "reason": "PA4 exact counted native expense query/aggregate and bound guard-envelope delta; shared parent performs no model-policy evaluation. EUR-only reporting is an explicit application feature boundary. Historical predecessors and runtime bytes remain unchanged.",
+  "removed": [],
+  "result_distinct_rows": 5831,
+  "result_occurrences": 7354,
+  "schema_version": 1
+}

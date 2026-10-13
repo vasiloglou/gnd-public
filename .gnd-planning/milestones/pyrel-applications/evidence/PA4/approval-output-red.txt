@@ -1,0 +1,40 @@
+Edited receipt: operator paths/pytest username sanitized; result text otherwise retained. Original raw SHA-256 02735d0e4d3217e1e1d94c928d3a07877ea928a3719bffae067655018f518835.
+
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_native_legitimate_approval_publishes[101-team-lead] ___________
+
+home = PosixPath('/private<tmp>/pytest-of-user/pytest-679/test_native_legitimate_approva0/expense')
+expense = 101, chain = 'team-lead'
+
+    @pytest.mark.parametrize('expense,chain', [(101, 'team-lead'), (102, 'finance')])
+    def test_native_legitimate_approval_publishes(home, expense, chain):
+        before = (home / 'seed.population.json').read_bytes()
+        completed = launch(home, 'approve', expense=expense, chain=chain)
+        assert completed.returncode == 0, completed.stderr + completed.stdout
+        result = json.loads(completed.stdout); candidate = json.loads((home / 'result.json').read_bytes())
+        assert result['accepted'] and result['published'] and result['policy']['accepted']
+>       assert 'calculation' not in result
+E       AssertionError: assert 'calculation' not in {'accepted': True, 'calculation': {'approved_expenses': [[103]], 'currency_mode': 'implicit', 'report': {'approved': 1...'population_sha256': '43b6e477b1c9da59587ae3bc264b8cc9f60330412e9cdd3e553f48714611d3fa'}, 'derivations': [], ...}, ...}
+
+tests/test_expense_pyrel_application.py:67: AssertionError
+____________ test_native_legitimate_approval_publishes[102-finance] ____________
+
+home = PosixPath('/private<tmp>/pytest-of-user/pytest-679/test_native_legitimate_approva1/expense')
+expense = 102, chain = 'finance'
+
+    @pytest.mark.parametrize('expense,chain', [(101, 'team-lead'), (102, 'finance')])
+    def test_native_legitimate_approval_publishes(home, expense, chain):
+        before = (home / 'seed.population.json').read_bytes()
+        completed = launch(home, 'approve', expense=expense, chain=chain)
+        assert completed.returncode == 0, completed.stderr + completed.stdout
+        result = json.loads(completed.stdout); candidate = json.loads((home / 'result.json').read_bytes())
+        assert result['accepted'] and result['published'] and result['policy']['accepted']
+>       assert 'calculation' not in result
+E       AssertionError: assert 'calculation' not in {'accepted': True, 'calculation': {'approved_expenses': [[103]], 'currency_mode': 'implicit', 'report': {'approved': 1...'population_sha256': '8d966310b97fcf7c42acfa71b91f857bfc05e4f81ca9fb6219fcc97aeab695b6'}, 'derivations': [], ...}, ...}
+
+tests/test_expense_pyrel_application.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_expense_pyrel_application.py::test_native_legitimate_approval_publishes[101-team-lead]
+FAILED tests/test_expense_pyrel_application.py::test_native_legitimate_approval_publishes[102-finance]
+2 failed, 26 deselected in 5.96s

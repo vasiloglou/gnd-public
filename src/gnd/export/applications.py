@@ -5,6 +5,7 @@ import asyncio
 import hashlib
 import json
 import os
+import re
 import tempfile
 from collections import Counter
 from pathlib import Path
@@ -143,11 +144,16 @@ def _preserve_source(model_doc, source, candidate, owned_relations):
 
 
 def execute_application(model_path, input_path, output_path, *, native_python, query_script,
-                        query_args=(), candidate_transform=None, owned_relations=()):
+                        query_args=(), candidate_transform=None, owned_relations=(), allowed_guard_kinds=()):
     """Only captured candidate bytes with complete native acceptance are published."""
     result = {'exit_code': 70, 'accepted': False, 'published': False,
               'policy': None, 'calculation': None}
     try:
+        if (not isinstance(allowed_guard_kinds, (tuple, list)) or len(allowed_guard_kinds) > 16
+                or any(not isinstance(kind, str) or re.fullmatch('[a-z][a-z0-9-]{0,63}', kind) is None
+                       for kind in allowed_guard_kinds)
+                or len(set(allowed_guard_kinds)) != len(allowed_guard_kinds)):
+            raise ValueError('guard kinds must be distinct bounded declarations')
         output = Path(output_path).absolute()
         if output.exists() or output.is_symlink():
             result.update(exit_code=2, reason='output already exists')
@@ -161,6 +167,7 @@ def execute_application(model_path, input_path, output_path, *, native_python, q
         model_doc = _parse_document(model_bytes.decode('utf-8'))
         model_sha = hashlib.sha256(model_bytes).hexdigest()
         input_sha = hashlib.sha256(input_bytes).hexdigest()
+        result['source_binding'] = {'model_sha256': model_sha, 'input_sha256': input_sha}
         # Capture the owned query too: neither child can change later source reads.
         query_bytes = _capture(query_script, INPUT_CAP)
         with tempfile.TemporaryDirectory(prefix='gnd-native-application-') as directory:
@@ -183,10 +190,20 @@ def execute_application(model_path, input_path, output_path, *, native_python, q
             envelope = bounded_json(_capture(proposal, ARTIFACT_CAP), max_bytes=ARTIFACT_CAP)
             if (not isinstance(envelope, dict) or type(envelope.get('schema_version')) is not int
                     or envelope['schema_version'] != 1
-                    or envelope.get('binding') != {'model_sha256': model_sha, 'input_sha256': input_sha}
-                    or not isinstance(envelope.get('candidate'), dict)
-                    or not isinstance(envelope.get('calculation'), dict)):
+                    or envelope.get('binding') != {'model_sha256': model_sha, 'input_sha256': input_sha}):
                 raise ValueError('malformed or misbound native proposal')
+            if 'guard_refusal' in envelope:
+                guard = envelope['guard_refusal']
+                if (set(envelope) != {'schema_version', 'binding', 'guard_refusal'}
+                        or not isinstance(guard, dict) or set(guard) != {'exit_code', 'kind', 'reason'}
+                        or type(guard['exit_code']) is not int or guard['exit_code'] != 1
+                        or not isinstance(guard['kind'], str) or guard['kind'] not in allowed_guard_kinds
+                        or not isinstance(guard['reason'], str) or not 1 <= len(guard['reason']) <= 300):
+                    raise ValueError('malformed or undeclared application guard refusal')
+                result.update(exit_code=1, application_refusal=guard)
+                return result
+            if not isinstance(envelope.get('candidate'), dict) or not isinstance(envelope.get('calculation'), dict):
+                raise ValueError('malformed native candidate/calculation')  # noqa: TRY004 -- refusal protocol
             document = envelope['candidate']
             if candidate_transform is not None:
                 document = candidate_transform(document)

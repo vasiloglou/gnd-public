@@ -2,17 +2,16 @@
 
 ## Execution checkpoint — 2026-10-13
 
-PA0–PA3 are complete. [PA3](007-phase-PA3.md) adds native BookRec queries,
-source-preserving proposals and independent exact-byte acceptance/publication.
-Current PA3 gates:336 focused checks and24 actual native cases. PA2's unchanged
-137-case framework receipt is explicitly inherited; its2,321 comparable rows and
-two reviewed A1 differences remain unchanged.
+PA0–PA4 are complete. [PA4](008-phase-PA4.md) adds native expense aggregates,
+approval candidates and source-bound application guards through BookRec's shared
+execution/check/publication path. Gates:365 focused checks,29 expense native
+cases and24 BookRec native regressions. Unchanged PA2 full137 framework evidence
+is verified and inherited, with2,321 comparable rows and two reviewed A1 differences.
 
 The effective plan is r1 plus [A1](notes/plan-amendment-a1.md), approved in
-[003](003-plan-amendment.md). Next: PA4 native expense reports/approval candidates;
-its [specification](notes/phase-PA4-spec.md) is preparation before its own gate.
-Three phases remain. Named auto delegation persists; merge, release and
-certification require separate owner authorization.
+[003](003-plan-amendment.md). Next: PA5 executable tutorials and six explanatory
+graphics; PA6 fresh-wheel acceptance and close. Two phases remain. Named auto
+delegation persists; merge, release and certification require separate authorization.
 
 ## Initial execution preparation
 

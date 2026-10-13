@@ -190,3 +190,36 @@ Native work/result limits and mathematical empty-result presentation are explici
 no unimplemented SDK method, runtime upgrade or credential environment is needed.
 
 Delegated approval (auto=true): preceding specification SHA-256 d02933dd3b93b257bd1d8d29d621da530e69809e555d48d1661602e53a3c29df. Named whole-milestone owner delegation persists; PA3 completed211a23f/007. Approve the bounded interfaces and budgets300query/wrapper,400tests,parent600; one Claude initial/at most one bounded repair. Corpus red means missing native interfaces, not executed native business outcomes. No production edit preceded this gate. No merge, release or certificate authorization.
+
+## Review-driven scope decisions before repairs
+
+The first native run had20/22 pass; tests expected hard1 for a fully empty
+covered currency relation. In ordinary ORM, those expenses lack mandatory
+currency. The inherited native profile instead labels its empty-FT walk vacuous
+and refuses2. PA4 preserves that conservative convention, withholds all business
+output, and records it as a bounded residual owned by GND maintainers under
+future native-empty-mandatory-semantics. Single missing and shipped101/102
+missing fixtures exercise actual native mandatory violations/witnesses. No
+frozen runtime/key is changed or stronger equivalence claimed.
+
+The EUR-only guard is the application's supported-unit boundary, separately
+labeled from the model's supported_currency policy. Other currencies remain
+unsupported even if a future model merely expands its enum; currency-specific
+limits/reporting support require deliberate extension. Correct successor claims
+to say no policy evaluation/threshold duplication in the parent, not no policy
+duplication anywhere. Native membership enumeration plus Python result-presence
+orchestration is accurately disclosed, as in BookRec; no Python expense
+category/chain/amount predicate supplies model checking.
+
+Add generic source_binding(model/input SHA) to library results after capture.
+CLI approval output drops pre-approval calculation; reports already hide internal
+calculation and show only accepted arithmetic. Expand named-policy controls for
+duplicate approval, missing submitter when approving another expense, nonpositive
+amount and shipped missing currency. The separate library currency-edit fault
+explicitly declares ownership of currency so the native supported_currency rule
+can be reached; ordinary approval owns only two facts and rejects such an edit3.
+No new currency-edit CLI or actor permission is introduced. Source-binding and
+approval-output defects are observed red before production fixes. Other additions
+are coverage of existing correct boundaries, not claimed pre-fix bug repairs.
+
+Delegated approval (auto=true), named milestone authority: preceding specification SHA-256 d44ca93ddf31dab4ff6aaf5e54e7a40d9af7e114f6329eac07db1a3c2c4cc765. Approve these bounded output/coverage repairs within original budgets before production edits; one bounded repair review remains. Retain exact initial findings and reading limits; no framework semantic change, broad replay, merge or certificate.

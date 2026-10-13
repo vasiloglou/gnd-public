@@ -1,0 +1,36 @@
+{
+  "all_models_match_measured_bindings": true,
+  "case_count": 137,
+  "inherited_receipt_sha256": "35f36dc062b7473af402dce37cec3cf71ecb74defc0652b8ab56787dc6cd1822",
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA2/native-final.json",
+  "predecessor_sha256": "657b04d0fcec0315305dc3b01eead39a560e51a8962e42fe8497d54bf4937195",
+  "schema_version": 1,
+  "scope": "Unchanged framework and137-case corpus inherited from PA2 via PA3. PA4 native arithmetic/application paths separately executed; no new full137 replay claimed.",
+  "unchanged": [
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "receipt_key": "runtime_source_sha256",
+      "sha256": "1ff982e08fe41c0623ad6d62436ba205a6a490046c5e47112ac314689a2f76b8"
+    },
+    {
+      "path": "tools/measure_pyrel_applications.py",
+      "receipt_key": "measurement_tool_sha256",
+      "sha256": "301d7a3a45da27ddbf34c4fdb999281efd23bb0125295524704d239c79162053"
+    },
+    {
+      "path": "tests/fixtures/pyrel_applications/matrix.json",
+      "receipt_key": "matrix_sha256",
+      "sha256": "4fbb82a5188d60ff27f10d0cba462744e0cc6cce050eb8a9e5733862ca3ba57c"
+    },
+    {
+      "path": "tests/fixtures/pyrel_applications/answers.json",
+      "receipt_key": "answers_sha256",
+      "sha256": "db902a387cbbae4b1c87bf0bafed03e66f27b9741439d980e808a716998a00ba"
+    },
+    {
+      "path": "tutorials/runtimes/uv.lock",
+      "receipt_key": "lock_sha256",
+      "sha256": "2b84d81648f9ce8c798257fb847ad16cbd0d5184100f7292134bd0a1a37546b6"
+    }
+  ]
+}

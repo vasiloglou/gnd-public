@@ -1,0 +1,101 @@
+{
+  "graphics": {
+    "caps-chains": "source model policy_meals75/approval_limit_team_lead100/approval_limit_finance3000 EUR; meal-cap90 and chain-limit800 native witnesses",
+    "currency-evolution": "baseline implicit EUR2260; currency-missing required_expense_has_currency witnesses101/102; currency-explicit native EUR2260 accepted",
+    "reporting-flow": "baseline native calculation.report + accepted policy; team-lead/finance checked candidates"
+  },
+  "limits": "Calculation evidence on rejected inputs is not a successful CLI report or actor/payment authorization.",
+  "parent_sha256": "64b564236978fb0c369464c483ab93193e5d912d20121990f8105e30430098fc",
+  "predecessor_sha256": "c6d6f717e4edaf44508eb9523a625e958f43c18d7b5de1f845d36cf5744601a9",
+  "query_sha256": "51393f24d7ad3d1864525a1aa59835c0ef1536abc975becc7ba49414e627fc18",
+  "runtime_sha256": "1ff982e08fe41c0623ad6d62436ba205a6a490046c5e47112ac314689a2f76b8",
+  "scenarios": [
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/baseline.population.json",
+      "candidate_sha256": "abd190e872e1acf0524ce94557ae7f10233154dec33d5814c3fb9180f85d1be5",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/seed.population.json",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/baseline.report.json",
+      "report_sha256": "edf70cc6abacf023edb0667a722e95d891472d7b0faa07b389e1fbde59fbd106",
+      "scenario": "baseline"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/team-lead.population.json",
+      "candidate_sha256": "43b6e477b1c9da59587ae3bc264b8cc9f60330412e9cdd3e553f48714611d3fa",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/seed.population.json",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/team-lead.report.json",
+      "report_sha256": "4482caae3bf1efa965abb5ad27c22332c0c43cfcb232cece072cfca6abfda1b5",
+      "scenario": "team-lead"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/finance.population.json",
+      "candidate_sha256": "8d966310b97fcf7c42acfa71b91f857bfc05e4f81ca9fb6219fcc97aeab695b6",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/seed.population.json",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/finance.report.json",
+      "report_sha256": "20a57d196195eca8d9006b01473fb66a279ac9b7a1da1587d1cffa533bc529fb",
+      "scenario": "finance"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "input": "src/gnd/examples/expense/invalid-meal.population.json",
+      "input_sha256": "1f85a8d9708f93446f81ac89abb7a76fe726c5944c55160e3735cc57e8e8b891",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/meal-cap.report.json",
+      "report_sha256": "57903e38c567631505bfbf0f069694ad686b4894d7963f52294f13fc0bab7463",
+      "scenario": "meal-cap"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "input": "src/gnd/examples/expense/invalid-chain.population.json",
+      "input_sha256": "f72267d7d18f6fdd29a6f676b7d8ed5a555c0a2fdef8e74831e0aedf0173e312",
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/chain-limit.report.json",
+      "report_sha256": "568665f82bc4c6ad511806c7b74c5eb0dcf64cc5999bf13ea957bf5a6145bc85",
+      "scenario": "chain-limit"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "input": "src/gnd/examples/expense/currency-missing.population.json",
+      "input_sha256": "fe74784f419c6a7154187ad44fa715860da4c933b08e5322d7c617ddef15b580",
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/currency-missing.report.json",
+      "report_sha256": "3374c7aadba325ed07c4c157934ba9f015467d84f4257ae0fb464397fa6fce1e",
+      "scenario": "currency-missing"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/currency-explicit.population.json",
+      "candidate_sha256": "84608300d0a2aabeb25596ab42ac22f8810343e04e2463caa8e77d8ce643f174",
+      "exit_code": 0,
+      "input": "src/gnd/examples/expense/currency.population.json",
+      "input_sha256": "47e86d8a4ad0a7233929f1a047afa0a5a81de154d55c5baf57a2eb5f143a5b38",
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/figure-source-final/currency-explicit.report.json",
+      "report_sha256": "e6343586719e32833dfb4133a8bc127d389c6d5cbd96a1a7d69fbf8d8073dbab",
+      "scenario": "currency-explicit"
+    }
+  ],
+  "schema_version": 1,
+  "source": "Synthetic shipped expense facts/model limits and actual independent native calculation/checker outputs",
+  "unit": "EUR, whole-number amounts; no conversion"
+}

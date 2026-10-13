@@ -15,7 +15,7 @@ def check_links(path):
 
 
 def check_current(root):
-    for name in ['process-phase', 'plan-review-panel']:
+    for name in ['process-phase', 'plan-review-panel', 'start-milestone']:
         a = root / '.codex/skills' / name
         b = root / '.claude/skills' / name
         left = {p.relative_to(a) for p in a.rglob('*') if p.is_file()}
@@ -48,12 +48,15 @@ def test_current_contributor_surfaces():
     check_current(ROOT)
 
 
-@pytest.mark.parametrize('mutation', ['broken_reference', 'twin', 'sample', 'skill_reference'])
+@pytest.mark.parametrize('mutation', [
+    'broken_reference', 'twin', 'sample', 'skill_reference',
+    'milestone_twin', 'milestone_reference', 'milestone_mode',
+])
 def test_contributor_controls_reject(tmp_path, mutation):
     # Copy only this predicate's dependency boundary, preserving link values.
     for name in ['.codex/skills', '.claude/skills', 'src/gnd/skills', 'docs/development']:
         shutil.copytree(ROOT / name, tmp_path / name, symlinks=True)
-    for name in ['CONTRIBUTING.md', 'SECURITY.md', 'tools/gnd_layers.json',
+    for name in ['AGENTS.md', 'CONTRIBUTING.md', 'SECURITY.md', 'tools/gnd_layers.json',
                  '.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md']:
         (tmp_path / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, tmp_path / name)
@@ -68,6 +71,16 @@ def test_contributor_controls_reject(tmp_path, mutation):
     elif mutation == 'twin':
         with (tmp_path / '.codex/skills/process-phase/SKILL.md').open('a') as f:
             f.write('changed')
+    elif mutation == 'milestone_twin':
+        with (tmp_path / '.codex/skills/start-milestone/SKILL.md').open('a') as f:
+            f.write('changed')
+    elif mutation == 'milestone_reference':
+        for base in ['.codex', '.claude']:
+            with (tmp_path / base / 'skills/start-milestone/SKILL.md').open('a') as f:
+                f.write('\n[Required reference](missing-milestone-reference.md)\n')
+    elif mutation == 'milestone_mode':
+        path = tmp_path / '.codex/skills/start-milestone/SKILL.md'
+        path.chmod(path.stat().st_mode ^ 0o100)
     else:
         (tmp_path / 'docs/development/examples/phase-record.md').write_text('unlabeled')
     with pytest.raises(AssertionError):

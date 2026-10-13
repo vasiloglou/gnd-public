@@ -17,6 +17,11 @@ Ordinary development uses this checkout's editable package. Final acceptance
 will additionally exercise the exact installed candidate in a fresh target-only
 tree, with actual module/tool/link paths recorded.
 
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+a milestone plan and its first draft phase spec in `.gnd-planning`. It checks
+obligation ownership, dependencies and implementability before execution; it does
+not approve the plan or run phases.
+
 Numbered work follows the full [process-phase](.codex/skills/process-phase/SKILL.md)
 protocol: spec, owner gate, implementation, independent review, refactoring review,
 record and explicit-path commit. The [sample spec](docs/development/examples/phase-spec.md)

@@ -1,0 +1,9 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________________ test_gnd_witness_key_cannot_drift _______________________
+tests/test_pyrel_application_corpus.py:80: in test_gnd_witness_key_cannot_drift
+    with pytest.raises(AssertionError):
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_corpus.py::test_gnd_witness_key_cannot_drift
+1 failed in 0.11s

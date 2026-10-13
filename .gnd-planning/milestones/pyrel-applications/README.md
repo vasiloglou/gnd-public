@@ -2,6 +2,17 @@
 
 ## Execution checkpoint — 2026-10-13
 
+PA0 is complete in [004-phase-PA0.md](004-phase-PA0.md): 61 obligations,
+137 controls, 151 corpus/verifier checks and 77 legacy/isolation checks.
+The effective plan is r1 plus [A1](notes/plan-amendment-a1.md), approved in
+[003](003-plan-amendment.md). Claude Code phase review is selected and completed
+for PA0; the final owned hardening/native measurements are recorded separately.
+Next: PA1 guarded checking and explicit acceptance. Native application acceptance
+remains red; no other phase is complete. Auto delegation persists for this named
+milestone; merge, release and certification remain separate owner actions.
+
+## Initial execution preparation
+
 The owner invoked `process-milestone pyrel-applications auto=true` and selected
 four local readers for plan/close review. [001-plan-gate.md](001-plan-gate.md)
 records their readings and delegated approval of draft r1.

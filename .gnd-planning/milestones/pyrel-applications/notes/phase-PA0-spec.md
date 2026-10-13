@@ -235,3 +235,99 @@ is 5,735 lines and 317,489 bytes, within the declared 15,000-line ceiling.
 The corpus gate is 128 passed; the selected legacy gate is 72 passed,
 13 deselected under existing exclusions. Distinct-harness phase review remains
 pending owner instrument selection; no PA0 completion record is claimed yet.
+
+## Reviewed repair amendment and delegated approval, 2026-10-13
+
+A1/003 supersedes unconditional per-row GND/native agreement only for the two
+named completeness source disagreements. Original statements remain historical;
+current full native expectations are frozen separately from GND observations.
+The corpus revision 2 adds 12 distinct-value uniqueness cases and one joint
+claim/recommendation omission, for 137 case entries over the same 61 obligations.
+Control count means addressed test scenarios, not distinct input byte hashes.
+
+The verifier now compares complete native dispositions, every guarded witness,
+derived missing/extra tuples, modality, profile/status/accepted/process exit and
+exact byte bindings. Current successor mode invokes --accept, just as acceptance
+mode does. Legacy mode is baseline only. The original successor mode was a
+refuted premise: it incorrectly expected new warning/derivation fields from the
+unchanged legacy schema. Its old red receipt is retained as omission history.
+
+Native derived rows use derivation_ref plus status, missing and extra arrays of
+role dictionaries. Zero/two-join/coverage branches are PA1 direct controls; PA0
+never measured them in its original 124 fully covered populations. PA1 will
+record exact native/GND normalization for those measured branches before claims.
+
+Consumer inventory now includes RF2 rendered-program SHA pins, RF1 helper
+goldens, constraint-oracle/isolation consumers, layer map and runtime/CLI docs.
+Historical goldens remain frozen; PA1 must route any actual rendered-source
+change through the named authenticated successor policy, never recapture old goldens.
+
+Current baseline command targets evidence/PA0/baseline-r2.json (expected 0);
+current successor command targets evidence/PA0/successor-r2-red.json (expected 1
+before the new profile exists). Select fresh output names on a rerun; the driver
+rejects occupied output before native work. Public CLI export uses relative model
+labels, stable UTF-8 encoding, pre-run byte hashes and post-run stability checks.
+The raw corpus/receipt caps and explicit version/error checks do not depend on
+Python assertions.
+
+Adopt these repaired design/corpus meanings under existing auto=true delegation.
+No new production code or phase completion is authorized by preparation alone.
+Exact revised corpus hashes:
+- tests/fixtures/pyrel_applications/matrix.json: b102ac2dcb19a2b7dc5c6a43b14cb436f8f043e7c503e9607f4ac8806d381c09
+- tests/fixtures/pyrel_applications/answers.json: db902a387cbbae4b1c87bf0bafed03e66f27b9741439d980e808a716998a00ba
+
+Review convergence before round two: 11 retained initial items; reproduced
+blocking 4/11 (R1 contract impossibility, R2 false driver green, R3 legacy
+successor contradiction, R4 missing affected-consumer routing); self-inflicted
+0/11 (no prior repair round). R5/R6/R7/R10 are corpus/verifier hardening and
+fixed within their owned deliverables. R8 is completeness corrected now because
+incorrect finance/positive stories determine corpus approval. R9's original
+coverage discharge claim is narrowed to PA0's measured boundary; its actual
+unknown/vacuous cases remain PA1. R11 is informational; model labels are source
+provenance, exact hashes bind the variant. Round two is one focused Claude repair
+review, with no third round; new blocking findings require measured disposition.
+
+## Final owned hardening disposition and corpus approval
+
+Claude round two found no blocker. Its current complete-model recomputation
+confirms all native expectations and exactly the two A1 disagreements.
+F1: frozen approval.json and tests now enforce native answers/hash/exclusions,
+including the joint case's obligation link. F2: 13 added inputs actually run
+in native legacy mode: 12 distinct uniqueness violations; the joint derived
+claim has no derivation verdict. F3: array placement, identity/type/reason and
+witness shape now reject malformed native rows. F4: non-object/malformed/oversized
+reports produce recorded mismatches, not a pop-before-validation traceback.
+F5: semantic/manifest/primitive-ambiguity/registry consumers are inventoried.
+F6: actual uniqueness index is used and the unused driver map is removed.
+F7: current navigation and fixture entry point are updated; historical 002 keeps
+its old scope. No native acceptance is credited to mocked checker tests.
+
+The row-placement vulnerable logic was reproduced through an exact inversion
+of the added F3 checks, retained as reconstructed pre-fix logic rather than an
+original-file replay. Original target-only driver and witness-key regressions
+have actual pre-fix red streams. New corrupted-report/schema/hash controls are
+green. Subsequent hardening has root execution evidence; Claude's opinion is
+limited to its reviewed bytes, not falsely extended to these later edits.
+
+Round-two convergence: 7 findings; 0 blocking; self-inflicted 5/7 (F1/F2/F3/F6/F7),
+ceiling Medium-Low. F4's pop boundary and F5's incomplete consumer routing
+predate the repair. The >1/2 rule and the declared one-repair budget stop further
+prose rounds; next instrument is implementation. These are concrete owned
+hardening fixes, not a claim of a third independent opinion.
+
+Explicit delegated budget amendment: driver 200 -> 240 lines; tests 300 -> 380.
+Actual 207/329 exceeds original estimates by 7/29; the revised ceilings retain
+33/51 lines of headroom for required verification, not added product scope.
+Original estimate misses remain recorded. Current fixture data remains beneath
+the original 15,000-line ceiling; recovered intermediate receipts are evidence,
+not new domain fixtures.
+
+Adopt the final approval.json snapshot and native key under the named auto=true
+authorization and A1/003. Fresh corpus/driver gate is 151 passed (exit 0); expanded
+legacy/isolation gate is 77 passed, 13 deselected (exit 0). Native additions are
+13/13 completed audit processes (exit 0); acceptance remains a deliberate red.
+Final snapshot identities:
+- tests/fixtures/pyrel_applications/matrix.json: 4fbb82a5188d60ff27f10d0cba462744e0cc6cce050eb8a9e5733862ca3ba57c
+- tests/fixtures/pyrel_applications/answers.json: db902a387cbbae4b1c87bf0bafed03e66f27b9741439d980e808a716998a00ba
+- tests/fixtures/pyrel_applications/approval.json: b380a31b92297a00d66997ad87da790ee51868bb4a33b984d525c15a36f735b7
+- tests/fixtures/pyrel_applications/README.md: b307a40da8c9d26b454f5e804d263b60c37849a8514d4dbc7580e1bdbe04b578

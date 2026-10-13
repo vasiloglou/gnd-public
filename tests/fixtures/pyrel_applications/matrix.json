@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "obligation_count": 61,
-  "case_count": 124,
+  "case_count": 137,
   "models": [
     "bookrec/model.orm.yaml",
     "bookrec/strict.orm.yaml",
@@ -18,7 +18,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m0-r0-positive",
-      "negative": "m0-r0-negative"
+      "negative": "m0-r0-negative",
+      "distinct": "m0-r0-distinct"
     },
     {
       "model": "bookrec/model.orm.yaml",
@@ -68,7 +69,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m1-r0-positive",
-      "negative": "m1-r0-negative"
+      "negative": "m1-r0-negative",
+      "distinct": "m1-r0-distinct"
     },
     {
       "model": "bookrec/strict.orm.yaml",
@@ -118,7 +120,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m2-r0-positive",
-      "negative": "m2-r0-negative"
+      "negative": "m2-r0-negative",
+      "distinct": "m2-r0-distinct"
     },
     {
       "model": "bookrec/complete.orm.yaml",
@@ -168,7 +171,11 @@
       "kind": "guarded",
       "modality": "alethic",
       "positive": "m2-r5-positive",
-      "negative": "m2-r5-negative"
+      "negative": "m2-r5-negative",
+      "source_disagreements": [
+        "m2-book_is_eligible-extra",
+        "m2-eligible-joint-omission"
+      ]
     },
     {
       "model": "bookrec/complete.orm.yaml",
@@ -200,7 +207,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m3-r0-positive",
-      "negative": "m3-r0-negative"
+      "negative": "m3-r0-negative",
+      "distinct": "m3-r0-distinct"
     },
     {
       "model": "expense/model.orm.json",
@@ -220,7 +228,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m3-r2-positive",
-      "negative": "m3-r2-negative"
+      "negative": "m3-r2-negative",
+      "distinct": "m3-r2-distinct"
     },
     {
       "model": "expense/model.orm.json",
@@ -240,7 +249,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m3-r4-positive",
-      "negative": "m3-r4-negative"
+      "negative": "m3-r4-negative",
+      "distinct": "m3-r4-distinct"
     },
     {
       "model": "expense/model.orm.json",
@@ -270,7 +280,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m3-r7-positive",
-      "negative": "m3-r7-negative"
+      "negative": "m3-r7-negative",
+      "distinct": "m3-r7-distinct"
     },
     {
       "model": "expense/model.orm.json",
@@ -400,7 +411,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m4-r0-positive",
-      "negative": "m4-r0-negative"
+      "negative": "m4-r0-negative",
+      "distinct": "m4-r0-distinct"
     },
     {
       "model": "expense/currency.orm.json",
@@ -420,7 +432,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m4-r2-positive",
-      "negative": "m4-r2-negative"
+      "negative": "m4-r2-negative",
+      "distinct": "m4-r2-distinct"
     },
     {
       "model": "expense/currency.orm.json",
@@ -440,7 +453,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m4-r4-positive",
-      "negative": "m4-r4-negative"
+      "negative": "m4-r4-negative",
+      "distinct": "m4-r4-distinct"
     },
     {
       "model": "expense/currency.orm.json",
@@ -470,7 +484,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m4-r7-positive",
-      "negative": "m4-r7-negative"
+      "negative": "m4-r7-negative",
+      "distinct": "m4-r7-distinct"
     },
     {
       "model": "expense/currency.orm.json",
@@ -480,7 +495,8 @@
       "kind": "uniqueness",
       "modality": "alethic",
       "positive": "m4-r8-positive",
-      "negative": "m4-r8-negative"
+      "negative": "m4-r8-negative",
+      "distinct": "m4-r8-distinct"
     },
     {
       "model": "expense/currency.orm.json",
@@ -627,7 +643,7 @@
     "m0-r0-positive": {
       "model": "src/gnd/examples/bookrec/model.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m0-r0-positive.population.json",
-      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[0]. Duplicate first book_has_genre tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[0]; positive boundary control for bookrec/model.orm.yaml.",
       "target": "fact_types[book_has_genre].constraints[0]",
       "expected": "pass"
     },
@@ -641,7 +657,7 @@
     "m0-r1-positive": {
       "model": "src/gnd/examples/bookrec/model.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m0-r1-positive.population.json",
-      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[1]. Observed book 'cosmos' has no mandatory book_has_genre tuple.",
+      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[1]; positive boundary control for bookrec/model.orm.yaml.",
       "target": "fact_types[book_has_genre].constraints[1]",
       "expected": "pass"
     },
@@ -655,7 +671,7 @@
     "m0-r2-positive": {
       "model": "src/gnd/examples/bookrec/model.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m0-r2-positive.population.json",
-      "story": "Known matching facts satisfy unread_only. Ada already rated read; injecting it after proposal must fail.",
+      "story": "Known matching facts satisfy unread_only; positive boundary control for bookrec/model.orm.yaml.",
       "target": "constraints[0]",
       "expected": "pass"
     },
@@ -669,7 +685,7 @@
     "m0-r3-positive": {
       "model": "src/gnd/examples/bookrec/model.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m0-r3-positive.population.json",
-      "story": "Known matching facts satisfy age_appropriate. Ada is a minor and night is adult-rated.",
+      "story": "Known matching facts satisfy age_appropriate; positive boundary control for bookrec/model.orm.yaml.",
       "target": "constraints[1]",
       "expected": "pass"
     },
@@ -683,7 +699,7 @@
     "m0-r4-positive": {
       "model": "src/gnd/examples/bookrec/model.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m0-r4-positive.population.json",
-      "story": "Known matching facts satisfy preferred_genre. Ada prefers fantasy; cosmos is science. Advisory warns, strict blocks.",
+      "story": "Known matching facts satisfy preferred_genre; positive boundary control for bookrec/model.orm.yaml.",
       "target": "constraints[2]",
       "expected": "pass"
     },
@@ -697,7 +713,7 @@
     "m1-r0-positive": {
       "model": "src/gnd/examples/bookrec/strict.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m1-r0-positive.population.json",
-      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[0]. Duplicate first book_has_genre tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[0]; positive boundary control for bookrec/strict.orm.yaml.",
       "target": "fact_types[book_has_genre].constraints[0]",
       "expected": "pass"
     },
@@ -711,7 +727,7 @@
     "m1-r1-positive": {
       "model": "src/gnd/examples/bookrec/strict.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m1-r1-positive.population.json",
-      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[1]. Observed book 'cosmos' has no mandatory book_has_genre tuple.",
+      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[1]; positive boundary control for bookrec/strict.orm.yaml.",
       "target": "fact_types[book_has_genre].constraints[1]",
       "expected": "pass"
     },
@@ -725,7 +741,7 @@
     "m1-r2-positive": {
       "model": "src/gnd/examples/bookrec/strict.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m1-r2-positive.population.json",
-      "story": "Known matching facts satisfy unread_only. Ada already rated read; injecting it after proposal must fail.",
+      "story": "Known matching facts satisfy unread_only; positive boundary control for bookrec/strict.orm.yaml.",
       "target": "constraints[0]",
       "expected": "pass"
     },
@@ -739,7 +755,7 @@
     "m1-r3-positive": {
       "model": "src/gnd/examples/bookrec/strict.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m1-r3-positive.population.json",
-      "story": "Known matching facts satisfy age_appropriate. Ada is a minor and night is adult-rated.",
+      "story": "Known matching facts satisfy age_appropriate; positive boundary control for bookrec/strict.orm.yaml.",
       "target": "constraints[1]",
       "expected": "pass"
     },
@@ -753,7 +769,7 @@
     "m1-r4-positive": {
       "model": "src/gnd/examples/bookrec/strict.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m1-r4-positive.population.json",
-      "story": "Known matching facts satisfy preferred_genre. Ada prefers fantasy; cosmos is science. Advisory warns, strict blocks.",
+      "story": "Known matching facts satisfy preferred_genre; positive boundary control for bookrec/strict.orm.yaml.",
       "target": "constraints[2]",
       "expected": "pass"
     },
@@ -767,7 +783,7 @@
     "m2-r0-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-r0-positive.population.json",
-      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[0]. Duplicate first book_has_genre tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[0]; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "fact_types[book_has_genre].constraints[0]",
       "expected": "pass"
     },
@@ -781,7 +797,7 @@
     "m2-r1-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-r1-positive.population.json",
-      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[1]. Observed book 'cosmos' has no mandatory book_has_genre tuple.",
+      "story": "Known matching facts satisfy fact_types[book_has_genre].constraints[1]; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "fact_types[book_has_genre].constraints[1]",
       "expected": "pass"
     },
@@ -795,7 +811,7 @@
     "m2-r2-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-r2-positive.population.json",
-      "story": "Known matching facts satisfy unread_only. Ada already rated read; injecting it after proposal must fail.",
+      "story": "Known matching facts satisfy unread_only; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "constraints[0]",
       "expected": "pass"
     },
@@ -809,7 +825,7 @@
     "m2-r3-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-r3-positive.population.json",
-      "story": "Known matching facts satisfy age_appropriate. Ada is a minor and night is adult-rated.",
+      "story": "Known matching facts satisfy age_appropriate; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "constraints[1]",
       "expected": "pass"
     },
@@ -823,7 +839,7 @@
     "m2-r4-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-r4-positive.population.json",
-      "story": "Known matching facts satisfy preferred_genre. Ada prefers fantasy; cosmos is science. Advisory warns, strict blocks.",
+      "story": "Known matching facts satisfy preferred_genre; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "constraints[2]",
       "expected": "pass"
     },
@@ -837,7 +853,7 @@
     "m2-r5-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-r5-positive.population.json",
-      "story": "Known matching facts satisfy all_eligible. Ada/river remains computed eligible but its recommendation is omitted.",
+      "story": "Known matching facts satisfy all_eligible; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "constraints[3]",
       "expected": "pass"
     },
@@ -851,7 +867,7 @@
     "m2-book_is_blocked_for-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-book_is_blocked_for-positive.population.json",
-      "story": "Supplied derived tuples exactly match independently computed extension.",
+      "story": "Known matching facts satisfy book_is_blocked_for; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "derivation:book_is_blocked_for",
       "expected": "pass"
     },
@@ -872,7 +888,7 @@
     "m2-book_is_eligible-positive": {
       "model": "src/gnd/examples/bookrec/complete.orm.yaml",
       "population": "tests/fixtures/pyrel_applications/cases/m2-book_is_eligible-positive.population.json",
-      "story": "Supplied derived tuples exactly match independently computed extension.",
+      "story": "Known matching facts satisfy book_is_eligible; positive boundary control for bookrec/complete.orm.yaml.",
       "target": "derivation:book_is_eligible",
       "expected": "pass"
     },
@@ -893,7 +909,7 @@
     "m3-r0-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r0-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_submitted_by_employee. Duplicate first expense_submitted_by_employee tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_submitted_by_employee; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_submitted_by_employee].constraints[0]",
       "expected": "pass"
     },
@@ -907,7 +923,7 @@
     "m3-r1-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r1-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_submitted_by_employee. Observed expense 101 has no mandatory expense_submitted_by_employee tuple.",
+      "story": "Known matching facts satisfy required_expense_submitted_by_employee; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_submitted_by_employee].constraints[1]",
       "expected": "pass"
     },
@@ -921,7 +937,7 @@
     "m3-r2-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r2-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_has_amount. Duplicate first expense_has_amount tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_has_amount; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_has_amount].constraints[0]",
       "expected": "pass"
     },
@@ -935,7 +951,7 @@
     "m3-r3-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r3-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_has_amount. Observed expense 101 has no mandatory expense_has_amount tuple.",
+      "story": "Known matching facts satisfy required_expense_has_amount; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_has_amount].constraints[1]",
       "expected": "pass"
     },
@@ -949,7 +965,7 @@
     "m3-r4-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r4-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_in_category. Duplicate first expense_in_category tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_in_category; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_in_category].constraints[0]",
       "expected": "pass"
     },
@@ -963,7 +979,7 @@
     "m3-r5-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r5-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_in_category. Observed expense 101 has no mandatory expense_in_category tuple.",
+      "story": "Known matching facts satisfy required_expense_in_category; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_in_category].constraints[1]",
       "expected": "pass"
     },
@@ -977,7 +993,7 @@
     "m3-r6-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r6-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_is_approved. Duplicate first expense_is_approved tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_is_approved; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_is_approved].constraints[0]",
       "expected": "pass"
     },
@@ -991,7 +1007,7 @@
     "m3-r7-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r7-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_approved_by_chain. Duplicate first expense_approved_by_chain tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_approved_by_chain; positive boundary control for expense/model.orm.json.",
       "target": "fact_types[expense_approved_by_chain].constraints[0]",
       "expected": "pass"
     },
@@ -1005,7 +1021,7 @@
     "m3-r8-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r8-positive.population.json",
-      "story": "Known matching facts satisfy known_categories. Unsupported category value violates allowed enum.",
+      "story": "Known matching facts satisfy known_categories; positive boundary control for expense/model.orm.json.",
       "target": "constraints[0]",
       "expected": "pass"
     },
@@ -1019,7 +1035,7 @@
     "m3-r9-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r9-positive.population.json",
-      "story": "Known matching facts satisfy known_chains. Unsupported chain value violates allowed enum.",
+      "story": "Known matching facts satisfy known_chains; positive boundary control for expense/model.orm.json.",
       "target": "constraints[1]",
       "expected": "pass"
     },
@@ -1033,7 +1049,7 @@
     "m3-r10-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r10-positive.population.json",
-      "story": "Known matching facts satisfy positive_amount. Zero is not a positive EUR amount.",
+      "story": "Known matching facts satisfy positive_amount; positive boundary control for expense/model.orm.json.",
       "target": "constraints[2]",
       "expected": "pass"
     },
@@ -1047,7 +1063,7 @@
     "m3-r11-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r11-positive.population.json",
-      "story": "Known matching facts satisfy approval_needs_submission. Dangling subset tuple 999 lacks a matching superset tuple.",
+      "story": "Known matching facts satisfy approval_needs_submission; positive boundary control for expense/model.orm.json.",
       "target": "constraints[3]",
       "expected": "pass"
     },
@@ -1061,7 +1077,7 @@
     "m3-r12-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r12-positive.population.json",
-      "story": "Known matching facts satisfy approval_needs_chain. Dangling subset tuple 999 lacks a matching superset tuple.",
+      "story": "Known matching facts satisfy approval_needs_chain; positive boundary control for expense/model.orm.json.",
       "target": "constraints[4]",
       "expected": "pass"
     },
@@ -1075,7 +1091,7 @@
     "m3-r13-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r13-positive.population.json",
-      "story": "Known matching facts satisfy chain_needs_approval. Dangling subset tuple 999 lacks a matching superset tuple.",
+      "story": "Known matching facts satisfy chain_needs_approval; positive boundary control for expense/model.orm.json.",
       "target": "constraints[5]",
       "expected": "pass"
     },
@@ -1089,7 +1105,7 @@
     "m3-r14-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r14-positive.population.json",
-      "story": "Known matching facts satisfy policy_meals. meals: inclusive cap 75 EUR accepts; 76 EUR fails.",
+      "story": "Known matching facts satisfy policy_meals; positive boundary control for expense/model.orm.json.",
       "target": "constraints[6]",
       "expected": "pass"
     },
@@ -1103,7 +1119,7 @@
     "m3-r15-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r15-positive.population.json",
-      "story": "Known matching facts satisfy policy_training. training: inclusive cap 1500 EUR accepts; 1501 EUR fails.",
+      "story": "Known matching facts satisfy policy_training; positive boundary control for expense/model.orm.json.",
       "target": "constraints[7]",
       "expected": "pass"
     },
@@ -1117,7 +1133,7 @@
     "m3-r16-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r16-positive.population.json",
-      "story": "Known matching facts satisfy policy_travel. travel: inclusive cap 2000 EUR accepts; 2001 EUR fails.",
+      "story": "Known matching facts satisfy policy_travel; positive boundary control for expense/model.orm.json.",
       "target": "constraints[8]",
       "expected": "pass"
     },
@@ -1131,7 +1147,7 @@
     "m3-r17-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r17-positive.population.json",
-      "story": "Known matching facts satisfy policy_equipment. equipment: inclusive cap 3000 EUR accepts; 3001 EUR fails.",
+      "story": "Known matching facts satisfy policy_equipment; positive boundary control for expense/model.orm.json.",
       "target": "constraints[9]",
       "expected": "pass"
     },
@@ -1145,7 +1161,7 @@
     "m3-r18-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r18-positive.population.json",
-      "story": "Known matching facts satisfy approval_limit_team_lead. team-lead: limit 100 EUR accepts; 101 EUR fails independently of category policies.",
+      "story": "Known matching facts satisfy approval_limit_team_lead; positive boundary control for expense/model.orm.json.",
       "target": "constraints[10]",
       "expected": "pass"
     },
@@ -1159,21 +1175,21 @@
     "m3-r19-positive": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r19-positive.population.json",
-      "story": "Known matching facts satisfy approval_limit_finance. finance: limit 3000 EUR accepts; 3001 EUR fails independently of category policies.",
+      "story": "Known matching facts satisfy approval_limit_finance; positive boundary control for expense/model.orm.json.",
       "target": "constraints[11]",
       "expected": "pass"
     },
     "m3-r19-negative": {
       "model": "src/gnd/examples/expense/model.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m3-r19-negative.population.json",
-      "story": "finance: limit 3000 EUR accepts; 3001 EUR fails independently of category policies.",
+      "story": "3,001 EUR exceeds both finance and equipment caps; both declared failures must be retained.",
       "target": "constraints[11]",
       "expected": "fail"
     },
     "m4-r0-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r0-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_submitted_by_employee. Duplicate first expense_submitted_by_employee tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_submitted_by_employee; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_submitted_by_employee].constraints[0]",
       "expected": "pass"
     },
@@ -1187,7 +1203,7 @@
     "m4-r1-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r1-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_submitted_by_employee. Observed expense 101 has no mandatory expense_submitted_by_employee tuple.",
+      "story": "Known matching facts satisfy required_expense_submitted_by_employee; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_submitted_by_employee].constraints[1]",
       "expected": "pass"
     },
@@ -1201,7 +1217,7 @@
     "m4-r2-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r2-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_has_amount. Duplicate first expense_has_amount tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_has_amount; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_has_amount].constraints[0]",
       "expected": "pass"
     },
@@ -1215,7 +1231,7 @@
     "m4-r3-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r3-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_has_amount. Observed expense 101 has no mandatory expense_has_amount tuple.",
+      "story": "Known matching facts satisfy required_expense_has_amount; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_has_amount].constraints[1]",
       "expected": "pass"
     },
@@ -1229,7 +1245,7 @@
     "m4-r4-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r4-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_in_category. Duplicate first expense_in_category tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_in_category; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_in_category].constraints[0]",
       "expected": "pass"
     },
@@ -1243,7 +1259,7 @@
     "m4-r5-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r5-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_in_category. Observed expense 101 has no mandatory expense_in_category tuple.",
+      "story": "Known matching facts satisfy required_expense_in_category; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_in_category].constraints[1]",
       "expected": "pass"
     },
@@ -1257,7 +1273,7 @@
     "m4-r6-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r6-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_is_approved. Duplicate first expense_is_approved tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_is_approved; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_is_approved].constraints[0]",
       "expected": "pass"
     },
@@ -1271,7 +1287,7 @@
     "m4-r7-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r7-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_approved_by_chain. Duplicate first expense_approved_by_chain tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_approved_by_chain; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_approved_by_chain].constraints[0]",
       "expected": "pass"
     },
@@ -1285,7 +1301,7 @@
     "m4-r8-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r8-positive.population.json",
-      "story": "Known matching facts satisfy one_expense_has_currency. Duplicate first expense_has_currency tuple violates row uniqueness.",
+      "story": "Known matching facts satisfy one_expense_has_currency; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_has_currency].constraints[0]",
       "expected": "pass"
     },
@@ -1299,7 +1315,7 @@
     "m4-r9-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r9-positive.population.json",
-      "story": "Known matching facts satisfy required_expense_has_currency. Observed expense 101 has no mandatory expense_has_currency tuple.",
+      "story": "Known matching facts satisfy required_expense_has_currency; positive boundary control for expense/currency.orm.json.",
       "target": "fact_types[expense_has_currency].constraints[1]",
       "expected": "pass"
     },
@@ -1313,7 +1329,7 @@
     "m4-r10-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r10-positive.population.json",
-      "story": "Known matching facts satisfy known_categories. Unsupported category value violates allowed enum.",
+      "story": "Known matching facts satisfy known_categories; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[0]",
       "expected": "pass"
     },
@@ -1327,7 +1343,7 @@
     "m4-r11-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r11-positive.population.json",
-      "story": "Known matching facts satisfy known_chains. Unsupported chain value violates allowed enum.",
+      "story": "Known matching facts satisfy known_chains; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[1]",
       "expected": "pass"
     },
@@ -1341,7 +1357,7 @@
     "m4-r12-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r12-positive.population.json",
-      "story": "Known matching facts satisfy positive_amount. Zero is not a positive EUR amount.",
+      "story": "Known matching facts satisfy positive_amount; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[2]",
       "expected": "pass"
     },
@@ -1355,7 +1371,7 @@
     "m4-r13-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r13-positive.population.json",
-      "story": "Known matching facts satisfy approval_needs_submission. Dangling subset tuple 999 lacks a matching superset tuple.",
+      "story": "Known matching facts satisfy approval_needs_submission; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[3]",
       "expected": "pass"
     },
@@ -1369,7 +1385,7 @@
     "m4-r14-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r14-positive.population.json",
-      "story": "Known matching facts satisfy approval_needs_chain. Dangling subset tuple 999 lacks a matching superset tuple.",
+      "story": "Known matching facts satisfy approval_needs_chain; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[4]",
       "expected": "pass"
     },
@@ -1383,7 +1399,7 @@
     "m4-r15-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r15-positive.population.json",
-      "story": "Known matching facts satisfy chain_needs_approval. Dangling subset tuple 999 lacks a matching superset tuple.",
+      "story": "Known matching facts satisfy chain_needs_approval; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[5]",
       "expected": "pass"
     },
@@ -1397,7 +1413,7 @@
     "m4-r16-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r16-positive.population.json",
-      "story": "Known matching facts satisfy policy_meals. meals: inclusive cap 75 EUR accepts; 76 EUR fails.",
+      "story": "Known matching facts satisfy policy_meals; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[6]",
       "expected": "pass"
     },
@@ -1411,7 +1427,7 @@
     "m4-r17-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r17-positive.population.json",
-      "story": "Known matching facts satisfy policy_training. training: inclusive cap 1500 EUR accepts; 1501 EUR fails.",
+      "story": "Known matching facts satisfy policy_training; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[7]",
       "expected": "pass"
     },
@@ -1425,7 +1441,7 @@
     "m4-r18-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r18-positive.population.json",
-      "story": "Known matching facts satisfy policy_travel. travel: inclusive cap 2000 EUR accepts; 2001 EUR fails.",
+      "story": "Known matching facts satisfy policy_travel; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[8]",
       "expected": "pass"
     },
@@ -1439,7 +1455,7 @@
     "m4-r19-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r19-positive.population.json",
-      "story": "Known matching facts satisfy policy_equipment. equipment: inclusive cap 3000 EUR accepts; 3001 EUR fails.",
+      "story": "Known matching facts satisfy policy_equipment; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[9]",
       "expected": "pass"
     },
@@ -1453,7 +1469,7 @@
     "m4-r20-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r20-positive.population.json",
-      "story": "Known matching facts satisfy approval_limit_team_lead. team-lead: limit 100 EUR accepts; 101 EUR fails independently of category policies.",
+      "story": "Known matching facts satisfy approval_limit_team_lead; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[10]",
       "expected": "pass"
     },
@@ -1467,21 +1483,21 @@
     "m4-r21-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r21-positive.population.json",
-      "story": "Known matching facts satisfy approval_limit_finance. finance: limit 3000 EUR accepts; 3001 EUR fails independently of category policies.",
+      "story": "Known matching facts satisfy approval_limit_finance; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[11]",
       "expected": "pass"
     },
     "m4-r21-negative": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r21-negative.population.json",
-      "story": "finance: limit 3000 EUR accepts; 3001 EUR fails independently of category policies.",
+      "story": "3,001 EUR exceeds both finance and equipment caps; both declared failures must be retained.",
       "target": "constraints[11]",
       "expected": "fail"
     },
     "m4-r22-positive": {
       "model": "src/gnd/examples/expense/currency.orm.json",
       "population": "tests/fixtures/pyrel_applications/cases/m4-r22-positive.population.json",
-      "story": "Known matching facts satisfy supported_currency. Unsupported currency value violates allowed enum.",
+      "story": "Known matching facts satisfy supported_currency; positive boundary control for expense/currency.orm.json.",
       "target": "constraints[12]",
       "expected": "pass"
     },
@@ -1490,6 +1506,97 @@
       "population": "tests/fixtures/pyrel_applications/cases/m4-r22-negative.population.json",
       "story": "Unsupported currency value violates allowed enum.",
       "target": "constraints[12]",
+      "expected": "fail"
+    },
+    "m0-r0-distinct": {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "population": "tests/fixtures/pyrel_applications/cases/m0-r0-distinct.population.json",
+      "story": "Same unique roles with a different genre value violates uniqueness.",
+      "target": "fact_types[book_has_genre].constraints[0]",
+      "expected": "fail"
+    },
+    "m1-r0-distinct": {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "population": "tests/fixtures/pyrel_applications/cases/m1-r0-distinct.population.json",
+      "story": "Same unique roles with a different genre value violates uniqueness.",
+      "target": "fact_types[book_has_genre].constraints[0]",
+      "expected": "fail"
+    },
+    "m2-r0-distinct": {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "population": "tests/fixtures/pyrel_applications/cases/m2-r0-distinct.population.json",
+      "story": "Same unique roles with a different genre value violates uniqueness.",
+      "target": "fact_types[book_has_genre].constraints[0]",
+      "expected": "fail"
+    },
+    "m3-r0-distinct": {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m3-r0-distinct.population.json",
+      "story": "Same unique roles with a different employee value violates uniqueness.",
+      "target": "fact_types[expense_submitted_by_employee].constraints[0]",
+      "expected": "fail"
+    },
+    "m3-r2-distinct": {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m3-r2-distinct.population.json",
+      "story": "Same unique roles with a different amount value violates uniqueness.",
+      "target": "fact_types[expense_has_amount].constraints[0]",
+      "expected": "fail"
+    },
+    "m3-r4-distinct": {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m3-r4-distinct.population.json",
+      "story": "Same unique roles with a different category value violates uniqueness.",
+      "target": "fact_types[expense_in_category].constraints[0]",
+      "expected": "fail"
+    },
+    "m3-r7-distinct": {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m3-r7-distinct.population.json",
+      "story": "Same unique roles with a different chain value violates uniqueness.",
+      "target": "fact_types[expense_approved_by_chain].constraints[0]",
+      "expected": "fail"
+    },
+    "m4-r0-distinct": {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m4-r0-distinct.population.json",
+      "story": "Same unique roles with a different employee value violates uniqueness.",
+      "target": "fact_types[expense_submitted_by_employee].constraints[0]",
+      "expected": "fail"
+    },
+    "m4-r2-distinct": {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m4-r2-distinct.population.json",
+      "story": "Same unique roles with a different amount value violates uniqueness.",
+      "target": "fact_types[expense_has_amount].constraints[0]",
+      "expected": "fail"
+    },
+    "m4-r4-distinct": {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m4-r4-distinct.population.json",
+      "story": "Same unique roles with a different category value violates uniqueness.",
+      "target": "fact_types[expense_in_category].constraints[0]",
+      "expected": "fail"
+    },
+    "m4-r7-distinct": {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m4-r7-distinct.population.json",
+      "story": "Same unique roles with a different chain value violates uniqueness.",
+      "target": "fact_types[expense_approved_by_chain].constraints[0]",
+      "expected": "fail"
+    },
+    "m4-r8-distinct": {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "population": "tests/fixtures/pyrel_applications/cases/m4-r8-distinct.population.json",
+      "story": "Same unique roles with a different currency value violates uniqueness.",
+      "target": "fact_types[expense_has_currency].constraints[0]",
+      "expected": "fail"
+    },
+    "m2-eligible-joint-omission": {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "population": "tests/fixtures/pyrel_applications/cases/m2-eligible-joint-omission.population.json",
+      "story": "Ada/river is computed eligible despite its omission from both claimed eligibility and recommendations. Derived claims and computed completeness both fail.",
+      "target": "derivation:book_is_eligible",
       "expected": "fail"
     }
   },
@@ -1506,6 +1613,21 @@
     "tutorials/runtimes/pyproject.toml",
     "tutorials/runtimes/uv.lock",
     "src/gnd/examples/release_governance/runtime-environment/pyproject.toml",
-    "src/gnd/examples/release_governance/runtime-environment/uv.lock"
-  ]
+    "src/gnd/examples/release_governance/runtime-environment/uv.lock",
+    "tests/test_rf2_pre_move_pins.py",
+    "tests/test_rf1_helper_pins.py",
+    "tests/fixtures/rf1-pins/goldens/helpers",
+    "tests/test_pyrel_constraint_oracle.py",
+    "tests/test_public_pyrel_oracle_isolation.py",
+    "tools/gnd_layers.json",
+    "docs/runtimes/pyrel.md",
+    "docs/reference/cli.md",
+    "tests/test_rf1_semantic_pins.py",
+    "tests/fixtures/rf1-pins/goldens.sha256",
+    "tests/test_rf7_review_regressions.py",
+    "tests/test_v70_phase1_registration.py",
+    "tests/fixtures/rf1-pins/goldens/sem",
+    "tests/fixtures/rf1-pins/goldens/sem-datetime"
+  ],
+  "revision": 2
 }

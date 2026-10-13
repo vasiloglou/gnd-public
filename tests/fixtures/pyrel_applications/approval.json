@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "authorization": "pyrel-applications auto=true; A1/003; PA0 post-review corpus ruling",
+  "matrix_sha256": "4fbb82a5188d60ff27f10d0cba462744e0cc6cce050eb8a9e5733862ca3ba57c",
+  "answers_sha256": "db902a387cbbae4b1c87bf0bafed03e66f27b9741439d980e808a716998a00ba",
+  "intentional_disagreements": {
+    "m2-book_is_eligible-extra": {
+      "constraints[3]": "computed eligibility excludes supplied Ada/night claim"
+    },
+    "m2-eligible-joint-omission": {
+      "constraints[3]": "computed eligibility includes Ada/river despite missing supplied claim"
+    }
+  }
+}

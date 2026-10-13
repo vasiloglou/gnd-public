@@ -1,0 +1,1558 @@
+{
+  "answers_sha256": "db902a387cbbae4b1c87bf0bafed03e66f27b9741439d980e808a716998a00ba",
+  "cases": [
+    {
+      "case": "m0-r0-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "population_sha256": "738ca2132f5b476a910d183636c4c72347b072d47dfc73c1fb46fa6a10dcbcac",
+      "process_exit": 0,
+      "program_sha256": "22c8d861007dde400375833cedddfa903004efc331814c5df8d3d1f0e46861aa",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                "read"
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[book_has_genre].constraints[0]"
+    },
+    {
+      "case": "m1-r0-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+      "population_sha256": "738ca2132f5b476a910d183636c4c72347b072d47dfc73c1fb46fa6a10dcbcac",
+      "process_exit": 0,
+      "program_sha256": "735fee0eb094a9ebcfb6e05f7f1412ba1245afa415d95bc06f94dd736abad6f1",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                "read"
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[book_has_genre].constraints[0]"
+    },
+    {
+      "case": "m2-r0-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+      "population_sha256": "30b2401ad6ad5c242c42bbfb992aa25574cb5415b454b303549b79f2381030e0",
+      "process_exit": 0,
+      "program_sha256": "b27f7bcd3cd0a2ac53714dc05473f78dd93a286cece498f7da5aec7031f881a0",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                "read"
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[book_has_genre].constraints[0]"
+    },
+    {
+      "case": "m3-r0-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "population_sha256": "938d7207d190d03b234f68a889e197e8c52ea3d4c2ef3afd35ef134089bf1efa",
+      "process_exit": 0,
+      "program_sha256": "d100c5f0235c054ce989a66abc334bd12f8e087377af639f73e2057cecf22826",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[expense_submitted_by_employee].constraints[0]"
+    },
+    {
+      "case": "m3-r2-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "population_sha256": "c761678c2d90003d0bae812e094565ba7fe27ed9affceca1c743fc89344d7f51",
+      "process_exit": 0,
+      "program_sha256": "d100c5f0235c054ce989a66abc334bd12f8e087377af639f73e2057cecf22826",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[expense_has_amount].constraints[0]"
+    },
+    {
+      "case": "m3-r4-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "population_sha256": "5f593207a870e553a1b5ca1c4beddde526cb4352811ec2d0d1adf2f1eb533d37",
+      "process_exit": 0,
+      "program_sha256": "d100c5f0235c054ce989a66abc334bd12f8e087377af639f73e2057cecf22826",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[expense_in_category].constraints[0]"
+    },
+    {
+      "case": "m3-r7-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "population_sha256": "d1e31529ce0afad53031ea45ca711499f7b3ca80665daa6e741535e624b7c830",
+      "process_exit": 0,
+      "program_sha256": "d100c5f0235c054ce989a66abc334bd12f8e087377af639f73e2057cecf22826",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                103
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "fact_types[expense_approved_by_chain].constraints[0]"
+    },
+    {
+      "case": "m4-r0-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "population_sha256": "b7720296ee55605ef063ce72baa02e42fab982baf7a4a10c56e0f5ffef4cea44",
+      "process_exit": 0,
+      "program_sha256": "b6da90f4ed60380cf22c84ee756eb8cb35eede38235f3f9f86b58d8e4c031bdb",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[12]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          }
+        ]
+      },
+      "target": "fact_types[expense_submitted_by_employee].constraints[0]"
+    },
+    {
+      "case": "m4-r2-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "population_sha256": "0f888cfdc0552f981f7b116431db34366334c3f91d5ab8a08b7c1e4ca13153b0",
+      "process_exit": 0,
+      "program_sha256": "b6da90f4ed60380cf22c84ee756eb8cb35eede38235f3f9f86b58d8e4c031bdb",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[12]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          }
+        ]
+      },
+      "target": "fact_types[expense_has_amount].constraints[0]"
+    },
+    {
+      "case": "m4-r4-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "population_sha256": "9a1e4e7a606a992e9fd55a9332b2753a6e44aa2d0e682912039a279b06bacf11",
+      "process_exit": 0,
+      "program_sha256": "b6da90f4ed60380cf22c84ee756eb8cb35eede38235f3f9f86b58d8e4c031bdb",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[12]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          }
+        ]
+      },
+      "target": "fact_types[expense_in_category].constraints[0]"
+    },
+    {
+      "case": "m4-r7-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "population_sha256": "04b3c7eff04caece1d3e7fc7027564d15e94c492e0c903e48eda98d90d4b6388",
+      "process_exit": 0,
+      "program_sha256": "b6da90f4ed60380cf22c84ee756eb8cb35eede38235f3f9f86b58d8e4c031bdb",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                103
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[12]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          }
+        ]
+      },
+      "target": "fact_types[expense_approved_by_chain].constraints[0]"
+    },
+    {
+      "case": "m4-r8-distinct",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {},
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "population_sha256": "91cb17c9b0f098afc01df2b4df57fe45d102c706bd39c34a8391ad396a79b00d",
+      "process_exit": 0,
+      "program_sha256": "b6da90f4ed60380cf22c84ee756eb8cb35eede38235f3f9f86b58d8e4c031bdb",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ]
+            ]
+          },
+          {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "value",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[4]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[5]",
+            "constraint_type": "subset",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[7]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[8]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[9]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[11]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[12]",
+            "constraint_type": "value",
+            "status": "violated",
+            "witnesses": [
+              [
+                "USD"
+              ]
+            ]
+          }
+        ]
+      },
+      "target": "fact_types[expense_has_currency].constraints[0]"
+    },
+    {
+      "case": "m2-eligible-joint-omission",
+      "gnd_observed_exit": 1,
+      "intentional_disagreements": {
+        "constraints[3]": "computed eligibility includes Ada/river despite missing supplied claim"
+      },
+      "matches": true,
+      "mismatches": [],
+      "model_sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+      "population_sha256": "11650b5b25b49b560aa1e5dcd4324f9b8a4a160aea2a383e7a72294b2ceb0f67",
+      "process_exit": 0,
+      "program_sha256": "b27f7bcd3cd0a2ac53714dc05473f78dd93a286cece498f7da5aec7031f881a0",
+      "report": {
+        "backend": "duckdb-local",
+        "mode": "select",
+        "oracle": "pyrel",
+        "package": {
+          "name": "relationalai",
+          "version": "1.30.1"
+        },
+        "schema_version": 1,
+        "verdicts": [
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+            "constraint_type": "uniqueness",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+            "constraint_type": "mandatory",
+            "status": "satisfied"
+          },
+          {
+            "constraint_ref": "constraints[0]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[1]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[2]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          },
+          {
+            "constraint_ref": "constraints[3]",
+            "constraint_type": "guarded",
+            "reason": "family-not-evaluated:guarded",
+            "status": "unsupported"
+          }
+        ]
+      },
+      "target": "derivation:book_is_eligible"
+    }
+  ],
+  "denominator": 13,
+  "lock_sha256": "2b84d81648f9ce8c798257fb847ad16cbd0d5184100f7292134bd0a1a37546b6",
+  "matched": 13,
+  "matrix_sha256": "4fbb82a5188d60ff27f10d0cba462744e0cc6cce050eb8a9e5733862ca3ba57c",
+  "mode": "baseline",
+  "runtime": {
+    "duckdb": "1.5.5",
+    "python": "3.13.12",
+    "relationalai": "1.30.1"
+  },
+  "schema_version": 2,
+  "stage": "additions"
+}

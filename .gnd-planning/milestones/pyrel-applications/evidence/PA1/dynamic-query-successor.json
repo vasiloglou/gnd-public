@@ -1,0 +1,233 @@
+{
+  "added": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_mandatory",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_mandatory",
+      "tuple[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "consequent[kind]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "constraint.get(key)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "fields[family]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "row[role['role_name']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "rows[atom['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "rows[consequent[kind]['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "rows[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard",
+      "consequent[kind]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard",
+      "dict[str, str]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard",
+      "variables[term]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard",
+      "{str: 'String', int: 'Integer', bool: 'Boolean'}.get(type(term))",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_rows",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_rows",
+      "list[list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_subset",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_subset",
+      "tuple[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "dict[str, Any]",
+      3
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "f'{type(error).__name__}: {error}'[:300]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "atom",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "atom",
+      "variables[term]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "atom_shape",
+      "roles[role]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "atom_shape",
+      "variables[term]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "_NEGATED_OP[payload['operator']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "constraint['consequent'][kind]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "self.facts[pattern['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "tuple[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "variables[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "operand",
+      "variables[term]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "operand",
+      "{str: 'String', int: 'Integer', bool: 'Boolean'}[type(term)]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "profile_evaluate",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "profile_evaluate",
+      "self.facts[ft_id]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "profile_evaluate",
+      "self.facts[ref['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "profile_evaluate",
+      "tuple[str, Any]",
+      1
+    ]
+  ],
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/dynamic-query-successor.json",
+  "predecessor_sha256": "abc67856029a0b41bcf2965be72f30767096830fe6139b09dbca06b8d7c5fc69",
+  "reason": "PA1 exact syntax candidates in the standalone acceptance profile; no dynamic selector resolution claim.",
+  "removed": [],
+  "result_distinct_rows": 5800,
+  "result_occurrences": 7315,
+  "schema_version": 1
+}

@@ -12,6 +12,11 @@ POLICY = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/q
 DYNAMIC_SUCCESSOR = ROOT / '.gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/dynamic-query-successor.json'
 
 
+def effective_policy():
+    from support.pyrel_application_successors import query_policy
+    return query_policy(POLICY)
+
+
 def reads(sources, *, include_subscriptions=True, include_literal_getattr=True):
     counts = Counter()
     for path, source in sources.items():
@@ -56,12 +61,12 @@ def assert_policy(found, policy):
 
 
 def test_exact_live_query_policy():
-    assert_policy(reads(sources()), json.loads(POLICY.read_text()))
+    assert_policy(reads(sources()), effective_policy())
 
 
 @pytest.mark.parametrize('damage', ['new-read', 'missing-row', 'stale-row', 'extra-occurrence'])
 def test_policy_rejects_each_direction(damage):
-    policy = json.loads(POLICY.read_text())
+    policy = effective_policy()
     found = reads(sources())
     if damage == 'new-read':
         found.update(reads({'src/gnd/new.py': 'def new(model):\n    return model.fact_types\n'}))
@@ -77,7 +82,7 @@ def test_policy_rejects_each_direction(damage):
 
 
 def test_literal_subscription_cannot_escape_direct_read_policy():
-    policy = json.loads(POLICY.read_text())
+    policy = effective_policy()
     found = reads(sources())
     assert_policy(found, policy)
     found.update(reads({'src/gnd/injected.py': 'def injected(model):\n    return model["fact_types"]\n'}))
@@ -149,7 +154,8 @@ def successor_dynamic_rows(successor=None):
     approved.update(added)
     assert len(approved) == successor['result_distinct_rows']
     assert sum(approved.values()) == successor['result_occurrences']
-    return [list(key) + [count] for key, count in sorted(approved.items())]
+    from support.pyrel_application_successors import dynamic_rows
+    return dynamic_rows([list(key) + [count] for key, count in sorted(approved.items())], DYNAMIC_SUCCESSOR)
 
 
 def test_dynamic_candidate_inventory_is_complete_and_live():
@@ -162,7 +168,7 @@ def test_dynamic_candidate_inventory_is_complete_and_live():
 
 
 def test_original_query_metric_remains_below_its_original_target():
-    policy = json.loads(POLICY.read_text())
+    policy = effective_policy()
     metric = policy['original_attribute_get_metric']
     count = sum(reads(sources(), include_subscriptions=False, include_literal_getattr=False).values())
     assert count == metric['current']

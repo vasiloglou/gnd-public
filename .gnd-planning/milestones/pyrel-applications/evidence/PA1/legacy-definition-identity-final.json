@@ -1,0 +1,33 @@
+{
+  "changed_existing_definitions": [
+    "program_main"
+  ],
+  "current_source_sha256": "d8c21fd17e4867aa7f316cc9e72e19d436aaf25577fd2209b7b88bc0155bd7cc",
+  "identical_existing_definitions": [
+    "ExportInputError",
+    "ModelIndex",
+    "PyrelOracle",
+    "_UsageParser",
+    "_admit_model",
+    "_admit_scalar",
+    "_constraint_entries",
+    "_constraints",
+    "_declarations",
+    "_jsonable",
+    "_load_yaml",
+    "_parse_document",
+    "_read_text",
+    "_scalar",
+    "_valid_temporal",
+    "admit_model",
+    "admit_population",
+    "evaluate_document",
+    "load_document",
+    "local_config",
+    "report_document",
+    "run",
+    "write_new"
+  ],
+  "source_base": "04ebec9",
+  "source_path": "src/gnd/export/pyrel_runtime.py"
+}

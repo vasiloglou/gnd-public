@@ -2,14 +2,18 @@
 
 ## Execution checkpoint — 2026-10-13
 
-PA0 is complete in [004-phase-PA0.md](004-phase-PA0.md): 61 obligations,
-137 controls, 151 corpus/verifier checks and 77 legacy/isolation checks.
+PA0 and PA1 are complete: [PA0](004-phase-PA0.md) freezes61obligations/137controls;
+[PA1](005-phase-PA1.md) implements guarded native checking and opt-in acceptance.
+PA1 current gates:358focused checks,19native direct tests,117/117full native
+scenario matches, unchanged legacy goldens and exact source/query successors.
+Two Claude phase readings and owned final hardening dispositions are retained.
+
 The effective plan is r1 plus [A1](notes/plan-amendment-a1.md), approved in
-[003](003-plan-amendment.md). Claude Code phase review is selected and completed
-for PA0; the final owned hardening/native measurements are recorded separately.
-Next: PA1 guarded checking and explicit acceptance. Native application acceptance
-remains red; no other phase is complete. Auto delegation persists for this named
-milestone; merge, release and certification remain separate owner actions.
+[003](003-plan-amendment.md). Next: PA2 integrates existing structured derivation
+capability into the standalone PyRel export/application acceptance path. Its
+[specification](notes/phase-PA2-spec.md) is preparation only until its own gate.
+Complete-model support remains refused; five phases remain. Named auto delegation
+persists; merge, release and certification require separate owner authorization.
 
 ## Initial execution preparation
 

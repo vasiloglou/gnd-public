@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_cross_type_subset_refuses_instead_of_accepting_invalid_model _______
+tests/test_pyrel_application_review_regressions.py:270: in test_cross_type_subset_refuses_instead_of_accepting_invalid_model
+    assert report['exit_code'] == 2 and not report['accepted'], report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}
+E   assert (0 == 2)
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_review_regressions.py::test_cross_type_subset_refuses_instead_of_accepting_invalid_model
+1 failed in 1.08s

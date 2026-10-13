@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto; owner make fixes part of M3; go ahead; go on",
+  "instrument": "corpus-first",
+  "spec_sha256": "6c6a560b6bfb8c4c2b467080a0e13a576c3ff517f92e9b53cb56c28dd3317a36",
+  "test_sha256": "bb3c37d2d2c06e207a66c955d7812c5f75cac59c13f0a05fbf514d780b317469",
+  "source_base": "fde2495",
+  "red_outcome": "single_origin_walk fails against original scan; existing semantic controls stay green",
+  "budget_usd": 0,
+  "new_domain_data": false,
+  "merge_release_certification": false,
+  "ruling": "preserve all projection output and exact JSON spellings; index only per snapshot/finding"
+}

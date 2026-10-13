@@ -75,3 +75,28 @@ by API/query processes; site tooling renders copied docs/assets in target only.
 Eight resource/origin controls are observed red before any harness implementation.
 
 Delegated approval(auto=true),2026-10-13: preceding spec SHA-256 e3c9e43400ad29529d82035eb17b1d81f86448bc70260f5361dce03de9cad511. Named milestone delegation persists; PA5 c9432b0/009 prerequisite complete. Corpus-first eight reds, budgets200harness/100tests, one Claude initial/at mostone repair, all native/install/render gates mandatory. No broad replay, merge/release/certification.
+
+Implementation finding: first target installation failed before any native gate
+because uv sync omitted the explicit tutorial-runtimes dependency group, leaving
+SDK metadata absent. Retain failed target/log; add the named frozen group and run
+a fresh target. No native skip or failed install is credited. Wheel/resource and
+base origin controls already passed. Source commit/dirty and harness hashes are
+recorded alongside the wheel; no source-policy bytes changed.
+
+Installed target B actually passed both offline/native learning paths, current
+GND137 checks and native137/137 (2321/2321 comparable rows), plus generated import
+isolation. Its site build then failed because the preexisting runtime page's
+Proofs.lean source snippet was not staged. Mirror the packaged release_governance
+resources from the installed wheel too; no checkout import or source module on
+PYTHONPATH. Retain B as incomplete; rerun the unchanged semantic gates in fresh C
+so the final harness has a complete actual exit0, not a synthesized receipt.
+
+Review repair gate: receipt coverage/source identity/native inventory gaps are
+located. Add start/end captured source identity, committed harness prefix before
+final run, exact tutorial/native/skip/denominator assertions, all step/program/
+site/source artifact hashes and installed dependency identities. Explicit six
+SVG inventory and target twins are required; install native using documented
+--locked --only-group tutorial-runtimes --python3.13. Retain partial C as
+superseded; D will be the fresh committed-harness run. Enforce expected GND/native
+case-set/approval agreement and2321 comparable/A1two. Keep scope finite.
+Delegated approval(auto=true), preceding spec SHA-256 64a349bb557897083b8ace078e13b5bc1bdde4c1ebc9a2fdfe8b79a9ed5a6c83,2026-10-13. Budget harness250from200, tests120from100; worker scripts remain bounded trusted target copies, future shared corpus-key refactor owned by GND maintainers under native-install-harness-maintenance. One bounded repair reading remains, no third.

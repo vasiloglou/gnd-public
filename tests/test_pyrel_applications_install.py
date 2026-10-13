@@ -56,3 +56,30 @@ def test_origin_rejects_checkout_and_sibling(tmp_path):
     for origin in [checkout/'src/gnd/__init__.py',tmp_path/'venv-sibling/lib/gnd/__init__.py']:
         with pytest.raises(ValueError,match='origin'):
             module.verify_origin(origin,venv,checkout)
+
+
+@pytest.mark.parametrize('group,total,native',[('bookrec',52,2),('expense',34,3)])
+def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,native):
+    module=tool();pages=7 if group=='bookrec' else 4
+    rows=[{'page':str(i%pages),'lane':'pyrel' if i<native else 'offline','status':'passed'} for i in range(total)]
+    module.verify_learning_paths({'count':total,'records':rows},group,'pyrel')
+    for mutation in ['skip','drop']:
+        bad=[dict(r) for r in rows]
+        if mutation=='skip':bad[0]['status']='skipped'
+        else:bad.pop()
+        with pytest.raises(ValueError,match='tutorial'):
+            module.verify_learning_paths({'count':total,'records':bad},group,'pyrel')
+
+
+def test_payload_cap_refuses(tmp_path):
+    target=tmp_path/'large.whl'
+    with zipfile.ZipFile(target,'w',compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr('padding',b'x'*(12*1024*1024+1))
+    with pytest.raises(ValueError,match='payload'):
+        tool().verify_wheel_resources(target,ROOT)
+
+
+@pytest.mark.parametrize('value',[None,[],{}, {'count':52,'records':[None]}])
+def test_malformed_tutorial_receipt_is_refused(value):
+    with pytest.raises(ValueError,match='tutorial'):
+        tool().verify_learning_paths(value,'bookrec','pyrel')

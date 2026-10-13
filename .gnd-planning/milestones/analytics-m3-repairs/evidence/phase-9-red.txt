@@ -1,0 +1,81 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_empty_subset_spends_no_required_role_work ________________
+
+    def test_empty_subset_spends_no_required_role_work():
+        facts, entries = inputs()
+        entry = next(e for e in entries if not facts.get(e["subset"]["of"])
+                     and facts.get(e["subset"]["in"]))
+        budget = implementation.WorkBudget(0)
+>       assert implementation.offending_rows(entry, facts, budget) == []
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_compiled_work.py:26:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src/gnd/compiled_obligations.py:38: in offending_rows
+    required = {key(row, 1) for row in facts.get(str(subset['in']), ())}
+                ^^^^^^^^^^^
+src/gnd/compiled_obligations.py:35: in key
+    budget.visit(len(pairs))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WorkBudget(limit=0, visits=1), count = 1
+
+    def visit(self, count: int) -> None:
+        self.visits += count
+        if self.visits > self.limit:
+>           raise CompiledWorkLimit('compiled obligation role-cell work limit')
+E           gnd.compiled_obligations.CompiledWorkLimit: compiled obligation role-cell work limit
+
+src/gnd/compiled_obligations.py:24: CompiledWorkLimit
+__________________ test_required_projection_is_prepared_once ___________________
+
+    def test_required_projection_is_prepared_once():
+        facts, entries = inputs()
+        active = [e for e in entries if facts.get(e["subset"]["of"])]
+        first, second = next((a,b) for a in active for b in active
+                             if a is not b and a["subset"]["in"] == b["subset"]["in"]
+                             and [p[1] for p in a["role_pairs"]] == [p[1] for p in b["role_pairs"]])
+        roles = len(first["role_pairs"])
+        expected = roles * (len(facts[first["subset"]["in"]])
+                            +len(facts[first["subset"]["of"]])
+                            +len(facts[second["subset"]["of"]]))
+        budget = implementation.WorkBudget(expected)
+>       prepared = implementation._PreparedSubsetRows(facts, budget)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.compiled_obligations' has no attribute '_PreparedSubsetRows'
+
+tests/test_m3_compiled_work.py:41: AttributeError
+________________ test_right_role_order_has_separate_projection _________________
+
+    def test_right_role_order_has_separate_projection():
+        facts, entries = inputs()
+        entry = next(e for e in entries if facts.get(e["subset"]["of"])
+                     and len(e["role_pairs"]) == 2)
+        reversed_entry = copy.deepcopy(entry)
+        reversed_entry["role_pairs"].reverse()
+        expected = 4 * (len(facts[entry["subset"]["of"]])+len(facts[entry["subset"]["in"]]))
+        budget = implementation.WorkBudget(expected)
+>       prepared = implementation._PreparedSubsetRows(facts,budget)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.compiled_obligations' has no attribute '_PreparedSubsetRows'
+
+tests/test_m3_compiled_work.py:55: AttributeError
+_____________ test_public_numeric_fixture_fits_actual_work_budget ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a8c0c30>
+
+    def test_public_numeric_fixture_fits_actual_work_budget(monkeypatch):
+        monkeypatch.setattr(implementation,"MAX_COMPILED_WORK",64)
+        report = api.check(CORPUS / "model.orm.json",CORPUS / "numeric.pop.json",
+                           compiled_operations=True)
+>       assert report["exit_code"] == 2
+E       assert 4 == 2
+
+tests/test_m3_compiled_work.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_compiled_work.py::test_empty_subset_spends_no_required_role_work
+FAILED tests/test_m3_compiled_work.py::test_required_projection_is_prepared_once
+FAILED tests/test_m3_compiled_work.py::test_right_role_order_has_separate_projection
+FAILED tests/test_m3_compiled_work.py::test_public_numeric_fixture_fits_actual_work_budget
+4 failed, 1 passed in 0.45s

@@ -125,3 +125,28 @@ def test_keyed_arity_and_unused_bad_coordinates_remain_unchanged() -> None:
     assert c.project_finding(finding(value, rows=1), obs).fact_refs == (("f", 0),)
     with pytest.raises(ValueError, match="zip"):
         c.project_finding(replace(finding(value, rows=1), witness_keys=("x", "y")), obs)
+
+
+def test_indexed_canonical_selection_order_and_cross_bucket_consumption() -> None:
+    value = scalar(); a = scalar(); b = scalar()
+    obs = SnapshotObservation((origin(a, 1, "x"), origin(b, 1, "x", 1)), (), (), ())
+    row = replace(finding(value, keys=("x",), rows=1), witness=((a,), (value,), (value,)))
+    assert c.project_finding(row, obs).witness == ({"x": 1}, {"x": 1}, {"x": 1})
+    from gnd.semantic_origins import OriginIndex, OriginSelection
+    used = set()
+    selected = OriginSelection(OriginIndex(obs.origins), used)
+    assert selected.value(a, None) == (True, 1) and used == {0}
+    assert selected.value(value, "x") == (True, 1) and used == {0, 1}
+    assert selected.value(value, "x") == (True, 1) and used == {0, 1}
+    assert selected.value(value, "missing") == (False, None)
+    assert selected.value(Scalar("boolean", "1/1", 1, 1, False, "boolean"), None) == (False, None)
+
+
+def test_context_tokens_are_restored_after_error() -> None:
+    value = scalar()
+    obs = SnapshotObservation((), (), (), ())
+    decision = c.SnapshotDecision((finding(value, rows=1),), 0, False, "refuse")
+    assert c._ORIGIN_INDEX.get() is None and c._ORIGIN_SELECTION.get() is None
+    with pytest.raises(ValueError, match="admissible origin"):
+        c.project_snapshot(decision, obs)
+    assert c._ORIGIN_INDEX.get() is None and c._ORIGIN_SELECTION.get() is None

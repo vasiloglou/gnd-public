@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import json
 from collections.abc import Mapping, Sequence
+from contextvars import ContextVar
 from dataclasses import dataclass, replace
 from fractions import Fraction
 from functools import cmp_to_key
@@ -22,6 +22,7 @@ from gnd.semantic_adapter import (
     correspondence_scope,
 )
 from gnd.semantic_ir import IRConstraint, Scalar, SnapshotIR
+from gnd.semantic_origins import OriginIndex, OriginSelection
 from gnd.semantic_rows import (
     canonical_rows as _canonical_rows,
 )
@@ -997,6 +998,12 @@ def _same_scalar(left: Scalar, right: Scalar) -> bool:
 _MISSING = object()
 
 
+_ORIGIN_INDEX: ContextVar[OriginIndex | None] = ContextVar("gnd_origin_index", default=None)
+_ORIGIN_SELECTION: ContextVar[OriginSelection | None] = ContextVar(
+    "gnd_origin_selection", default=None
+)
+
+
 def _origin_value(
     value: Scalar,
     origins: Sequence[ValueOrigin],
@@ -1004,62 +1011,11 @@ def _origin_value(
     *,
     witness_key: str | None = None,
 ) -> PublicScalar | object:
-    def admissible(origin: ValueOrigin) -> bool:
-        if origin.source == "admitted":
-            return origin.derivation_fact_type is None and not origin.dependency_paths
-        return (
-            origin.source == "derived"
-            and origin.derivation_fact_type is not None
-            and bool(origin.dependency_paths)
-        )
-
-    def role_matches(origin: ValueOrigin) -> bool:
-        # Guarded witnesses are keyed by variables (``$x``), not by source
-        # roles. Their admissibility is established by the guarded join; the
-        # origin bridge can still require exact scalar identity. Other keyed
-        # witnesses name the source role directly.
-        return (
-            witness_key is None
-            or witness_key.startswith("$")
-            or origin.path[-1:] == (witness_key,)
-        )
-
-    for index, origin in enumerate(origins):
-        if index in used or origin.scalar is not value or not admissible(origin):
-            continue
-        if not role_matches(origin):
-            continue
-        used.add(index)
-        return origin.admitted_value
-    # A cycle can return to its first admitted cell.  Reuse is sound only for
-    # the exact IR scalar object; canonical equality alone would collapse the
-    # distinct JSON spellings ``1`` and ``1.0``.
-    for origin in origins:
-        if origin.scalar is value and admissible(origin) and role_matches(origin):
-            return origin.admitted_value
-    # Some semantic operators project through an object roster, whose Scalar
-    # object is distinct from the relation cell that admitted it.  Canonical
-    # matching is allowed only when it identifies one exact JSON spelling;
-    # mixed ``1``/``1.0`` candidates are deliberately refused.
-    candidates = [
-        (index, origin)
-        for index, origin in enumerate(origins)
-        if admissible(origin)
-        and _same_scalar(value, origin.scalar)
-        and role_matches(origin)
-    ]
-    identities = {
-        (type(origin.admitted_value).__name__, json.dumps(origin.admitted_value, ensure_ascii=False))
-        for _index, origin in candidates
-    }
-    if len(identities) == 1:
-        for index, origin in candidates:
-            if index not in used:
-                used.add(index)
-                return origin.admitted_value
-        if candidates:
-            return candidates[0][1].admitted_value
-    return _MISSING
+    selection = _ORIGIN_SELECTION.get()
+    if selection is None or selection.index.origins is not origins or selection.used is not used:
+        selection = OriginSelection(OriginIndex(origins), used)
+    found, raw = selection.value(value, witness_key)
+    return raw if found else _MISSING
 
 
 def _subject_occurrences(
@@ -1088,6 +1044,9 @@ def project_finding(
     finding: CorrespondedFinding,
     observation: SnapshotObservation,
 ) -> ProjectedFinding:
+    index = _ORIGIN_INDEX.get()
+    if index is None or index.origins is not observation.origins:
+        index = OriginIndex(observation.origins)
     coordinates: set[tuple[str, int]] = set()
     if finding.verdict == "unchecked" and finding.reason_code in {
         "opaque-value",
@@ -1095,36 +1054,34 @@ def project_finding(
     }:
         coordinates.update(_subject_occurrences(finding.constraint_id, observation))
     elif finding.verdict in {"fail", "warning"}:
-        for origin in observation.origins:
-            path = origin.path
-            if (
-                len(path) == 4 and path[0] == "facts"
-                and any(origin.scalar is scalar for row in finding.witness for scalar in row)
-            ):
-                coordinates.add((str(path[1]), int(path[2])))
+        coordinates.update(index.coordinates(finding.witness))
     rows: list[Any] = []
     used_origins: set[int] = set()
-    for row in finding.witness:
-        projected: list[PublicScalar] = []
-        for position, scalar in enumerate(row):
-            witness_key = (
-                finding.witness_keys[position] if position < len(finding.witness_keys) else None
-            )
-            value = _origin_value(
-                scalar,
-                observation.origins,
-                used_origins,
-                witness_key=witness_key,
-            )
-            if value is _MISSING:
-                raise ValueError(
-                    f"witness for {finding.scope_id!r} has no admissible origin"
+    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins))
+    try:
+        for row in finding.witness:
+            projected: list[PublicScalar] = []
+            for position, scalar in enumerate(row):
+                witness_key = (
+                    finding.witness_keys[position] if position < len(finding.witness_keys) else None
                 )
-            projected.append(value)
-        if finding.family == "guarded" or finding.witness_keys:
-            rows.append(dict(zip(finding.witness_keys, projected, strict=True)))
-        else:
-            rows.append(tuple(projected))
+                value = _origin_value(
+                    scalar,
+                    observation.origins,
+                    used_origins,
+                    witness_key=witness_key,
+                )
+                if value is _MISSING:
+                    raise ValueError(
+                        f"witness for {finding.scope_id!r} has no admissible origin"
+                    )
+                projected.append(value)
+            if finding.family == "guarded" or finding.witness_keys:
+                rows.append(dict(zip(finding.witness_keys, projected, strict=True)))
+            else:
+                rows.append(tuple(projected))
+    finally:
+        _ORIGIN_SELECTION.reset(token)
     return ProjectedFinding(
         finding.scope_id,
         finding.constraint_id,
@@ -1142,7 +1099,11 @@ def project_snapshot(
     decision: SnapshotDecision,
     observation: SnapshotObservation,
 ) -> SnapshotProjection:
-    findings = tuple(project_finding(row, observation) for row in decision.findings)
+    token = _ORIGIN_INDEX.set(OriginIndex(observation.origins))
+    try:
+        findings = tuple(project_finding(row, observation) for row in decision.findings)
+    finally:
+        _ORIGIN_INDEX.reset(token)
     vocabulary: tuple[SnapshotVerdict, ...] = ("pass", "fail", "warning", "unchecked", "vacuous")
     counts = tuple((name, sum(row.verdict == name for row in findings)) for name in vocabulary)
     return SnapshotProjection(

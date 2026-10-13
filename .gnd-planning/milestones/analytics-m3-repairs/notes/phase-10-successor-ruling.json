@@ -1,0 +1,7 @@
+{
+  "approval_test_sha256": "bb3c37d2d2c06e207a66c955d7812c5f75cac59c13f0a05fbf514d780b317469",
+  "successor_test_sha256": "e596c5930042fce38822ced68b48b960f29f274a23645d9e612bc53a617366da",
+  "changes": "add indexed cross-bucket consumption and exception context-reset tests; original approved cases unchanged",
+  "authority": "standing M3 auto",
+  "expected_results_changed": false
+}

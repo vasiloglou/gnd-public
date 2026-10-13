@@ -62,3 +62,15 @@ def test_subset_invalid_shape_refuses_like_oracle(changes, tmp_path):
     constraint, snapshot, _ = _case("P2-086", tmp_path)
     constraint = replace(constraint, **changes)
     assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == semantic_spec.verdict_of(constraint, snapshot)
+
+
+def test_native_measurement_counts_canonicalization_identity_work():
+    import runpy
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    measure = runpy.run_path(str(root / ".gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-native-layer.py"))["measure_identity_work"]
+    scalar = canonical_scalar(1, None)
+    rows, _, count = measure(lambda: semantic_rows.canonical_rows([(scalar,), (scalar,)]))
+    assert rows == ((scalar,),)
+    assert count == 2

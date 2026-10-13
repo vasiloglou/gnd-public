@@ -1229,7 +1229,7 @@ def _load_intermediate(
     try:
         payload = artifacts.canonical_json_bytes(document)
         population = load_population_bytes(
-            payload, source=f"<intermediate state after step {index}>", model=model
+            payload, source=f"<intermediate state after step {index}>.json", model=model
         )
     except Exception as error:  # noqa: BLE001 - an intermediate refusal stays a verdict
         population = None
@@ -1274,7 +1274,7 @@ def _load_intermediate_dispatch(
     try:
         population = load_population_bytes(
             artifacts.canonical_json_bytes(document),
-            source=f"<intermediate state after step {index}>", model=model,
+            source=f"<intermediate state after step {index}>.json", model=model,
         )
     except Exception as error:  # noqa: BLE001 - an intermediate refusal stays a verdict
         population = None
@@ -1896,7 +1896,7 @@ def _population_from_asserted_state(
         document["population"]["model_id"] = model.model_id
     return load_population_bytes(
         artifacts.canonical_json_bytes(document),
-        source=f"<dynamic asserted state after step {index}>",
+        source=f"<dynamic asserted state after step {index}>.json",
         model=model,
     )
 
@@ -2090,7 +2090,7 @@ def evaluate_plan(
     computed_document = _rf7_input.loads(canonical)
     computed_document["population"]["model_id"] = pre.model_id
     try:
-        computed = load_population_bytes(canonical, source="<computed post>", model=model)
+        computed = load_population_bytes(canonical, source="<computed post>.json", model=model)
     except Exception:  # noqa: BLE001 - the final intermediate already records band 4
         computed = None
     if computed is not None:
@@ -2103,7 +2103,7 @@ def evaluate_plan(
         effective_document["facts"] = effective_post
         effective_population = load_population_bytes(
             artifacts.canonical_json_bytes(effective_document),
-            source="<computed post evaluation view>",
+            source="<computed post evaluation view>.json",
             model=model,
         )
         report.post_snapshot = check(model, effective_population)

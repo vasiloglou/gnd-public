@@ -15,7 +15,8 @@ def check_links(path):
 
 
 def check_current(root):
-    for name in ['process-phase', 'plan-review-panel', 'start-milestone']:
+    for name in ['process-phase', 'plan-review-panel', 'start-milestone',
+                 'process-milestone']:
         a = root / '.codex/skills' / name
         b = root / '.claude/skills' / name
         left = {p.relative_to(a) for p in a.rglob('*') if p.is_file()}
@@ -51,8 +52,13 @@ def test_current_contributor_surfaces():
 @pytest.mark.parametrize('mutation', [
     'broken_reference', 'twin', 'sample', 'skill_reference',
     'milestone_twin', 'milestone_reference', 'milestone_mode',
+    'process_milestone_twin', 'process_milestone_reference', 'process_milestone_mode',
 ])
 def test_contributor_controls_reject(tmp_path, mutation):
+    skill_name = 'start-milestone'
+    if mutation.startswith('process_milestone_'):
+        skill_name = 'process-milestone'
+        mutation = mutation.removeprefix('process_')
     # Copy only this predicate's dependency boundary, preserving link values.
     for name in ['.codex/skills', '.claude/skills', 'src/gnd/skills', 'docs/development']:
         shutil.copytree(ROOT / name, tmp_path / name, symlinks=True)
@@ -72,14 +78,14 @@ def test_contributor_controls_reject(tmp_path, mutation):
         with (tmp_path / '.codex/skills/process-phase/SKILL.md').open('a') as f:
             f.write('changed')
     elif mutation == 'milestone_twin':
-        with (tmp_path / '.codex/skills/start-milestone/SKILL.md').open('a') as f:
+        with (tmp_path / '.codex/skills' / skill_name / 'SKILL.md').open('a') as f:
             f.write('changed')
     elif mutation == 'milestone_reference':
         for base in ['.codex', '.claude']:
-            with (tmp_path / base / 'skills/start-milestone/SKILL.md').open('a') as f:
+            with (tmp_path / base / 'skills' / skill_name / 'SKILL.md').open('a') as f:
                 f.write('\n[Required reference](missing-milestone-reference.md)\n')
     elif mutation == 'milestone_mode':
-        path = tmp_path / '.codex/skills/start-milestone/SKILL.md'
+        path = tmp_path / '.codex/skills' / skill_name / 'SKILL.md'
         path.chmod(path.stat().st_mode ^ 0o100)
     else:
         (tmp_path / 'docs/development/examples/phase-record.md').write_text('unlabeled')

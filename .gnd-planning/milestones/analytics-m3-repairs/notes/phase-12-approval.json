@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-13",
+  "authority": "Owner M3 auto; make fixes part of M3; fix it; remaining M3 reviews approved; high requested",
+  "instrument": "corpus-first",
+  "source_base": "512ed63",
+  "spec_sha256": "ea6dde512871bce19bd22d08175611e38c7f78a2e644442724c9b439ba3aedb2",
+  "test_sha256": "9bcd2f2aa8dccd9ace496d794650ed5c85dbd339556c1a726a600e855b102584",
+  "paid_cap": 0,
+  "expected_outputs_weakened": false,
+  "synthetic_domain_data": false,
+  "review_model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "source_merge_authorized": false
+}

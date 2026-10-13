@@ -113,3 +113,15 @@ things.
 
 The authoritative [walk contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#walks--stepsjson-and-transition-evaluation)
 defines digest binding, frame scope, dynamic rules, and evaluation order.
+
+## Check compiled standing obligations in a snapshot
+
+Use `gnd check MODEL POP --compiled-operations --format json`, or add the same
+flag to `gnd check MODEL --populations DIR --format json`. In Python use
+`api.check(model, population, compiled_operations=True)`. This is an explicit
+assertion that eligible operational implications apply to the population.
+Ordinary snapshots keep their current behavior. The generated failure reference
+names its operation/precondition source, so single and batch callers can compare
+identical obligation sets. The option cannot combine with occurrence admission.
+See the [canonical compiled-obligation contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#compiled-obligations)
+for coverage, uncertainty, work limits and the walk-only boundary.

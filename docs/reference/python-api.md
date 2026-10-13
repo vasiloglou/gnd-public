@@ -313,3 +313,12 @@ The current signatures live in
 [the public API module](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/api.py).
 The [format index](formats.md) points to the authoritative contracts for each
 report and input family.
+
+### Compiled snapshot operation obligations
+
+`api.check(model, population, compiled_operations=True)` adds eligible standing
+operation subsets to a snapshot check. Default checking still excludes operations.
+Known alethic violations appear as `compiled-subset` verdicts and band 1; missing
+coverage/unknown inputs appear as unchecked. Reports carry no proof-backed
+assurance for this new mode. `admission=True` cannot be combined with it. Use
+`api.transition` for step, dynamic, intermediate-state and frame obligations.

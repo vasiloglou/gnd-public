@@ -1,0 +1,40 @@
+{
+  "agreed_populations": 2,
+  "boundary": "Public batch output does not expose every passing/warning obligation row. Agreement is over its exact observable normalized fields, not all per-row dispositions or full walks.",
+  "normalization": [
+    "exit_code",
+    "counts",
+    "failing_constraints"
+  ],
+  "population_denominator": 2,
+  "rows": [
+    {
+      "case": "nonnumeric",
+      "compiled_inventory": 23,
+      "counts": {
+        "fail": 1,
+        "pass": 24,
+        "unchecked": 0,
+        "vacuous": 53,
+        "warning": 0
+      },
+      "exit_code": 1,
+      "failed_constraints": [
+        "$.operations[id=filter_compare].compiled[2]"
+      ]
+    },
+    {
+      "case": "numeric",
+      "compiled_inventory": 23,
+      "counts": {
+        "fail": 0,
+        "pass": 25,
+        "unchecked": 0,
+        "vacuous": 53,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "failed_constraints": []
+    }
+  ]
+}

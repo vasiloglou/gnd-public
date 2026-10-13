@@ -1,0 +1,14 @@
+{
+  "after": {
+    "sha256": "9d9eff25fb4f515613f49bb249c9676572609448090c2d5bc9cd736001d8542c",
+    "size_bytes": 93920
+  },
+  "before": {
+    "sha256": "6dad29de39d6dd8623fa1c916c30020292e8ad7ff8c6621083cdf484b02e866d",
+    "size_bytes": 86207
+  },
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA1/pyrel-successor.json",
+  "predecessor_sha256": "eee901a2511f645e30cb2aeed6cd55ec231279cc4d84a4bdbf0fc56a0ab31309",
+  "reason": "PA2 integrates native derivation calculation and claim checking in applications-v1; legacy evaluator unchanged. No historical source recapture.",
+  "schema_version": 1
+}

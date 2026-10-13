@@ -99,6 +99,15 @@ def check_acceptance(report: dict, process_exit: int, answer: dict, model: dict,
                 if not isinstance(witnesses, list) or canonical_rows(witnesses) != canonical_rows(guarded[ref]):
                     failures.append('witnesses:' + ref)
             if ref in answer['expected_native_derivations']:
+                if row.get('fact_type') != ref.split(':', 1)[1] or row.get('reason', 'missing') is not None:
+                    failures.append('derivation-identity:' + ref)
+                computed = row.get('computed')
+                expected_computed = answer.get('expected_native_computed', {}).get(ref)
+                if expected_computed is None:
+                    failures.append('derivation-computed-key:' + ref)
+                elif (not isinstance(computed, list)
+                      or canonical_rows(computed) != canonical_rows(expected_computed)):
+                    failures.append('derivation-computed:' + ref)
                 for key in ['missing', 'extra']:
                     tuples = row.get(key)
                     expected = answer['expected_native_derivations'][ref][key]
@@ -109,7 +118,62 @@ def check_acceptance(report: dict, process_exit: int, answer: dict, model: dict,
     return failures
 
 
+def agreement(records: list[dict], answers: dict, approved: dict) -> dict:
+    """Finite row agreement; no unlisted mismatch can shrink the denominator."""
+    names = [record['case'] for record in records]
+    if len(set(names)) != len(names) or set(names) != set(answers):
+        raise ValueError('agreement case inventory differs')
+    required = {name: answer['intentional_disagreements'] for name, answer in answers.items()
+                if answer['intentional_disagreements']}
+    selected = {name: exclusions for name, exclusions in approved.items() if name in answers}
+    if selected != required:
+        raise ValueError('agreement exclusion inventory differs')
+    normalization = {'pass': 'satisfied', 'fail': 'violated', 'warning': 'warning'}
+    total = compared = matches = 0
+    disagreements = []
+    for record in records:
+        name, report = record['case'], record['report']
+        answer = answers[name]
+        if record['process_exit'] != answer['observed_gnd_exit']:
+            raise ValueError('business exits differ in the selected finite corpus')
+        observed = {}
+        for field, key in [('verdicts', 'constraint_ref'), ('derivations', 'derivation_ref')]:
+            for row in report[field]:
+                ref = row[key]
+                if ref in observed:
+                    raise ValueError('duplicate agreement row')
+                observed[ref] = row['status']
+        if set(observed) != set(answer['observed_gnd_verdicts']):
+            raise ValueError('agreement row inventory differs')
+        for ref, native in observed.items():
+            total += 1
+            gnd = answer['observed_gnd_verdicts'][ref]
+            if gnd not in normalization:
+                raise ValueError('unmapped GND agreement status')
+            if ref in required.get(name, {}):
+                if normalization[gnd] == native:
+                    raise ValueError('listed disagreement is no longer a disagreement')
+                if record['process_exit'] != 1 or answer['observed_gnd_exit'] != 1:
+                    raise ValueError('listed disagreement did not reject in both engines')
+                disagreements.append({'case': name, 'constraint_ref': ref, 'gnd': gnd,
+                                       'native': native, 'reason': required[name][ref],
+                                       'population_sha256': record['population_sha256']})
+            else:
+                compared += 1
+                if normalization[gnd] != native:
+                    raise ValueError('unlisted disagreement:' + name + ':' + ref)
+                matches += 1
+    return {'normalization': normalization, 'native_obligation_rows': total,
+            'comparable_rows': total - len(disagreements), 'compared_rows': compared,
+            'matches': matches, 'intentional_disagreements': disagreements,
+            'business_rejections_agree': True,
+            'boundary': 'Only the selected frozen rows and listed exclusions; not universal ORM agreement.'}
+
+
 def measure(mode: str, python: Path, stage: str = 'all') -> dict:
+    runtime_source = ROOT / 'src/gnd/export/pyrel_runtime.py'
+    runtime_raw = read_bounded(runtime_source)
+    tool_raw = read_bounded(Path(__file__))
     matrix_raw, answer_raw = approved_corpus()
     matrix, answers = json.loads(matrix_raw), json.loads(answer_raw)
     if mode == 'baseline':
@@ -163,7 +227,17 @@ def measure(mode: str, python: Path, stage: str = 'all') -> dict:
                 if isinstance(report, dict) and any(v.get('status') == 'error' for v in report.get('verdicts', [])):
                     failures.append('audit-error')
             else:
-                failures = check_acceptance(report, result.returncode, answer,
+                expected_computed = {}
+                population_doc = json.loads(population_raw)
+                for ref, delta in answer['expected_native_derivations'].items():
+                    head = ref.split(':', 1)[1]
+                    values = {json.dumps(value, sort_keys=True): value
+                              for value in population_doc['facts'][head] + delta['missing']}
+                    for value in delta['extra']:
+                        values.pop(json.dumps(value, sort_keys=True), None)
+                    expected_computed[ref] = [values[key] for key in sorted(values)]
+                comparison = {**answer, 'expected_native_computed': expected_computed}
+                failures = check_acceptance(report, result.returncode, comparison,
                                             json.loads(model_raw), model_sha, population_sha)
             failures.extend(diagnostics)
             if not stable:
@@ -175,7 +249,15 @@ def measure(mode: str, python: Path, stage: str = 'all') -> dict:
                             'gnd_observed_exit': answer['observed_gnd_exit'],
                             'intentional_disagreements': answer['intentional_disagreements']})
             print(f'{name}: exit={result.returncode} matches={not failures}', flush=True)
+    if read_bounded(runtime_source) != runtime_raw or read_bounded(Path(__file__)) != tool_raw:
+        raise ValueError('runtime or measurement tool changed during execution')
+    compared = None
+    if mode == 'acceptance' and all(record['matches'] for record in records):
+        approved = json.loads(read_bounded(CORPUS / 'approval.json'))['intentional_disagreements']
+        compared = agreement(records, {name: answers[name] for name in names}, approved)
     return {'schema_version': 2, 'mode': mode, 'stage': stage, 'runtime': runtime,
+            'agreement': compared,
+            'runtime_source_sha256': sha(runtime_raw), 'measurement_tool_sha256': sha(tool_raw),
             'matrix_sha256': sha(matrix_raw), 'answers_sha256': sha(answer_raw),
             'lock_sha256': sha(read_bounded(ROOT / 'tutorials/runtimes/uv.lock')),
             'cases': records, 'matched': sum(r['matches'] for r in records), 'denominator': len(records)}

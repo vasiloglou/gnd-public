@@ -1,0 +1,162 @@
+{
+  "added": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "__init__",
+      "dict[str, Any]",
+      3
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "__init__",
+      "dict[str, list[dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "__init__",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "row[role['role_name']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "rule['head'][role['role_name']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "self._concepts[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "self._relations[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "self.facts[atom['fact_type']]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "self.model.fact_types[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "variables[rule['head'][role['role_name']]]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "rows[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_derivations",
+      "facts[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_derivations",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard_work",
+      "consequent[kind]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard_work",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard_work",
+      "dict[str, list]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard_work",
+      "facts[atom['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_guard_work",
+      "facts[consequent[kind]['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "actual[key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "oracle.computed[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "population['facts'][name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "supplied[key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "atom",
+      "variables[term]",
+      1
+    ]
+  ],
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA1/dynamic-query-successor.json",
+  "predecessor_sha256": "45e516b1f21ec7efaae9773cc8e90a2a9eef882ad9fffde4fa48bbc5caa670b5",
+  "reason": "PA2 standalone structured-rule integration uses its independent raw ModelIndex; exact counted delta, no GND import or blanket waiver. Historical PA1 and earlier evidence remains unchanged.",
+  "removed": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "rows[atom['fact_type']]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "rows[consequent[kind]['fact_type']]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 5816,
+  "result_occurrences": 7339,
+  "schema_version": 1
+}

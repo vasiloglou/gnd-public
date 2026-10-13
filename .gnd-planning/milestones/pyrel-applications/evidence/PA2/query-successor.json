@@ -1,0 +1,30 @@
+{
+  "added": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "self.model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_derivations",
+      "index.fact_types",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "acceptance_document",
+      "index.fact_types",
+      1
+    ]
+  ],
+  "original_metric_current": 304,
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA1/query-successor.json",
+  "predecessor_sha256": "4fe66e4c713a6b85b9d952cab768c39a1f5e6643cd550ed0b82e1d088d4b921f",
+  "reason": "PA2 standalone structured-rule integration uses its independent raw ModelIndex; exact counted delta, no GND import or blanket waiver. Historical PA1 and earlier evidence remains unchanged.",
+  "removed": [],
+  "result_distinct_rows": 290,
+  "result_occurrences": 359,
+  "schema_version": 1
+}

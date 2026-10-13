@@ -1,0 +1,32 @@
+{
+  "boundary": "PA2 changes application profile only; all legacy top-level definitions including program_main remain AST-identical to PA1.",
+  "runtime_source_sha256": "1ff982e08fe41c0623ad6d62436ba205a6a490046c5e47112ac314689a2f76b8",
+  "source_base": "5290a5d",
+  "unchanged_definitions": [
+    "_load_yaml",
+    "_scalar",
+    "_jsonable",
+    "ModelIndex",
+    "PyrelOracle",
+    "_constraint_entries",
+    "ExportInputError",
+    "_UsageParser",
+    "_read_text",
+    "_parse_document",
+    "load_document",
+    "_declarations",
+    "_constraints",
+    "_admit_model",
+    "admit_model",
+    "admit_population",
+    "_valid_temporal",
+    "_admit_scalar",
+    "local_config",
+    "evaluate_document",
+    "report_document",
+    "run",
+    "write_new",
+    "ProfileRefusal",
+    "program_main"
+  ]
+}

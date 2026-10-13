@@ -145,3 +145,108 @@ Optional spec panel omitted; corpus-first and exact legacy compatibility stay.
 ## Delegated approval (auto=true), 2026-10-13
 
 Approve preceding spec bytes SHA-256 82325d3082d4ff64ce7c1a6afc5ca35f8a6fb7404cf3f4817b12674675a52d33. Authorization: named whole-milestone auto=true, PA1 completion5290a5d. Corpus-first: inherited unchanged137case key plus19direct grammar controls and1native generic chain control authored red against PA1 before production. No optional spec panel. Instrument: native measured full137key and new branch controls, selected Claude Code phase reviewer (one initial, at most one bounded repair). Budget400added source/450direct-test lines plus focused consumer routing; original bounds/legacy/query ceilings stay. Generic integration uses native joins/projection/negation, no GND evaluator or test-oracle import. Distinct ordinals preserve computed key multiplicity. Claims are compared, never seeded as derivation premises. Unsupported/head literal/cycle/unknown/budget cases refuse; no publisher or universal compiler claim.
+
+## Implementation findings recorded as found
+
+Native generic8scenario chain passed, including reversed declarations and a
+forged blocked claim that does not alter computed availability. Parent19grammar
+controls turned green. The initial full corpus is running on unchanged runtime
+bytes; its original tool pre-dates newly added agreement/computed-field checks,
+so it remains historical execution rather than claiming the final instrument.
+
+Agreement instrumentation was red before code and rejects missing/extra approved
+exclusions, unlisted mismatch, missing row, duplicate case and wrong business
+exit. Counts alone were insufficient to assert business rejection agreement;
+a new exit-mutant red control required explicit matching of finite corpus exits.
+Computed extensions are now explicit report fields. Verifier identity/computed/
+reason mutants were red; expected computed tuples are inferred only from frozen
+hand-narrated missing/extra plus raw claims (claims+missing-extra), not runtime
+policy or regenerated expected answers. Original frozen files stay unchanged.
+
+The successful native tuples are calculated in temporary native projection
+relations, then loaded into the actual derived relation with distinct ordinals.
+This supports repeated output variables and computed inline keys without Python
+policy joins. The rule evaluator and actual-work preflight remain one production
+home; all positive/negative dependencies must be declared before empty shortcuts.
+
+## Independent review triage before repair
+
+One Claude reader returned1blocker and3minor findings. Its exact output and
+empty-interpreter-call deviation are retained. R1 reproduced with two valid
+GND models: mandatory and entity value enum both GNDreject1/nativeaccept0.
+The native parent pre-caches entity universes while derived rows are removed;
+computed introduced subtype members are absent. This is blocking and owned:
+clear the population-universe cache after all derivations, retaining only actual
+computed rows as facts. Entity concept materialization is not the profile query
+surface; relationship/universe methods are the admitted surface.
+
+Minor typing width: the profile currently checks shared primitive types, not all
+GND conceptual-model validity rules. Explicitly record this boundary and require
+GND-valid source declarations at the application parent interface; no GND policy
+evaluator is used in native computation. Full model validation/authority is not
+claimed here, nor is universal equivalence. No generic GND validator is copied.
+
+Minor provenance: add runtime/tool SHA digests and stable-read checks to final
+measurement; per-program hashes plus public re-rendering remain independent
+current-byte binding evidence. Minor computed-key omission: a known-red control
+shows the checker silently skips comparison without expected_native_computed;
+require the expected key whenever a derived row is checked. These are owned
+instrument hardening. No frozen expected answer changes.
+
+Approve this bounded repair under named auto=true delegation before source edit.
+Source400/direct-tests450 plus routing budget remains; one bounded repair review
+is still available after the convergence ledger. No certificate/broad replay.
+
+Delegated repair approval (auto=true), 2026-10-13: preceding specification SHA-256 05f1802eaa8f181414832c08c2f0fee07cbedc0e5d72d5e34fb48cfec98fc17b, same named milestone authorization, actual R1 reproduction and instrument hardening, one repair review budget.
+
+## Convergence before the sole repair review
+
+| Round | Seats | Per-seat counts | Self-inflicted / total | Blocking / total | Severity ceiling | Verdicts |
+|---|---|---|---|---|---|---|
+|1|Claude Code|1blocker+3minor findings|4/4new integration/instrument boundaries|1/4 entity-cache false acceptance|blocker, with minor nonblocking remainder|bounded repair|
+
+Proceed with exactly one budgeted repair reading; no third loop. Entity-cache
+red2cases became green after clearing the inherited value cache. The pre-cache
+runtime is reconstructed by removing exactly that3line fix; its filename says
+reconstructed and no original-file replay is claimed. Existing legacy classes
+are unchanged. Missing computed-key red became green; the provenance checker
+has a changed-runtime negative that refuses after otherwise matching fake reports.
+These instrument tests are not native execution evidence. Actual repaired native
+controls25passed; focused354passed (the new provenance negative was added later
+and separately passed). Fresh full137receipt is running with bound source/tool
+hashes. Primitive typing width is an explicit limitation, not secretly excluded
+from a denominator; GND-valid model declarations are an application prerequisite.
+
+## Sole repair review and final owned N1 disposition
+
+Round2 returned1new blocker-class neighbour, confirming all previous repairs.
+Convergence:1seat/1finding,0self-inflicted/1total (pre-existing computed-vs-claims
+constraint choice, newly located),1blocking/1total, blocker severity. The declared
+review budget is exhausted; no third round is claimed or launched. Reproduce and
+repair this owned input-admission defect with its specific red control.
+
+N1: duplicate claims on a derived head with inline uniqueness pass derivation
+set equality but GND rejects the raw-row key; native computed rows have one tuple
+and accepted. Public GND and actual native reproduction confirm that mismatch.
+Refuse exact duplicate supplied rows for a derived head carrying any inline
+uniqueness constraint (all modalities), with reason duplicate-derived-key-claims,
+status incomplete/2. This is a declared unsupported claim shape, not a Python
+uniqueness verdict labeled native. Duplicate claims without a key retain logical
+set semantics and the existing positive control. Distinct computed tuples still
+exercise native key counts with unique ordinals. No shipped model/key changes.
+
+Additional limits are explicit: standalone admission checks the defined primitive
+fragment, not every GND declaration-validity rule, so GND-invalid models may still
+be accepted there; application parents must validate immutable source declarations.
+GND validity/authority is not established by native acceptance. Universes and
+constraints consume computed heads, whereas GND's view may consume supplied
+claims: outside the frozen corpus their individual verdicts can differ while
+claim mismatches withhold acceptance. No new disagreement exclusion is invented.
+Legacy entity_concepts remains asserted-only and is not the admitted profile
+query surface; PA3 uses relationship/universe methods. A future native-entity-
+concept-maintenance task (owner:GNDmaintainers) owns that unused legacy surface.
+
+Final current-byte focused/native/full137/source-binding gates follow. Source
+and test budgets remain; no third reviewer opinion or broad suite is inferred.
+
+Delegated final N1 approval (auto=true), 2026-10-13: preceding spec SHA-256 82a33d8142172f0938d800eba3e9046615eb13aabae5ec291c102d25ac2e0090, named milestone authorization, exact duplicate-derived-key claim refusal and explicit primitive/full-validity boundaries. No new corpus answer, reviewer round or product scope.

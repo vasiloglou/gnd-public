@@ -65,6 +65,16 @@ def valid_report(name):
                            for ref, c in entries],
               'derivations': [{'derivation_ref': ref, 'status': answer['expected_native_verdicts'][ref],
                                **rows} for ref, rows in answer['expected_native_derivations'].items()]}
+    population = json.loads((ROOT / case['population']).read_text())
+    expected_computed = {}
+    for row in report['derivations']:
+        ref = row['derivation_ref']; name = ref.split(':', 1)[1]
+        values = {json.dumps(value, sort_keys=True): value for value in population['facts'][name] + row['missing']}
+        for value in row['extra']:
+            values.pop(json.dumps(value, sort_keys=True), None)
+        row.update(fact_type=name, computed=[values[key] for key in sorted(values)], reason=None)
+        expected_computed[ref] = row['computed']
+    answer = {**answer, 'expected_native_computed': expected_computed}
     return report, answer, model
 
 
@@ -141,3 +151,90 @@ def test_snapshot_hash_changes_refuse_before_native_execution(monkeypatch):
     import pytest
     with pytest.raises(ValueError, match='approved snapshot'):
         DRIVER.approved_corpus()
+
+
+def test_agreement_counts_actual_rows_and_exact_two_exclusions():
+    import copy
+    answers = json.loads((DRIVER.CORPUS / 'answers.json').read_text())
+    approved = json.loads((DRIVER.CORPUS / 'approval.json').read_text())['intentional_disagreements']
+    records = []
+    for name, answer in answers.items():
+        verdicts, derivations = [], []
+        for ref, status in answer['expected_native_verdicts'].items():
+            (derivations if ref.startswith('derivation:') else verdicts).append({
+                'derivation_ref' if ref.startswith('derivation:') else 'constraint_ref': ref, 'status': status})
+        records.append({'case': name, 'report': {'verdicts': verdicts, 'derivations': derivations},
+                        'process_exit': answer['expected_acceptance']['exit_code'],
+                        'population_sha256': 'a' * 64})
+    function = getattr(DRIVER, 'agreement', None)
+    assert callable(function), 'row agreement accounting is not implemented'
+    result = function(records, answers, approved)
+    assert result['native_obligation_rows'] == 2323
+    assert result['comparable_rows'] == result['compared_rows'] == result['matches'] == 2321
+    assert len(result['intentional_disagreements']) == 2
+    assert result['business_rejections_agree'] is True
+    for damage in ['unlisted', 'missing-exclusion', 'extra-exclusion', 'missing-row', 'duplicate-case', 'business-exit']:
+        dirty = copy.deepcopy(records); exclusions = copy.deepcopy(approved)
+        if damage == 'unlisted':
+            dirty[0]['report']['verdicts'][0]['status'] = 'violated'
+        elif damage == 'missing-exclusion':
+            exclusions.pop('m2-eligible-joint-omission')
+        elif damage == 'extra-exclusion':
+            exclusions['m0-r0-positive'] = {'constraints[0]': 'unapproved'}
+        elif damage == 'missing-row':
+            dirty[0]['report']['verdicts'].pop()
+        elif damage == 'business-exit':
+            dirty[0]['process_exit'] = 1
+        else:
+            dirty.append(copy.deepcopy(dirty[0]))
+        import pytest
+        with pytest.raises(ValueError):
+            function(dirty, answers, exclusions)
+
+
+def test_computed_derivation_identity_and_values_cannot_be_laundered():
+    import copy
+    report, answer, model = valid_report('m2-book_is_eligible-extra')
+    assert DRIVER.check_acceptance(report, 1, answer, model, 'a' * 64, 'b' * 64) == []
+    for key, value in [('fact_type', 'invented'), ('computed', []), ('reason', 'invented')]:
+        dirty = copy.deepcopy(report)
+        dirty['derivations'][-1][key] = value
+        assert DRIVER.check_acceptance(dirty, 1, answer, model, 'a' * 64, 'b' * 64), key
+
+
+def test_missing_computed_expected_key_cannot_silently_skip_verification():
+    report, answer, model = valid_report('m2-book_is_eligible-extra')
+    del answer['expected_native_computed']
+    assert DRIVER.check_acceptance(report, 1, answer, model, 'a' * 64, 'b' * 64)
+
+
+def test_measurement_rejects_changed_runtime_snapshot(monkeypatch):
+    import pytest
+    matrix = json.loads((DRIVER.CORPUS / 'matrix.json').read_text())
+    original = DRIVER.read_bounded
+    reads = 0
+    def changed(path, limit=1048576):
+        nonlocal reads
+        raw = original(path, limit)
+        if path == ROOT / 'src/gnd/export/pyrel_runtime.py':
+            reads += 1
+            if reads > 1:
+                return raw + b' '
+        return raw
+    def fake_run(argv, **_kwargs):
+        if '-c' in argv:
+            return subprocess.CompletedProcess(argv, 0, json.dumps({'python': '3.13.12', 'relationalai': '1.30.1', 'duckdb': '1.5.5'}), '')
+        output = Path(argv[argv.index('--out') + 1])
+        if '-m' in argv:
+            output.write_text('# fake export')
+            return subprocess.CompletedProcess(argv, 0, '', '')
+        report, answer, _ = valid_report(output.stem)
+        case = matrix['cases'][output.stem]
+        report['binding'] = {'model_sha256': DRIVER.sha(original(ROOT / case['model'])),
+                             'population_sha256': DRIVER.sha(original(ROOT / case['population']))}
+        output.write_text(json.dumps(report))
+        return subprocess.CompletedProcess(argv, answer['expected_acceptance']['exit_code'], '', '')
+    monkeypatch.setattr(DRIVER, 'read_bounded', changed)
+    monkeypatch.setattr(DRIVER.subprocess, 'run', fake_run)
+    with pytest.raises(ValueError, match='changed during execution'):
+        DRIVER.measure('acceptance', ROOT / 'tutorials/runtimes/.venv/bin/python', 'guarded')

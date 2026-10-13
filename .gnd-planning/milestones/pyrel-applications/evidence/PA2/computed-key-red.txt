@@ -1,0 +1,11 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_missing_computed_expected_key_cannot_silently_skip_verification _____
+tests/test_pyrel_application_driver.py:208: in test_missing_computed_expected_key_cannot_silently_skip_verification
+    assert DRIVER.check_acceptance(report, 1, answer, model, 'a' * 64, 'b' * 64)
+E   AssertionError: assert []
+E    +  where [] = <function check_acceptance at 0x107b3af20>({'schema_version': 1, 'profile': 'applications-v1', 'backend': 'duckdb-local', 'exit_code': 1, ...}, 1, {'target': 'derivation:book_is_eligible', 'expected': 'fail', 'observed_gnd_exit': 1, 'observed_gnd_verdicts': {'fact_...s', 'fact_types[book_has_genre].constraints[1]': 'pass', 'constraints[0]': 'pass', 'constraints[1]': 'pass', ...}, ...}, {'version': 2, 'model_id': 'urn:gnd-tutorial:bookrec', 'source': {'kind': 'text-conversation', 'confidence': 'standard...kind': 'value', 'primitive': 'String'}, {'id': 'genre', 'name': 'Genre', 'kind': 'value', 'primitive': 'String'}], ...}, ('a' * 64), ('b' * 64))
+E    +    where <function check_acceptance at 0x107b3af20> = DRIVER.check_acceptance
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_driver.py::test_missing_computed_expected_key_cannot_silently_skip_verification
+1 failed in 0.07s

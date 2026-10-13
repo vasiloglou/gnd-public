@@ -1,15 +1,16 @@
-"""Authenticated PA1 deltas; historical source/query evidence stays immutable."""
+"""Authenticated phase deltas; historical source/query evidence stays immutable."""
 import hashlib
 import json
 from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-EVIDENCE = ROOT / '.gnd-planning/milestones/pyrel-applications/evidence/PA1'
+EVIDENCE = ROOT / '.gnd-planning/milestones/pyrel-applications/evidence'
+PHASES = ['PA1', 'PA2']
 
 
-def authenticated(name, predecessor):
-    data = json.loads((EVIDENCE / name).read_text())
+def authenticated(name, predecessor, phase):
+    data = json.loads((EVIDENCE / phase / name).read_text())
     assert data['schema_version'] == 1 and data['reason']
     assert data['predecessor'] == predecessor.relative_to(ROOT).as_posix()
     assert data['predecessor_sha256'] == hashlib.sha256(predecessor.read_bytes()).hexdigest()
@@ -41,22 +42,30 @@ def delta(rows, data):
 
 def query_policy(predecessor):
     policy = json.loads(predecessor.read_text())
-    data = authenticated('query-successor.json', predecessor)
-    rows = [[r['path'], r['owner'], r['expression'], r['count']] for r in policy['rows']]
-    reasons = {(r['path'], r['owner'], r['expression']): r['reason'] for r in policy['rows']}
-    for row in data['added']:
-        reasons[tuple(row[:3])] = data['reason']
-    policy['rows'] = [dict(zip(['path', 'owner', 'expression', 'count'], row, strict=True),
-                           reason=reasons[tuple(row[:3])]) for row in delta(rows, data)]
-    policy['original_attribute_get_metric']['current'] = data['original_metric_current']
+    for phase in PHASES:
+        data = authenticated('query-successor.json', predecessor, phase)
+        rows = [[r['path'], r['owner'], r['expression'], r['count']] for r in policy['rows']]
+        reasons = {(r['path'], r['owner'], r['expression']): r['reason'] for r in policy['rows']}
+        for row in data['added']:
+            reasons[tuple(row[:3])] = data['reason']
+        policy['rows'] = [dict(zip(['path', 'owner', 'expression', 'count'], row, strict=True),
+                               reason=reasons[tuple(row[:3])]) for row in delta(rows, data)]
+        policy['original_attribute_get_metric']['current'] = data['original_metric_current']
+        predecessor = EVIDENCE / phase / 'query-successor.json'
     return policy
 
 
 def dynamic_rows(rows, predecessor):
-    return delta(rows, authenticated('dynamic-query-successor.json', predecessor))
+    for phase in PHASES:
+        rows = delta(rows, authenticated('dynamic-query-successor.json', predecessor, phase))
+        predecessor = EVIDENCE / phase / 'dynamic-query-successor.json'
+    return rows
 
 
 def rendered_bytes(expected, predecessor):
-    data = authenticated('pyrel-successor.json', predecessor)
-    assert data['before'] == expected
-    return data['after']
+    for phase in PHASES:
+        data = authenticated('pyrel-successor.json', predecessor, phase)
+        assert data['before'] == expected
+        expected = data['after']
+        predecessor = EVIDENCE / phase / 'pyrel-successor.json'
+    return expected

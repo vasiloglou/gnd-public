@@ -1288,6 +1288,63 @@ def _profile_guard(index: ModelIndex, constraint: dict[str, Any]) -> dict[str, s
     return variables
 
 
+def _profile_derivations(index: ModelIndex) -> list[str]:
+    """Validate the acyclic v2 join/project/negation fragment, not GND semantics."""
+    facts = index.fact_types
+    heads = {name for name, fact in facts.items()
+             if fact.get('derivation') not in (None, 'asserted') or 'derivation_rule' in fact}
+    if heads and index.doc.get('version') != 2:
+        raise ProfileRefusal('derivations-require-model-v2')
+    dependencies = {}
+    for name in sorted(heads):
+        fact = facts[name]
+        if fact.get('derivation') != 'derived' or fact.get('storage') != 'computed':
+            raise ProfileRefusal('only-derived-computed-relations')
+        rule = fact.get('derivation_rule')
+        if not isinstance(rule, dict) or set(rule) - {'body', 'head', 'negate'}:
+            raise ProfileRefusal('structured-derivation-rule-shape')
+        head = rule.get('head')
+        roles = {role['role_name'] for role in index.roles(name)}
+        if not isinstance(head, dict) or set(head) != roles:
+            raise ProfileRefusal('derivation-head-role-shape')
+        if any(not isinstance(term, str) or not term.startswith('$') or len(term) < 2
+               for term in head.values()):
+            raise ProfileRefusal('derivation-head-needs-bound-variables')
+        body, negative = rule.get('body'), rule.get('negate', [])
+        if not isinstance(negative, list) or len(negative) > 8:
+            raise ProfileRefusal('derivation-negative-shape')
+        _profile_guard(index, {'antecedent': body,
+                               'consequent': {'atom': {'fact_type': name, 'bind': head}}})
+        for atom in negative:
+            _profile_guard(index, {'antecedent': body, 'consequent': {'absence': atom}})
+        dependencies[name] = {atom['fact_type'] for atom in body + negative} & heads
+    ordered = []
+    while dependencies:
+        ready = sorted(name for name, needs in dependencies.items() if not needs)
+        if not ready:
+            raise ProfileRefusal('derivation-dependency-cycle')
+        ordered.extend(ready)
+        for name in ready:
+            del dependencies[name]
+        for needs in dependencies.values():
+            needs.difference_update(ready)
+    return ordered
+
+
+def _profile_guard_work(constraint: dict[str, Any], facts: dict[str, list]) -> None:
+    work = 1
+    for atom in constraint['antecedent']:
+        work *= len(facts[atom['fact_type']])
+        if work > PROFILE_WORK:
+            raise ProfileRefusal('guarded-join-work-limit')
+    consequent = constraint['consequent']
+    kind = next(iter(consequent))
+    if kind in {'atom', 'absence'}:
+        work *= max(1, len(facts[consequent[kind]['fact_type']]))
+        if work > PROFILE_WORK:
+            raise ProfileRefusal('guarded-join-work-limit')
+
+
 def _profile_admit(index: ModelIndex, population: dict[str, Any]) -> None:
     facts = index.fact_types
     entries = _constraint_entries(index)
@@ -1334,16 +1391,24 @@ def _profile_admit(index: ModelIndex, population: dict[str, Any]) -> None:
             raise ProfileRefusal('role-limit')
         if any(set(role) - {'role_name', 'object_type'} for role in roles):
             raise ProfileRefusal('role-declarations-outside-application-profile')
-        if declaration.get('derivation') not in (None, 'asserted') or 'derivation_rule' in declaration:
-            raise ProfileRefusal('derivation-not-yet-in-application-profile')
-        if declaration.get('storage') not in (None, 'stored'):
+        if declaration.get('derivation') not in (None, 'asserted', 'derived'):
+            raise ProfileRefusal('derivation-not-in-application-profile')
+        if declaration.get('derivation') != 'derived' and 'derivation_rule' in declaration:
+            raise ProfileRefusal('asserted-relation-has-derivation-rule')
+        if declaration.get('derivation') != 'derived' and declaration.get('storage') not in (None, 'stored'):
             raise ProfileRefusal('storage-not-in-application-profile')
+        if declaration.get('derivation') == 'derived' and any(
+                constraint['type'] == 'uniqueness' for constraint in declaration.get('constraints', [])):
+            claimed = [json.dumps(row, sort_keys=True, separators=(',', ':')) for row in rows[name]]
+            if len(set(claimed)) != len(claimed):
+                raise ProfileRefusal('duplicate-derived-key-claims')
         for row in rows[name]:
             for role in roles:
                 _profile_literal(row[role['role_name']], index.primitive(role['object_type']))
     for oid, values in population.get('instances', {}).items():
         for value in values:
             _profile_literal(value, index.primitive(oid))
+    derived = _profile_derivations(index)
     for _, constraint, ft_id in entries:
         family = constraint['type']
         common = {'type', 'id', 'source', 'status', 'modality', 'provenance', 'rationale', 'scope'}
@@ -1362,17 +1427,13 @@ def _profile_admit(index: ModelIndex, population: dict[str, Any]) -> None:
             if ft_id is not None:
                 raise ProfileRefusal('only-top-level-guarded')
             _profile_guard(index, constraint)
-            work = 1
-            for atom in constraint['antecedent']:
-                work *= len(rows[atom['fact_type']])
-                if work > PROFILE_WORK:
-                    raise ProfileRefusal('guarded-join-work-limit')
+            references = [atom['fact_type'] for atom in constraint['antecedent']]
             consequent = constraint['consequent']
             kind = next(iter(consequent))
             if kind in {'atom', 'absence'}:
-                work *= max(1, len(rows[consequent[kind]['fact_type']]))
-                if work > PROFILE_WORK:
-                    raise ProfileRefusal('guarded-join-work-limit')
+                references.append(consequent[kind]['fact_type'])
+            if not any(name in derived for name in references):
+                _profile_guard_work(constraint, rows)
         elif family in {'uniqueness', 'mandatory'}:
             if ft_id is None or constraint.get('scope') == 'external':
                 raise ProfileRefusal('only-inline-key-and-mandatory')
@@ -1416,6 +1477,58 @@ def _profile_admit(index: ModelIndex, population: dict[str, Any]) -> None:
 class ApplicationOracle(PyrelOracle):
     """Native policy execution for the bounded, explicitly selected profile."""
 
+    def __init__(self, model: ModelIndex, population: dict[str, Any], *, config: dict[str, Any]):
+        ordered = _profile_derivations(model)
+        asserted = {**population, 'facts': {name: [] if name in ordered else rows
+                                            for name, rows in population.get('facts', {}).items()}}
+        super().__init__(model, asserted, config=config)
+        self.computed: dict[str, list[dict[str, Any]]] = {}
+        for ordinal, name in enumerate(ordered):
+            self._derive(name, ordinal)
+        # The legacy constructor eagerly snapshots entity members. Rebuild
+        # from asserted plus computed facts, never from supplied head claims.
+        self._universe_values.clear()
+
+    def _derive(self, name: str, ordinal: int) -> None:
+        from relationalai.semantics.frontend.base import Field
+
+        rule = self.model.fact_types[name]['derivation_rule']
+        roles = self.model.roles(name)
+        calculated = []
+        if all(self.facts[atom['fact_type']] for atom in rule['body']):
+            work = 1
+            for atom in rule['body'] + rule.get('negate', []):
+                work *= max(1, len(self.facts[atom['fact_type']]))
+                if work > PROFILE_WORK:
+                    raise ProfileRefusal('derivation-join-work-limit')
+            primitives = _profile_guard(self.model, {
+                'antecedent': rule['body'],
+                'consequent': {'atom': {'fact_type': name, 'bind': rule['head']}}})
+            variables = {var: self._concept_for(primitive).ref() for var, primitive in primitives.items()}
+
+            def atom(pattern):
+                return self.pattern(pattern['fact_type'], {
+                    role: variables[term] if isinstance(term, str) and term in variables else term
+                    for role, term in pattern['bind'].items()})
+
+            positive = [atom(pattern) for pattern in rule['body']]
+            negative = [self.m.not_(atom(pattern)) for pattern in rule.get('negate', [])]
+            concepts = self._concepts[name]
+            result = self.m.Relationship(fields=[Field(role['role_name'], concept)
+                                                 for role, concept in zip(roles, concepts, strict=True)],
+                                         short_name=f'profile_derived_{ordinal}')
+            self.m.where(*positive, *negative).define(result(*[variables[rule['head'][role['role_name']]] for role in roles]))
+            columns = [concept.ref() for concept in concepts]
+            tuples = self._rows(self.m.where(result(*columns)).select(*columns))
+            canonical = {json.dumps(row, sort_keys=True, separators=(',', ':')) for row in tuples}
+            calculated = [dict(zip([role['role_name'] for role in roles], json.loads(row), strict=True))
+                          for row in sorted(canonical)]
+        if calculated:
+            self.m.define(*[self._relations[name](*[row[role['role_name']] for role in roles], i)
+                            for i, row in enumerate(calculated)])
+        self.facts[name] = calculated
+        self.computed[name] = calculated
+
     def _mandatory(self, constraint: dict[str, Any], ft_id: str | None) -> tuple[str, Any]:
         role_name = constraint['role']
         ot = self.model.role_object_type(ft_id, role_name)
@@ -1438,6 +1551,7 @@ class ApplicationOracle(PyrelOracle):
         from relationalai.semantics.frontend.base import Field
 
         primitives = _profile_guard(self.model, constraint)
+        _profile_guard_work(constraint, self.facts)
         variables = {name: self._concept_for(primitive).ref() for name, primitive in primitives.items()}
         names = sorted(variables)
 
@@ -1542,6 +1656,12 @@ def acceptance_document(model: dict[str, Any], population: dict[str, Any], *,
               'status': 'incomplete', 'exit_code': 2, 'accepted': False,
               'binding': {'model_sha256': model_sha256, 'population_sha256': population_sha256},
               'verdicts': verdicts, 'derivations': []}
+    for name, fact in index.fact_types.items():
+        if fact.get('derivation') not in (None, 'asserted') or 'derivation_rule' in fact:
+            report['derivations'].append({'derivation_ref': 'derivation:' + name, 'fact_type': name,
+                                          'status': 'incomplete', 'computed': None,
+                                          'missing': [], 'extra': [], 'reason': None})
+    all_rows = verdicts + report['derivations']
     try:
         _profile_admit(index, population)
         if execution_refusal is not None:
@@ -1549,7 +1669,7 @@ def acceptance_document(model: dict[str, Any], population: dict[str, Any], *,
                 raise ExportInputError('execution refusal must be a nonempty string')
             raise ProfileRefusal(execution_refusal)
     except ProfileRefusal as error:
-        for row in verdicts:
+        for row in all_rows:
             row['reason'] = str(error)
         return report
     try:
@@ -1560,6 +1680,17 @@ def acceptance_document(model: dict[str, Any], population: dict[str, Any], *,
         config = local_config()
         config['deployment']['schema'] = 'gnd_application_' + uuid.uuid4().hex
         oracle = ApplicationOracle(index, population, config=config)
+        for row in report['derivations']:
+            name = row['fact_type']
+            computed = oracle.computed[name]
+            claimed = population['facts'][name]
+            def keyed(rows):
+                return {json.dumps(value, sort_keys=True, separators=(',', ':')): value for value in rows}
+            actual, supplied = keyed(computed), keyed(claimed)
+            missing = [actual[key] for key in sorted(actual.keys() - supplied.keys())]
+            extra = [supplied[key] for key in sorted(supplied.keys() - actual.keys())]
+            row.update(computed=computed, missing=missing, extra=extra,
+                       status='violated' if missing or extra else 'satisfied')
         for row, (_, constraint, ft_id) in zip(verdicts, entries, strict=True):
             try:
                 status, payload = oracle.profile_evaluate(constraint, ft_id)
@@ -1574,12 +1705,16 @@ def acceptance_document(model: dict[str, Any], population: dict[str, Any], *,
                 row.update(status='incomplete', reason=str(error))
             except Exception as error:  # noqa: BLE001 -- explicit native failure verdict
                 row.update(status='error', reason=f'{type(error).__name__}: {error}'[:300])
+    except ProfileRefusal as error:
+        for row in all_rows:
+            row.update(status='incomplete', reason=str(error))
+        return report
     except Exception as error:  # noqa: BLE001 -- optional backend construction boundary
-        for row in verdicts:
+        for row in all_rows:
             row.update(status='error', reason=f'{type(error).__name__}: {error}'[:300])
         report.update(status='runtime_failure', exit_code=70)
         return report
-    statuses = {row['status'] for row in verdicts}
+    statuses = {row['status'] for row in all_rows}
     if 'error' in statuses:
         report.update(status='runtime_failure', exit_code=70)
     elif statuses & {'unsupported', 'incomplete', 'vacuous'}:

@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_computed_derivation_identity_and_values_cannot_be_laundered _______
+tests/test_pyrel_application_driver.py:202: in test_computed_derivation_identity_and_values_cannot_be_laundered
+    assert DRIVER.check_acceptance(dirty, 1, answer, model, 'a' * 64, 'b' * 64), key
+E   AssertionError: fact_type
+E   assert []
+E    +  where [] = <function check_acceptance at 0x109f8ed40>({'schema_version': 1, 'profile': 'applications-v1', 'backend': 'duckdb-local', 'exit_code': 1, ...}, 1, {'target': 'derivation:book_is_eligible', 'expected': 'fail', 'observed_gnd_exit': 1, 'observed_gnd_verdicts': {'fact_...s', 'fact_types[book_has_genre].constraints[1]': 'pass', 'constraints[0]': 'pass', 'constraints[1]': 'pass', ...}, ...}, {'version': 2, 'model_id': 'urn:gnd-tutorial:bookrec', 'source': {'kind': 'text-conversation', 'confidence': 'standard...kind': 'value', 'primitive': 'String'}, {'id': 'genre', 'name': 'Genre', 'kind': 'value', 'primitive': 'String'}], ...}, ('a' * 64), ('b' * 64))
+E    +    where <function check_acceptance at 0x109f8ed40> = DRIVER.check_acceptance
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_driver.py::test_computed_derivation_identity_and_values_cannot_be_laundered
+1 failed in 0.06s

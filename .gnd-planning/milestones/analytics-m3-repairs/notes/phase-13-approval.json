@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-13",
+  "authority": "Owner M3auto/makefixespartM3/fixit; remaining reviewsapproved; highrequested",
+  "instrument": "corpus-first",
+  "source_base": "35af996",
+  "spec_sha256": "f16168628536cdf3e29b69705ee2f241276272151be64551036c9a26f6e85a47",
+  "test_sha256": "1b3b60cd30325b0a9ca2639db74a9e0930a768196c53652612e6609cd2b6d744",
+  "red": "9 failed in 0.45s; complete public report/trace/work oracle clauses pass before missing scope assertion",
+  "expected_outputs_weakened": false,
+  "paid_cap": 0,
+  "new_synthetic_domain_rows": false,
+  "review_model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "source_merge_authorized": false
+}

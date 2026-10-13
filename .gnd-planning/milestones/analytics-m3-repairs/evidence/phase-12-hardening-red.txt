@@ -1,0 +1,102 @@
+FF..FFFF                                                                 [100%]
+=================================== FAILURES ===================================
+______________ test_numeric_protocol_object_is_not_a_json_number _______________
+
+    def test_numeric_protocol_object_is_not_a_json_number():
+        class Convertible:
+            def __float__(self):
+                return 1.0
+>       assert not accept(Convertible(), {'type': 'number'})
+E       AssertionError: assert not True
+E        +  where True = accept(<test_m3_population_shape.test_numeric_protocol_object_is_not_a_json_number.<locals>.Convertible object at 0x108373b60>, {'type': 'number'})
+E        +    where <test_m3_population_shape.test_numeric_protocol_object_is_not_a_json_number.<locals>.Convertible object at 0x108373b60> = <class 'test_m3_population_shape.test_numeric_protocol_object_is_not_a_json_number.<locals>.Convertible'>()
+
+tests/test_m3_population_shape.py:146: AssertionError
+__________ test_incompatible_sibling_operands_fall_back[schema0-doc0] __________
+
+schema = {'type': 'object', 'minLength': True}, doc = {}
+
+    @pytest.mark.parametrize('schema,doc', [
+        ({'type': 'object', 'minLength': True}, {}),
+        ({'type': 'string', 'items': []}, 'x'),
+        ({'type': 'array', 'properties': []}, []),
+    ])
+    def test_incompatible_sibling_operands_fall_back(schema, doc):
+>       assert not accept(doc, schema)
+E       AssertionError: assert not True
+E        +  where True = accept({}, {'type': 'object', 'minLength': True})
+
+tests/test_m3_population_shape.py:155: AssertionError
+_________ test_malformed_type_and_items_operands_fall_back[schema0-x] __________
+
+schema = {'type': None, 'enum': ['x']}, doc = 'x'
+
+    @pytest.mark.parametrize('schema,doc', [
+        ({'type': None, 'enum': ['x']}, 'x'),
+        ({'type': 'array', 'items': None}, []),
+        ({'type': ['string', 'string']}, 'x'),
+    ])
+    def test_malformed_type_and_items_operands_fall_back(schema, doc):
+>       assert not accept(doc, schema)
+E       AssertionError: assert not True
+E        +  where True = accept('x', {'type': None, 'enum': ['x']})
+
+tests/test_m3_population_shape.py:164: AssertionError
+________ test_malformed_type_and_items_operands_fall_back[schema1-doc1] ________
+
+schema = {'type': 'array', 'items': None}, doc = []
+
+    @pytest.mark.parametrize('schema,doc', [
+        ({'type': None, 'enum': ['x']}, 'x'),
+        ({'type': 'array', 'items': None}, []),
+        ({'type': ['string', 'string']}, 'x'),
+    ])
+    def test_malformed_type_and_items_operands_fall_back(schema, doc):
+>       assert not accept(doc, schema)
+E       AssertionError: assert not True
+E        +  where True = accept([], {'type': 'array', 'items': None})
+
+tests/test_m3_population_shape.py:164: AssertionError
+_________ test_malformed_type_and_items_operands_fall_back[schema2-x] __________
+
+schema = {'type': ['string', 'string']}, doc = 'x'
+
+    @pytest.mark.parametrize('schema,doc', [
+        ({'type': None, 'enum': ['x']}, 'x'),
+        ({'type': 'array', 'items': None}, []),
+        ({'type': ['string', 'string']}, 'x'),
+    ])
+    def test_malformed_type_and_items_operands_fall_back(schema, doc):
+>       assert not accept(doc, schema)
+E       AssertionError: assert not True
+E        +  where True = accept('x', {'type': ['string', 'string']})
+
+tests/test_m3_population_shape.py:164: AssertionError
+__________ test_oversized_schema_string_refused_before_serialization ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1083ffbb0>
+
+    def test_oversized_schema_string_refused_before_serialization(monkeypatch):
+        from gnd import population_shape
+        calls = []
+        original = population_shape.json.dumps
+        def spy(*args, **kwargs):
+            calls.append(True)
+            return original(*args, **kwargs)
+        monkeypatch.setattr(population_shape.json, 'dumps', spy)
+        assert not accept('x', {'type': 'string', 'description': 'x' * (1024 * 1024 + 1)})
+>       assert calls == []
+E       assert [True] == []
+E         
+E         Left contains one more item: True
+E         Use -v to get more diff
+
+tests/test_m3_population_shape.py:176: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_numeric_protocol_object_is_not_a_json_number
+FAILED tests/test_m3_population_shape.py::test_incompatible_sibling_operands_fall_back[schema0-doc0]
+FAILED tests/test_m3_population_shape.py::test_malformed_type_and_items_operands_fall_back[schema0-x]
+FAILED tests/test_m3_population_shape.py::test_malformed_type_and_items_operands_fall_back[schema1-doc1]
+FAILED tests/test_m3_population_shape.py::test_malformed_type_and_items_operands_fall_back[schema2-x]
+FAILED tests/test_m3_population_shape.py::test_oversized_schema_string_refused_before_serialization
+6 failed, 2 passed, 51 deselected in 0.08s

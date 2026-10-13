@@ -1,0 +1,14 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_unmasked_boolean_condition_does_not_equal_integer ____________
+
+    def test_unmasked_boolean_condition_does_not_equal_integer():
+        schema = conditional_schema(1)
+>       assert not accept({'v': True, 'p': 'then'}, schema)
+E       AssertionError: assert not True
+E        +  where True = accept({'v': True, 'p': 'then'}, {'if': {'properties': {'v': {'const': 1}}, 'required': ['v']}, 'then': {'properties': {'p': {'type': 'string'}}, 'required': ['p']}, 'else': {'properties': {'p': {'type': 'integer'}}, 'required': ['p']}})
+
+tests/test_m3_population_shape.py:221: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_unmasked_boolean_condition_does_not_equal_integer
+1 failed, 65 deselected in 0.06s

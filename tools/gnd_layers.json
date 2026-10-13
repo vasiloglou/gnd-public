@@ -601,6 +601,9 @@
     "gnd.population": {
       "layer": "model"
     },
+    "gnd.population_shape": {
+      "layer": "model"
+    },
     "gnd.popvalidate": {
       "layer": "model"
     },

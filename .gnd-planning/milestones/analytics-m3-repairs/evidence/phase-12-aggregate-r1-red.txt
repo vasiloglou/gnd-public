@@ -1,0 +1,135 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_aggregate_schema_strings_refused_before_serialization __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e85940>
+
+    def test_aggregate_schema_strings_refused_before_serialization(monkeypatch):
+        from gnd import population_shape
+        def unwanted(*args, **kwargs):
+            raise AssertionError('aggregate schema exceeded budget before serialization')
+        monkeypatch.setattr(population_shape.json, 'dumps', unwanted)
+        schema = {'type': 'string', 'title': 'x' * 600000, 'description': 'y' * 600000}
+        with pytest.raises(population_shape._Unsupported):
+>           population_shape._bounded(schema)
+
+tests/test_m3_population_shape.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../gnd-phase12-r1-population_shape.py:48: in _bounded
+    content = json.dumps(schema, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'type': 'string', 'title': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'},)
+kwargs = {'ensure_ascii': True, 'separators': (',', ':'), 'allow_nan': False}
+
+    def unwanted(*args, **kwargs):
+>       raise AssertionError('aggregate schema exceeded budget before serialization')
+E       AssertionError: aggregate schema exceeded budget before serialization
+
+tests/test_m3_population_shape.py:182: AssertionError
+_ test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded[schema0] _
+
+schema = {'type': 'object', 'properties': {'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx': {'type': 'string'}}}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e85f30>
+
+    @pytest.mark.parametrize('schema', [
+        {'type': 'object', 'properties': {'x' * 1100000: {'type': 'string'}}},
+        {'type': 'string', 'enum': ['x' * 600000, 'x' * 600000]},
+        {'enum': [1 << (8 * 1024 * 1024)]},
+    ])
+    def test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded(schema, monkeypatch):
+        from gnd import population_shape
+        def unwanted(*args, **kwargs):
+            raise AssertionError('serialization reached before schema byte refusal')
+        monkeypatch.setattr(population_shape.json, 'dumps', unwanted)
+        with pytest.raises(population_shape._Unsupported):
+>           population_shape._bounded(schema)
+
+tests/test_m3_population_shape.py:200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../gnd-phase12-r1-population_shape.py:48: in _bounded
+    content = json.dumps(schema, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'type': 'object', 'properties': {'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx': {'type': 'string'}}},)
+kwargs = {'ensure_ascii': True, 'separators': (',', ':'), 'allow_nan': False}
+
+    def unwanted(*args, **kwargs):
+>       raise AssertionError('serialization reached before schema byte refusal')
+E       AssertionError: serialization reached before schema byte refusal
+
+tests/test_m3_population_shape.py:197: AssertionError
+_ test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded[schema1] _
+
+schema = {'type': 'string', 'enum': ['xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e739b0>
+
+    @pytest.mark.parametrize('schema', [
+        {'type': 'object', 'properties': {'x' * 1100000: {'type': 'string'}}},
+        {'type': 'string', 'enum': ['x' * 600000, 'x' * 600000]},
+        {'enum': [1 << (8 * 1024 * 1024)]},
+    ])
+    def test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded(schema, monkeypatch):
+        from gnd import population_shape
+        def unwanted(*args, **kwargs):
+            raise AssertionError('serialization reached before schema byte refusal')
+        monkeypatch.setattr(population_shape.json, 'dumps', unwanted)
+        with pytest.raises(population_shape._Unsupported):
+>           population_shape._bounded(schema)
+
+tests/test_m3_population_shape.py:200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../gnd-phase12-r1-population_shape.py:48: in _bounded
+    content = json.dumps(schema, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'type': 'string', 'enum': ['xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']},)
+kwargs = {'ensure_ascii': True, 'separators': (',', ':'), 'allow_nan': False}
+
+    def unwanted(*args, **kwargs):
+>       raise AssertionError('serialization reached before schema byte refusal')
+E       AssertionError: serialization reached before schema byte refusal
+
+tests/test_m3_population_shape.py:197: AssertionError
+_ test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded[schema2] _
+
+schema = {'enum': [<int instance with roughly 2525223 digits (limit at 4300) at 0xc5826c000>]}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e8f130>
+
+    @pytest.mark.parametrize('schema', [
+        {'type': 'object', 'properties': {'x' * 1100000: {'type': 'string'}}},
+        {'type': 'string', 'enum': ['x' * 600000, 'x' * 600000]},
+        {'enum': [1 << (8 * 1024 * 1024)]},
+    ])
+    def test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded(schema, monkeypatch):
+        from gnd import population_shape
+        def unwanted(*args, **kwargs):
+            raise AssertionError('serialization reached before schema byte refusal')
+        monkeypatch.setattr(population_shape.json, 'dumps', unwanted)
+        with pytest.raises(population_shape._Unsupported):
+>           population_shape._bounded(schema)
+
+tests/test_m3_population_shape.py:200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../gnd-phase12-r1-population_shape.py:48: in _bounded
+    content = json.dumps(schema, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'enum': [<int instance with roughly 2525223 digits (limit at 4300) at 0xc5826c000>]},)
+kwargs = {'ensure_ascii': True, 'separators': (',', ':'), 'allow_nan': False}
+
+    def unwanted(*args, **kwargs):
+>       raise AssertionError('serialization reached before schema byte refusal')
+E       AssertionError: serialization reached before schema byte refusal
+
+tests/test_m3_population_shape.py:197: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_aggregate_schema_strings_refused_before_serialization
+FAILED tests/test_m3_population_shape.py::test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded[schema0]
+FAILED tests/test_m3_population_shape.py::test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded[schema1]
+FAILED tests/test_m3_population_shape.py::test_schema_keys_repetitions_and_integer_size_are_preallocation_bounded[schema2]
+4 failed, 62 deselected in 0.09s

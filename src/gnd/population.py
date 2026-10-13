@@ -63,6 +63,8 @@ from gnd.values import (
 from gnd.values import model_digest as _model_digest
 from gnd.yaml_comments import configure_comment_scanner
 
+_ORIGINAL_DRAFT_VALIDATOR = Draft202012Validator
+
 MAX_POPULATION_BYTES = 10 * 1024 * 1024  # 10 MB
 
 
@@ -306,7 +308,13 @@ def _prepared_population_schema(schema: Any) -> Any:
 
 
 def _schema_issues(doc: Any) -> list[ValidationIssue]:
-    validator = Draft202012Validator(_prepared_population_schema(_load_population_schema()))
+    schema = _prepared_population_schema(_load_population_schema())
+    if Draft202012Validator is _ORIGINAL_DRAFT_VALIDATOR:
+        from gnd.population_shape import accepts_shape
+
+        if accepts_shape(doc, schema):
+            return []
+    validator = Draft202012Validator(schema)
     return [
         ValidationIssue(
             path=error.json_path,

@@ -94,3 +94,17 @@ unsupported exact integer/conditional/error cases; current dependency present.
 Ownerdelegated M3auto/makefixespartM3/fixit approval, corpusfirst before runtime.
 No optional panel, no source merge/adoption/release/certification authority.
 Phase12 required before05. Appmain sourcebranchPR policies remain.
+
+## Review amendment, delegated2026-10-13
+
+R1 found two hardening issues, no demonstrated acceptance false-positive.
+Aggregate schema string/key/numeric storage must charge a conservative ASCII
+serialized-size allowance BEFORE json.dumps; individually sub-cap strings cannot
+amplify materialization above1MiB. Original bound/expectedoutputs unchanged.
+Author and reviewer same aggregatecase provenRED against current runtime.
+Unmasked controls must directly exercise then/else selection for float2.0 and
+Boolean/numeric const collision, plus standalone enum1 againstTrue. Prove each
+targeted faulty predicate/enum mutant RED; current correct behavior staysGREEN.
+Original cases remain, successor controls only. R2 required after repair; bound2
+reviews and Astra/high owner preference preserved. Current-byte native/app checks
+repeat after repair; earlier pre-review timings retained separately.

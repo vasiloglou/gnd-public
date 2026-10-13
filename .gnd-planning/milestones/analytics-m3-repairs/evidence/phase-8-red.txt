@@ -1,0 +1,263 @@
+F...............FFFFFFFFFFFFF                                            [100%]
+=================================== FAILURES ===================================
+________ test_public_population_load_removes_repeated_local_ref_lookup _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1087e0d60>
+
+    def test_public_population_load_removes_repeated_local_ref_lookup(monkeypatch):
+        observed = []
+        def capture(schema):
+            observed.append(schema)
+            return Draft202012Validator(schema)
+        monkeypatch.setattr(population, "Draft202012Validator", capture)
+        model = load_model(FIXTURES / "model.orm.yaml")
+        loaded = population.load_population(FIXTURES / "population.good.json", model=model)
+        assert loaded.matches_validation_marker(model)
+>       assert observed and not any(has_ref(schema) for schema in observed)
+E       AssertionError: assert ([{'$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'https://gnd.dev/schema/population.schema.json', '...bject-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.', ...}] and not True)
+E        +  where True = any(<generator object test_public_population_load_removes_repeated_local_ref_lookup.<locals>.<genexpr> at 0x1087da880>)
+
+tests/test_m3_population_schema.py:39: AssertionError
+___________ test_unsupported_schema_uses_original_validator[unknown] ___________
+
+unsupported = 'unknown'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+____________ test_unsupported_schema_uses_original_validator[cycle] ____________
+
+unsupported = 'cycle'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+___________ test_unsupported_schema_uses_original_validator[sibling] ___________
+
+unsupported = 'sibling'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+__________ test_unsupported_schema_uses_original_validator[external] ___________
+
+unsupported = 'external'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+__________ test_unsupported_schema_uses_original_validator[nested-id] __________
+
+unsupported = 'nested-id'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+___________ test_unsupported_schema_uses_original_validator[dynamic] ___________
+
+unsupported = 'dynamic'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+____________ test_unsupported_schema_uses_original_validator[deep] _____________
+
+unsupported = 'deep'
+
+    @pytest.mark.parametrize("unsupported", ["unknown", "cycle", "sibling", "external", "nested-id", "dynamic", "deep"])
+    def test_unsupported_schema_uses_original_validator(unsupported):
+        schema = population._load_population_schema()
+        if unsupported == "unknown": schema["properties"]["facts"] = {"$ref": "#/$defs/missing"}
+        elif unsupported == "cycle": schema["$defs"]["scalar"] = {"$ref": "#/$defs/scalar"}
+        elif unsupported == "sibling": schema["$defs"]["fact_value"]["anyOf"][0]["description"] = "sibling"
+        elif unsupported == "external": schema["$defs"]["scalar"] = {"$ref": "https://example.invalid/schema"}
+        elif unsupported == "nested-id": schema["$defs"]["scalar"]["$id"] = "nested"
+        elif unsupported == "dynamic": schema["$defs"]["scalar"]["$dynamicRef"] = "#scalar"
+        else:
+            node = schema["$defs"]["scalar"]
+            for _ in range(100):
+                node["items"] = {}
+                node = node["items"]
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:85: AttributeError
+________________ test_hostile_schema_preparation_is_total[None] ________________
+
+schema = None
+
+    @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
+    def test_hostile_schema_preparation_is_total(schema):
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:90: AttributeError
+______________ test_hostile_schema_preparation_is_total[schema1] _______________
+
+schema = []
+
+    @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
+    def test_hostile_schema_preparation_is_total(schema):
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:90: AttributeError
+________________ test_hostile_schema_preparation_is_total[True] ________________
+
+schema = True
+
+    @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
+    def test_hostile_schema_preparation_is_total(schema):
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:90: AttributeError
+_________________ test_hostile_schema_preparation_is_total[1] __________________
+
+schema = 1
+
+    @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
+    def test_hostile_schema_preparation_is_total(schema):
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:90: AttributeError
+_______________ test_hostile_schema_preparation_is_total[schema] _______________
+
+schema = 'schema'
+
+    @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
+    def test_hostile_schema_preparation_is_total(schema):
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:90: AttributeError
+______________ test_hostile_schema_preparation_is_total[schema5] _______________
+
+schema = {'$defs': []}
+
+    @pytest.mark.parametrize("schema", [None, [], True, 1, "schema", {"$defs": []}])
+    def test_hostile_schema_preparation_is_total(schema):
+>       assert population._prepared_population_schema(schema) is schema
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.population' has no attribute '_prepared_population_schema'. Did you mean: '_load_population_schema'?
+
+tests/test_m3_population_schema.py:90: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_schema.py::test_public_population_load_removes_repeated_local_ref_lookup
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[unknown]
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[cycle]
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[sibling]
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[external]
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[nested-id]
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[dynamic]
+FAILED tests/test_m3_population_schema.py::test_unsupported_schema_uses_original_validator[deep]
+FAILED tests/test_m3_population_schema.py::test_hostile_schema_preparation_is_total[None]
+FAILED tests/test_m3_population_schema.py::test_hostile_schema_preparation_is_total[schema1]
+FAILED tests/test_m3_population_schema.py::test_hostile_schema_preparation_is_total[True]
+FAILED tests/test_m3_population_schema.py::test_hostile_schema_preparation_is_total[1]
+FAILED tests/test_m3_population_schema.py::test_hostile_schema_preparation_is_total[schema]
+FAILED tests/test_m3_population_schema.py::test_hostile_schema_preparation_is_total[schema5]
+14 failed, 15 passed in 0.09s

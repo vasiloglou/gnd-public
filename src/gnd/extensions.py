@@ -4,20 +4,23 @@ from __future__ import annotations
 import math
 from collections.abc import Callable, Collection, Mapping, Sequence
 from contextvars import ContextVar
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields, replace
 from decimal import Decimal
 from fractions import Fraction
-from types import MappingProxyType
+from functools import wraps
+from types import FunctionType, MappingProxyType
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, model_validator
 
+from gnd import extension_preparation as _extension_preparation
 from gnd import verbalize
 from gnd.address import derivation_address
 from gnd.atoms import atom_bind
 from gnd.branches import UnregisteredBranchError, branch, record_branch
 from gnd.documents import Model
 from gnd.errors import UnvalidatedPopulationError
+from gnd.extension_preparation import current_scope
 from gnd.model import (
     AggregateAnalysis,
     _derivation_variable,
@@ -1249,6 +1252,77 @@ def _requires_fixpoint(model: Model) -> bool:
     )
 
 
+def _clone_prepared_calculation(
+    result: _ExtensionResult | _ExactExtensionResult,
+) -> _ExtensionResult | _ExactExtensionResult | None:
+    if type(result) not in (_ExtensionResult, _ExactExtensionResult):
+        return None
+    if type(result.counted_operations) not in (_JoinWork, _ExactJoinWork, _FixpointJoinWork):
+        return None
+    # Typed relation rows and lineage are immutable. Refuse to memoize unknown
+    # mutable cell shapes rather than changing their evaluation or ownership.
+    if any(type(value) not in (str, int, float, bool)
+           for relation in result.extensions.values() for row in relation.rows for value in row):
+        return None
+    mapping = result.extensions
+    unavailable = {}
+    for name, origin in getattr(mapping, "unavailable", {}).items():
+        if any(type(value) not in (str, int, float, bool) for value in origin.binding.values()):
+            return None
+        unavailable[name] = replace(origin, binding=MappingProxyType(dict(origin.binding)))
+    if isinstance(mapping, _PartialExtensions):
+        if any(type(value) not in (str, int, float, bool, _Wildcard)
+               for rows in mapping.possible.values() for row in rows for value in row):
+            return None
+        copied = _PartialExtensions(
+            mapping, possible=dict(mapping.possible), unavailable=unavailable
+        )
+    elif isinstance(mapping, _ExactExtensions):
+        copied = _ExactExtensions(mapping, unavailable=unavailable)
+    else:
+        copied = MappingProxyType(dict(mapping))
+    return replace(result, extensions=copied, counted_operations=replace(result.counted_operations))
+
+
+def _prepared_stratified(function: Callable[..., _ExtensionResult | _ExactExtensionResult]):
+    @wraps(function)
+    def prepared(model, relations, *, heads=None, prior_unavailable=None,
+                 prior_possible=None, observe_partial=None, exact=False):
+        def calculate():
+            return function(model, relations, heads=heads, prior_unavailable=prior_unavailable,
+                            prior_possible=prior_possible, observe_partial=observe_partial, exact=exact)
+        scope = current_scope()
+        if (scope is None or scope.model is not model or type(exact) is not bool
+                or type(_PARTIAL_OPAQUE.get()) is not bool or heads is not None
+                or prior_unavailable is not None or prior_possible is not None
+                or observe_partial is not None or _WITNESS_TRACE.get() is not None
+                or _REFERENCE_PRESENTATION_WORK.get() is not None):
+            return calculate()
+        def snapshot(freeze):
+            # Read field references lazily; do not materialize model_dump or a
+            # complete relation snapshot before the remaining walk budget applies.
+            model_key = tuple((freeze(name), freeze(getattr(model, name)))
+                              for name in model.__class__.model_fields)
+            relation_key = []
+            for name, relation in relations.items():
+                relation_key.append((freeze(name), freeze(relation.fact_type),
+                                     freeze(relation.roles), freeze(relation.rows),
+                                     freeze(relation.row_lineage), freeze(relation.identity_codec_version)))
+            limit_key = tuple((freeze(f.name), freeze(getattr(DEFAULT_LIMITS, f.name)))
+                              for f in fields(DEFAULT_LIMITS))
+            return (model_key, tuple(relation_key), limit_key)
+        # Every callable at this actual lookup home participates, including
+        # imported strata/comparison helpers and compatibility patch seams.
+        dependencies = tuple(sorted(
+            (name, value, value.__code__ if isinstance(value, FunctionType) else None)
+            for name, value in globals().items() if callable(value)
+        ))
+        key = (function, exact, _PARTIAL_OPAQUE.get(), dependencies, math.isfinite)
+        return scope.calculate(key, snapshot, calculate, _clone_prepared_calculation, record_branch)
+    return prepared
+
+
+@_prepared_stratified
 def _evaluate_stratified_extensions(
     model: Model,
     relations: Mapping[str, _TypedRelation],
@@ -2556,6 +2630,7 @@ ExactJoinWork = _ExactJoinWork
 ExtensionResult = _ExtensionResult
 FixpointJoinWork = _FixpointJoinWork
 JoinWork = _JoinWork
+calculation_scope = _extension_preparation.calculation_scope
 PARTIAL_OPAQUE = _PARTIAL_OPAQUE
 PHASE3_LEGACY_CONSTRAINT_VIEW = _PHASE3_LEGACY_CONSTRAINT_VIEW
 PHASE3_LEGACY_EVALUATE_DERIVATIONS = _PHASE3_LEGACY_EVALUATE_DERIVATIONS

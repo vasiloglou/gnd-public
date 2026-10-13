@@ -112,3 +112,26 @@ Delegated approval under standing M3auto, make fixes part of M3, go on, fix it.
 Corpus-first; exact spec/test hashes before runtime edits. No synthetic domain
 approval, source merge, release or certification authority. Required11 before05;
 source branch/PR and owner merge rule retained, app directmain. Paid budget0.
+
+
+## Review amendment, delegated2026-10-13
+
+R1 reproduced2failed/1passed against reviewed runtime, plus two failing scope
+owner mutants. Budget counts EVERY fingerprint visit including hits/failed
+attempts; exhausted/entry-full scope bypasses BEFORE snapshot construction.
+Fingerprint model fields and ordered typed relations lazily, no full model_dump
+or relation copy before bounds. Existing YAML round-trip containers, Pydantic
+metadata and enum fields are walked directly under the same budget; unsupported
+shapes still bypass, never re-evaluate document validation. Integer storage also
+charges the16M storage/character cap. All callable helpers at extensions' actual
+lookup home, their function-code identities, math finite policy and DEFAULT_LIMITS
+participate; helper replacement cannot silently reuse earlier local results.
+This is preparation keying, not public canonical serialization. Existing raw
+result projection remains authority. No arbitrary interpreter/stdlib mutation
+contract or new semantic/evaluation cap. Scope controls now reach existing real
+compiled-snapshot numeric model, assert same evaluator/compose owner, fresh public
+owners, actual body reuse and complete uncached/prepared report equality.
+Corpus meanings unchanged; instrument corrections and successor cases retained.
+Round2 required after repair. Convergence bound2 phase diff reviews for current
+repair; new demonstrated blocking defects require RED/fix, not speculative churn.
+Model gpt6astra/high per explicit owner instruction overrides skill xhigh example.

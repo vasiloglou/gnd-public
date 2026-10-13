@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto",
+  "original_corpus_commit": "69ebf04",
+  "successor_test_sha256": "863a500a3e0a60e53bbc218f0c592d00b5201e347bf9cb547eed18a909c031ff",
+  "instrument_correction": "frozen field assignment replaced by in-place nested source metadata mutation; same invalidation outcome, no implementation accommodation",
+  "strengthening": "nonempty branch replay, unavailable binding isolation, exception noncaching and bounded/reference fallback controls",
+  "expected_outputs_weakened": false,
+  "fingerprint_integer_storage": "integer byte-size also charged to string/storage cap; no larger budget"
+}

@@ -1,0 +1,1 @@
+{"cap": 8, "error": null, "heldout_gate": false, "id": "dw_5162", "load_seconds": 1.677211916015949, "parent_seconds": 121.81197387498105, "partition": "tuning", "peak_memory_bytes": null, "question_seconds": 120.00079979200382, "question_wall_seconds": 120, "returned": null, "stats": null, "status": "wall_budget", "top": 3, "workers": 1}

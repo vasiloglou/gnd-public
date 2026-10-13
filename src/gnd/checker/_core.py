@@ -2061,16 +2061,17 @@ def check(
         context = resolve_context(model, references)
         if not is_bound_population(model, population, context):
             population = bind_population(model, population, references=context).combined
-    token = extension_core.PARTIAL_OPAQUE.set(True) if compiled_operations else None
-    try:
-        report = _check_dispatch(model, population)
-        if compiled_operations:
-            from gnd.compiled_obligations import compose
-            report = compose(model, population, report)
-        return report
-    finally:
-        if token is not None:
-            extension_core.PARTIAL_OPAQUE.reset(token)
+    with extension_core.calculation_scope(model, population):
+        token = extension_core.PARTIAL_OPAQUE.set(True) if compiled_operations else None
+        try:
+            report = _check_dispatch(model, population)
+            if compiled_operations:
+                from gnd.compiled_obligations import compose
+                report = compose(model, population, report)
+            return report
+        finally:
+            if token is not None:
+                extension_core.PARTIAL_OPAQUE.reset(token)
 
 
 def check_partial(model: Model, population: Population) -> CheckReport:

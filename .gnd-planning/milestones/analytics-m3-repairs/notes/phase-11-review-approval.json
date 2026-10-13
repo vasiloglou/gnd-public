@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "authority": "owner explicitly answered Approve remaining M3 reviews",
+  "scope": "Codex CLI gpt-5.5 read-only reviews of phase11 and remaining M3 performance source/spec/tests/evidence",
+  "merge_authorized": false,
+  "prompt_sha256": "097c008436b19f03e8fd34ee484f010e8fa94f70de3ec4e89e5ae8ecc1329019",
+  "model": "gpt-6-astra",
+  "model_selection": "owner questioned gpt5.5; current CLI cache lists gpt6astra, official model documentation most capable",
+  "reasoning_effort": "high",
+  "prior_gpt55_attempt": "superseded; retained transcript is not formal acceptance review",
+  "effort_authority": "owner explicitly requested do not use xhigh; just high is fine",
+  "prior_astra_xhigh_attempt": "interrupted at explicit owner request; not acceptance evidence"
+}

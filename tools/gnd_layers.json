@@ -874,6 +874,9 @@
     },
     "gnd.semantic_origins": {
       "layer": "checking"
+    },
+    "gnd.extension_preparation": {
+      "layer": "checking"
     }
   },
   "schema_version": 1

@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_review_public_scope_spans_compose_and_joins_checker ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10abb95b0>
+
+    def test_review_public_scope_spans_compose_and_joins_checker(monkeypatch):
+        from gnd import compiled_obligations,extension_preparation as prepared
+        fixture=Path(__file__).parent/'fixtures/compiled-snapshot'
+        model=load_model(fixture/'model.orm.json');population=load_population(fixture/'numeric.pop.json',model=model)
+        owners=[];original=ext._evaluate_derivations
+        def observed(*args,**kwargs):
+            owners.append(prepared.current_scope())
+            return original(*args,**kwargs)
+        monkeypatch.setattr(ext,'evaluate_derivations',observed)
+        compose_owners=[];original_compose=compiled_obligations.compose
+        def compose(*args,**kwargs):
+            compose_owners.append(prepared.current_scope())
+            return original_compose(*args,**kwargs)
+        monkeypatch.setattr(compiled_obligations,'compose',compose)
+        for _ in range(2):
+            before=len(owners)
+            api.check(model,population,compiled_operations=True)
+            found=owners[before:]
+>           assert len(found)>=2 and all(owner is found[0] for owner in found)
+E           AssertionError: assert (2 >= 2 and False)
+E            +  where 2 = len([CalculationScope(model=Model(version=2, model_id='urn:gnd-analytics:plan@2', source={'confidence': 'standard', 'kind'...e_maximum_value_bits=0, fixpoint_iterations=15, canonical_insertions=3)), branches=())}, nodes=6029, characters=42488)])
+E            +  and   False = all(<generator object test_review_public_scope_spans_compose_and_joins_checker.<locals>.<genexpr> at 0x10aba7d80>)
+
+tests/test_m3_extension_preparation.py:271: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_extension_preparation.py::test_review_public_scope_spans_compose_and_joins_checker
+1 failed in 0.20s

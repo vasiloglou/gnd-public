@@ -1,0 +1,140 @@
+FFFF.FF                                                                  [100%]
+=================================== FAILURES ===================================
+________ test_identical_full_calculation_once_with_fresh_consumer_work _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cb50510>
+
+    def test_identical_full_calculation_once_with_fresh_consumer_work(monkeypatch):
+        model, population, relations = inputs()
+        counts = body_counter(monkeypatch)
+        with scope(model, population):
+            first = ext._evaluate_stratified_extensions(model, relations)
+            before = len(counts)
+            assert before > 0
+            expected = first.counted_operations.atom_role_terms_read
+            first.counted_operations.atom_role_terms_read = -100
+            second = ext._evaluate_stratified_extensions(model, relations)
+>           assert len(counts) == before
+E           assert 6 == 3
+E            +  where 6 = len([1, 1, 1, 1, 1, 1])
+
+tests/test_m3_extension_preparation.py:48: AssertionError
+_______ test_relation_and_model_content_and_policy_changes_do_not_reuse ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cb50d60>
+
+    def test_relation_and_model_content_and_policy_changes_do_not_reuse(monkeypatch):
+        model, population, relations = inputs()
+        counts = body_counter(monkeypatch)
+        with scope(model, population):
+            ext._evaluate_stratified_extensions(model, relations)
+            before = len(counts)
+            changed = dict(relations)
+            changed['seed'] = replace(relations['seed'], rows=())
+            result = ext._evaluate_stratified_extensions(model, changed)
+            assert len(counts) > before and not result.extensions['top'].rows
+            before = len(counts)
+            ext._evaluate_stratified_extensions(model, relations, exact=True)
+            assert len(counts) > before
+            before = len(counts)
+            token = ext.PARTIAL_OPAQUE.set(True)
+            try: ext._evaluate_stratified_extensions(model, relations)
+            finally: ext.PARTIAL_OPAQUE.reset(token)
+            assert len(counts) > before
+            before = len(counts)
+>           model.source = {**model.source, 'confidence': 'high'}
+            ^^^^^^^^^^^^
+
+tests/test_m3_extension_preparation.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.14/site-packages/pydantic/main.py:1048: in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/pydantic/main.py:1084: in _setattr_handler
+    _check_frozen(cls, name, value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model_cls = <class 'gnd.model.Model'>, name = 'source'
+value = {'kind': 'text-conversation', 'confidence': 'high', 'mode': 'one-shot'}
+
+    def _check_frozen(model_cls: type[BaseModel], name: str, value: Any) -> None:
+        if model_cls.model_config.get('frozen'):
+            error_type = 'frozen_instance'
+        elif getattr(model_cls.__pydantic_fields__.get(name), 'frozen', False):
+            error_type = 'frozen_field'
+        else:
+            return
+    
+>       raise ValidationError.from_exception_data(
+            model_cls.__name__, [{'type': error_type, 'loc': (name,), 'input': value}]
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for Model
+E       source
+E         Instance is frozen [type=frozen_instance, input_value={'kind': 'text-conversati...gh', 'mode': 'one-shot'}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.13/v/frozen_instance
+
+.venv/lib/python3.14/site-packages/pydantic/main.py:90: ValidationError
+___________________ test_nested_scopes_and_exception_cleanup ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ca928d0>
+
+    def test_nested_scopes_and_exception_cleanup(monkeypatch):
+        model, population, relations = inputs()
+        other_model, other_population, other_relations = inputs()
+        counts = body_counter(monkeypatch)
+        with scope(model, population):
+            ext._evaluate_stratified_extensions(model, relations)
+            with scope(other_model, other_population):
+                ext._evaluate_stratified_extensions(other_model, other_relations)
+            before = len(counts)
+            ext._evaluate_stratified_extensions(model, relations)
+>           assert len(counts) == before
+E           assert 9 == 6
+E            +  where 9 = len([1, 1, 1, 1, 1, 1, ...])
+
+tests/test_m3_extension_preparation.py:91: AssertionError
+___________ test_trace_and_exact_metadata_are_retained_and_isolated ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cbe9d00>
+
+    def test_trace_and_exact_metadata_are_retained_and_isolated(monkeypatch):
+        model, population, relations = inputs()
+        counts = body_counter(monkeypatch)
+        with scope(model, population):
+            with capture_branches() as first_trace:
+                first = ext._evaluate_stratified_extensions(model, relations, exact=True)
+            before = len(counts)
+            first.extensions.pop('top')
+            with capture_branches() as second_trace:
+                second = ext._evaluate_stratified_extensions(model, relations, exact=True)
+>           assert len(counts) == before
+E           assert 6 == 3
+E            +  where 6 = len([1, 1, 1, 1, 1, 1])
+
+tests/test_m3_extension_preparation.py:110: AssertionError
+__________________ test_public_and_direct_checker_own_scopes ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cd4c450>
+
+    def test_public_and_direct_checker_own_scopes(monkeypatch):
+>       from gnd import extension_preparation as prepared
+E       ImportError: cannot import name 'extension_preparation' from 'gnd' (/private/tmp/gnd-m3-performance/src/gnd/__init__.py)
+
+tests/test_m3_extension_preparation.py:140: ImportError
+__________________ test_fingerprint_totality_and_bound_bypass __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cd4cc50>
+
+    def test_fingerprint_totality_and_bound_bypass(monkeypatch):
+>       from gnd import extension_preparation as prepared
+E       ImportError: cannot import name 'extension_preparation' from 'gnd' (/private/tmp/gnd-m3-performance/src/gnd/__init__.py)
+
+tests/test_m3_extension_preparation.py:160: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_m3_extension_preparation.py::test_identical_full_calculation_once_with_fresh_consumer_work
+FAILED tests/test_m3_extension_preparation.py::test_relation_and_model_content_and_policy_changes_do_not_reuse
+FAILED tests/test_m3_extension_preparation.py::test_nested_scopes_and_exception_cleanup
+FAILED tests/test_m3_extension_preparation.py::test_trace_and_exact_metadata_are_retained_and_isolated
+FAILED tests/test_m3_extension_preparation.py::test_public_and_direct_checker_own_scopes
+FAILED tests/test_m3_extension_preparation.py::test_fingerprint_totality_and_bound_bypass
+6 failed, 1 passed in 0.16s

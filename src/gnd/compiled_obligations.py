@@ -1,7 +1,7 @@
 """Opt-in standing operation implications and shared typed subset matching."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from gnd.values import identity_key
@@ -24,19 +24,43 @@ class WorkBudget:
             raise CompiledWorkLimit('compiled obligation role-cell work limit')
 
 
+@dataclass
+class _PreparedSubsetRows:
+    """One call's effective relation view and counted required projections."""
+
+    facts: Any
+    budget: WorkBudget | None = None
+    required: dict[tuple[str, tuple[str, ...]], set[tuple[Any, ...]]] = field(
+        default_factory=dict
+    )
+
+    def key(self, row: Any, roles: tuple[str, ...]) -> tuple[Any, ...]:
+        if self.budget is not None:
+            self.budget.visit(len(roles))
+        return tuple(identity_key(row.get(role)) for role in roles)
+
+    def offending_rows(self, entry: dict[str, Any]) -> list[Any]:
+        subset = entry['subset']
+        left = self.facts.get(str(subset['of']), ())
+        if not left:
+            return []
+        pairs = entry['role_pairs']
+        right_roles = tuple(pair[1] for pair in pairs)
+        projection = str(subset['in']), right_roles
+        if projection not in self.required:
+            self.required[projection] = {
+                self.key(row, right_roles)
+                for row in self.facts.get(projection[0], ())
+            }
+        required = self.required[projection]
+        left_roles = tuple(pair[0] for pair in pairs)
+        return [row for row in left if self.key(row, left_roles) not in required]
+
+
 def offending_rows(entry: dict[str, Any], facts: Any,
                    budget: WorkBudget | None = None) -> list[Any]:
     """Match every role pair against one required row, using typed identity."""
-    pairs = entry['role_pairs']
-    subset = entry['subset']
-
-    def key(row, side):
-        if budget is not None:
-            budget.visit(len(pairs))
-        return tuple(identity_key(row.get(pair[side])) for pair in pairs)
-
-    required = {key(row, 1) for row in facts.get(str(subset['in']), ())}
-    return [row for row in facts.get(str(subset['of']), ()) if key(row, 0) not in required]
+    return _PreparedSubsetRows(facts, budget).offending_rows(entry)
 
 
 def compiled_entries(model):
@@ -95,6 +119,7 @@ def compose(model, population, report):
         ):
             unavailable.add(str(fact['id']))
     rows = []
+    prepared = _PreparedSubsetRows(view.facts, budget)
     for operation, entry in entries:
         of, into = str(entry['subset']['of']), str(entry['subset']['in'])
         subjects = {of, into}
@@ -113,7 +138,7 @@ def compose(model, population, report):
                                       'compiled-obligation-work-limit')
         else:
             try:
-                offending = offending_rows(entry, view.facts, budget)
+                offending = prepared.offending_rows(entry)
                 if not view.facts.get(of):
                     verdict, event = 'vacuous', 'vacuous'
                 elif offending:

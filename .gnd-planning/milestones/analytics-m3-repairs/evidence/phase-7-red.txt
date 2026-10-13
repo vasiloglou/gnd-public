@@ -1,0 +1,322 @@
+FFFFFFFFFFFF...FFFF                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_subset_public_result_avoids_quadratic_provider[P2-086] __________
+
+case_id = 'P2-086'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_public_result_avoi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d91940>
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
+        model, population = _build(case_id, tmp_path)
+        expected = api.check(model, population)
+
+        def reject(*args):
+            raise AssertionError("quadratic pure subset provider reached")
+
+        monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
+>       assert api.check(model, population) == expected
+E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...ccepted', ...}
+E
+E         Omitting 13 identical items, use -vv to show
+E         Differing items:
+E         {'coverage': {}} != {'coverage': {'booking_by_person': {'declared': 'declared', 'facts': 2}, 'booking_of_room': {'declared': 'declared', '...aches_course': {'declared': 'declared', 'facts': 1}, 'person_takes_course': {'declared': 'declared', 'facts': 2}, ...}}
+E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'accept', 'assurance_level': 'none', 'scope_digest': None, ...}}
+E         {'error': {'ty...
+E
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+tests/test_m3_indexed_subset.py:25: AssertionError
+_________ test_subset_public_result_avoids_quadratic_provider[P2-087] __________
+
+case_id = 'P2-087'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_public_result_avoi1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d92ea0>
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
+        model, population = _build(case_id, tmp_path)
+        expected = api.check(model, population)
+
+        def reject(*args):
+            raise AssertionError("quadratic pure subset provider reached")
+
+        monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
+>       assert api.check(model, population) == expected
+E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...iolated', ...}
+E
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'coverage': {}} != {'coverage': {'booking_by_person': {'declared': 'declared', 'facts': 3}, 'booking_of_room': {'declared': 'declared', '...aches_course': {'declared': 'declared', 'facts': 3}, 'person_takes_course': {'declared': 'declared', 'facts': 3}, ...}}
+E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'refuse', 'assurance_level': 'none', 'scope_digest': None, ...}}
+E         {'error': {'ty...
+E
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_m3_indexed_subset.py:25: AssertionError
+_________ test_subset_public_result_avoids_quadratic_provider[P2-088] __________
+
+case_id = 'P2-088'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_public_result_avoi2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d1b2f0>
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
+        model, population = _build(case_id, tmp_path)
+        expected = api.check(model, population)
+
+        def reject(*args):
+            raise AssertionError("quadratic pure subset provider reached")
+
+        monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
+>       assert api.check(model, population) == expected
+E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...iolated', ...}
+E
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'coverage': {}} != {'coverage': {'booking_by_person': {'declared': 'declared', 'facts': 3}, 'booking_of_room': {'declared': 'declared', '...aches_course': {'declared': 'declared', 'facts': 3}, 'person_takes_course': {'declared': 'declared', 'facts': 3}, ...}}
+E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'refuse', 'assurance_level': 'none', 'scope_digest': None, ...}}
+E         {'error': {'ty...
+E
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_m3_indexed_subset.py:25: AssertionError
+_________ test_subset_public_result_avoids_quadratic_provider[P2-089] __________
+
+case_id = 'P2-089'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_public_result_avoi3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108de09e0>
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
+        model, population = _build(case_id, tmp_path)
+        expected = api.check(model, population)
+
+        def reject(*args):
+            raise AssertionError("quadratic pure subset provider reached")
+
+        monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
+>       assert api.check(model, population) == expected
+E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...dequate', ...}
+E
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'coverage': {}} != {'coverage': {'s_sub_p': {'declared': 'declared', 'facts': 1}, 's_sub_q': {'declared': 'declared', 'facts': 1}, 's_sup_p': {'declared': 'declared', 'facts': 1}, 's_sup_q': {'declared': 'declared', 'facts': 1}, ...}}
+E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'indeterminate', 'assurance_level': 'none', 'scope_digest': None, ...}}
+E         {'error': {'type': 'AssertionErr...
+E
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_m3_indexed_subset.py:25: AssertionError
+_________ test_subset_public_result_avoids_quadratic_provider[P2-090] __________
+
+case_id = 'P2-090'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_public_result_avoi4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108de39b0>
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
+        model, population = _build(case_id, tmp_path)
+        expected = api.check(model, population)
+
+        def reject(*args):
+            raise AssertionError("quadratic pure subset provider reached")
+
+        monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
+>       assert api.check(model, population) == expected
+E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...iolated', ...}
+E
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'coverage': {}} != {'coverage': {'s_sub_p': {'declared': 'declared', 'facts': 1}, 's_sub_q': {'declared': 'declared', 'facts': 1}, 's_sup_p': {'declared': 'declared', 'facts': 1}, 's_sup_q': {'declared': 'declared', 'facts': 1}, ...}}
+E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'refuse', 'assurance_level': 'none', 'scope_digest': None, ...}}
+E         {'error': {'type': 'AssertionError', 'm...
+E
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_m3_indexed_subset.py:25: AssertionError
+_________ test_subset_public_result_avoids_quadratic_provider[P2-091] __________
+
+case_id = 'P2-091'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_public_result_avoi5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108f36c50>
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
+        model, population = _build(case_id, tmp_path)
+        expected = api.check(model, population)
+
+        def reject(*args):
+            raise AssertionError("quadratic pure subset provider reached")
+
+        monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
+>       assert api.check(model, population) == expected
+E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...ccepted', ...}
+E
+E         Omitting 13 identical items, use -vv to show
+E         Differing items:
+E         {'coverage': {}} != {'coverage': {'s_sub_p': {'declared': 'declared', 'facts': 1}, 's_sub_q': {'declared': 'declared', 'facts': 1}, 's_sup_p': {'declared': 'declared', 'facts': 1}, 's_sup_q': {'declared': 'declared', 'facts': 1}, ...}}
+E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'accept', 'assurance_level': 'none', 'scope_digest': None, ...}}
+E         {'error': {'type': 'AssertionError', 'm...
+E
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+tests/test_m3_indexed_subset.py:25: AssertionError
+______________________ test_subset_oracle_parity[P2-086] _______________________
+
+case_id = 'P2-086'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_oracle_parity_P2_00')
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_oracle_parity(case_id, tmp_path):
+        constraint, snapshot, _ = _case(case_id, tmp_path)
+        expected = semantic_spec.verdict_of(constraint, snapshot)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:32: AttributeError
+______________________ test_subset_oracle_parity[P2-087] _______________________
+
+case_id = 'P2-087'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_oracle_parity_P2_01')
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_oracle_parity(case_id, tmp_path):
+        constraint, snapshot, _ = _case(case_id, tmp_path)
+        expected = semantic_spec.verdict_of(constraint, snapshot)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:32: AttributeError
+______________________ test_subset_oracle_parity[P2-088] _______________________
+
+case_id = 'P2-088'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_oracle_parity_P2_02')
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_oracle_parity(case_id, tmp_path):
+        constraint, snapshot, _ = _case(case_id, tmp_path)
+        expected = semantic_spec.verdict_of(constraint, snapshot)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:32: AttributeError
+______________________ test_subset_oracle_parity[P2-089] _______________________
+
+case_id = 'P2-089'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_oracle_parity_P2_03')
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_oracle_parity(case_id, tmp_path):
+        constraint, snapshot, _ = _case(case_id, tmp_path)
+        expected = semantic_spec.verdict_of(constraint, snapshot)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:32: AttributeError
+______________________ test_subset_oracle_parity[P2-090] _______________________
+
+case_id = 'P2-090'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_oracle_parity_P2_04')
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_oracle_parity(case_id, tmp_path):
+        constraint, snapshot, _ = _case(case_id, tmp_path)
+        expected = semantic_spec.verdict_of(constraint, snapshot)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:32: AttributeError
+______________________ test_subset_oracle_parity[P2-091] _______________________
+
+case_id = 'P2-091'
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_oracle_parity_P2_05')
+
+    @pytest.mark.parametrize("case_id", CASES)
+    def test_subset_oracle_parity(case_id, tmp_path):
+        constraint, snapshot, _ = _case(case_id, tmp_path)
+        expected = semantic_spec.verdict_of(constraint, snapshot)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:32: AttributeError
+_______________ test_production_hook_registered_only_for_subset ________________
+
+    def test_production_hook_registered_only_for_subset():
+>       assert FAMILIES["subset"].production == "indexed_subset_verdict"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Family' object has no attribute 'production'
+
+tests/test_m3_indexed_subset.py:53: AttributeError
+___________ test_subset_invalid_shape_refuses_like_oracle[changes0] ____________
+
+changes = {'variant': 'unknown'}
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_invalid_shape_refu0')
+
+    @pytest.mark.parametrize("changes", [
+        {"variant": "unknown"}, {"sequences": ()}, {"refused": "opaque-value"},
+    ])
+    def test_subset_invalid_shape_refuses_like_oracle(changes, tmp_path):
+        constraint, snapshot, _ = _case("P2-086", tmp_path)
+        constraint = replace(constraint, **changes)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == semantic_spec.verdict_of(constraint, snapshot)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:64: AttributeError
+___________ test_subset_invalid_shape_refuses_like_oracle[changes1] ____________
+
+changes = {'sequences': ()}
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_invalid_shape_refu1')
+
+    @pytest.mark.parametrize("changes", [
+        {"variant": "unknown"}, {"sequences": ()}, {"refused": "opaque-value"},
+    ])
+    def test_subset_invalid_shape_refuses_like_oracle(changes, tmp_path):
+        constraint, snapshot, _ = _case("P2-086", tmp_path)
+        constraint = replace(constraint, **changes)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == semantic_spec.verdict_of(constraint, snapshot)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:64: AttributeError
+___________ test_subset_invalid_shape_refuses_like_oracle[changes2] ____________
+
+changes = {'refused': 'opaque-value'}
+tmp_path = PosixPath('<PYTEST_TEMP>/pytest-493/test_subset_invalid_shape_refu2')
+
+    @pytest.mark.parametrize("changes", [
+        {"variant": "unknown"}, {"sequences": ()}, {"refused": "opaque-value"},
+    ])
+    def test_subset_invalid_shape_refuses_like_oracle(changes, tmp_path):
+        constraint, snapshot, _ = _case("P2-086", tmp_path)
+        constraint = replace(constraint, **changes)
+>       assert semantic_rows.indexed_subset_verdict(constraint, snapshot) == semantic_spec.verdict_of(constraint, snapshot)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.semantic_rows' has no attribute 'indexed_subset_verdict'
+
+tests/test_m3_indexed_subset.py:64: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_m3_indexed_subset.py::test_subset_public_result_avoids_quadratic_provider[P2-086]
+FAILED tests/test_m3_indexed_subset.py::test_subset_public_result_avoids_quadratic_provider[P2-087]
+FAILED tests/test_m3_indexed_subset.py::test_subset_public_result_avoids_quadratic_provider[P2-088]
+FAILED tests/test_m3_indexed_subset.py::test_subset_public_result_avoids_quadratic_provider[P2-089]
+FAILED tests/test_m3_indexed_subset.py::test_subset_public_result_avoids_quadratic_provider[P2-090]
+FAILED tests/test_m3_indexed_subset.py::test_subset_public_result_avoids_quadratic_provider[P2-091]
+FAILED tests/test_m3_indexed_subset.py::test_subset_oracle_parity[P2-086] - A...
+FAILED tests/test_m3_indexed_subset.py::test_subset_oracle_parity[P2-087] - A...
+FAILED tests/test_m3_indexed_subset.py::test_subset_oracle_parity[P2-088] - A...
+FAILED tests/test_m3_indexed_subset.py::test_subset_oracle_parity[P2-089] - A...
+FAILED tests/test_m3_indexed_subset.py::test_subset_oracle_parity[P2-090] - A...
+FAILED tests/test_m3_indexed_subset.py::test_subset_oracle_parity[P2-091] - A...
+FAILED tests/test_m3_indexed_subset.py::test_production_hook_registered_only_for_subset
+FAILED tests/test_m3_indexed_subset.py::test_subset_invalid_shape_refuses_like_oracle[changes0]
+FAILED tests/test_m3_indexed_subset.py::test_subset_invalid_shape_refuses_like_oracle[changes1]
+FAILED tests/test_m3_indexed_subset.py::test_subset_invalid_shape_refuses_like_oracle[changes2]
+16 failed, 3 passed in 0.48s

@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "authority": "owner M3 auto; make the fixes part of M3; go ahead",
+  "spec_sha256": "6155bc7e27ffe083774dc312bfd410a5230f962c2a323479af8feaf1c42f383e",
+  "paid_cap_usd": 0,
+  "synthetic_domain_data_authorized": false,
+  "upstream_merge_release_certification_authorized": false,
+  "instrument": "corpus-first existing frozen controls and scalar identity units",
+  "decision": "optional production subset hook; pure oracle unchanged; equality/exclusion sibling controls",
+  "test_sha256": "c4faabea2e15371fe660008b2b023dd6b6612f2521664f328582c533dd787a4d",
+  "source_base": "9993750",
+  "red_outcome": "16 failed, 3 passed in 0.48s; intended missing indexed hook and quadratic-provider trap"
+}

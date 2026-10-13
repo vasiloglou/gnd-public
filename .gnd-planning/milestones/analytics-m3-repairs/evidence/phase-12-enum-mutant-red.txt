@@ -1,0 +1,14 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_standalone_enum_does_not_admit_boolean __________________
+
+    def test_standalone_enum_does_not_admit_boolean():
+        assert accept(1, {'enum': [1]})
+>       assert not accept(True, {'enum': [1]})
+E       AssertionError: assert not True
+E        +  where True = accept(True, {'enum': [1]})
+
+tests/test_m3_population_shape.py:228: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_standalone_enum_does_not_admit_boolean
+1 failed, 65 deselected in 0.06s

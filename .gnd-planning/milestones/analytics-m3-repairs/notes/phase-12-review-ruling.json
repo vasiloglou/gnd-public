@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-13",
+  "authority": "M3auto/fixit/remaining-reviewsapproved/ownerhigh",
+  "prior_spec_sha256": "ea6dde512871bce19bd22d08175611e38c7f78a2e644442724c9b439ba3aedb2",
+  "amended_spec_sha256": "904726e28039a3971ff921ee7c4378e15b96eefa4f3549db50352d1afe829ffc",
+  "review_model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "review_r1": "2hardening, aggregate already reproducedRED; branch controls require mutantRED",
+  "round_limit": 2,
+  "expected_outputs_weakened": false,
+  "intermediate_green": "59pass before aggregate successor",
+  "reviewed_runtime_sha256": "dda4de8abbb03bcfd797dc8d6ec188d4842d41490dfb34bfefbfd37cd294d415",
+  "current_implementation_sha256": {
+    "src/gnd/population_shape.py": "ec8e028f1ec23d668a0c5412701f7e14eec539d65cc4a472212a07e196d822bf",
+    "src/gnd/population.py": "5aa61d2556fdc80c31a13c289e707bb4e34ef0b4a46434d571ef005debcb01e1"
+  },
+  "current_test_sha256": "099dd94195a8f2a0c44e7d872a3b1338f0b30fdc76ac0310c722db2615f57968",
+  "r1_reproduction": "aggregate/key/repeated/int controls4RED against retained actual R1; numeric/bool/enum mutants each1RED",
+  "current_focused": "214 passed in 4.14s"
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-13",
+  "authority": "explicit owner remainingM3reviews; modelAstra/high preference",
+  "transport": "CodexCLI read-only stdin",
+  "source_base": "35af996",
+  "corpus_red": "50f64db",
+  "review_model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "current_sha256": {
+    "src/gnd/transition.py": "2bc689040ac96df00a6d76c13af3c8f29db7b65263bd2e2775a295283e3f6ee4",
+    "tests/test_m3_transition_preparation.py": "1b3b60cd30325b0a9ca2639db74a9e0930a768196c53652612e6609cd2b6d744"
+  },
+  "paid_cap": 0,
+  "source_merge_authorized": false
+}

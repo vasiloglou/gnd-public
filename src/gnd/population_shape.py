@@ -1,0 +1,308 @@
+"""Bounded positive-only compilation of population interchange shape policy."""
+
+from __future__ import annotations
+
+import json
+from functools import lru_cache
+from typing import Any
+
+from pydantic_core import SchemaValidator, core_schema
+
+_MAX_DEPTH = 48
+_MAX_NODES = 4096
+_MAX_BYTES = 1024 * 1024
+_ANNOTATIONS = {"title", "description"}
+_TYPES = {"object", "array", "string", "integer", "number", "boolean"}
+
+
+class _Unsupported(ValueError):
+    """The authoritative Draft validator must handle this schema."""
+
+
+def _bounded(schema: Any) -> str:
+    count = 0
+    byte_budget = 0
+    active: set[int] = set()
+
+    def charge(amount: int) -> None:
+        nonlocal byte_budget
+        byte_budget += amount
+        if byte_budget > _MAX_BYTES:
+            raise _Unsupported("aggregate schema size bound")
+
+    def visit(value: Any, depth: int) -> None:
+        nonlocal count
+        count += 1
+        if count > _MAX_NODES or depth > _MAX_DEPTH:
+            raise _Unsupported("schema work bound")
+        if type(value) in (dict, list):
+            identity = id(value)
+            if identity in active:
+                raise _Unsupported("schema cycle")
+            active.add(identity)
+            # Delimiters and separators, conservatively including a trailing
+            # separator. Charge each occurrence, including repeated aliases.
+            charge(2 + 2 * len(value))
+            if isinstance(value, dict):
+                for key in value:
+                    if type(key) is not str:
+                        raise _Unsupported("schema keys")
+                    charge(2 + 12 * len(key))
+            children = value.values() if isinstance(value, dict) else value
+            if isinstance(value, dict) and any(type(k) is not str for k in value):
+                raise _Unsupported("schema keys")
+            for child in children:
+                visit(child, depth + 1)
+            active.remove(identity)
+        elif type(value) is str:
+            # ensure_ascii can encode one Unicode character as two six-byte
+            # surrogate escapes. This upper bound permits safe false negatives.
+            charge(2 + 12 * len(value))
+        elif type(value) is int:
+            # Decimal digits are fewer than binary bits; no integer-to-string
+            # allocation is needed to refuse a hostile schema operand.
+            charge(2 + value.bit_length())
+        elif type(value) is float:
+            charge(32)
+        elif type(value) in (bool, type(None)):
+            charge(5)
+        else:
+            raise _Unsupported("schema operand")
+
+    visit(schema, 0)
+    content = json.dumps(schema, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+    if len(content.encode("utf-8")) > _MAX_BYTES:
+        raise _Unsupported("schema size bound")
+    return content
+
+
+def _intersection(parts: list[Any]) -> Any:
+    validators = tuple(SchemaValidator(part) for part in parts)
+
+    def validate(value: Any) -> Any:
+        for validator in validators:
+            validator.validate_python(value)
+        return value
+
+    return core_schema.no_info_plain_validator_function(validate)
+
+
+def _constant(value: Any) -> Any:
+    if type(value) is str:
+        primitive = core_schema.str_schema(strict=True)
+    elif type(value) is int:
+        primitive = core_schema.int_schema(strict=True)
+    else:
+        raise _Unsupported("constant operand")
+    return core_schema.chain_schema([primitive, core_schema.literal_schema([value])])
+
+
+def _condition(schema: Any):
+    # This finite predicate is exact, rather than a narrow positive validator:
+    # numeric 2.0 matches const 2, while bool does not match numeric constants.
+    if not isinstance(schema, dict) or set(schema) != {"properties", "required"}:
+        raise _Unsupported("conditional predicate")
+    properties, required = schema["properties"], schema["required"]
+    if not isinstance(properties, dict) or not isinstance(required, list):
+        raise _Unsupported("conditional operands")
+    if len(properties) != 1 or required != list(properties):
+        raise _Unsupported("conditional guard")
+    name, operand = next(iter(properties.items()))
+    if type(name) is not str or not isinstance(operand, dict) or set(operand) != {"const"}:
+        raise _Unsupported("conditional constant")
+    constant = operand["const"]
+    if type(constant) not in (str, int):
+        raise _Unsupported("conditional constant type")
+
+    def matches(value: Any) -> bool:
+        if type(value) is not dict:
+            raise _Unsupported("conditional data")
+        if name not in value:
+            return False
+        actual = value[name]
+        if type(actual) not in (str, int, float, bool, type(None), dict, list):
+            raise _Unsupported("conditional scalar")
+        if type(constant) is int:
+            return type(actual) in (int, float) and actual == constant
+        return type(actual) is str and actual == constant
+
+    return matches
+
+
+def _compile(schema: Any, *, root: bool = False) -> Any:
+    if not isinstance(schema, dict):
+        raise _Unsupported("schema node")
+    allowed = _ANNOTATIONS | {
+        "type",
+        "properties",
+        "required",
+        "additionalProperties",
+        "items",
+        "minLength",
+        "enum",
+        "const",
+        "anyOf",
+        "allOf",
+        "if",
+        "then",
+        "else",
+    }
+    if root:
+        allowed |= {"$schema", "$id", "$defs"}
+        if (
+            "$schema" in schema
+            and schema["$schema"] != "https://json-schema.org/draft/2020-12/schema"
+        ):
+            raise _Unsupported("schema dialect")
+        if "$id" in schema and schema["$id"] != "https://gnd.dev/schema/population.schema.json":
+            raise _Unsupported("schema resource")
+        if "$defs" in schema:
+            if not isinstance(schema["$defs"], dict):
+                raise _Unsupported("definitions")
+            for definition in schema["$defs"].values():
+                _compile(definition)
+    if set(schema) - allowed:
+        raise _Unsupported("schema keyword")
+    for annotation in _ANNOTATIONS & set(schema):
+        if type(schema[annotation]) is not str:
+            raise _Unsupported("annotation")
+    parts = []
+    kind = schema.get("type")
+    if "type" in schema and kind is None:
+        raise _Unsupported("null type")
+    # Reject incompatible sibling shapes rather than accidentally overlooking
+    # their operands while selecting one primitive or structural compiler.
+    families = [
+        ({"properties", "required", "additionalProperties"}, "object"),
+        ({"items"}, "array"),
+        ({"minLength"}, "string"),
+    ]
+    selected = [expected for keywords, expected in families if keywords & set(schema)]
+    if len(selected) > 1 or (selected and kind is not None and kind != selected[0]):
+        raise _Unsupported("incompatible sibling constraint")
+    if isinstance(kind, list):
+        if (
+            not kind
+            or any(type(k) is not str or k not in _TYPES for k in kind)
+            or len(kind) != len(set(kind))
+        ):
+            raise _Unsupported("type union")
+        parts.append(
+            core_schema.union_schema([_compile({"type": k}) for k in kind], mode="left_to_right")
+        )
+    elif kind is not None and (type(kind) is not str or kind not in _TYPES):
+        raise _Unsupported("type")
+    elif kind == "object" or any(
+        k in schema for k in ("properties", "required", "additionalProperties")
+    ):
+        properties = schema.get("properties", {})
+        required = schema.get("required", [])
+        if (
+            not isinstance(properties, dict)
+            or not isinstance(required, list)
+            or any(type(k) is not str for k in required)
+        ):
+            raise _Unsupported("object operands")
+        if len(required) != len(set(required)) or any(k not in properties for k in required):
+            raise _Unsupported("required properties")
+        additional = schema.get("additionalProperties", True)
+        if type(additional) is not bool and not isinstance(additional, dict):
+            raise _Unsupported("additional properties")
+        fields = {
+            name: core_schema.typed_dict_field(_compile(child), required=name in required)
+            for name, child in properties.items()
+        }
+        parts.append(
+            core_schema.typed_dict_schema(
+                fields,
+                strict=True,
+                extra_behavior="forbid" if additional is False else "allow",
+                extras_schema=_compile(additional) if isinstance(additional, dict) else None,
+            )
+        )
+    elif kind == "array" or "items" in schema:
+        item = schema.get("items")
+        if "items" in schema and not isinstance(item, dict):
+            raise _Unsupported("array items")
+        parts.append(
+            core_schema.list_schema(_compile(item) if item is not None else None, strict=True)
+        )
+    elif kind == "string" or "minLength" in schema:
+        minimum = schema.get("minLength", 0)
+        if type(minimum) is not int or minimum < 0:
+            raise _Unsupported("string length")
+        parts.append(core_schema.str_schema(strict=True, min_length=minimum))
+    elif kind == "integer":
+        parts.append(core_schema.int_schema(strict=True))
+    elif kind == "number":
+
+        def native_number(value: Any) -> Any:
+            if type(value) not in (int, float):
+                raise _Unsupported("non-native number")
+            return value
+
+        numeric = core_schema.union_schema(
+            [
+                core_schema.int_schema(strict=True),
+                core_schema.float_schema(strict=True, allow_inf_nan=False),
+            ],
+            mode="left_to_right",
+        )
+        parts.append(core_schema.no_info_before_validator_function(native_number, numeric))
+    elif kind == "boolean":
+        parts.append(core_schema.bool_schema(strict=True))
+    # Keywords independently constrain the original input, including when type
+    # is a union or another structural keyword has already selected a schema.
+    for keyword in ("items", "minLength", "properties", "required", "additionalProperties"):
+        if keyword in schema and isinstance(kind, list):
+            raise _Unsupported("union sibling constraint")
+    if "enum" in schema:
+        values = schema["enum"]
+        if not isinstance(values, list) or not values:
+            raise _Unsupported("enum")
+        parts.append(core_schema.union_schema([_constant(v) for v in values], mode="left_to_right"))
+    if "const" in schema:
+        parts.append(_constant(schema["const"]))
+    for keyword in ("anyOf", "allOf"):
+        if keyword in schema:
+            branches = schema[keyword]
+            if not isinstance(branches, list) or not branches:
+                raise _Unsupported("schema branches")
+            compiled = [_compile(branch) for branch in branches]
+            parts.append(
+                core_schema.union_schema(compiled, mode="left_to_right")
+                if keyword == "anyOf"
+                else _intersection(compiled)
+            )
+    if "if" in schema:
+        predicate = _condition(schema["if"])
+        then = SchemaValidator(_compile(schema["then"])) if "then" in schema else None
+        otherwise = SchemaValidator(_compile(schema["else"])) if "else" in schema else None
+
+        def conditional(value: Any) -> Any:
+            selected = then if predicate(value) else otherwise
+            if selected is not None:
+                selected.validate_python(value)
+            return value
+
+        parts.append(core_schema.no_info_plain_validator_function(conditional))
+    elif "then" in schema or "else" in schema:
+        raise _Unsupported("unattached conditional")
+    if not parts:
+        raise _Unsupported("unconstrained schema")
+    return parts[0] if len(parts) == 1 else _intersection(parts)
+
+
+@lru_cache(maxsize=8)
+def _prepared(content: str) -> SchemaValidator:
+    return SchemaValidator(_compile(json.loads(content), root=True))
+
+
+def accepts_shape(doc: Any, schema: Any) -> bool:
+    """Accept only supported positive cases; every other case uses Draft."""
+    try:
+        validator = _prepared(_bounded(schema))
+        validator.validate_python(doc)
+    except Exception:  # noqa: BLE001 -- positive-only optimization, Draft owns errors
+        return False
+    return True

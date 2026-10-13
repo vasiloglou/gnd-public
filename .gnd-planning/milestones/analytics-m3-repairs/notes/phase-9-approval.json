@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto, go ahead, required plan follow-up",
+  "spec_sha256": "a4231f8487afe6c44b6126abb4c7f11b8b3ce5356597dbf583970797929dc5ff",
+  "ruling": "D9 count actual cached work; empty known subset vacuity; budget100000 unchanged",
+  "budget_usd": 0,
+  "new_domain_data": false,
+  "merge_release_certification": false,
+  "source_base": "65b6de0",
+  "test_sha256": "ae395cdd70279549f4039e54649d2ffcbafe8488429a1b0f9ba38069c977aeea",
+  "source_runtime_view": "_PreparedSubsetRows(facts, budget).offending_rows(entry); standalone signature unchanged",
+  "red_outcome": "4 failed,1 passed; empty budget, missing preparation, public numeric budget refusal"
+}

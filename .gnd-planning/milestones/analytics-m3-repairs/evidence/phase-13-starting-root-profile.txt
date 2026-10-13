@@ -1,0 +1,45 @@
+{"mode": "profile-root", "diagnostic_model_variant": "full", "id": "dw_5162", "load_seconds": 1.1614550410304219, "candidates": 8, "wall_cap_seconds": 60.0, "facts": {"concept_exists": 97, "concept_has_value_role": 3844, "concept_size": 97, "join_fanout": 392, "joinable": 392, "literal_supported": 14218, "plan_role_functional": 2119, "role_functional": 2119, "role_has_value": 14218, "role_is_numeric": 164, "role_is_text": 3288, "role_mandatory": 1095}, "exit_code": 2, "status": "complete", "semantic_sha256": "b24161d360189420c722c52b701425901035b51ce899b186a4105ea72fa1be12", "runtime": {"python": "3.13.12 (main, Mar 10 2026, 18:26:32) [Clang 21.1.4 ]", "gnd_api": "/private/tmp/gnd-m3-performance/src/gnd/api.py", "rpds_py": "2026.9.1"}, "inputs": {"<APP_ROOT>/.gnd-analytics/local/beast-2/m3-full-state/plan.orm.json": "a9361f1077f4c2c92b7698337afaec96689a98bfcd3f16f2354407601a44b809", "<APP_ROOT>/.gnd-analytics/local/beast-2/m3-full-state/state0.pop.json": "226345bd8246ad5b2ea728ce2a8cf9da51fd930b9e148c7bf359435b0906c559", ".gnd-analytics/local/beast-2/split.json": "fa22d52148b838f9d10cee790855f758ce3ca3a15f505d27222a98b01fb2df2a", "<APP_ROOT>/.gnd-analytics/local/beast-2/development.jsonl": "a2f9ea01b18e422cdde691317d497e921ddf2120ffb2823175d2f3e27fdc24dc"}, "seconds": 14.687069958017673, "cpu_seconds": 14.668928}
+         85010533 function calls (80257469 primitive calls) in 13.777 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1057 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001   14.667   14.667 api.py:735(transition)
+        1    0.001    0.001   14.666   14.666 api.py:472(_run_transition)
+        1    0.003    0.003   14.659   14.659 api.py:214(_run_transition_raw)
+        1    0.008    0.008   14.512   14.512 transition.py:2070(evaluate_plan)
+        1    0.003    0.003    9.202    9.202 transition.py:1904(_evaluate_to_state)
+        3    0.000    0.000    8.844    2.948 _core.py:2052(check)
+        3    0.026    0.009    8.832    2.944 _core.py:1777(_check_dispatch)
+        3    0.001    0.000    8.805    2.935 _core.py:330(check_legacy)
+        9    0.010    0.001    5.908    0.656 extensions.py:1288(prepared)
+        6    0.006    0.001    4.298    0.716 extensions.py:1291(calculate)
+        6    0.434    0.072    4.291    0.715 extensions.py:1325(_evaluate_stratified_extensions)
+        6    0.000    0.000    4.130    0.688 extensions.py:1007(_python_extension_calculator)
+        6    0.004    0.001    4.119    0.687 extension_preparation.py:104(calculate)
+        3    0.000    0.000    4.038    1.346 extensions.py:2502(_evaluate_derivations_dispatch)
+        3    0.004    0.001    3.975    1.325 extensions.py:2394(evaluate_derivations_legacy)
+        3    0.001    0.000    3.107    1.036 correspondence.py:1118(correspond_snapshot)
+        3    0.334    0.111    3.063    1.021 semantic_adapter.py:796(adapt_snapshot_observed)
+        5    0.000    0.000    2.872    0.574 population.py:498(load_population_bytes)
+        5    0.019    0.004    2.526    0.505 population.py:424(_build_population)
+        5    0.000    0.000    2.364    0.473 popvalidate.py:623(population_validate)
+        5    0.235    0.047    2.197    0.439 popvalidate.py:428(_rule_fact_type_mismatch)
+        3    0.001    0.000    1.894    0.631 extensions.py:1965(structured_extension_view)
+   916984    0.419    0.000    1.850    0.000 extensions.py:606(_identity_token)
+   484078    0.110    0.000    1.805    0.000 universe.py:86(resolve_primitive)
+        6    0.000    0.000    1.550    0.258 extensions.py:1301(snapshot)
+1515378/2256    1.001    0.000    1.549    0.001 extension_preparation.py:35(freeze)
+1986360/336646    0.263    0.000    1.530    0.000 extension_preparation.py:78(<genexpr>)
+        3    0.000    0.000    1.524    0.508 correspondence.py:1098(project_snapshot)
+        3    0.670    0.223    1.485    0.495 semantic_origins.py:23(__init__)
+   917066    0.330    0.000    1.328    0.000 __init__.py:185(dumps)
+   484804    0.054    0.000    1.281    0.000 universe.py:56(_object_types_by_id)
+      122    0.157    0.001    1.227    0.010 extensions.py:953(_binding_lineages)
+   484804    0.794    0.000    1.227    0.000 model_index.py:88(object_map)
+        3    0.001    0.000    1.222    0.407 applicability.py:13(applicable_scope_ids)
+        3    0.111    0.037    1.205    0.402 semantic_adapter.py:644(adapt_snapshot)
+
+
+

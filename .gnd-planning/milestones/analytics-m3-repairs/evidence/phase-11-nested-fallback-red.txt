@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_failed_fingerprint_charged_before_nested_fallback ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a3c9a70>
+
+    def test_failed_fingerprint_charged_before_nested_fallback(monkeypatch):
+        from gnd import extension_preparation as prepared
+        model,population,_=inputs()
+        monkeypatch.setattr(prepared,'MAX_FINGERPRINT_NODES',3)
+        with scope(model,population) as owner:
+            def fallback():
+                return owner.calculate(('nested',),1,lambda:1,lambda v:v,ext.record_branch)
+            owner.calculate(('unsupported',),{'x':object()},fallback,lambda v:v,ext.record_branch)
+>           assert owner.nodes==3
+E           AssertionError: assert 4 == 3
+E            +  where 4 = CalculationScope(model=Model(version=1, model_id='urn:gnd-fixture:derivation-evaluation:cost-chain-counted@1', source=... 'alpha'}]}, warnings=[]), records={(('nested',), ('int', 1)): _Prepared(value=1, branches=())}, nodes=4, characters=2).nodes
+
+tests/test_m3_extension_preparation.py:302: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_extension_preparation.py::test_failed_fingerprint_charged_before_nested_fallback
+1 failed in 0.09s

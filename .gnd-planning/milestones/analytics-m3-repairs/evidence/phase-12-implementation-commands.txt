@@ -1,0 +1,24 @@
+Working directory: /private/tmp/gnd-m3-performance
+Every command used UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline.
+
+pytest tests/test_m3_population_shape.py -q
+exit0; phase-12-shape-green.txt;66passed.
+
+pytest tests/test_m3_population_shape.py tests/test_m3_population_schema.py tests/test_population_load.py tests/test_m3_generated_json.py tests/test_schema_sync.py tests/test_rf1_layering.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py -q
+exit0; phase-12-focused-green.txt;214passed.
+
+ruff check src/gnd/population_shape.py src/gnd/population.py
+exit0; phase-12-lint-green.txt.
+
+RED commands were originally executed as uv run --offline python with equivalent reproducible code retained in phase-12-mutant-runner.py. Reproduction commands:
+python .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-12-mutant-runner.py r1-bound
+exit1;4assertion failures; phase-12-aggregate-r1-red.txt.
+python .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-12-mutant-runner.py numeric-condition
+exit1;1assertion failure; phase-12-numeric-condition-mutant-red.txt.
+python .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-12-mutant-runner.py boolean-condition
+exit1;1assertion failure; phase-12-boolean-condition-mutant-red.txt.
+python .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-12-mutant-runner.py enum
+exit1;1assertion failure; phase-12-enum-mutant-red.txt.
+
+phase-12-r1-runtime.txt retains actual prior runtime dda4de8, copied before amendment repair.
+phase-12-reconstructed-pre-hardening-runtime.txt is explicitly reconstructed by reversing documented hardening edits, not retained original historical bytes. phase-12-reconstructed-hardening-red.txt records6failed2passed against that reconstructed implementation. This is separate from original missing-helper feature RED and actual R1 aggregate RED.

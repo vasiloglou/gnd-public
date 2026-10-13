@@ -1,0 +1,9 @@
+{
+  "authority": "standing M3auto,2026-10-13",
+  "scope": "import-only lint formatting of corpus; expected outcomes preserved",
+  "original_approval_sha256": "ddeed5309de87d9041b77f24892d2cb7c4191f4667fbada074c350587c4364dc",
+  "current_test_sha256": "edff8310563d52db5a6346b1723215fdfc9647eab339c75512eb0f99c264d27d",
+  "lint_current": "All checks passed!",
+  "prior_red_artifact_read_by_reviewer": true,
+  "budget_cap_unchanged": true
+}

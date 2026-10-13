@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto, make fixes part of M3, go ahead; plan scoped follow-up rule",
+  "scope": "required frozen schema reference preparation optimization and measured exact parity",
+  "spec_sha256": "c8b5007ec7e493236c7b573a343ced1c2a68a2624ac662b3f7892befbaab36d8",
+  "paid_cap_usd": 0,
+  "new_synthetic_domain_data": false,
+  "merge_release_certification": false,
+  "source_base": "7f40f01",
+  "test_sha256": "1e1fd9c3549abcc6c76ada43ce051ecbc91b968b4004077c049f2f4b78f6f290",
+  "selected_gate": "uv run pytest -q tests/test_m3_population_schema.py tests/test_population_load.py tests/test_m3_generated_json.py tests/test_m3_indexed_subset.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py tests/test_schema_sync.py tests/test_rf7_consumers.py"
+}

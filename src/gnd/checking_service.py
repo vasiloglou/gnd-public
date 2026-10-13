@@ -286,27 +286,30 @@ def _run_check_raw(
                             f"anchor:sidecar-invalid: population could not be read safely: {error}"
                         ) from error
                 bind_anchors(selected_anchors, model, population_bytes, document_raw, population)
-            if selected_anchors is not None or any(
-                c.get("type") == "anchored"
-                for ft in model.fact_types
-                for c in ft.get("constraints") or []
-            ):
-                anchored_evaluator = (
-                    checker_module.check_with_anchors_partial
-                    if evaluator is checker_module.check_partial
-                    else checker_module.check_with_anchors
-                )
-                checked = anchored_evaluator(
-                    model,
-                    population,
-                    anchors=selected_anchors,
-                    document_bytes=document_raw,
-                )
-            else:
-                checked = (evaluator or checker_module.check)(model, population)
-            if compiled_operations:
-                from gnd.compiled_obligations import compose
-                checked = compose(model, population, checked)
+            from gnd.extension_preparation import calculation_scope
+
+            with calculation_scope(model, population):
+                if selected_anchors is not None or any(
+                    c.get("type") == "anchored"
+                    for ft in model.fact_types
+                    for c in ft.get("constraints") or []
+                ):
+                    anchored_evaluator = (
+                        checker_module.check_with_anchors_partial
+                        if evaluator is checker_module.check_partial
+                        else checker_module.check_with_anchors
+                    )
+                    checked = anchored_evaluator(
+                        model,
+                        population,
+                        anchors=selected_anchors,
+                        document_bytes=document_raw,
+                    )
+                else:
+                    checked = (evaluator or checker_module.check)(model, population)
+                if compiled_operations:
+                    from gnd.compiled_obligations import compose
+                    checked = compose(model, population, checked)
             exit_code = checker_module.band(checked)
     except AnchorError as error:
         return _finalize(

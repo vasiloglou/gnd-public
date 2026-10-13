@@ -1,0 +1,86 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_generated_transition_states_use_json[legacy] _______________
+
+case = 'legacy'
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-490/test_generated_transition_stat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c91f820>
+
+    @pytest.mark.parametrize("case", ["legacy", "opaque"])
+    def test_generated_transition_states_use_json(case, tmp_path, monkeypatch):
+        if case == "legacy":
+            corpus = ROOT / "tests/fixtures/public-transition-contract"
+            model = load_model(corpus / "v2_expense.orm.yaml")
+            pre = load_population(corpus / "walks/clean-walk/pre.pop.yaml", model=model)
+            steps = json.loads((corpus / "walks/clean-walk/steps.json").read_text())
+            steps.update(
+                model_digest=transition.model_digest(model),
+                operations_digest=transition.operations_digest(model.operations),
+            )
+        else:
+            model_path, pre_path, steps_path = _stage("T01-walk-unknown-precondition", tmp_path)
+            model = load_model(model_path)
+            pre = load_population(pre_path, model=model)
+            steps = json.loads(steps_path.read_text())
+        observed = []
+        original = population._parse_document_bytes
+    
+        def capture(data, *, suffix, source):
+            observed.append((source, suffix))
+            return original(data, suffix=suffix, source=source)
+    
+        monkeypatch.setattr(population, "_parse_document_bytes", capture)
+        payload = api.transition(model, pre, steps)
+        assert payload["exit_code"] == ANSWERS[case]["exit_code"]
+        assert bool(payload["transition"]["computed_post"]) == ANSWERS[case]["computed_post"]
+        assert observed
+>       assert all(suffix == ".json" for _, suffix in observed), observed
+E       AssertionError: [('<dynamic asserted state after step 1>', ''), ('<intermediate state after step 1>', ''), ('<dynamic asserted state a...('<intermediate state after step 2>', ''), ('<dynamic asserted state after step 2>', ''), ('<computed post>', ''), ...]
+E       assert False
+E        +  where False = all(<generator object test_generated_transition_states_use_json.<locals>.<genexpr> at 0x10d19e180>)
+
+tests/test_m3_generated_json.py:49: AssertionError
+______________ test_generated_transition_states_use_json[opaque] _______________
+
+case = 'opaque'
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-490/test_generated_transition_stat1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c91f6f0>
+
+    @pytest.mark.parametrize("case", ["legacy", "opaque"])
+    def test_generated_transition_states_use_json(case, tmp_path, monkeypatch):
+        if case == "legacy":
+            corpus = ROOT / "tests/fixtures/public-transition-contract"
+            model = load_model(corpus / "v2_expense.orm.yaml")
+            pre = load_population(corpus / "walks/clean-walk/pre.pop.yaml", model=model)
+            steps = json.loads((corpus / "walks/clean-walk/steps.json").read_text())
+            steps.update(
+                model_digest=transition.model_digest(model),
+                operations_digest=transition.operations_digest(model.operations),
+            )
+        else:
+            model_path, pre_path, steps_path = _stage("T01-walk-unknown-precondition", tmp_path)
+            model = load_model(model_path)
+            pre = load_population(pre_path, model=model)
+            steps = json.loads(steps_path.read_text())
+        observed = []
+        original = population._parse_document_bytes
+    
+        def capture(data, *, suffix, source):
+            observed.append((source, suffix))
+            return original(data, suffix=suffix, source=source)
+    
+        monkeypatch.setattr(population, "_parse_document_bytes", capture)
+        payload = api.transition(model, pre, steps)
+        assert payload["exit_code"] == ANSWERS[case]["exit_code"]
+        assert bool(payload["transition"]["computed_post"]) == ANSWERS[case]["computed_post"]
+        assert observed
+>       assert all(suffix == ".json" for _, suffix in observed), observed
+E       AssertionError: [('<dynamic asserted state after step 1>', ''), ('<intermediate state after step 1>', ''), ('<dynamic asserted state after step 1>', ''), ('<computed post>', ''), ('<computed post evaluation view>', '')]
+E       assert False
+E        +  where False = all(<generator object test_generated_transition_states_use_json.<locals>.<genexpr> at 0x10d1e9e00>)
+
+tests/test_m3_generated_json.py:49: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_generated_json.py::test_generated_transition_states_use_json[legacy]
+FAILED tests/test_m3_generated_json.py::test_generated_transition_states_use_json[opaque]
+2 failed in 0.31s

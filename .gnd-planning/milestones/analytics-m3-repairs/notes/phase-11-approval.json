@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto; owner fix it after phase10",
+  "instrument": "corpus-first",
+  "source_base": "098ec68",
+  "spec_sha256": "feccbdc0da599cc77291b97b052f4edb1b0f8e71ca9bf461d4f6b6a35a998795",
+  "test_sha256": "37da439737c98884a4c17d0c47fd9735dbb92bfb90f67017cca33b29c8b84e98",
+  "ruling": "scoped full stratified calculation reuse only; same outputs/traces/budgets and fresh work; unsupported routes fall back",
+  "budget_usd": 0,
+  "merge_release_certification": false,
+  "new_domain_data": false,
+  "red_artifact_sha256": "ab0c0fe56f7cabca9286142534d81de5fbcb02457280c649a61f72a09ed04878"
+}

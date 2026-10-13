@@ -1,0 +1,1228 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.FFFFFFFFFFFFFFF.                          [100%]
+=================================== FAILURES ===================================
+_______________ test_valid_population_avoids_python_schema_walk ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a1b9350>
+
+    def test_valid_population_avoids_python_schema_walk(monkeypatch):
+        def unwanted(*args,**kwargs):
+            raise AssertionError('valid document repeated Draft iter_errors')
+        model=load_model(FIXTURES/'model.orm.yaml')
+        monkeypatch.setattr(Draft202012Validator,'iter_errors',unwanted)
+>       loaded=population.load_population(FIXTURES/'population.good.json',model=model)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/gnd/population.py:544: in load_population
+    return load_population_bytes(data, source=path, model=model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/population.py:504: in load_population_bytes
+    return _build_population(doc, model=model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/population.py:431: in _build_population
+    issues = _schema_issues(shape)
+             ^^^^^^^^^^^^^^^^^^^^^
+src/gnd/population.py:316: in _schema_issues
+    for error in sorted(validator.iter_errors(doc), key=lambda e: e.json_path)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Draft202012Validator(schema={'$defs': {'fact_value': {'anyOf': [{'type': ['string', 'number', 'boolean']}, {'addition...': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}})
+kwargs = {}
+
+    def unwanted(*args,**kwargs):
+>       raise AssertionError('valid document repeated Draft iter_errors')
+E       AssertionError: valid document repeated Draft iter_errors
+
+tests/test_m3_population_shape.py:24: AssertionError
+__________ test_conditional_and_errors_match_original[original-None] ___________
+
+version = None, value = 'original'
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...r': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[original-1] ____________
+
+version = 1, value = 'original'
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 1}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[original-2] ____________
+
+version = 2, value = 'original'
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[original-2.0] ___________
+
+version = 2.0, value = 'original'
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2.0}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+__________ test_conditional_and_errors_match_original[original-True] ___________
+
+version = True, value = 'original'
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...: 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': True}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[None-None] _____________
+
+version = None, value = None
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...r': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+______________ test_conditional_and_errors_match_original[None-1] ______________
+
+version = 1, value = None
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 1}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+______________ test_conditional_and_errors_match_original[None-2] ______________
+
+version = 2, value = None
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[None-2.0] _____________
+
+version = 2.0, value = None
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2.0}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[None-True] _____________
+
+version = True, value = None
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...: 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': True}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[value2-None] ____________
+
+version = None, value = {'$opaque': 'existing marker'}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...r': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[value2-1] _____________
+
+version = 1, value = {'$opaque': 'existing marker'}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 1}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[value2-2] _____________
+
+version = 2, value = {'$opaque': 'existing marker'}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[value2-2.0] ____________
+
+version = 2.0, value = {'$opaque': 'existing marker'}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2.0}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[value2-True] ____________
+
+version = True, value = {'$opaque': 'existing marker'}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...: 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': True}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[value3-None] ____________
+
+version = None, value = {'$opaque': ''}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...r': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[value3-1] _____________
+
+version = 1, value = {'$opaque': ''}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 1}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[value3-2] _____________
+
+version = 2, value = {'$opaque': ''}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[value3-2.0] ____________
+
+version = 2.0, value = {'$opaque': ''}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2.0}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[value3-True] ____________
+
+version = True, value = {'$opaque': ''}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...: 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': True}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[value4-None] ____________
+
+version = None, value = {'$opaque': 'x', 'extra': 1}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...r': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[value4-1] _____________
+
+version = 1, value = {'$opaque': 'x', 'extra': 1}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 1}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_conditional_and_errors_match_original[value4-2] _____________
+
+version = 2, value = {'$opaque': 'x', 'extra': 1}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+____________ test_conditional_and_errors_match_original[value4-2.0] ____________
+
+version = 2.0, value = {'$opaque': 'x', 'extra': 1}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2.0}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+___________ test_conditional_and_errors_match_original[value4-True] ____________
+
+version = True, value = {'$opaque': 'x', 'extra': 1}
+
+    @pytest.mark.parametrize('version',[None,1,2,2.0,True])
+    @pytest.mark.parametrize('value',['original',None,{'$opaque':'existing marker'},{'$opaque':''},{'$opaque':'x','extra':1}])
+    def test_conditional_and_errors_match_original(version,value):
+        doc=document()
+        if version is not None: doc['format_version']=version
+        doc['facts']['movie_has_title'][0]['title']=value
+        schema=population._load_population_schema()
+        expected=issues(doc,schema)
+>       assert not accept(doc) or not expected
+                   ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...: 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': True}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_supported_good_cases_and_instances_policy[None] _____________
+
+version = None
+
+    @pytest.mark.parametrize('version',[None,1,2])
+    def test_supported_good_cases_and_instances_policy(version):
+        doc=document()
+        if version is not None: doc['format_version']=version
+>       assert accept(doc)
+               ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...r': [{'movie': 1, 'year': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+______________ test_supported_good_cases_and_instances_policy[1] _______________
+
+version = 1
+
+    @pytest.mark.parametrize('version',[None,1,2])
+    def test_supported_good_cases_and_instances_policy(version):
+        doc=document()
+        if version is not None: doc['format_version']=version
+>       assert accept(doc)
+               ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 1}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+______________ test_supported_good_cases_and_instances_policy[2] _______________
+
+version = 2
+
+    @pytest.mark.parametrize('version',[None,1,2])
+    def test_supported_good_cases_and_instances_policy(version):
+        doc=document()
+        if version is not None: doc['format_version']=version
+>       assert accept(doc)
+               ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...ar': 2006}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}, 'format_version': 2}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+______________ test_original_document_retains_types_and_identity _______________
+
+    def test_original_document_retains_types_and_identity():
+        doc=document()
+        doc['facts']['movie_released_in_year'][0]['year']=2006.0
+        doc['facts']['movie_has_title'][0]['title']='é😊'
+        before=copy.deepcopy(doc); row=doc['facts']['movie_released_in_year'][0]
+>       assert accept(doc)
+               ^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = {'population': {'model': 'model.orm.yaml', 'source': 'fixture', 'label': 'conforming', 'covers': ['movie_has_title', '...: [{'movie': 1, 'year': 2006.0}, {'movie': 2, 'year': 2002}], 'movie_sequel_of_movie': [{'sequel': 1, 'original': 2}]}}
+schema = None
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema0] __________________
+
+schema = {'type': 'string', 'pattern': '^blocked$'}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'type': 'string', 'pattern': '^blocked$'}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema1] __________________
+
+schema = {'type': 'number', 'minimum': 100}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'type': 'number', 'minimum': 100}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema2] __________________
+
+schema = {'$ref': 'https://example.invalid/schema'}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'$ref': 'https://example.invalid/schema'}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema3] __________________
+
+schema = {'if': {'type': 'integer'}, 'then': {'const': 1}, 'else': {'const': 2}}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'if': {'type': 'integer'}, 'then': {'const': 1}, 'else': {'const': 2}}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema4] __________________
+
+schema = {'type': 'object', '$id': 'nested'}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'type': 'object', '$id': 'nested'}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema5] __________________
+
+schema = {'type': 'string', 'minLength': True}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'type': 'string', 'minLength': True}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema6] __________________
+
+schema = {'type': 'array', 'items': []}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'type': 'array', 'items': []}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_unsupported_schema_falls_back[schema7] __________________
+
+schema = {'type': 'object', 'required': 'key'}
+
+    @pytest.mark.parametrize('schema',[
+        {'type':'string','pattern':'^blocked$'},
+        {'type':'number','minimum':100},
+        {'$ref':'https://example.invalid/schema'},
+        {'if':{'type':'integer'},'then':{'const':1},'else':{'const':2}},
+        {'type':'object','$id':'nested'},
+        {'type':'string','minLength':True},
+        {'type':'array','items':[]},
+        {'type':'object','required':'key'},
+    ])
+    def test_unsupported_schema_falls_back(schema):
+>       assert not accept('permitted only by ignored constraint',schema)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 'permitted only by ignored constraint'
+schema = {'type': 'object', 'required': 'key'}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+________________ test_scalar_algorithm_rejections[schema0-True] ________________
+
+schema = {'type': 'integer', 'enum': [1, 2]}, doc = True
+
+    @pytest.mark.parametrize('schema,doc',[
+        ({'type':'integer','enum':[1,2]},True),
+        ({'type':'integer','enum':[1,2]},2.0),
+        ({'enum':['x']},1),
+        ({'type':'string','minLength':2},'😊'),
+        ({'type':'array','items':{'type':'string'}},('x',)),
+        ({'anyOf':[{'type':'string'},{'type':'integer'}]},False),
+    ])
+    def test_scalar_algorithm_rejections(schema,doc):
+>       assert not accept(doc,schema)
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = True, schema = {'type': 'integer', 'enum': [1, 2]}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+________________ test_scalar_algorithm_rejections[schema1-2.0] _________________
+
+schema = {'type': 'integer', 'enum': [1, 2]}, doc = 2.0
+
+    @pytest.mark.parametrize('schema,doc',[
+        ({'type':'integer','enum':[1,2]},True),
+        ({'type':'integer','enum':[1,2]},2.0),
+        ({'enum':['x']},1),
+        ({'type':'string','minLength':2},'😊'),
+        ({'type':'array','items':{'type':'string'}},('x',)),
+        ({'anyOf':[{'type':'string'},{'type':'integer'}]},False),
+    ])
+    def test_scalar_algorithm_rejections(schema,doc):
+>       assert not accept(doc,schema)
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 2.0, schema = {'type': 'integer', 'enum': [1, 2]}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_________________ test_scalar_algorithm_rejections[schema2-1] __________________
+
+schema = {'enum': ['x']}, doc = 1
+
+    @pytest.mark.parametrize('schema,doc',[
+        ({'type':'integer','enum':[1,2]},True),
+        ({'type':'integer','enum':[1,2]},2.0),
+        ({'enum':['x']},1),
+        ({'type':'string','minLength':2},'😊'),
+        ({'type':'array','items':{'type':'string'}},('x',)),
+        ({'anyOf':[{'type':'string'},{'type':'integer'}]},False),
+    ])
+    def test_scalar_algorithm_rejections(schema,doc):
+>       assert not accept(doc,schema)
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = 1, schema = {'enum': ['x']}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_____________ test_scalar_algorithm_rejections[schema3-\U0001f60a] _____________
+
+schema = {'type': 'string', 'minLength': 2}, doc = '😊'
+
+    @pytest.mark.parametrize('schema,doc',[
+        ({'type':'integer','enum':[1,2]},True),
+        ({'type':'integer','enum':[1,2]},2.0),
+        ({'enum':['x']},1),
+        ({'type':'string','minLength':2},'😊'),
+        ({'type':'array','items':{'type':'string'}},('x',)),
+        ({'anyOf':[{'type':'string'},{'type':'integer'}]},False),
+    ])
+    def test_scalar_algorithm_rejections(schema,doc):
+>       assert not accept(doc,schema)
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = '😊', schema = {'type': 'string', 'minLength': 2}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+________________ test_scalar_algorithm_rejections[schema4-doc4] ________________
+
+schema = {'type': 'array', 'items': {'type': 'string'}}, doc = ('x',)
+
+    @pytest.mark.parametrize('schema,doc',[
+        ({'type':'integer','enum':[1,2]},True),
+        ({'type':'integer','enum':[1,2]},2.0),
+        ({'enum':['x']},1),
+        ({'type':'string','minLength':2},'😊'),
+        ({'type':'array','items':{'type':'string'}},('x',)),
+        ({'anyOf':[{'type':'string'},{'type':'integer'}]},False),
+    ])
+    def test_scalar_algorithm_rejections(schema,doc):
+>       assert not accept(doc,schema)
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = ('x',), schema = {'type': 'array', 'items': {'type': 'string'}}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+_______________ test_scalar_algorithm_rejections[schema5-False] ________________
+
+schema = {'anyOf': [{'type': 'string'}, {'type': 'integer'}]}, doc = False
+
+    @pytest.mark.parametrize('schema,doc',[
+        ({'type':'integer','enum':[1,2]},True),
+        ({'type':'integer','enum':[1,2]},2.0),
+        ({'enum':['x']},1),
+        ({'type':'string','minLength':2},'😊'),
+        ({'type':'array','items':{'type':'string'}},('x',)),
+        ({'anyOf':[{'type':'string'},{'type':'integer'}]},False),
+    ])
+    def test_scalar_algorithm_rejections(schema,doc):
+>       assert not accept(doc,schema)
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = False, schema = {'anyOf': [{'type': 'string'}, {'type': 'integer'}]}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+______________________ test_compilation_bounds_and_cycles ______________________
+
+    def test_compilation_bounds_and_cycles():
+        cycle={'type':'array'}; cycle['items']=cycle
+>       assert not accept([],cycle)
+                   ^^^^^^^^^^^^^^^^
+
+tests/test_m3_population_shape.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+doc = []
+schema = {'type': 'array', 'items': {'type': 'array', 'items': {'type': 'array', 'items': {'type': 'array', 'items': {'type': 'array', 'items': {'type': 'array', 'items': {...}}}}}}}
+
+    def accept(doc,schema=None):
+>       from gnd.population_shape import accepts_shape
+E       ModuleNotFoundError: No module named 'gnd.population_shape'
+
+tests/test_m3_population_shape.py:16: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_valid_population_avoids_python_schema_walk
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[original-None]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[original-1]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[original-2]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[original-2.0]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[original-True]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[None-None]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[None-1]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[None-2]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[None-2.0]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[None-True]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value2-None]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value2-1]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value2-2]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value2-2.0]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value2-True]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value3-None]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value3-1]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value3-2]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value3-2.0]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value3-True]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value4-None]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value4-1]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value4-2]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value4-2.0]
+FAILED tests/test_m3_population_shape.py::test_conditional_and_errors_match_original[value4-True]
+FAILED tests/test_m3_population_shape.py::test_supported_good_cases_and_instances_policy[None]
+FAILED tests/test_m3_population_shape.py::test_supported_good_cases_and_instances_policy[1]
+FAILED tests/test_m3_population_shape.py::test_supported_good_cases_and_instances_policy[2]
+FAILED tests/test_m3_population_shape.py::test_original_document_retains_types_and_identity
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema0]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema1]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema2]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema3]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema4]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema5]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema6]
+FAILED tests/test_m3_population_shape.py::test_unsupported_schema_falls_back[schema7]
+FAILED tests/test_m3_population_shape.py::test_scalar_algorithm_rejections[schema0-True]
+FAILED tests/test_m3_population_shape.py::test_scalar_algorithm_rejections[schema1-2.0]
+FAILED tests/test_m3_population_shape.py::test_scalar_algorithm_rejections[schema2-1]
+FAILED tests/test_m3_population_shape.py::test_scalar_algorithm_rejections[schema3-\U0001f60a]
+FAILED tests/test_m3_population_shape.py::test_scalar_algorithm_rejections[schema4-doc4]
+FAILED tests/test_m3_population_shape.py::test_scalar_algorithm_rejections[schema5-False]
+FAILED tests/test_m3_population_shape.py::test_compilation_bounds_and_cycles
+45 failed, 2 passed in 0.16s

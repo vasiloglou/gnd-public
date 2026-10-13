@@ -1,0 +1,39 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_review_aggregate_budget_charges_hits_and_failed_attempts _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108e11480>
+
+    def test_review_aggregate_budget_charges_hits_and_failed_attempts(monkeypatch):
+        from gnd import extension_preparation as prepared
+        model,population,_=inputs()
+        monkeypatch.setattr(prepared,'MAX_FINGERPRINT_NODES',12)
+        calls=[]
+        with scope(model,population) as owner:
+            for _ in range(3):
+                owner.calculate(('unit',),{'x': (1,2,3)},lambda:calls.append(1) or 1,lambda v:v,ext.record_branch)
+>           assert len(calls)==2
+E           assert 1 == 2
+E            +  where 1 = len([1])
+
+tests/test_m3_extension_preparation.py:238: AssertionError
+_______________ test_review_warm_helper_patch_invalidates_result _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108e11ba0>
+
+    def test_review_warm_helper_patch_invalidates_result(monkeypatch):
+        model,population,relations=inputs()
+        with scope(model,population):
+            assert ext._evaluate_stratified_extensions(model,relations).extensions['top'].rows
+            monkeypatch.setattr(ext,'derivation_strata',lambda document:[])
+>           assert not ext._evaluate_stratified_extensions(model,relations).extensions
+E           AssertionError: assert not mappingproxy({'low': _TypedRelation(fact_type='low', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('...String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')})
+E            +  where mappingproxy({'low': _TypedRelation(fact_type='low', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((('...String'),), rows=(('alpha',),), row_lineage=((('facts', 'seed', 0),),), identity_codec_version='gnd-identity-json/1')}) = _ExtensionResult(extensions=mappingproxy({'low': _TypedRelation(fact_type='low', roles=(('item', 'String'),), rows=(('...groups=0, aggregate_exact_operations=0, aggregate_maximum_value_bits=0, fixpoint_iterations=6, canonical_insertions=3)).extensions
+E            +    where _ExtensionResult(extensions=mappingproxy({'low': _TypedRelation(fact_type='low', roles=(('item', 'String'),), rows=(('...groups=0, aggregate_exact_operations=0, aggregate_maximum_value_bits=0, fixpoint_iterations=6, canonical_insertions=3)) = <function _evaluate_stratified_extensions at 0x108b7cbf0>(Model(version=1, model_id='urn:gnd-fixture:derivation-evaluation:cost-chain-counted@1', source={'kind': 'text-conversa...$i'}}}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[]), mappingproxy({'seed': _TypedRelation(fact_type='seed', roles=(('item', 'String'),), rows=(('alpha',),), row_lineage=((...(fact_type='top', roles=(('item', 'String'),), rows=(), row_lineage=(), identity_codec_version='gnd-identity-json/1')}))
+E            +      where <function _evaluate_stratified_extensions at 0x108b7cbf0> = ext._evaluate_stratified_extensions
+
+tests/test_m3_extension_preparation.py:250: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_extension_preparation.py::test_review_aggregate_budget_charges_hits_and_failed_attempts
+FAILED tests/test_m3_extension_preparation.py::test_review_warm_helper_patch_invalidates_result
+2 failed, 1 passed in 0.26s

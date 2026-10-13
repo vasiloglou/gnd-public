@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-13",
+  "authority": "M3auto/fixit/remainingreviews/high",
+  "prior_spec_sha256": "f16168628536cdf3e29b69705ee2f241276272151be64551036c9a26f6e85a47",
+  "amended_spec_sha256": "f808789244e8e173c55209a9c8800f5d93f5c25ba8363b50354c18c57ddb7543",
+  "round_limit": 2,
+  "review_model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "R1": "1hardening coveragegap selectedrefresh, no runtime defect",
+  "expected_outputs_weakened": false,
+  "runtime_changed": false,
+  "current_test_sha256": "be019fe4d85a7a07c0d849988af4e4e9e4ea9bb424293658d2d8e71e336dd255",
+  "current_runtime_sha256": "2bc689040ac96df00a6d76c13af3c8f29db7b65263bd2e2775a295283e3f6ee4",
+  "R1_reproduced": "oldfixture selectedrefresh absent; selectedrefresh-only owned-scope mutant1RED after semanticparity",
+  "successor_gate": "10direct/111focused"
+}

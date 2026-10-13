@@ -9,8 +9,9 @@ from fractions import Fraction
 from functools import cmp_to_key
 from typing import Any, Literal
 
-from gnd import semantic_spec
+from gnd import semantic_rows, semantic_spec
 from gnd.branches import REGISTRY, record_branch, snapshot_branch, violated_branch
+from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.documents import Model
 from gnd.population import Population
 from gnd.semantic_adapter import (
@@ -914,6 +915,11 @@ def evaluate_snapshot(
                     indexed = _inline_uniqueness_result(constraint, semantic_snapshot)
                 if indexed is None:
                     indexed = _legacy_string_order_result(constraint, semantic_snapshot)
+                entry = FAMILIES.get(constraint.family)
+                if indexed is None and entry is not None and entry.production is not None:
+                    indexed = resolve_hook(entry.production, vars(semantic_rows))(
+                        constraint, semantic_snapshot
+                    )
             verdict, reason, witness = (
                 indexed
                 if indexed is not None

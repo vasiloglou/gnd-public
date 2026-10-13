@@ -15,16 +15,19 @@ from gnd.semantic_adapter import adapt_snapshot
 def measure_identity_work(operation):
     calls = [0]
     original = semantic_rows.scalar_identity
+    private_original = semantic_rows._scalar_identity
     def count(value):
         calls[0] += 1
         return original(value)
     semantic_rows.scalar_identity = count
+    semantic_rows._scalar_identity = count
     started = perf_counter()
     try:
         result = operation()
     finally:
         elapsed = perf_counter() - started
         semantic_rows.scalar_identity = original
+        semantic_rows._scalar_identity = private_original
     return result, elapsed, calls[0]
 
 
@@ -46,7 +49,7 @@ def main(root):
         signal.setitimer(signal.ITIMER_REAL, 15)
         try:
             actual, elapsed, calls = measure_identity_work(
-                lambda: semantic_rows.indexed_subset_verdict(constraint, snapshot))
+                lambda constraint=constraint: semantic_rows.indexed_subset_verdict(constraint, snapshot))
         finally:
             signal.setitimer(signal.ITIMER_REAL, 0)
         assert actual == expected

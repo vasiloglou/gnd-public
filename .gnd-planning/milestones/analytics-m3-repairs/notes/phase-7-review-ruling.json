@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto and go ahead",
+  "scope": "measurement hardening from reproduced review finding; no semantic expected-outcome change",
+  "prior_approval_sha256": "2b28c6ab5832b835501290b79640b11cb3d4641093cc2ab4f307f55a373c5821",
+  "review_red_commit": "f0a9348",
+  "test_sha256": "bd3109b97d953508c5fa808458ce8ee813c85fae9f61f479e36ae1744415e729",
+  "native_instrument_sha256": "0551113ff11c9695209664be506188722e3a73def6cab8c68009e7a9ddb9b3a3",
+  "paid_cap_usd": 0
+}

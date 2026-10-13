@@ -1,5 +1,7 @@
 """Indexed subset dispatch must preserve the frozen public and scalar contracts."""
+import runpy
 from dataclasses import replace
+from pathlib import Path
 
 import pytest
 from test_public_branch_runtime import _build
@@ -65,9 +67,6 @@ def test_subset_invalid_shape_refuses_like_oracle(changes, tmp_path):
 
 
 def test_native_measurement_counts_canonicalization_identity_work():
-    import runpy
-    from pathlib import Path
-
     root = Path(__file__).resolve().parents[1]
     measure = runpy.run_path(str(root / ".gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-native-layer.py"))["measure_identity_work"]
     scalar = canonical_scalar(1, None)

@@ -10,20 +10,20 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d91940>
     def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
         model, population = _build(case_id, tmp_path)
         expected = api.check(model, population)
-    
+
         def reject(*args):
             raise AssertionError("quadratic pure subset provider reached")
-    
+
         monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
 >       assert api.check(model, population) == expected
 E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...ccepted', ...}
-E         
+E
 E         Omitting 13 identical items, use -vv to show
 E         Differing items:
 E         {'coverage': {}} != {'coverage': {'booking_by_person': {'declared': 'declared', 'facts': 2}, 'booking_of_room': {'declared': 'declared', '...aches_course': {'declared': 'declared', 'facts': 1}, 'person_takes_course': {'declared': 'declared', 'facts': 2}, ...}}
 E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'accept', 'assurance_level': 'none', 'scope_digest': None, ...}}
 E         {'error': {'ty...
-E         
+E
 E         ...Full output truncated (7 lines hidden), use '-vv' to show
 
 tests/test_m3_indexed_subset.py:25: AssertionError
@@ -37,20 +37,20 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d92ea0>
     def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
         model, population = _build(case_id, tmp_path)
         expected = api.check(model, population)
-    
+
         def reject(*args):
             raise AssertionError("quadratic pure subset provider reached")
-    
+
         monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
 >       assert api.check(model, population) == expected
 E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...iolated', ...}
-E         
+E
 E         Omitting 14 identical items, use -vv to show
 E         Differing items:
 E         {'coverage': {}} != {'coverage': {'booking_by_person': {'declared': 'declared', 'facts': 3}, 'booking_of_room': {'declared': 'declared', '...aches_course': {'declared': 'declared', 'facts': 3}, 'person_takes_course': {'declared': 'declared', 'facts': 3}, ...}}
 E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'refuse', 'assurance_level': 'none', 'scope_digest': None, ...}}
 E         {'error': {'ty...
-E         
+E
 E         ...Full output truncated (6 lines hidden), use '-vv' to show
 
 tests/test_m3_indexed_subset.py:25: AssertionError
@@ -64,20 +64,20 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108d1b2f0>
     def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
         model, population = _build(case_id, tmp_path)
         expected = api.check(model, population)
-    
+
         def reject(*args):
             raise AssertionError("quadratic pure subset provider reached")
-    
+
         monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
 >       assert api.check(model, population) == expected
 E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...iolated', ...}
-E         
+E
 E         Omitting 14 identical items, use -vv to show
 E         Differing items:
 E         {'coverage': {}} != {'coverage': {'booking_by_person': {'declared': 'declared', 'facts': 3}, 'booking_of_room': {'declared': 'declared', '...aches_course': {'declared': 'declared', 'facts': 3}, 'person_takes_course': {'declared': 'declared', 'facts': 3}, ...}}
 E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'refuse', 'assurance_level': 'none', 'scope_digest': None, ...}}
 E         {'error': {'ty...
-E         
+E
 E         ...Full output truncated (6 lines hidden), use '-vv' to show
 
 tests/test_m3_indexed_subset.py:25: AssertionError
@@ -91,20 +91,20 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108de09e0>
     def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
         model, population = _build(case_id, tmp_path)
         expected = api.check(model, population)
-    
+
         def reject(*args):
             raise AssertionError("quadratic pure subset provider reached")
-    
+
         monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
 >       assert api.check(model, population) == expected
 E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...dequate', ...}
-E         
+E
 E         Omitting 14 identical items, use -vv to show
 E         Differing items:
 E         {'coverage': {}} != {'coverage': {'s_sub_p': {'declared': 'declared', 'facts': 1}, 's_sub_q': {'declared': 'declared', 'facts': 1}, 's_sup_p': {'declared': 'declared', 'facts': 1}, 's_sup_q': {'declared': 'declared', 'facts': 1}, ...}}
 E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'indeterminate', 'assurance_level': 'none', 'scope_digest': None, ...}}
 E         {'error': {'type': 'AssertionErr...
-E         
+E
 E         ...Full output truncated (6 lines hidden), use '-vv' to show
 
 tests/test_m3_indexed_subset.py:25: AssertionError
@@ -118,20 +118,20 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108de39b0>
     def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
         model, population = _build(case_id, tmp_path)
         expected = api.check(model, population)
-    
+
         def reject(*args):
             raise AssertionError("quadratic pure subset provider reached")
-    
+
         monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
 >       assert api.check(model, population) == expected
 E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...iolated', ...}
-E         
+E
 E         Omitting 14 identical items, use -vv to show
 E         Differing items:
 E         {'coverage': {}} != {'coverage': {'s_sub_p': {'declared': 'declared', 'facts': 1}, 's_sub_q': {'declared': 'declared', 'facts': 1}, 's_sup_p': {'declared': 'declared', 'facts': 1}, 's_sup_q': {'declared': 'declared', 'facts': 1}, ...}}
 E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'refuse', 'assurance_level': 'none', 'scope_digest': None, ...}}
 E         {'error': {'type': 'AssertionError', 'm...
-E         
+E
 E         ...Full output truncated (6 lines hidden), use '-vv' to show
 
 tests/test_m3_indexed_subset.py:25: AssertionError
@@ -145,20 +145,20 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108f36c50>
     def test_subset_public_result_avoids_quadratic_provider(case_id, tmp_path, monkeypatch):
         model, population = _build(case_id, tmp_path)
         expected = api.check(model, population)
-    
+
         def reject(*args):
             raise AssertionError("quadratic pure subset provider reached")
-    
+
         monkeypatch.setattr(semantic_spec, "_family_result_subset", reject)
 >       assert api.check(model, population) == expected
 E       AssertionError: assert {'schema_vers...l_error', ...} == {'schema_vers...ccepted', ...}
-E         
+E
 E         Omitting 13 identical items, use -vv to show
 E         Differing items:
 E         {'coverage': {}} != {'coverage': {'s_sub_p': {'declared': 'declared', 'facts': 1}, 's_sub_q': {'declared': 'declared', 'facts': 1}, 's_sup_p': {'declared': 'declared', 'facts': 1}, 's_sup_q': {'declared': 'declared', 'facts': 1}, ...}}
 E         {'assurance': {'schema_version': 1, 'semantic_decision': None, 'assurance_level': 'none', 'scope_digest': None, ...}} != {'assurance': {'schema_version': 1, 'semantic_decision': 'accept', 'assurance_level': 'none', 'scope_digest': None, ...}}
 E         {'error': {'type': 'AssertionError', 'm...
-E         
+E
 E         ...Full output truncated (7 lines hidden), use '-vv' to show
 
 tests/test_m3_indexed_subset.py:25: AssertionError

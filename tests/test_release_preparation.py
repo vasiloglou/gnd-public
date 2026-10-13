@@ -1,5 +1,6 @@
 """Bounded build-origin and offline identity controls, not candidate acceptance."""
 import hashlib
+import io
 import os
 import shlex
 import shutil
@@ -14,18 +15,27 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_workflow_never_publishes_and_keeps_origins_separate():
+def test_workflow_preparation_is_separate_from_opt_in_publication():
     text = (ROOT / '.github/workflows/release.yml').read_text()
     assert 'workflow_dispatch:' in text
     assert 'push:' not in text and 'pull_request:' not in text
-    assert 'id-token:' not in text and 'pypa/gh-action-pypi-publish' not in text
     assert 'uv publish' not in text and 'twine' not in text
     assert text.count('uv build') == 2
     from ruamel.yaml import YAML
     workflow = YAML(typ='safe').load(text)
-    assert workflow['on'] == {'workflow_dispatch': None}
+    assert set(workflow['on']) == {'workflow_dispatch'}
+    inputs = workflow['on']['workflow_dispatch']['inputs']
+    assert inputs['publish']['type'] == 'boolean'
+    assert inputs['publish']['default'] is False
+    assert set(workflow['jobs']) == {'prepare', 'publish'}
+    assert workflow['permissions'] == {'contents': 'read'}
+    prepare = workflow['jobs']['prepare']
+    assert prepare['if'] == "github.ref == 'refs/heads/main'"
+    assert prepare.get('permissions', workflow['permissions']) == {'contents': 'read'}
+    assert not any('pypa/gh-action-pypi-publish' in step.get('uses', '')
+                   for step in prepare['steps'])
     builds = [shlex.split(line.strip())
-              for step in workflow['jobs']['prepare']['steps']
+              for step in prepare['steps']
               for line in step.get('run', '').splitlines()
               if line.strip().startswith('uv build ')]
     assert builds == [
@@ -33,6 +43,30 @@ def test_workflow_never_publishes_and_keeps_origins_separate():
         ['uv', 'build', '--wheel', 'candidate/source/*', '--out-dir', '$PWD/candidate/comparison'],
     ]
     assert 'sha256sum -c SHA256SUMS' in text
+    publish = workflow['jobs']['publish']
+    assert publish['if'] == "inputs.publish && github.ref == 'refs/heads/main'"
+    assert publish['needs'] == 'prepare'
+    assert publish['environment']['name'] == 'pypi'
+    assert publish['permissions'] == {'contents': 'read', 'actions': 'read', 'id-token': 'write'}
+    steps = publish['steps']
+    downloads = [i for i, step in enumerate(steps)
+                 if step.get('uses', '').startswith('actions/download-artifact@')]
+    publishers = [i for i, step in enumerate(steps)
+                  if step.get('uses', '').startswith('pypa/gh-action-pypi-publish@')]
+    assert len(downloads) == len(publishers) == 1
+    downloaded = steps[downloads[0]]['with']
+    assert downloaded['name'] == 'preparation-${{ github.sha }}-${{ github.run_id }}'
+    assert downloaded['path'] == 'candidate'
+    verifiers = [i for i, step in enumerate(steps)
+                 if 'sha256sum -c SHA256SUMS' in step.get('run', '')]
+    assert len(verifiers) == 1 and downloads[0] < verifiers[0] < publishers[0]
+    verifier = steps[verifiers[0]]
+    assert verifier['working-directory'] == 'candidate'
+    assert verifier['env']['EXPECTED_COMMIT'] == '${{ github.sha }}'
+    assert 'test "$(cat SOURCE_COMMIT)" = "$EXPECTED_COMMIT"' in verifier['run']
+    assert steps[publishers[0]]['with']['packages-dir'] == 'candidate/release/'
+    assert steps[publishers[0]]['with']['attestations'] is True
+    assert not any('uv build' in step.get('run', '') for step in steps)
 
 
 @pytest.mark.parametrize('mutation', ['exact', 'missing', 'changed'])
@@ -122,4 +156,44 @@ def test_workflow_control_rejects_overwriting_comparison(monkeypatch):
 
     monkeypatch.setattr(Path, 'read_text', overwritten)
     with pytest.raises(AssertionError):
-        test_workflow_never_publishes_and_keeps_origins_separate()
+        test_workflow_preparation_is_separate_from_opt_in_publication()
+
+
+@pytest.mark.parametrize('mutation', [
+    'publish-by-default', 'unguarded-publisher', 'missing-acceptance',
+    'unprotected-environment', 'publish-from-prepare', 'wrong-artifact',
+    'missing-verifier', 'publish-comparison',
+])
+def test_workflow_control_rejects_unsafe_publication(monkeypatch, mutation):
+    from ruamel.yaml import YAML
+    yaml = YAML(typ='safe')
+    path = ROOT / '.github/workflows/release.yml'
+    workflow = yaml.load(path.read_text())
+    publish = workflow['jobs']['publish']
+    if mutation == 'publish-by-default':
+        workflow['on']['workflow_dispatch']['inputs']['publish']['default'] = True
+    elif mutation == 'unguarded-publisher':
+        publish['if'] = "github.ref == 'refs/heads/main'"
+    elif mutation == 'missing-acceptance':
+        del publish['needs']
+    elif mutation == 'unprotected-environment':
+        publish['environment']['name'] = 'unprotected'
+    elif mutation == 'publish-from-prepare':
+        workflow['jobs']['prepare']['steps'].append({'uses': 'pypa/gh-action-pypi-publish@fake'})
+    elif mutation == 'wrong-artifact':
+        publish['steps'][0]['with']['name'] = 'unvalidated-candidate'
+    elif mutation == 'missing-verifier':
+        publish['steps'] = [step for step in publish['steps']
+                            if 'sha256sum -c SHA256SUMS' not in step.get('run', '')]
+    elif mutation == 'publish-comparison':
+        for step in publish['steps']:
+            if step.get('uses', '').startswith('pypa/gh-action-pypi-publish@'):
+                step['with']['packages-dir'] = 'candidate/comparison/'
+    stream = io.StringIO()
+    yaml.dump(workflow, stream)
+    original = Path.read_text
+    monkeypatch.setattr(Path, 'read_text',
+                        lambda target, *args, **kwargs: stream.getvalue() if target == path
+                        else original(target, *args, **kwargs))
+    with pytest.raises((AssertionError, KeyError)):
+        test_workflow_preparation_is_separate_from_opt_in_publication()

@@ -37,8 +37,8 @@ Contributions are by invitation. Only collaborators approved by `vasiloglou`
 receive write access. Public availability permits reading and forking; it does
 not grant permission to modify this repository.
 
-All changes, including owner and coding-agent changes, use a topic branch and a
-pull request. Never push directly to `main`, force-push it, or delete it. Resolve
+For all changes, including owner and coding-agent changes, use a topic branch and
+submit a pull request. Never push directly to main, force-push it, or delete it. Resolve
 review conversations before merging. `.github/CODEOWNERS` names `vasiloglou` for
 all files.
 

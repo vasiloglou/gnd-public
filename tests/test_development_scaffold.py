@@ -18,6 +18,23 @@ REQUIRED = ['README.md', 'LICENSE', 'NOTICE', 'AGENTS.md', 'CONTRIBUTING.md',
             '.gnd-planning/open-questions.md',
             'src/gnd/skills/gnd-orm-core/references/milestone-record-format.md']
 
+# These links identify the original operator's retained, external run evidence.
+# The historical report is immutable; their presence on a fresh checkout is not
+# part of reference closure. Exempt only its enumerated targets, not arbitrary
+# absolute paths or every link under evidence/.
+RETAINED_EXTERNAL_REFERENCES = {
+    Path('.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/baseline-report.md'): {
+        '/private/tmp/gnd-local-ci-20261006-d6f1e8a/' + name
+        for name in (
+            'status.json', 'followup-status.json', 'confirmed-failures.json',
+            'failed-nodes.json', 'regression-311.log', 'regression-313.log',
+            'failed-corrected-311.log', 'failed-corrected-313.log',
+            'installed-corrected-311.log', 'installed-corrected-313.log',
+            'corrected-artifact-hashes.log',
+        )
+    },
+}
+
 
 def check_references(root):
     for path in REQUIRED:
@@ -28,6 +45,8 @@ def check_references(root):
         for href in re.findall(r'\]\(([^)]+)\)', path.read_text()):
             if '://' in href or href.startswith(('#', '<')):
                 continue  # URLs, anchors and <placeholder> paths retained verbatim in records
+            if href in RETAINED_EXTERNAL_REFERENCES.get(path.relative_to(root), ()):
+                continue
             assert (path.parent / href.split('#')[0]).exists(), (path, href)
     boot = (root / 'docs/development/bootstrap.md').read_text()
     assert 'No source-checkout bootstrap is required' in boot
@@ -96,6 +115,33 @@ def check_ledger(root):
 
 def test_reference_closure_and_declared_bootstrap():
     check_references(ROOT)
+
+
+@pytest.mark.parametrize('case', ['retained', 'other-document', 'unknown-target', 'relative'])
+def test_retained_external_reference_exception_is_bounded(tmp_path, case):
+    for name in REQUIRED:
+        path = tmp_path / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('')
+    (tmp_path / 'docs/development/bootstrap.md').write_text(
+        'No source-checkout bootstrap is required; historical Phase 3.\n'
+    )
+    report, targets = next(iter(RETAINED_EXTERNAL_REFERENCES.items()))
+    target = min(targets)
+    if case == 'other-document':
+        report = Path('docs/current.md')
+    elif case == 'unknown-target':
+        target = '/private/tmp/gnd-local-ci-20261006-d6f1e8a/unknown.json'
+    elif case == 'relative':
+        target = 'missing.json'
+    path = tmp_path / report
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(f'[evidence]({target})\n')
+    if case == 'retained':
+        check_references(tmp_path)
+    else:
+        with pytest.raises(AssertionError):
+            check_references(tmp_path)
 
 
 def test_twins_modes_and_generated_links():

@@ -1,0 +1,106 @@
+{
+  "recorded_on": "2026-10-14",
+  "recordings": {
+    "codex-conflict-1": {
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "elapsed_seconds": 38.0,
+      "exit": 0,
+      "files": {
+        "codex-conflict-1/attempt-0001/agent.stdout": "bb7728813ac598d99e36e9975b71f85eaf849de5fcaa8c35c123331c3047c989",
+        "codex-conflict-1/attempt-0001/feedback.json": "1a18fb2b337e4e81a87e6e31f9de824d5b74d3feaa0ae62296cfc1641ae45a75",
+        "codex-conflict-1/attempt-0001/recommendation.population.json": "4808b72c8aed18863c884bd59b76a75cde24aa3cdfb7e353f138006739e09a69",
+        "codex-conflict-1/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "terminal agent",
+      "model": "gpt-5.6-sol",
+      "result": "accepted",
+      "route": "gnd exp run --adapter-policy (codex)",
+      "run": 1,
+      "source_stdout_sha256": {
+        "codex-conflict-1/attempt-0001/agent.stdout": "6a183e57471edf93b1a961a3ca47382f1381bb4cb9a3dc136318616adf6acb97"
+      },
+      "tool": "codex-cli 0.156.1",
+      "variant": "conflict"
+    },
+    "codex-conflict-2": {
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "elapsed_seconds": 39.6,
+      "exit": 0,
+      "files": {
+        "codex-conflict-2/attempt-0001/agent.stdout": "b5cab7ce3e92f7adc60f0f2bd0971ed7f931899482a33c12df3fd24115f07f37",
+        "codex-conflict-2/attempt-0001/feedback.json": "e61fdf3225a25e723f89584ff8c8765821eb8fdc019283cb1b50b89cc532c035",
+        "codex-conflict-2/attempt-0001/recommendation.population.json": "4808b72c8aed18863c884bd59b76a75cde24aa3cdfb7e353f138006739e09a69",
+        "codex-conflict-2/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "terminal agent",
+      "model": "gpt-5.6-sol",
+      "result": "accepted",
+      "route": "gnd exp run --adapter-policy (codex)",
+      "run": 2,
+      "source_stdout_sha256": {
+        "codex-conflict-2/attempt-0001/agent.stdout": "7502cd1c2f2d59520b82b4091490593c635862a5d2841231ca6c801df879a051"
+      },
+      "tool": "codex-cli 0.156.1",
+      "variant": "conflict"
+    },
+    "codex-plain-1": {
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "elapsed_seconds": 41.3,
+      "exit": 0,
+      "files": {
+        "codex-plain-1/attempt-0001/agent.stdout": "ab7ff04ae063b7ab8c04117894dd20997dca6b8553d6012f6008fd761697e764",
+        "codex-plain-1/attempt-0001/feedback.json": "c5f3220b19cc0e23f512c7173d414fe48b2a5aaf24bef203f99d0445ec4a64c2",
+        "codex-plain-1/attempt-0001/recommendation.population.json": "89d0ec12217e12aba2c13e63e150bb77a547cc28aeb399fa4c830e722394dd03",
+        "codex-plain-1/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "terminal agent",
+      "model": "gpt-5.6-sol",
+      "result": "accepted",
+      "route": "gnd exp run --adapter-policy (codex)",
+      "run": 1,
+      "source_stdout_sha256": {
+        "codex-plain-1/attempt-0001/agent.stdout": "e1a3c684886ad1f11ec1c3b823989d1a67bc54c24f12405a6307a5849c981de3"
+      },
+      "tool": "codex-cli 0.156.1",
+      "variant": "plain"
+    },
+    "codex-plain-2": {
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "elapsed_seconds": 31.7,
+      "exit": 0,
+      "files": {
+        "codex-plain-2/attempt-0001/agent.stdout": "6b2f65441d236be60fffcce491ab522605a960dc99c776fd469660472eb36230",
+        "codex-plain-2/attempt-0001/feedback.json": "308d77e8936f855fdc006e3ec3cf089e26c026206201b3642775a5587fbbcc0a",
+        "codex-plain-2/attempt-0001/recommendation.population.json": "89d0ec12217e12aba2c13e63e150bb77a547cc28aeb399fa4c830e722394dd03",
+        "codex-plain-2/result.json": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+      },
+      "kind": "terminal agent",
+      "model": "gpt-5.6-sol",
+      "result": "accepted",
+      "route": "gnd exp run --adapter-policy (codex)",
+      "run": 2,
+      "source_stdout_sha256": {
+        "codex-plain-2/attempt-0001/agent.stdout": "d17938c0178de1d83a5eae5488d5c748aa3027c9fdf7be8591b767ce7b319c9b"
+      },
+      "tool": "codex-cli 0.156.1",
+      "variant": "plain"
+    }
+  },
+  "redactions": [
+    "<workspace>",
+    "<home>"
+  ],
+  "stdout_cap_bytes": 262144
+}

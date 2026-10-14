@@ -1,0 +1,53 @@
+{
+  "recorded_on": "2026-10-14",
+  "max_attempts": 3,
+  "tools": {
+    "codex": "codex-cli 0.156.1"
+  },
+  "sessions": [
+    {
+      "agent": "Codex CLI",
+      "variant": "conflict",
+      "run": 1,
+      "disposition": "accepted",
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "exit": 0
+    },
+    {
+      "agent": "Codex CLI",
+      "variant": "conflict",
+      "run": 2,
+      "disposition": "accepted",
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "exit": 0
+    },
+    {
+      "agent": "Codex CLI",
+      "variant": "plain",
+      "run": 1,
+      "disposition": "accepted",
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "exit": 0
+    },
+    {
+      "agent": "Codex CLI",
+      "variant": "plain",
+      "run": 2,
+      "disposition": "accepted",
+      "attempts": 1,
+      "bands": [
+        0
+      ],
+      "exit": 0
+    }
+  ]
+}

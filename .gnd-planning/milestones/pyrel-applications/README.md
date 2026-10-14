@@ -8,7 +8,7 @@ adopted by delegated approval in [010](010-plan-amendment-a2.md) after four
 readings and one repair round. It inserts phase PA5R (tutorial rewrite, public
 query seam, Snowflake-claim fixes, checked-output blocks, readability gate)
 before PA6. Current PA6 evidence is superseded but retained; PA6 is re-gated
-after PA5R. PA5R is complete: [011](011-phase-PA5R.md). Next: PA6 new spec gate (update its pinned tutorial shape), then its rerun.
+after PA5R. PA5R [011](011-phase-PA5R.md), CI repair [012](012-ci-repair.md) and PA6 [013](013-phase-PA6.md) are complete. The milestone is closed in [014](014-milestone-close.md); PR #21 merges on the owner's ruling.
 
 ## Execution checkpoint — 2026-10-13
 

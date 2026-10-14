@@ -75,8 +75,8 @@ it one object, `app`, already loaded with the input facts:
 | `app.propose(candidate, calculation)` | Hand the proposal to GND's check |
 | `app.refuse(kind, reason)` | Stop with a named refusal instead of a proposal |
 
-The file ends with a short `main()` that starts it with
-`runpy.run_path(runtime)['run_app'](calculate, ...)`. See the full BookRec and
+The file ends with a short `main()` that loads `run_app` from the generated
+program with `runpy.run_path` and calls it with your `calculate` function. See the full BookRec and
 Expense queries at the end of each chapter.
 
 ## Where to start

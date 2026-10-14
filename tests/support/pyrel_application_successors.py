@@ -62,8 +62,12 @@ def dynamic_rows(rows, predecessor):
     return rows
 
 
+# PA5R changed only the emitted program bytes (A2 D1); its query inventories are unchanged.
+RENDER_PHASES = [*PHASES, 'PA5R']
+
+
 def rendered_bytes(expected, predecessor):
-    for phase in PHASES:
+    for phase in RENDER_PHASES:
         data = authenticated('pyrel-successor.json', predecessor, phase)
         assert data['before'] == expected
         expected = data['after']

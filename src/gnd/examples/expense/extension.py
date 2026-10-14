@@ -40,13 +40,16 @@ def main(argv=None):
         sub.add_argument("--population", required=True, type=Path)
         sub.add_argument("--backend", choices=["gnd", "pyrel"], default="gnd")
         sub.add_argument("--pyrel-python", type=Path)
+        sub.add_argument("--format", choices=["json", "text"], default="json")
         if name == "approve":
             sub.add_argument("--expense", required=True, type=int)
             sub.add_argument("--chain", required=True)
             sub.add_argument("--output", required=True, type=Path)
     args = parser.parse_args(argv)
+    if args.format == "text" and args.backend != "pyrel":
+        parser.error("--format text requires --backend pyrel")
     if args.backend == "pyrel":
-        from gnd.export.applications import execute_application
+        from gnd.export.applications import execute_application, format_result
 
         if args.pyrel_python is None:
             parser.error("--backend pyrel requires --pyrel-python")
@@ -66,7 +69,13 @@ def main(argv=None):
         # Failed calculations are evidence in the library result, never a
         # successful business report in the CLI response.
         result.pop("calculation", None)
-        print(json.dumps(result, sort_keys=True))
+        if args.format == "text":
+            shown = dict(result)
+            if args.command == "approve":
+                shown.update(approval={"expense": args.expense, "chain": args.chain}, output=str(args.output))
+            print("\n".join(format_result(shown)))
+        else:
+            print(json.dumps(result, sort_keys=True))
         return result["exit_code"]
     accepted, report = _accepted(args.model, args.population)
     if not accepted:

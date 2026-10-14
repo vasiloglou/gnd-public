@@ -1,0 +1,14 @@
+>       assert receipts[-1]['status'] == 'failed'
+E       AssertionError: assert 'passed' == 'failed'
+E         - failed
+E         + passed
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_total_over_review_shapes[result0]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_total_over_review_shapes[result1]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_total_over_review_shapes[result2]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_reason_is_one_line
+FAILED tests/test_pyrel_proposal_check.py::test_gnd_backend_proposal_preserves_input
+FAILED tests/test_tutorial_output_blocks.py::test_receipt_status_reflects_output_mismatch
+FAILED tests/test_tutorial_output_blocks.py::test_stray_text_block_after_unchecked_command_is_refused
+7 failed, 25 passed, 6 deselected in 0.33s
+1 failed in 0.06s
+1 failed, 27 deselected in 0.10s

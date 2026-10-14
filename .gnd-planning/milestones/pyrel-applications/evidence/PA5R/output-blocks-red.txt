@@ -1,0 +1,12 @@
+E       AttributeError: module 'output_runner' has no attribute 'parsed_outputs'
+
+tests/test_tutorial_output_blocks.py:71: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_tutorial_output_blocks.py::test_matching_output_passes_and_is_recorded
+FAILED tests/test_tutorial_output_blocks.py::test_mismatched_output_fails_even_with_right_exit
+FAILED tests/test_tutorial_output_blocks.py::test_stderr_stream_and_python_fences
+FAILED tests/test_tutorial_output_blocks.py::test_ellipsis_matches_any_run_of_lines
+FAILED tests/test_tutorial_output_blocks.py::test_normalizes_run_directory_temp_names_and_times
+FAILED tests/test_tutorial_output_blocks.py::test_native_chapters_show_output_for_every_block[bookrec/07-native.md]
+FAILED tests/test_tutorial_output_blocks.py::test_native_chapters_show_output_for_every_block[expense/04-native.md]
+7 failed, 2 passed in 0.07s

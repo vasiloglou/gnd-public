@@ -1,207 +1,358 @@
-# 4. Reuse the native path for reporting and approvals
+# 4. Run expense approvals on PyRel and catch a bad approval
 
-Expense 102 costs 800 EUR. Its travel category permits 2000 EUR, but a team-lead
-approval permits only 100 EUR. A plausible total and a successful query cannot
-make that approval legal. This chapter reuses BookRec's compiler, independent
-policy audit and publication machinery, adding expense-specific native queries.
-Continue after chapter 3; start from fresh installed resources below.
+Expense 102 costs 800 EUR. A team lead may approve at most 100 EUR, so a team-lead
+approval of 102 must be refused, however plausible it looks. In this chapter a
+PyRel query produces the report and stages the approval, and GND checks the
+result before anything is saved. You need the two environments from
+[PyRel + GND](../pyrel-apps.md#set-up).
+
+## 1. What you'll build
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Expense reporting and approval flow">
 ![Three submitted expenses total 2260 EUR and one is approved. Reporting calculations and approval proposals enter a separate policy check; only accepted results are presented or published.](../assets/applications/expense-flow.svg)
 </div>
 
 *Source: shipped seed facts and native baseline/team-lead checkpoints.
-The baseline is submitted 3, approved 1, total 2260 EUR. Numbers and policy verdicts
-are separate outputs; failed CLI reports withhold business arithmetic.*
+Numbers and policy verdicts are separate outputs; a refused report shows no totals.*
 
 On narrow screens, focus a diagram and scroll horizontally with arrow keys or touch.
 
-## A small extension on the same machinery
+| Step | Who does it | Where it lives |
+|---|---|---|
+| Propose an approval | The candidate producer: here your `--chain` choice, in your app possibly an LLM agent | the command line |
+| Count and total expenses | PyRel | `native_query.py` |
+| Refuse unknown or already-approved expenses | Plain Python, using PyRel's results | `native_query.py` |
+| Check limits and caps, then save | GND, using PyRel to run the check | the model file |
 
-The shipped `native_query.py` computes native counts, sums, currency groups and
-membership observations. The existing CLI supplies approval/chain claims; the
-shared parent preserves all other source facts and checks exact candidate bytes.
-Expense does not need a second policy compiler or publication implementation.
-Category caps and approval ceilings remain in its model. For a new app, write
-the domain queries and workflow against this reusable seam, then demonstrate
-successful and deliberately invalid candidates.
+The applications here run on PyRel 1.30.1 with DuckDB 1.5.5, locally, with no
+account. A passing check means the supplied facts satisfy the modeled rules; it
+does not prove who approved anything or that money moved.
 
-Use separate interpreters as in [BookRec's native chapter](../bookrec/07-native.md)
-and the [pinned runtime setup](../runtimes/pyrel.md). Set
-`GND_TUTORIAL_PYREL_PYTHON` to the absolute native interpreter; the runner sets
-`GND_TUTORIAL_GND_PYTHON` from its explicit base `--python`. Select the expense
-group with `--lane pyrel --receipt expense-steps.json`. Offline runs label native
-steps skipped. Timings measure supplied command execution on your machine,
-excluding human design/authoring, installation and review; they are not a
-promise of developer build duration.
+## 2. Build a fresh project and check both environments
 
-For individual copy-and-run blocks, set both interpreter variables yourself:
+Work in the folder where you created the two environments. Run Python blocks
+with the GND interpreter: save one as a file, for example `step.py`, and run
+`"$GND_TUTORIAL_GND_PYTHON" step.py`.
 
-```sh
-export GND_TUTORIAL_GND_PYTHON=/absolute/base/bin/python
-export GND_TUTORIAL_PYREL_PYTHON=/absolute/pinned/native/bin/python
-```
+Chapter 3 changed `expense-project` to the currency model, so repeat chapter 2's
+setup under fresh names. Copy the shipped example:
 
-<!-- gnd-run expect=0 -->
+<!-- gnd-run expect=0 output=stdout -->
 ```python
 from importlib.resources import files
-from pathlib import Path
 import shutil
-source = files("gnd").joinpath("examples", "expense")
-shutil.copytree(str(source), "expense-native")
-home = Path("expense-native")
-(home/"cli").mkdir()
-(home/"cli/__init__.py").write_text("")
-for origin, target in [("extension.py","expense_cli.py"), ("reporting.py","reporting.py"), ("native_query.py","native_query.py")]:
-    shutil.copy2(home/origin, home/"cli"/target)
+
+shutil.copytree(str(files("gnd").joinpath("examples", "expense")), "expense-native-demo")
+print("Copied the expense example to expense-native-demo/")
 ```
 
-## Report, reject a chain, then repair it
+```text
+Copied the expense example to expense-native-demo/
+```
+
+Generate the project, exactly as in chapter 2:
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd codegen expense-native-demo/model.orm.json --out expense-native
+```
+
+```text
+generated project for expense-native-demo/model.orm.json -> expense-native
+...
+```
+
+Install the same developer-owned files as chapter 2, plus the PyRel query:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+from pathlib import Path
+import shutil
+
+source = Path("expense-native-demo")
+project = Path("expense-native")
+(project / "cli").mkdir()
+(project / "cli/__init__.py").write_text("")
+for origin, target in [
+    ("extension.py", "cli/expense_cli.py"),
+    ("reporting.py", "cli/reporting.py"),
+    ("native_query.py", "cli/native_query.py"),
+    ("architecture.contract.yaml", "architecture.contract.yaml"),
+    ("model.orm.json", "model.orm.json"),
+    ("seed.population.json", "seed.population.json"),
+]:
+    shutil.copy2(source / origin, project / target)
+print("Installed the expense app and its PyRel query in expense-native/")
+```
+
+```text
+Installed the expense app and its PyRel query in expense-native/
+```
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+"$GND_TUTORIAL_GND_PYTHON" -c "import gnd; print('GND is ready')"
+```
+
+```text
+GND is ready
+```
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+"$GND_TUTORIAL_PYREL_PYTHON" -c "from importlib.metadata import version as v; print('PyRel', v('relationalai'), 'with DuckDB', v('duckdb'))"
+```
+
+```text
+PyRel 1.30.1 with DuckDB 1.5.5
+```
+
+## 3. One rule, and the query that does not enforce it
+
+The model's `approval_limit_team_lead` rule says: a team-lead approval covers at
+most 100 EUR. Now look at the PyRel query. It only counts and adds up:
+
+```python
+# Count and sum submitted expenses natively.
+claims = m.where(app.match('expense_submitted_by_employee', expense=e),
+                 app.match('expense_has_amount', expense=e, amount=a))
+totals = app.rows(claims.select(aggregates.count(m.distinct(e)), aggregates.sum(e, a)))
+```
+
+`m` is an ordinary PyRel model. `e` and `a` are query variables for an expense and
+its amount, made with `app.ref`, and `aggregates` is PyRel's own module of
+`count` and `sum`. `app` is the [query toolkit](../pyrel-apps.md#the-query-toolkit)
+GND hands your query. No query here enforces the limit, and none needs to: the rule
+lives in the model, and GND's check enforces it on whatever is proposed. That is
+what lets you change a limit without rewriting code.
+
+## 4. Run the report
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model model.orm.json --population seed.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Report: 3 submitted, 1 approved, 2260 EUR total
+Policy check: ACCEPTED
+```
+
+The report is shown only because the facts passed the check.
+
+## 5. A bad approval
+
+Play the agent: propose that a team lead approves expense 102.
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli approve --expense 102 --chain team-lead \
+  --output team-lead-102.json --model model.orm.json --population seed.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Proposed approval: expense 102 by team-lead
+Policy check: REJECTED
+  violated    approval_limit_team_lead {"$a": 800, "$e": 102}
+Nothing was published.
+```
+
+The line under the verdict is a witness (the exact facts that break the rule):
+`$e` is the expense, 102, and `$a` its amount, 800. The query staged the approval
+as asked; the check refused it.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Expense category caps and approval chain limits">
 ![Meal 101 costs 60 EUR, below category 75 and team-lead 100. Travel 102 costs 800, within category 2000 but beyond team-lead 100, violating approval_limit_team_lead. Finance 3000 accepts 102.](../assets/applications/expense-limits.svg)
 </div>
 
 *Source: shipped category caps and native team-lead/chain-limit/finance
-checkpoints. Every amount and ceiling is EUR. A finance approval cannot waive
-a category cap: the separate meal 90 fixture violates `policy_meals`.*
+checkpoints. Every amount and ceiling is EUR.*
 
-<!-- gnd-run expect=0 lane=pyrel -->
-```python
-import hashlib, json, os, subprocess
-from pathlib import Path
-home = Path("expense-native").resolve()
-base, native = os.environ["GND_TUTORIAL_GND_PYTHON"], os.environ["GND_TUTORIAL_PYREL_PYTHON"]
-source = home/"seed.population.json"
-before = hashlib.sha256(source.read_bytes()).hexdigest()
-def launch(command, expected=0, *extra, model="model.orm.json", population="seed.population.json"):
-    argv = [base,"-m","cli.expense_cli",command,"--model",model,"--population",population,
-            "--backend","pyrel","--pyrel-python",native,*extra]
-    run = subprocess.run(argv,cwd=home,capture_output=True,text=True,timeout=150)
-    assert run.returncode == expected, run.stdout + run.stderr
-    return json.loads(run.stdout)
-report = launch("report")
-assert report["report"] == {"submitted":3,"approved":1,"total_eur":2260}
-assert report["accepted"] and not report["published"]
-bad = launch("approve",1,"--expense","102","--chain","team-lead","--output","bad.json")
-rule = next(r for r in bad["policy"]["verdicts"] if r["id"] == "approval_limit_team_lead")
-assert rule["status"] == "violated" and rule["witnesses"] == [{"$e":102,"$a":800}]
-assert not (home/"bad.json").exists()
-for expense, chain, output in [(101,"team-lead","team-lead.json"),(102,"finance","finance.json")]:
-    accepted = launch("approve",0,"--expense",str(expense),"--chain",chain,"--output",output)
-    assert accepted["accepted"] and accepted["published"] and "calculation" not in accepted
-    after = launch("report",population=output)
-    assert after["report"] == {"submitted":3,"approved":2,"total_eur":2260}
-meal = launch("report",1,population="invalid-meal.population.json")
-assert next(r for r in meal["policy"]["verdicts"] if r["id"]=="policy_meals")["status"] == "violated"
-assert "report" not in meal
-assert hashlib.sha256(source.read_bytes()).hexdigest() == before
-print("3 submitted,1 approved,2260 EUR; chain rejected; two independent repairs accepted.")
+## 6. Fix it and rerun
+
+Finance may approve up to 3000 EUR:
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli approve --expense 102 --chain finance \
+  --output finance-102.json --model model.orm.json --population seed.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
 ```
 
-These are fresh static snapshots. A checked approval does not establish the
-operator's identity, transition permission, a concurrent ledger or reimbursement.
-The input remains unchanged and every approval output uses a fresh path.
+```text
+Proposed approval: expense 102 by finance
+Policy check: ACCEPTED
+Published: finance-102.json
+```
 
-## The same reporting query meets a currency requirement
+The saved file is a new snapshot; `seed.population.json` is unchanged. Report on it:
 
-Chapter 3's evolution machinery adds explicit currency facts and mandatory
-policy. Here we exercise the shipped before/after models with the native path.
-The missing fixture assigns EUR only to 103; 101/102 remain missing. Adding
-explicit EUR to all three repairs the population without conversion.
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model model.orm.json --population finance-102.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Report: 3 submitted, 2 approved, 2260 EUR total
+Policy check: ACCEPTED
+```
+
+Category caps are checked too, separately from approvals. The shipped example
+`invalid-meal.population.json` records a 90 EUR meal against the 75 EUR meal cap:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model model.orm.json --population ../expense-native-demo/invalid-meal.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Policy check: REJECTED
+  violated    policy_meals {"$a": 90, "$e": 101}
+Nothing was published.
+```
+
+## 7. Change a rule without touching the query
+
+Suppose the meal cap drops from 75 to 50 EUR. In the model file, the rule
+`policy_meals` stores its cap under `consequent` → `comparison` → `right`. Change
+it in a private copy. For a shared model, make the change through `gnd evolve`,
+as in [chapter 3](03-evolution.md); here we keep the focus on the query:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+import json
+from pathlib import Path
+
+model = json.loads(Path("expense-native/model.orm.json").read_text())
+rule = next(r for r in model["constraints"] if r["id"] == "policy_meals")
+old = rule["consequent"]["comparison"]["right"]
+rule["consequent"]["comparison"]["right"] = 50
+Path("expense-native/lower-cap.orm.json").write_text(json.dumps(model, indent=2))
+print(f"policy_meals now allows meals up to 50 EUR (was {old})")
+```
+
+```text
+policy_meals now allows meals up to 50 EUR (was 75)
+```
+
+The same query and the same facts now fail on the 60 EUR meal:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model lower-cap.orm.json --population seed.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Policy check: REJECTED
+  violated    policy_meals {"$a": 60, "$e": 101}
+Nothing was published.
+```
+
+The query finished and computed totals, but no report is shown: a query that
+finishes is not the same as a passing check.
+
+### The currency rule from chapter 3
+
+The currency model requires every expense to state its currency. With currency
+missing on 101 and 102, the check names both:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model ../expense-native-demo/currency.orm.json \
+  --population ../expense-native-demo/currency-missing.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Policy check: REJECTED
+  violated    required_expense_has_currency [101]
+  violated    required_expense_has_currency [102]
+Nothing was published.
+```
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model ../expense-native-demo/currency.orm.json \
+  --population ../expense-native-demo/currency.population.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Report: 3 submitted, 1 approved, 2260 EUR total
+Policy check: ACCEPTED
+```
+
+A USD expense is refused by the app itself, before any check, because this app
+does not convert currencies:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
+  --model ../expense-native-demo/currency.orm.json \
+  --population ../expense-native-demo/tutorial-assets/checkpoints/usd.input.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Policy check: REFUSED by the application (only explicit EUR is supported; no currency conversion)
+Nothing was published.
+```
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Expense implicit and explicit currency evolution">
 ![Implicit EUR gives 2260. The evolved model requires expense_has_currency and allows only EUR. Missing 101/102 currency violates required_expense_has_currency; supplying EUR for all three yields labeled EUR 2260. No conversion is performed.](../assets/applications/expense-currency.svg)
 </div>
 
-*Source: shipped currency model plus missing/explicit native checkpoints.
-`required_expense_has_currency` witnesses 101/102, followed by an accepted
-`totals_by_currency` report. USD also has a separately labeled EUR-only
-application refusal; changing the model enum alone does not implement conversion.*
+*Source: shipped currency model plus missing/explicit native checkpoints. No
+currency conversion is implemented.*
 
-<!-- gnd-run expect=0 lane=pyrel -->
-```python
-import json, os, subprocess
-from pathlib import Path
-home = Path("expense-native").resolve()
-base, native = os.environ["GND_TUTORIAL_GND_PYTHON"], os.environ["GND_TUTORIAL_PYREL_PYTHON"]
-for population, expected in [("currency-missing.population.json",1),("currency.population.json",0)]:
-    run = subprocess.run([base,"-m","cli.expense_cli","report","--model","currency.orm.json",
-        "--population",population,"--backend","pyrel","--pyrel-python",native],cwd=home,capture_output=True,text=True,timeout=150)
-    assert run.returncode == expected, run.stdout + run.stderr
-    result = json.loads(run.stdout)
-    if expected:
-        missing = next(r for r in result["policy"]["verdicts"] if r["id"]=="required_expense_has_currency")
-        assert missing["status"] == "violated" and missing["witnesses"] == [[101],[102]]
-        assert "report" not in result
-    else:
-        assert result["report"] == {"submitted":3,"approved":1,"totals_by_currency":{"EUR":2260}}
-        assert result["accepted"] and not result["published"]
-    print(population, result["policy"]["status"])
-usd = json.loads((home/"currency.population.json").read_text())
-usd["facts"]["expense_has_currency"][0]["currency"] = "USD"
-(home/"usd.json").write_text(json.dumps(usd))
-run = subprocess.run([base,"-m","cli.expense_cli","report","--model","currency.orm.json","--population","usd.json","--backend","pyrel","--pyrel-python",native],cwd=home,capture_output=True,text=True,timeout=150)
-assert run.returncode == 1, run.stdout + run.stderr
-guard = json.loads(run.stdout)
-assert guard["application_refusal"]["kind"] == "unsupported-currency" and guard["policy"] is None
-assert "report" not in guard
-```
+## 8. Recap
 
-## Change one policy without rewriting the query
+The producer proposed, PyRel counted and summed, and GND checked before saving.
+Limits and caps stayed in the model, so changing one needed no query change.
+A warning, a refusal and an unknown fact list are all different outcomes, and
+only an accepted check shows a report or saves a file.
 
-For this synthetic variant, the exercise owner lowers the meal cap from 75 to 50
-EUR. Change only the copied model and its provenance, then rerun the same query
-and CLI. The old 60 EUR meal must fail; repairing it to 45 EUR gives 2245 EUR total.
-This is a local tutorial variant, separate from the baseline 75 EUR diagrams and
-chapter 3's managed evolution workflow. No shared or installed model is edited.
+## Troubleshooting
 
-<!-- gnd-run expect=0 lane=pyrel -->
-```python
-import json, os, subprocess
-from pathlib import Path
-home = Path("expense-native").resolve()
-model = json.loads((home/"model.orm.json").read_text())
-rule = next(c for c in model["constraints"] if c["id"]=="policy_meals")
-rule["consequent"]["comparison"]["right"] = 50
-rule["provenance"]["user_quote"] = "For this synthetic tutorial variant, meals cost at most 50 EUR."
-(home/"lower-cap.orm.json").write_text(json.dumps(model))
-repair = json.loads((home/"seed.population.json").read_text())
-next(r for r in repair["facts"]["expense_has_amount"] if r["expense"]==101)["amount"] = 45
-(home/"lower-meal.json").write_text(json.dumps(repair))
-for population, expected in [("seed.population.json",1),("lower-meal.json",0)]:
-    run = subprocess.run([os.environ["GND_TUTORIAL_GND_PYTHON"],"-m","cli.expense_cli","report",
-        "--model","lower-cap.orm.json","--population",population,"--backend","pyrel",
-        "--pyrel-python",os.environ["GND_TUTORIAL_PYREL_PYTHON"]],cwd=home,capture_output=True,text=True,timeout=150)
-    assert run.returncode == expected, run.stdout + run.stderr
-    result = json.loads(run.stdout)
-    if expected:
-        assert next(v for v in result["policy"]["verdicts"] if v["id"]=="policy_meals")["status"]=="violated"
-        assert "report" not in result
-    else:
-        assert result["report"]=={"submitted":3,"approved":1,"total_eur":2245}
-    print("50 EUR cap",population,result["policy"]["status"])
-```
+The exit code is the number `echo $?` prints right after a command. An input's
+coverage list (`covers`) names the fact lists the input vouches for; a list it
+does not name is unknown, which is different from a list that is declared but empty.
 
-## Troubleshoot without weakening the policy
+| What you see | Why | What to do |
+|---|---|---|
+| `--backend pyrel requires --pyrel-python` | No PyRel interpreter given | Add `--pyrel-python` with your PyRel interpreter |
+| `No module named 'cli'` | Command run outside `expense-native` | Keep the `(cd expense-native && ...)` form |
+| `NOT RUN` mentioning the interpreter or `requires PyRel 1.30.1` | Wrong environment | Rebuild it as in [Set up](../pyrel-apps.md#set-up) |
+| `NOT ACCEPTED (some rules could not be decided)`, exit code 2 | A rule needs a fact list the input does not cover | Cover that list, or leave it out on purpose and accept the refusal |
+| `NOT RUN (...)`, exit code 3 | The input is malformed, or an approval changed facts it does not own | Fix the file and rerun |
+| `NOT RUN (output already exists)` | Outputs are never overwritten | Choose a new `--output` path |
+| `FileExistsError` at the copy step | You ran the chapter before in this folder | Start again in a new empty folder |
+| `gnd: command not found` | `gnd-env/bin` is not on your `PATH` | Add it, or type `gnd-env/bin/gnd` |
 
-A missing/wrong interpreter fails native preflight; use PyRel 1.30.1/DuckDB 1.5.5
-in the separate pinned environment. Copy `native_query.py` beside
-`cli/expense_cli.py`. Unknown coverage must stay unknown; include the asserted
-relation coverage metadata even when an observed relation is empty. A fully
-empty currency relation retains the bounded profile's incomplete exit 2; partial
-omissions have mandatory witnesses. Zero approvals/empty inputs can yield
-mathematical zero calculation while policy evidence remains incomplete. Neither
-case is an accepted CLI report. Exit 3 means malformed input and exit 70 an
-operational failure; no refused run publishes.
+## Next steps
 
-Native aggregates preserve expense identity, so equal amounts on distinct
-expenses are counted separately. Native membership results are checked by Python
-orchestration for unknown/already-approved guards; model caps/enums/mandatory
-rules are checked by the separate exported policy walk. Read the copied
-`native_query.py` and `extension.py` to see those responsibilities in actual
-shipped code. The six tutorial SVGs and their source/checkpoint manifests ship
-with the installed examples, so this learning path needs no repository checkout.
+- Write rules for your own domain with
+  [gnd-model-from-text](../agents/model-from-text.md), then build the same kind of app.
+- Drive a real LLM agent against the same model and checker. That is a separate
+  session contract you write for [`gnd exp run`](../agents/dev-session.md); it
+  does not run this CLI.
+- Running against Snowflake is outside this tutorial and outside the
+  applications runtime, which refuses non-local connections.
+
+A checked approval does not establish who the approver is or that they may act.
+
+## The whole query
 
 ??? note "Read the shipped native query source"
 

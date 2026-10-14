@@ -165,8 +165,11 @@ def test_native_specific_intake_and_version_refusals(tmp_path, boundary):
     if boundary == 'malformed-input':
         source.write_bytes(b'{"facts": []}')
     else:
-        query.write_text(query.read_text().replace('from importlib.metadata import version',
-                                                  'from importlib.metadata import version\nversion = lambda name: "wrong"'))
+        # The pin lives in the emitted seam (open_app); patch the lookup it performs.
+        text = query.read_text()
+        assert 'import runpy\n' in text
+        query.write_text(text.replace('import runpy\n', 'import runpy\nimport importlib.metadata\n'
+                                      'importlib.metadata.version = lambda name: "wrong"\n', 1))
     before = source.read_bytes(); output = tmp_path / 'output.json'
     result = execute_application(example / 'model.orm.yaml', source, output,
                                  native_python=NATIVE, owned_relations=('recommendation',), query_script=query,

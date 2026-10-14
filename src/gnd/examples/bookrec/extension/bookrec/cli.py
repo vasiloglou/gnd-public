@@ -37,7 +37,7 @@ def publish(model, document, output):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["recommend", "complete"])
+    parser.add_argument("command", choices=["recommend", "complete", "check"])
     parser.add_argument("--model", required=True)
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
@@ -46,20 +46,36 @@ def main(argv=None):
     parser.add_argument("--preferred-only", action="store_true")
     parser.add_argument("--backend", choices=["gnd", "pyrel"], default="gnd")
     parser.add_argument("--pyrel-python", type=Path)
+    parser.add_argument("--proposal", type=Path,
+                        help="check this candidate (for example an agent's output) instead of computing one")
+    parser.add_argument("--format", choices=["json", "text"], default="json")
     args = parser.parse_args(argv)
+    if args.format == "text" and args.backend != "pyrel":
+        parser.error("--format text requires --backend pyrel")
+    if (args.command == "check") != (args.proposal is not None):
+        parser.error("use check together with --proposal FILE")
+    if args.proposal is not None and args.backend != "pyrel":
+        parser.error("--proposal requires --backend pyrel")
     if args.backend == "pyrel":
-        from gnd.export.applications import execute_application
+        from gnd.export.applications import check_proposal, execute_application, format_result
 
         if args.pyrel_python is None:
             parser.error("--backend pyrel requires --pyrel-python")
-        result = execute_application(
-            args.model, args.input, args.output, native_python=args.pyrel_python,
-            query_script=Path(__file__).with_name("native_query.py"),
-            owned_relations=("recommendation",),
-            query_args=(args.command, args.user or "", str(args.limit),
-                        "true" if args.preferred_only else "false"),
-        )
-        print(json.dumps(result, indent=2))
+        if args.proposal is not None:
+            result = check_proposal(args.model, args.input, args.proposal, args.output,
+                                    native_python=args.pyrel_python, owned_relations=("recommendation",))
+        else:
+            result = execute_application(
+                args.model, args.input, args.output, native_python=args.pyrel_python,
+                query_script=Path(__file__).with_name("native_query.py"),
+                owned_relations=("recommendation",),
+                query_args=(args.command, args.user or "", str(args.limit),
+                            "true" if args.preferred_only else "false"),
+            )
+        if args.format == "text":
+            print("\n".join(format_result({**result, "output": str(args.output)})))
+        else:
+            print(json.dumps(result, indent=2))
         return result["exit_code"]
     # Validate source structure through GND before application indexing. A nonzero
     # semantic band is repairable input here; malformed input is not.

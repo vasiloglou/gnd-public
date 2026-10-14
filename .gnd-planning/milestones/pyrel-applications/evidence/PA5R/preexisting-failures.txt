@@ -1,0 +1,3 @@
+Pre-existing failures, not caused by PA5R. Transcripts, not prose:
+- evidence/PA5R/preexisting-failures-head-transcript.txt: both tests run in a clean worktree at 50eba83 and fail identically.
+- evidence/PA5R/rf7-all-offenders.txt: every rf7 routing offender (the test stops at the first) on 50eba83 and on the PA5R tree; the sets are identical (pyrel_runtime.py:1524, :1612), so PA5R adds none.

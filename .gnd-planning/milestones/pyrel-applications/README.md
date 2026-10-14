@@ -8,7 +8,7 @@ adopted by delegated approval in [010](010-plan-amendment-a2.md) after four
 readings and one repair round. It inserts phase PA5R (tutorial rewrite, public
 query seam, Snowflake-claim fixes, checked-output blocks, readability gate)
 before PA6. Current PA6 evidence is superseded but retained; PA6 is re-gated
-after PA5R. Next: `process-phase PA5R pyrel-applications` to write its spec.
+after PA5R. PA5R is complete: [011](011-phase-PA5R.md). Next: PA6 new spec gate (update its pinned tutorial shape), then its rerun.
 
 ## Execution checkpoint — 2026-10-13
 

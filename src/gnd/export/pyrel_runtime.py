@@ -1632,6 +1632,114 @@ class ApplicationOracle(PyrelOracle):
         return self.evaluate(constraint, ft_id)
 
 
+class NativeApp:
+    """Public seam for a developer-owned native query (applications-v1 profile).
+
+    Opened by ``open_app`` inside an emitted program. ``model`` is the ordinary
+    PyRel ``Model``: build queries with ``model.where(...).select(...)`` and
+    ``relationalai.semantics`` types. Admission, coverage, limits and the version
+    pin are enforced here exactly as for the policy check; execution is local.
+    """
+
+    def __init__(self, oracle: ApplicationOracle, source: dict[str, Any], working: dict[str, Any],
+                 derivations: tuple[str, ...], output: Path, binding: dict[str, str]):
+        self._oracle, self._working, self._output, self._binding = oracle, working, output, binding
+        import copy
+
+        self.model = oracle.m
+        self.source = copy.deepcopy(source)
+        self.derivations = derivations
+
+    def has(self, fact_type: str) -> bool:
+        return fact_type in self._oracle.model.fact_types
+
+    def ref(self, fact_type: str, role: str) -> Any:
+        return self._oracle.refs(fact_type)[role]
+
+    def match(self, fact_type: str, **roles: Any) -> Any:
+        return self._oracle.pattern(fact_type, roles)
+
+    def relationship(self, name: str, **fields: Any) -> Any:
+        from relationalai.semantics.frontend.base import Field
+
+        return self.model.Relationship(fields=[Field(role, kind) for role, kind in fields.items()],
+                                       short_name='app_' + name)
+
+    def rows(self, query: Any) -> list[list[Any]]:
+        return self._oracle._rows(query)
+
+    def check_work(self, estimate: int, what: str) -> None:
+        if estimate > PROFILE_WORK:
+            raise ProfileRefusal(what + ' work limit')
+
+    def candidate(self) -> dict[str, Any]:
+        import copy
+
+        document = copy.deepcopy(self._working)
+        for name in self.derivations:
+            document['facts'][name] = self._oracle.computed[name]
+        return document
+
+    def propose(self, candidate: dict[str, Any], calculation: dict[str, Any]) -> None:
+        self._output.write_text(json.dumps({'schema_version': 1, 'binding': self._binding,
+                                            'candidate': candidate, 'calculation': calculation},
+                                           sort_keys=True, indent=2) + '\n')
+
+    def refuse(self, kind: str, reason: str) -> None:
+        self._output.write_text(json.dumps({'schema_version': 1, 'binding': self._binding,
+                                            'guard_refusal': {'exit_code': 1, 'kind': kind, 'reason': reason}}))
+
+
+def open_app(population_path: str | Path, output_path: str | Path) -> NativeApp:
+    """Admit the input population and open a local PyRel model over it."""
+    import hashlib
+    from importlib.metadata import version
+
+    raw = Path(population_path).read_bytes()
+    if len(raw) > PROFILE_BYTES:
+        raise ProfileRefusal('native input byte limit')
+    source = _parse_document(raw.decode('utf-8'))
+    index = admit_model(_parse_document(MODEL_TEXT))
+    admit_population(source, index)
+    derivations = tuple(_profile_derivations(index))
+    import copy
+
+    working = copy.deepcopy(source)
+    if derivations:
+        metadata = working.get('population', {})
+        if not isinstance(metadata, dict):
+            raise ValueError('population metadata must be an object')
+        if not isinstance(metadata.get('covers'), list):
+            raise ProfileRefusal('coverage-not-declared')
+        # Computed claims belong to the new candidate; asserted coverage is never filled in.
+        working.setdefault('facts', {})
+        for name in derivations:
+            working['facts'].setdefault(name, [])
+            if name not in metadata['covers']:
+                metadata['covers'].append(name)
+    _profile_admit(index, working)
+    if version('relationalai') != '1.30.1' or version('duckdb') != '1.5.5':
+        raise RuntimeError('requires PyRel 1.30.1/DuckDB 1.5.5')
+    binding = {'model_sha256': hashlib.sha256(MODEL_TEXT.encode()).hexdigest(),
+               'input_sha256': hashlib.sha256(raw).hexdigest()}
+    oracle = ApplicationOracle(index, working, config=local_config())
+    return NativeApp(oracle, source, working, derivations, Path(output_path), binding)
+
+
+def run_app(handler: Any, argv: list[str]) -> int:
+    """Run ``handler(app, *args)`` with the applications exit protocol (0/2/3/70)."""
+    population, output, *args = argv
+    try:
+        handler(open_app(population, output), *args)
+        return 0
+    except ValueError as error:
+        print(str(error)[:300], file=sys.stderr)
+        return 3
+    except Exception as error:  # noqa: BLE001 -- native application refusal boundary
+        print(f'{type(error).__name__}: {error}'[:300], file=sys.stderr)
+        return 2 if isinstance(error, ProfileRefusal) else 70
+
+
 def acceptance_document(model: dict[str, Any], population: dict[str, Any], *,
                         model_sha256: str, population_sha256: str,
                         execution_refusal: str | None = None) -> dict[str, Any]:

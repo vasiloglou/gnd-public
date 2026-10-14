@@ -1,0 +1,22 @@
+tests/test_pyrel_proposal_check.py:140: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result0]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result1]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result2]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result3]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result4]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result5]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result6]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[result7]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[None]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_is_total[text]
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_reports_rejection_witness_and_no_publication
+FAILED tests/test_pyrel_proposal_check.py::test_format_result_accepted_report_and_warning
+FAILED tests/test_pyrel_proposal_check.py::test_check_proposal_validation_order_is_pinned
+FAILED tests/test_pyrel_proposal_check.py::test_agent_proposal_is_rejected_by_pyrel_checker
+FAILED tests/test_pyrel_proposal_check.py::test_accepted_proposal_publishes_exact_checked_bytes
+FAILED tests/test_pyrel_proposal_check.py::test_proposal_refusals_happen_before_checking[exists]
+FAILED tests/test_pyrel_proposal_check.py::test_proposal_refusals_happen_before_checking[inventory]
+FAILED tests/test_pyrel_proposal_check.py::test_proposal_refusals_happen_before_checking[asserted]
+FAILED tests/test_pyrel_proposal_check.py::test_bookrec_cli_proposal_text_output
+19 failed in 0.21s

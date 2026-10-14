@@ -20,10 +20,10 @@ Every skill ends in a structured artifact that `gnd` can check:
 | generated project | model-derived tools plus your extension code | `gnd conformance` |
 
 GND checks these with its own deterministic engine, which is portable native Python
-and needs no database or service. For recursive analysis, proofs or enterprise data,
+and needs no database or service. For recursive analysis, proofs or relational queries,
 `gnd export` hands the same model to [Soufflé](../runtimes/souffle.md),
-[Lean](../runtimes/lean.md) or [PyRel](../runtimes/pyrel.md). PyRel runs locally on
-DuckDB or on Snowflake; the public build measures the DuckDB route.
+[Lean](../runtimes/lean.md) or [PyRel](../runtimes/pyrel.md). Exported PyRel programs run
+locally on DuckDB; Snowflake execution is not yet supported by gnd export.
 
 ## Every skill, by outcome
 

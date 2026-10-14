@@ -143,6 +143,39 @@ def _preserve_source(model_doc, source, candidate, owned_relations):
         raise ValueError('candidate changed asserted source coverage')
 
 
+def _check_and_publish(result, *, interpreter, model_doc, model_sha, sources, runtime_bytes, candidate_bytes, output):
+    """Check exact candidate bytes in a fresh stage; publish only verified acceptance."""
+    model_bytes = sources[0][1]
+    if len(candidate_bytes) > INPUT_CAP:
+        raise ValueError('candidate exceeds native byte cap')
+    # Create the checker stage only after any query group has exited.
+    # Query-created paths/runtime/build artifacts cannot enter this run.
+    with tempfile.TemporaryDirectory(prefix='gnd-native-checker-') as checked_directory:
+        checked_home = Path(checked_directory)
+        candidate = checked_home / 'candidate.json'
+        policy_path = checked_home / 'policy.json'
+        checked_runtime = checked_home / 'runtime.py'
+        for name, data in [('candidate.json', candidate_bytes), ('runtime.py', runtime_bytes),
+                           ('model.orm.yaml', model_bytes)]:
+            artifact_publish_leaf_atomic(checked_home, name, data)
+        checked = _child([interpreter, '-I', checked_runtime, candidate, '--accept', '--out', policy_path], checked_home)
+        if checked.return_code == 3:
+            result.update(exit_code=3, reason=checked.stderr.decode('utf-8', errors='replace')[-300:])
+            return result
+        report = bounded_json(_capture(policy_path, ARTIFACT_CAP), max_bytes=ARTIFACT_CAP)
+    result['policy'] = report
+    if checked.return_code != 0:
+        result['exit_code'] = checked.return_code if checked.return_code in {1, 2, 3} else 70
+        return result
+    verify_policy_report(report, model_doc, model_sha,
+                         hashlib.sha256(candidate_bytes).hexdigest(), checked.return_code)
+    if any(_capture(path, INPUT_CAP) != data for path, data in sources):
+        raise RuntimeError('source bytes changed during native execution')
+    artifact_publish_leaf_atomic(output.parent, output.name, candidate_bytes)
+    result.update(exit_code=0, accepted=True, published=True)
+    return result
+
+
 def execute_application(model_path, input_path, output_path, *, native_python, query_script,
                         query_args=(), candidate_transform=None, owned_relations=(), allowed_guard_kinds=()):
     """Only captured candidate bytes with complete native acceptance are published."""
@@ -209,37 +242,137 @@ def execute_application(model_path, input_path, output_path, *, native_python, q
                 document = candidate_transform(document)
             _preserve_source(model_doc, _parse_document(input_bytes.decode('utf-8')), document, owned_relations)
             candidate_bytes = (json.dumps(document, sort_keys=True, indent=2, allow_nan=False) + '\n').encode()
-            if len(candidate_bytes) > INPUT_CAP:
-                raise ValueError('candidate exceeds native byte cap')
             result['calculation'] = envelope['calculation']
-            # Create the checker stage only after the query group has exited.
-            # Query-created paths/runtime/build artifacts cannot enter this run.
-            with tempfile.TemporaryDirectory(prefix='gnd-native-checker-') as checked_directory:
-                checked_home = Path(checked_directory)
-                candidate = checked_home / 'candidate.json'
-                policy_path = checked_home / 'policy.json'
-                checked_runtime = checked_home / 'runtime.py'
-                for name, data in [('candidate.json', candidate_bytes), ('runtime.py', runtime_bytes),
-                                   ('model.orm.yaml', model_bytes)]:
-                    artifact_publish_leaf_atomic(checked_home, name, data)
-                checked = _child([interpreter, '-I', checked_runtime, candidate, '--accept', '--out', policy_path], checked_home)
-                if checked.return_code == 3:
-                    result.update(exit_code=3, reason=checked.stderr.decode('utf-8', errors='replace')[-300:])
-                    return result
-                report = bounded_json(_capture(policy_path, ARTIFACT_CAP), max_bytes=ARTIFACT_CAP)
-            result['policy'] = report
-            if checked.return_code != 0:
-                result['exit_code'] = checked.return_code if checked.return_code in {1, 2, 3} else 70
-                return result
-            verify_policy_report(report, model_doc, model_sha,
-                                 hashlib.sha256(candidate_bytes).hexdigest(), checked.return_code)
-            if (_capture(model_path, INPUT_CAP) != model_bytes
-                    or _capture(input_path, INPUT_CAP) != input_bytes):
-                raise RuntimeError('source bytes changed during native execution')
-            artifact_publish_leaf_atomic(output.parent, output.name, candidate_bytes)
-            result.update(exit_code=0, accepted=True, published=True)
+            return _check_and_publish(result, interpreter=interpreter, model_doc=model_doc, model_sha=model_sha,
+                                      sources=((model_path, model_bytes), (input_path, input_bytes)),
+                                      runtime_bytes=runtime_bytes, candidate_bytes=candidate_bytes, output=output)
     except (ValueError, UnicodeError, ModelLoadError, ModelValidationError) as error:
         result.update(exit_code=3, reason=str(error)[:300])
     except Exception as error:  # noqa: BLE001 -- application refusal must withhold publication
         result.update(exit_code=70, reason=f'{type(error).__name__}: {error}'[:300])
     return result
+
+
+def check_proposal(model_path, input_path, proposal_path, output_path, *, native_python, owned_relations=()):
+    """Check a supplied candidate, such as an agent's proposal, with the exported PyRel checker.
+
+    No native query runs, so ``calculation`` stays ``None``. The proposal may change only
+    ``owned_relations``; its bytes are captured and bound like the input's.
+    """
+    result = {'exit_code': 70, 'accepted': False, 'published': False,
+              'policy': None, 'calculation': None}
+    try:
+        output = Path(output_path).absolute()
+        if output.exists() or output.is_symlink():
+            result.update(exit_code=2, reason='output already exists')
+            return result
+        interpreter = Path(native_python)
+        if not interpreter.is_absolute() or not interpreter.is_file():
+            raise RuntimeError('explicit native interpreter is unavailable')
+        model_bytes = _capture(model_path, INPUT_CAP)
+        input_bytes = _capture(input_path, INPUT_CAP)
+        proposal_bytes = _capture(proposal_path, INPUT_CAP)
+        load_model_bytes(model_bytes, source=model_path)
+        model_doc = _parse_document(model_bytes.decode('utf-8'))
+        model_sha = hashlib.sha256(model_bytes).hexdigest()
+        result['source_binding'] = {'model_sha256': model_sha,
+                                    'input_sha256': hashlib.sha256(input_bytes).hexdigest(),
+                                    'proposal_sha256': hashlib.sha256(proposal_bytes).hexdigest()}
+        document = bounded_json(proposal_bytes, max_bytes=INPUT_CAP)
+        _preserve_source(model_doc, _parse_document(input_bytes.decode('utf-8')), document, owned_relations)
+        result['proposal'] = {name: document['facts'].get(name, []) for name in owned_relations}
+        candidate_bytes = (json.dumps(document, sort_keys=True, indent=2, allow_nan=False) + '\n').encode()
+        with tempfile.TemporaryDirectory(prefix='gnd-native-application-') as directory:
+            model = Path(directory) / 'model.orm.yaml'
+            model.write_bytes(model_bytes)
+            runtime_bytes = render_pyrel(model).encode('utf-8')
+        return _check_and_publish(result, interpreter=interpreter, model_doc=model_doc, model_sha=model_sha,
+                                  sources=((model_path, model_bytes), (input_path, input_bytes),
+                                           (proposal_path, proposal_bytes)),
+                                  runtime_bytes=runtime_bytes, candidate_bytes=candidate_bytes, output=output)
+    except (ValueError, UnicodeError, ModelLoadError, ModelValidationError) as error:
+        result.update(exit_code=3, reason=str(error)[:300])
+    except Exception as error:  # noqa: BLE001 -- application refusal must withhold publication
+        result.update(exit_code=70, reason=f'{type(error).__name__}: {error}'[:300])
+    return result
+
+
+_WITNESS_LINES = 5
+
+
+def _list(value):
+    return value if isinstance(value, list) else []
+
+
+def _text(value):
+    return ' '.join(str(value).split())
+
+
+def _row_label(row):
+    if isinstance(row, dict) and set(row) == {'user', 'book'}:
+        return f"{row['user']}/{row['book']}"
+    return json.dumps(row, sort_keys=True, default=str)
+
+
+def format_result(result):
+    """Short human summary of an application result; total over any input."""
+    result = result if isinstance(result, dict) else {}
+    lines = []
+    proposal = result.get('proposal')
+    if isinstance(proposal, dict):
+        proposal = [row for rows in proposal.values() for row in _list(rows)]
+    if isinstance(proposal, list):
+        lines.append("Checking the agent's proposal: " + ', '.join(_row_label(row) for row in proposal))
+    calculation = result.get('calculation') if isinstance(result.get('calculation'), dict) else {}
+    selected = [row for row in _list(calculation.get('selected_pairs')) if isinstance(row, dict)]
+    if selected:
+        users = {str(row.get('user')) for row in selected}
+        if len(users) == 1:
+            lines.append(f'Proposed for {users.pop()}: ' + ', '.join(str(row.get('book')) for row in selected))
+        else:
+            lines.append('Proposed: ' + ', '.join(_row_label(row) for row in selected))
+    approval = result.get('approval')
+    if isinstance(approval, dict):
+        lines.append(f"Proposed approval: expense {approval.get('expense')} by {approval.get('chain')}")
+    report = result.get('report') if isinstance(result.get('report'), dict) else None
+    if report is not None and result.get('accepted') is True:
+        totals = report.get('totals_by_currency')
+        total = (', '.join(f'{amount} {currency}' for currency, amount in totals.items()) + ' total'
+                 if isinstance(totals, dict) else f"{report.get('total_eur')} EUR total")
+        lines.append(f"Report: {report.get('submitted')} submitted, {report.get('approved')} approved, {total}")
+    policy = result.get('policy') if isinstance(result.get('policy'), dict) else None
+    verdicts = [row for row in _list((policy or {}).get('verdicts')) if isinstance(row, dict)]
+    status = (policy or {}).get('status')
+    refusal = result.get('application_refusal')
+    if result.get('accepted') is True:
+        warnings = sum(1 for row in verdicts if row.get('status') == 'warning')
+        lines.append('Policy check: ACCEPTED' + (f" with {warnings} warning{'s' if warnings != 1 else ''}"
+                                                 if warnings else ''))
+    elif isinstance(refusal, dict):
+        lines.append(f"Policy check: REFUSED by the application ({_text(refusal.get('reason'))})")
+    elif status == 'rejected':
+        lines.append('Policy check: REJECTED')
+    elif status == 'incomplete':
+        lines.append('Policy check: NOT ACCEPTED (some rules could not be decided)')
+    elif policy is not None:
+        lines.append('Policy check: NOT ACCEPTED')
+    else:
+        reason = result.get('reason')
+        lines.append('Policy check: NOT RUN' + (f' ({_text(reason)})' if isinstance(reason, str) and reason.strip() else ''))
+    for row in verdicts:
+        status = row.get('status')
+        if not isinstance(status, str) or status == 'satisfied':
+            continue
+        witnesses = _list(row.get('witnesses'))
+        label = f"  {_text(status):<11} {_text(row.get('id'))}"
+        for witness in witnesses[:_WITNESS_LINES]:
+            lines.append(label + ' ' + json.dumps(witness, default=str))
+        if len(witnesses) > _WITNESS_LINES:
+            lines.append(f'  ... {len(witnesses) - _WITNESS_LINES} more')
+        if not witnesses:
+            lines.append(label)
+    if result.get('published') is True:
+        lines.append(f"Published: {result.get('output')}")
+    elif report is None or result.get('accepted') is not True:
+        lines.append('Nothing was published.')
+    return lines

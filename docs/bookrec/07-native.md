@@ -1,9 +1,11 @@
-# 7. Compute recommendations with PyRel and audit them separately
+# 7. Run BookRec on PyRel and catch a faulty agent
 
-Ada is a minor. A proposer that chooses `night` has produced a business failure,
-even if its query ran successfully. This chapter separates native calculation
-from the exported policy check that decides whether a candidate can be published.
-Continue after chapter 6; the native exercise starts with fresh installed resources.
+In this chapter BookRec computes recommendations with a PyRel query, and GND
+checks every proposal before anything is saved. You will watch a faulty agent
+recommend an adult-only book to Ada, who is a minor, and see the check stop it.
+You need the two environments from [PyRel + GND](../pyrel-apps.md#set-up).
+
+## 1. What you'll build
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec calculation and checking flow">
 ![BookRec facts feed native queries, then a separate policy audit; advisory warnings publish and strict genre failures withhold output.](../assets/applications/bookrec-flow.svg)
@@ -11,151 +13,270 @@ Continue after chapter 6; the native exercise starts with fresh installed resour
 
 *Source: shipped baseline/strict models and measured advisory/strict checkpoints.
 The same Ada/cosmos candidate warns under `preferred_genre` in advisory mode and
-fails under the strict model. Query completion alone cannot publish output.*
+fails under the strict model.*
 
 On narrow screens, focus a diagram and scroll horizontally with arrow keys or touch.
 
-## Keep the two interpreters explicit
+| Step | Who does it | Where it lives |
+|---|---|---|
+| Propose recommendations | The candidate producer: here a PyRel query, in your app possibly an LLM agent | `native_query.py` |
+| Compute who can read what | PyRel | `native_query.py` |
+| Sort and keep the first few | Plain Python | `native_query.py` |
+| Check the rules, then save | GND, using PyRel to run the check | the model files |
 
-GND runs in your base environment. Native PyRel runs in a separate environment
-with PyRel 1.30.1 and DuckDB 1.5.5, following the [pinned runtime setup](../runtimes/pyrel.md).
-The tutorial runner sets `GND_TUTORIAL_GND_PYTHON` from `--python`; set
-`GND_TUTORIAL_PYREL_PYTHON` to your absolute pinned native interpreter path.
-These blocks use only the standard library in that native interpreter and invoke
-GND's CLI in the base interpreter. No account or remote database is required.
+The rules live in the model, not in the query. The applications here run on
+PyRel 1.30.1 with DuckDB 1.5.5, locally, with no account. A passing check means
+the supplied facts satisfy the modeled rules; it says nothing about whether
+they describe the world.
 
-The default offline run skips native blocks and says so. Run this group with
-`--lane pyrel --receipt bookrec-steps.json` to execute both paths. The receipt
-records elapsed command execution, including deliberate failures, rather than
-human model design, application authoring, runtime installation or review time.
-The earlier chapters demonstrate scaffold generation and safe rule evolution;
-this chapter reuses their models with a supplied native query extension.
+## 2. Get a fresh copy and check both environments
 
-For individual copy-and-run blocks, set both interpreter variables yourself:
+Work in the folder where you created the two environments. Run Python blocks
+with the GND interpreter: save one as a file, for example `step.py`, and run
+`"$GND_TUTORIAL_GND_PYTHON" step.py`. Start from the shipped example,
+so earlier chapters cannot change the starting facts:
 
-```sh
-export GND_TUTORIAL_GND_PYTHON=/absolute/base/bin/python
-export GND_TUTORIAL_PYREL_PYTHON=/absolute/pinned/native/bin/python
-```
-
-<!-- gnd-run expect=0 -->
+<!-- gnd-run expect=0 output=stdout -->
 ```python
 from importlib.resources import files
-from pathlib import Path
 import shutil
-source = files("gnd").joinpath("examples", "bookrec")
-shutil.copytree(str(source), "bookrec-native")
-assert Path("bookrec-native/extension/bookrec/native_query.py").is_file()
+
+shutil.copytree(str(files("gnd").joinpath("examples", "bookrec")), "bookrec-native")
+print("Copied the BookRec example to bookrec-native/")
 ```
 
-## Advisory, strict, repair and completeness
+```text
+Copied the BookRec example to bookrec-native/
+```
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+"$GND_TUTORIAL_GND_PYTHON" -c "import gnd; print('GND is ready')"
+```
+
+```text
+GND is ready
+```
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+"$GND_TUTORIAL_PYREL_PYTHON" -c "from importlib.metadata import version as v; print('PyRel', v('relationalai'), 'with DuckDB', v('duckdb'))"
+```
+
+```text
+PyRel 1.30.1 with DuckDB 1.5.5
+```
+
+## 3. One rule, and the query that respects it
+
+The model's `age_appropriate` rule says: a minor is never recommended an
+adult-rated book. Here is how the PyRel query avoids those pairs while it computes:
+
+```python
+# A minor reader and an adult-rated book: never recommend this pair.
+blocked = m.where(reader, book, app.match('user_is_minor', user=u), app.match('book_rated_adult', book=b))
+blocked_pair = app.relationship('blocked', user=String, book=String)
+blocked.define(blocked_pair(u, b))
+...
+clauses = [reader, book,
+           m.not_(app.match('user_rated_book', user=u, book=b)),   # not read yet
+           m.not_(blocked_pair(u, b))]                             # not blocked
+```
+
+`m` is an ordinary PyRel model, `String.ref()` makes query variables, and
+`m.not_(...)` excludes matches. `app` is the small
+[query toolkit](../pyrel-apps.md#the-query-toolkit) GND hands your query:
+`app.match` matches a fact list, and `app.relationship` declares a helper relation
+that `.define` fills. `reader` and `book` are matches set up a few lines earlier
+in the full source below. Avoiding a bad pair here is helpful, but it is not a
+guarantee: GND still checks the result against the rule itself.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec reader, book and genre eligibility">
 ![Eligibility arrows show Ada to map/river and Ben to map/night/river. Ada/night violates age_appropriate; Ada/read and Ben/read violate unread_only. Cosmos is legal in baseline but outside the preferred complete set.](../assets/applications/bookrec-eligibility.svg)
 </div>
 
 *Source: complete-mode checkpoint's five eligible pairs and blocked/read pairs.
-Arrows show the preferred complete set. The exclusion labels name the
-rules checked when a bad proposer inserts those pairs.*
+The exclusion labels name the rules checked when a bad proposer inserts those pairs.*
 
-<!-- gnd-run expect=0 lane=pyrel -->
-```python
-import hashlib, json, os, subprocess, sys
-from pathlib import Path
-base = os.environ["GND_TUTORIAL_GND_PYTHON"]
-native = os.environ["GND_TUTORIAL_PYREL_PYTHON"]
-home = Path("bookrec-native").resolve()
-source = home / "seed.population.json"
-before = hashlib.sha256(source.read_bytes()).hexdigest()
-for name, model, command, extra, expected in [
-    ("advisory", "model.orm.yaml", "recommend", [], 0),
-    ("strict", "strict.orm.yaml", "recommend", [], 1),
-    ("preferred", "strict.orm.yaml", "recommend", ["--preferred-only"], 0),
-    ("complete", "complete.orm.yaml", "complete", [], 0),
-]:
-    output = home / (name + ".json")
-    argv = [base, "-m", "bookrec.cli", command, "--model", str(home/model),
-            "--input", str(source), "--output", str(output), "--backend", "pyrel",
-            "--pyrel-python", native, "--user", "ada", "--limit", "2", *extra]
-    run = subprocess.run(argv, cwd=home/"extension", capture_output=True, text=True, timeout=150)
-    assert run.returncode == expected, run.stdout + run.stderr
-    result = json.loads(run.stdout)
-    (home/(name+".report.json")).write_text(json.dumps(result, indent=2))
-    assert result["accepted"] == (expected == 0)
-    assert output.exists() == (expected == 0)
-    genre = next(r for r in result["policy"]["verdicts"] if r["id"] == "preferred_genre")
-    if name in {"advisory", "strict"}:
-        assert result["calculation"]["selected_pairs"] == [{"user":"ada","book":"cosmos"}, {"user":"ada","book":"map"}]
-        if name == "advisory":
-            assert {(r["user"],r["book"]) for r in json.loads(output.read_text())["facts"]["recommendation"]} == {("ada","cosmos"),("ada","map"),("ben","night")}
-        assert genre["status"] == ("warning" if name == "advisory" else "violated")
-        assert genre["witnesses"] == [{"$u":"ada", "$b":"cosmos", "$g":"science"}]
-    if name == "preferred":
-        assert result["calculation"]["selected_pairs"] == [{"user":"ada","book":"map"}, {"user":"ada","book":"river"}]
-    if name == "complete":
-        pairs = result["calculation"]["eligible_pairs"]
-        assert {(r["user"],r["book"]) for r in pairs} == {("ada","map"),("ada","river"),("ben","map"),("ben","night"),("ben","river")}
-    print(name, result["policy"]["status"], "published", result["published"])
-assert hashlib.sha256(source.read_bytes()).hexdigest() == before
+## 4. Run the app
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli recommend --user ada \
+  --model ../model.orm.yaml --input ../seed.population.json --output ../ada.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
 ```
 
-| Checkpoint | Ada proposal | Expected policy | Output |
-|---|---|---|---|
-| Advisory | cosmos, map | accepted with genre warning | Published |
-| Strict, same proposal | cosmos, map | preferred_genre violated | Absent |
-| Strict repair | map, river | accepted | Published |
-| Complete | all five preferred eligible pairs | accepted | Published |
+```text
+Proposed for ada: cosmos, map
+Policy check: ACCEPTED with 1 warning
+  warning     preferred_genre {"$b": "cosmos", "$g": "science", "$u": "ada"}
+Published: ../ada.json
+```
+
+Ada gets two books. The saved file is `bookrec-native/ada.json`; paths in the
+output are relative to `bookrec-native/extension`. `preferred_genre` is a should-rule in this model, so a
+science book outside her preferred genres is a warning, not a failure, and the
+recommendations are saved. Each line under the verdict is a witness (the exact
+facts that break the rule), here Ada, cosmos and its genre. `$u`, `$b` and `$g`
+are the rule's own variable names, for the user, the book and the genre.
+
+## 5. A faulty agent
+
+Now play the agent yourself. The shipped file `adult-for-minor.population.json`
+proposes `night`, an adult-rated book, for Ada and Ben. You are injecting it on
+purpose, as a stand-in for an agent that got it wrong. The `check` command
+with `--proposal` checks a supplied candidate instead of computing one:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli check \
+  --model ../model.orm.yaml --input ../seed.population.json \
+  --proposal ../adult-for-minor.population.json --output ../agent.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Checking the agent's proposal: ada/night, ben/night
+Policy check: REJECTED
+  violated    age_appropriate {"$b": "night", "$u": "ada"}
+Nothing was published.
+```
+
+Ben is an adult, so only Ada's pair breaks the rule. No query ran here, so
+nothing could filter the bad pair out first: the check alone caught it. The
+same happens when an agent recommends a book Ada has already read:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli check \
+  --model ../model.orm.yaml --input ../seed.population.json \
+  --proposal ../tutorial-assets/checkpoints/already-read-refusal.input.json --output ../agent-read.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Checking the agent's proposal: ada/map, ben/night, ada/read
+Policy check: REJECTED
+  violated    unread_only {"$b": "read", "$u": "ada"}
+Nothing was published.
+```
+
+## 6. Fix it and rerun
+
+Ben's `night` pick was already in the input, and it is fine because Ben is an
+adult. A corrected proposal keeps it and gives Ada `cosmos` and `map` instead,
+the same picks the query made in step 4. The check accepts it and saves it:
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli check \
+  --model ../model.orm.yaml --input ../seed.population.json \
+  --proposal ../tutorial-assets/checkpoints/advisory.candidate.json --output ../fixed.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Checking the agent's proposal: ben/night, ada/cosmos, ada/map
+Policy check: ACCEPTED with 1 warning
+  warning     preferred_genre {"$b": "cosmos", "$g": "science", "$u": "ada"}
+Published: ../fixed.json
+```
+
+## 7. Change a rule without touching the query
+
+`strict.orm.yaml` makes `preferred_genre` a must-rule. Same query, same facts:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli recommend --user ada \
+  --model ../strict.orm.yaml --input ../seed.population.json --output ../strict.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Proposed for ada: cosmos, map
+Policy check: REJECTED
+  violated    preferred_genre {"$b": "cosmos", "$g": "science", "$u": "ada"}
+Nothing was published.
+```
+
+The query still finished and still proposed cosmos. A query that finishes is
+not the same as a passing check. Ask the query for preferred genres only:
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli recommend --user ada --preferred-only \
+  --model ../strict.orm.yaml --input ../seed.population.json --output ../preferred.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+```
+
+```text
+Proposed for ada: map, river
+Policy check: ACCEPTED
+Published: ../preferred.json
+```
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec advisory, strict and complete rules">
 ![The same cosmos/map candidate warns with advisory genre fit and fails with strict fit; preferred-only repairs Ada to map/river. Complete mode requires all five eligible pairs.](../assets/applications/bookrec-evolution.svg)
 </div>
 
-*Source: advisory, strict, preferred and complete native checkpoint reports.
-Legal recommendations and the complete eligible set answer different questions;
-`all_eligible` checks omissions under the complete model.*
+*Source: advisory, strict, preferred and complete native checkpoint reports.*
 
-## Make checking catch what filtering cannot
+### Go further: the complete list
 
-Deliberately add Ada/read after a successful proposal, then run the standalone
-export with `--accept`. This bypasses proposer filtering so the audit must catch
-the violation. The bad file is an exercise input, never an application publication.
+`complete.orm.yaml` adds rules that require every eligible pair, not just a few:
 
-<!-- gnd-run expect=0 lane=pyrel -->
-```python
-import json, os, subprocess
-from pathlib import Path
-home = Path("bookrec-native").resolve()
-base, native = os.environ["GND_TUTORIAL_GND_PYTHON"], os.environ["GND_TUTORIAL_PYREL_PYTHON"]
-candidate = json.loads((home/"preferred.json").read_text())
-candidate["facts"]["recommendation"].append({"user":"ada", "book":"read"})
-(home/"bad.json").write_text(json.dumps(candidate))
-export = subprocess.run([base,"-m","gnd","export","pyrel",str(home/"strict.orm.yaml"),"--out",str(home/"checker.py")],capture_output=True,text=True,timeout=30)
-assert export.returncode == 0, export.stderr
-bad = subprocess.run([native,"-I",str(home/"checker.py"),str(home/"bad.json"),"--out",str(home/"bad.report.json"),"--accept"],cwd=home,capture_output=True,text=True,timeout=90)
-assert bad.returncode == 1, bad.stdout + bad.stderr
-report = json.loads((home/"bad.report.json").read_text())
-rule = next(r for r in report["verdicts"] if r["id"] == "unread_only")
-assert rule["status"] == "violated" and rule["witnesses"] == [{"$u":"ada","$b":"read"}]
-repair = subprocess.run([native,"-I",str(home/"checker.py"),str(home/"preferred.json"),"--out",str(home/"repaired.report.json"),"--accept"],cwd=home,capture_output=True,text=True,timeout=90)
-assert repair.returncode == 0, repair.stderr
-print("Inserted already-read recommendation rejected; original repair accepted.")
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli complete \
+  --model ../complete.orm.yaml --input ../seed.population.json --output ../complete.json \
+  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
 ```
 
-## Read the extension and troubleshoot
+```text
+Proposed: ada/map, ada/river, ben/map, ben/night, ben/river
+Policy check: ACCEPTED
+Published: ../complete.json
+```
 
-Open the copied `extension/bookrec/native_query.py` and `cli.py`. Native joins and
-negation calculate candidates; Python deduplicates, orders, selects the user and
-limits presentation. The shared GND parent captures source bytes, preserves
-nonowned facts, runs a fresh exported checker and publishes only accepted bytes.
-Model constraints live in the model; query logic remains developer-owned.
+## 8. Recap
 
-A missing/wrong PyRel interpreter fails preflight; install the pinned runtime and
-pass its absolute path. Missing `covers_fact_types` is unknown coverage, including
-empty asserted relations; retain that metadata rather than inventing observations.
-Exit 2 means incomplete/unsupported evidence, exit 3 malformed input and exit 70
-operational failure. None publishes. An SDK exit 0 is not acceptance without the
-full policy report. The tiny alphabetic recommender demonstrates integration,
-not ranking quality, production storage or actor permission.
+The producer proposed, PyRel computed, Python sorted, and GND checked before
+saving. Bad proposals were refused whether or not a query had filtered them, and
+changing a rule needed no query change. A warning still saves, a violation
+refuses, and an unknown fact list is never treated as empty. Your input files
+were never modified.
+
+## Troubleshooting
+
+The exit code is the number `echo $?` prints right after a command. An input's
+coverage list (`covers`) names the fact lists the input vouches for; a list it
+does not name is unknown, which is different from a list that is declared but empty.
+
+| What you see | Why | What to do |
+|---|---|---|
+| `--backend pyrel requires --pyrel-python` | No PyRel interpreter given | Add `--pyrel-python` with your PyRel interpreter |
+| `NOT RUN` mentioning the interpreter or `requires PyRel 1.30.1` | Wrong environment | Rebuild it as in [Set up](../pyrel-apps.md#set-up) |
+| `NOT RUN (ProfileRefusal: coverage-not-declared)`, exit code 2 | The input has no coverage list | Add the `covers` list for the facts you actually have |
+| `NOT ACCEPTED (some rules could not be decided)`, exit code 2 | A rule needs a fact list the input does not cover | Cover that list, or leave it out on purpose and accept the refusal |
+| `NOT RUN (...)`, exit code 3 | The input or proposal is malformed, or changed facts it does not own | Fix the file; a proposal may only change `recommendation` |
+| `NOT RUN (output already exists)` | Outputs are never overwritten | Choose a new `--output` path |
+| `FileExistsError` at the copy step | You ran the chapter before in this folder | Start again in a new empty folder |
+
+## Next steps
+
+- Write rules for your own domain with
+  [gnd-model-from-text](../agents/model-from-text.md), then build the same kind of app.
+- Drive a real LLM agent against the same model and checker. That is a separate
+  session contract you write for [`gnd exp run`](../agents/dev-session.md); it
+  does not run this CLI.
+- Running against Snowflake is outside this tutorial and outside the
+  applications runtime, which refuses non-local connections.
+
+The recommender is deliberately tiny: it shows the integration, not ranking quality.
+
+## The whole query
 
 ??? note "Read the shipped native query source"
 

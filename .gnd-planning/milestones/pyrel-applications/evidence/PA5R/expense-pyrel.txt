@@ -1,0 +1,6 @@
+01-model.md: selected executable blocks passed
+02-application.md: selected executable blocks passed
+03-evolution.md: selected executable blocks passed
+04-native.md: selected executable blocks passed
+Native lanes executed: pyrel
+43 tutorial blocks passed

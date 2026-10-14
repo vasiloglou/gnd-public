@@ -13,7 +13,7 @@ three external engines:
 |---|---|---|
 | [Soufflé](../runtimes/souffle.md) | `gnd export souffle`, `souffle-verify`, `souffle-run` | recursive derivations at scale, such as the transitive impact of a vulnerable dependency |
 | [Lean](../runtimes/lean.md) | `gnd export lean`, `lean-verify`, `lean-compile` | finite definitions plus explicitly unproved obligations that you prove, or refute with a counterexample |
-| [PyRel](../runtimes/pyrel.md) | `gnd export pyrel` | a standalone relational program, run locally on DuckDB or on Snowflake when your data lives there |
+| [PyRel](../runtimes/pyrel.md) | `gnd export pyrel` | a standalone relational program, run locally on DuckDB (Snowflake execution is not yet supported by gnd export) |
 
 ```text
 Use gnd-export to export the approval policy model to Lean with the release population,

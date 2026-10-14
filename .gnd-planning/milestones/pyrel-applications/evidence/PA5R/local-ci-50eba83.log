@@ -1,0 +1,575 @@
+=== STEP sync
+Using CPython 3.13.12
+Creating virtual environment at: .venv
+Resolved 32 packages in 6ms
+   Building get-nick-done @ file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head
+      Built get-nick-done @ file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head
+Prepared 1 package in 11ms
+Installed 30 packages in 350ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + click==8.5.0
+ + deepmerge==3.0.1
+ + duckdb==1.5.5
+ + faker==40.36.0
+ + get-nick-done==0.1.0 (from file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head)
+ + iniconfig==2.3.0
+ + jinja2==3.1.6
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + markdown==3.11
+ + markupsafe==3.0.4
+ + packaging==26.3
+ + pathspec==1.1.1
+ + pluggy==1.6.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pymdown-extensions==12.1
+ + pytest==9.1.1
+ + pyyaml==6.0.3
+ + referencing==0.37.0
+ + rpds-py==2026.6.3
+ + ruamel-yaml==0.19.1
+ + ruff==0.16.2
+ + tomli==2.4.1
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
+ + zensical==0.0.67
+=== RESULT sync exit=0 (0s)
+=== STEP candidate-build
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built candidate/release/get_nick_done-0.1.0.tar.gz
+Successfully built candidate/release/get_nick_done-0.1.0-py3-none-any.whl
+Building wheel (uv build backend)...
+Successfully built candidate/comparison/get_nick_done-0.1.0-py3-none-any.whl
+release/get_nick_done-0.1.0-py3-none-any.whl: OK
+release/get_nick_done-0.1.0.tar.gz: OK
+comparison/get_nick_done-0.1.0-py3-none-any.whl: OK
+=== RESULT candidate-build exit=0 (1s)
+=== STEP gnd-install
+claude/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.claude/skills
+  placed 16 file(s)
+codex/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.codex/skills
+  placed 16 file(s)
+=== RESULT gnd-install exit=0 (1s)
+=== STEP gnd-doctor
+executable directory: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.venv/bin (on PATH)
+checking both scopes regardless of the flags given (skill precedence is user level over project level)
+claude/global -> /Users/nikolaosvasiloglou/.claude/skills
+  not installed
+codex/global -> /Users/nikolaosvasiloglou/.codex/skills
+  not installed
+  note: /Users/nikolaosvasiloglou/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+claude/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.claude/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-14T02:19:28Z): current=16
+codex/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.codex/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-14T02:19:28Z): current=16
+  note: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+=== RESULT gnd-doctor exit=0 (0s)
+=== STEP collect
+
+14382/14861 tests collected (479 deselected) in 7.76s
+=== RESULT collect exit=0 (10s)
+=== STEP platform-sensitive
+........................................................................ [ 45%]
+........................................................................ [ 90%]
+................                                                         [100%]
+==================================== PASSES ====================================
+___________ test_connected_three_atom_join_meets_the_declared_bound ____________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.06450653339270503, 0.06437977480236441, 0.0649626084137708, 0.06599543339107186, 0.06445259181782603, 0.06464989164378494, 0.06408991678617895, 0.0647141084074974, 0.06502885059453548], [0.13160034159664064, 0.13138192505575716, 0.13340658340603112, 0.13144830816891045, 0.13164435839280486, 0.13250590863171965, 0.13379929200746118, 0.12981010002549737, 0.13334428363014011]], 'medians': [0.06464989164378494, 0.13164435839280486], 'relative_mad': [0.004178148401374756, 0.006544528375033518], 'ratio': 2.036265723663597, 'limit': 0.2}
+__________ test_guarded_timing_decision_controls[small0-large0-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172], [0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345]], 'medians': [0.172, 0.345], 'relative_mad': [0.0, 0.0], 'ratio': 2.005813953488372, 'limit': 0.3784}
+__________ test_guarded_timing_decision_controls[small1-large1-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438]], 'medians': [0.2, 0.438], 'relative_mad': [0.0, 0.0], 'ratio': 2.19, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small2-large2-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442]], 'medians': [0.2, 0.442], 'relative_mad': [0.0, 0.0], 'ratio': 2.21, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small3-large3-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]], 'medians': [0.2, 0.8], 'relative_mad': [0.0, 0.0], 'ratio': 4.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small4-large4-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02], [0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19]], 'medians': [0.02, 0.19], 'relative_mad': [0.0, 0.0], 'ratio': 9.5, 'limit': 0.2}
+__________ test_guarded_timing_decision_controls[small6-large6-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.7]], 'medians': [0.2, 0.4], 'relative_mad': [0.0, 0.0], 'ratio': 2.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small7-large7-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.15, 0.15, 0.15, 0.15, 0.2, 0.25, 0.25, 0.25, 0.25], [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]], 'medians': [0.2, 0.4], 'relative_mad': [0.24999999999999994, 0.0], 'ratio': 2.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small8-large8-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.3, 0.3, 0.3, 0.3, 0.4, 0.5, 0.5, 0.5, 0.5]], 'medians': [0.2, 0.4], 'relative_mad': [0.0, 0.24999999999999994], 'ratio': 2.0, 'limit': 0.44000000000000006}
+160 passed, 1 deselected in 45.67s
+=== RESULT platform-sensitive exit=0 (46s)
+=== STEP regression-full
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+..............F..........FF............................................. [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 15%]
+........................................................................ [ 16%]
+........................................................................ [ 16%]
+........................................................................ [ 17%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+........................................................................ [ 19%]
+........................................................................ [ 20%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+........................................................................ [ 21%]
+........................................................................ [ 22%]
+........................................................................ [ 22%]
+........................................................................ [ 23%]
+........................................................................ [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+........................................................................ [ 28%]
+........................................................................ [ 29%]
+........................................................................ [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 30%]
+........................................................................ [ 31%]
+........................................................................ [ 31%]
+........................................................................ [ 32%]
+........................................................................ [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+........................................................................ [ 68%]
+........................................................................ [ 69%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+........................................................................ [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 82%]
+...................................................................F.... [ 83%]
+........................................................................ [ 83%]
+........................FF.............................................. [ 84%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+........................................................................ [ 99%]
+......................................................                   [100%]
+=================================== FAILURES ===================================
+_________ test_the_repository_install_receipts_are_not_tracked_by_git __________
+tests/test_doctor_uninstall.py:1217: in test_the_repository_install_receipts_are_not_tracked_by_git
+    assert managed == sorted(REPOSITORY_LINK_TARGETS)
+E   AssertionError: assert ['.claude/ski...extract', ...] == ['.claude/ski...extract', ...]
+E     
+E     At index 16 diff: '.claude/skills/process-milestone/SKILL.md' != '.codex/skills/gnd-adopt'
+E     Left contains 8 more items, first extra item: '.codex/skills/gnd-review-panel'
+E     Use -v to get more diff
+_ test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.claude/skills] _
+tests/test_doctor_uninstall.py:1563: in test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries
+    assert others == set(unmanaged), (
+E   AssertionError: .claude/skills holds an unexpected non-link entry: ['process-milestone', 'start-milestone']; missing an expected one: []. Every entry in a discovery root is either a link GND owns or an artifact the installer must never touch, and both halves are pinned so neither can grow unobserved.
+E   assert {'plan-review...rt-milestone'} == {'plan-review...rocess-phase'}
+E     
+E     Extra items in the left set:
+E     'start-milestone'
+E     'process-milestone'
+E     Use -v to get more diff
+_ test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.codex/skills] _
+tests/test_doctor_uninstall.py:1563: in test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries
+    assert others == set(unmanaged), (
+E   AssertionError: .codex/skills holds an unexpected non-link entry: ['process-milestone', 'start-milestone']; missing an expected one: []. Every entry in a discovery root is either a link GND owns or an artifact the installer must never touch, and both halves are pinned so neither can grow unobserved.
+E   assert {'plan-review...rt-milestone'} == {'plan-review...rocess-phase'}
+E     
+E     Extra items in the left set:
+E     'start-milestone'
+E     'process-milestone'
+E     Use -v to get more diff
+___________________ test_complete_routing_and_dirty_controls ___________________
+tests/test_rf7_structure.py:44: in test_complete_routing_and_dirty_controls
+    assert_routing(sources)
+tests/test_rf7_structure.py:39: in assert_routing
+    assert path == 'src/gnd/export/souffle_runtime.py' and node.func.attr == 'JSONDecoder', path
+E   AssertionError: src/gnd/export/pyrel_runtime.py
+E   assert ('src/gnd/expo...el_runtime.py' == 'src/gnd/expo...le_runtime.py'
+E     
+E     - src/gnd/export/souffle_runtime.py
+E     ?                ^^^^^ -
+E     + src/gnd/export/pyrel_runtime.py
+E     ?                ^^^^)
+______ test_literal_getattr_is_visible_to_exact_query_policy[fact_types] _______
+tests/test_rf9_repairs.py:111: in test_literal_getattr_is_visible_to_exact_query_policy
+    assert_policy(found, policy)
+tests/test_rf6_query_policy.py:59: in assert_policy
+    assert found == approved, (found - approved, approved - found)
+E   AssertionError: (Counter({('src/gnd/export/applications.py', '_preserve_source', 'index.fact_types'): 1, ('src/gnd/export/applications...raint.get('roles')"): 1, ('src/gnd/examples/expense/native_query.py', 'calculate', 'index.fact_types'): 1}), Counter())
+E   assert Counter({('sr...t_types'): 1}) == Counter({('sr...t_types'): 1})
+E     
+E     Omitting 285 identical items, use -vv to show
+E     Left contains 8 more items:
+E     {('src/gnd/examples/expense/native_query.py', 'calculate', 'index.fact_types'): 1,
+E      ('src/gnd/export/applications.py', '_preserve_source', 'index.fact_types'): 1,
+E      ('src/gnd/export/applications.py', 'verify_policy_report', 'index.fact_types'): 1,
+E      ('src/gnd/export/pyrel_runtime.py', '_derive', 'self.model.fact_types'): 1,...
+E     
+E     ...Full output truncated (5 lines hidden), use '-vv' to show
+_________ test_literal_getattr_is_visible_to_exact_query_policy[roles] _________
+tests/test_rf9_repairs.py:111: in test_literal_getattr_is_visible_to_exact_query_policy
+    assert_policy(found, policy)
+tests/test_rf6_query_policy.py:59: in assert_policy
+    assert found == approved, (found - approved, approved - found)
+E   AssertionError: (Counter({('src/gnd/export/applications.py', '_preserve_source', 'index.fact_types'): 1, ('src/gnd/export/applications...raint.get('roles')"): 1, ('src/gnd/examples/expense/native_query.py', 'calculate', 'index.fact_types'): 1}), Counter())
+E   assert Counter({('sr...t_types'): 1}) == Counter({('sr...t_types'): 1})
+E     
+E     Omitting 285 identical items, use -vv to show
+E     Left contains 8 more items:
+E     {('src/gnd/examples/expense/native_query.py', 'calculate', 'index.fact_types'): 1,
+E      ('src/gnd/export/applications.py', '_preserve_source', 'index.fact_types'): 1,
+E      ('src/gnd/export/applications.py', 'verify_policy_report', 'index.fact_types'): 1,
+E      ('src/gnd/export/pyrel_runtime.py', '_derive', 'self.model.fact_types'): 1,...
+E     
+E     ...Full output truncated (5 lines hidden), use '-vv' to show
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git
+FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.claude/skills]
+FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.codex/skills]
+FAILED tests/test_rf7_structure.py::test_complete_routing_and_dirty_controls
+FAILED tests/test_rf9_repairs.py::test_literal_getattr_is_visible_to_exact_query_policy[fact_types]
+FAILED tests/test_rf9_repairs.py::test_literal_getattr_is_visible_to_exact_query_policy[roles]
+6 failed, 14376 passed, 479 deselected, 1 warning in 1801.85s (0:30:01)
+=== RESULT regression-full exit=1 (1804s)
+=== STEP installed
+EEEEEEEEEE
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_retained_candidate_identity ______________
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+_____ ERROR at setup of test_candidate_identity_negative_controls[changed] _____
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+_____ ERROR at setup of test_candidate_identity_negative_controls[missing] _____
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+______ ERROR at setup of test_candidate_identity_negative_controls[extra] ______
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+_________ ERROR at setup of test_installed_optional_refusals[release] __________
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+_________ ERROR at setup of test_installed_behavior_families[release] __________
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+______ ERROR at setup of test_target_only_contributor_lifecycle[release] _______
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+________ ERROR at setup of test_installed_optional_refusals[comparison] ________
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+________ ERROR at setup of test_installed_behavior_families[comparison] ________
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+_____ ERROR at setup of test_target_only_contributor_lifecycle[comparison] _____
+tests/test_release_acceptance.py:61: in candidate
+    verify_files(root)
+tests/test_release_acceptance.py:50: in verify_files
+    assert actual == expected and len(expected) == 3
+E   AssertionError: assert ({'comparison/...0.1.0.tar.gz'} == {'comparison/...0.1.0.tar.gz'}
+E     
+E     Extra items in the left set:
+E     'release/.gitignore'
+E     'comparison/.gitignore'
+E     Use -v to get more diff)
+=========================== short test summary info ============================
+ERROR tests/test_release_acceptance.py::test_retained_candidate_identity - As...
+ERROR tests/test_release_acceptance.py::test_candidate_identity_negative_controls[changed]
+ERROR tests/test_release_acceptance.py::test_candidate_identity_negative_controls[missing]
+ERROR tests/test_release_acceptance.py::test_candidate_identity_negative_controls[extra]
+ERROR tests/test_release_acceptance.py::test_installed_optional_refusals[release]
+ERROR tests/test_release_acceptance.py::test_installed_behavior_families[release]
+ERROR tests/test_release_acceptance.py::test_target_only_contributor_lifecycle[release]
+ERROR tests/test_release_acceptance.py::test_installed_optional_refusals[comparison]
+ERROR tests/test_release_acceptance.py::test_installed_behavior_families[comparison]
+ERROR tests/test_release_acceptance.py::test_target_only_contributor_lifecycle[comparison]
+10 errors in 0.08s
+=== RESULT installed exit=1 (0s)
+=== STEP docs-tutorials
+quickstart.md: selected executable blocks passed
+README.md: selected executable blocks passed
+release-example.md: selected executable blocks passed
+01-model.md: selected executable blocks passed
+02-facts.md: selected executable blocks passed
+03-project.md: selected executable blocks passed
+04-application.md: selected executable blocks passed
+05-repair.md: selected executable blocks passed
+06-evolution.md: selected executable blocks passed
+07-native.md: selected executable blocks passed
+Native lanes not executed: pyrel
+01-model.md: selected executable blocks passed
+02-application.md: selected executable blocks passed
+03-evolution.md: selected executable blocks passed
+04-native.md: selected executable blocks passed
+Native lanes not executed: pyrel
+python-api.md: selected executable blocks passed
+walkthrough.md: selected executable blocks passed
+install.md: selected executable blocks passed
+plans.md: selected executable blocks passed
+model-from-text.md: selected executable blocks passed
+dev-session.md: selected executable blocks passed
+recorded-sessions.md: selected executable blocks passed
+scenario.md: selected executable blocks passed
+pyrel.md: selected executable blocks passed
+Native lanes not executed: pyrel
+scenario.md: selected executable blocks passed
+souffle.md: selected executable blocks passed
+Native lanes not executed: souffle
+scenario.md: selected executable blocks passed
+lean.md: selected executable blocks passed
+Native lanes not executed: lean
+scenario.md: selected executable blocks passed
+decision.md: selected executable blocks passed
+157 tutorial blocks passed
+=== RESULT docs-tutorials exit=0 (28s)
+=== STEP docs-build
+Build started
+No issues found
+Build finished in 0.49s
+=== RESULT docs-build exit=0 (2s)
+=== STEP docs-links
+7426 local links/assets/anchors checked
+=== RESULT docs-links exit=0 (0s)

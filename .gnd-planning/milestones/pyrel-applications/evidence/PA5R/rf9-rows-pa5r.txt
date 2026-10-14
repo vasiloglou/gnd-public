@@ -1,0 +1,8 @@
+EXTRA ('src/gnd/export/applications.py', '_preserve_source', 'index.fact_types') 1
+EXTRA ('src/gnd/export/applications.py', 'verify_policy_report', 'index.fact_types') 1
+EXTRA ('src/gnd/export/pyrel_runtime.py', '_derive', 'self.model.fact_types') 1
+EXTRA ('src/gnd/export/pyrel_runtime.py', '_profile_admit', "constraint.get('roles')") 1
+EXTRA ('src/gnd/export/pyrel_runtime.py', '_profile_admit', 'index.fact_types') 1
+EXTRA ('src/gnd/export/pyrel_runtime.py', '_profile_derivations', 'index.fact_types') 1
+EXTRA ('src/gnd/export/pyrel_runtime.py', 'acceptance_document', 'index.fact_types') 1
+EXTRA ('src/gnd/export/pyrel_runtime.py', 'has', 'self._oracle.model.fact_types') 1

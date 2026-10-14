@@ -175,3 +175,21 @@ its new spec gate (A2 sequence).
   existing agent pages (H6 declined).
 - "Reviewer-ready evidence was final" -- refuted by the repair reading;
   closing transcripts regenerated.
+
+## Addendum: local CI of the base commit (owner request, 2026-10-13)
+
+Both workflows (.github/workflows/development.yml, docs.yml) were mirrored on a
+clean worktree at 50eba83, macOS / Python 3.13 entry (evidence/PA5R/local-ci-50eba83.log):
+sync, candidate build, gnd install, gnd doctor, collection, platform-sensitive tests,
+all tutorials (157 blocks), strict site build and links pass. Full suite: exit 1,
+"6 failed, 14376 passed, 479 deselected". The installed step first errored only on
+uv's out-dir .gitignore files, which actions/upload-artifact drops by default; with
+them removed it passes "10 passed" (local-ci-50eba83-installed-rerun.log).
+
+The six failures exist before PA5R and would fail real CI on this branch:
+
+| Failure | Cause | Owner / target |
+|---|---|---|
+| test_doctor_uninstall (3) | 00efef2 added process-milestone/start-milestone skill directories (branch only) without updating the pinned discovery-root entries | Milestone close |
+| test_rf7_structure routing | pyrel_runtime.py:1524, :1612 json.loads (PA phases) | Milestone close |
+| test_rf9_repairs query policy (2) | eight unauthenticated PA-phase attribute rows; PA5R swaps one (removes the Expense query row, adds NativeApp.has), count unchanged (rf9-rows-*.txt) | Milestone close |

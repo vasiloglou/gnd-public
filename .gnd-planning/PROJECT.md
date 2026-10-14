@@ -72,3 +72,15 @@ measurement tool, authority handoff) is recorded in
 surface RF2–RF8 move; 167 of 167 seeded mutations killed) is recorded in
 [006](milestones/code-refactoring/006-phase-RF1.md). **Next:** RF2, consolidating
 the identical helpers, run with `process-phase RF2 code-refactoring`.
+
+## pyrel-agent-loop — opened, 2026-10-14
+
+The owner rejected the PyRel tutorial pages shipped by `pyrel-applications`
+as unpedagogical and asked for readable commands, rules shown in English, ORM
+and PyRel, and a demonstration of GND with a coding assistant: what the LLM
+outputs, how GND checks it, what it feeds back, how the skills are used.
+[Plan r1](milestones/pyrel-agent-loop/notes/pyrel-agent-loop-plan.md) was
+approved by the owner by default
+([gate](milestones/pyrel-agent-loop/001-plan-gate.md)); phases PL0–PL6 run
+on `codex/pyrel-agent-loop`. Real Claude Code and Codex sessions are recorded
+once as evidence (PL4, owner-gated); pages replay deterministic stand-ins.

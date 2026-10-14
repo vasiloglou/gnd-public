@@ -26,7 +26,7 @@ from support.rf1_pins import (
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = PINS_ROOT / "goldens.sha256"
 # The manifest's own digest: changing any golden edits this line too (SM1).
-MANIFEST_SHA256 = "68d9163ee30f32fc03f59294b94c709e52ac569168ac6ecc773eb5dd22a36444"
+MANIFEST_SHA256 = "519da6a14313b624832710861677280ef68e95b728b9ea3709121cba1f38227e"  # PL12 adds export pyrel --rules (pyrel-agent-loop)
 
 _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
 tool = importlib.util.module_from_spec(_SPEC)

@@ -1,0 +1,287 @@
+{
+ "version": 1,
+ "model_id": "urn:probe:invalid",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "team",
+   "name": "Team",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "team_code"
+   }
+  },
+  {
+   "id": "team_code",
+   "name": "TeamCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "level",
+   "name": "Level",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "tag",
+   "name": "Tag",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "member",
+   "reading": "{Person} is in {Team} at {Level}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "team",
+     "role_name": "team"
+    },
+    {
+     "object_type": "level",
+     "role_name": "level"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "type": "uniqueness",
+     "roles": [
+      "person"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lead",
+   "reading": "{Person} leads {Team}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "team",
+     "role_name": "team"
+    }
+   ]
+  },
+  {
+   "id": "person_has_tag",
+   "reading": "{Person} has {Tag}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "tag",
+     "role_name": "tag"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "type": "mandatory",
+     "role": "person"
+    }
+   ]
+  },
+  {
+   "id": "team_badge",
+   "reading": "{Team} has badge {Tag}",
+   "roles": [
+    {
+     "object_type": "team",
+     "role_name": "team"
+    },
+    {
+     "object_type": "tag",
+     "role_name": "badge"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "lead_is_member"
+   },
+   "id": "lead_is_member",
+   "type": "subset",
+   "subset_role_seq": [
+    {
+     "fact_type": "lead",
+     "role": "person"
+    },
+    {
+     "fact_type": "lead",
+     "role": "team"
+    }
+   ],
+   "superset_role_seq": [
+    {
+     "fact_type": "member",
+     "role": "person"
+    },
+    {
+     "fact_type": "member",
+     "role": "team"
+    }
+   ]
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "tag_values"
+   },
+   "id": "tag_values",
+   "type": "value",
+   "object_type": "tag",
+   "allowed": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "pid_values"
+   },
+   "id": "pid_values",
+   "type": "value",
+   "object_type": "person_id",
+   "allowed": [
+    "p1",
+    "p2",
+    "p3"
+   ]
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "level3_leads_t1"
+   },
+   "id": "level3_leads_t1",
+   "type": "guarded",
+   "antecedent": [
+    {
+     "fact_type": "member",
+     "bind": {
+      "person": "$p",
+      "team": "$t",
+      "level": 3
+     }
+    }
+   ],
+   "consequent": {
+    "atom": {
+     "fact_type": "lead",
+     "bind": {
+      "person": "$p",
+      "team": "t1"
+     }
+    }
+   }
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "level_cap"
+   },
+   "id": "level_cap",
+   "type": "guarded",
+   "antecedent": [
+    {
+     "fact_type": "member",
+     "bind": {
+      "person": "$p",
+      "level": "$l"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "operator": "<=",
+     "left": "$l",
+     "right": 5
+    }
+   }
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "lead_has_badge"
+   },
+   "id": "lead_has_badge",
+   "type": "guarded",
+   "antecedent": [
+    {
+     "fact_type": "lead",
+     "bind": {
+      "person": "$p",
+      "team": "$t"
+     }
+    }
+   ],
+   "consequent": {
+    "atom": {
+     "fact_type": "team_badge",
+     "bind": {
+      "team": "$t",
+      "badge": "a"
+     }
+    }
+   }
+  }
+ ]
+}

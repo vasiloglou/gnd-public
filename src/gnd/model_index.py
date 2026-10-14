@@ -100,6 +100,12 @@ class ModelIndex:
         } for ft in model.fact_types or [] if ft.get('id') is not None}
 
     @staticmethod
+    def constraint_roles(constraint: Any) -> list[str]:
+        """The role names a fact-type constraint spans (uniqueness, frequency), in declared order."""
+        roles = constraint.get('roles') if isinstance(constraint, dict) else None
+        return [str(role) for role in roles] if isinstance(roles, list) else []
+
+    @staticmethod
     def scope_facts(model: Any, targets: Any) -> list[str]:
         return [str(ft.get('id')) for ft in model.fact_types
                 if any(role.get('object_type') in targets for role in ft.get('roles') or [])]

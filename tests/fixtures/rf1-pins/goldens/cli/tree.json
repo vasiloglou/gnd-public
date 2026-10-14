@@ -2080,6 +2080,24 @@
        ],
        "required": false,
        "type": null
+      },
+      {
+       "choices": [
+        "duckdb",
+        "lqp"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "rules",
+       "help": "write the model's rules as a readable PyRel program of requirements instead of the checker: 'lqp' enforces them with require on a RelationalAI engine; 'duckdb' checks the same requirements locally through their violation queries",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--rules"
+       ],
+       "required": false,
+       "type": null
       }
      ],
      "description": null,

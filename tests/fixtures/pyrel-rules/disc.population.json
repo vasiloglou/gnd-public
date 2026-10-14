@@ -1,0 +1,48 @@
+{
+ "population": {
+  "model": "disc.orm.json",
+  "model_id": "urn:probe:disc",
+  "source": "synthetic",
+  "covers": [
+   "member",
+   "lead",
+   "person_has_tag",
+   "team_badge"
+  ]
+ },
+ "facts": {
+  "member": [
+   {
+    "person": "p1",
+    "team": "t1",
+    "level": 1
+   }
+  ],
+  "lead": [
+   {
+    "person": "p1",
+    "team": "t1"
+   }
+  ],
+  "person_has_tag": [
+   {
+    "person": "p1",
+    "tag": "a"
+   },
+   {
+    "person": "p9",
+    "tag": "a"
+   }
+  ],
+  "team_badge": [
+   {
+    "team": "t1",
+    "badge": "a"
+   },
+   {
+    "team": "t2",
+    "badge": "z"
+   }
+  ]
+ }
+}

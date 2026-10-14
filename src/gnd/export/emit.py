@@ -35,3 +35,10 @@ def render_pyrel(
               '\nif __name__ == "__main__":\n    sys.exit(program_main())\n')
     compile(source, "<pyrel-export>", "exec")
     return source
+
+
+def render_pyrel_rules(model_path, target):
+    """The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``)."""
+    from .pyrel_rules import render
+
+    return render(model_path, target)

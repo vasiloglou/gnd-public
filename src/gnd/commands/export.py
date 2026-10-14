@@ -37,6 +37,34 @@ def _cmd_export_pyrel(
 _cmd_export_pyrel.__module__ = "gnd.cli"
 
 
+def _cmd_export_pyrel_rules(model_path: str, out_path: str, *, target: str) -> int:
+    """Write the model's rules as a readable PyRel program of requirements (duckdb or lqp)."""
+    from gnd.export.emit import render_pyrel_rules
+    from gnd.export.pyrel_runtime import ExportInputError, write_new
+
+    try:
+        source = render_pyrel_rules(Path(model_path), target)
+    except FileNotFoundError as error:
+        print(f"missing input: {error}", file=sys.stderr)
+        return EXIT_NO_INPUT
+    except ExportInputError as error:
+        print(f"cannot write the rules program: {error}", file=sys.stderr)
+        return 3
+    except Exception as error:  # noqa: BLE001 -- same refusal contract as the checker export
+        print(f"export failed: {error}", file=sys.stderr)
+        return EXIT_INTERNAL
+    try:
+        write_new(Path(out_path), source)
+    except FileExistsError as error:
+        print(f"output exists: {error}", file=sys.stderr)
+        return EXIT_COLLISION
+    except OSError as error:
+        print(f"output failure: {error}", file=sys.stderr)
+        return EXIT_INTERNAL
+    print(f"Exported the model's rules as PyRel requirements ({target} version) to {out_path}")
+    return 0
+
+
 
 
 def _register_export(subparsers):
@@ -53,6 +81,12 @@ def _register_export(subparsers):
     connection_group = pyrel_parser.add_mutually_exclusive_group()
     connection_group.add_argument("--duckdb-path", default=":memory:")
     connection_group.add_argument("--connection", help="reserved named Snowflake connection")
+    pyrel_parser.add_argument(
+        "--rules", choices=("duckdb", "lqp"),
+        help="write the model's rules as a readable PyRel program of requirements instead of the checker: "
+             "'lqp' enforces them with require on a RelationalAI engine; 'duckdb' checks the same "
+             "requirements locally through their violation queries",
+    )
 
     return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser}
 
@@ -77,6 +111,11 @@ def handle(args, parsers) -> int:
         if args.export_target != "pyrel":
             from gnd.export.souffle_cli import dispatch
             return dispatch(args)
+        if args.rules is not None:
+            if args.connection is not None or args.duckdb_path != ":memory:":
+                parsers["pyrel_parser"].error("--rules writes a standalone program; --connection and "
+                                              "--duckdb-path apply only to the checker export")
+            return _cmd_export_pyrel_rules(args.model, args.out, target=args.rules)
         return _cmd_export_pyrel(
             args.model, args.out, duckdb_path=args.duckdb_path, connection=args.connection
         )

@@ -2,11 +2,11 @@
  "help": {
   "exit": 0,
   "stderr": "",
-  "stdout": "usage: gnd export pyrel [-h] --out OUT [--duckdb-path DUCKDB_PATH |\n                        --connection CONNECTION]\n                        model\n\npositional arguments:\n  model                 path to the model file\n\noptions:\n  -h, --help            show this help message and exit\n  --out OUT             new Python program path\n  --duckdb-path DUCKDB_PATH\n  --connection CONNECTION\n                        reserved named Snowflake connection\n"
+  "stdout": "usage: gnd export pyrel [-h] --out OUT [--duckdb-path DUCKDB_PATH |\n                        --connection CONNECTION] [--rules {duckdb,lqp}]\n                        model\n\npositional arguments:\n  model                 path to the model file\n\noptions:\n  -h, --help            show this help message and exit\n  --out OUT             new Python program path\n  --duckdb-path DUCKDB_PATH\n  --connection CONNECTION\n                        reserved named Snowflake connection\n  --rules {duckdb,lqp}  write the model's rules as a readable PyRel program of\n                        requirements instead of the checker: 'lqp' enforces\n                        them with require on a RelationalAI engine; 'duckdb'\n                        checks the same requirements locally through their\n                        violation queries\n"
  },
  "unknown_flag": {
   "exit": 64,
-  "stderr": "usage: gnd export pyrel [-h] --out OUT [--duckdb-path DUCKDB_PATH |\n                        --connection CONNECTION]\n                        model\ngnd export pyrel: error: the following arguments are required: model, --out\n",
+  "stderr": "usage: gnd export pyrel [-h] --out OUT [--duckdb-path DUCKDB_PATH |\n                        --connection CONNECTION] [--rules {duckdb,lqp}]\n                        model\ngnd export pyrel: error: the following arguments are required: model, --out\n",
   "stdout": ""
  }
 }

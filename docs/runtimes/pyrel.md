@@ -51,6 +51,82 @@ This model's subset rule catches Alice because she is unauthorized. It does not
 encode the distinct-requester policy: an authorized requester could still approve
 their own release. The next native query checks that separate business question.
 
+## Read the rules as PyRel requirements
+
+The audit above is a translator you run, not a program you read. To see the
+model's rules written as PyRel logic, export them as **requirements**: each rule
+becomes `m.where(<domain>).require(<check>)`, where the domain is the facts the
+rule talks about and the check is what must hold for each of them. GND writes
+two versions from the same rules:
+
+| Version | Each rule is | Enforced by |
+|---|---|---|
+| `--rules lqp` | an executable `require` | a RelationalAI engine (the logic reasoner), which reports every violation |
+| `--rules duckdb` | the same `require`, shown as a comment, plus its violation query `m.where(<domain>, <not check>)` | PyRel on local DuckDB, which does not enforce `require` itself |
+
+The logic reasoner's direct LQP compiler lowers a requirement to that same
+violation condition, so both programs state the same rules. The DuckDB version
+also reports vacuous rules and uses GND's exit codes; the LQP version only
+relays the engine's reports.
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd export pyrel release-governance/policy/model.orm.json --rules duckdb --out release-rules.py
+gnd export pyrel release-governance/policy/model.orm.json --rules lqp --out release-rules-lqp.py
+```
+
+```text
+Exported the model's rules as PyRel requirements (duckdb version) to release-rules.py
+Exported the model's rules as PyRel requirements (lqp version) to release-rules-lqp.py
+```
+
+Open `release-rules.py`. The authorization rule reads:
+
+```python
+# authorized_approval (must): Synthetic release governance policy supplied by the tutorial.
+#   rule:      m.where(approval(String.ref(), k0)).require(authorized(k0))
+found['authorized_approval'] = rows(m.where(approval(String.ref(), k0), not_(authorized(k0))).select(k0))
+```
+
+Run the DuckDB version on the invalid snapshot. It prints the same witnesses the
+audit reported:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+"${GND_TUTORIAL_PYREL_PYTHON:?set the isolated interpreter}" release-rules.py release-governance/policy/invalid.pop.json
+```
+
+```text
+approval_required  violated  ["REL-103"]
+one_approval  violated  [{"release": "REL-104", "reviewer": "Maya"}, {"release": "REL-104", "reviewer": "Noah"}]
+authorized_approval  violated  ["Alice"]
+authorized_approval  violated  ["Zoe"]
+```
+
+The LQP version needs an engine to enforce anything. Without one, `--compile`
+shows how PyRel compiled each requirement. That checks the program is well
+formed, not that the rules hold:
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+"${GND_TUTORIAL_PYREL_PYTHON:?set the isolated interpreter}" release-rules-lqp.py --compile
+```
+
+```text
+3 requirements compiled for 3 rules (expected 3)
+Require{…} domain Logical release_any(string::String) check Logical approval(string::String, string_2::String)
+Require{…} domain Logical approval(string::String, string_2::String) approval(string::String, string_3::String) check Logical =(string_2::String, string_3::String)
+Require{…} domain Logical approval(string::String, string_2::String) check Logical authorized(string_2::String)
+```
+
+With an engine connection named in your `raiconfig.yaml`, run
+`release-rules-lqp.py SNAPSHOT --connection NAME`. That path is not exercised
+here: it needs a RelationalAI engine, which this tutorial does not use. Both
+versions cover mandatory, uniqueness, subset, value and guarded rules today.
+Other families, subtypes, derived facts and disconnected rule bodies are refused
+by name when you export, and the DuckDB version refuses an input that repeats a
+fact, because PyRel relations are sets.
+
 ## Build your own report with public PyRel APIs
 
 `pyrel_queries.py` declares four relationships, defines supplied rows, joins the

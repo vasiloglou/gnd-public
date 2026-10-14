@@ -126,7 +126,8 @@ manifest = json.loads((recordings / "manifest.json").read_text())
 count = 0
 for name, entry in manifest["recordings"].items():
     for relative, digest in entry["files"].items():
-        assert hashlib.sha256((recordings / relative).read_bytes()).hexdigest() == digest, relative
+        if hashlib.sha256((recordings / relative).read_bytes()).hexdigest() != digest:
+            raise ValueError("recorded artifact hash mismatch")
         count += 1
 print(len(manifest["recordings"]), "recorded sessions,", count, "files, every digest matches")
 ```
@@ -151,7 +152,8 @@ for name in manifest["recordings"]:
         replayed = api.transition("walk/model.orm.yaml", "walk/input/state.pop.yaml",
                                   "walk/cand/steps.json")["exit_code"]
         print(f"{name:24} {attempt.name}  recorded band {recorded}  replayed band {replayed}")
-        assert replayed == recorded
+        if replayed != recorded:
+            raise ValueError("recorded verifier exit mismatch")
 ```
 
 ```text
@@ -261,12 +263,14 @@ for domain, model in (("bookrec", "model.orm.yaml"), ("expense", "model.orm.json
     manifest = json.loads((recordings / "manifest.json").read_text())
     for name, entry in manifest["recordings"].items():
         for relative, digest in entry["files"].items():
-            assert hashlib.sha256((recordings / relative).read_bytes()).hexdigest() == digest, relative
+            if hashlib.sha256((recordings / relative).read_bytes()).hexdigest() != digest:
+                raise ValueError("recorded artifact hash mismatch")
         for attempt in sorted((recordings / name).glob("attempt-*")):
             candidate = next(p for p in attempt.iterdir() if p.name.endswith(".population.json"))
             recorded = dict(json.loads((attempt / "feedback.json").read_text())["payload_exit"])["required"]
             replayed_exit = api.check(home / model, candidate)["exit_code"]
-            assert replayed_exit == recorded, (name, attempt.name)
+            if replayed_exit != recorded:
+                raise ValueError("recorded verifier exit mismatch")
             replayed += 1
     print(f"{domain}: {len(manifest['recordings'])} sessions, every digest matches")
 print(replayed, "recorded candidates replayed to their recorded verifier exit")

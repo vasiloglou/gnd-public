@@ -30,22 +30,12 @@ PL1–PL4 are recorded in [002](002-phase-PL1.md), [003](003-phase-PL2.md),
 [004](004-phase-PL3.md) and [006](006-phase-PL4.md). PL4 recorded Codex only;
 Claude Code evidence remains owner-blocked (PL4-Q1).
 
-PL5 pages are implemented and locally checked, including replay tamper controls
-and the actual repaired Expense candidate. Independent PL5 review remains
-pending: the prior Claude reviewer stopped at the session limit, and automatic
-approval review rejected sending unpublished changes to the gpt-6-sol reviewer.
-The explicit review authorization question is pending. No successful independent
-review or milestone close is claimed.
+PL5's independent review and bounded repair reading are retained in
+[009](009-phase-PL5-review-repairs.md). Both initial blockers were repaired;
+the bounded reader reported zero blockers and two hardening items, subsequently
+fixed with local controls. The old preparation records remain historical.
 
-PL6's [spec](notes/phase-PL6-spec.md) retains the final installed check and the
-failure-classification boundary. Seven refactoring failures reproduce on clean
-main a9a2f08 and on the candidate. Reference closure passes in a clean candidate;
-the eighth failure in the prior broad run came from scanning an old nested
-Claude worktree. That broad run's wrapper lost pytest's exit code.
-
-Preparation checkpoint: [007](007-phase-PL5-preparation.md).
-
-Fresh-wheel acceptance exited 0: [008](008-phase-PL6-preparation.md).
-Next: retain a draft PR, then complete the independent phase and close reviews
-once authorized. Literal
-Claude-session completion remains an explicit owner decision.
+The review fixes are available in [draft PR22](https://github.com/vasiloglou/gnd-public/pull/22).
+Fresh-wheel acceptance will be rerun on these repaired bytes before final sign-off.
+The missing Claude recording, four-reader milestone-close review and seven
+inherited refactoring failures remain explicit open work. No merge is authorized.

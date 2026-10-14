@@ -35,6 +35,7 @@ def test_candidate_resources_match_source(tmp_path):
     'gnd/examples/expense/tutorial-assets/currency.svg','gnd/examples/expense/native_query.py',
     'gnd/examples/expense/project/cli/expense_cli.py','gnd/examples/bookrec/app.py',
     'gnd/examples/bookrec/rules_in_pyrel.py','gnd/examples/expense/stand_in_agent.py',
+    'gnd/examples/expense/prepare_meal_cap.py',
     'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'])
 def test_missing_required_resource_refuses(tmp_path,name):
     with pytest.raises(ValueError,match='missing'):
@@ -60,7 +61,7 @@ def test_origin_rejects_checkout_and_sibling(tmp_path):
             module.verify_origin(origin,venv,checkout)
 
 
-@pytest.mark.parametrize('group,total,native',[('bookrec',71,10),('expense',57,11)])
+@pytest.mark.parametrize('group,total,native',[('bookrec',71,10),('expense',59,11)])
 def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,native):
     module=tool();pages=7 if group=='bookrec' else 4
     rows=[{'page':str(i%pages),'lane':'pyrel' if i<native else 'offline','status':'passed'} for i in range(total)]

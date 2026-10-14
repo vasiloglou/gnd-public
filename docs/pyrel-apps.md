@@ -164,7 +164,7 @@ New to GND? Start with [BookRec chapter 1](bookrec/01-model.md), where the rules
 are written, and follow it through. Already finished the earlier chapters? Go
 straight to the PyRel chapters:
 
-- [BookRec on PyRel](bookrec/07-native.md): an agent is asked to recommend an
+- [BookRec on PyRel](bookrec/07-native.md): a scripted stand-in recommends an
   adult-only book to a minor, and the check refuses it.
 - [Expense approvals on PyRel](expense/04-native.md): a team lead approves 800
   EUR against a 100 EUR limit, and the check refuses it.

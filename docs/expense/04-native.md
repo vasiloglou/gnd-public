@@ -6,8 +6,8 @@ chapter you read that rule three ways: in English, as a model constraint and as
 a PyRel query. A PyRel query produces the report and stages approvals, and GND
 checks every result before anything is saved.
 
-An agent asked to record the team lead's approval is refused with the facts
-that broke the rule. You need the two environments from
+A scripted stand-in obeys that request, is refused with the facts that broke
+the rule, then repairs. The recorded Codex sessions instead passed first time. You need the two environments from
 [PyRel + GND](../pyrel-apps.md#set-up).
 
 ## 1. What you'll build
@@ -276,14 +276,25 @@ import hashlib
 from pathlib import Path
 
 task = Path("expense-native-demo/recordings/TASK-conflict.md")
-assert hashlib.sha256(task.read_bytes()).hexdigest() == "b9ecff986774a2648cb687aeacf196d2822ee6c5b4261f0628f60026f04be730"
-print("\n".join(task.read_text().splitlines()[:4]))
+if hashlib.sha256(task.read_bytes()).hexdigest() != "b9ecff986774a2648cb687aeacf196d2822ee6c5b4261f0628f60026f04be730":
+    raise ValueError("recorded artifact hash mismatch")
+print(task.read_text(), end="")
 ```
 
 ```text
 # Task
 
 Dana, the team lead, approved expense 102 this morning. Record it.
+
+Write `approvals.population.json` in the current directory (the candidate
+directory): a copy of `../input/seed.population.json` with expense `102` added
+to `expense_is_approved` and to `expense_approved_by_chain` with the chain
+`team-lead`. Keep every other fact and the `population` header exactly as they
+are. The rules, including who may approve how much, are in `../model.orm.json`.
+
+If you can run commands, check your file with
+`gnd check ../model.orm.json approvals.population.json` and fix it until the
+check exits 0. Edit nothing outside the candidate directory.
 ```
 
 <!-- gnd-run expect=0 output=stdout -->
@@ -296,7 +307,8 @@ manifest = json.loads((root / "manifest.json").read_text())
 session = "codex-conflict-1"
 entry = manifest["recordings"][session]
 stdout = root / session / "attempt-0001/agent.stdout"
-assert hashlib.sha256(stdout.read_bytes()).hexdigest() == entry["files"][f"{session}/attempt-0001/agent.stdout"]
+if hashlib.sha256(stdout.read_bytes()).hexdigest() != entry["files"][f"{session}/attempt-0001/agent.stdout"]:
+    raise ValueError("recorded artifact hash mismatch")
 print(f"Recorded {manifest['recorded_on']} with {entry['tool']}: {entry['result']} after {entry['attempts']} attempt(s)")
 for line in stdout.read_text().splitlines():
     event = json.loads(line)
@@ -339,7 +351,8 @@ entry = json.loads((root / "manifest.json").read_text())["recordings"]["codex-co
 attempt = root / "codex-conflict-1/attempt-0001"
 for name in ("approvals.population.json", "feedback.json"):
     path = attempt / name
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == entry["files"][path.relative_to(root).as_posix()]
+    if hashlib.sha256(path.read_bytes()).hexdigest() != entry["files"][path.relative_to(root).as_posix()]:
+        raise ValueError("recorded artifact hash mismatch")
 candidate = json.loads((attempt / "approvals.population.json").read_text())
 feedback = json.loads((attempt / "feedback.json").read_text())
 print("Candidate approvals:", ", ".join(f"{r['expense']}/{r['chain']}" for r in candidate["facts"]["expense_approved_by_chain"]))
@@ -558,7 +571,7 @@ through a reviewed proposal, exactly as chapter 3 added currencies. With an
 assistant you would ask for `gnd-model-evolve`:
 
 ```text
-Use gnd-model-evolve on expense-native/model.orm.json. Lower the meals cap in
+Use gnd-model-evolve on expense-native-demo/model.orm.json. Lower the meals cap in
 policy_meals from 75 to 50 EUR. Preview the change, show me the blast radius,
 and wait for my go-ahead before you apply it.
 ```
@@ -570,7 +583,7 @@ proposal for the cap you choose:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-python expense-native-demo/prepare_meal_cap.py --model expense-native/model.orm.json --cap 50 --output expense-native/meal-cap.proposal.json
+python expense-native-demo/prepare_meal_cap.py --model expense-native-demo/model.orm.json --project expense-native --cap 50 --output expense-native/meal-cap.proposal.json
 ```
 
 ```text
@@ -579,22 +592,49 @@ Proposal meal-cap-50: policy_meals 75 -> 50 EUR
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd evolve preview expense-native/model.orm.json expense-native/meal-cap.proposal.json --workspace expense-native --records expense-native/records --out expense-native/meal-cap.preview.json | grep -E "breaking|affected"
+gnd evolve preview expense-native-demo/model.orm.json expense-native/meal-cap.proposal.json --workspace . --records expense-native/records --out expense-native/meal-cap.preview.json
 ```
 
 ```text
+...
   breaking: false
+...
   affected: model.constraints[guarded:be7d5988820f8e1e7d5557493e65cc68b393cb24d3cfa6269b4e440ee8dee8c3:0]
+...
+```
+
+<!-- gnd-run expect=13 output=stdout -->
+```sh
+gnd evolve apply expense-native-demo/model.orm.json expense-native/meal-cap.proposal.json --preview expense-native/meal-cap.preview.json --workspace . --records expense-native/records
+```
+
+```text
+...
+  conformance-exit: 13
+...
+```
+
+The proposal linked `expense-native`, so apply checked that generated project
+and reported drift: the model changed while its generated files did not. The
+model change is already applied. Regenerate those files and check alignment;
+the extension and its query are left in place:
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd codegen expense-native-demo/model.orm.json --out expense-native
+```
+
+```text
+...
 ```
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd evolve apply expense-native/model.orm.json expense-native/meal-cap.proposal.json --preview expense-native/meal-cap.preview.json --workspace expense-native --records expense-native/records | grep -E "^RECORDED|conformance" | sed -E "s/^RECORDED [0-9a-f]+/RECORDED (record digest)/"
+gnd conformance expense-native-demo/model.orm.json expense-native > meal-cap.conformance.txt && echo "conformance: aligned"
 ```
 
 ```text
-RECORDED (record digest)
-  conformance-exit: 0
+conformance: aligned
 ```
 
 The same query and the same facts now fail on the 60 EUR meal:
@@ -602,7 +642,7 @@ The same query and the same facts now fail on the 60 EUR meal:
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
 python expense-native/app.py report \
-  --model expense-native/model.orm.json --population expense-native/seed.population.json \
+  --model expense-native-demo/model.orm.json --population expense-native/seed.population.json \
   --backend pyrel
 ```
 

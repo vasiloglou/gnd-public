@@ -6,7 +6,7 @@ model bytes it was written against, carries the complete candidate model, and
 records the rule before and after, so ``gnd evolve preview`` can replay the
 change independently before anything is applied.
 
-Usage: python prepare_meal_cap.py --model model.orm.json --cap 50 --output meal-cap.proposal.json
+Usage: python prepare_meal_cap.py --model model.orm.json --project expense-native --cap 50 --output meal-cap.proposal.json
 """
 from __future__ import annotations
 
@@ -16,18 +16,30 @@ import hashlib
 import json
 from pathlib import Path
 
+from gnd.artifacts import snapshot_tracked_roster
 from gnd.evolve.models import EvolutionProposal, canonical_sha256
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
+    parser.add_argument("--project", type=Path, required=True)
     parser.add_argument("--cap", type=int, required=True, help="the new meals cap in EUR")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     model_bytes = args.model.read_bytes()
     before_model = json.loads(model_bytes)
     rule_before = next(rule for rule in before_model["constraints"] if rule["id"] == "policy_meals")
+    old_cap = rule_before["consequent"]["comparison"]["right"]
+    if not 1 <= args.cap < old_cap:
+        parser.error(f"cap must be between 1 and {old_cap - 1} EUR to lower the current cap")
+    manifest = json.loads((args.project / ".gnd-codegen.json").read_text(encoding="utf-8"))
+    paths = sorted({row["relpath"] for row in manifest["files"]} | {
+        ".gnd-codegen.json", "architecture.contract.yaml", "app.py",
+        "cli/__init__.py", "cli/expense_cli.py", "cli/reporting.py", "cli/native_query.py",
+        "model.orm.json", "seed.population.json",
+    })
+    _, project_digest = snapshot_tracked_roster(args.project, paths, label="expense meal-cap tutorial")
     rule_after = copy.deepcopy(rule_before)
     rule_after["consequent"]["comparison"]["right"] = args.cap
     rule_after["source"] = "user-supplied"
@@ -55,7 +67,12 @@ def main() -> int:
         "rationale": f"Finance lowered the meals cap from {rule_before['consequent']['comparison']['right']} to {args.cap} EUR.",
         "audit": {"actor_id": "tutorial-reader", "origin": "expense-tutorial",
                   "requested_at": "2026-10-14T00:00:00Z"},
-        "linked_projects": [],
+        "linked_projects": [{
+            "project_id": "expense-application",
+            "locator": {"base": "allowed-project-root", "path": args.project.as_posix()},
+            "tracked_roster": {"schema_version": 1, "paths": paths},
+            "expected_tracked_tree_sha256": project_digest,
+        }],
         "artifacts": [],
     })
     args.output.write_text(json.dumps(proposal.model_dump(mode="json"), indent=2) + "\n", encoding="utf-8")

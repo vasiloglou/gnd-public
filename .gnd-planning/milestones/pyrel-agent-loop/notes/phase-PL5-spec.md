@@ -123,3 +123,32 @@ tests/test_documentation_tutorials.py, tests/test_development_scaffold.py;
 both chapter groups in both lanes; agent-recorded, agent-session, agent-model;
 strict build and local link checker. PL6 acceptance must bind the final page bytes.
 The prior fresh-install receipt describes the pre-repair pages only.
+
+## Independent-review repair gate, 2026-10-14
+
+Owner approved the gpt-6-sol review explicitly in chat. Initial review is retained
+in phase-PL5-codex-review.md. Reproduced F1 (hidden task lines), F2 (standalone
+conformance observes actual currency drift 13 despite the empty-project aggregate
+0), F4 (eight optimized-Python tamper controls fail), F6 (ordinary reader-shell
+pipelines hide exit 42), F8 (reordered source excerpt accepted). F5's helper
+controls are authored red before its new linked-project interface.
+
+Delegated repair approval (auto=true), under 001, scope limited to these pages,
+their helper and tests. F1/F2 blocking; F3–F6/F8 hardening of phase-owned output
+and verification blocks. F7 is completeness: defer broader agents-page gate
+coverage to tutorial maintenance, preserving 007's explicit limit. No literal
+Claude recording criterion is waived.
+
+Expense evolves the external demo model while explicitly linking the generated
+project via its tracked roster, as its earlier currency chapter already does.
+Apply must report actual project drift (13); regeneration plus standalone
+conformance then restores alignment. The query itself is unchanged. Two new
+runnable blocks make Expense 59 total, 11 native (48 offline). Update pins only
+after observing the chapter. BookRec remains 71/10. Remove evolution output
+pipelines so a reader's ordinary shell preserves the actual command status.
+
+Repair budget: this initial review plus at most one bounded repair reading,
+no third reading. The next reading covers the actual repairs and neighbors;
+record findings, blocking/total and self-inflicted/total before considering
+another round. Majority-completeness or the standing stop rule ends review
+churn; no fresh claims are inferred from old installed evidence on changed bytes.

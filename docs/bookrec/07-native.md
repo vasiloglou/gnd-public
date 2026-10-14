@@ -3,9 +3,9 @@
 In this chapter BookRec computes recommendations with a PyRel query, and GND
 checks every proposal before anything is saved. You will read the age rule
 three ways, in English, as a model constraint and as a PyRel query. Then you
-will watch an agent asked for an adult-only book for Ada, who is a minor, see
-the check refuse it with the facts that broke the rule, and see the repair. You
-need the two environments from [PyRel + GND](../pyrel-apps.md#set-up).
+will watch a scripted stand-in propose an adult-only book for Ada, who is a
+minor, be refused with the facts that broke the rule, and repair. The recorded
+Codex sessions instead passed first time. You need the two environments from [PyRel + GND](../pyrel-apps.md#set-up).
 
 ## 1. What you'll build
 
@@ -270,7 +270,8 @@ import hashlib
 from pathlib import Path
 
 task = Path("bookrec-native/recordings/TASK-conflict.md")
-assert hashlib.sha256(task.read_bytes()).hexdigest() == "b1d54631c8c1acf76b4c33d0dd28cc5536f92d0669a10d075894b4da90730d82"
+if hashlib.sha256(task.read_bytes()).hexdigest() != "b1d54631c8c1acf76b4c33d0dd28cc5536f92d0669a10d075894b4da90730d82":
+    raise ValueError("recorded artifact hash mismatch")
 print(task.read_text(), end="")
 ```
 
@@ -301,7 +302,8 @@ manifest = json.loads((root / "manifest.json").read_text())
 session = "codex-conflict-1"
 entry = manifest["recordings"][session]
 stdout = root / session / "attempt-0001/agent.stdout"
-assert hashlib.sha256(stdout.read_bytes()).hexdigest() == entry["files"][f"{session}/attempt-0001/agent.stdout"]
+if hashlib.sha256(stdout.read_bytes()).hexdigest() != entry["files"][f"{session}/attempt-0001/agent.stdout"]:
+    raise ValueError("recorded artifact hash mismatch")
 print(f"Recorded {manifest['recorded_on']} with {entry['tool']}: {entry['result']} after {entry['attempts']} attempt(s)")
 for line in stdout.read_text().splitlines():
     event = json.loads(line)
@@ -345,7 +347,8 @@ entry = json.loads((root / "manifest.json").read_text())["recordings"]["codex-co
 attempt = root / "codex-conflict-1/attempt-0001"
 for name in ("recommendation.population.json", "feedback.json"):
     path = attempt / name
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == entry["files"][path.relative_to(root).as_posix()]
+    if hashlib.sha256(path.read_bytes()).hexdigest() != entry["files"][path.relative_to(root).as_posix()]:
+        raise ValueError("recorded artifact hash mismatch")
 candidate = json.loads((attempt / "recommendation.population.json").read_text())
 feedback = json.loads((attempt / "feedback.json").read_text())
 print("Candidate:", ", ".join(f"{r['user']}/{r['book']}" for r in candidate["facts"]["recommendation"]))
@@ -482,7 +485,7 @@ attempt 0002: proposed ada/map, ben/night, ada/cosmos
     The feedback names the constraint and the offending facts: Ada and `night`.
     It does not say which book to pick instead, and it does not mention
     `cosmos`. The stand-in repaired by dropping the named pair and choosing
-    another book; a real assistant does the same reading. The witness is the
+    another book; a real assistant would need to choose a repair from the model and facts. The witness is the
     one you predicted in step 3 and the one the hand-written PyRel rule printed.
 
 ### 5c. The same candidates through the app
@@ -586,26 +589,31 @@ is that proposal. Preview it:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd evolve preview bookrec-native/model.orm.yaml bookrec-native/genre-proposal.json --workspace bookrec-native --records bookrec-native/records --out bookrec-native/preview.json | grep -E "breaking|affected"
+gnd evolve preview bookrec-native/model.orm.yaml bookrec-native/genre-proposal.json --workspace bookrec-native --records bookrec-native/records --out bookrec-native/preview.json
 ```
 
 ```text
+...
   breaking: false
+...
   affected: model.constraints[guarded:e59f06a1810aa081cf9339e673635cf775e04b555e58e7b134ffe46ab897b38b:0]
+...
 ```
 
 One constraint is affected and the change is not breaking. Apply the reviewed
 preview; the model file in `bookrec-native` is replaced in place and a record
-is kept:
+is kept. This standalone proposal declares no generated project, so its
+conformance field does not check one; Expense demonstrates that check:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd evolve apply bookrec-native/model.orm.yaml bookrec-native/genre-proposal.json --preview bookrec-native/preview.json --workspace bookrec-native --records bookrec-native/records | grep -E "^RECORDED|conformance" | sed -E "s/^RECORDED [0-9a-f]+/RECORDED (record digest)/"
+gnd evolve apply bookrec-native/model.orm.yaml bookrec-native/genre-proposal.json --preview bookrec-native/preview.json --workspace bookrec-native --records bookrec-native/records
 ```
 
 ```text
-RECORDED (record digest)
+...
   conformance-exit: 0
+...
 ```
 
 Same query, same facts, new rule:

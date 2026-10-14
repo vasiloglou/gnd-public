@@ -110,15 +110,57 @@ def test_snowflake_is_context_or_boundary(path):
                 assert 'pyrel itself' in low, sentence
 
 
-@pytest.mark.parametrize('path,source', [
-    ('docs/bookrec/07-native.md', 'src/gnd/examples/bookrec/extension/bookrec/native_query.py'),
-    ('docs/expense/04-native.md', 'src/gnd/examples/expense/native_query.py')])
-def test_step_three_excerpt_comes_from_shipped_query(path, source):
+EXCERPT_SOURCES = {
+    'bookrec': {'native_query.py': 'src/gnd/examples/bookrec/extension/bookrec/native_query.py',
+                'rules_in_pyrel.py': 'src/gnd/examples/bookrec/rules_in_pyrel.py'},
+    'expense': {'native_query.py': 'src/gnd/examples/expense/native_query.py',
+                'rules_in_pyrel.py': 'src/gnd/examples/expense/rules_in_pyrel.py'},
+}
+
+
+@pytest.mark.parametrize('domain,path', [('bookrec', 'docs/bookrec/07-native.md'), ('expense', 'docs/expense/04-native.md')])
+def test_step_three_excerpts_come_from_shipped_files(domain, path):
+    """Every marked excerpt in step 3 is verbatim lines of the shipped file it names."""
     text = (ROOT / path).read_text()
     section = text[text.index('## 3.'):text.index('## 4.')]
-    excerpt = re.search(r'```python\n(.*?)\n```', section, flags=re.DOTALL).group(1)
-    shipped = {line.strip() for line in (ROOT / source).read_text().splitlines()}
-    lines = [line.strip() for line in excerpt.splitlines() if line.strip() and line.strip() != '...']
-    assert len(lines) >= 3
-    for line in lines:
-        assert line in shipped, line
+    marked = re.findall(r'<!-- gnd-excerpt source=([A-Za-z_./-]+) -->\s*\n```python\n(.*?)\n```', section, flags=re.DOTALL)
+    assert {name for name, _ in marked} == set(EXCERPT_SOURCES[domain]), 'step 3 shows the query and the hand-written rules'
+    for name, excerpt in marked:
+        shipped = {line.strip() for line in (ROOT / EXCERPT_SOURCES[domain][name]).read_text().splitlines()}
+        lines = [line.strip() for line in excerpt.splitlines() if line.strip() and line.strip() != '...']
+        assert len(lines) >= 3, name
+        for line in lines:
+            assert line in shipped, (name, line)
+    unmarked = re.findall(r'(?<!-->\n)```python\n(.*?)\n```', section, flags=re.DOTALL)
+    # Illustrative python fences in step 3 are either marked excerpts or runnable blocks.
+    for block in unmarked:
+        assert block in {e for _, e in marked} or 'print(' in block, block[:80]
+
+
+@pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+@pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+    """Each excerpt must refuse a changed artifact before printing its contents."""
+    import shutil
+    import subprocess
+    import sys
+
+    page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+    chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+    blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+    needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+              'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+    language, code = next((language, code) for language, code in blocks if needle in code)
+    folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+    home = tmp_path / folder / 'recordings'
+    shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+    subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+    relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+    target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+    # Whitespace preserves JSON meaning and changes the committed bytes.
+    target.write_text(target.read_text() + '\n')
+    command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+    result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30, check=False)
+    assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+    assert 'AssertionError' in result.stderr, result.stderr

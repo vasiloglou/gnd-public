@@ -20,8 +20,32 @@ implementable spec is [PL1](notes/phase-PL1-spec.md). Owner rulings PL-D1–D6
 are in plan section 10. Records go here, one per material event; specs,
 reviews and readings go in `notes/`; evidence in `evidence/<phase>/`.
 
-Branch: `codex/pyrel-agent-loop` from `origin/main` (`a9a2f08`). Pull request
-and merge remain the owner's decision. The live-recording step in PL4 runs the
-owner's `claude` and `codex` CLIs and stops for an explicit go-ahead.
+Branch: `codex/pyrel-agent-loop` from `origin/main` (`a9a2f08`). PL6 prepares
+the pull request; merge remains the owner's explicit decision. The separate
+live-recording gate is recorded in [005](005-recording-gate.md).
 
-Next: `process-phase PL1 pyrel-agent-loop`.
+## Resume status, 2026-10-14
+
+PL1–PL4 are recorded in [002](002-phase-PL1.md), [003](003-phase-PL2.md),
+[004](004-phase-PL3.md) and [006](006-phase-PL4.md). PL4 recorded Codex only;
+Claude Code evidence remains owner-blocked (PL4-Q1).
+
+PL5 pages are implemented and locally checked, including replay tamper controls
+and the actual repaired Expense candidate. Independent PL5 review remains
+pending: the prior Claude reviewer stopped at the session limit, and automatic
+approval review rejected sending unpublished changes to the gpt-6-sol reviewer.
+The explicit review authorization question is pending. No successful independent
+review or milestone close is claimed.
+
+PL6's [spec](notes/phase-PL6-spec.md) retains the final installed check and the
+failure-classification boundary. Seven refactoring failures reproduce on clean
+main a9a2f08 and on the candidate. Reference closure passes in a clean candidate;
+the eighth failure in the prior broad run came from scanning an old nested
+Claude worktree. That broad run's wrapper lost pytest's exit code.
+
+Preparation checkpoint: [007](007-phase-PL5-preparation.md).
+
+Fresh-wheel acceptance exited 0: [008](008-phase-PL6-preparation.md).
+Next: retain a draft PR, then complete the independent phase and close reviews
+once authorized. Literal
+Claude-session completion remains an explicit owner decision.

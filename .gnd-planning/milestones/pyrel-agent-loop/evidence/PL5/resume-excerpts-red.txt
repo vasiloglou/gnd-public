@@ -1,0 +1,227 @@
+Retained command output; edited only to replace machine-local path prefixes.
+FF..FFFF                                                                 [100%]
+=================================== FAILURES ===================================
+__________ test_recorded_excerpt_refuses_changed_bytes[task-bookrec] ___________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_0')
+domain = 'bookrec', artifact = 'task'
+
+    @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+    @pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+    def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+        """Each excerpt must refuse a changed artifact before printing its contents."""
+        import shutil
+        import subprocess
+        import sys
+    
+        page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+        chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+        blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+        needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+                  'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+        language, code = next((language, code) for language, code in blocks if needle in code)
+        folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+        home = tmp_path / folder / 'recordings'
+        shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+        subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+        relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                    'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+        target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+        # Whitespace preserves JSON meaning and changes the committed bytes.
+        target.write_text(target.read_text() + '\n')
+        command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+        result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30)
+>       assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+E       AssertionError: bookrec/task: excerpt accepted changed bytes
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['bash', '-c', 'cat bookrec-native/recordings/TASK-conflict.md'], returncode=0, stdout='# Task\n...on.population.json` and fix it until\nthe check exits 0. Edit nothing outside the candidate directory.\n\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:165: AssertionError
+__________ test_recorded_excerpt_refuses_changed_bytes[task-expense] ___________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_1')
+domain = 'expense', artifact = 'task'
+
+    @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+    @pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+    def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+        """Each excerpt must refuse a changed artifact before printing its contents."""
+        import shutil
+        import subprocess
+        import sys
+    
+        page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+        chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+        blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+        needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+                  'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+        language, code = next((language, code) for language, code in blocks if needle in code)
+        folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+        home = tmp_path / folder / 'recordings'
+        shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+        subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+        relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                    'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+        target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+        # Whitespace preserves JSON meaning and changes the committed bytes.
+        target.write_text(target.read_text() + '\n')
+        command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+        result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30)
+>       assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+E       AssertionError: expense/task: excerpt accepted changed bytes
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['bash', '-c', 'sed -n 1,4p expense-native-demo/recordings/TASK-conflict.md'], returncode=0, stdout='# Task\n\nDana, the team lead, approved expense 102 this morning. Record it.\n\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:165: AssertionError
+________ test_recorded_excerpt_refuses_changed_bytes[candidate-bookrec] ________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_4')
+domain = 'bookrec', artifact = 'candidate'
+
+    @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+    @pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+    def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+        """Each excerpt must refuse a changed artifact before printing its contents."""
+        import shutil
+        import subprocess
+        import sys
+    
+        page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+        chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+        blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+        needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+                  'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+        language, code = next((language, code) for language, code in blocks if needle in code)
+        folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+        home = tmp_path / folder / 'recordings'
+        shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+        subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+        relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                    'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+        target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+        # Whitespace preserves JSON meaning and changes the committed bytes.
+        target.write_text(target.read_text() + '\n')
+        command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+        result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30)
+>       assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+E       AssertionError: bookrec/candidate: excerpt accepted changed bytes
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c', 'import json\nfrom ...'], returncode=0, stdout='Candidate: ada/map, ada/river, ben/night\nGND said: accepted with 0 violations\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:165: AssertionError
+________ test_recorded_excerpt_refuses_changed_bytes[candidate-expense] ________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_5')
+domain = 'expense', artifact = 'candidate'
+
+    @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+    @pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+    def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+        """Each excerpt must refuse a changed artifact before printing its contents."""
+        import shutil
+        import subprocess
+        import sys
+    
+        page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+        chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+        blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+        needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+                  'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+        language, code = next((language, code) for language, code in blocks if needle in code)
+        folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+        home = tmp_path / folder / 'recordings'
+        shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+        subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+        relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                    'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+        target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+        # Whitespace preserves JSON meaning and changes the committed bytes.
+        target.write_text(target.read_text() + '\n')
+        command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+        result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30)
+>       assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+E       AssertionError: expense/candidate: excerpt accepted changed bytes
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c', 'import json\nfrom ...eturncode=0, stdout='Candidate approvals: 103/finance, 102/finance\nGND said: accepted with 0 violations\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:165: AssertionError
+________ test_recorded_excerpt_refuses_changed_bytes[feedback-bookrec] _________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_6')
+domain = 'bookrec', artifact = 'feedback'
+
+    @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+    @pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+    def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+        """Each excerpt must refuse a changed artifact before printing its contents."""
+        import shutil
+        import subprocess
+        import sys
+    
+        page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+        chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+        blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+        needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+                  'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+        language, code = next((language, code) for language, code in blocks if needle in code)
+        folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+        home = tmp_path / folder / 'recordings'
+        shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+        subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+        relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                    'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+        target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+        # Whitespace preserves JSON meaning and changes the committed bytes.
+        target.write_text(target.read_text() + '\n')
+        command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+        result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30)
+>       assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+E       AssertionError: bookrec/feedback: excerpt accepted changed bytes
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c', 'import json\nfrom ...'], returncode=0, stdout='Candidate: ada/map, ada/river, ben/night\nGND said: accepted with 0 violations\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:165: AssertionError
+________ test_recorded_excerpt_refuses_changed_bytes[feedback-expense] _________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_7')
+domain = 'expense', artifact = 'feedback'
+
+    @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
+    @pytest.mark.parametrize('artifact', ['task', 'transcript', 'candidate', 'feedback'])
+    def test_recorded_excerpt_refuses_changed_bytes(tmp_path, domain, artifact):
+        """Each excerpt must refuse a changed artifact before printing its contents."""
+        import shutil
+        import subprocess
+        import sys
+    
+        page = ROOT / ('docs/bookrec/07-native.md' if domain == 'bookrec' else 'docs/expense/04-native.md')
+        chapter = page.read_text().split('### 5a. A recorded session', 1)[1].split('### 5b.', 1)[0]
+        blocks = re.findall(r'<!-- gnd-run expect=0 output=stdout -->\s*```(python|sh)\n(.*?)\n```', chapter, re.DOTALL)
+        needle = {'task': 'TASK-conflict.md', 'transcript': 'stdout =',
+                  'candidate': 'candidate =', 'feedback': 'feedback ='}[artifact]
+        language, code = next((language, code) for language, code in blocks if needle in code)
+        folder = 'bookrec-native' if domain == 'bookrec' else 'expense-native-demo'
+        home = tmp_path / folder / 'recordings'
+        shutil.copytree(ROOT / 'src/gnd/examples' / domain / 'recordings', home)
+        subject = 'recommendation.population.json' if domain == 'bookrec' else 'approvals.population.json'
+        relative = {'task': 'TASK-conflict.md', 'transcript': 'agent.stdout',
+                    'candidate': subject, 'feedback': 'feedback.json'}[artifact]
+        target = home / relative if artifact == 'task' else home / 'codex-conflict-1/attempt-0001' / relative
+        # Whitespace preserves JSON meaning and changes the committed bytes.
+        target.write_text(target.read_text() + '\n')
+        command = [sys.executable, '-c', code] if language == 'python' else ['bash', '-c', code]
+        result = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True, timeout=30)
+>       assert result.returncode != 0, f'{domain}/{artifact}: excerpt accepted changed bytes'
+E       AssertionError: expense/feedback: excerpt accepted changed bytes
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c', 'import json\nfrom ...eturncode=0, stdout='Candidate approvals: 103/finance, 102/finance\nGND said: accepted with 0 violations\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:165: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_learning_path.py::test_recorded_excerpt_refuses_changed_bytes[task-bookrec]
+FAILED tests/test_pyrel_learning_path.py::test_recorded_excerpt_refuses_changed_bytes[task-expense]
+FAILED tests/test_pyrel_learning_path.py::test_recorded_excerpt_refuses_changed_bytes[candidate-bookrec]
+FAILED tests/test_pyrel_learning_path.py::test_recorded_excerpt_refuses_changed_bytes[candidate-expense]
+FAILED tests/test_pyrel_learning_path.py::test_recorded_excerpt_refuses_changed_bytes[feedback-bookrec]
+FAILED tests/test_pyrel_learning_path.py::test_recorded_excerpt_refuses_changed_bytes[feedback-expense]
+6 failed, 2 passed, 28 deselected in 1.67s

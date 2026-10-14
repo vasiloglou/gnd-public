@@ -1,0 +1,174 @@
+Retained command output; edited only to replace machine-local path prefixes.
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+____________________ test_mutation_table_rows_of_their_own _____________________
+
+    def test_mutation_table_rows_of_their_own():
+        table = tool.load_table(ROOT / tool.DEFAULT_TABLE)
+>       tool.validate_rows(ROOT, tool.DEFAULT_SOURCE, table["rows"])
+
+tests/test_rf1_pin_harness.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('<resume>/candidate-check')
+source = 'src/gnd'
+rows = [{'expect_red': ['tests/test_rf1_helper_pins.py::test_helper[canonical_json|gnd.artifacts:canonical_json_bytes]'], 'fi...timeError("rf1-mutant")\n    """One deterministic JSON line. Two runs over one unchanged panel print the\n', ...}, ...]
+
+    def validate_rows(root: Path, source: str, rows: list[dict]) -> None:
+        base = (root / source).resolve()
+        for row in rows:
+            target = (root / row["file"]).resolve()
+            if base not in target.parents or not target.is_file():
+                raise _invalid(f"{row['id']}: {row['file']} is not a file under {source}")
+            count = target.read_text(encoding="utf-8").count(row["old"])
+            if count != 1:
+>               raise _invalid(f"{row['id']}: snippet occurs {count} times in {row['file']} (exactly 1 required)")
+E               rf1_pins_tool.ToolError: M-HELP-validation-issues-gnd-population-schema-issues: snippet occurs 0 times in src/gnd/population.py (exactly 1 required)
+
+tools/rf1_pins.py:171: ToolError
+_______ test_moved_algorithm_preserves_base_body[gnd.api:_run_check_raw] _______
+
+move = {'old': 'gnd.api', 'new': 'gnd.checking_service', 'name': '_run_check_raw', 'body_sha256': '1f7966d9162405936ae14bd69e71357a0f287db7ee374cc33e3e56a167282faa'}
+
+    @pytest.mark.parametrize('move', [m for m in MOVES['names'] if not m['name'].isupper()],
+                             ids=lambda m: f"{m['old']}:{m['name']}")
+    def test_moved_algorithm_preserves_base_body(move):
+        path = 'src/' + move['old'].replace('.', '/') + '.py'
+        original = subprocess.check_output(['git', 'show', f'{BASE}:{path}'], cwd=ROOT, text=True)
+        before = _definition(original, move['name'])
+        if before is None:
+            return  # constants/imported aliases are covered by identity rather than an algorithm claim
+        after = _definition(_source(move['new']).read_text(), move['name'])
+        assert after is not None
+        from support.rf9_ci_sources import body_successor
+        successor = body_successor('RF4', move['name'], move['old'])
+        if successor:
+            assert successor['reason']
+            assert successor['home'] == move['new']
+            assert _import_bindings(before) == successor['before']['imports']
+>           assert _import_bindings(after) == successor['after']['imports']
+E           AssertionError: assert ['AnchorError...n_scope', ...] == ['AnchorError...compose', ...]
+E             
+E             At index 5 diff: 'calculation_scope' != 'compose'
+E             Left contains one more item: 'validate_anchor_sidecar'
+E             Use -v to get more diff
+
+tests/test_rf4_peripheral.py:143: AssertionError
+___________ test_current_successor_body_and_import_controls_are_live ___________
+
+    def test_current_successor_body_and_import_controls_are_live():
+        import copy
+    
+        from support.rf9_ci_sources import body_successor
+        successor = body_successor('RF4', '_run_check_raw', 'gnd.api')
+        current = _definition(_source(successor['home']).read_text(), '_run_check_raw')
+>       assert hashlib.sha256(_algorithm(current).encode()).hexdigest() == successor['after']['algorithm_sha256']
+E       AssertionError: assert '19e8413c8018...0b9f57e446baf' == '49b7fd2a06e9...2fb64e0082e13'
+E         
+E         - 49b7fd2a06e94bb8348dd2ac3d64119aab1ea99a1518e706bef2fb64e0082e13
+E         + 19e8413c80180da753cf019f8b038ecbe4b52c896b87c1f1c930b9f57e446baf
+
+tests/test_rf4_peripheral.py:157: AssertionError
+_________ test_original_definition_body_is_verbatim[gnd.checker.check] _________
+
+row = {'module': 'gnd.checker', 'name': 'check', 'kind': 'FunctionDef', 'line': 2218, ...}
+
+    @pytest.mark.parametrize('row', inventory(), ids=lambda r: r['module'] + '.' + r['name'])
+    def test_original_definition_body_is_verbatim(row):
+        module = homes().get((row['module'], row['name']), row['module'])
+        relative = module.replace('.', '/')
+        path = ROOT / 'src' / (relative + '.py')
+        if not path.is_file():
+            path = ROOT / 'src' / relative / '__init__.py'
+        source = path.read_text()
+        definitions = [n for n in ast.parse(source).body if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == row['name']]
+        assert len(definitions) == 1
+        node = definitions[0]
+        start = min([node.lineno] + [d.lineno for d in node.decorator_list])
+        body = ''.join(source.splitlines(keepends=True)[start-1:node.end_lineno])
+        from support.rf9_ci_sources import definition_successor
+        successor = definition_successor(row['module'], row['name'])
+        if successor:
+            assert successor['home'] == module
+            assert successor['before'] == row['sha256'] and successor['reason']
+>       assert hashlib.sha256(body.encode()).hexdigest() == (successor['after'] if successor else row['sha256'])
+E       AssertionError: assert '3164f5610d8e...8705b367c08f6' == '6a8da7606f09...2a5e0681b1978'
+E         
+E         - 6a8da7606f0924c83fdac4e1563f95ee381b91361f8164329f32a5e0681b1978
+E         + 3164f5610d8e2f4f8e73339b3bd70121ff2aee515accccbe4018705b367c08f6
+
+tests/test_rf6_packages.py:88: AssertionError
+____________ test_dynamic_candidate_inventory_is_complete_and_live _____________
+
+    def test_dynamic_candidate_inventory_is_complete_and_live():
+        rows = successor_dynamic_rows()
+        found = dynamic_reads(sources())
+>       assert_dynamic_inventory(found, rows)
+
+tests/test_rf6_query_policy.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+found = Counter({('src/gnd/export/pyrel_runtime.py', '__init__', 'dict[str, Any]'): 12, ('src/gnd/redaction.py', 'from_model',...nce', 'Mapping[str, Any]'): 1, ('src/gnd/conformance/report.py', 'build_conformance_payload', 'Sequence[Finding]'): 1})
+rows = [['src/gnd/address.py', '<module>', "Literal['declared-id', 'positional']", 1], ['src/gnd/address.py', '<module>', "Li...sion.py', '<module>', 'tuple[str, int]', 1], ['src/gnd/admission.py', '<module>', 'tuple[str, str, TypedKey]', 1], ...]
+
+    def assert_dynamic_inventory(found, rows):
+        approved = Counter()
+        for row in rows:
+            assert len(row) == 4 and isinstance(row[3], int) and row[3] > 0
+            key = tuple(row[:3])
+            assert key not in approved
+            approved[key] = row[3]
+>       assert found == approved
+E       assert Counter({('sr...inding]'): 1}) == Counter({('sr...es'][i]"): 1})
+E         
+E         Omitting 5837 identical items, use -vv to show
+E         Differing items:
+E         {('src/gnd/compiled_obligations.py', 'offending_rows', 'dict[str, Any]'): 2} != {('src/gnd/compiled_obligations.py', 'offending_rows', 'dict[str, Any]'): 1}
+E         {('src/gnd/compiled_obligations.py', 'offending_rows', 'list[Any]'): 2} != {('src/gnd/compiled_obligations.py', 'offending_rows', 'list[Any]'): 1}
+E         Left contains 87 more items:
+E         {('src/gnd/compiled_obligations.py', '_PreparedSubsetRows', 'dict[tuple[str, tuple[str, ...]], set[tuple[Any, ...]]]'): 1,...
+E         
+E         ...Full output truncated (93 lines hidden), use '-vv' to show
+
+tests/test_rf6_query_policy.py:124: AssertionError
+_______________ test_dynamic_duplicate_inventory_row_is_refused ________________
+
+    def test_dynamic_duplicate_inventory_row_is_refused():
+        rows = successor_dynamic_rows()
+        found = dynamic_reads(sources())
+>       assert_dynamic_inventory(found, rows)
+
+tests/test_rf6_query_policy.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+found = Counter({('src/gnd/export/pyrel_runtime.py', '__init__', 'dict[str, Any]'): 12, ('src/gnd/redaction.py', 'from_model',...nce', 'Mapping[str, Any]'): 1, ('src/gnd/conformance/report.py', 'build_conformance_payload', 'Sequence[Finding]'): 1})
+rows = [['src/gnd/address.py', '<module>', "Literal['declared-id', 'positional']", 1], ['src/gnd/address.py', '<module>', "Li...sion.py', '<module>', 'tuple[str, int]', 1], ['src/gnd/admission.py', '<module>', 'tuple[str, str, TypedKey]', 1], ...]
+
+    def assert_dynamic_inventory(found, rows):
+        approved = Counter()
+        for row in rows:
+            assert len(row) == 4 and isinstance(row[3], int) and row[3] > 0
+            key = tuple(row[:3])
+            assert key not in approved
+            approved[key] = row[3]
+>       assert found == approved
+E       assert Counter({('sr...inding]'): 1}) == Counter({('sr...es'][i]"): 1})
+E         
+E         Omitting 5837 identical items, use -vv to show
+E         Differing items:
+E         {('src/gnd/compiled_obligations.py', 'offending_rows', 'dict[str, Any]'): 2} != {('src/gnd/compiled_obligations.py', 'offending_rows', 'dict[str, Any]'): 1}
+E         {('src/gnd/compiled_obligations.py', 'offending_rows', 'list[Any]'): 2} != {('src/gnd/compiled_obligations.py', 'offending_rows', 'list[Any]'): 1}
+E         Left contains 87 more items:
+E         {('src/gnd/compiled_obligations.py', '_PreparedSubsetRows', 'dict[tuple[str, tuple[str, ...]], set[tuple[Any, ...]]]'): 1,...
+E         
+E         ...Full output truncated (93 lines hidden), use '-vv' to show
+
+tests/test_rf6_query_policy.py:124: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rf1_pin_harness.py::test_mutation_table_rows_of_their_own
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_run_check_raw]
+FAILED tests/test_rf4_peripheral.py::test_current_successor_body_and_import_controls_are_live
+FAILED tests/test_rf6_packages.py::test_original_definition_body_is_verbatim[gnd.checker.check]
+FAILED tests/test_rf6_query_policy.py::test_dynamic_candidate_inventory_is_complete_and_live
+FAILED tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused
+6 failed in 2.44s

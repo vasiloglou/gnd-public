@@ -1,0 +1,53 @@
+Retained command output; edited only to replace machine-local path prefixes.
+.......................................F.                                [100%]
+=================================== FAILURES ===================================
+___________________ test_complete_routing_and_dirty_controls ___________________
+
+    def test_complete_routing_and_dirty_controls():
+        sources = parser_sources()
+>       assert_routing(sources)
+
+<resume>/candidate-check/tests/test_rf7_structure.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sources = {'src/gnd/transition_kernel.py': '"""Pure transition decisions shared by production and the Phase 4 proof.\n\nThis mod... return payload\n    except Exception as error:\n        raise RedactionProjectionError(str(error)) from error\n', ...}
+
+    def assert_routing(sources):
+        inventory = json.loads((ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF7/json-routing.json').read_text())
+        expected = set(inventory if isinstance(inventory, list) else inventory['files'])
+        assert expected <= set(sources)
+        for path, source in sources.items():
+            if path in {
+                'src/gnd/examples/expense/extension.py',
+                'src/gnd/examples/expense/project/cli/expense_cli.py',
+                'src/gnd/examples/expense/rules_in_pyrel.py',
+                'src/gnd/examples/bookrec/rules_in_pyrel.py',
+                'src/gnd/examples/bookrec/stand_in_agent.py',
+                'src/gnd/examples/expense/stand_in_agent.py',
+                'src/gnd/examples/expense/prepare_currency.py',
+                'src/gnd/examples/expense/prepare_meal_cap.py',
+                'src/gnd/examples/release_governance/prepare_facts.py',
+                'src/gnd/examples/release_governance/pyrel_queries.py',
+                'src/gnd/examples/approvals/stand_in_agent.py',
+                'src/gnd/examples/bookrec/extension/bookrec/cli.py',
+                'src/gnd/skills/gnd-adopt/scripts/verify_migration.py',
+                'src/gnd/skills/gnd-model-from-text/scripts/validate_model.py',
+                'src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py',
+            }:
+                continue  # Standalone skill/example executables, outside GND module readers.
+            tree = ast.parse(source)
+            for node in ast.walk(tree):
+                if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                        and isinstance(node.func.value, ast.Name) and node.func.value.id == 'json'
+                        and node.func.attr in ('loads', 'load', 'JSONDecoder')):
+>                   assert path == 'src/gnd/export/souffle_runtime.py' and node.func.attr == 'JSONDecoder', path
+E                   AssertionError: src/gnd/population_shape.py
+E                   assert ('src/gnd/population_shape.py' == 'src/gnd/expo...le_runtime.py'
+E                     
+E                     - src/gnd/export/souffle_runtime.py
+E                     + src/gnd/population_shape.py)
+
+<resume>/candidate-check/tests/test_rf7_structure.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../..<resume>/candidate-check/tests/test_rf7_structure.py::test_complete_routing_and_dirty_controls
+1 failed, 40 passed, 1 deselected in 11.73s

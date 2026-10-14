@@ -48,6 +48,20 @@ locally on DuckDB; Snowflake execution is not yet supported by gnd export.
 Each skill's `SKILL.md` is in the
 [packaged skill directory](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/skills).
 
+## Follow the skills through one application
+
+The PyRel tutorials put four of these skills in order on one small app, with
+the prompt beside the checkpoint it produces and the `gnd` command that checks
+it. The agent's proposals are checked by a PyRel program GND generates from the
+same model.
+
+| Step in the chapter | Skill | BookRec | Expense |
+|---|---|---|---|
+| Write the rules, read them three ways | `gnd-model-from-text` | [chapter 7, step 3](../bookrec/07-native.md#3-the-rules-three-ways) | [chapter 4, step 3](../expense/04-native.md#3-the-rules-three-ways) |
+| Generate the project, write the extension | `gnd-codegen`, `gnd-conformance` | [chapter 7, step 2](../bookrec/07-native.md#2-set-up-the-project-and-check-both-environments) | [chapter 4, step 2](../expense/04-native.md#2-set-up-the-project-and-check-both-environments) |
+| Put an agent in the loop | `gnd-dev-session` | [chapter 7, step 5](../bookrec/07-native.md#5-an-agent-in-the-loop) | [chapter 4, step 5](../expense/04-native.md#5-an-agent-in-the-loop) |
+| Change a rule | `gnd-model-evolve` | [chapter 7, step 7](../bookrec/07-native.md#7-change-a-rule-without-touching-the-query) | [chapter 4, step 7](../expense/04-native.md#7-change-a-rule-without-touching-the-query) |
+
 ## Why this works with smaller models
 
 A deterministic checker turns "is this right?" from a judgment into a lookup. A cheap

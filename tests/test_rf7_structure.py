@@ -27,6 +27,7 @@ def assert_routing(sources):
             'src/gnd/examples/bookrec/stand_in_agent.py',
             'src/gnd/examples/expense/stand_in_agent.py',
             'src/gnd/examples/expense/prepare_currency.py',
+            'src/gnd/examples/expense/prepare_meal_cap.py',
             'src/gnd/examples/release_governance/prepare_facts.py',
             'src/gnd/examples/release_governance/pyrel_queries.py',
             'src/gnd/examples/approvals/stand_in_agent.py',

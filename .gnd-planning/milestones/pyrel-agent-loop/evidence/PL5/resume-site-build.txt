@@ -1,0 +1,4 @@
+Retained command output; edited only to replace machine-local path prefixes.
+Build started
+No issues found
+Build finished in 0.44s

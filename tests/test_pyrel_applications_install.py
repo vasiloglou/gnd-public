@@ -60,7 +60,7 @@ def test_origin_rejects_checkout_and_sibling(tmp_path):
             module.verify_origin(origin,venv,checkout)
 
 
-@pytest.mark.parametrize('group,total,native',[('bookrec',59,8),('expense',45,10)])
+@pytest.mark.parametrize('group,total,native',[('bookrec',71,10),('expense',57,11)])
 def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,native):
     module=tool();pages=7 if group=='bookrec' else 4
     rows=[{'page':str(i%pages),'lane':'pyrel' if i<native else 'offline','status':'passed'} for i in range(total)]
@@ -89,7 +89,7 @@ def test_malformed_tutorial_receipt_is_refused(value):
 
 @pytest.mark.parametrize('mutation',['offline-ran-native','count-mismatch'])
 def test_learning_inventory_refuses_offline_native_and_count_drift(mutation):
-    module=tool();total,native=59,8
+    module=tool();total,native=71,10
     rows=[{'page':str(i%7),'lane':'pyrel' if i<native else 'offline',
            'status':'skipped' if i<native else 'passed'} for i in range(total)]
     module.verify_learning_paths({'count':total-native,'records':rows},'bookrec','offline')

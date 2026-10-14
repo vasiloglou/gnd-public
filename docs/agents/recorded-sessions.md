@@ -211,6 +211,73 @@ cp approvals/recordings/llama-3.1-8b-instruct/attempt-0002/steps.json walk/cand/
 cd walk/cand && gnd check ../model.orm.yaml --pre ../input/state.pop.yaml --steps steps.json
 ```
 
+## BookRec and Expense, recorded on 2026-10-14
+
+The [PyRel tutorials](../pyrel-apps.md) use the same loop over facts instead of
+plans: the agent writes a population, `gnd check` is the verifier, and the
+feedback carries the constraint and its offending facts. On 2026-10-14 we gave
+**Codex CLI 0.156.1** (`gpt-5.6-sol`, ChatGPT login) two tasks per domain, a
+plain request and a request that contradicts a rule, two runs each, three
+attempts budget, with the packaged skills installed in the workspace.
+
+| Domain | Task | Runs | Accepted | On attempt 1 |
+|---|---|---|---|---|
+| BookRec | plain: recommend books for Ada | 2 | 2 | 2 |
+| BookRec | conflict: Ada asked for `night`, an adult-only book | 2 | 2 | 2 |
+| Expense | plain: record an approval of expense 102 | 2 | 2 | 2 |
+| Expense | conflict: the team lead approved expense 102 (800 EUR) | 2 | 2 | 2 |
+
+Every conflict run shows the same shape in the transcript: the agent opened the
+installed `gnd-dev-session` skill, read the task, the seed facts and the model,
+named the conflict in its own words, wrote a candidate that satisfies the rules
+and ran `gnd check` itself. No rule-level refusal was recorded, so the chapters
+show the refusal-and-repair loop with a deterministic stand-in and quote these
+recordings for what a real assistant reads and writes.
+
+!!! warning "What was not recorded"
+
+    Claude Code was not recorded. Its standalone CLI had no login of its own on
+    the recording machine, and the owner's session did not permit the wrapper
+    that imports an API key from the owner's env file. The recorder refuses to
+    run without a named owner gate record, and the two READMEs say exactly
+    which tool ran. Eight runs on one day rank nothing.
+
+Check the committed bytes and replay every retained candidate through the
+checker:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+import hashlib, json, shutil
+from importlib.resources import files
+from pathlib import Path
+
+from gnd import api
+
+replayed = 0
+for domain, model in (("bookrec", "model.orm.yaml"), ("expense", "model.orm.json")):
+    home = Path(f"{domain}-recordings")
+    shutil.copytree(str(files("gnd") / "examples" / domain), home)
+    recordings = home / "recordings"
+    manifest = json.loads((recordings / "manifest.json").read_text())
+    for name, entry in manifest["recordings"].items():
+        for relative, digest in entry["files"].items():
+            assert hashlib.sha256((recordings / relative).read_bytes()).hexdigest() == digest, relative
+        for attempt in sorted((recordings / name).glob("attempt-*")):
+            candidate = next(p for p in attempt.iterdir() if p.name.endswith(".population.json"))
+            recorded = dict(json.loads((attempt / "feedback.json").read_text())["payload_exit"])["required"]
+            replayed_exit = api.check(home / model, candidate)["exit_code"]
+            assert replayed_exit == recorded, (name, attempt.name)
+            replayed += 1
+    print(f"{domain}: {len(manifest['recordings'])} sessions, every digest matches")
+print(replayed, "recorded candidates replayed to their recorded verifier exit")
+```
+
+```text
+bookrec: 4 sessions, every digest matches
+expense: 4 sessions, every digest matches
+8 recorded candidates replayed to their recorded verifier exit
+```
+
 ## Record your own
 
 Terminal agents run through their own adapters. The experiment must be inside a git

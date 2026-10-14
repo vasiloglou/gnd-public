@@ -71,7 +71,7 @@ private names are untouched; RF1/RF2 pins stay green.
 
 Each `native_query.py` becomes: imports, a `calculate(app, *args)` handler using
 only the seam plus `relationalai.semantics` (`String`, `std.aggregates`), and
-`main()` = `runpy.run_path(argv[1])['run_app'](calculate, argv[2:])`.
+`main()` = `runpy.run_path(argv[1])['run_app'] (calculate, argv[2:])`.
 
 ### D6 proposal checking — `src/gnd/export/applications.py`
 

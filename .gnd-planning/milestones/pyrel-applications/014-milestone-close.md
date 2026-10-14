@@ -134,3 +134,12 @@ Local completion and recorded close. Merge happens only on the owner's ruling ab
 through the PR; no release, publication, certificate or universal equivalence.
 Commit grammar drift in earlier commits (missing bodies or record lines, scope-token
 variation) is noted, not rewritten.
+
+## Addendum: reference-checker false positive in the PA5R spec
+
+A clean-checkout run of tests/test_development_scaffold.py at 483a60b found one more
+code span read as a link: notes/phase-PA5R-spec.md, "['run_app'](calculate, argv[2:])".
+A space was inserted before the call (identical Python meaning). The spec bytes changed
+from 124f6107d016edda3608839f8903ad1811c8d250e109c583b7a51453ee10e894 to 9c6f06487e9503b9b7eb798de2e84e94d13e687b989469ac83af2b6fd4d8a43a after their approval; this is a formatting edit, not a
+change to any ruling. A scan of every tracked Markdown file with the checker's logic
+finds no other offender.

@@ -138,8 +138,10 @@ variation) is noted, not rewritten.
 ## Addendum: reference-checker false positive in the PA5R spec
 
 A clean-checkout run of tests/test_development_scaffold.py at 483a60b found one more
-code span read as a link: notes/phase-PA5R-spec.md, "['run_app'](calculate, argv[2:])".
-A space was inserted before the call (identical Python meaning). The spec bytes changed
+code span read as a link: in notes/phase-PA5R-spec.md, the run_app lookup written as a
+subscript immediately followed by its argument list, which the checker's link regex
+matches. A space was inserted before the call (identical Python meaning); this record
+describes rather than quotes the span for the same reason. The spec bytes changed
 from 124f6107d016edda3608839f8903ad1811c8d250e109c583b7a51453ee10e894 to 9c6f06487e9503b9b7eb798de2e84e94d13e687b989469ac83af2b6fd4d8a43a after their approval; this is a formatting edit, not a
 change to any ruling. A scan of every tracked Markdown file with the checker's logic
 finds no other offender.

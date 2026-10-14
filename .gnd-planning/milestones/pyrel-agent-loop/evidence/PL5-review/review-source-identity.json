@@ -1,0 +1,39 @@
+{
+  "commit": "1165b81",
+  "sources": {
+    "docs/pyrel-apps.md": "fc064226376d6b3ab993a0d1c9a0f8e4e8e7a9757dbb3502db6404131f2b2708",
+    "docs/bookrec/07-native.md": "61fd53711c16b52b1786f5ab53e89276843239a82966ff796569c20c2a512647",
+    "docs/expense/04-native.md": "97ab787b70b9f1fc7801a13171376d3671b3dac6ce1b1e33ad205aaaef129b04",
+    "docs/agents/recorded-sessions.md": "520098f00de41b58b4f8957cb832c007221edba7d749b94d000910429b025ccd",
+    "src/gnd/examples/expense/prepare_meal_cap.py": "649bda9b76477c4036c004c61fbd9c7379eee2afa34a1cb20ee90cad513192a3",
+    "tests/test_pyrel_learning_path.py": "a1cf933723e01e5ca2fa1d8ca5ab4419b01d8c87038e816970573a594f75e8c0",
+    "tests/test_meal_cap_proposal.py": "5e89d5d070a51ad5701a5ddebd1c0ee55aa70e0cc5a900f0f1425f8e5fdec77e",
+    "tools/accept_pyrel_applications_install.py": "c2a36cefc016c9b39fddbf61deb6d8cbf926774e29c38920aa0f86d96407e155",
+    "tests/test_pyrel_applications_install.py": "53474d7db727bda24170df394f816fd681778238990715123223efff2291268d"
+  },
+  "screenshots": {
+    "expense-1440-dark-5a.png": "d62a3e96a914d9ad70bde962649f46bf802a4ace474d545320877577fe8484f3",
+    "expense-1440-dark-7-.png": "cad0c66d157bfbb4b2bee56011d0a4015c9c701f680f504c7bbaf7c498e94d8c",
+    "expense-1440-light-5a.png": "8195cfcea3a283cb9ef2bb85e605086e347ece5f0eb30c6b8364ed02c73e569d",
+    "expense-1440-light-7-.png": "a8fb0d420295f925f7d1d3111412f057cfc9229e542e2d5ce9f0fea87952951d",
+    "expense-390-dark-5a.png": "25d075a71f9e6d3191e2212e5c2e9dd8b9e880f8b597de85dcc9d5e75f9e1ebc",
+    "expense-390-dark-7-.png": "87055f79081fb2adb820cdcfe7d11f51756bb921ead39f1f40d9ad6204dd84bb",
+    "expense-390-light-5a.png": "6a2e8914e80f302a9b1fe96113153704260e104f17fa1b282368deefd16e8516",
+    "expense-390-light-7-.png": "022ee420183d123ea75ef938e92c3cd5894fc8d01eaf9f02dde6a22053941a61"
+  },
+  "viewports": [
+    1440,
+    390
+  ],
+  "height": 1000,
+  "themes": [
+    "default",
+    "slate"
+  ],
+  "page_widths_match_viewports": true,
+  "view_regions": [
+    "expense-recorded-task",
+    "expense-linked-project-drift-and-regeneration"
+  ],
+  "scope": "Author visual reading, not independent review or milestone close."
+}

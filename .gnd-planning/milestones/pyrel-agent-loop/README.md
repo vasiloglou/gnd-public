@@ -36,6 +36,8 @@ the bounded reader reported zero blockers and two hardening items, subsequently
 fixed with local controls. The old preparation records remain historical.
 
 The review fixes are available in [draft PR22](https://github.com/vasiloglou/gnd-public/pull/22).
-Fresh-wheel acceptance will be rerun on these repaired bytes before final sign-off.
+Fresh-wheel acceptance on the repaired bytes passed: [010](010-phase-PL5-current-validation.md).
+The latest focused run passes 224 tests; both native chapter paths and all
+137 corpus cases pass. Documentation is ready for owner review.
 The missing Claude recording, four-reader milestone-close review and seven
 inherited refactoring failures remain explicit open work. No merge is authorized.

@@ -58,7 +58,7 @@ def test_origin_rejects_checkout_and_sibling(tmp_path):
             module.verify_origin(origin,venv,checkout)
 
 
-@pytest.mark.parametrize('group,total,native',[('bookrec',52,2),('expense',34,3)])
+@pytest.mark.parametrize('group,total,native',[('bookrec',59,8),('expense',45,10)])
 def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,native):
     module=tool();pages=7 if group=='bookrec' else 4
     rows=[{'page':str(i%pages),'lane':'pyrel' if i<native else 'offline','status':'passed'} for i in range(total)]

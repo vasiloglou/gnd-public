@@ -64,7 +64,7 @@ def verify_learning_paths(data,group,lane):
                    or not isinstance(r.get('status'),str) or r['status'] not in {'passed','skipped','failed'}
                    for r in data['records'])):
         raise ValueError('malformed tutorial receipt')
-    pages,total,native=(7,52,2) if group=='bookrec' else (4,34,3)
+    pages,total,native=(7,59,8) if group=='bookrec' else (4,45,10)
     rows=data['records'];passed=[r for r in rows if r['status']=='passed']
     if len(rows)!=total or len({r['page'] for r in rows})!=pages:
         raise ValueError('tutorial inventory incomplete')

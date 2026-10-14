@@ -1,5 +1,15 @@
 # PyRel applications
 
+## Amendment A2 — 2026-10-13
+
+The owner asked for junior-friendly tutorials that show PyRel users how GND gets
+them from rules to checked agentic apps. [A2](notes/plan-amendment-a2.md) is
+adopted by delegated approval in [010](010-plan-amendment-a2.md) after four
+readings and one repair round. It inserts phase PA5R (tutorial rewrite, public
+query seam, Snowflake-claim fixes, checked-output blocks, readability gate)
+before PA6. Current PA6 evidence is superseded but retained; PA6 is re-gated
+after PA5R. Next: `process-phase PA5R pyrel-applications` to write its spec.
+
 ## Execution checkpoint — 2026-10-13
 
 PA0–PA5 are complete. [PA5](009-phase-PA5.md) adds six source-bound accessible

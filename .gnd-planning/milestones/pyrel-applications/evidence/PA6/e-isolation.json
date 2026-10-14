@@ -1,0 +1,60 @@
+{
+  "accepted": true,
+  "backend": "duckdb-local",
+  "binding": {
+    "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+    "population_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9"
+  },
+  "derivations": [],
+  "exit_code": 0,
+  "profile": "applications-v1",
+  "schema_version": 1,
+  "status": "accepted",
+  "verdicts": [
+    {
+      "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+      "constraint_type": "uniqueness",
+      "id": "fact_types[book_has_genre].constraints[0]",
+      "modality": "alethic",
+      "reason": null,
+      "status": "satisfied",
+      "witnesses": []
+    },
+    {
+      "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+      "constraint_type": "mandatory",
+      "id": "fact_types[book_has_genre].constraints[1]",
+      "modality": "alethic",
+      "reason": null,
+      "status": "satisfied",
+      "witnesses": []
+    },
+    {
+      "constraint_ref": "constraints[0]",
+      "constraint_type": "guarded",
+      "id": "unread_only",
+      "modality": "alethic",
+      "reason": null,
+      "status": "satisfied",
+      "witnesses": []
+    },
+    {
+      "constraint_ref": "constraints[1]",
+      "constraint_type": "guarded",
+      "id": "age_appropriate",
+      "modality": "alethic",
+      "reason": null,
+      "status": "satisfied",
+      "witnesses": []
+    },
+    {
+      "constraint_ref": "constraints[2]",
+      "constraint_type": "guarded",
+      "id": "preferred_genre",
+      "modality": "deontic",
+      "reason": null,
+      "status": "satisfied",
+      "witnesses": []
+    }
+  ]
+}

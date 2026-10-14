@@ -83,3 +83,16 @@ def test_payload_cap_refuses(tmp_path):
 def test_malformed_tutorial_receipt_is_refused(value):
     with pytest.raises(ValueError,match='tutorial'):
         tool().verify_learning_paths(value,'bookrec','pyrel')
+
+
+@pytest.mark.parametrize('mutation',['offline-ran-native','count-mismatch'])
+def test_learning_inventory_refuses_offline_native_and_count_drift(mutation):
+    module=tool();total,native=59,8
+    rows=[{'page':str(i%7),'lane':'pyrel' if i<native else 'offline',
+           'status':'skipped' if i<native else 'passed'} for i in range(total)]
+    module.verify_learning_paths({'count':total-native,'records':rows},'bookrec','offline')
+    data={'count':total-native,'records':[dict(r) for r in rows]}
+    if mutation=='offline-ran-native':data['records'][0]['status']='passed'
+    else:data['count']+=1
+    with pytest.raises(ValueError,match='tutorial'):
+        module.verify_learning_paths(data,'bookrec','offline')

@@ -193,3 +193,10 @@ The six failures exist before PA5R and would fail real CI on this branch:
 | test_doctor_uninstall (3) | 00efef2 added process-milestone/start-milestone skill directories (branch only) without updating the pinned discovery-root entries | Milestone close |
 | test_rf7_structure routing | pyrel_runtime.py:1524, :1612 json.loads (PA phases) | Milestone close |
 | test_rf9_repairs query policy (2) | eight unauthenticated PA-phase attribute rows; PA5R swaps one (removes the Expense query row, adds NativeApp.has), count unchanged (rf9-rows-*.txt) | Milestone close |
+
+## Superseded bindings (2026-10-13)
+
+012-ci-repair.md changed evidence/PA5R/pyrel-successor.json after this record (its
+hash above is the pre-repair bytes) and added PA5R query successor files this record
+does not bind. See 012's addendum. The open-question row "PA6 re-gate"
+is closed by c0039e4 and run E (013).

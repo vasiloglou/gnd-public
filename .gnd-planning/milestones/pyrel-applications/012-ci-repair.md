@@ -41,3 +41,17 @@ Emitted program bytes changed again (rf7 repair); evidence/PA5R/pyrel-successor.
 
 No model, corpus, answer or checker-semantics change. Full-suite confirmation runs
 in the local CI mirror on the final commit before push.
+
+## Addendum after the PA6 repair reading (2026-10-13)
+
+- Gate transcripts: evidence/ci-repair-gates.txt (23d457dcaf9e95247a08d57662a9c322ce28169d9d92e1a3d16befbae43a28a0).
+- Provenance correction: this repair rewrote one closed PA5R file and created another under evidence/PA5R.
+  evidence/PA5R/pyrel-successor.json "after" moved from 56c4e7c2... to 60a263a1...
+  (the rf7 dedupe change), and evidence/PA5R/dynamic-query-successor.json, created
+  here, also carries rows that come from this repair (_derive canonical[key],
+  guarded witnesses[key]). Their reason text names PA5R only. Both are superseded
+  as PA5R-only evidence: they describe PA5R plus this repair. 011 binds
+  pyrel-successor.json at e8f81f84... (pre-repair); current bytes are 527dc501...
+  dynamic-query-successor.json was created here and is not bound by 011. A split
+  into separate PA5R and ci-repair links remains an open question for the close.
+- The full suite on the final merged commit runs in the local CI mirror before push.

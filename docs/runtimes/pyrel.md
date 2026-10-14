@@ -121,11 +121,29 @@ Require{…} domain Logical approval(string::String, string_2::String) check Log
 
 With an engine connection named in your `raiconfig.yaml`, run
 `release-rules-lqp.py SNAPSHOT --connection NAME`. That path is not exercised
-here: it needs a RelationalAI engine, which this tutorial does not use. Both
-versions cover mandatory, uniqueness, subset, value and guarded rules today.
-Other families, subtypes, derived facts and disconnected rule bodies are refused
-by name when you export, and the DuckDB version refuses an input that repeats a
-fact, because PyRel relations are sets.
+here: it needs a RelationalAI engine, which this tutorial does not use.
+
+Both versions cover these rule families:
+
+- mandatory and inclusive-or (mandatory over several roles);
+- internal uniqueness and internal frequency;
+- subset, equality and exclusion;
+- exclusive-or over single roles;
+- value lists and value ranges;
+- every ring variant, including acyclic through a recursive closure;
+- object and role cardinality;
+- guarded rules.
+
+Textual rules are listed as not checked, as GND lists them. External uniqueness
+and frequency, exclusive-or over role sequences, subtypes, derived facts and
+disconnected rule bodies are refused by name when you export. So is a fact type
+whose name the program needs for a helper relation, such as `likes_reverse`.
+
+The DuckDB version reads every fact list in the input, as GND does. A mandatory
+or inclusive-or rule is vacuous when a fact type it needs is missing from
+`covers`. It also refuses an input that repeats a fact, because PyRel relations
+are sets. Its report uses GND's witnesses, in GND's order, and GND's exit codes:
+1 for a broken rule, 4 for a rule it can't check, 2 for a vacuous rule, 0 otherwise.
 
 ## Build your own report with public PyRel APIs
 

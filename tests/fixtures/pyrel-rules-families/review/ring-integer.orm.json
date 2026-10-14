@@ -1,0 +1,190 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:review:ringint",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "node",
+   "name": "Node",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "node_id"
+   }
+  },
+  {
+   "id": "node_id",
+   "name": "Nodeid",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "r_irr",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_irr",
+     "type": "ring",
+     "variant": "irreflexive",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_irr"
+     }
+    }
+   ]
+  },
+  {
+   "id": "r_asym",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_asym",
+     "type": "ring",
+     "variant": "asymmetric",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_asym"
+     }
+    }
+   ]
+  },
+  {
+   "id": "r_trans",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_trans",
+     "type": "ring",
+     "variant": "transitive",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_trans"
+     }
+    }
+   ]
+  },
+  {
+   "id": "r_refl",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_refl",
+     "type": "ring",
+     "variant": "reflexive",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_refl"
+     }
+    }
+   ]
+  },
+  {
+   "id": "r_acyc",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_acyc",
+     "type": "ring",
+     "variant": "acyclic",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_acyc"
+     }
+    }
+   ]
+  },
+  {
+   "id": "r_symirr",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_symirr",
+     "type": "ring",
+     "variant": "symmetric-irreflexive",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_symirr"
+     }
+    }
+   ]
+  }
+ ]
+}

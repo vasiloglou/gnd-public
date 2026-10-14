@@ -57,6 +57,13 @@ class Atom:
 
 
 @dataclass(frozen=True)
+class Count:
+    """``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given."""
+    of: tuple[str, ...]
+    per: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
 class Compare:
     operator: str
     left: Any
@@ -81,7 +88,10 @@ class Requirement:
     check: Check
     witness: tuple[str, ...]       # variables reported for a violation
     vacuous_when: tuple[str, tuple[str, ...]]   # ("any"|"all", fact types whose emptiness makes it vacuous)
-    refs: tuple[str, ...] = field(default=())   # fact types the rule reads (coverage)
+    refs: tuple[str, ...] = field(default=())   # fact types the rule reads
+    part: str = ""                 # several requirements may make up one constraint (same id)
+    listing: bool = False          # a plain query the DuckDB report needs; not a requirement
+    info: tuple[tuple[str, Any], ...] = ()      # family details the report needs (bounds, scope, ...)
 
 
 class _Model:
@@ -93,6 +103,13 @@ class _Model:
         self.objects = self.index.object_types_by_id()
         self._roles = self.index.role_object_types()
         self.facts = {fact_id: self.index.fact_type(fact_id) for fact_id in self._roles}
+        self.helpers: dict[str, dict[str, Any]] = {}
+        self.unchecked: list[dict[str, str]] = []   # textual rules: listed, never evaluated (as GND)
+
+    def helper(self, name: str, fields: list[tuple[str, str]], kind: str, **data: Any) -> str:
+        """Register a helper relation the rules refer to; rendered once, in registration order."""
+        self.helpers.setdefault(name, {"fields": fields, "kind": kind, **data})
+        return name
 
     def roles(self, fact_id: str) -> list[dict[str, Any]]:
         if fact_id not in self._roles:
@@ -218,7 +235,8 @@ def _mandatory(model: _Model, c: dict[str, Any], fact_id: str) -> Requirement:
     domain = (Atom(universe, ("$x",)),)
     check = Check("holds", atom=Atom(fact_id, tuple("$x" if r["role_name"] == role else None for r in roles)))
     return Requirement(c.get("id") or f"{fact_id}#mandatory", "mandatory", c["modality"], _quote(c),
-                       domain, check, ("$x",), ("any", (fact_id,)), (fact_id,))
+                       domain, check, ("$x",), ("any", (fact_id,)), (fact_id,),
+                       info=(("uncovered_vacuous", [fact_id]),))
 
 
 def _subset(model: _Model, c: dict[str, Any]) -> Requirement:
@@ -241,12 +259,203 @@ def _subset(model: _Model, c: dict[str, Any]) -> Requirement:
 
 
 def _value(model: _Model, c: dict[str, Any]) -> Requirement:
-    if "allowed" not in c or not isinstance(c["allowed"], list):
-        raise ExportInputError(f"{c.get('id')}: ranges are a later phase")
     object_id = c["object_type"]
+    if c.get("role_ref"):
+        raise ExportInputError(f"{c.get('id')}: role-scoped value constraints are a later phase")
+    if "allowed" not in c:
+        ranges = c.get("ranges") or ([c["range"]] if isinstance(c.get("range"), dict) else None)
+        if not ranges:
+            raise ExportInputError(f"{c.get('id')}: a value constraint needs allowed, range or ranges")
+        model.helper(f"{c['id']}_allowed", [("value", model.primitive(object_id))], "ranges",
+                     object_type=object_id, ranges=ranges)
     plays = tuple(dict.fromkeys(fact for fact, _ in model.plays(object_id)))
+    # GND evaluates a value rule over every fact and the instances roster; it is vacuous only when
+    # both are empty, so the report checks the rosters too (vacuous_when "universe").
     return Requirement(c["id"], "value", c["modality"], _quote(c), (Atom(f"{object_id}_any", ("$x",)),),
-                       Check("holds", atom=Atom(f"{c['id']}_allowed", ("$x",))), ("$x",), ("all", plays), plays)
+                       Check("holds", atom=Atom(f"{c['id']}_allowed", ("$x",))), ("$x",), ("universe", plays), plays,
+                       info=(("rosters", _rosters(model, object_id)),))
+
+
+def _rosters(model: _Model, object_id: str) -> list[str]:
+    """The instances keys that populate an object type: its own, and entities it is the reference value of."""
+    return [object_id] + sorted(o for o, obj in model.objects.items()
+                                if (obj.get("reference") or {}).get("value_type") == object_id)
+
+
+def _seq_atom(model: _Model, seq: list[dict[str, Any]], names: list[str], cid: str) -> Atom:
+    """One fact-type atom whose listed roles carry the given variables, other roles left open."""
+    facts = {ref.get("fact_type") for ref in seq}
+    if len(facts) != 1:
+        raise ExportInputError(f"{cid}: role sequences spanning fact types are a later phase")
+    fact_id = seq[0]["fact_type"]
+    position = {ref["role"]: name for ref, name in zip(seq, names)}
+    unknown = set(position) - {r["role_name"] for r in model.roles(fact_id)}
+    if unknown:
+        raise ExportInputError(f"{cid}: unknown roles {sorted(unknown)} in {fact_id}")
+    return Atom(fact_id, tuple(position.get(r["role_name"]) for r in model.roles(fact_id)))
+
+
+def _role_object(model: _Model, fact_id: str, role_name: str) -> str:
+    for role in model.roles(fact_id):
+        if role["role_name"] == role_name:
+            return role["object_type"]
+    raise ExportInputError(f"fact type {fact_id!r} has no role {role_name!r}")
+
+
+def _plays(model: _Model, c: dict[str, Any], refs: list[dict[str, Any]]) -> tuple[str, str]:
+    """A helper relation of every instance playing any of the referenced roles; returns (helper, object type)."""
+    objects = {_role_object(model, ref["fact_type"], ref["role"]) for ref in refs}
+    if len(objects) != 1:
+        raise ExportInputError(f"{c['id']}: the roles must be played by one object type")
+    (object_id,) = objects
+    helper = model.helper(f"{c['id']}_plays", [("member", model.primitive(object_id))], "plays",
+                          refs=[(ref["fact_type"], ref["role"]) for ref in refs])
+    return helper, object_id
+
+
+def _mandatory_disjunctive(model: _Model, c: dict[str, Any]) -> list[Requirement]:
+    refs = c.get("role_refs") or []
+    if len(refs) < 2:
+        raise ExportInputError(f"{c['id']}: inclusive-or needs two or more roles")
+    helper, object_id = _plays(model, c, refs)
+    facts = tuple(dict.fromkeys(ref["fact_type"] for ref in refs))
+    return [Requirement(c["id"], "mandatory-disjunctive", c["modality"], _quote(c),
+                        (Atom(f"{object_id}_any", ("$x",)),), Check("holds", atom=Atom(helper, ("$x",))),
+                        ("$x",), ("all", facts), facts, info=(("uncovered_vacuous", list(facts)),))]
+
+
+def _two_sequences(model: _Model, c: dict[str, Any]) -> tuple[Atom, Atom, tuple[str, ...]]:
+    a, b = c.get("role_seq_a") or [], c.get("role_seq_b") or []
+    if not a or len(a) != len(b):
+        raise ExportInputError(f"{c['id']}: the two role sequences must have the same, non-zero length")
+    names = [f"$k{i}" for i in range(len(a))]
+    return _seq_atom(model, a, names, c["id"]), _seq_atom(model, b, names, c["id"]), tuple(names)
+
+
+def _equality(model: _Model, c: dict[str, Any]) -> list[Requirement]:
+    left, right, names = _two_sequences(model, c)
+    lists = ("all", (left.relation, right.relation))
+    return [Requirement(c["id"], "equality", c["modality"], _quote(c), (left,), Check("holds", atom=right),
+                        names, lists, (left.relation, right.relation), part="a_not_b"),
+            Requirement(c["id"], "equality", c["modality"], _quote(c), (right,), Check("holds", atom=left),
+                        names, lists, (left.relation, right.relation), part="b_not_a")]
+
+
+def _exclusion(model: _Model, c: dict[str, Any]) -> list[Requirement]:
+    left, right, names = _two_sequences(model, c)
+    return [Requirement(c["id"], "exclusion", c["modality"], _quote(c), (left,), Check("absent", atom=right),
+                        names, ("all", (left.relation, right.relation)), (left.relation, right.relation))]
+
+
+def _exclusive_or(model: _Model, c: dict[str, Any]) -> list[Requirement]:
+    seqs = c.get("role_seqs") or []
+    if len(seqs) < 2 or any(len(seq) != 1 for seq in seqs):
+        raise ExportInputError(f"{c['id']}: exclusive-or over multi-role sequences is checked by GND only for its "
+                               "exclusion half (unchecked otherwise); the rules programs refuse it")
+    refs = [seq[0] for seq in seqs]
+    helper, object_id = _plays(model, c, refs)
+    atoms = [_seq_atom(model, seq, ["$x"], c["id"]) for seq in seqs]
+    facts = tuple(dict.fromkeys(atom.relation for atom in atoms))
+    found = []
+    for i in range(len(atoms)):
+        for j in range(i + 1, len(atoms)):
+            found.append(Requirement(c["id"], "exclusive-or", c["modality"], _quote(c), (atoms[i],),
+                                     Check("absent", atom=atoms[j]), ("$x",), ("all", facts), facts,
+                                     part=f"both_{i}_{j}"))
+    found.append(Requirement(c["id"], "exclusive-or", c["modality"], _quote(c), (Atom(f"{object_id}_any", ("$x",)),),
+                             Check("holds", atom=Atom(helper, ("$x",))), ("$x",), ("all", facts), facts,
+                             part="none"))
+    return found
+
+
+def _frequency(model: _Model, c: dict[str, Any], fact_id: str) -> list[Requirement]:
+    if c.get("scope", "internal") != "internal":
+        raise ExportInputError(f"{c['id']}: external frequency is a later phase of the rules programs")
+    keys = ModelIndex.constraint_roles(c)
+    roles = [r["role_name"] for r in model.roles(fact_id)]
+    if not keys or set(keys) - set(roles):
+        raise ExportInputError(f"{c['id']}: frequency roles must belong to {fact_id}")
+    others = [r for r in roles if r not in keys]
+    if not others:
+        raise ExportInputError(f"{c['id']}: frequency over every role counts duplicate rows; GND reports it")
+    bound = c.get("bound") or {}
+    atom = Atom(fact_id, tuple(f"${r}" for r in roles))
+    count = Count(tuple(f"${r}" for r in others), tuple(f"${r}" for r in keys))
+    witness = tuple(f"${r}" for r in keys)
+    found = []
+    for part, operator in (("min", ">="), ("max", "<=")):
+        if bound.get(part) is not None:
+            found.append(Requirement(c["id"], "frequency", c["modality"], _quote(c), (atom,),
+                                     Check("compare", compare=Compare(operator, count, int(bound[part]))),
+                                     witness, ("any", (fact_id,)), (fact_id,), part=part))
+    if not found:
+        raise ExportInputError(f"{c['id']}: a frequency bound needs min or max")
+    return found
+
+
+_RING_COMBINED = {"asymmetric-intransitive": ("asymmetric", "intransitive"),
+                  "acyclic-intransitive": ("acyclic", "intransitive"),
+                  "symmetric-irreflexive": ("symmetric", "irreflexive"),
+                  "symmetric-intransitive": ("symmetric", "intransitive")}
+
+
+def _ring(model: _Model, c: dict[str, Any], fact_id: str) -> list[Requirement]:
+    roles = model.roles(fact_id)
+    if len(roles) != 2 or len({model.primitive(r["object_type"]) for r in roles}) != 1:
+        raise ExportInputError(f"{c['id']}: a ring constraint needs a binary fact type over one type")
+    variant = c.get("variant")
+    components = _RING_COMBINED.get(variant, (variant,))
+    primitive = model.primitive(roles[0]["object_type"])
+    F = lambda a, b: Atom(fact_id, (a, b))
+    needs_reverse = {"asymmetric", "antisymmetric", "symmetric"} & set(components)
+    if needs_reverse:
+        model.helper(f"{fact_id}_reverse", [("a", primitive), ("b", primitive)], "reverse", fact=fact_id)
+    if "acyclic" in components:
+        model.helper(f"{fact_id}_closure", [("a", primitive), ("b", primitive)], "closure", fact=fact_id)
+    R = lambda a, b: Atom(f"{fact_id}_reverse", (a, b))
+    table = {
+        "irreflexive": ((F("$x", "$y"),), Check("compare", compare=Compare("!=", "$x", "$y")), ("$x", "$y")),
+        "asymmetric": ((F("$x", "$y"),), Check("absent", atom=R("$x", "$y")), ("$x", "$y")),
+        "antisymmetric": ((F("$x", "$y"), R("$x", "$y")), Check("compare", compare=Compare("=", "$x", "$y")), ("$x", "$y")),
+        "symmetric": ((F("$x", "$y"),), Check("holds", atom=R("$x", "$y")), ("$x", "$y")),
+        "intransitive": ((F("$x", "$y"), F("$y", "$z")), Check("absent", atom=F("$x", "$z")), ("$x", "$y", "$z")),
+        "transitive": ((F("$x", "$y"), F("$y", "$z")), Check("holds", atom=F("$x", "$z")), ("$x", "$y", "$z")),
+        "acyclic": ((Atom(f"{fact_id}_closure", ("$x", "$y")),), Check("compare", compare=Compare("!=", "$x", "$y")), ("$x",)),
+        "purely-reflexive": ((F("$x", "$y"),), Check("compare", compare=Compare("=", "$x", "$y")), ("$x", "$y")),
+        "reflexive": ((F("$x", "$y"),), Check("holds", atom=F("$x", "$x")), ("$x",)),
+    }
+    found = []
+    for component in components:
+        if component not in table:
+            raise ExportInputError(f"{c['id']}: ring variant {variant!r} is not supported")
+        domain, check, witness = table[component]
+        found.append(Requirement(c["id"], "ring", c["modality"], _quote(c), domain, check, witness,
+                                 ("any", (fact_id,)), (fact_id,), part=component,
+                                 info=(("components", list(components)), ("fact", fact_id),
+                                       ("roles", [r["role_name"] for r in roles]))))
+    return found
+
+
+def _cardinality(model: _Model, c: dict[str, Any]) -> list[Requirement]:
+    bound, scope = c.get("bound") or {}, c.get("scope")
+    if scope == "object":
+        domain, facts = (Atom(f"{c['object_type']}_any", ("$x",)),), ()
+    elif scope == "role":
+        ref = c.get("role_ref") or {}
+        atom = _seq_atom(model, [ref], ["$x"], c["id"])
+        domain, facts = (atom,), (atom.relation,)
+    else:
+        raise ExportInputError(f"{c['id']}: cardinality scope must be object or role")
+    info = (("scope", scope), ("min", bound.get("min")), ("max", bound.get("max")))
+    found = [Requirement(c["id"], "cardinality", c["modality"], _quote(c), domain, Check("none"), ("$x",),
+                         ("any", facts), facts, part="members", listing=True, info=info)]
+    for part, operator in (("min", ">="), ("max", "<=")):
+        if bound.get(part) is not None:
+            found.append(Requirement(c["id"], "cardinality", c["modality"], _quote(c), domain,
+                                     Check("compare", compare=Compare(operator, Count(("$x",)), int(bound[part]))),
+                                     ("$x",), ("any", facts), facts, part=part, info=info))
+    return found
+
 
 
 def _uniqueness(model: _Model, c: dict[str, Any], fact_id: str) -> Requirement | None:
@@ -291,9 +500,12 @@ def _refuse_unsupported_model(doc: dict[str, Any]) -> None:
                                    "computed ones, which the rules programs do not reproduce yet (later phase)")
 
 
-def requirements(doc: dict[str, Any]) -> list[Requirement]:
-    """Lower every supported constraint to one requirement, in model order. One walk for all families."""
-    model = _Model(doc)
+def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requirement]:
+    """Lower every supported constraint to requirements, in model order. One walk for all families.
+
+    Helper relations the lowering needs are registered on ``model``; pass the model you render with.
+    """
+    model = model if model is not None else _Model(doc)
     _refuse_unsupported_model(doc)
     found: list[Requirement] = []
     for fact_id, fact in model.facts.items():
@@ -302,9 +514,17 @@ def requirements(doc: dict[str, Any]) -> list[Requirement]:
             if c["type"] == "mandatory":
                 found.append(_mandatory(model, c, fact_id))
             elif c["type"] == "uniqueness":
+                if c.get("scope") == "external":
+                    raise ExportInputError(f"{c['id']}: external uniqueness is a later phase of the rules programs")
                 lowered = _uniqueness(model, c, fact_id)
                 if lowered is not None:
                     found.append(lowered)
+            elif c["type"] == "frequency":
+                if c.get("scope") == "external":
+                    raise ExportInputError(f"{c['id']}: external frequency is a later phase of the rules programs")
+                found += _frequency(model, c, fact_id)
+            elif c["type"] == "ring":
+                found += _ring(model, c, fact_id)
             else:
                 raise ExportInputError(f"{c['id']}: family {c['type']!r} is a later phase of the rules programs")
     for c in doc.get("constraints", []):
@@ -315,9 +535,35 @@ def requirements(doc: dict[str, Any]) -> list[Requirement]:
             found.append(_subset(model, c))
         elif family == "value":
             found.append(_value(model, c))
+        elif family == "mandatory-disjunctive":
+            found += _mandatory_disjunctive(model, c)
+        elif family == "equality":
+            found += _equality(model, c)
+        elif family == "exclusion":
+            found += _exclusion(model, c)
+        elif family == "exclusive-or":
+            found += _exclusive_or(model, c)
+        elif family == "cardinality":
+            found += _cardinality(model, c)
+        elif family in ("uniqueness", "frequency") and c.get("scope") == "external":
+            raise ExportInputError(f"{c.get('id')}: external {family} is a later phase of the rules programs")
+        elif family == "textual":
+            model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"]})
         else:
             raise ExportInputError(f"{c.get('id')}: family {family!r} is a later phase of the rules programs")
+    _refuse_name_collisions(model, found)
     return found
+
+
+def _refuse_name_collisions(model: _Model, found: list[Requirement]) -> None:
+    """Helper relations share the fact types' namespace, so a fact type may not take a generated name."""
+    used = {atom.relation for r in found for atom in (*r.domain, *([r.check.atom] if r.check.atom else []))}
+    generated = set(model.helpers) | ({f"{o}_any" for o in model.objects} & used) | {
+        f"{r.id}_allowed" for r in found if r.family == "value"}
+    clash = sorted(generated & set(model.facts))
+    if clash:
+        raise ExportInputError(f"fact type {clash[0]!r} has the name of a relation the rules programs generate "
+                               "(<fact>_reverse, <fact>_closure, <id>_plays, <id>_allowed, <type>_any); rename it")
 
 
 # ---------------------------------------------------------------- rendering
@@ -361,6 +607,8 @@ def _types(model: _Model, req: Requirement) -> dict[str, str]:
 
 
 def _relation_roles(model: _Model, relation: str) -> list[tuple[str, str]]:
+    if relation in model.helpers:
+        return list(model.helpers[relation]["fields"])
     if relation in model.facts:
         return [(r["role_name"], model.role_type(relation, r["role_name"])) for r in model.roles(relation)]
     if relation.endswith("_allowed"):
@@ -386,6 +634,9 @@ def _atom_text(atom: Atom, names: _Names, model: _Model) -> str:
 
 
 def _operand(value: Any, names: _Names) -> str:
+    if isinstance(value, Count):
+        text = f"aggregates.count({', '.join(names.var(v) for v in value.of)})"
+        return text + (f".per({', '.join(names.var(v) for v in value.per)})" if value.per else "")
     return names.var(value) if isinstance(value, str) and value.startswith("$") else repr(value)
 
 
@@ -399,6 +650,8 @@ def _check_text(check: Check, names: _Names, model: _Model, *, negate: bool) -> 
     if check.kind == "compare":
         op = _NEGATED[check.compare.operator] if negate else check.compare.operator
         return [f"{_operand(check.compare.left, names)} {_PYOP[op]} {_operand(check.compare.right, names)}"]
+    if check.kind == "none":
+        return []
     if check.kind == "same":
         if negate:
             if len(check.pairs) == 1:
@@ -411,6 +664,8 @@ def _check_text(check: Check, names: _Names, model: _Model, *, negate: bool) -> 
 
 
 def require_text(req: Requirement, names: _Names, model: _Model) -> str:
+    if req.listing:
+        return f"(listing for the report) {denial_text(req, names, model)}"
     domain = ", ".join(_atom_text(a, names, model) for a in req.domain)
     check = ", ".join(_check_text(req.check, names, model, negate=False))
     return f"m.where({domain}).require({check})"
@@ -435,8 +690,7 @@ def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[st
             args = ", ".join("x" if r["role_name"] == role_name else f"{model.role_type(fact_id, r['role_name'])}.ref()"
                              for r in model.roles(fact_id))
             lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(x))")
-        rosters = [object_id] + sorted(o for o, obj in model.objects.items()
-                                       if (obj.get("reference") or {}).get("value_type") == object_id)
+        rosters = _rosters(model, object_id)
         lines.append(f"    for value in [v for key in {rosters!r} for v in instances.get(key, [])]:")
         lines.append(f"        m.define({rel}(value))")
     return lines
@@ -445,12 +699,55 @@ def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[st
 def _allowed(model: _Model, reqs: list[Requirement], names: _Names) -> list[str]:
     lines = []
     for c in model.doc.get("constraints", []):
-        if c.get("type") == "value" and any(r.id == c["id"] for r in reqs):
+        if c.get("type") == "value" and "allowed" in c and any(r.id == c["id"] for r in reqs):
             rel = names.relation(f"{c['id']}_allowed")
             primitive = model.primitive(c["object_type"])
             lines.append(f"    # {c['id']}: the declared list of allowed values")
             lines.append(f"    {rel} = m.Relationship(fields=[Field('value', {primitive})], short_name='{c['id']}_allowed')")
             lines.append(f"    m.define(*[{rel}(v) for v in {c['allowed']!r}])")
+    return lines
+
+
+def _helpers(model: _Model, names: _Names) -> list[str]:
+    """Render every registered helper relation: reverses, closures, role-player sets and ranges."""
+    lines = []
+    for name, spec in model.helpers.items():
+        rel = names.relation(name)
+        fields = ", ".join(f"Field({field!r}, {primitive})" for field, primitive in spec["fields"])
+        lines.append(f"    {rel} = m.Relationship(fields=[{fields}], short_name={name!r})")
+        if spec["kind"] == "reverse":
+            primitive = spec["fields"][0][1]
+            fact = names.relation(spec["fact"])
+            lines.insert(-1, f"    # {spec['fact']} read backwards (joining a relation with itself, swapped, trips a PyRel 1.30.1 bug)")
+            lines.append(f"    h_a, h_b = {primitive}.ref(), {primitive}.ref()")
+            lines.append(f"    m.where({fact}(h_a, h_b)).define({rel}(h_b, h_a))")
+        elif spec["kind"] == "closure":
+            primitive = spec["fields"][0][1]
+            fact = names.relation(spec["fact"])
+            lines.insert(-1, f"    # every pair connected by a chain of {spec['fact']} facts (recursive)")
+            lines.append(f"    h_a, h_b, h_c = {primitive}.ref(), {primitive}.ref(), {primitive}.ref()")
+            lines.append(f"    m.where({fact}(h_a, h_b)).define({rel}(h_a, h_b))")
+            lines.append(f"    m.where({rel}(h_a, h_b), {fact}(h_b, h_c)).define({rel}(h_a, h_c))")
+        elif spec["kind"] == "plays":
+            lines.insert(-1, f"    # every instance that plays one of the roles {[f'{f}.{r}' for f, r in spec['refs']]}")
+            for fact_id, role_name in spec["refs"]:
+                args = ", ".join("h_x" if r["role_name"] == role_name else f"{model.role_type(fact_id, r['role_name'])}.ref()"
+                                 for r in model.roles(fact_id))
+                lines.append(f"    h_x = {spec['fields'][0][1]}.ref()")
+                lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(h_x))")
+        elif spec["kind"] == "ranges":
+            universe = names.relation(f"{spec['object_type']}_any")
+            lines.insert(-1, f"    # the values of {spec['object_type']} that fall inside a declared range")
+            for bounds in spec["ranges"]:
+                conditions = []
+                if bounds.get("min") is not None:
+                    conditions.append(f"h_x {'>=' if bounds.get('min_inclusive', True) else '>'} {bounds['min']!r}")
+                if bounds.get("max") is not None:
+                    conditions.append(f"h_x {'<=' if bounds.get('max_inclusive', True) else '<'} {bounds['max']!r}")
+                lines.append(f"    h_x = {spec['fields'][0][1]}.ref()")
+                lines.append(f"    m.where({universe}(h_x){''.join(', ' + c for c in conditions)}).define({rel}(h_x))")
+        else:
+            raise ExportInputError(f"unknown helper kind {spec['kind']}")
     return lines
 
 
@@ -480,43 +777,177 @@ def _rule_block(req: Requirement, model: _Model, names: _Names, target: str) -> 
     lines = [f"    # {req.id} ({strength}): {req.quote}"]
     if variables:
         lines.append(_declare(variables, types, names))
+    key = f"{req.id}::{req.part}" if req.part else req.id
     if target == "lqp":
+        if req.listing:
+            return lines[:1] + ["    #   (the DuckDB version also lists the members to report them; nothing to require)"]
         lines.append(f"    {require_text(req, names, model)}")
+    elif req.listing:
+        lines.append("    #   listing the members the report names when the count is out of bounds")
+        lines.append(f"    found[{key!r}] = rows({denial_text(req, names, model)})")
     else:
         lines.append(f"    #   rule:      {require_text(req, names, model)}")
         lines.append("    #   violation: the facts that match the domain and fail the check")
-        lines.append(f"    found[{req.id!r}] = rows({denial_text(req, names, model)})")
+        lines.append(f"    found[{key!r}] = rows({denial_text(req, names, model)})")
     return lines
 
 
 def _require_count(req: Requirement) -> int:
     """PyRel compiles each statement passed to require() into its own Require node."""
+    if req.listing:
+        return 0
     return len(req.check.pairs) if req.check.kind == "same" else 1
 
 
 def _rules_table(reqs: list[Requirement]) -> str:
-    rows = [{"id": r.id, "family": r.family, "modality": r.modality, "witness": list(r.witness),
-             "vacuous_when": [r.vacuous_when[0], list(r.vacuous_when[1])], "requires": _require_count(r)}
+    rows = [{"id": r.id, "part": r.part, "family": r.family, "modality": r.modality, "witness": list(r.witness),
+             "vacuous_when": [r.vacuous_when[0], list(r.vacuous_when[1])], "requires": _require_count(r),
+             "info": dict(r.info)}
             for r in reqs]
     return json.dumps(rows, indent=1)
 
 
 _DUCKDB_MAIN = '''
 
-def report(population, found):
-    """One line per rule; exit 1 on any must-rule violation, else 2 if a rule was vacuous, else 0.
+GROUPED = ('mandatory-disjunctive', 'equality', 'exclusion', 'exclusive-or', 'frequency', 'ring', 'cardinality')
 
-    A fact list the input does not provide is empty here, as in GND's checker.
+
+def scalar_key(value):
+    """GND's canonical order for one value: booleans, then numbers by value, then strings, then null."""
+    if isinstance(value, bool):
+        return (0, int(value), '')
+    if isinstance(value, (int, float)):
+        return (1, Fraction(value), '')
+    if isinstance(value, str):
+        return (2, 0, value)
+    return (3, 0, '')
+
+
+def canon(value):
+    """Rows compare value by value, a shorter row first when one is a prefix of the other."""
+    return tuple(scalar_key(v) for v in value) if isinstance(value, (list, tuple)) else scalar_key(value)
+
+
+def cycle_witness(pairs):
+    """The one cycle GND reports: depth-first from each node in canonical order, successors in fact order.
+
+    The requirement (closure x != y) decides whether the rule is broken; this only picks the same
+    witness GND prints (semantic_spec.ring_cycle_witness).
+    """
+    nodes = sorted({v for pair in pairs for v in pair}, key=scalar_key)
+    index = {json.dumps(v): i for i, v in enumerate(nodes)}
+    successors = [[] for _ in nodes]
+    for a, b in pairs:
+        successors[index[json.dumps(a)]].append(index[json.dumps(b)])
+    colour, parent = [0] * len(nodes), [-1] * len(nodes)
+    for start in range(len(nodes)):
+        if colour[start]:
+            continue
+        colour[start] = 1
+        stack = [(start, 0)]
+        while stack:
+            node, next_index = stack[-1]
+            if next_index >= len(successors[node]):
+                colour[node] = 2
+                stack.pop()
+                continue
+            stack[-1] = (node, next_index + 1)
+            successor = successors[node][next_index]
+            if colour[successor] == 0:
+                colour[successor], parent[successor] = 1, node
+                stack.append((successor, 0))
+            elif colour[successor] == 1:
+                path = [node]
+                while path[-1] != successor:
+                    path.append(parent[path[-1]])
+                return [nodes[i] for i in reversed(path)] + [nodes[successor]]
+    return []
+
+
+def distinct_sorted(rows_):
+    seen = {json.dumps(list(row)): list(row) for row in rows_}
+    return sorted(seen.values(), key=canon)
+
+
+def judge(parts, found, facts):
+    """One constraint made of several requirements: (status, witness list) in GND's shape."""
+    head = parts[0]
+    family, info = head['family'], head['info']
+    rows_of = {part['part']: found[f"{part['id']}::{part['part']}" if part['part'] else part['id']] for part in parts}
+    if family == 'cardinality':
+        members = [row[0] for row in distinct_sorted(rows_of['members'])]
+        if not members:
+            if info.get('min'):
+                return 'fail', []
+            return 'vacuous', None
+        count = len(members)
+        low = info.get('min') is not None and count < info['min']
+        high = info.get('max') is not None and count > info['max']
+        return ('fail', sorted(members, key=canon)) if low or high else ('pass', None)
+    if family == 'mandatory-disjunctive':
+        witness = sorted({row[0] for row in rows_of['']}, key=canon)
+    elif family == 'equality':
+        witness = distinct_sorted(rows_of['a_not_b']) + distinct_sorted(rows_of['b_not_a'])
+    elif family == 'exclusion':
+        witness = distinct_sorted(rows_of[''])
+    elif family == 'exclusive-or':
+        both = [row for name, rows_ in rows_of.items() if name.startswith('both_') for row in rows_]
+        witness = distinct_sorted(both) + distinct_sorted(rows_of['none'])
+    elif family == 'frequency':
+        witness = distinct_sorted(rows_of.get('min', []) + rows_of.get('max', []))
+    elif family == 'ring':
+        witness = []
+        for component in info['components']:
+            component_rows = rows_of[component]
+            if component == 'acyclic':
+                if component_rows:
+                    first, second = info['roles']
+                    witness.append(cycle_witness([(row[first], row[second]) for row in facts.get(info['fact'], [])]))
+            else:
+                witness += distinct_sorted(component_rows)
+    else:
+        raise ValueError(f'unknown grouped family {family}')
+    return ('fail', witness) if witness else ('pass', None)
+
+
+def report(population, found):
+    """One line per rule. Exit 1 on any must-rule violation, else 4 if a must-rule is not checked,
+    else 2 if a rule was vacuous, else 0.
+
+    GND's checker reads every fact list, covered or not; only mandatory roles treat a fact
+    list missing from the input's covers as unknown, and report the rule vacuous.
     """
     facts = population['facts']
-    violated = vacuous = False
+    instances = population.get('instances', {})
+    covers = set(population['population']['covers'])
+    violated = vacuous = unchecked = False
+    groups = {}
     for rule in RULES:
-        name = rule['id']
+        groups.setdefault(rule['id'], []).append(rule)
+    for name, parts in groups.items():
+        rule = parts[0]
         mode, lists = rule['vacuous_when']
         empty = [not facts.get(ref) for ref in lists]
-        if lists and (any(empty) if mode == 'any' else all(empty)):
+        if mode == 'universe':   # no facts and no roster members: nothing to check
+            nothing = all(empty) and not any(instances.get(key) for key in rule['info']['rosters'])
+        else:
+            nothing = bool(lists) and (any(empty) if mode == 'any' else all(empty))
+        uncovered = [ref for ref in rule['info'].get('uncovered_vacuous', []) if ref not in covers]
+        if uncovered or nothing:
             print(f'{name}  vacuous  (no facts for it to apply to)')
             vacuous = True
+            continue
+        status = 'violated' if rule['modality'] == 'alethic' else 'warning'
+        if rule['family'] in GROUPED:
+            verdict, witness = judge(parts, found, facts)
+            if verdict == 'vacuous':
+                print(f'{name}  vacuous  (no facts for it to apply to)')
+                vacuous = True
+            elif verdict == 'pass':
+                print(f'{name}  OK')
+            else:
+                print(f'{name}  {status}  {json.dumps(witness)}')
+                violated = violated or status == 'violated'
             continue
         hits = witnesses(rule, found[name])
         if not hits:
@@ -525,7 +956,10 @@ def report(population, found):
         for hit in hits:
             print(f'{name}  {status}  {json.dumps(hit, sort_keys=True)}')
         violated = violated or (bool(hits) and status == 'violated')
-    return 1 if violated else 2 if vacuous else 0
+    for rule in UNCHECKED:
+        print(f"{rule['id']}  not checked  (textual rule: {rule['expression']})")
+        unchecked = unchecked or rule['modality'] == 'alethic'
+    return 1 if violated else 4 if unchecked else 2 if vacuous else 0
 
 
 def witnesses(rule, found):
@@ -661,7 +1095,7 @@ def render(model_path: Path, target: str) -> str:
         raise ExportInputError(f"invalid model: {error}") from error
     doc = _parse_document(raw.decode("utf-8"))
     model = _Model(doc)
-    reqs = requirements(doc)
+    reqs = requirements(doc, model)
     names = _Names(model)
     spanning = spanning_uniqueness(doc)
     spanning_note = (f"Spanning uniqueness ({', '.join(spanning)}) can only be broken by duplicate rows. PyRel\n"
@@ -693,8 +1127,10 @@ def render(model_path: Path, target: str) -> str:
     out = [
         f"# /// script\n# requires-python = \">=3.11,<3.14\"\n# dependencies = [\"relationalai=={PYREL_VERSION}\"]\n# ///",
         header.rstrip("\n").replace("Generated by", spanning_note + "Generated by", 1),
-        "from __future__ import annotations\n\nimport json\nimport os\nimport re\nimport sys\nimport tempfile",
-        f"\nSCHEMA = {schema!r}\nRULES = json.loads({_rules_table(reqs)!r})\nLIMIT = 1 << 20\n",
+        "from __future__ import annotations\n\nimport json\nimport os\nimport re\nimport sys\nimport tempfile"
+        + ("\nfrom fractions import Fraction" if target == "duckdb" else ""),
+        (f"\nSCHEMA = {schema!r}\nRULES = json.loads({_rules_table(reqs)!r})\n"
+         f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\nLIMIT = 1 << 20\n"),
         ("\ndef read_population(path):\n"
         "    with open(path, 'rb') as handle:\n"
         "        raw = handle.read(LIMIT + 1)\n"
@@ -703,11 +1139,13 @@ def render(model_path: Path, target: str) -> str:
         "    document = json.loads(raw)\n"
         "    if not isinstance(document.get('facts'), dict):\n"
         "        raise KeyError('facts')\n"
-        "    covers = (document.get('population') or {}).get('covers')\n"
+        "    header = document.setdefault('population', {})\n"
+        "    if not isinstance(header, dict):\n"
+        "        raise ValueError('population header must be a mapping')\n"
+        "    covers = header.setdefault('covers', [])   # absent covers: nothing is vouched for\n"
         "    if not isinstance(covers, list):\n"
-        "        raise ValueError('the population must declare covers: the fact lists it vouches for')\n"
-        "    # As in GND's checker, a fact list the input does not cover is treated as empty.\n"
-        "    document['facts'] = {name: document['facts'].get(name, []) for name in covers}\n"
+        "        raise ValueError('covers must be a list of fact types')\n"
+        "    # GND's checker reads every fact list; only mandatory roles consult covers (see report).\n"
         "    for fact_type, rows_ in document['facts'].items():\n"
         "        seen = set()\n"
         "        for row in rows_:\n"
@@ -724,6 +1162,7 @@ def render(model_path: Path, target: str) -> str:
         "    return sorted(list(row) for row in query.to_df().itertuples(index=False, name=None))\n"),
         "\ndef build(population, config):\n"
         "    from relationalai.semantics import Boolean, Field, Float, Integer, Model, String, not_  # noqa: F401\n"
+        "    from relationalai.semantics.std import aggregates  # noqa: F401\n"
         "    m = Model(SCHEMA, config=config)\n"
         "    facts = population['facts']\n"
         "    instances = population.get('instances', {})\n"
@@ -731,7 +1170,7 @@ def render(model_path: Path, target: str) -> str:
         "\n    # ---- facts: one relationship per fact type",
         *_relations(model, names),
     ]
-    universes = _universes(model, reqs, names) + _allowed(model, reqs, names)
+    universes = _universes(model, reqs, names) + _allowed(model, reqs, names) + _helpers(model, names)
     if universes:
         out += ["\n    # ---- helper relations the rules refer to", *universes]
     out.append("\n    # ---- rules: `require` says what must hold")
@@ -739,6 +1178,8 @@ def render(model_path: Path, target: str) -> str:
         out += _rule_block(req, model, names, target)
     for rule_id in spanning:
         out.append(f"    # {rule_id}: spanning uniqueness, broken only by a repeated fact; the input is refused instead")
+    for rule in model.unchecked:
+        out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
     if target == "duckdb":
         out.append("    return found")
     else:

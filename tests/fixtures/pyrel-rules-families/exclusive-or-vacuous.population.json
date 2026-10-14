@@ -1,0 +1,22 @@
+{
+ "population": {
+  "model": "exclusive-or.orm.json",
+  "model_id": "urn:gnd:pl13a:exclusive-or",
+  "source": "fixture",
+  "covers": [
+   "person_teaches_course",
+   "person_takes_course",
+   "person_has_nick"
+  ]
+ },
+ "facts": {
+  "person_teaches_course": [],
+  "person_takes_course": [],
+  "person_has_nick": [
+   {
+    "person": "p7",
+    "nick": "g"
+   }
+  ]
+ }
+}

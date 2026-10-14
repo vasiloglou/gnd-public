@@ -1,0 +1,3357 @@
+{
+ "generated_by": "gnd.api.check(model, population, unredacted=True)",
+ "results": {
+  "cardinality-fail": {
+   "model": "cardinality.orm.json",
+   "population": "cardinality-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 3,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "card_country_1_to_3",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of country instances is between 1 and 3 \u2014 violated: 4 observed."
+    },
+    {
+     "id": "card_person_id_max_4",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "cardinality",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of person_id instances is at most 4 \u2014 violated: 5 observed."
+    },
+    {
+     "id": "card_head_max_1",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p2",
+      "p3",
+      "p4",
+      "p5"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of distinct player of person_heads_country.persons is at most 1 \u2014 violated: 4 observed."
+    },
+    {
+     "id": "card_resident_min_2",
+     "constraint_ref": "constraints[3]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p1"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of distinct player of person_lives_in_country.persons is at least 2 \u2014 violated: 1 observed."
+    }
+   ]
+  },
+  "cardinality-pass-at-bounds": {
+   "model": "cardinality.orm.json",
+   "population": "cardinality-pass-at-bounds.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 4,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "card_country_1_to_3",
+    "card_person_id_max_4",
+    "card_head_max_1",
+    "card_resident_min_2"
+   ],
+   "verdicts": []
+  },
+  "cardinality-role-vacuous": {
+   "model": "cardinality.orm.json",
+   "population": "cardinality-role-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 1
+   },
+   "pass": [
+    "card_country_1_to_3",
+    "card_person_id_max_4",
+    "card_head_max_1"
+   ],
+   "verdicts": [
+    {
+     "id": "card_resident_min_2",
+     "constraint_ref": "constraints[3]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_lives_in_country' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "cardinality-roster-only": {
+   "model": "cardinality.orm.json",
+   "population": "cardinality-roster-only.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 3
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "card_country_1_to_3",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of country instances is between 1 and 3 \u2014 violated: 4 observed."
+    },
+    {
+     "id": "card_person_id_max_4",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "cardinality",
+     "modality": "deontic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Object type 'person_id' has no instances in this population \u2014 no fact type gives it a population and no instances: roster supplies one \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "card_head_max_1",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_heads_country' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "card_resident_min_2",
+     "constraint_ref": "constraints[3]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_lives_in_country' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "cardinality-uncovered-fail": {
+   "model": "cardinality.orm.json",
+   "population": "cardinality-uncovered-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 3,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "card_country_1_to_3",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of country instances is between 1 and 3 \u2014 violated: 4 observed."
+    },
+    {
+     "id": "card_person_id_max_4",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "cardinality",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of person_id instances is at most 4 \u2014 violated: 5 observed."
+    },
+    {
+     "id": "card_head_max_1",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p2",
+      "p3",
+      "p4",
+      "p5"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of distinct player of person_heads_country.persons is at most 1 \u2014 violated: 4 observed."
+    },
+    {
+     "id": "card_resident_min_2",
+     "constraint_ref": "constraints[3]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p1"
+     ],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "list of str",
+     "message": "The number of distinct player of person_lives_in_country.persons is at least 2 \u2014 violated: 1 observed."
+    }
+   ]
+  },
+  "cardinality-vacuous": {
+   "model": "cardinality.orm.json",
+   "population": "cardinality-vacuous.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 3
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "card_country_1_to_3",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "flat list of ALL distinct instances counted (object scope) or ALL distinct role players (role scope), sorted -- not just the excess; [] when 0 observed",
+     "shape": "empty list",
+     "message": "The number of country instances is between 1 and 3 \u2014 violated: 0 observed."
+    },
+    {
+     "id": "card_person_id_max_4",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "cardinality",
+     "modality": "deontic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Object type 'person_id' has no instances in this population \u2014 no fact type gives it a population and no instances: roster supplies one \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "card_head_max_1",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_heads_country' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "card_resident_min_2",
+     "constraint_ref": "constraints[3]",
+     "constraint_type": "cardinality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_lives_in_country' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "equality-fail": {
+   "model": "equality.orm.json",
+   "population": "equality-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "eq_sbp_dbp",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p3"
+      ],
+      [
+       "p4"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_has_sbp.patient) and (patient_has_dbp.patient) are equal \u2014 violated: 'p3' only in the first; 'p4' only in the second."
+    },
+    {
+     "id": "eq_visits_likes",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1",
+       "c2"
+      ],
+      [
+       "p2",
+       "c1"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_visits_city.patient, patient_visits_city.city) and (patient_likes_city.patient, patient_likes_city.city) are equal \u2014 violated: ('p1', 'c2') only in the first; ('p2', 'c1') only in the second."
+    }
+   ]
+  },
+  "equality-fail-order": {
+   "model": "equality.orm.json",
+   "population": "equality-fail-order.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "eq_sbp_dbp",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p10"
+      ],
+      [
+       "p9"
+      ],
+      [
+       "p0"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_has_sbp.patient) and (patient_has_dbp.patient) are equal \u2014 violated: 'p10', 'p9' only in the first; 'p0' only in the second."
+    },
+    {
+     "id": "eq_visits_likes",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1",
+       "c1"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_visits_city.patient, patient_visits_city.city) and (patient_likes_city.patient, patient_likes_city.city) are equal \u2014 violated: ('p1', 'c1') only in the second."
+    }
+   ]
+  },
+  "equality-one-side-empty": {
+   "model": "equality.orm.json",
+   "population": "equality-one-side-empty.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "eq_sbp_dbp",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_has_sbp.patient) and (patient_has_dbp.patient) are equal \u2014 violated: 'p1' only in the first."
+    },
+    {
+     "id": "eq_visits_likes",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p2",
+       "c1"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_visits_city.patient, patient_visits_city.city) and (patient_likes_city.patient, patient_likes_city.city) are equal \u2014 violated: ('p2', 'c1') only in the second."
+    }
+   ]
+  },
+  "equality-pass": {
+   "model": "equality.orm.json",
+   "population": "equality-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "eq_sbp_dbp",
+    "eq_visits_likes"
+   ],
+   "verdicts": []
+  },
+  "equality-uncovered-fail": {
+   "model": "equality.orm.json",
+   "population": "equality-uncovered-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "eq_sbp_dbp",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p3"
+      ],
+      [
+       "p4"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_has_sbp.patient) and (patient_has_dbp.patient) are equal \u2014 violated: 'p3' only in the first; 'p4' only in the second."
+    },
+    {
+     "id": "eq_visits_likes",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1",
+       "c2"
+      ],
+      [
+       "p2",
+       "c1"
+      ]
+     ],
+     "note": "list of 1-tuples/n-tuples (lists): all tuples only in role_seq_a (sorted) then all only in role_seq_b (sorted); no side marker",
+     "shape": "list of list of str",
+     "message": "The populations of (patient_visits_city.patient, patient_visits_city.city) and (patient_likes_city.patient, patient_likes_city.city) are equal \u2014 violated: ('p1', 'c2') only in the first; ('p2', 'c1') only in the second."
+    }
+   ]
+  },
+  "equality-vacuous": {
+   "model": "equality.orm.json",
+   "population": "equality-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 2
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "eq_sbp_dbp",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'patient_has_sbp', 'patient_has_dbp' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "eq_visits_likes",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "equality",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'patient_visits_city', 'patient_likes_city' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "exclusion-fail": {
+   "model": "exclusion.orm.json",
+   "population": "exclusion-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "ex_married_widowed",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusion",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1"
+      ],
+      [
+       "p2"
+      ]
+     ],
+     "note": "list of tuples (lists) present in both sequences; sorted",
+     "shape": "list of list of str",
+     "message": "No tuple appears in both (person_married_in.person) and (person_widowed_in.person) \u2014 violated by: 'p1', 'p2'."
+    },
+    {
+     "id": "ex_owns_rents",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "exclusion",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1",
+       "c1"
+      ],
+      [
+       "p2",
+       "c2"
+      ]
+     ],
+     "note": "list of tuples (lists) present in both sequences; sorted",
+     "shape": "list of list of str",
+     "message": "No tuple appears in both (person_owns_car.person, person_owns_car.car) and (person_rents_car.person, person_rents_car.car) \u2014 violated by: ('p1', 'c1'), ('p2', 'c2')."
+    }
+   ]
+  },
+  "exclusion-one-side-empty": {
+   "model": "exclusion.orm.json",
+   "population": "exclusion-one-side-empty.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "ex_married_widowed",
+    "ex_owns_rents"
+   ],
+   "verdicts": []
+  },
+  "exclusion-pass": {
+   "model": "exclusion.orm.json",
+   "population": "exclusion-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "ex_married_widowed",
+    "ex_owns_rents"
+   ],
+   "verdicts": []
+  },
+  "exclusion-uncovered-fail": {
+   "model": "exclusion.orm.json",
+   "population": "exclusion-uncovered-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "ex_married_widowed",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusion",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1"
+      ],
+      [
+       "p2"
+      ]
+     ],
+     "note": "list of tuples (lists) present in both sequences; sorted",
+     "shape": "list of list of str",
+     "message": "No tuple appears in both (person_married_in.person) and (person_widowed_in.person) \u2014 violated by: 'p1', 'p2'."
+    },
+    {
+     "id": "ex_owns_rents",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "exclusion",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1",
+       "c1"
+      ],
+      [
+       "p2",
+       "c2"
+      ]
+     ],
+     "note": "list of tuples (lists) present in both sequences; sorted",
+     "shape": "list of list of str",
+     "message": "No tuple appears in both (person_owns_car.person, person_owns_car.car) and (person_rents_car.person, person_rents_car.car) \u2014 violated by: ('p1', 'c1'), ('p2', 'c2')."
+    }
+   ]
+  },
+  "exclusion-vacuous": {
+   "model": "exclusion.orm.json",
+   "population": "exclusion-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 2
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "ex_married_widowed",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusion",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_married_in', 'person_widowed_in' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "ex_owns_rents",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "exclusion",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_owns_car', 'person_rents_car' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "exclusive-or-fail-both": {
+   "model": "exclusive-or.orm.json",
+   "population": "exclusive-or-fail-both.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_teach_or_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p1"
+      ],
+      [
+       "p2"
+      ]
+     ],
+     "note": "single-role: list of [value] 1-lists: 'plays more than one' first (sorted), then 'plays none' (sorted)",
+     "shape": "list of list of str",
+     "message": "Each person plays exactly one of (person_teaches_course.person); (person_takes_course.person) \u2014 violated: 'p1', 'p2' plays more than one."
+    }
+   ]
+  },
+  "exclusive-or-fail-both-and-neither": {
+   "model": "exclusive-or.orm.json",
+   "population": "exclusive-or-fail-both-and-neither.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_teach_or_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p5"
+      ],
+      [
+       "p0"
+      ],
+      [
+       "p9"
+      ]
+     ],
+     "note": "single-role: list of [value] 1-lists: 'plays more than one' first (sorted), then 'plays none' (sorted)",
+     "shape": "list of list of str",
+     "message": "Each person plays exactly one of (person_teaches_course.person); (person_takes_course.person) \u2014 violated: 'p5' plays more than one; 'p0', 'p9' plays none."
+    }
+   ]
+  },
+  "exclusive-or-fail-neither": {
+   "model": "exclusive-or.orm.json",
+   "population": "exclusive-or-fail-neither.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_teach_or_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p7"
+      ],
+      [
+       "p8"
+      ]
+     ],
+     "note": "single-role: list of [value] 1-lists: 'plays more than one' first (sorted), then 'plays none' (sorted)",
+     "shape": "list of list of str",
+     "message": "Each person plays exactly one of (person_teaches_course.person); (person_takes_course.person) \u2014 violated: 'p7', 'p8' plays none."
+    }
+   ]
+  },
+  "exclusive-or-multi-fail-both": {
+   "model": "exclusive-or-multi.orm.json",
+   "population": "exclusive-or-multi-fail-both.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_multi_teach_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p2",
+       "c2"
+      ]
+     ],
+     "note": "multi-role: list of tuples present in more than one sequence",
+     "shape": "list of list of str",
+     "message": "No tuple appears in more than one of (person_teaches_course.person, person_teaches_course.course); (person_takes_course.person, person_takes_course.course) \u2014 violated by: ('p2', 'c2'). This is the EXCLUSION half of the exclusive-or; its disjunctive half has no universe over multi-role sequences and was not evaluated, but a tuple appearing in two sequences violates the constraint whichever way that half would have gone."
+    }
+   ]
+  },
+  "exclusive-or-multi-fail-both-and-neither": {
+   "model": "exclusive-or-multi.orm.json",
+   "population": "exclusive-or-multi-fail-both-and-neither.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 1,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_multi_teach_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "unchecked",
+     "reason_code": "xor-disjunctive-undefined",
+     "offending_facts": [],
+     "note": "unchecked: offending_facts is []",
+     "shape": "empty list",
+     "message": "Whether each tuple plays exactly one of (person_teaches_course.person, person_teaches_course.course); (person_takes_course.person, person_takes_course.course) was NOT evaluated \u2014 reported as unchecked. The EXCLUSION half WAS evaluated and found no tuple in more than one sequence; the DISJUNCTIVE half (that every candidate tuple plays at least one) has no universe to quantify over. ORM 2 defines disjunctive-mandatory over a set of roles played by ONE object type, never over multi-role sequences, so no set of candidate tuples is defined here \u2014 and a position-wise product of the object-type populations would assert that every combination must appear, which is strictly stronger and almost always false. Declare single-role sequences if the disjunctive half must be decided."
+    }
+   ]
+  },
+  "exclusive-or-multi-fail-neither": {
+   "model": "exclusive-or-multi.orm.json",
+   "population": "exclusive-or-multi-fail-neither.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 1,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_multi_teach_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "unchecked",
+     "reason_code": "xor-disjunctive-undefined",
+     "offending_facts": [],
+     "note": "unchecked: offending_facts is []",
+     "shape": "empty list",
+     "message": "Whether each tuple plays exactly one of (person_teaches_course.person, person_teaches_course.course); (person_takes_course.person, person_takes_course.course) was NOT evaluated \u2014 reported as unchecked. The EXCLUSION half WAS evaluated and found no tuple in more than one sequence; the DISJUNCTIVE half (that every candidate tuple plays at least one) has no universe to quantify over. ORM 2 defines disjunctive-mandatory over a set of roles played by ONE object type, never over multi-role sequences, so no set of candidate tuples is defined here \u2014 and a position-wise product of the object-type populations would assert that every combination must appear, which is strictly stronger and almost always false. Declare single-role sequences if the disjunctive half must be decided."
+    }
+   ]
+  },
+  "exclusive-or-multi-pass": {
+   "model": "exclusive-or-multi.orm.json",
+   "population": "exclusive-or-multi-pass.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 1,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_multi_teach_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "unchecked",
+     "reason_code": "xor-disjunctive-undefined",
+     "offending_facts": [],
+     "note": "unchecked: offending_facts is []",
+     "shape": "empty list",
+     "message": "Whether each tuple plays exactly one of (person_teaches_course.person, person_teaches_course.course); (person_takes_course.person, person_takes_course.course) was NOT evaluated \u2014 reported as unchecked. The EXCLUSION half WAS evaluated and found no tuple in more than one sequence; the DISJUNCTIVE half (that every candidate tuple plays at least one) has no universe to quantify over. ORM 2 defines disjunctive-mandatory over a set of roles played by ONE object type, never over multi-role sequences, so no set of candidate tuples is defined here \u2014 and a position-wise product of the object-type populations would assert that every combination must appear, which is strictly stronger and almost always false. Declare single-role sequences if the disjunctive half must be decided."
+    }
+   ]
+  },
+  "exclusive-or-multi-uncovered": {
+   "model": "exclusive-or-multi.orm.json",
+   "population": "exclusive-or-multi-uncovered.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 1,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_multi_teach_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "unchecked",
+     "reason_code": "xor-disjunctive-undefined",
+     "offending_facts": [],
+     "note": "unchecked: offending_facts is []",
+     "shape": "empty list",
+     "message": "Whether each tuple plays exactly one of (person_teaches_course.person, person_teaches_course.course); (person_takes_course.person, person_takes_course.course) was NOT evaluated \u2014 reported as unchecked. The EXCLUSION half WAS evaluated and found no tuple in more than one sequence; the DISJUNCTIVE half (that every candidate tuple plays at least one) has no universe to quantify over. ORM 2 defines disjunctive-mandatory over a set of roles played by ONE object type, never over multi-role sequences, so no set of candidate tuples is defined here \u2014 and a position-wise product of the object-type populations would assert that every combination must appear, which is strictly stronger and almost always false. Declare single-role sequences if the disjunctive half must be decided."
+    }
+   ]
+  },
+  "exclusive-or-multi-vacuous": {
+   "model": "exclusive-or-multi.orm.json",
+   "population": "exclusive-or-multi-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 1
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_multi_teach_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_teaches_course', 'person_takes_course' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "exclusive-or-pass": {
+   "model": "exclusive-or.orm.json",
+   "population": "exclusive-or-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "xor_teach_or_take"
+   ],
+   "verdicts": []
+  },
+  "exclusive-or-uncovered": {
+   "model": "exclusive-or.orm.json",
+   "population": "exclusive-or-uncovered.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_teach_or_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "p7"
+      ],
+      [
+       "p8"
+      ]
+     ],
+     "note": "single-role: list of [value] 1-lists: 'plays more than one' first (sorted), then 'plays none' (sorted)",
+     "shape": "list of list of str",
+     "message": "Each person plays exactly one of (person_teaches_course.person); (person_takes_course.person) \u2014 violated: 'p7', 'p8' plays none."
+    }
+   ]
+  },
+  "exclusive-or-vacuous": {
+   "model": "exclusive-or.orm.json",
+   "population": "exclusive-or-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 1
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "xor_teach_or_take",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "exclusive-or",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_teaches_course', 'person_takes_course' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "frequency-fail-above-max": {
+   "model": "frequency.orm.json",
+   "population": "frequency-fail-above-max.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 1,
+    "fail": 3,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "f_team_min_2"
+   ],
+   "verdicts": [
+    {
+     "id": "f_panel_2_to_3",
+     "constraint_ref": "fact_types[panel_includes_expert].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "panel0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (panel in panel_includes_expert) appears at least 2 and at most 3 times \u2014 violated: 'panel0' occurs 4 times."
+    },
+    {
+     "id": "f_club_max_2",
+     "constraint_ref": "fact_types[club_includes_player].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "club0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (club in club_includes_player) appears at most 2 times \u2014 violated: 'club0' occurs 3 times."
+    },
+    {
+     "id": "f_committee_exactly_3",
+     "constraint_ref": "fact_types[committee_includes_seat].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "committee0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (committee in committee_includes_seat) appears at least 3 and at most 3 times \u2014 violated: 'committee0' occurs 4 times."
+    },
+    {
+     "id": "f_reviewer_paper_max_2",
+     "constraint_ref": "fact_types[reviewer_reviews_paper_in_round].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "r1",
+       "x1"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (reviewer, paper in reviewer_reviews_paper_in_round) appears at most 2 times \u2014 violated: ('r1', 'x1') occurs 3 times."
+    }
+   ]
+  },
+  "frequency-fail-below-min": {
+   "model": "frequency.orm.json",
+   "population": "frequency-fail-below-min.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 2,
+    "fail": 3,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "f_club_max_2",
+    "f_reviewer_paper_max_2"
+   ],
+   "verdicts": [
+    {
+     "id": "f_panel_2_to_3",
+     "constraint_ref": "fact_types[panel_includes_expert].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "panel0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (panel in panel_includes_expert) appears at least 2 and at most 3 times \u2014 violated: 'panel0' occurs 1 times."
+    },
+    {
+     "id": "f_team_min_2",
+     "constraint_ref": "fact_types[team_includes_member].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "team0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (team in team_includes_member) appears at least 2 times \u2014 violated: 'team0' occurs 1 times."
+    },
+    {
+     "id": "f_committee_exactly_3",
+     "constraint_ref": "fact_types[committee_includes_seat].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "committee0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (committee in committee_includes_seat) appears at least 3 and at most 3 times \u2014 violated: 'committee0' occurs 2 times."
+    }
+   ]
+  },
+  "frequency-fail-order": {
+   "model": "frequency.orm.json",
+   "population": "frequency-fail-order.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 3,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "f_team_min_2",
+    "f_club_max_2",
+    "f_committee_exactly_3"
+   ],
+   "verdicts": [
+    {
+     "id": "f_panel_2_to_3",
+     "constraint_ref": "fact_types[panel_includes_expert].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "panel1"
+      ],
+      [
+       "panel2"
+      ],
+      [
+       "panel4"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (panel in panel_includes_expert) appears at least 2 and at most 3 times \u2014 violated: 'panel1' occurs 1 times; 'panel2' occurs 4 times; 'panel4' occurs 5 times."
+    },
+    {
+     "id": "f_reviewer_paper_max_2",
+     "constraint_ref": "fact_types[reviewer_reviews_paper_in_round].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "r1",
+       "x9"
+      ],
+      [
+       "r2",
+       "x1"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (reviewer, paper in reviewer_reviews_paper_in_round) appears at most 2 times \u2014 violated: ('r2', 'x1') occurs 3 times; ('r1', 'x9') occurs 3 times."
+    }
+   ]
+  },
+  "frequency-pass-at-bounds": {
+   "model": "frequency.orm.json",
+   "population": "frequency-pass-at-bounds.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 5,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "f_panel_2_to_3",
+    "f_team_min_2",
+    "f_club_max_2",
+    "f_committee_exactly_3",
+    "f_reviewer_paper_max_2"
+   ],
+   "verdicts": []
+  },
+  "frequency-uncovered-fail": {
+   "model": "frequency.orm.json",
+   "population": "frequency-uncovered-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 1,
+    "fail": 3,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "f_team_min_2"
+   ],
+   "verdicts": [
+    {
+     "id": "f_panel_2_to_3",
+     "constraint_ref": "fact_types[panel_includes_expert].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "panel0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (panel in panel_includes_expert) appears at least 2 and at most 3 times \u2014 violated: 'panel0' occurs 4 times."
+    },
+    {
+     "id": "f_club_max_2",
+     "constraint_ref": "fact_types[club_includes_player].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "club0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (club in club_includes_player) appears at most 2 times \u2014 violated: 'club0' occurs 3 times."
+    },
+    {
+     "id": "f_committee_exactly_3",
+     "constraint_ref": "fact_types[committee_includes_seat].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "committee0"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (committee in committee_includes_seat) appears at least 3 and at most 3 times \u2014 violated: 'committee0' occurs 4 times."
+    },
+    {
+     "id": "f_reviewer_paper_max_2",
+     "constraint_ref": "fact_types[reviewer_reviews_paper_in_round].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "r1",
+       "x1"
+      ]
+     ],
+     "note": "list of group-key tuples (lists over the constrained roles, in roles order) whose count is outside the bound; sorted; counts only in message",
+     "shape": "list of list of str",
+     "message": "Each occurrence of (reviewer, paper in reviewer_reviews_paper_in_round) appears at most 2 times \u2014 violated: ('r1', 'x1') occurs 3 times."
+    }
+   ]
+  },
+  "frequency-vacuous": {
+   "model": "frequency.orm.json",
+   "population": "frequency-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 5
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "f_panel_2_to_3",
+     "constraint_ref": "fact_types[panel_includes_expert].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'panel_includes_expert' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "f_team_min_2",
+     "constraint_ref": "fact_types[team_includes_member].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'team_includes_member' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "f_club_max_2",
+     "constraint_ref": "fact_types[club_includes_player].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "deontic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'club_includes_player' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "f_committee_exactly_3",
+     "constraint_ref": "fact_types[committee_includes_seat].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'committee_includes_seat' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "f_reviewer_paper_max_2",
+     "constraint_ref": "fact_types[reviewer_reviews_paper_in_round].constraints[0]",
+     "constraint_type": "frequency",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'reviewer_reviews_paper_in_round' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "mandatory-disjunctive-fail": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "md_passport_or_licence",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "mandatory-disjunctive",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p4",
+      "p5"
+     ],
+     "note": "flat list of instance values (entity reference values) playing none of the roles; sorted",
+     "shape": "list of str",
+     "message": "Each person plays at least one of the roles (person_has_passport.person, person_has_licence.person) \u2014 violated: 'p4', 'p5' play none of them."
+    }
+   ]
+  },
+  "mandatory-disjunctive-fail-order": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-fail-order.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "md_passport_or_licence",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "mandatory-disjunctive",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p10",
+      "p3",
+      "p9"
+     ],
+     "note": "flat list of instance values (entity reference values) playing none of the roles; sorted",
+     "shape": "list of str",
+     "message": "Each person plays at least one of the roles (person_has_passport.person, person_has_licence.person) \u2014 violated: 'p10', 'p3', 'p9' play none of them."
+    }
+   ]
+  },
+  "mandatory-disjunctive-fail-roster": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-fail-roster.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "md_passport_or_licence",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "mandatory-disjunctive",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "p9"
+     ],
+     "note": "flat list of instance values (entity reference values) playing none of the roles; sorted",
+     "shape": "list of str",
+     "message": "Each person plays at least one of the roles (person_has_passport.person, person_has_licence.person) \u2014 violated: 'p9' play none of them."
+    }
+   ]
+  },
+  "mandatory-disjunctive-one-side-empty-pass": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-one-side-empty-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "md_passport_or_licence"
+   ],
+   "verdicts": []
+  },
+  "mandatory-disjunctive-pass": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 1,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "md_passport_or_licence"
+   ],
+   "verdicts": []
+  },
+  "mandatory-disjunctive-vacuous-empty": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-vacuous-empty.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 1
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "md_passport_or_licence",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "mandatory-disjunctive",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'person_has_passport', 'person_has_licence' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "mandatory-disjunctive-vacuous-uncovered": {
+   "model": "mandatory-disjunctive.orm.json",
+   "population": "mandatory-disjunctive-vacuous-uncovered.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 1
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "md_passport_or_licence",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "mandatory-disjunctive",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Population coverage omits fact type(s) 'person_has_licence', which carry a mandatory-relevant constraint \u2014 vacuous: the population does not claim completeness for them (D-12)."
+    }
+   ]
+  },
+  "ring-boundary-acyclic-intransitive-both": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-acyclic-intransitive-both.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 12,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_acyclic",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_acyclic_intransitive",
+     "constraint_ref": "fact_types[ring_acyclic_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3",
+       "n1"
+      ],
+      [
+       "n1",
+       "n2",
+       "n3"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order acyclic (exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic_intransitive' is acyclic-intransitive \u2014 violated: acyclic-intransitive broken by ('n1', 'n2', 'n3', 'n1'); acyclic-intransitive broken by ('n1', 'n2', 'n3')."
+    }
+   ]
+  },
+  "ring-boundary-acyclic-self-loop": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-acyclic-self-loop.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 12,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_acyclic",
+     "constraint_ref": "fact_types[ring_acyclic].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1"
+      ]
+     ],
+     "note": "exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic' is acyclic \u2014 violated: cycle through 'n1' -> 'n1'."
+    }
+   ]
+  },
+  "ring-boundary-acyclic-two-cycles": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-acyclic-two-cycles.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 12,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_acyclic",
+     "constraint_ref": "fact_types[ring_acyclic].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n1"
+      ]
+     ],
+     "note": "exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic' is acyclic \u2014 violated: cycle through 'n1' -> 'n2' -> 'n1'."
+    }
+   ]
+  },
+  "ring-boundary-intransitive-self-loop": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-intransitive-self-loop.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 11,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_acyclic",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_intransitive",
+     "constraint_ref": "fact_types[ring_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1",
+       "n1"
+      ]
+     ],
+     "note": "list of [a,b,c] triples with aRb, bRc and aRc",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_intransitive' is intransitive \u2014 violated: intransitive broken by ('n1', 'n1', 'n1')."
+    },
+    {
+     "id": "r_transitive",
+     "constraint_ref": "fact_types[ring_transitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n1"
+      ],
+      [
+       "n2",
+       "n1",
+       "n2"
+      ]
+     ],
+     "note": "list of [a,b,c] triples with aRb, bRc and not aRc",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_transitive' is transitive \u2014 violated: transitive broken by ('n1', 'n2', 'n1'); transitive broken by ('n2', 'n1', 'n2')."
+    }
+   ]
+  },
+  "ring-boundary-reflexive-domain-only": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-reflexive-domain-only.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 12,
+    "fail": 1,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_acyclic",
+    "r_purely_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_reflexive",
+     "constraint_ref": "fact_types[ring_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1"
+      ]
+     ],
+     "note": "list of [a] 1-lists: DOMAIN (first-role) values a lacking [a,a]; range-only values are NOT checked",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_reflexive' is reflexive \u2014 violated: reflexive broken by 'n1'."
+    }
+   ]
+  },
+  "ring-boundary-reflexive-range-only": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-reflexive-range-only.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 13,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_acyclic",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": []
+  },
+  "ring-boundary-single-pair": {
+   "model": "ring.orm.json",
+   "population": "ring-boundary-single-pair.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 8,
+    "fail": 4,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_acyclic",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_symmetric",
+     "constraint_ref": "fact_types[ring_symmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ]
+     ],
+     "note": "list of [a,b] pairs whose reverse is missing",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric' is symmetric \u2014 violated: symmetric broken by ('n1', 'n2')."
+    },
+    {
+     "id": "r_purely_reflexive",
+     "constraint_ref": "fact_types[ring_purely_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ]
+     ],
+     "note": "list of [a,b] pairs with a!=b",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_purely_reflexive' is purely-reflexive \u2014 violated: purely-reflexive broken by ('n1', 'n2')."
+    },
+    {
+     "id": "r_reflexive",
+     "constraint_ref": "fact_types[ring_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1"
+      ]
+     ],
+     "note": "list of [a] 1-lists: DOMAIN (first-role) values a lacking [a,a]; range-only values are NOT checked",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_reflexive' is reflexive \u2014 violated: reflexive broken by 'n1'."
+    },
+    {
+     "id": "r_symmetric_irreflexive",
+     "constraint_ref": "fact_types[ring_symmetric_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order symmetric (list of [a,b] pairs whose reverse is missing) + irreflexive (list of [a,a] pairs)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric_irreflexive' is symmetric-irreflexive \u2014 violated: symmetric-irreflexive broken by ('n1', 'n2')."
+    },
+    {
+     "id": "r_symmetric_intransitive",
+     "constraint_ref": "fact_types[ring_symmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order symmetric (list of [a,b] pairs whose reverse is missing) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric_intransitive' is symmetric-intransitive \u2014 violated: symmetric-intransitive broken by ('n1', 'n2')."
+    }
+   ]
+  },
+  "ring-fail": {
+   "model": "ring.orm.json",
+   "population": "ring-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 12,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "r_irreflexive",
+     "constraint_ref": "fact_types[ring_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1"
+      ],
+      [
+       "n3",
+       "n3"
+      ]
+     ],
+     "note": "list of [a,a] pairs",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_irreflexive' is irreflexive \u2014 violated: irreflexive broken by ('n1', 'n1'); irreflexive broken by ('n3', 'n3')."
+    },
+    {
+     "id": "r_asymmetric",
+     "constraint_ref": "fact_types[ring_asymmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n2",
+       "n1"
+      ],
+      [
+       "n3",
+       "n3"
+      ]
+     ],
+     "note": "list of [a,b] pairs whose reverse is present (both directions listed; self-loops [a,a] included)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_asymmetric' is asymmetric \u2014 violated: asymmetric broken by ('n1', 'n2'); asymmetric broken by ('n2', 'n1'); asymmetric broken by ('n3', 'n3')."
+    },
+    {
+     "id": "r_antisymmetric",
+     "constraint_ref": "fact_types[ring_antisymmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n2",
+       "n1"
+      ]
+     ],
+     "note": "list of [a,b] pairs with a!=b whose reverse is present (both directions listed)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_antisymmetric' is antisymmetric \u2014 violated: antisymmetric broken by ('n1', 'n2'); antisymmetric broken by ('n2', 'n1')."
+    },
+    {
+     "id": "r_symmetric",
+     "constraint_ref": "fact_types[ring_symmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n4",
+       "n5"
+      ]
+     ],
+     "note": "list of [a,b] pairs whose reverse is missing",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric' is symmetric \u2014 violated: symmetric broken by ('n1', 'n2'); symmetric broken by ('n4', 'n5')."
+    },
+    {
+     "id": "r_intransitive",
+     "constraint_ref": "fact_types[ring_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3"
+      ]
+     ],
+     "note": "list of [a,b,c] triples with aRb, bRc and aRc",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_intransitive' is intransitive \u2014 violated: intransitive broken by ('n1', 'n2', 'n3')."
+    },
+    {
+     "id": "r_transitive",
+     "constraint_ref": "fact_types[ring_transitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3"
+      ],
+      [
+       "n2",
+       "n3",
+       "n4"
+      ]
+     ],
+     "note": "list of [a,b,c] triples with aRb, bRc and not aRc",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_transitive' is transitive \u2014 violated: transitive broken by ('n1', 'n2', 'n3'); transitive broken by ('n2', 'n3', 'n4')."
+    },
+    {
+     "id": "r_acyclic",
+     "constraint_ref": "fact_types[ring_acyclic].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3",
+       "n1"
+      ]
+     ],
+     "note": "exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic' is acyclic \u2014 violated: cycle through 'n1' -> 'n2' -> 'n3' -> 'n1'."
+    },
+    {
+     "id": "r_purely_reflexive",
+     "constraint_ref": "fact_types[ring_purely_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n3",
+       "n4"
+      ]
+     ],
+     "note": "list of [a,b] pairs with a!=b",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_purely_reflexive' is purely-reflexive \u2014 violated: purely-reflexive broken by ('n1', 'n2'); purely-reflexive broken by ('n3', 'n4')."
+    },
+    {
+     "id": "r_reflexive",
+     "constraint_ref": "fact_types[ring_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n3"
+      ]
+     ],
+     "note": "list of [a] 1-lists: DOMAIN (first-role) values a lacking [a,a]; range-only values are NOT checked",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_reflexive' is reflexive \u2014 violated: reflexive broken by 'n3'."
+    },
+    {
+     "id": "r_asymmetric_intransitive",
+     "constraint_ref": "fact_types[ring_asymmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n2",
+       "n1"
+      ],
+      [
+       "n3",
+       "n4",
+       "n5"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order asymmetric (list of [a,b] pairs whose reverse is present (both directions listed; self-loops [a,a] included)) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_asymmetric_intransitive' is asymmetric-intransitive \u2014 violated: asymmetric-intransitive broken by ('n1', 'n2'); asymmetric-intransitive broken by ('n2', 'n1'); asymmetric-intransitive broken by ('n3', 'n4', 'n5')."
+    },
+    {
+     "id": "r_acyclic_intransitive",
+     "constraint_ref": "fact_types[ring_acyclic_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order acyclic (exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic_intransitive' is acyclic-intransitive \u2014 violated: acyclic-intransitive broken by ('n1', 'n2', 'n3')."
+    },
+    {
+     "id": "r_symmetric_irreflexive",
+     "constraint_ref": "fact_types[ring_symmetric_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n2",
+       "n3"
+      ],
+      [
+       "n1",
+       "n1"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order symmetric (list of [a,b] pairs whose reverse is missing) + irreflexive (list of [a,a] pairs)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric_irreflexive' is symmetric-irreflexive \u2014 violated: symmetric-irreflexive broken by ('n2', 'n3'); symmetric-irreflexive broken by ('n1', 'n1')."
+    },
+    {
+     "id": "r_symmetric_intransitive",
+     "constraint_ref": "fact_types[ring_symmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1",
+       "n1"
+      ],
+      [
+       "n1",
+       "n1",
+       "n2"
+      ],
+      [
+       "n1",
+       "n2",
+       "n1"
+      ],
+      [
+       "n2",
+       "n1",
+       "n1"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order symmetric (list of [a,b] pairs whose reverse is missing) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric_intransitive' is symmetric-intransitive \u2014 violated: symmetric-intransitive broken by ('n1', 'n1', 'n1'); symmetric-intransitive broken by ('n1', 'n1', 'n2'); symmetric-intransitive broken by ('n1', 'n2', 'n1'); symmetric-intransitive broken by ('n2', 'n1', 'n1')."
+    }
+   ]
+  },
+  "ring-fail-order": {
+   "model": "ring.orm.json",
+   "population": "ring-fail-order.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 11,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": [
+    {
+     "id": "r_irreflexive",
+     "constraint_ref": "fact_types[ring_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1"
+      ],
+      [
+       "n10",
+       "n10"
+      ],
+      [
+       "n9",
+       "n9"
+      ]
+     ],
+     "note": "list of [a,a] pairs",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_irreflexive' is irreflexive \u2014 violated: irreflexive broken by ('n1', 'n1'); irreflexive broken by ('n10', 'n10'); irreflexive broken by ('n9', 'n9')."
+    },
+    {
+     "id": "r_acyclic",
+     "constraint_ref": "fact_types[ring_acyclic].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n1"
+      ]
+     ],
+     "note": "exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic' is acyclic \u2014 violated: cycle through 'n1' -> 'n2' -> 'n1'."
+    }
+   ]
+  },
+  "ring-pass": {
+   "model": "ring.orm.json",
+   "population": "ring-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 13,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "r_irreflexive",
+    "r_asymmetric",
+    "r_antisymmetric",
+    "r_symmetric",
+    "r_intransitive",
+    "r_transitive",
+    "r_acyclic",
+    "r_purely_reflexive",
+    "r_reflexive",
+    "r_asymmetric_intransitive",
+    "r_acyclic_intransitive",
+    "r_symmetric_irreflexive",
+    "r_symmetric_intransitive"
+   ],
+   "verdicts": []
+  },
+  "ring-uncovered-fail": {
+   "model": "ring.orm.json",
+   "population": "ring-uncovered-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 12,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "r_irreflexive",
+     "constraint_ref": "fact_types[ring_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1"
+      ],
+      [
+       "n3",
+       "n3"
+      ]
+     ],
+     "note": "list of [a,a] pairs",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_irreflexive' is irreflexive \u2014 violated: irreflexive broken by ('n1', 'n1'); irreflexive broken by ('n3', 'n3')."
+    },
+    {
+     "id": "r_asymmetric",
+     "constraint_ref": "fact_types[ring_asymmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n2",
+       "n1"
+      ],
+      [
+       "n3",
+       "n3"
+      ]
+     ],
+     "note": "list of [a,b] pairs whose reverse is present (both directions listed; self-loops [a,a] included)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_asymmetric' is asymmetric \u2014 violated: asymmetric broken by ('n1', 'n2'); asymmetric broken by ('n2', 'n1'); asymmetric broken by ('n3', 'n3')."
+    },
+    {
+     "id": "r_antisymmetric",
+     "constraint_ref": "fact_types[ring_antisymmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n2",
+       "n1"
+      ]
+     ],
+     "note": "list of [a,b] pairs with a!=b whose reverse is present (both directions listed)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_antisymmetric' is antisymmetric \u2014 violated: antisymmetric broken by ('n1', 'n2'); antisymmetric broken by ('n2', 'n1')."
+    },
+    {
+     "id": "r_symmetric",
+     "constraint_ref": "fact_types[ring_symmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n4",
+       "n5"
+      ]
+     ],
+     "note": "list of [a,b] pairs whose reverse is missing",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric' is symmetric \u2014 violated: symmetric broken by ('n1', 'n2'); symmetric broken by ('n4', 'n5')."
+    },
+    {
+     "id": "r_intransitive",
+     "constraint_ref": "fact_types[ring_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3"
+      ]
+     ],
+     "note": "list of [a,b,c] triples with aRb, bRc and aRc",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_intransitive' is intransitive \u2014 violated: intransitive broken by ('n1', 'n2', 'n3')."
+    },
+    {
+     "id": "r_transitive",
+     "constraint_ref": "fact_types[ring_transitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3"
+      ],
+      [
+       "n2",
+       "n3",
+       "n4"
+      ]
+     ],
+     "note": "list of [a,b,c] triples with aRb, bRc and not aRc",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_transitive' is transitive \u2014 violated: transitive broken by ('n1', 'n2', 'n3'); transitive broken by ('n2', 'n3', 'n4')."
+    },
+    {
+     "id": "r_acyclic",
+     "constraint_ref": "fact_types[ring_acyclic].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3",
+       "n1"
+      ]
+     ],
+     "note": "exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic' is acyclic \u2014 violated: cycle through 'n1' -> 'n2' -> 'n3' -> 'n1'."
+    },
+    {
+     "id": "r_purely_reflexive",
+     "constraint_ref": "fact_types[ring_purely_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n3",
+       "n4"
+      ]
+     ],
+     "note": "list of [a,b] pairs with a!=b",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_purely_reflexive' is purely-reflexive \u2014 violated: purely-reflexive broken by ('n1', 'n2'); purely-reflexive broken by ('n3', 'n4')."
+    },
+    {
+     "id": "r_reflexive",
+     "constraint_ref": "fact_types[ring_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n3"
+      ]
+     ],
+     "note": "list of [a] 1-lists: DOMAIN (first-role) values a lacking [a,a]; range-only values are NOT checked",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_reflexive' is reflexive \u2014 violated: reflexive broken by 'n3'."
+    },
+    {
+     "id": "r_asymmetric_intransitive",
+     "constraint_ref": "fact_types[ring_asymmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2"
+      ],
+      [
+       "n2",
+       "n1"
+      ],
+      [
+       "n3",
+       "n4",
+       "n5"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order asymmetric (list of [a,b] pairs whose reverse is present (both directions listed; self-loops [a,a] included)) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_asymmetric_intransitive' is asymmetric-intransitive \u2014 violated: asymmetric-intransitive broken by ('n1', 'n2'); asymmetric-intransitive broken by ('n2', 'n1'); asymmetric-intransitive broken by ('n3', 'n4', 'n5')."
+    },
+    {
+     "id": "r_acyclic_intransitive",
+     "constraint_ref": "fact_types[ring_acyclic_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n2",
+       "n3"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order acyclic (exactly one cycle as a list [x1,...,xk,x1] (first node repeated at end; self-loop is [a,a]); further cycles not reported) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_acyclic_intransitive' is acyclic-intransitive \u2014 violated: acyclic-intransitive broken by ('n1', 'n2', 'n3')."
+    },
+    {
+     "id": "r_symmetric_irreflexive",
+     "constraint_ref": "fact_types[ring_symmetric_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n2",
+       "n3"
+      ],
+      [
+       "n1",
+       "n1"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order symmetric (list of [a,b] pairs whose reverse is missing) + irreflexive (list of [a,a] pairs)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric_irreflexive' is symmetric-irreflexive \u2014 violated: symmetric-irreflexive broken by ('n2', 'n3'); symmetric-irreflexive broken by ('n1', 'n1')."
+    },
+    {
+     "id": "r_symmetric_intransitive",
+     "constraint_ref": "fact_types[ring_symmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      [
+       "n1",
+       "n1",
+       "n1"
+      ],
+      [
+       "n1",
+       "n1",
+       "n2"
+      ],
+      [
+       "n1",
+       "n2",
+       "n1"
+      ],
+      [
+       "n2",
+       "n1",
+       "n1"
+      ]
+     ],
+     "note": "combined: concatenation of component witnesses in order symmetric (list of [a,b] pairs whose reverse is missing) + intransitive (list of [a,b,c] triples with aRb, bRc and aRc)",
+     "shape": "list of list of str",
+     "message": "The relation 'ring_symmetric_intransitive' is symmetric-intransitive \u2014 violated: symmetric-intransitive broken by ('n1', 'n1', 'n1'); symmetric-intransitive broken by ('n1', 'n1', 'n2'); symmetric-intransitive broken by ('n1', 'n2', 'n1'); symmetric-intransitive broken by ('n2', 'n1', 'n1')."
+    }
+   ]
+  },
+  "ring-vacuous": {
+   "model": "ring.orm.json",
+   "population": "ring-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 13
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "r_irreflexive",
+     "constraint_ref": "fact_types[ring_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_irreflexive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_asymmetric",
+     "constraint_ref": "fact_types[ring_asymmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_asymmetric' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_antisymmetric",
+     "constraint_ref": "fact_types[ring_antisymmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_antisymmetric' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_symmetric",
+     "constraint_ref": "fact_types[ring_symmetric].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_symmetric' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_intransitive",
+     "constraint_ref": "fact_types[ring_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_intransitive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_transitive",
+     "constraint_ref": "fact_types[ring_transitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_transitive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_acyclic",
+     "constraint_ref": "fact_types[ring_acyclic].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_acyclic' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_purely_reflexive",
+     "constraint_ref": "fact_types[ring_purely_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_purely_reflexive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_reflexive",
+     "constraint_ref": "fact_types[ring_reflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_reflexive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_asymmetric_intransitive",
+     "constraint_ref": "fact_types[ring_asymmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_asymmetric_intransitive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_acyclic_intransitive",
+     "constraint_ref": "fact_types[ring_acyclic_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_acyclic_intransitive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_symmetric_irreflexive",
+     "constraint_ref": "fact_types[ring_symmetric_irreflexive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "deontic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_symmetric_irreflexive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "r_symmetric_intransitive",
+     "constraint_ref": "fact_types[ring_symmetric_intransitive].constraints[0]",
+     "constraint_type": "ring",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Fact type(s) 'ring_symmetric_intransitive' contain no facts in this population \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  },
+  "value-boundary-excluded-endpoint": {
+   "model": "value.orm.json",
+   "population": "value-boundary-excluded-endpoint.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "v_score_0_to_100_excl",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      100
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each score value must be between '0' and '100' \u2014 violated: '100' out of range."
+    },
+    {
+     "id": "v_level_multi",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      10
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each level value must be between '1' and '3' or between '10' and '20' \u2014 violated: '10' outside every range."
+    },
+    {
+     "id": "v_age_gt_18",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "value",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      18
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each age value must be between '18' and 'None' \u2014 violated: '18' out of range."
+    }
+   ]
+  },
+  "value-deontic-only-violation": {
+   "model": "value.orm.json",
+   "population": "value-deontic-only-violation.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "v_score_0_to_100_excl",
+    "v_level_multi"
+   ],
+   "verdicts": [
+    {
+     "id": "v_age_gt_18",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "value",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      18,
+      5
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each age value must be between '18' and 'None' \u2014 violated: '18', '5' out of range."
+    }
+   ]
+  },
+  "value-fail-order": {
+   "model": "value.orm.json",
+   "population": "value-fail-order.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 1,
+    "fail": 2,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "v_age_gt_18"
+   ],
+   "verdicts": [
+    {
+     "id": "v_score_0_to_100_excl",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      150,
+      120,
+      -5,
+      100,
+      150
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each score value must be between '0' and '100' \u2014 violated: '150', '120', '-5', '100', '150' out of range."
+    },
+    {
+     "id": "v_level_multi",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      9,
+      4
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each level value must be between '1' and '3' or between '10' and '20' \u2014 violated: '9', '4' outside every range."
+    }
+   ]
+  },
+  "value-fail-outside": {
+   "model": "value.orm.json",
+   "population": "value-fail-outside.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "v_score_0_to_100_excl",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      -1,
+      101
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each score value must be between '0' and '100' \u2014 violated: '-1', '101' out of range."
+    },
+    {
+     "id": "v_level_multi",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      0,
+      5,
+      21
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each level value must be between '1' and '3' or between '10' and '20' \u2014 violated: '0', '5', '21' outside every range."
+    },
+    {
+     "id": "v_age_gt_18",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "value",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      3
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each age value must be between '18' and 'None' \u2014 violated: '3' out of range."
+    }
+   ]
+  },
+  "value-pass": {
+   "model": "value.orm.json",
+   "population": "value-pass.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "counts": {
+    "pass": 3,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [
+    "v_score_0_to_100_excl",
+    "v_level_multi",
+    "v_age_gt_18"
+   ],
+   "verdicts": []
+  },
+  "value-uncovered-fail": {
+   "model": "value.orm.json",
+   "population": "value-uncovered-fail.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "counts": {
+    "pass": 0,
+    "fail": 2,
+    "warning": 1,
+    "unchecked": 0,
+    "vacuous": 0
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "v_score_0_to_100_excl",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      -1,
+      101
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each score value must be between '0' and '100' \u2014 violated: '-1', '101' out of range."
+    },
+    {
+     "id": "v_level_multi",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      0,
+      5,
+      21
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each level value must be between '1' and '3' or between '10' and '20' \u2014 violated: '0', '5', '21' outside every range."
+    },
+    {
+     "id": "v_age_gt_18",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "value",
+     "modality": "deontic",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      3
+     ],
+     "note": "flat list of offending scalar values, one per offending fact, in population fact order, duplicates kept",
+     "shape": "list of int",
+     "message": "Each age value must be between '18' and 'None' \u2014 violated: '3' out of range."
+    }
+   ]
+  },
+  "value-vacuous": {
+   "model": "value.orm.json",
+   "population": "value-vacuous.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "counts": {
+    "pass": 0,
+    "fail": 0,
+    "warning": 0,
+    "unchecked": 0,
+    "vacuous": 3
+   },
+   "pass": [],
+   "verdicts": [
+    {
+     "id": "v_score_0_to_100_excl",
+     "constraint_ref": "constraints[0]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Object type 'score' has no instances in this population \u2014 no fact type gives it a population and no instances: roster supplies one \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "v_level_multi",
+     "constraint_ref": "constraints[1]",
+     "constraint_type": "value",
+     "modality": "alethic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Object type 'level' has no instances in this population \u2014 no fact type gives it a population and no instances: roster supplies one \u2014 constraint is vacuous, not evaluated."
+    },
+    {
+     "id": "v_age_gt_18",
+     "constraint_ref": "constraints[2]",
+     "constraint_type": "value",
+     "modality": "deontic",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": [],
+     "note": "vacuous: offending_facts is []",
+     "shape": "empty list",
+     "message": "Object type 'age' has no instances in this population \u2014 no fact type gives it a population and no instances: roster supplies one \u2014 constraint is vacuous, not evaluated."
+    }
+   ]
+  }
+ }
+}

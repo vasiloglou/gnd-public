@@ -1,0 +1,144 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:value",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "item",
+   "name": "Item",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "item_id"
+   }
+  },
+  {
+   "id": "item_id",
+   "name": "ItemId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "score",
+   "name": "Score",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "level",
+   "name": "Level",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "age",
+   "name": "Age",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "item_has_score",
+   "reading": "{Item} has {Score}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "score",
+     "role_name": "score"
+    }
+   ]
+  },
+  {
+   "id": "item_has_level",
+   "reading": "{Item} has {Level}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "level",
+     "role_name": "level"
+    }
+   ]
+  },
+  {
+   "id": "item_has_age",
+   "reading": "{Item} has {Age}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "age",
+     "role_name": "age"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "v_score_0_to_100_excl",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: v_score_0_to_100_excl"
+   },
+   "object_type": "score",
+   "range": {
+    "min": 0,
+    "max": 100,
+    "min_inclusive": true,
+    "max_inclusive": false
+   }
+  },
+  {
+   "id": "v_level_multi",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: v_level_multi"
+   },
+   "object_type": "level",
+   "ranges": [
+    {
+     "min": 1,
+     "max": 3
+    },
+    {
+     "min": 10,
+     "max": 20,
+     "min_inclusive": false
+    }
+   ]
+  },
+  {
+   "id": "v_age_gt_18",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "deontic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: v_age_gt_18"
+   },
+   "object_type": "age",
+   "range": {
+    "min": 18,
+    "min_inclusive": false
+   }
+  }
+ ]
+}

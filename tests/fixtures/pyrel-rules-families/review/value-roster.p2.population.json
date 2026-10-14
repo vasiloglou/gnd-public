@@ -1,0 +1,25 @@
+{
+ "population": {
+  "model": "value-roster.orm.json",
+  "model_id": "urn:gnd:review:val",
+  "source": "fixture",
+  "covers": [
+   "has_score",
+   "has_weight",
+   "has_grade"
+  ]
+ },
+ "facts": {
+  "has_score": [],
+  "has_weight": [],
+  "has_grade": []
+ },
+ "instances": {
+  "score": [
+   7
+  ],
+  "grade": [
+   5
+  ]
+ }
+}

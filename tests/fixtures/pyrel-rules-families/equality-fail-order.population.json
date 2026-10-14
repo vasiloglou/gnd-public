@@ -1,0 +1,46 @@
+{
+ "population": {
+  "model": "equality.orm.json",
+  "model_id": "urn:gnd:pl13a:equality",
+  "source": "fixture",
+  "covers": [
+   "patient_has_sbp",
+   "patient_has_dbp",
+   "patient_visits_city",
+   "patient_likes_city"
+  ]
+ },
+ "facts": {
+  "patient_has_sbp": [
+   {
+    "patient": "p9",
+    "sbp": 1
+   },
+   {
+    "patient": "p10",
+    "sbp": 1
+   },
+   {
+    "patient": "p1",
+    "sbp": 1
+   }
+  ],
+  "patient_has_dbp": [
+   {
+    "patient": "p1",
+    "dbp": 1
+   },
+   {
+    "patient": "p0",
+    "dbp": 1
+   }
+  ],
+  "patient_visits_city": [],
+  "patient_likes_city": [
+   {
+    "patient": "p1",
+    "city": "c1"
+   }
+  ]
+ }
+}

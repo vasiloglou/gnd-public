@@ -1,0 +1,29 @@
+{
+ "population": {
+  "model": "helper-collision.orm.json",
+  "model_id": "urn:gnd:review:collide",
+  "source": "fixture",
+  "covers": [
+   "likes",
+   "likes_reverse"
+  ]
+ },
+ "facts": {
+  "likes": [
+   {
+    "a": "n1",
+    "b": "n1"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "likes_reverse": [
+   {
+    "a": "n5",
+    "b": "n6"
+   }
+  ]
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:mandatory-disjunctive",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "passport_no",
+   "name": "PassportNo",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "licence_no",
+   "name": "LicenceNo",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "nick",
+   "name": "Nick",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "person_has_passport",
+   "reading": "{Person} has {PassportNo}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "passport_no",
+     "role_name": "passport"
+    }
+   ]
+  },
+  {
+   "id": "person_has_licence",
+   "reading": "{Person} has {LicenceNo}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "licence_no",
+     "role_name": "licence"
+    }
+   ]
+  },
+  {
+   "id": "person_has_nick",
+   "reading": "{Person} has {Nick}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "nick",
+     "role_name": "nick"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "md_passport_or_licence",
+   "type": "mandatory-disjunctive",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: md_passport_or_licence"
+   },
+   "role_refs": [
+    {
+     "fact_type": "person_has_passport",
+     "role": "person"
+    },
+    {
+     "fact_type": "person_has_licence",
+     "role": "person"
+    }
+   ]
+  }
+ ]
+}

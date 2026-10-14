@@ -1,0 +1,140 @@
+{
+ "population": {
+  "model": "frequency.orm.json",
+  "model_id": "urn:gnd:pl13a:frequency",
+  "source": "fixture",
+  "covers": [
+   "panel_includes_expert",
+   "team_includes_member",
+   "club_includes_player",
+   "committee_includes_seat",
+   "reviewer_reviews_paper_in_round"
+  ]
+ },
+ "facts": {
+  "panel_includes_expert": [
+   {
+    "panel": "panel0",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel0",
+    "expert": "expert1"
+   },
+   {
+    "panel": "panel0",
+    "expert": "expert2"
+   },
+   {
+    "panel": "panel1",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel2",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel2",
+    "expert": "expert1"
+   },
+   {
+    "panel": "panel2",
+    "expert": "expert2"
+   },
+   {
+    "panel": "panel2",
+    "expert": "expert3"
+   },
+   {
+    "panel": "panel3",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel3",
+    "expert": "expert1"
+   },
+   {
+    "panel": "panel4",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel4",
+    "expert": "expert1"
+   },
+   {
+    "panel": "panel4",
+    "expert": "expert2"
+   },
+   {
+    "panel": "panel4",
+    "expert": "expert3"
+   },
+   {
+    "panel": "panel4",
+    "expert": "expert4"
+   }
+  ],
+  "team_includes_member": [
+   {
+    "team": "team0",
+    "member": "member0"
+   },
+   {
+    "team": "team0",
+    "member": "member1"
+   }
+  ],
+  "club_includes_player": [
+   {
+    "club": "club0",
+    "player": "player0"
+   }
+  ],
+  "committee_includes_seat": [
+   {
+    "committee": "committee0",
+    "seat": "seat0"
+   },
+   {
+    "committee": "committee0",
+    "seat": "seat1"
+   },
+   {
+    "committee": "committee0",
+    "seat": "seat2"
+   }
+  ],
+  "reviewer_reviews_paper_in_round": [
+   {
+    "reviewer": "r2",
+    "paper": "x1",
+    "round": 1
+   },
+   {
+    "reviewer": "r2",
+    "paper": "x1",
+    "round": 2
+   },
+   {
+    "reviewer": "r2",
+    "paper": "x1",
+    "round": 3
+   },
+   {
+    "reviewer": "r1",
+    "paper": "x9",
+    "round": 1
+   },
+   {
+    "reviewer": "r1",
+    "paper": "x9",
+    "round": 2
+   },
+   {
+    "reviewer": "r1",
+    "paper": "x9",
+    "round": 3
+   }
+  ]
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "population": {
+  "model": "frequency.orm.json",
+  "model_id": "urn:gnd:pl13a:frequency",
+  "source": "fixture"
+ },
+ "facts": {
+  "panel_includes_expert": [
+   {
+    "panel": "panel0",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel0",
+    "expert": "expert1"
+   },
+   {
+    "panel": "panel0",
+    "expert": "expert2"
+   },
+   {
+    "panel": "panel0",
+    "expert": "expert3"
+   },
+   {
+    "panel": "panel1",
+    "expert": "expert0"
+   },
+   {
+    "panel": "panel1",
+    "expert": "expert1"
+   }
+  ],
+  "team_includes_member": [
+   {
+    "team": "team0",
+    "member": "member0"
+   },
+   {
+    "team": "team0",
+    "member": "member1"
+   }
+  ],
+  "club_includes_player": [
+   {
+    "club": "club0",
+    "player": "player0"
+   },
+   {
+    "club": "club0",
+    "player": "player1"
+   },
+   {
+    "club": "club0",
+    "player": "player2"
+   }
+  ],
+  "committee_includes_seat": [
+   {
+    "committee": "committee0",
+    "seat": "seat0"
+   },
+   {
+    "committee": "committee0",
+    "seat": "seat1"
+   },
+   {
+    "committee": "committee0",
+    "seat": "seat2"
+   },
+   {
+    "committee": "committee0",
+    "seat": "seat3"
+   },
+   {
+    "committee": "committee1",
+    "seat": "seat0"
+   },
+   {
+    "committee": "committee1",
+    "seat": "seat1"
+   },
+   {
+    "committee": "committee1",
+    "seat": "seat2"
+   }
+  ],
+  "reviewer_reviews_paper_in_round": [
+   {
+    "reviewer": "r1",
+    "paper": "x1",
+    "round": 1
+   },
+   {
+    "reviewer": "r1",
+    "paper": "x1",
+    "round": 2
+   },
+   {
+    "reviewer": "r1",
+    "paper": "x1",
+    "round": 3
+   }
+  ]
+ }
+}

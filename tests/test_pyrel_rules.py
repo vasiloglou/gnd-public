@@ -137,6 +137,68 @@ def test_duckdb_program_agrees_with_gnd_on_the_cap_boundary(tmp_path, meal, team
     _assert_witness_lines_sorted(run.stdout)
 
 
+
+def _uncovered(tmp_path, name, base, edit):
+    """GND reads every fact list, covered or not; only mandatory roles consult covers."""
+    document = json.loads(base.read_text())
+    edit(document)
+    path = tmp_path / f'{name}.population.json'
+    path.write_text(json.dumps(document))
+    return path
+
+
+def _uncover(document, fact_type):
+    document['population']['covers'].remove(fact_type)
+
+
+UNCOVERED = {
+    'guarded-list-uncovered': (EXPENSE / 'invalid-chain.population.json',
+                               lambda d: _uncover(d, 'expense_approved_by_chain')),
+    'category-uncovered': (EXPENSE / 'invalid-meal.population.json', lambda d: _uncover(d, 'expense_in_category')),
+    'duplicate-key-uncovered': (EXPENSE / 'seed.population.json',
+                                lambda d: (d['facts']['expense_has_amount'].append({'expense': 101, 'amount': 61}),
+                                           _uncover(d, 'expense_has_amount'))),
+    'subset-uncovered': (EXPENSE / 'seed.population.json',
+                         lambda d: (d['facts']['expense_is_approved'].append({'expense': 999}),
+                                    _uncover(d, 'expense_is_approved'))),
+    'no-covers-at-all': (EXPENSE / 'invalid-meal.population.json', lambda d: d['population'].pop('covers')),
+}
+
+
+@pytest.mark.pyrel_oracle
+@pytest.mark.parametrize('case', sorted(UNCOVERED))
+def test_uncovered_fact_lists_are_read_as_gnd_reads_them(tmp_path, case):
+    base, edit = UNCOVERED[case]
+    population = _uncovered(tmp_path, case, base, edit)
+    program = _program(tmp_path, 'expense', 'duckdb')
+    run = subprocess.run([str(NATIVE), '-I', str(program), str(population)], capture_output=True, text=True,
+                         timeout=300, check=False)
+    gnd_exit, gnd = _gnd('expense', population)
+    assert run.stderr == '', run.stderr
+    assert run.returncode == gnd_exit, run.stdout
+    assert _findings(run.stdout) == gnd
+
+
+@pytest.mark.pyrel_oracle
+def test_acyclic_over_a_long_chain_finishes_in_time(tmp_path):
+    """Standing rule 2: the recursive closure is bounded; a 500-edge chain with one back edge."""
+    import time
+    model = ROOT / 'tests/fixtures/pyrel-rules-families/ring.orm.json'
+    rows = [{'a': f'n{i}', 'b': f'n{i + 1}'} for i in range(500)] + [{'a': 'n500', 'b': 'n0'}]
+    population = tmp_path / 'chain.population.json'
+    population.write_text(json.dumps({'population': {'model': 'ring.orm.json', 'model_id': 'urn:gnd:pl13a:ring',
+                                                     'covers': ['ring_acyclic']},
+                                      'facts': {'ring_acyclic': rows}}))
+    program = tmp_path / 'ring.py'
+    program.write_text(render(model, 'duckdb'))
+    started = time.monotonic()
+    run = subprocess.run([str(NATIVE), '-I', str(program), str(population)], capture_output=True, text=True,
+                         timeout=300, check=False)
+    assert time.monotonic() - started < 60, 'acyclic closure over 501 edges took too long'
+    line = next(l for l in run.stdout.splitlines() if l.startswith('r_acyclic  '))
+    assert line.startswith('r_acyclic  violated')
+    assert json.loads(line.split('  ', 2)[2]) == [[f'n{i}' for i in range(501)] + ['n0']]   # GND's cycle shape
+
 def _assert_witness_lines_sorted(stdout):
     """Deterministic output: within a rule, witness lines come in sorted order."""
     by_rule = {}
@@ -214,8 +276,8 @@ def test_programs_are_labelled_by_who_enforces_the_rules():
 
 
 @pytest.mark.parametrize('family,constraint', [
-    ('ring', {'id': 'r', 'type': 'ring', 'modality': 'alethic', 'roles': ['user', 'book'], 'ring': ['irreflexive']}),
-    ('frequency', {'id': 'f', 'type': 'frequency', 'modality': 'alethic'}),
+    ('subtype-partition', {'id': 's', 'type': 'subtype-partition', 'modality': 'alethic'}),
+    ('value-comparison', {'id': 'c', 'type': 'value-comparison', 'modality': 'alethic'}),
 ])
 def test_later_families_are_refused_by_name(family, constraint):
     doc = _parse_document(MODELS['bookrec'].read_text())

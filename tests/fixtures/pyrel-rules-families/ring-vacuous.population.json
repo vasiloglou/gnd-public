@@ -1,0 +1,37 @@
+{
+ "population": {
+  "model": "ring.orm.json",
+  "model_id": "urn:gnd:pl13a:ring",
+  "source": "fixture",
+  "covers": [
+   "ring_irreflexive",
+   "ring_asymmetric",
+   "ring_antisymmetric",
+   "ring_symmetric",
+   "ring_intransitive",
+   "ring_transitive",
+   "ring_acyclic",
+   "ring_purely_reflexive",
+   "ring_reflexive",
+   "ring_asymmetric_intransitive",
+   "ring_acyclic_intransitive",
+   "ring_symmetric_irreflexive",
+   "ring_symmetric_intransitive"
+  ]
+ },
+ "facts": {
+  "ring_irreflexive": [],
+  "ring_asymmetric": [],
+  "ring_antisymmetric": [],
+  "ring_symmetric": [],
+  "ring_intransitive": [],
+  "ring_transitive": [],
+  "ring_acyclic": [],
+  "ring_purely_reflexive": [],
+  "ring_reflexive": [],
+  "ring_asymmetric_intransitive": [],
+  "ring_acyclic_intransitive": [],
+  "ring_symmetric_irreflexive": [],
+  "ring_symmetric_intransitive": []
+ }
+}

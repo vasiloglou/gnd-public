@@ -1,0 +1,162 @@
+{
+ "population": {
+  "model": "ring.orm.json",
+  "model_id": "urn:gnd:pl13a:ring",
+  "source": "fixture",
+  "covers": [
+   "ring_irreflexive",
+   "ring_asymmetric",
+   "ring_antisymmetric",
+   "ring_symmetric",
+   "ring_intransitive",
+   "ring_transitive",
+   "ring_acyclic",
+   "ring_purely_reflexive",
+   "ring_reflexive",
+   "ring_asymmetric_intransitive",
+   "ring_acyclic_intransitive",
+   "ring_symmetric_irreflexive",
+   "ring_symmetric_intransitive"
+  ]
+ },
+ "facts": {
+  "ring_irreflexive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n1"
+   }
+  ],
+  "ring_asymmetric": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "ring_antisymmetric": [
+   {
+    "a": "n1",
+    "b": "n1"
+   },
+   {
+    "a": "n1",
+    "b": "n2"
+   }
+  ],
+  "ring_symmetric": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n1"
+   },
+   {
+    "a": "n3",
+    "b": "n3"
+   }
+  ],
+  "ring_intransitive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "ring_transitive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   },
+   {
+    "a": "n1",
+    "b": "n3"
+   }
+  ],
+  "ring_acyclic": [
+   {
+    "a": "n1",
+    "b": "n1"
+   }
+  ],
+  "ring_purely_reflexive": [
+   {
+    "a": "n1",
+    "b": "n1"
+   },
+   {
+    "a": "n2",
+    "b": "n2"
+   }
+  ],
+  "ring_reflexive": [
+   {
+    "a": "n1",
+    "b": "n1"
+   },
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n2"
+   }
+  ],
+  "ring_asymmetric_intransitive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "ring_acyclic_intransitive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "ring_symmetric_irreflexive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n1"
+   }
+  ],
+  "ring_symmetric_intransitive": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n1"
+   }
+  ]
+ }
+}

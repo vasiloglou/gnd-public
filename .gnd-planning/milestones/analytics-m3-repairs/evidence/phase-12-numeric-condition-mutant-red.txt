@@ -1,0 +1,14 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_unmasked_numeric_condition_observes_integral_float ____________
+
+    def test_unmasked_numeric_condition_observes_integral_float():
+        schema = conditional_schema(2)
+>       assert not accept({'v': 2.0, 'p': 7}, schema)
+E       AssertionError: assert not True
+E        +  where True = accept({'v': 2.0, 'p': 7}, {'if': {'properties': {'v': {'const': 2}}, 'required': ['v']}, 'then': {'properties': {'p': {'type': 'string'}}, 'required': ['p']}, 'else': {'properties': {'p': {'type': 'integer'}}, 'required': ['p']}})
+
+tests/test_m3_population_shape.py:213: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_unmasked_numeric_condition_observes_integral_float
+1 failed, 65 deselected in 0.06s

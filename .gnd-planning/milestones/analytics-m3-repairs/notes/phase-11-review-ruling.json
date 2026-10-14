@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-13",
+  "authority": "standing M3 auto; owner fix it; remaining reviews approved; Astra high requested",
+  "prior_spec_sha256": "feccbdc0da599cc77291b97b052f4edb1b0f8e71ca9bf461d4f6b6a35a998795",
+  "amended_spec_sha256": "e928f7549e4d4688bec9a0afaf472ab84ecf398414588b2cb27417d6d37160a5",
+  "current_test_sha256": "b4cb784e793a81f448f27a41655737f79abd4a4ad0e08e2d5249006d4fc07c9f",
+  "review_r1": "1blocking/2hardening, reproduced2red1pass plus2owner mutants",
+  "repair_r2_limit": 2,
+  "review_model": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "expected_outputs_weakened": false,
+  "nested_fallback": "author-discovered successor: failed fingerprint returned calculate() before finally charge; proven red scope.nodes4 vs3, repaired charge before nested fallback",
+  "current_implementation_sha256": {
+    "src/gnd/extensions.py": "c5c070a9b293be76172812b6f2885dc0db0397bfa24268aebb395c1786a13ddc",
+    "src/gnd/extension_preparation.py": "ca46bcae073179c9284003c4f46ac278c19b09a1f9ef71ea0e02c4a3e7109a93"
+  }
+}

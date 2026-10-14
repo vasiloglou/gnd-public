@@ -1,0 +1,29 @@
+...F....                                                                 [100%]
+=================================== FAILURES ===================================
+_________ test_snapshot_walks_origins_once_and_resets_used_per_finding _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108dc50f0>
+
+    def test_snapshot_walks_origins_once_and_resets_used_per_finding(monkeypatch) -> None:
+        value = scalar()
+        origins = CountingOrigins((origin(value, 1), origin(value, 1.0, row=1)))
+        obs = SnapshotObservation(origins, (), (), ())
+        decision = c.SnapshotDecision((finding(value), finding(value)), 0, False, "refuse")
+        original = c.project_finding
+        calls = []
+        def dispatch(row, observation):
+            calls.append(observation)
+            return original(row, observation)
+        monkeypatch.setattr(c, "project_finding", dispatch)
+        result = c.project_snapshot(decision, obs)
+        assert calls == [obs, obs]
+        assert result.findings[0] == result.findings[1]
+        assert [type(row[0]) for row in result.findings[1].witness] == [int, float, int]
+>       assert origins.walks <= 1
+E       assert 10 <= 1
+E        +  where 10 = <test_m3_origin_index.CountingOrigins object at 0x108c674d0>.walks
+
+tests/test_m3_origin_index.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_origin_index.py::test_snapshot_walks_origins_once_and_resets_used_per_finding
+1 failed, 7 passed in 0.07s

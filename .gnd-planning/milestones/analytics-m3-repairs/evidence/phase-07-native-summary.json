@@ -1,0 +1,25 @@
+{
+  "source_base": "9993750",
+  "red_commit": "2086e61",
+  "review_red_commit": "f0a9348",
+  "check_before_seconds": 7.8638692909735255,
+  "check_after_seconds": 1.3147834580158815,
+  "root_before_median_seconds": 32.12781208398519,
+  "root_after_seconds": [
+    12.325068709033076,
+    12.288108207983896,
+    12.41559883399168
+  ],
+  "root_after_median_seconds": 12.325068709033076,
+  "normalized_reports_byte_identical": true,
+  "normalization": "only generated <...>.json label suffix; phase07 no semantic normalization needed",
+  "root_semantic_sha256": "b24161d360189420c722c52b701425901035b51ce899b186a4105ea72fa1be12",
+  "check_semantic_sha256": "bd4de66031d691baaeb1e8247e9e10449607253a9631792088ce6080cf0dbb8e",
+  "both_mirror_rules_retained": true,
+  "candidate_files": {
+    "src/gnd/semantic_rows.py": "1257f0399a6e65d4a605497229bc66b57c4d40aeaa8d9d8db9edfb8c376af9f5",
+    "src/gnd/correspondence.py": "e8558de8178f734bf628d9caeb5e4e00a95b2215c99ed441d1c66cd854c538e9",
+    "src/gnd/constraint_families.py": "13bd449715a2e226ac9df62ad66fa867a9888d620e2687fa372a0f4e4dcc6b5b"
+  },
+  "final_question_gate": false
+}

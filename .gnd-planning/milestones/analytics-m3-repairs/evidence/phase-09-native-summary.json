@@ -1,0 +1,40 @@
+{
+  "source_base": "65b6de0",
+  "red_commit": "0867fcb",
+  "compiled_source_sha256": "068d95de141ed79ef6f02e9049f75548be4bc3c78eedfff58fa739142002b6fd",
+  "same_candidate_population_sha256": "4f14a10db277c26217e8547b9ed0df95f845a0a7dc44b41fa70fc1abed3f5c6f",
+  "baseline_seconds": [
+    3.291470084048342,
+    3.312943625031039,
+    3.3136273749987595
+  ],
+  "candidate_seconds": [
+    3.298617790977005,
+    3.3311539579881355,
+    3.3260228750295937
+  ],
+  "baseline_median_seconds": 3.312943625031039,
+  "candidate_median_seconds": 3.3260228750295937,
+  "speedup_claim": false,
+  "baseline_exit": 4,
+  "candidate_exit": 2,
+  "changed_empty_operation_findings": [
+    "filter_pattern.compiled[2]",
+    "order_result.compiled[0]",
+    "limit_result.compiled[0]"
+  ],
+  "changed_top_fields": [
+    "counts",
+    "exit_code",
+    "outcome",
+    "verdicts"
+  ],
+  "only_changed_finding_fields": [
+    "message",
+    "reason_code",
+    "verdict"
+  ],
+  "all_other_report_fields_identical": true,
+  "budget_limit": 100000,
+  "complete_question_gate": false
+}

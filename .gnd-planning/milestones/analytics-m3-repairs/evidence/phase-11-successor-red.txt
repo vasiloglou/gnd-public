@@ -1,0 +1,128 @@
+F.FF.FFFFF                                                               [100%]
+=================================== FAILURES ===================================
+________ test_identical_full_calculation_once_with_fresh_consumer_work _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1096a4fc0>
+
+    def test_identical_full_calculation_once_with_fresh_consumer_work(monkeypatch):
+        model, population, relations = inputs()
+        counts = body_counter(monkeypatch)
+        with scope(model, population):
+            first = ext._evaluate_stratified_extensions(model, relations)
+            before = len(counts)
+            assert before > 0
+            expected = first.counted_operations.atom_role_terms_read
+            first.counted_operations.atom_role_terms_read = -100
+            second = ext._evaluate_stratified_extensions(model, relations)
+>           assert len(counts) == before
+E           assert 6 == 3
+E            +  where 6 = len([1, 1, 1, 1, 1, 1])
+
+tests/test_m3_extension_preparation.py:48: AssertionError
+___________________ test_nested_scopes_and_exception_cleanup ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a9e4050>
+
+    def test_nested_scopes_and_exception_cleanup(monkeypatch):
+        model, population, relations = inputs()
+        other_model, other_population, other_relations = inputs()
+        counts = body_counter(monkeypatch)
+        with scope(model, population):
+            ext._evaluate_stratified_extensions(model, relations)
+            with scope(other_model, other_population):
+                ext._evaluate_stratified_extensions(other_model, other_relations)
+            before = len(counts)
+            ext._evaluate_stratified_extensions(model, relations)
+>           assert len(counts) == before
+E           assert 9 == 6
+E            +  where 9 = len([1, 1, 1, 1, 1, 1, ...])
+
+tests/test_m3_extension_preparation.py:91: AssertionError
+___________ test_trace_and_exact_metadata_are_retained_and_isolated ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109b759d0>
+
+    def test_trace_and_exact_metadata_are_retained_and_isolated(monkeypatch):
+        model, population, relations = inputs()
+        counts = body_counter(monkeypatch)
+        actual = ext._relation_facts
+        def branch_body(*args, **kwargs):
+            ext.record_branch("derivation:extension:derived:exact-applied")
+            return actual(*args, **kwargs)
+        monkeypatch.setattr(ext, "_relation_facts", branch_body)
+        with scope(model, population):
+            with capture_branches() as first_trace:
+                first = ext._evaluate_stratified_extensions(model, relations, exact=True)
+            before = len(counts)
+            first.extensions.pop('top')
+            with capture_branches() as second_trace:
+                second = ext._evaluate_stratified_extensions(model, relations, exact=True)
+>           assert len(counts) == before
+E           assert 6 == 3
+E            +  where 6 = len([1, 1, 1, 1, 1, 1])
+
+tests/test_m3_extension_preparation.py:115: AssertionError
+__________________ test_public_and_direct_checker_own_scopes ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109b68450>
+
+    def test_public_and_direct_checker_own_scopes(monkeypatch):
+>       from gnd import extension_preparation as prepared
+E       ImportError: cannot import name 'extension_preparation' from 'gnd' (/private/tmp/gnd-m3-extension-baseline/src/gnd/__init__.py)
+
+tests/test_m3_extension_preparation.py:145: ImportError
+__________________ test_fingerprint_totality_and_bound_bypass __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109b68650>
+
+    def test_fingerprint_totality_and_bound_bypass(monkeypatch):
+>       from gnd import extension_preparation as prepared
+E       ImportError: cannot import name 'extension_preparation' from 'gnd' (/private/tmp/gnd-m3-extension-baseline/src/gnd/__init__.py)
+
+tests/test_m3_extension_preparation.py:165: ImportError
+__________ test_cached_unavailable_binding_is_an_independent_mapping ___________
+
+    def test_cached_unavailable_binding_is_an_independent_mapping() -> None:
+        model,population,_ = inputs()
+        with scope(model,population):
+>           owner = ext.current_scope()
+                    ^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'gnd.extensions' has no attribute 'current_scope'
+
+tests/test_m3_extension_preparation.py:183: AttributeError
+______ test_failed_calculation_does_not_cache_and_restores_branch_capture ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a9d6a80>
+
+    def test_failed_calculation_does_not_cache_and_restores_branch_capture(monkeypatch):
+        model,population,relations=inputs()
+        original=ext._clause_bindings
+        def fail(*args,**kwargs):raise RuntimeError('calculation failure')
+        with scope(model,population):
+            monkeypatch.setattr(ext,'_clause_bindings',fail)
+            with pytest.raises(RuntimeError,match='calculation failure'):
+                ext._evaluate_stratified_extensions(model,relations)
+>           assert not ext.current_scope().records
+                       ^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'gnd.extensions' has no attribute 'current_scope'
+
+tests/test_m3_extension_preparation.py:202: AttributeError
+_______ test_cache_entry_character_and_reference_trace_limits_fall_back ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a9d54f0>
+
+    def test_cache_entry_character_and_reference_trace_limits_fall_back(monkeypatch):
+>       from gnd import extension_preparation as prepared
+E       ImportError: cannot import name 'extension_preparation' from 'gnd' (/private/tmp/gnd-m3-extension-baseline/src/gnd/__init__.py)
+
+tests/test_m3_extension_preparation.py:208: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_m3_extension_preparation.py::test_identical_full_calculation_once_with_fresh_consumer_work
+FAILED tests/test_m3_extension_preparation.py::test_nested_scopes_and_exception_cleanup
+FAILED tests/test_m3_extension_preparation.py::test_trace_and_exact_metadata_are_retained_and_isolated
+FAILED tests/test_m3_extension_preparation.py::test_public_and_direct_checker_own_scopes
+FAILED tests/test_m3_extension_preparation.py::test_fingerprint_totality_and_bound_bypass
+FAILED tests/test_m3_extension_preparation.py::test_cached_unavailable_binding_is_an_independent_mapping
+FAILED tests/test_m3_extension_preparation.py::test_failed_calculation_does_not_cache_and_restores_branch_capture
+FAILED tests/test_m3_extension_preparation.py::test_cache_entry_character_and_reference_trace_limits_fall_back
+8 failed, 2 passed in 0.25s

@@ -1,0 +1,10 @@
+Working directory /private/tmp/gnd-m3-performance. Every command prefix UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline.
+pytest tests/test_m3_transition_preparation.py -q
+exit0,10passed; source runtime unchanged since original9/120 gates.
+pytest tests/test_m3_transition_preparation.py tests/test_m3_extension_preparation.py tests/test_v62_phase4_composition.py tests/test_v70_phase4_transition.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_rf1_layering.py -q
+exit0,111 passed in5.04s. Original120 gate also selected test_v62_phase3_composition; unchanged runtime and added test only, no prior output weakened.
+ruff check tests/test_m3_transition_preparation.py
+exit0,All checks passed!
+python /private/tmp/gnd-phase13-selected-refresh-mutant.py
+exit1,1 intended owner-is-None assertion failure; original invocation retained script.
+Oldfixture coverage-refutation asserts nonempty selectedrefresh list and fails on empty list. Runtime defect not asserted; coverage claim corrected.

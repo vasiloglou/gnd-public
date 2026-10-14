@@ -601,6 +601,9 @@
     "gnd.population": {
       "layer": "model"
     },
+    "gnd.population_shape": {
+      "layer": "model"
+    },
     "gnd.popvalidate": {
       "layer": "model"
     },
@@ -875,6 +878,12 @@
     "gnd.export.applications": {
       "lane": "export",
       "layer": "lanes"
+    },
+    "gnd.semantic_origins": {
+      "layer": "checking"
+    },
+    "gnd.extension_preparation": {
+      "layer": "checking"
     }
   },
   "schema_version": 1

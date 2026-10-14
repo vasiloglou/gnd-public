@@ -62,7 +62,7 @@ from gnd.errors import (
     ValidationIssue,
 )
 from gnd.extensions import Wildcard as _Wildcard
-from gnd.extensions import derivation_claims_against, structured_extension_view
+from gnd.extensions import calculation_scope, derivation_claims_against, structured_extension_view
 from gnd.extensions import partial_compatible as _partial_compatible
 from gnd.model import derivation_classifications, dynamic_subject_is_functional
 from gnd.population import Population, load_population_bytes
@@ -1229,7 +1229,7 @@ def _load_intermediate(
     try:
         payload = artifacts.canonical_json_bytes(document)
         population = load_population_bytes(
-            payload, source=f"<intermediate state after step {index}>", model=model
+            payload, source=f"<intermediate state after step {index}>.json", model=model
         )
     except Exception as error:  # noqa: BLE001 - an intermediate refusal stays a verdict
         population = None
@@ -1274,7 +1274,7 @@ def _load_intermediate_dispatch(
     try:
         population = load_population_bytes(
             artifacts.canonical_json_bytes(document),
-            source=f"<intermediate state after step {index}>", model=model,
+            source=f"<intermediate state after step {index}>.json", model=model,
         )
     except Exception as error:  # noqa: BLE001 - an intermediate refusal stays a verdict
         population = None
@@ -1896,7 +1896,7 @@ def _population_from_asserted_state(
         document["population"]["model_id"] = model.model_id
     return load_population_bytes(
         artifacts.canonical_json_bytes(document),
-        source=f"<dynamic asserted state after step {index}>",
+        source=f"<dynamic asserted state after step {index}>.json",
         model=model,
     )
 
@@ -1917,14 +1917,15 @@ def _evaluate_to_state(
             ft: rows for ft, rows in view.combined.facts.items() if ft in dict(context._owners)
         }
     declared = _operations_by_id(model)
-    report = TransitionReport(
-        pre_snapshot=check(model, pre),
-        pre_snapshot_verdicts=_compiled_verdicts_for_dynamic_walk(model, pre),
-    )
-    covers = list(pre.covers or [])
-    state = _state_of(pre)
-    population: Population | None = pre
-    extension_view = structured_extension_view(model, pre)
+    with calculation_scope(model, pre):
+        report = TransitionReport(
+            pre_snapshot=check(model, pre),
+            pre_snapshot_verdicts=_compiled_verdicts_for_dynamic_walk(model, pre),
+        )
+        covers = list(pre.covers or [])
+        state = _state_of(pre)
+        population: Population | None = pre
+        extension_view = structured_extension_view(model, pre)
     extensions = extension_view.facts
     unavailable = extension_view.unavailable
     possible = extension_view.possible
@@ -2090,7 +2091,7 @@ def evaluate_plan(
     computed_document = _rf7_input.loads(canonical)
     computed_document["population"]["model_id"] = pre.model_id
     try:
-        computed = load_population_bytes(canonical, source="<computed post>", model=model)
+        computed = load_population_bytes(canonical, source="<computed post>.json", model=model)
     except Exception:  # noqa: BLE001 - the final intermediate already records band 4
         computed = None
     if computed is not None:
@@ -2103,7 +2104,7 @@ def evaluate_plan(
         effective_document["facts"] = effective_post
         effective_population = load_population_bytes(
             artifacts.canonical_json_bytes(effective_document),
-            source="<computed post evaluation view>",
+            source="<computed post evaluation view>.json",
             model=model,
         )
         report.post_snapshot = check(model, effective_population)

@@ -22,6 +22,7 @@ class Family:
     implemented: bool
     shape: Hook = '_family_shape_true'
     scope_before_refs: bool = False
+    production: Hook | None = None
 
 
 def resolve_hook(hook: Hook, namespace: Mapping[str, Any]) -> Callable[..., Any]:
@@ -42,7 +43,7 @@ FAMILIES: dict[str, Family] = {
     'mandatory': Family('_family_adapt_identity', '_family_result_mandatory', '_flat_projected_witness', '_family_message_mandatory', '_family_scope_empty', True, shape='_family_implemented_mandatory', scope_before_refs=False),
     'mandatory-disjunctive': Family('_family_adapt_identity', '_family_result_mandatory_disjunctive', '_flat_projected_witness', '_family_message_mandatory_disjunctive', '_family_scope_empty', True, shape='_family_implemented_mandatory_disjunctive', scope_before_refs=False),
     'ring': Family('_family_adapt_identity', '_family_result_ring', '_row_projected_witness', '_family_message_ring', '_family_scope_empty', True, shape='_family_implemented_ring', scope_before_refs=False),
-    'subset': Family('_family_adapt_identity', '_family_result_subset', '_row_projected_witness', '_family_message_subset', '_family_scope_empty', True, shape='_family_implemented_subset', scope_before_refs=False),
+    'subset': Family('_family_adapt_identity', '_family_result_subset', '_row_projected_witness', '_family_message_subset', '_family_scope_empty', True, shape='_family_implemented_subset', scope_before_refs=False, production='indexed_subset_verdict'),
     'subtype-partition': Family('_family_adapt_identity', '_family_result_subtype_partition', '_row_projected_witness', '_family_message_subtype_partition', '_family_scope_subtype_partition', True, shape='_family_implemented_subtype_partition', scope_before_refs=False),
     'textual': Family('_family_adapt_textual', '_family_result_unknown', '_row_projected_witness', '_family_message_default', '_family_scope_empty', False, shape='_family_shape_false', scope_before_refs=False),
     'uniqueness': Family('_family_adapt_identity', '_family_result_uniqueness', '_row_projected_witness', '_family_message_uniqueness', '_family_scope_empty', True, shape='_family_implemented_uniqueness', scope_before_refs=False),

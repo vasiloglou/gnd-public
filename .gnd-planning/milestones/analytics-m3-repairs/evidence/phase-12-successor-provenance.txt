@@ -1,0 +1,13 @@
+Successor implementation provenance (no expected outcome weakened)
+
+Original phase12 feature RED: missing new helper,45failed2passed. This proves feature absence only.
+
+Earlier operand/numeric/pre-serialization hardening RED: phase-12-reconstructed-hardening-red.txt,6failed2passed. The temporary module was reconstructed by reversing only documented hardening edits from final formatted source. It is NOT retained historical original bytes. Retained reconstruction: phase-12-reconstructed-pre-hardening-runtime.txt. Numeric protocol object, malformed object/minLength sibling, null type, null items, duplicate type union and individual oversized string controls fail their expected refusal assertions against that reconstruction. Passing sibling controls are not claimed as reproduced defects.
+
+R1 actual source RED: phase-12-r1-runtime.txt is the actual reviewed dda4de8 runtime copied before aggregate repair. phase-12-aggregate-r1-red.txt records4assertion failures for total sub-cap strings, oversized keys, repeated sub-cap strings and huge integer schema operand. All reached sentinel json.dumps before the byte cap. This is independent actual retained source evidence, not the reconstruction or missing-helper feature RED.
+
+R1 control-strengthening disposition: production conditional/enum semantics were not changed. Added unmasked original-input conditions and standalone enum controls. Strict-int conditional mutant, bool==integer conditional mutant and bare-literal enum mutant each admit an invalid example and produce1assertion failure. Existing then/else/enum expected results remain unchanged. Equivalent reproducible mutation harness is phase-12-mutant-runner.py; original runs used stdin Python with the same mutations and pytest selectors.
+
+Aggregate repair: schema walk conservatively charges escaped strings, dictionary keys, delimiters/separators, repeated occurrences, integers by bit_length, floats and bool/null BEFORE json.dumps. The existing postserialization exact1MiB check remains. Conservative false negatives invoke unchanged authoritative Draft diagnostics. All original documents/core outputs/error ordering contracts remain unchanged.
+
+Final commands and logs are in phase-12-implementation-commands.txt. Direct66passed, focused214passed, Ruff passed. Formal R2/native/app gates are parent-owned and not claimed here. No runtime edits after hash ec8e028f1ec23d668a0c5412701f7e14eec539d65cc4a472212a07e196d822bf; test file hash099dd94195a8f2a0c44e7d872a3b1338f0b30fdc76ac0310c722db2615f57968.

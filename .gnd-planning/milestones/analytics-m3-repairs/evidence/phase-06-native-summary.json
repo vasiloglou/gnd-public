@@ -1,0 +1,17 @@
+{
+  "baseline_seconds": 52.38098449999234,
+  "candidate_seconds": [
+    32.12781208398519,
+    32.285824250022415,
+    32.1113757500425
+  ],
+  "candidate_median_seconds": 32.12781208398519,
+  "normalized_full_reports_identical": true,
+  "normalization": "only generated <...>.json label suffix removed",
+  "semantic_sha256": "b24161d360189420c722c52b701425901035b51ce899b186a4105ea72fa1be12",
+  "source_base": "fa926ae7255842ec2c3dbe3555f837e366346179",
+  "red_commit": "36703a0",
+  "transition_sha256": "03303cd71b3cdaf18ce8718a85178ebd553846b557b6e50798343a83deb8271d",
+  "app_base": "8d9cfac005022941a250b70d4bccbf7569aa4321",
+  "final_question_gate": false
+}

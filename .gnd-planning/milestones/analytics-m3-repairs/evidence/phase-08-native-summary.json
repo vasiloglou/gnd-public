@@ -1,0 +1,28 @@
+{
+  "source_base": "7f40f01",
+  "red_commit": "6f0665b",
+  "source_population_sha256": "a7eca16d78fe76452dfd26629e03bc459accd8e4da8b6bb2897a3f2dd8743eef",
+  "load_baseline_seconds": [
+    1.8637757079559378,
+    1.8668279169942252,
+    1.867184333037585
+  ],
+  "load_candidate_seconds": [
+    0.834759125020355,
+    0.8326868330477737,
+    0.831308499968145
+  ],
+  "load_before_median_seconds": 1.8668279169942252,
+  "load_after_median_seconds": 0.8326868330477737,
+  "root_baseline_median_seconds": 12.325068709033076,
+  "root_candidate_seconds": [
+    8.306631792045664,
+    8.300914541992825,
+    8.301700084004551
+  ],
+  "root_candidate_median_seconds": 8.301700084004551,
+  "normalized_root_reports_byte_identical": true,
+  "facts_types_instances_covers_warnings_identical": true,
+  "semantic_sha256": "b24161d360189420c722c52b701425901035b51ce899b186a4105ea72fa1be12",
+  "question_latency_gate": false
+}

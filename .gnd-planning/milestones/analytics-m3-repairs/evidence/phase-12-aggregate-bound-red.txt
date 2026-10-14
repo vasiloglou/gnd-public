@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_aggregate_schema_strings_refused_before_serialization __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a1015b0>
+
+    def test_aggregate_schema_strings_refused_before_serialization(monkeypatch):
+        from gnd import population_shape
+        def unwanted(*args, **kwargs):
+            raise AssertionError('aggregate schema exceeded budget before serialization')
+        monkeypatch.setattr(population_shape.json, 'dumps', unwanted)
+        schema = {'type': 'string', 'title': 'x' * 600000, 'description': 'y' * 600000}
+        with pytest.raises(population_shape._Unsupported):
+>           population_shape._bounded(schema)
+
+tests/test_m3_population_shape.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/gnd/population_shape.py:48: in _bounded
+    content = json.dumps(schema, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'type': 'string', 'title': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'},)
+kwargs = {'ensure_ascii': True, 'separators': (',', ':'), 'allow_nan': False}
+
+    def unwanted(*args, **kwargs):
+>       raise AssertionError('aggregate schema exceeded budget before serialization')
+E       AssertionError: aggregate schema exceeded budget before serialization
+
+tests/test_m3_population_shape.py:182: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_m3_population_shape.py::test_aggregate_schema_strings_refused_before_serialization
+1 failed, 59 deselected in 0.06s

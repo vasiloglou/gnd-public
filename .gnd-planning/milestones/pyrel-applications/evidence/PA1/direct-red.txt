@@ -1,0 +1,154 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+________ test_profile_admission_refuses_before_native_import[uncovered] ________
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+______ test_profile_admission_refuses_before_native_import[missing-list] _______
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+__________ test_profile_admission_refuses_before_native_import[rows] ___________
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+_________ test_profile_admission_refuses_before_native_import[objects] _________
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+_____ test_profile_admission_refuses_before_native_import[unknown-family] ______
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+_________ test_profile_admission_refuses_before_native_import[derived] _________
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+________ test_profile_admission_refuses_before_native_import[primitive] ________
+tests/test_pyrel_application_acceptance.py:54: in test_profile_admission_refuses_before_native_import
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+____________ test_unsupported_guarded_shape_cannot_accept[unbound] _____________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+______________ test_unsupported_guarded_shape_cannot_accept[role] ______________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+______________ test_unsupported_guarded_shape_cannot_accept[fact] ______________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+________ test_unsupported_guarded_shape_cannot_accept[extra-consequent] ________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+____________ test_unsupported_guarded_shape_cannot_accept[operator] ____________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+_________ test_unsupported_guarded_shape_cannot_accept[typed-variable] _________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+_____________ test_unsupported_guarded_shape_cannot_accept[atoms] ______________
+tests/test_pyrel_application_acceptance.py:78: in test_unsupported_guarded_shape_cannot_accept
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+_________________ test_acceptance_signature_and_binding_shape __________________
+tests/test_pyrel_application_acceptance.py:86: in test_acceptance_signature_and_binding_shape
+    report = api()(model, population, model_sha256='a' * 64, population_sha256='b' * 64)
+             ^^^^^
+tests/test_pyrel_application_acceptance.py:30: in api
+    assert callable(function), 'applications-v1 acceptance interface is not implemented'
+E   AssertionError: applications-v1 acceptance interface is not implemented
+E   assert False
+E    +  where False = callable(None)
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[uncovered]
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[missing-list]
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[rows]
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[objects]
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[unknown-family]
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[derived]
+FAILED tests/test_pyrel_application_acceptance.py::test_profile_admission_refuses_before_native_import[primitive]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[unbound]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[role]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[fact]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[extra-consequent]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[operator]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[typed-variable]
+FAILED tests/test_pyrel_application_acceptance.py::test_unsupported_guarded_shape_cannot_accept[atoms]
+FAILED tests/test_pyrel_application_acceptance.py::test_acceptance_signature_and_binding_shape
+15 failed in 0.14s

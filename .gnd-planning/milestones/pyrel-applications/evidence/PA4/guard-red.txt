@@ -1,0 +1,177 @@
+Edited receipt: operator repository/temp paths and pytest username sanitized; result text otherwise retained. Raw SHA-256 e6602aaeaa12781a5f3e55b30263e8c32d24f1ba95fb730c00a7e7146e2c5924.
+
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+__________ test_source_bound_guard_refusal_has_closed_interface[None] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109da7810>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa0')
+damage = None
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+________ test_source_bound_guard_refusal_has_closed_interface[binding] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109f4c990>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa1')
+damage = 'binding'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+_________ test_source_bound_guard_refusal_has_closed_interface[schema] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109fb36d0>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa2')
+damage = 'schema'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+__________ test_source_bound_guard_refusal_has_closed_interface[code] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109f82e50>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa3')
+damage = 'code'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+__________ test_source_bound_guard_refusal_has_closed_interface[kind] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109f47210>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa4')
+damage = 'kind'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+_________ test_source_bound_guard_refusal_has_closed_interface[reason] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109fbccd0>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa5')
+damage = 'reason'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+_________ test_source_bound_guard_refusal_has_closed_interface[mixed] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109fb2e50>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa6')
+damage = 'mixed'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+_________ test_source_bound_guard_refusal_has_closed_interface[extra] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109d81f10>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa7')
+damage = 'extra'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+________ test_source_bound_guard_refusal_has_closed_interface[default] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109fbda90>
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-667/test_source_bound_guard_refusa8')
+damage = 'default'
+
+    @pytest.mark.parametrize('damage', [None, 'binding', 'schema', 'code', 'kind', 'reason', 'mixed', 'extra', 'default'])
+    def test_source_bound_guard_refusal_has_closed_interface(monkeypatch, tmp_path, damage):
+        module = application()
+>       assert 'allowed_guard_kinds' in inspect.signature(module.execute_application).parameters, 'guard-envelope interface is absent'
+E       AssertionError: guard-envelope interface is absent
+E       assert 'allowed_guard_kinds' in mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)]))
+E        +  where mappingproxy(OrderedDict([('model_path', <Parameter "model_path">), ('input_path', <Parameter "input_path">), ('output...candidate_transform', <Parameter "candidate_transform=None">), ('owned_relations', <Parameter "owned_relations=()">)])) = <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())>.parameters
+E        +    where <Signature (model_path, input_path, output_path, *, native_python, query_script, query_args=(), candidate_transform=None, owned_relations=())> = <function signature at 0x102fa2f20>(<function execute_application at 0x109f8e200>)
+E        +      where <function signature at 0x102fa2f20> = inspect.signature
+E        +      and   <function execute_application at 0x109f8e200> = <module 'gnd.export.applications' from '<repo>/src/gnd/export/applications.py'>.execute_application
+
+tests/test_pyrel_application_guards.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[None]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[binding]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[schema]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[code]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[kind]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[reason]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[mixed]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[extra]
+FAILED tests/test_pyrel_application_guards.py::test_source_bound_guard_refusal_has_closed_interface[default]
+9 failed in 0.08s

@@ -1,0 +1,41 @@
+Additional retained-output edit: pytest temporary operator-name token only; predecessor SHA-256 22acdcce67cd153a5a0fce9ab12c950a93b77a4c0259236ba001008c3c23d13b
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________ test_receipt_container_is_checked_before_work[value0] _____________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-712/test_receipt_container_is_chec0')
+value = {}
+
+    @pytest.mark.parametrize('value',[{}, 1, 'receipt'])
+    def test_receipt_container_is_checked_before_work(tmp_path,value):
+>       with pytest.raises(AssertionError,match='receipts must be a list or None'):
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:92: Failed
+_______________ test_receipt_container_is_checked_before_work[1] _______________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-712/test_receipt_container_is_chec1')
+value = 1
+
+    @pytest.mark.parametrize('value',[{}, 1, 'receipt'])
+    def test_receipt_container_is_checked_before_work(tmp_path,value):
+>       with pytest.raises(AssertionError,match='receipts must be a list or None'):
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:92: Failed
+____________ test_receipt_container_is_checked_before_work[receipt] ____________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-712/test_receipt_container_is_chec2')
+value = 'receipt'
+
+    @pytest.mark.parametrize('value',[{}, 1, 'receipt'])
+    def test_receipt_container_is_checked_before_work(tmp_path,value):
+>       with pytest.raises(AssertionError,match='receipts must be a list or None'):
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:92: Failed
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_receipt_container_is_checked_before_work[value0]
+FAILED tests/test_pyrel_tutorial_experience.py::test_receipt_container_is_checked_before_work[1]
+FAILED tests/test_pyrel_tutorial_experience.py::test_receipt_container_is_checked_before_work[receipt]
+3 failed, 13 deselected in 0.07s

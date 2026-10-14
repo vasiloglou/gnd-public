@@ -1,0 +1,32 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___ test_mobile_scroll_regions_are_keyboard_accessible[bookrec-07-native.md] ___
+
+domain = 'bookrec', page = '07-native.md'
+
+    @pytest.mark.parametrize('domain,page', [('bookrec','07-native.md'),('expense','04-native.md')])
+    def test_mobile_scroll_regions_are_keyboard_accessible(domain,page):
+        source=(ROOT/'docs'/domain/page).read_text()
+>       assert source.count('tabindex="0"') == 3
+E       assert 0 == 3
+E        +  where 0 = <built-in method count of str object at 0x818cd8800>('tabindex="0"')
+E        +    where <built-in method count of str object at 0x818cd8800> = '# 7. Compute recommendations with PyRel and audit them separately\n\nAda is a minor. A proposer that chooses `night` ...ipped native query source"\n\n    ```python\n    --8<-- "docs/assets/applications/bookrec-native-query.txt"\n    ```\n'.count
+
+tests/test_pyrel_tutorial_experience.py:85: AssertionError
+___ test_mobile_scroll_regions_are_keyboard_accessible[expense-04-native.md] ___
+
+domain = 'expense', page = '04-native.md'
+
+    @pytest.mark.parametrize('domain,page', [('bookrec','07-native.md'),('expense','04-native.md')])
+    def test_mobile_scroll_regions_are_keyboard_accessible(domain,page):
+        source=(ROOT/'docs'/domain/page).read_text()
+>       assert source.count('tabindex="0"') == 3
+E       assert 0 == 3
+E        +  where 0 = <built-in method count of str object at 0x818ce0000>('tabindex="0"')
+E        +    where <built-in method count of str object at 0x818ce0000> = '# 4. Reuse the native path for reporting and approvals\n\nExpense102 costs800 EUR. Its travel category permits2000 EU...ipped native query source"\n\n    ```python\n    --8<-- "docs/assets/applications/expense-native-query.txt"\n    ```\n'.count
+
+tests/test_pyrel_tutorial_experience.py:85: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_mobile_scroll_regions_are_keyboard_accessible[bookrec-07-native.md]
+FAILED tests/test_pyrel_tutorial_experience.py::test_mobile_scroll_regions_are_keyboard_accessible[expense-04-native.md]
+2 failed, 11 deselected in 0.06s

@@ -1,0 +1,5 @@
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_native_seam.py::test_emitted_program_exposes_public_seam
+FAILED tests/test_pyrel_native_seam.py::test_owned_queries_use_only_the_public_seam[bookrec]
+FAILED tests/test_pyrel_native_seam.py::test_owned_queries_use_only_the_public_seam[expense]
+3 failed, 12 passed in 28.24s

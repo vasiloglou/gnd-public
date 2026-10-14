@@ -1,0 +1,13 @@
+{
+  "boundary": "Public CLI re-rendering current source reproduces all measured program digests. Current execution is the final receipt, not an old review opinion.",
+  "matched": 117,
+  "native_receipt_sha256": "e9d53cf72778d311f3201a55b1175aa4d3f377a81dd5c92bcf20e4d7dac644ae",
+  "regenerated_program_sha256": {
+    "src/gnd/examples/bookrec/model.orm.yaml": "8ddf81317e8ea8334fed666a8e3f3e95641523a558d88e6726b40e9e3912094c",
+    "src/gnd/examples/bookrec/strict.orm.yaml": "5d6426d409ffd0275f532b3868bbe9986d54508f8079c5e7d9045705304946b1",
+    "src/gnd/examples/expense/currency.orm.json": "bc9ec616611a8e254d0e595db399f4a0ed2c4f2f3450156209c1d3e6210c5330",
+    "src/gnd/examples/expense/model.orm.json": "8664de93e8e30d2283c52ccfe9115e74fd20c121a18a409824b65d1d0f87c38b"
+  },
+  "runtime_source_sha256": "e91b4c7b62f995d9c3630393edfa8154f807e232b3c3a665018a874b543bd803",
+  "verified_case_count": 117
+}

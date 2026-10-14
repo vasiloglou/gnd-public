@@ -1,0 +1,68 @@
+Additional retained-output edit: pytest temporary operator-name token only; predecessor SHA-256 6ddc2248260f8515055887476a9aab4a17a8576cda28dfe4dc5d004dcfdd7e9e
+Retained output edited: operator/checkout paths only. Raw SHA-256 b78f4aebf4e1fb4ef2498531e550c2de3ab9facd2c51a11790ef80049b956de0
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_invalid_receipt_destination_refuses_before_execution[True] ________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-713/test_invalid_receipt_destinati0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108897ad0>
+existing = True
+
+    @pytest.mark.parametrize('existing',[True,False])
+    def test_invalid_receipt_destination_refuses_before_execution(tmp_path,monkeypatch,existing):
+        receipt=tmp_path/'receipt.json' if existing else tmp_path/'absent'/'receipt.json'
+        if existing: receipt.write_text('prior evidence')
+        monkeypatch.setattr(sys,'argv',['run_tutorials','--group','bookrec','--receipt',str(receipt)])
+        monkeypatch.setattr(runner,'run_pages',lambda *a,**k:pytest.fail('executed before receipt validation'))
+>       with pytest.raises(SystemExit) as error: runner.main()
+                                                 ^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/run_tutorials.py:156: in main
+    total += run_pages(pages, Path(directory), args.python.absolute(), args.lane, receipts=receipts)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = ([PosixPath('<checkout>/docs/bookrec/01-model.md'), PosixPath('/Users/nikolaosv...nd-docs-bookrec-dyic188_'), PosixPath('<checkout>/.venv/bin/python'), 'offline')
+k = {'receipts': []}
+
+>   monkeypatch.setattr(runner,'run_pages',lambda *a,**k:pytest.fail('executed before receipt validation'))
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: executed before receipt validation
+
+tests/test_pyrel_tutorial_experience.py:102: Failed
+_______ test_invalid_receipt_destination_refuses_before_execution[False] _______
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-713/test_invalid_receipt_destinati1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1088e9f90>
+existing = False
+
+    @pytest.mark.parametrize('existing',[True,False])
+    def test_invalid_receipt_destination_refuses_before_execution(tmp_path,monkeypatch,existing):
+        receipt=tmp_path/'receipt.json' if existing else tmp_path/'absent'/'receipt.json'
+        if existing: receipt.write_text('prior evidence')
+        monkeypatch.setattr(sys,'argv',['run_tutorials','--group','bookrec','--receipt',str(receipt)])
+        monkeypatch.setattr(runner,'run_pages',lambda *a,**k:pytest.fail('executed before receipt validation'))
+>       with pytest.raises(SystemExit) as error: runner.main()
+                                                 ^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/run_tutorials.py:156: in main
+    total += run_pages(pages, Path(directory), args.python.absolute(), args.lane, receipts=receipts)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = ([PosixPath('<checkout>/docs/bookrec/01-model.md'), PosixPath('/Users/nikolaosv...nd-docs-bookrec-jbci_l05'), PosixPath('<checkout>/.venv/bin/python'), 'offline')
+k = {'receipts': []}
+
+>   monkeypatch.setattr(runner,'run_pages',lambda *a,**k:pytest.fail('executed before receipt validation'))
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: executed before receipt validation
+
+tests/test_pyrel_tutorial_experience.py:102: Failed
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_invalid_receipt_destination_refuses_before_execution[True]
+FAILED tests/test_pyrel_tutorial_experience.py::test_invalid_receipt_destination_refuses_before_execution[False]
+2 failed, 16 deselected in 0.07s

@@ -1,0 +1,32 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_native_learning_inventory_rejects_skips_and_missing_pages[bookrec-52-2] _
+
+group = 'bookrec', total = 52, native = 2
+
+    @pytest.mark.parametrize('group,total,native',[('bookrec',52,2),('expense',34,3)])
+    def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,native):
+        module=tool();pages=7 if group=='bookrec' else 4
+        rows=[{'page':str(i%pages),'lane':'pyrel' if i<native else 'offline','status':'passed'} for i in range(total)]
+>       module.verify_learning_paths({'count':total,'records':rows},group,'pyrel')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pa_install' has no attribute 'verify_learning_paths'
+
+tests/test_pyrel_applications_install.py:65: AttributeError
+_ test_native_learning_inventory_rejects_skips_and_missing_pages[expense-34-3] _
+
+group = 'expense', total = 34, native = 3
+
+    @pytest.mark.parametrize('group,total,native',[('bookrec',52,2),('expense',34,3)])
+    def test_native_learning_inventory_rejects_skips_and_missing_pages(group,total,native):
+        module=tool();pages=7 if group=='bookrec' else 4
+        rows=[{'page':str(i%pages),'lane':'pyrel' if i<native else 'offline','status':'passed'} for i in range(total)]
+>       module.verify_learning_paths({'count':total,'records':rows},group,'pyrel')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pa_install' has no attribute 'verify_learning_paths'
+
+tests/test_pyrel_applications_install.py:65: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_applications_install.py::test_native_learning_inventory_rejects_skips_and_missing_pages[bookrec-52-2]
+FAILED tests/test_pyrel_applications_install.py::test_native_learning_inventory_rejects_skips_and_missing_pages[expense-34-3]
+2 failed, 9 deselected in 0.07s

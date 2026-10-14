@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 700" role="img" aria-labelledby="title desc"><title id="title">Currency becomes an explicit fact</title><desc id="desc">Baseline implicit EUR totals 2260. Add required currency; only 103 has EUR, so 101/102 are missing and policy rejects. Repair all three to EUR and report 2260 EUR. No conversion.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="560" height="700" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Currency becomes an explicit fact</text>
+<rect x="24" y="74" width="512" height="100" rx="12" fill="#eef5f8"/>
+<text x="40" y="104" class="strong">Before · implicit EUR</text>
+<text x="40" y="133" class="">60 + 800 + 1400 = 2260 EUR</text>
+<text x="40" y="160" class="">Units come from the synthetic brief</text>
+<path class="edge" d="M280 174L280 204"/>
+<rect x="24" y="210" width="512" height="108" rx="12" fill="#eef5f8"/>
+<text x="40" y="240" class="strong">Model change · require currency</text>
+<text x="40" y="269" class="">expense_has_currency is mandatory</text>
+<text x="40" y="296" class="">supported_currency permits EUR only</text>
+<path class="edge" d="M280 318L280 348"/>
+<rect x="24" y="354" width="512" height="119" rx="12" fill="#fff0e4"/>
+<text x="40" y="384" class="strong">Missing facts · rejected</text>
+<text x="40" y="413" class="">Only 103 → EUR; 101/102 missing</text>
+<text x="40" y="440" class="">FAIL: required_expense_has_currency</text>
+<text x="40" y="467" class="">No successful CLI report</text>
+<path class="edge" d="M280 473L280 503"/>
+<rect x="24" y="509" width="512" height="105" rx="12" fill="#e9f4ec"/>
+<text x="40" y="539" class="strong">Repair · 101/102/103 → EUR</text>
+<text x="40" y="568" class="">PASS: totals_by_currency = EUR 2260</text>
+<text x="40" y="595" class="">No exchange rate or currency conversion</text>
+<text x="24" y="658" class="small">USD also hits the EUR-only application guard</text>
+</svg>

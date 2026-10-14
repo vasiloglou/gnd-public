@@ -1,0 +1,16 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_native_computed_entity_universe_cannot_omit_new_subtype_members[mandatory] _
+tests/test_pyrel_application_derivations.py:224: in test_native_computed_entity_universe_cannot_omit_new_subtype_members
+    assert report['exit_code'] == 1 and not report['accepted'], report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...': [{'computed': [{'who': 'a'}], 'derivation_ref': 'derivation:active', 'extra': [], 'fact_type': 'active', ...}], ...}
+E   assert (0 == 1)
+_ test_native_computed_entity_universe_cannot_omit_new_subtype_members[value] __
+tests/test_pyrel_application_derivations.py:224: in test_native_computed_entity_universe_cannot_omit_new_subtype_members
+    assert report['exit_code'] == 1 and not report['accepted'], report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...': [{'computed': [{'who': 'a'}], 'derivation_ref': 'derivation:active', 'extra': [], 'fact_type': 'active', ...}], ...}
+E   assert (0 == 1)
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_derivations.py::test_native_computed_entity_universe_cannot_omit_new_subtype_members[mandatory]
+FAILED tests/test_pyrel_application_derivations.py::test_native_computed_entity_universe_cannot_omit_new_subtype_members[value]
+2 failed in 2.11s

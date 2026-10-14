@@ -1,0 +1,94 @@
+Edited tool receipt: operator repository/temp paths and pytest username sanitized; execution/result text otherwise retained. Original raw SHA-256 5a0ea55c0869f9da0bf3ff68c68dfe66045d37edbeda5a7f9880101690f5bc24.
+
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_model_filename_cannot_collide_with_private_stage[seed.json] _______
+
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-653/test_model_filename_cannot_col0')
+name = 'seed.json'
+
+    @pytest.mark.parametrize('name', ['seed.json', 'candidate.json', 'policy.json', 'runtime.py'])
+    def test_model_filename_cannot_collide_with_private_stage(tmp_path, name):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        model = tmp_path / name; model.write_bytes((example / 'model.orm.yaml').read_bytes())
+        output = tmp_path / 'out.json'
+        result = execute_application(model, example / 'seed.population.json', output,
+                                     native_python=NATIVE, owned_relations=('recommendation',),
+                                     query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('recommend', 'ada', '2', 'false'))
+>       assert result['exit_code'] == 0 and result['published'] and result['policy']['accepted'], result
+E       AssertionError: {'exit_code': 3, 'accepted': False, 'published': False, 'policy': None, ...}
+E       assert (3 == 0)
+
+tests/test_bookrec_pyrel_application.py:200: AssertionError
+____ test_model_filename_cannot_collide_with_private_stage[candidate.json] _____
+
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-653/test_model_filename_cannot_col1')
+name = 'candidate.json'
+
+    @pytest.mark.parametrize('name', ['seed.json', 'candidate.json', 'policy.json', 'runtime.py'])
+    def test_model_filename_cannot_collide_with_private_stage(tmp_path, name):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        model = tmp_path / name; model.write_bytes((example / 'model.orm.yaml').read_bytes())
+        output = tmp_path / 'out.json'
+        result = execute_application(model, example / 'seed.population.json', output,
+                                     native_python=NATIVE, owned_relations=('recommendation',),
+                                     query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('recommend', 'ada', '2', 'false'))
+>       assert result['exit_code'] == 0 and result['published'] and result['policy']['accepted'], result
+E       AssertionError: {'exit_code': 70, 'accepted': False, 'published': False, 'policy': None, ...}
+E       assert (70 == 0)
+
+tests/test_bookrec_pyrel_application.py:200: AssertionError
+______ test_model_filename_cannot_collide_with_private_stage[policy.json] ______
+
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-653/test_model_filename_cannot_col2')
+name = 'policy.json'
+
+    @pytest.mark.parametrize('name', ['seed.json', 'candidate.json', 'policy.json', 'runtime.py'])
+    def test_model_filename_cannot_collide_with_private_stage(tmp_path, name):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        model = tmp_path / name; model.write_bytes((example / 'model.orm.yaml').read_bytes())
+        output = tmp_path / 'out.json'
+        result = execute_application(model, example / 'seed.population.json', output,
+                                     native_python=NATIVE, owned_relations=('recommendation',),
+                                     query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('recommend', 'ada', '2', 'false'))
+>       assert result['exit_code'] == 0 and result['published'] and result['policy']['accepted'], result
+E       AssertionError: {'exit_code': 70, 'accepted': False, 'published': False, 'policy': {'version': 1, 'model_id': 'urn:gnd-tutorial:bookre... 'value', 'primitive': 'String'}, {'id': 'genre', 'name': 'Genre', 'kind': 'value', 'primitive': 'String'}], ...}, ...}
+E       assert (70 == 0)
+
+tests/test_bookrec_pyrel_application.py:200: AssertionError
+______ test_model_filename_cannot_collide_with_private_stage[runtime.py] _______
+
+tmp_path = PosixPath('<tmp>/pytest-of-user/pytest-653/test_model_filename_cannot_col3')
+name = 'runtime.py'
+
+    @pytest.mark.parametrize('name', ['seed.json', 'candidate.json', 'policy.json', 'runtime.py'])
+    def test_model_filename_cannot_collide_with_private_stage(tmp_path, name):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        model = tmp_path / name; model.write_bytes((example / 'model.orm.yaml').read_bytes())
+        output = tmp_path / 'out.json'
+        result = execute_application(model, example / 'seed.population.json', output,
+                                     native_python=NATIVE, owned_relations=('recommendation',),
+                                     query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('recommend', 'ada', '2', 'false'))
+>       assert result['exit_code'] == 0 and result['published'] and result['policy']['accepted'], result
+E       AssertionError: {'exit_code': 70, 'accepted': False, 'published': False, 'policy': None, ...}
+E       assert (70 == 0)
+
+tests/test_bookrec_pyrel_application.py:200: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_bookrec_pyrel_application.py::test_model_filename_cannot_collide_with_private_stage[seed.json]
+FAILED tests/test_bookrec_pyrel_application.py::test_model_filename_cannot_collide_with_private_stage[candidate.json]
+FAILED tests/test_bookrec_pyrel_application.py::test_model_filename_cannot_collide_with_private_stage[policy.json]
+FAILED tests/test_bookrec_pyrel_application.py::test_model_filename_cannot_collide_with_private_stage[runtime.py]
+4 failed, 19 deselected in 4.15s

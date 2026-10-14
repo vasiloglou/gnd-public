@@ -1,6 +1,10 @@
 # GND development agreements
 
-Use [process-phase](.codex/skills/process-phase/SKILL.md) for numbered milestone work.
+Use [start-milestone](.codex/skills/start-milestone/SKILL.md) to prepare or resume
+milestone plans and their first draft phase spec. Use
+[process-phase](.codex/skills/process-phase/SKILL.md) for numbered phase execution.
+Use [process-milestone](.codex/skills/process-milestone/SKILL.md) to coordinate
+a whole named milestone; `auto=true` requires explicit scoped owner delegation.
 The complete normative references are shipped in both real discovery roots;
 keep twins byte-for-byte and executable-mode identical. The owned compatibility
 [plan-review-panel](.codex/skills/plan-review-panel/SKILL.md) requires an explicit

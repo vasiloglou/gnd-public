@@ -1,0 +1,194 @@
+FFFFFFFFFFFFFFFFFFF                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_negative_dependency_order_is_not_declaration_order ____________
+tests/test_pyrel_application_derivations.py:41: in test_negative_dependency_order_is_not_declaration_order
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+_________ test_derivation_grammar_refuses_before_native_import[cycle] __________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+_________ test_derivation_grammar_refuses_before_native_import[opaque] _________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+________ test_derivation_grammar_refuses_before_native_import[clauses] _________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+____ test_derivation_grammar_refuses_before_native_import[unsafe-negative] _____
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+______ test_derivation_grammar_refuses_before_native_import[unbound-head] ______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+___ test_derivation_grammar_refuses_before_native_import[missing-head-role] ____
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+______ test_derivation_grammar_refuses_before_native_import[unknown-fact] ______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+______ test_derivation_grammar_refuses_before_native_import[unknown-role] ______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+_______ test_derivation_grammar_refuses_before_native_import[body-limit] _______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+_____ test_derivation_grammar_refuses_before_native_import[negative-limit] _____
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+________ test_derivation_grammar_refuses_before_native_import[bad-rule] ________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+________ test_derivation_grammar_refuses_before_native_import[bad-body] ________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+________ test_derivation_grammar_refuses_before_native_import[bad-head] ________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+______ test_derivation_grammar_refuses_before_native_import[head-literal] ______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+_______ test_derivation_grammar_refuses_before_native_import[typed-head] _______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+___________ test_derivation_grammar_refuses_before_native_import[v1] ___________
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+______ test_derivation_grammar_refuses_before_native_import[semiderived] _______
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+_____ test_derivation_grammar_refuses_before_native_import[stored-derived] _____
+tests/test_pyrel_application_derivations.py:53: in test_derivation_grammar_refuses_before_native_import
+    namespace, function = compiler()
+                          ^^^^^^^^^^
+tests/test_pyrel_application_derivations.py:36: in compiler
+    assert callable(function), 'structured derivation admission is absent from standalone runtime'
+E   AssertionError: structured derivation admission is absent from standalone runtime
+E   assert False
+E    +  where False = callable(None)
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_derivations.py::test_negative_dependency_order_is_not_declaration_order
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[cycle]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[opaque]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[clauses]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[unsafe-negative]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[unbound-head]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[missing-head-role]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[unknown-fact]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[unknown-role]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[body-limit]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[negative-limit]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[bad-rule]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[bad-body]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[bad-head]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[head-literal]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[typed-head]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[v1]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[semiderived]
+FAILED tests/test_pyrel_application_derivations.py::test_derivation_grammar_refuses_before_native_import[stored-derived]
+19 failed, 1 deselected in 0.21s

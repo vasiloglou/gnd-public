@@ -32,7 +32,8 @@ def pin(name, value):
             from support.rf9_ci_sources import EVIDENCE
             successor = json.loads((EVIDENCE / 'pyrel-successor.json').read_text())
             assert successor['before'] == expected and successor['reason']
-            expected = successor['after']
+            from support.pyrel_application_successors import rendered_bytes
+            expected = rendered_bytes(successor['after'], EVIDENCE / 'pyrel-successor.json')
         assert value == expected
 
 

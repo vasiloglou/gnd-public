@@ -1,0 +1,65 @@
+[
+  {
+    "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA6/install-measured.txt",
+    "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA6/install-measured.txt",
+    "raw_sha256": "387c06aace2a4c45b5170afc657d59cb717427ca1872f68bfc0ff917b1ab3c93",
+    "retained_sha256": "019b2cf15a1dc5d150c48f40c4235bac6c0340ef67651598aa98035fac361739",
+    "edits": "path roles only; committed predecessors preserved"
+  },
+  {
+    "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA6/install-red.txt",
+    "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA6/install-red-sanitized.txt",
+    "raw_sha256": "8a34abe9ecb37f1a870dfd2cc900399e84413d8c29dcf4a86a5e9cd12a4cbd29",
+    "retained_sha256": "491e632af34fe068ea561d4b4d438d4f88e82c9489181af7e280f4ab1692769c",
+    "edits": "path roles only; committed predecessors preserved"
+  },
+  {
+    "source": ".gnd-planning/milestones/pyrel-applications/evidence/PA6/install-initial.txt",
+    "retained": ".gnd-planning/milestones/pyrel-applications/evidence/PA6/install-initial.txt",
+    "raw_sha256": "d2ef8154d788a87711a3bdaeb00103aed4e6df66f1507959b9b9a0ab51a338af",
+    "retained_sha256": "6a628af471ac5632d902adfca79dba5e581a8d5ce5051ab014a9d0de9f7645cc",
+    "edits": "path roles only; committed predecessors preserved"
+  },
+  {
+    "source": "<installed-target>/receipt.json",
+    "raw_sha256": "4814ab7942224342ba7fb4eb9e932f3a7ef84ef4e36c61b940b515731ef3e224",
+    "retained_sha256": "4b88582941ea409370cced25fb5dda837d43022f08f73bf98ad6962426ecb41c",
+    "edits": "path roles only"
+  },
+  {
+    "source": "<installed-target>/native-corpus.json",
+    "raw_sha256": "657b04d0fcec0315305dc3b01eead39a560e51a8962e42fe8497d54bf4937195",
+    "retained_sha256": "657b04d0fcec0315305dc3b01eead39a560e51a8962e42fe8497d54bf4937195",
+    "edits": "none"
+  },
+  {
+    "source": "<installed-target>/gnd-corpus.json",
+    "raw_sha256": "45c355f07e1f0b764c81779d5d7a212c94547538b7ebb4d23c7b5890dc7759fe",
+    "retained_sha256": "45c355f07e1f0b764c81779d5d7a212c94547538b7ebb4d23c7b5890dc7759fe",
+    "edits": "none"
+  },
+  {
+    "source": "<installed-target>/bookrec-pyrel-steps.json",
+    "raw_sha256": "4f3c56038daa6282ebc32b8f592c7925435ea28dc3c3481e33fa052a3feb9641",
+    "retained_sha256": "4f3c56038daa6282ebc32b8f592c7925435ea28dc3c3481e33fa052a3feb9641",
+    "edits": "none"
+  },
+  {
+    "source": "<installed-target>/expense-pyrel-steps.json",
+    "raw_sha256": "855954b1e4b52135608c0aac22b1b478040c43f92cc712918257c10adabdfed3",
+    "retained_sha256": "855954b1e4b52135608c0aac22b1b478040c43f92cc712918257c10adabdfed3",
+    "edits": "none"
+  },
+  {
+    "source": "<installed-target>/bookrec-offline-steps.json",
+    "raw_sha256": "37f41ec6430c556bce8c7bb033655886a883db0d559a5dbd76c628d3084393d7",
+    "retained_sha256": "37f41ec6430c556bce8c7bb033655886a883db0d559a5dbd76c628d3084393d7",
+    "edits": "none"
+  },
+  {
+    "source": "<installed-target>/expense-offline-steps.json",
+    "raw_sha256": "4d175b0875f151a226fe9d1f0c7e0e53b8a69b69fcd88e0510a84a05eb344a4e",
+    "retained_sha256": "4d175b0875f151a226fe9d1f0c7e0e53b8a69b69fcd88e0510a84a05eb344a4e",
+    "edits": "none"
+  }
+]

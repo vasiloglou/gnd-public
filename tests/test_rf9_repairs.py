@@ -105,7 +105,8 @@ def test_population_digest_annotations_resolve(name, type_name):
 def test_literal_getattr_is_visible_to_exact_query_policy(field):
     import test_rf6_query_policy as guard
 
-    policy = json.loads(guard.POLICY.read_text())
+    # The live policy is the RF9 base plus its authenticated phase successors, as in rf6.
+    policy = guard.effective_policy()
     found = guard.reads(guard.sources())
     assert_policy = guard.assert_policy
     assert_policy(found, policy)

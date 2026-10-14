@@ -1,0 +1,4 @@
+$ .venv/bin/python -m pytest -q -p no:cacheprovider -m pyrel_oracle tests/test_pyrel_native_seam.py tests/test_pyrel_proposal_check.py tests/test_bookrec_pyrel_application.py tests/test_expense_pyrel_application.py tests/test_pyrel_application_driver.py tests/test_pyrel_application_acceptance.py tests/test_pyrel_application_guards.py tests/test_pyrel_application_publication.py tests/test_pyrel_export.py tests/test_pyrel_export_boundaries.py tests/test_public_pyrel_oracle_isolation.py tests/test_pyrel_constraint_oracle.py
+# at d3bad6e, clean tracked tree: yes
+FAILED tests/test_pyrel_constraint_oracle.py::test_decided_verdicts_agree - A...
+1 failed, 94 passed, 202 deselected in 410.52s (0:06:50)

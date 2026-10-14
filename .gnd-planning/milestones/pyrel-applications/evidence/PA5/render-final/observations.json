@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "source": "Final owned local browser capture after bounded repair;24 graphic/theme/viewport variants plus12mobile rightviews;8normalpage navigation views",
+  "instrumentation": "Cropped diagram images hide sticky header/floatingTOC only; separate normal navigation views retain them. Mobile minimum560px intentionally scrolls, all labels reachable; no intrinsic SVG clipping. Subsequent desc-only Ben/read clarification does not change pixels; XML tests and current source hashes cover accessible text.",
+  "rows": [
+    {
+      "domain": "bookrec",
+      "viewport": "desktop",
+      "theme": "default",
+      "checks": [
+        {
+          "asset": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": "BookRec facts feed native queries, then a separate policy audit; advisory warnings publish and strict genre failures withhold output.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": "Eligibility arrows show Ada to map/river and Ben to map/night/river. Ada/night violates age_appropriate; Ada/read and Ben/read violate unread_only. Cosmos is legal in baseline but outside the preferred complete set.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": "The same cosmos/map candidate warns with advisory genre fit and fails with strict fit; preferred-only repairs Ada to map/river. Complete mode requires all five eligible pairs.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "bookrec",
+      "viewport": "desktop",
+      "theme": "slate",
+      "checks": [
+        {
+          "asset": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": "BookRec facts feed native queries, then a separate policy audit; advisory warnings publish and strict genre failures withhold output.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": "Eligibility arrows show Ada to map/river and Ben to map/night/river. Ada/night violates age_appropriate; Ada/read and Ben/read violate unread_only. Cosmos is legal in baseline but outside the preferred complete set.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": "The same cosmos/map candidate warns with advisory genre fit and fails with strict fit; preferred-only repairs Ada to map/river. Complete mode requires all five eligible pairs.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "bookrec",
+      "viewport": "mobile",
+      "theme": "default",
+      "checks": [
+        {
+          "asset": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": "BookRec facts feed native queries, then a separate policy audit; advisory warnings publish and strict genre failures withhold output.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": "Eligibility arrows show Ada to map/river and Ben to map/night/river. Ada/night violates age_appropriate; Ada/read and Ben/read violate unread_only. Cosmos is legal in baseline but outside the preferred complete set.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": "The same cosmos/map candidate warns with advisory genre fit and fails with strict fit; preferred-only repairs Ada to map/river. Complete mode requires all five eligible pairs.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "domain": "bookrec",
+      "viewport": "mobile",
+      "theme": "slate",
+      "checks": [
+        {
+          "asset": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": "BookRec facts feed native queries, then a separate policy audit; advisory warnings publish and strict genre failures withhold output.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": "Eligibility arrows show Ada to map/river and Ben to map/night/river. Ada/night violates age_appropriate; Ada/read and Ben/read violate unread_only. Cosmos is legal in baseline but outside the preferred complete set.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": "The same cosmos/map candidate warns with advisory genre fit and fails with strict fit; preferred-only repairs Ada to map/river. Complete mode requires all five eligible pairs.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "domain": "expense",
+      "viewport": "desktop",
+      "theme": "default",
+      "checks": [
+        {
+          "asset": "expense-flow.svg",
+          "loaded": true,
+          "alt": "Three submitted expenses total 2260 EUR and one is approved. Reporting calculations and approval proposals enter a separate policy check; only accepted results are presented or published.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-limits.svg",
+          "loaded": true,
+          "alt": "Meal 101 costs 60 EUR, below category 75 and team-lead 100. Travel 102 costs 800, within category 2000 but beyond team-lead 100, violating approval_limit_team_lead. Finance 3000 accepts 102.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-currency.svg",
+          "loaded": true,
+          "alt": "Implicit EUR gives 2260. The evolved model requires expense_has_currency and allows only EUR. Missing 101/102 currency violates required_expense_has_currency; supplying EUR for all three yields labeled EUR 2260. No conversion is performed.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "expense",
+      "viewport": "desktop",
+      "theme": "slate",
+      "checks": [
+        {
+          "asset": "expense-flow.svg",
+          "loaded": true,
+          "alt": "Three submitted expenses total 2260 EUR and one is approved. Reporting calculations and approval proposals enter a separate policy check; only accepted results are presented or published.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-limits.svg",
+          "loaded": true,
+          "alt": "Meal 101 costs 60 EUR, below category 75 and team-lead 100. Travel 102 costs 800, within category 2000 but beyond team-lead 100, violating approval_limit_team_lead. Finance 3000 accepts 102.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-currency.svg",
+          "loaded": true,
+          "alt": "Implicit EUR gives 2260. The evolved model requires expense_has_currency and allows only EUR. Missing 101/102 currency violates required_expense_has_currency; supplying EUR for all three yields labeled EUR 2260. No conversion is performed.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "expense",
+      "viewport": "mobile",
+      "theme": "default",
+      "checks": [
+        {
+          "asset": "expense-flow.svg",
+          "loaded": true,
+          "alt": "Three submitted expenses total 2260 EUR and one is approved. Reporting calculations and approval proposals enter a separate policy check; only accepted results are presented or published.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-limits.svg",
+          "loaded": true,
+          "alt": "Meal 101 costs 60 EUR, below category 75 and team-lead 100. Travel 102 costs 800, within category 2000 but beyond team-lead 100, violating approval_limit_team_lead. Finance 3000 accepts 102.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-currency.svg",
+          "loaded": true,
+          "alt": "Implicit EUR gives 2260. The evolved model requires expense_has_currency and allows only EUR. Missing 101/102 currency violates required_expense_has_currency; supplying EUR for all three yields labeled EUR 2260. No conversion is performed.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "domain": "expense",
+      "viewport": "mobile",
+      "theme": "slate",
+      "checks": [
+        {
+          "asset": "expense-flow.svg",
+          "loaded": true,
+          "alt": "Three submitted expenses total 2260 EUR and one is approved. Reporting calculations and approval proposals enter a separate policy check; only accepted results are presented or published.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-limits.svg",
+          "loaded": true,
+          "alt": "Meal 101 costs 60 EUR, below category 75 and team-lead 100. Travel 102 costs 800, within category 2000 but beyond team-lead 100, violating approval_limit_team_lead. Finance 3000 accepts 102.",
+          "glyph_overflows": []
+        },
+        {
+          "asset": "expense-currency.svg",
+          "loaded": true,
+          "alt": "Implicit EUR gives 2260. The evolved model requires expense_has_currency and allows only EUR. Missing 101/102 currency violates required_expense_has_currency; supplying EUR for all three yields labeled EUR 2260. No conversion is performed.",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    }
+  ]
+}

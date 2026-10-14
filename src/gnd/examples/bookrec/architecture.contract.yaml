@@ -11,6 +11,15 @@
           ]
         }
       ]
+    },
+    {
+      "path": "bookrec/native_query.py",
+      "symbols": [
+        {
+          "name": "main",
+          "parameters": []
+        }
+      ]
     }
   ],
   "artifacts": [],
@@ -27,7 +36,9 @@
         "--output",
         "--user",
         "--limit",
-        "--preferred-only"
+        "--preferred-only",
+        "--backend",
+        "--pyrel-python"
       ],
       "consumes": [
         "recommendation",

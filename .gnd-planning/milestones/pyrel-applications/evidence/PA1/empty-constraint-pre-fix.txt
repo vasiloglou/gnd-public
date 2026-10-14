@@ -1,0 +1,12 @@
+.........................................F                               [100%]
+=================================== FAILURES ===================================
+____________ test_engine_failure_without_constraints_cannot_accept _____________
+tests/test_pyrel_application_acceptance.py:177: in test_engine_failure_without_constraints_cannot_accept
+    assert report['status'] == 'runtime_failure' and report['exit_code'] == 70
+E   AssertionError: assert ('accepted' == 'runtime_failure'
+E     
+E     - runtime_failure
+E     + accepted)
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_acceptance.py::test_engine_failure_without_constraints_cannot_accept
+1 failed, 41 passed in 0.32s

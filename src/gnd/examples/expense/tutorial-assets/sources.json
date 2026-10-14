@@ -1,0 +1,422 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic shipped facts and measured native checkpoint reports; no source truth, actor authority or conversion.",
+  "graphics": {
+    "flow": {
+      "sha256": "4654889be5a9726ba9368d8a7acc0632e70f08f807fa9aa601b3104e25a427d5",
+      "labels": [
+        "2260 EUR",
+        "Independent exported policy check"
+      ],
+      "checks": [
+        {
+          "file": "tutorial-assets/checkpoints/baseline.json",
+          "sha256": "edf70cc6abacf023edb0667a722e95d891472d7b0faa07b389e1fbde59fbd106",
+          "path": [
+            "calculation",
+            "report"
+          ],
+          "expected": {
+            "submitted": 3,
+            "approved": 1,
+            "total_eur": 2260
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/team-lead.json",
+          "sha256": "4482caae3bf1efa965abb5ad27c22332c0c43cfcb232cece072cfca6abfda1b5",
+          "path": [
+            "accepted"
+          ],
+          "expected": true
+        }
+      ],
+      "caption": "Expenses: numbers and policy",
+      "value_labels": [
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "expense_has_amount",
+            0,
+            "amount"
+          ],
+          "template": "101 \u00b7 meals {value}; 102 \u00b7 travel 800",
+          "expected": 60
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "expense_has_amount",
+            1,
+            "amount"
+          ],
+          "template": "101 \u00b7 meals 60; 102 \u00b7 travel {value}",
+          "expected": 800
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "expense_has_amount",
+            2,
+            "amount"
+          ],
+          "template": "103 \u00b7 equipment {value}, finance-approved",
+          "expected": 1400
+        }
+      ]
+    },
+    "limits": {
+      "sha256": "df4b69c12854c612552df966112d91fd9a72891804da74220682e58653749943",
+      "labels": [
+        "approval_limit_team_lead",
+        "3000",
+        "75",
+        "1500",
+        "2000",
+        "3000",
+        "800 > 100"
+      ],
+      "checks": [
+        {
+          "file": "tutorial-assets/checkpoints/chain-limit.json",
+          "sha256": "568665f82bc4c6ad511806c7b74c5eb0dcf64cc5999bf13ea957bf5a6145bc85",
+          "path": [
+            "policy",
+            "verdicts",
+            18
+          ],
+          "expected": {
+            "constraint_ref": "constraints[10]",
+            "constraint_type": "guarded",
+            "id": "approval_limit_team_lead",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              {
+                "$a": 800,
+                "$e": 102
+              }
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/meal-cap.json",
+          "sha256": "57903e38c567631505bfbf0f069694ad686b4894d7963f52294f13fc0bab7463",
+          "path": [
+            "policy",
+            "verdicts",
+            14
+          ],
+          "expected": {
+            "constraint_ref": "constraints[6]",
+            "constraint_type": "guarded",
+            "id": "policy_meals",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              {
+                "$a": 90,
+                "$e": 101
+              }
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/finance.json",
+          "sha256": "20a57d196195eca8d9006b01473fb66a279ac9b7a1da1587d1cffa533bc529fb",
+          "path": [
+            "accepted"
+          ],
+          "expected": true
+        }
+      ],
+      "caption": "Two ceilings govern an approval",
+      "value_labels": [
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            6,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "60 \u2264 category {value} and chain 100",
+          "expected": 75
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            10,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "60 \u2264 category 75 and chain {value}",
+          "expected": 100
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            7,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "{value}",
+          "expected": 1500
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            8,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "{value}",
+          "expected": 2000
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            9,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "{value}",
+          "expected": 3000
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            6,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "{value}",
+          "expected": 75
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            8,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "Category PASS: 800 \u2264 {value}",
+          "expected": 2000
+        },
+        {
+          "file": "model.orm.json",
+          "path": [
+            "constraints",
+            11,
+            "consequent",
+            "comparison",
+            "right"
+          ],
+          "template": "800 \u2264 {value}; checked approval accepted",
+          "expected": 3000
+        }
+      ]
+    },
+    "currency": {
+      "sha256": "70cc75b5f585af923782dc0c30953a570353d449af65a16f3515709cb2d0a1bf",
+      "labels": [
+        "required_expense_has_currency",
+        "supported_currency",
+        "No exchange rate"
+      ],
+      "checks": [
+        {
+          "file": "tutorial-assets/checkpoints/currency-missing.json",
+          "sha256": "3374c7aadba325ed07c4c157934ba9f015467d84f4257ae0fb464397fa6fce1e",
+          "path": [
+            "policy",
+            "verdicts",
+            9
+          ],
+          "expected": {
+            "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+            "constraint_type": "mandatory",
+            "id": "required_expense_has_currency",
+            "modality": "alethic",
+            "reason": null,
+            "status": "violated",
+            "witnesses": [
+              [
+                101
+              ],
+              [
+                102
+              ]
+            ]
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/currency-explicit.json",
+          "sha256": "e6343586719e32833dfb4133a8bc127d389c6d5cbd96a1a7d69fbf8d8073dbab",
+          "path": [
+            "calculation",
+            "report"
+          ],
+          "expected": {
+            "submitted": 3,
+            "approved": 1,
+            "totals_by_currency": {
+              "EUR": 2260
+            }
+          }
+        },
+        {
+          "file": "tutorial-assets/checkpoints/usd.json",
+          "sha256": "e5d70edbd238d2c6724717e061afa0fef9a05c87c054bedfdae8466e74e46565",
+          "path": [
+            "application_refusal",
+            "kind"
+          ],
+          "expected": "unsupported-currency"
+        }
+      ],
+      "caption": "Currency becomes an explicit fact",
+      "value_labels": [
+        {
+          "file": "currency.orm.json",
+          "path": [
+            "constraints",
+            12,
+            "allowed"
+          ],
+          "template": "supported_currency permits {value} only",
+          "expected": [
+            "EUR"
+          ]
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "expense_has_amount",
+            0,
+            "amount"
+          ],
+          "template": "{value} + 800 + 1400 = 2260 EUR",
+          "expected": 60
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "expense_has_amount",
+            1,
+            "amount"
+          ],
+          "template": "60 + {value} + 1400 = 2260 EUR",
+          "expected": 800
+        },
+        {
+          "file": "seed.population.json",
+          "path": [
+            "facts",
+            "expense_has_amount",
+            2,
+            "amount"
+          ],
+          "template": "60 + 800 + {value} = 2260 EUR",
+          "expected": 1400
+        }
+      ]
+    }
+  },
+  "sources": {
+    "tutorial-assets/checkpoints/baseline.json": "edf70cc6abacf023edb0667a722e95d891472d7b0faa07b389e1fbde59fbd106",
+    "tutorial-assets/checkpoints/team-lead.json": "4482caae3bf1efa965abb5ad27c22332c0c43cfcb232cece072cfca6abfda1b5",
+    "tutorial-assets/checkpoints/chain-limit.json": "568665f82bc4c6ad511806c7b74c5eb0dcf64cc5999bf13ea957bf5a6145bc85",
+    "tutorial-assets/checkpoints/meal-cap.json": "57903e38c567631505bfbf0f069694ad686b4894d7963f52294f13fc0bab7463",
+    "tutorial-assets/checkpoints/finance.json": "20a57d196195eca8d9006b01473fb66a279ac9b7a1da1587d1cffa533bc529fb",
+    "tutorial-assets/checkpoints/currency-missing.json": "3374c7aadba325ed07c4c157934ba9f015467d84f4257ae0fb464397fa6fce1e",
+    "tutorial-assets/checkpoints/currency-explicit.json": "e6343586719e32833dfb4133a8bc127d389c6d5cbd96a1a7d69fbf8d8073dbab",
+    "model.orm.json": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+    "currency.orm.json": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+    "seed.population.json": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd",
+    "invalid-meal.population.json": "1f85a8d9708f93446f81ac89abb7a76fe726c5944c55160e3735cc57e8e8b891",
+    "invalid-chain.population.json": "f72267d7d18f6fdd29a6f676b7d8ed5a555c0a2fdef8e74831e0aedf0173e312",
+    "currency-missing.population.json": "fe74784f419c6a7154187ad44fa715860da4c933b08e5322d7c617ddef15b580",
+    "currency.population.json": "47e86d8a4ad0a7233929f1a047afa0a5a81de154d55c5baf57a2eb5f143a5b38",
+    "tutorial-assets/checkpoints/usd.input.json": "e39648eef481c6912a85addced101e0eb38bbf5d4ea5d05e77700bb707c7a561",
+    "tutorial-assets/checkpoints/usd.json": "e5d70edbd238d2c6724717e061afa0fef9a05c87c054bedfdae8466e74e46565"
+  },
+  "bindings": [
+    {
+      "report": "tutorial-assets/checkpoints/baseline.json",
+      "model": "model.orm.json",
+      "input": "seed.population.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/team-lead.json",
+      "model": "model.orm.json",
+      "input": "seed.population.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/finance.json",
+      "model": "model.orm.json",
+      "input": "seed.population.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "input_sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/meal-cap.json",
+      "model": "model.orm.json",
+      "input": "invalid-meal.population.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "input_sha256": "1f85a8d9708f93446f81ac89abb7a76fe726c5944c55160e3735cc57e8e8b891"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/chain-limit.json",
+      "model": "model.orm.json",
+      "input": "invalid-chain.population.json",
+      "model_sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0",
+      "input_sha256": "f72267d7d18f6fdd29a6f676b7d8ed5a555c0a2fdef8e74831e0aedf0173e312"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/currency-missing.json",
+      "model": "currency.orm.json",
+      "input": "currency-missing.population.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "input_sha256": "fe74784f419c6a7154187ad44fa715860da4c933b08e5322d7c617ddef15b580"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/currency-explicit.json",
+      "model": "currency.orm.json",
+      "input": "currency.population.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "input_sha256": "47e86d8a4ad0a7233929f1a047afa0a5a81de154d55c5baf57a2eb5f143a5b38"
+    },
+    {
+      "report": "tutorial-assets/checkpoints/usd.json",
+      "model": "currency.orm.json",
+      "input": "tutorial-assets/checkpoints/usd.input.json",
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "input_sha256": "e39648eef481c6912a85addced101e0eb38bbf5d4ea5d05e77700bb707c7a561"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+/private/tmp/pyrel-applications-pa6-20261013-c/base/lib/python3.11/site-packages/gnd/__init__.py
+{"python": "3.13.12", "relationalai": "1.30.1", "duckdb": "1.5.5", "gnd_absent": true}

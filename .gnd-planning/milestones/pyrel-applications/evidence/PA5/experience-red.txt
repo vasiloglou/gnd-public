@@ -1,0 +1,275 @@
+Additional retained-output edit: pytest temporary operator-name token only; predecessor SHA-256 6f8cc140092e8e1a43da1668f49e372e6c0842f13e79d81c4d9a1a0f0205dad3
+Retained output edited: operator/checkout paths only. Raw SHA-256 1efd246776180886c55953b8b00473c07e012bec9554c763ddac8a0c3bf6aefe
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_______________ test_graphic_sources_and_doc_twins[bookrec-flow] _______________
+
+domain = 'bookrec', name = 'flow'
+
+    @pytest.mark.parametrize('domain,name', [('bookrec', 'flow'), ('bookrec', 'eligibility'),
+        ('bookrec', 'evolution'), ('expense', 'flow'), ('expense', 'limits'), ('expense', 'currency')])
+    def test_graphic_sources_and_doc_twins(domain, name):
+>       assert verify_graphic(domain, name)['checks']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pyrel_tutorial_experience.py:19: in verify_graphic
+    manifest = json.loads((assets / 'sources.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('<checkout>/src/gnd/examples/bookrec/tutorial-assets/sources.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/src/gnd/examples/bookrec/tutorial-assets/sources.json'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+___________ test_graphic_sources_and_doc_twins[bookrec-eligibility] ____________
+
+domain = 'bookrec', name = 'eligibility'
+
+    @pytest.mark.parametrize('domain,name', [('bookrec', 'flow'), ('bookrec', 'eligibility'),
+        ('bookrec', 'evolution'), ('expense', 'flow'), ('expense', 'limits'), ('expense', 'currency')])
+    def test_graphic_sources_and_doc_twins(domain, name):
+>       assert verify_graphic(domain, name)['checks']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pyrel_tutorial_experience.py:19: in verify_graphic
+    manifest = json.loads((assets / 'sources.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('<checkout>/src/gnd/examples/bookrec/tutorial-assets/sources.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/src/gnd/examples/bookrec/tutorial-assets/sources.json'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+____________ test_graphic_sources_and_doc_twins[bookrec-evolution] _____________
+
+domain = 'bookrec', name = 'evolution'
+
+    @pytest.mark.parametrize('domain,name', [('bookrec', 'flow'), ('bookrec', 'eligibility'),
+        ('bookrec', 'evolution'), ('expense', 'flow'), ('expense', 'limits'), ('expense', 'currency')])
+    def test_graphic_sources_and_doc_twins(domain, name):
+>       assert verify_graphic(domain, name)['checks']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pyrel_tutorial_experience.py:19: in verify_graphic
+    manifest = json.loads((assets / 'sources.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('<checkout>/src/gnd/examples/bookrec/tutorial-assets/sources.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/src/gnd/examples/bookrec/tutorial-assets/sources.json'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+_______________ test_graphic_sources_and_doc_twins[expense-flow] _______________
+
+domain = 'expense', name = 'flow'
+
+    @pytest.mark.parametrize('domain,name', [('bookrec', 'flow'), ('bookrec', 'eligibility'),
+        ('bookrec', 'evolution'), ('expense', 'flow'), ('expense', 'limits'), ('expense', 'currency')])
+    def test_graphic_sources_and_doc_twins(domain, name):
+>       assert verify_graphic(domain, name)['checks']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pyrel_tutorial_experience.py:19: in verify_graphic
+    manifest = json.loads((assets / 'sources.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('<checkout>/src/gnd/examples/expense/tutorial-assets/sources.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/src/gnd/examples/expense/tutorial-assets/sources.json'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+______________ test_graphic_sources_and_doc_twins[expense-limits] ______________
+
+domain = 'expense', name = 'limits'
+
+    @pytest.mark.parametrize('domain,name', [('bookrec', 'flow'), ('bookrec', 'eligibility'),
+        ('bookrec', 'evolution'), ('expense', 'flow'), ('expense', 'limits'), ('expense', 'currency')])
+    def test_graphic_sources_and_doc_twins(domain, name):
+>       assert verify_graphic(domain, name)['checks']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pyrel_tutorial_experience.py:19: in verify_graphic
+    manifest = json.loads((assets / 'sources.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('<checkout>/src/gnd/examples/expense/tutorial-assets/sources.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/src/gnd/examples/expense/tutorial-assets/sources.json'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+_____________ test_graphic_sources_and_doc_twins[expense-currency] _____________
+
+domain = 'expense', name = 'currency'
+
+    @pytest.mark.parametrize('domain,name', [('bookrec', 'flow'), ('bookrec', 'eligibility'),
+        ('bookrec', 'evolution'), ('expense', 'flow'), ('expense', 'limits'), ('expense', 'currency')])
+    def test_graphic_sources_and_doc_twins(domain, name):
+>       assert verify_graphic(domain, name)['checks']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pyrel_tutorial_experience.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pyrel_tutorial_experience.py:19: in verify_graphic
+    manifest = json.loads((assets / 'sources.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('<checkout>/src/gnd/examples/expense/tutorial-assets/sources.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/src/gnd/examples/expense/tutorial-assets/sources.json'
+
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: FileNotFoundError
+______________ test_observed_steps_include_skips_and_elapsed_time ______________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-697/test_observed_steps_include_sk0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bddddd0>
+
+    def test_observed_steps_include_skips_and_elapsed_time(tmp_path, monkeypatch):
+        page = tmp_path / 'lesson.md'
+        page.write_text('<!-- gnd-run expect=0 -->\n```python\nprint("ready")\n```\n'
+                        '<!-- gnd-run expect=0 lane=pyrel -->\n```python\nraise RuntimeError()\n```')
+        records = []
+>       assert runner.run_pages([page], tmp_path / 'work', Path(sys.executable), receipts=records) == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_pages() got an unexpected keyword argument 'receipts'
+
+tests/test_pyrel_tutorial_experience.py:51: TypeError
+_______________ test_native_block_receives_explicit_base_python ________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-697/test_native_block_receives_exp0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bdca4d0>
+
+    def test_native_block_receives_explicit_base_python(tmp_path, monkeypatch):
+        page = tmp_path / 'lesson.md'
+        page.write_text('<!-- gnd-run expect=0 lane=pyrel -->\n```python\n'
+                        'import os\nassert os.environ["GND_TUTORIAL_GND_PYTHON"]\n```')
+        monkeypatch.setattr(runner, 'require_runtime', lambda *a: None)
+        records = []
+>       assert runner.run_pages([page], tmp_path / 'work', Path(sys.executable), 'pyrel', receipts=records) == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_pages() got an unexpected keyword argument 'receipts'
+
+tests/test_pyrel_tutorial_experience.py:64: TypeError
+________________ test_failed_step_cannot_produce_passed_receipt ________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-697/test_failed_step_cannot_produc0')
+
+    def test_failed_step_cannot_produce_passed_receipt(tmp_path):
+        page = tmp_path / 'lesson.md'
+        page.write_text('<!-- gnd-run expect=0 -->\n```python\nraise SystemExit(1)\n```')
+        records = []
+        with pytest.raises(AssertionError, match='expected 0, got 1'):
+>           runner.run_pages([page], tmp_path / 'work', Path(sys.executable), receipts=records)
+E           TypeError: run_pages() got an unexpected keyword argument 'receipts'
+
+tests/test_pyrel_tutorial_experience.py:73: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_sources_and_doc_twins[bookrec-flow]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_sources_and_doc_twins[bookrec-eligibility]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_sources_and_doc_twins[bookrec-evolution]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_sources_and_doc_twins[expense-flow]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_sources_and_doc_twins[expense-limits]
+FAILED tests/test_pyrel_tutorial_experience.py::test_graphic_sources_and_doc_twins[expense-currency]
+FAILED tests/test_pyrel_tutorial_experience.py::test_observed_steps_include_skips_and_elapsed_time
+FAILED tests/test_pyrel_tutorial_experience.py::test_native_block_receives_explicit_base_python
+FAILED tests/test_pyrel_tutorial_experience.py::test_failed_step_cannot_produce_passed_receipt
+9 failed in 0.12s

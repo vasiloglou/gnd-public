@@ -37,7 +37,9 @@
         "--population",
         "--expense",
         "--chain",
-        "--output"
+        "--output",
+        "--backend",
+        "--pyrel-python"
       ],
       "consumes": [
         "expense_submitted_by_employee",

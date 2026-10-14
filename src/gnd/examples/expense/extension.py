@@ -38,11 +38,45 @@ def main(argv=None):
         sub = subcommands.add_parser(name)
         sub.add_argument("--model", required=True, type=Path)
         sub.add_argument("--population", required=True, type=Path)
+        sub.add_argument("--backend", choices=["gnd", "pyrel"], default="gnd")
+        sub.add_argument("--pyrel-python", type=Path)
+        sub.add_argument("--format", choices=["json", "text"], default="json")
         if name == "approve":
             sub.add_argument("--expense", required=True, type=int)
             sub.add_argument("--chain", required=True)
             sub.add_argument("--output", required=True, type=Path)
     args = parser.parse_args(argv)
+    if args.format == "text" and args.backend != "pyrel":
+        parser.error("--format text requires --backend pyrel")
+    if args.backend == "pyrel":
+        from gnd.export.applications import execute_application, format_result
+
+        if args.pyrel_python is None:
+            parser.error("--backend pyrel requires --pyrel-python")
+        with tempfile.TemporaryDirectory(prefix="expense-native-report-") as directory:
+            output = args.output if args.command == "approve" else Path(directory) / "checked.json"
+            result = execute_application(
+                args.model, args.population, output, native_python=args.pyrel_python,
+                query_script=Path(__file__).with_name("native_query.py"),
+                query_args=(args.command, str(args.expense) if args.command == "approve" else "",
+                            args.chain if args.command == "approve" else ""),
+                owned_relations=("expense_is_approved", "expense_approved_by_chain") if args.command == "approve" else (),
+                allowed_guard_kinds=("unknown-expense", "already-approved", "unsupported-currency"),
+            )
+        if result["accepted"] and args.command == "report":
+            result["report"] = result["calculation"]["report"]
+            result["published"] = False  # the private checked snapshot has been removed
+        # Failed calculations are evidence in the library result, never a
+        # successful business report in the CLI response.
+        result.pop("calculation", None)
+        if args.format == "text":
+            shown = dict(result)
+            if args.command == "approve":
+                shown.update(approval={"expense": args.expense, "chain": args.chain}, output=str(args.output))
+            print("\n".join(format_result(shown)))
+        else:
+            print(json.dumps(result, sort_keys=True))
+        return result["exit_code"]
     accepted, report = _accepted(args.model, args.population)
     if not accepted:
         return _refusal(report)

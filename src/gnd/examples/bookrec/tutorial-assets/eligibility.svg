@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 740" role="img" aria-labelledby="title desc"><title id="title">Who can receive which book?</title><desc id="desc">Ada/read and Ben/read are excluded by unread_only; Ada/night by age_appropriate. Preferred complete set: Ada/map, Ada/river; Ben/map, Ben/night, Ben/river.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="560" height="740" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Who can receive which book?</text>
+<text x="26" y="88" class="strong">Reader</text>
+<text x="360" y="88" class="strong">Book</text>
+<rect x="24" y="120" width="168" height="80" rx="12" fill="#eef5f8"/>
+<text x="40" y="150" class="strong">Ada · minor</text>
+<rect x="24" y="280" width="168" height="80" rx="12" fill="#eef5f8"/>
+<text x="40" y="310" class="strong">Ben · adult</text>
+<rect x="352" y="116" width="184" height="58" rx="12" fill="#eef5f8"/>
+<text x="368" y="146" class="strong">map · fantasy</text>
+<rect x="352" y="192" width="184" height="58" rx="12" fill="#eef5f8"/>
+<text x="368" y="222" class="strong">river · fantasy</text>
+<rect x="352" y="268" width="184" height="58" rx="12" fill="#eef5f8"/>
+<text x="368" y="298" class="strong">night · fantasy</text>
+<rect x="352" y="344" width="184" height="58" rx="12" fill="#eef5f8"/>
+<text x="368" y="374" class="strong">read · fantasy</text>
+<rect x="352" y="420" width="184" height="58" rx="12" fill="#eef5f8"/>
+<text x="368" y="450" class="strong">cosmos · science</text>
+<path class="edge" d="M192 162L350 145"/>
+<path class="edge" d="M192 162L350 221"/>
+<path class="edge" d="M192 322L352 145"/>
+<path class="edge" d="M192 322L352 221"/>
+<path class="edge" d="M192 322L352 297"/>
+<text x="24" y="526" class="">Arrows: complete preferred eligible pairs</text>
+<rect x="24" y="552" width="512" height="139" rx="12" fill="#fff0e4"/>
+<text x="40" y="582" class="strong">Excluded pairs · explicit rule witnesses</text>
+<text x="40" y="611" class="">Ada / night → age_appropriate</text>
+<text x="40" y="638" class="">Ada / read → unread_only</text>
+<text x="24" y="725" class="small">Cosmos: legal baseline, outside preferred set</text>
+<text x="40" y="669">Ben / read → unread_only</text>
+<text x="40" y="180" class="small">Prefers fantasy</text>
+<text x="40" y="340" class="small">Prefers fantasy</text>
+</svg>

@@ -1,0 +1,9 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_agreement_counts_actual_rows_and_exact_two_exclusions __________
+tests/test_pyrel_application_driver.py:181: in test_agreement_counts_actual_rows_and_exact_two_exclusions
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_driver.py::test_agreement_counts_actual_rows_and_exact_two_exclusions
+1 failed in 0.07s

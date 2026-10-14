@@ -40,6 +40,8 @@ def test_offline_skips_native_without_calling_preflight(tmp_path, monkeypatch, c
 @pytest.mark.parametrize('lane', ['pyrel', 'souffle', 'lean', 'all'])
 def test_native_executes_prerequisite_first(tmp_path, monkeypatch, lane):
     chosen = 'pyrel' if lane == 'all' else lane
+    if chosen == 'pyrel':
+        monkeypatch.setenv('GND_TUTORIAL_PYREL_PYTHON',sys.executable)
     lesson = page(tmp_path, f'<!-- gnd-run expect=0 -->\n```python\nfrom pathlib import Path\nPath("ready").touch()\n```\n<!-- gnd-run expect=0 lane={chosen} -->\n```python\nfrom pathlib import Path\nassert Path("ready").exists()\nPath("native").touch()\n```')
     calls = []
     monkeypatch.setattr(runner, 'require_runtime', lambda *a: calls.append(a[0]))
@@ -59,12 +61,12 @@ def test_wrong_runtime_version_refused(monkeypatch, lane, output):
     monkeypatch.setattr(runner.shutil, 'which', lambda *a, **k: '/tool')
     monkeypatch.setattr(runner.subprocess, 'run', lambda *a, **k: SimpleNamespace(returncode=0, stdout=output, stderr=''))
     with pytest.raises(AssertionError, match='required'):
-        runner.require_runtime(lane, Path(sys.executable), {'PATH': '/bin'})
+        runner.require_runtime(lane, Path(sys.executable), {'PATH': '/bin', 'GND_TUTORIAL_PYREL_PYTHON':'/pyrel/python'})
 
 
 def test_separate_pyrel_interpreter_selected(tmp_path, monkeypatch):
     calls = []
-    monkeypatch.setattr(runner.subprocess, 'run', lambda argv, **kwargs: calls.append(argv) or SimpleNamespace(returncode=0, stdout='PyRel 1.30.1\nDuckDB 1.5.5', stderr=''))
+    monkeypatch.setattr(runner.subprocess, 'run', lambda argv, **kwargs: calls.append(argv) or SimpleNamespace(returncode=0, stdout='PyRel 1.30.1\nDuckDB 1.5.5\n'+json.dumps({'relationalai':'1.30.1','duckdb':'1.5.5'}), stderr=''))
     runner.require_runtime('pyrel', Path('/gnd/python'), {'PATH': '/bin', 'GND_TUTORIAL_PYREL_PYTHON': '/pyrel/python'})
     assert calls[0][0] == '/pyrel/python'
 

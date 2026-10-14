@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "source": "Actual local Playwright after bounded helper repair;390x844 mobile, both themes, all six diagrams",
+  "rows": [
+    {
+      "domain": "bookrec",
+      "theme": "default",
+      "figure": 0,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "bookrec",
+      "theme": "default",
+      "figure": 1,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "bookrec",
+      "theme": "default",
+      "figure": 2,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "bookrec",
+      "theme": "slate",
+      "figure": 0,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "bookrec",
+      "theme": "slate",
+      "figure": 1,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "bookrec",
+      "theme": "slate",
+      "figure": 2,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "expense",
+      "theme": "default",
+      "figure": 0,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "expense",
+      "theme": "default",
+      "figure": 1,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "expense",
+      "theme": "default",
+      "figure": 2,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "expense",
+      "theme": "slate",
+      "figure": 0,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "expense",
+      "theme": "slate",
+      "figure": 1,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    },
+    {
+      "domain": "expense",
+      "theme": "slate",
+      "figure": 2,
+      "arrow_right": 120,
+      "arrow_left": 82,
+      "home": 0,
+      "end": 202,
+      "max": 202
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "method": "WCAG relative sRGB luminance",
+  "text_color": "#172b3a",
+  "fixed_svg_surfaces": {
+    "ffffff": 14.552,
+    "eef5f8": 13.202,
+    "e9f4ec": 12.9,
+    "fff0e4": 13.053
+  },
+  "threshold": 4.5,
+  "minimum_font_px_at_mobile_scroll_width": 16,
+  "meaning": "Text/shape labels plus exact counts and outcome words; color alone carries no verdict."
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "scope": "Execution of shipped commands on this machine, excludes human authoring, installation and review time; not a productivity benchmark.",
+  "results": {
+    "bookrec": {
+      "selected_blocks": 52,
+      "native_blocks": 2,
+      "total_execution_seconds": 20.031005,
+      "native_execution_seconds": 12.875349,
+      "native_steps": [
+        {
+          "block": 2,
+          "elapsed_seconds": 10.269015,
+          "code_sha256": "3254468fd740f4bf6570a25e919e1bd3c37a0e018450e435cc561257c768cbc6"
+        },
+        {
+          "block": 3,
+          "elapsed_seconds": 2.606334,
+          "code_sha256": "331e77be43eb6cf3a247d23311ea5621231564b6af2a956e837cc3edff73faf2"
+        }
+      ]
+    },
+    "expense": {
+      "selected_blocks": 34,
+      "native_blocks": 3,
+      "total_execution_seconds": 38.643452,
+      "native_execution_seconds": 33.242689,
+      "native_steps": [
+        {
+          "block": 2,
+          "elapsed_seconds": 21.054886,
+          "code_sha256": "860b0215567e7444c808c2f5e06c1bf6f296c51b2a764a61bce8c5d8f6268c58"
+        },
+        {
+          "block": 3,
+          "elapsed_seconds": 6.755293,
+          "code_sha256": "9123ad0a3000ed1c40540948bdbbce8cf6c2f1a424a9eb6bd5a9c92802398bd6"
+        },
+        {
+          "block": 4,
+          "elapsed_seconds": 5.43251,
+          "code_sha256": "d67187edb98ea166605e4941b54d92b428499945a662d7839ecaa02792b3dea0"
+        }
+      ]
+    }
+  }
+}

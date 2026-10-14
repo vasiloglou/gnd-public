@@ -1,0 +1,37 @@
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-value] _
+tests/test_pyrel_application_review_regressions.py:110: in test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance
+    assert not report['accepted'] and report['exit_code'] == 2, report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}
+E   assert (not True)
+_ test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-subset] _
+tests/test_pyrel_application_review_regressions.py:110: in test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance
+    assert not report['accepted'] and report['exit_code'] == 2, report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}
+E   assert (not True)
+_ test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-guarded] _
+tests/test_pyrel_application_review_regressions.py:110: in test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance
+    assert not report['accepted'] and report['exit_code'] == 2, report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}
+E   assert (not True)
+_ test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-mandatory] _
+tests/test_pyrel_application_review_regressions.py:110: in test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance
+    assert not report['accepted'] and report['exit_code'] == 2, report
+E   AssertionError: {'accepted': False, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}
+E   assert (not False and 1 == 2)
+____________ test_repeated_calls_use_model_specific_legacy_negation ____________
+tests/test_pyrel_application_review_regressions.py:128: in test_repeated_calls_use_model_specific_legacy_negation
+    assert [r['status'] for r in reports] == ['accepted', 'rejected', 'rejected'], reports
+E   AssertionError: [{'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}]
+E   assert ['accepted', ...time_failure'] == ['accepted', ...', 'rejected']
+E     
+E     At index 1 diff: 'runtime_failure' != 'rejected'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_review_regressions.py::test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-value]
+FAILED tests/test_pyrel_application_review_regressions.py::test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-subset]
+FAILED tests/test_pyrel_application_review_regressions.py::test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-guarded]
+FAILED tests/test_pyrel_application_review_regressions.py::test_vacuity_scope_does_not_turn_empty_subjects_into_acceptance[inline-mandatory]
+FAILED tests/test_pyrel_application_review_regressions.py::test_repeated_calls_use_model_specific_legacy_negation
+5 failed, 1 passed, 11 deselected in 5.60s

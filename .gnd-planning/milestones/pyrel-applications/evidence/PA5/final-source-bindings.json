@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "current_sources": {
+    "docs/assets/applications/expense-limits.svg": "df4b69c12854c612552df966112d91fd9a72891804da74220682e58653749943",
+    "docs/assets/applications/bookrec-flow.svg": "cbb4d607b6c96b22684e98b749e11836b7363a44e9d06236ea7a8890055d03fd",
+    "docs/assets/applications/expense-currency.svg": "70cc75b5f585af923782dc0c30953a570353d449af65a16f3515709cb2d0a1bf",
+    "docs/assets/applications/bookrec-native-query.txt": "0a27b63fda9d2a2160551e36cabb14a79a5bc87bc8ec5b5052ada0a1b25b4ba3",
+    "docs/assets/applications/expense-flow.svg": "4654889be5a9726ba9368d8a7acc0632e70f08f807fa9aa601b3104e25a427d5",
+    "docs/assets/applications/bookrec-evolution.svg": "9354fdfed8e538b1ebc8a9a98ea0c84d11ecd082d5ff34df96cf0af508dc2616",
+    "docs/assets/applications/bookrec-eligibility.svg": "66a76ca2c6f3bdd2b9c5b0f7a51465a0ef1fe38daac399abd4474ce82115bd79",
+    "docs/assets/applications/expense-native-query.txt": "51393f24d7ad3d1864525a1aa59835c0ef1536abc975becc7ba49414e627fc18",
+    "docs/assets/styles.css": "e008c90acc02bde97983ec4fc706e887d708009196cd18009346def29cd4e8ed",
+    "docs/assets/application-diagrams.js": "6fea77ac9858e08be1156f09e63ffd502d767357dcae86424f038ae3745ae843",
+    "docs/bookrec/07-native.md": "91853e9633eb2f2467d4a3bd75909cae6194389bf7dcdb51e8e6e43251f205d0",
+    "docs/expense/04-native.md": "9aa92aeb9e0335900deb826093370ea023108a33120e8c0e1eda211020ef8923",
+    "tools/run_tutorials.py": "9c1f16d90f33c55678a3725cc50db25f4c3796def561af7050b49f3cb7de18c0",
+    "zensical.toml": "bf341e884ba5e28267e79fa0c6f17107564577eb423e964518ae0b2629130ff2"
+  },
+  "current_render": "render-final; cropped chrome removed as disclosed; desc-only Ben/read addition changes accessible text, not pixels.",
+  "prior_render": "render directory contains earlier documented iterations, never final acceptance source.",
+  "previous_sha256": "3d00ef8d597816b46c231be9f7901ee31be23f3a1b94425c1ab137d23d20653a"
+}

@@ -1,0 +1,13 @@
+{
+  "boundary": "Public CLI re-rendering current source reproduces every program digest in the final native receipt. This binds source/program/receipt currency; execution is established by the original measured subprocesses.",
+  "matched": 117,
+  "native_receipt_sha256": "2b592412b3e79cd59ebf39bdae718b81e31e101d0bf90b493f31d32b63b89376",
+  "regenerated_program_sha256": {
+    "src/gnd/examples/bookrec/model.orm.yaml": "720ad6345de2637fb4002281e6b26cad9af6aef1fa50d30c492d5d12004d2a45",
+    "src/gnd/examples/bookrec/strict.orm.yaml": "b674c73fabe16e910f65a159a1187f258ee6207683d0b5f04c1ff0db1c487bd1",
+    "src/gnd/examples/expense/currency.orm.json": "cffad286121f9559f2e615c3f633530a8807ddcbaf1e4a3b091129b5cc34466e",
+    "src/gnd/examples/expense/model.orm.json": "f715992092e2ca32f6b21ed8304ffef469e51f86f0967fb24c8a325c53cc7c0e"
+  },
+  "runtime_source_sha256": "d8c21fd17e4867aa7f316cc9e72e19d436aaf25577fd2209b7b88bc0155bd7cc",
+  "verified_case_count": 117
+}

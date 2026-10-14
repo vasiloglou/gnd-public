@@ -1,0 +1,195 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+____________________ test_candidate_resources_match_source _____________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_candidate_resources_match0')
+
+    def test_candidate_resources_match_source(tmp_path):
+>       assert tool().verify_wheel_resources(wheel(tmp_path),ROOT)['resources']
+               ^^^^^^
+
+tests/test_pyrel_applications_install.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+_ test_missing_required_resource_refuses[gnd/examples/bookrec/tutorial-assets/eligibility.svg] _
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_missing_required_resource0')
+name = 'gnd/examples/bookrec/tutorial-assets/eligibility.svg'
+
+    @pytest.mark.parametrize('name',['gnd/examples/bookrec/tutorial-assets/eligibility.svg',
+        'gnd/examples/expense/tutorial-assets/currency.svg','gnd/examples/expense/native_query.py',
+        'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'])
+    def test_missing_required_resource_refuses(tmp_path,name):
+        with pytest.raises(ValueError,match='missing'):
+>           tool().verify_wheel_resources(wheel(tmp_path,omit=name),ROOT)
+            ^^^^^^
+
+tests/test_pyrel_applications_install.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+_ test_missing_required_resource_refuses[gnd/examples/expense/tutorial-assets/currency.svg] _
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_missing_required_resource1')
+name = 'gnd/examples/expense/tutorial-assets/currency.svg'
+
+    @pytest.mark.parametrize('name',['gnd/examples/bookrec/tutorial-assets/eligibility.svg',
+        'gnd/examples/expense/tutorial-assets/currency.svg','gnd/examples/expense/native_query.py',
+        'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'])
+    def test_missing_required_resource_refuses(tmp_path,name):
+        with pytest.raises(ValueError,match='missing'):
+>           tool().verify_wheel_resources(wheel(tmp_path,omit=name),ROOT)
+            ^^^^^^
+
+tests/test_pyrel_applications_install.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+_ test_missing_required_resource_refuses[gnd/examples/expense/native_query.py] _
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_missing_required_resource2')
+name = 'gnd/examples/expense/native_query.py'
+
+    @pytest.mark.parametrize('name',['gnd/examples/bookrec/tutorial-assets/eligibility.svg',
+        'gnd/examples/expense/tutorial-assets/currency.svg','gnd/examples/expense/native_query.py',
+        'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'])
+    def test_missing_required_resource_refuses(tmp_path,name):
+        with pytest.raises(ValueError,match='missing'):
+>           tool().verify_wheel_resources(wheel(tmp_path,omit=name),ROOT)
+            ^^^^^^
+
+tests/test_pyrel_applications_install.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+_ test_missing_required_resource_refuses[gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json] _
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_missing_required_resource3')
+name = 'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'
+
+    @pytest.mark.parametrize('name',['gnd/examples/bookrec/tutorial-assets/eligibility.svg',
+        'gnd/examples/expense/tutorial-assets/currency.svg','gnd/examples/expense/native_query.py',
+        'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'])
+    def test_missing_required_resource_refuses(tmp_path,name):
+        with pytest.raises(ValueError,match='missing'):
+>           tool().verify_wheel_resources(wheel(tmp_path,omit=name),ROOT)
+            ^^^^^^
+
+tests/test_pyrel_applications_install.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+________________________ test_changed_resource_refuses _________________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_changed_resource_refuses0')
+
+    def test_changed_resource_refuses(tmp_path):
+        with pytest.raises(ValueError,match='changed'):
+>           tool().verify_wheel_resources(wheel(tmp_path,change='gnd/examples/expense/native_query.py'),ROOT)
+            ^^^^^^
+
+tests/test_pyrel_applications_install.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+_________________________ test_malformed_wheel_refuses _________________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_malformed_wheel_refuses0')
+
+    def test_malformed_wheel_refuses(tmp_path):
+        path=tmp_path/'bad.whl';path.write_text('not zip')
+        with pytest.raises(ValueError,match='wheel'):
+>           tool().verify_wheel_resources(path,ROOT)
+            ^^^^^^
+
+tests/test_pyrel_applications_install.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+___________________ test_origin_rejects_checkout_and_sibling ___________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-747/test_origin_rejects_checkout_a0')
+
+    def test_origin_rejects_checkout_and_sibling(tmp_path):
+>       module=tool();venv=tmp_path/'venv';checkout=tmp_path/'source'
+               ^^^^^^
+
+tests/test_pyrel_applications_install.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def tool():
+        path=ROOT/'tools/accept_pyrel_applications_install.py'
+>       assert path.exists(),'fresh-install acceptance harness is absent'
+E       AssertionError: fresh-install acceptance harness is absent
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/tools/accept_pyrel_applications_install.py').exists
+
+tests/test_pyrel_applications_install.py:13: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_applications_install.py::test_candidate_resources_match_source
+FAILED tests/test_pyrel_applications_install.py::test_missing_required_resource_refuses[gnd/examples/bookrec/tutorial-assets/eligibility.svg]
+FAILED tests/test_pyrel_applications_install.py::test_missing_required_resource_refuses[gnd/examples/expense/tutorial-assets/currency.svg]
+FAILED tests/test_pyrel_applications_install.py::test_missing_required_resource_refuses[gnd/examples/expense/native_query.py]
+FAILED tests/test_pyrel_applications_install.py::test_missing_required_resource_refuses[gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json]
+FAILED tests/test_pyrel_applications_install.py::test_changed_resource_refuses
+FAILED tests/test_pyrel_applications_install.py::test_malformed_wheel_refuses
+FAILED tests/test_pyrel_applications_install.py::test_origin_rejects_checkout_and_sibling
+8 failed in 0.07s

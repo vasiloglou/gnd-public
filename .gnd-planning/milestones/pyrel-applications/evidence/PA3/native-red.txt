@@ -1,0 +1,59 @@
+FFFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+____________ test_native_bookrec_cli_outcomes_and_pairs[advisory-0] ____________
+tests/test_bookrec_pyrel_application.py:34: in test_native_bookrec_cli_outcomes_and_pairs
+    assert completed.returncode == expected, completed.stderr + completed.stdout
+E   AssertionError: usage: cli.py [-h] --model MODEL --input INPUT --output OUTPUT [--user USER]
+E                   [--limit LIMIT] [--preferred-only]
+E                   {recommend,complete}
+E     cli.py: error: unrecognized arguments: --backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python
+E     
+E   assert 2 == 0
+E    +  where 2 = CompletedProcess(args=['/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin/python', '-m', 'bookrec.cli', 'rec...-backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python\n').returncode
+_____________ test_native_bookrec_cli_outcomes_and_pairs[strict-1] _____________
+tests/test_bookrec_pyrel_application.py:34: in test_native_bookrec_cli_outcomes_and_pairs
+    assert completed.returncode == expected, completed.stderr + completed.stdout
+E   AssertionError: usage: cli.py [-h] --model MODEL --input INPUT --output OUTPUT [--user USER]
+E                   [--limit LIMIT] [--preferred-only]
+E                   {recommend,complete}
+E     cli.py: error: unrecognized arguments: --backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python
+E     
+E   assert 2 == 1
+E    +  where 2 = CompletedProcess(args=['/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin/python', '-m', 'bookrec.cli', 'rec...-backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python\n').returncode
+___________ test_native_bookrec_cli_outcomes_and_pairs[preferred-0] ____________
+tests/test_bookrec_pyrel_application.py:34: in test_native_bookrec_cli_outcomes_and_pairs
+    assert completed.returncode == expected, completed.stderr + completed.stdout
+E   AssertionError: usage: cli.py [-h] --model MODEL --input INPUT --output OUTPUT [--user USER]
+E                   [--limit LIMIT] [--preferred-only]
+E                   {recommend,complete}
+E     cli.py: error: unrecognized arguments: --backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python
+E     
+E   assert 2 == 0
+E    +  where 2 = CompletedProcess(args=['/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin/python', '-m', 'bookrec.cli', 'rec...-backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python\n').returncode
+____________ test_native_bookrec_cli_outcomes_and_pairs[complete-0] ____________
+tests/test_bookrec_pyrel_application.py:34: in test_native_bookrec_cli_outcomes_and_pairs
+    assert completed.returncode == expected, completed.stderr + completed.stdout
+E   AssertionError: usage: cli.py [-h] --model MODEL --input INPUT --output OUTPUT [--user USER]
+E                   [--limit LIMIT] [--preferred-only]
+E                   {recommend,complete}
+E     cli.py: error: unrecognized arguments: --backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python
+E     
+E   assert 2 == 0
+E    +  where 2 = CompletedProcess(args=['/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin/python', '-m', 'bookrec.cli', 'com...-backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python\n').returncode
+____________ test_native_bookrec_cli_outcomes_and_pairs[unknown-3] _____________
+tests/test_bookrec_pyrel_application.py:34: in test_native_bookrec_cli_outcomes_and_pairs
+    assert completed.returncode == expected, completed.stderr + completed.stdout
+E   AssertionError: usage: cli.py [-h] --model MODEL --input INPUT --output OUTPUT [--user USER]
+E                   [--limit LIMIT] [--preferred-only]
+E                   {recommend,complete}
+E     cli.py: error: unrecognized arguments: --backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python
+E     
+E   assert 2 == 3
+E    +  where 2 = CompletedProcess(args=['/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin/python', '-m', 'bookrec.cli', 'rec...-backend pyrel --pyrel-python /Users/nikolaosvasiloglou/github-repos/gnd-public/tutorials/runtimes/.venv/bin/python\n').returncode
+=========================== short test summary info ============================
+FAILED tests/test_bookrec_pyrel_application.py::test_native_bookrec_cli_outcomes_and_pairs[advisory-0]
+FAILED tests/test_bookrec_pyrel_application.py::test_native_bookrec_cli_outcomes_and_pairs[strict-1]
+FAILED tests/test_bookrec_pyrel_application.py::test_native_bookrec_cli_outcomes_and_pairs[preferred-0]
+FAILED tests/test_bookrec_pyrel_application.py::test_native_bookrec_cli_outcomes_and_pairs[complete-0]
+FAILED tests/test_bookrec_pyrel_application.py::test_native_bookrec_cli_outcomes_and_pairs[unknown-3]
+5 failed, 1 passed in 1.36s

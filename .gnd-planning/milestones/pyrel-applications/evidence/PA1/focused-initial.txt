@@ -1,0 +1,20 @@
+........................................................................ [ 21%]
+........................................................................ [ 43%]
+........................................................................ [ 65%]
+........................................................................ [ 87%]
+.............................F..........                                 [100%]
+=================================== FAILURES ===================================
+______________________ test_standalone_pyrel_output_bytes ______________________
+tests/test_rf2_pre_move_pins.py:87: in test_standalone_pyrel_output_bytes
+    pin("standalone_pyrel_output_bytes", {"sha256": hashlib.sha256(raw).hexdigest(),
+tests/test_rf2_pre_move_pins.py:37: in pin
+    assert value == expected
+E   AssertionError: assert {'sha256': '9...bytes': 82867} == {'sha256': 'e...bytes': 82866}
+E     
+E     Differing items:
+E     {'size_bytes': 82867} != {'size_bytes': 82866}
+E     {'sha256': '91d6be6357c106edaf2a32b26e50ef97e3c429af07ce80a4ddbe1204676e22ef'} != {'sha256': 'e7b0a6586a93fa0a7eec46e39ffd43a967bd8ff85155282917d5ac15114f1e80'}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_rf2_pre_move_pins.py::test_standalone_pyrel_output_bytes - ...
+1 failed, 327 passed, 13 deselected in 27.06s

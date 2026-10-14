@@ -238,8 +238,8 @@ prove them, or find a counterexample. [Tutorial](runtimes/lean.md)
 <div markdown>
 **PyRel** *(optional)*
 
-`gnd export pyrel` writes a standalone program that runs locally on DuckDB, or on
-Snowflake when your business logic and data live in enterprise systems.
+`gnd export pyrel` writes a standalone PyRel program that runs locally on DuckDB.
+Snowflake execution is not yet supported by gnd export.
 [Tutorial](runtimes/pyrel.md)
 </div>
 </div>
@@ -256,4 +256,4 @@ Snowflake when your business logic and data live in enterprise systems.
 | Find out whether a feature fits your problem | [Supported capabilities](reference/capabilities.md) |
 | Improve GND itself | [Contributor guide](development/index.md) |
 
-<p class="caption">A passing check means the supplied facts satisfy the modeled rules. GND verifies the output, never the producer; you still choose the rules and establish that the facts describe the world. Public builds report assurance as <code>unavailable</code>. The core checker runs locally and the tutorials need no model-provider key. Native Soufflé, Lean and PyRel execution, and Snowflake deployment, are optional and have their own prerequisites.</p>
+<p class="caption">A passing check means the supplied facts satisfy the modeled rules. GND verifies the output, never the producer; you still choose the rules and establish that the facts describe the world. Public builds report assurance as <code>unavailable</code>. The core checker runs locally and the tutorials need no model-provider key. Native Soufflé, Lean and PyRel execution are optional and have their own prerequisites; Snowflake execution is not yet supported by gnd export.</p>

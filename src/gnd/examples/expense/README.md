@@ -34,6 +34,7 @@ The model's explicit/user-supplied provenance refers to this synthetic brief;
 | `invalid-chain.population.json` | Expense 102 improperly approved by the team lead |
 | `invalid-meal.population.json` | Meal costs 90 EUR, above the 75 EUR cap |
 | `extension.py`, `reporting.py` | Initial developer-owned CLI and report function |
+| `native_query.py` | Optional developer-owned PyRel counts, sums, membership and candidate wiring |
 | `architecture.contract.yaml` | Extension modules, command contract and smoke cases |
 | `currency.orm.json` | Complete model after adding the currency requirement |
 | `currency-missing.population.json` | Currency supplied for 103 but missing for 101/102 |
@@ -41,6 +42,28 @@ The model's explicit/user-supplied provenance refers to this synthetic brief;
 | `currency_reporting.py` | Replacement report that exposes currency labels |
 | `currency.architecture.contract.yaml` | Updated declared consumption of currency facts |
 | `prepare_currency.py` | Builds the explicit, digest-bound additive proposal |
+
+The optional native backend uses `--backend pyrel --pyrel-python
+/absolute/pinned/python` on `report` or `approve`. Copy `native_query.py` beside
+the copied `cli/expense_cli.py`, as well as the existing reporting module.
+The selected interpreter must supply PyRel 1.30.1/DuckDB 1.5.5; GND remains in
+its separate base interpreter. Native mode has no fallback to Python arithmetic
+or GND population policy checking.
+
+Native queries calculate submitted/approved counts and totals. Approval adds
+only the approval and chain claims; an independent exported checker validates
+the exact candidate before a fresh output is published. Report snapshots are
+checked privately and removed; successful report JSON marks `published: false`.
+Application guards for unknown/already-approved expenses or unsupported currency
+are labeled separately from model verdicts. Refused CLI responses contain no
+successful report arithmetic. A static accepted approval is not actor permission
+or reimbursement authorization.
+
+Baseline amounts are implicit EUR. The evolved model uses explicit EUR groups,
+with no currency conversion. One missing currency produces a mandatory witness;
+a fully empty covered currency relation retains the bounded profile's incomplete
+refusal. Known-empty/zero-approval arithmetic does not make vacuous policy evidence
+an accepted report.
 
 `prepare_currency.py` does not apply the change. It uses GND's versioned evolution
 proposal/roster support contracts, which are separate from the stable seven

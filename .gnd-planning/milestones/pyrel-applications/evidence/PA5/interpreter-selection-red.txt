@@ -1,0 +1,20 @@
+Additional retained-output edit: pytest temporary operator-name token only; predecessor SHA-256 a5ec7017759182c9f712adf39b0f090d03bd70db30c458dc724c1f3abf01483e
+Retained output edited: operator/checkout paths only. Raw SHA-256 50453e6fa6bfbfcf9b070a034e56ee86a841608c4ac179395bafeb232de20ebd
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_pyrel_selection_requires_explicit_native_interpreter ___________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-717/test_pyrel_selection_requires_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c3c80d0>
+
+    def test_pyrel_selection_requires_explicit_native_interpreter(tmp_path,monkeypatch):
+        monkeypatch.delenv('GND_TUTORIAL_PYREL_PYTHON',raising=False)
+>       with pytest.raises(AssertionError,match='required explicit native interpreter'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'required explicit native interpreter'
+E         Actual message: 'pyrel: required runtime version unavailable\nTraceback (most recent call last):\n  File "<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/importlib/metadata/__init__.py", line 563, in from_name\n    return next(cls.discover(name=name))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nStopIteration\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/importlib/metadata/__init__.py", line 1009, in version\n    return distribution(distribution_name).version\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/importlib/metadata/__init__.py", line 982, in distribution\n    return Distribution.from_name(distribution_name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "<operator-home>/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/importlib/metadata/__init__.py", line 565, in from_name\n    raise PackageNotFoundError(name)\nimportlib.metadata.PackageNotFoundError: No package metadata was found for relationalai\n'
+
+tests/test_pyrel_tutorial_experience.py:160: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_pyrel_selection_requires_explicit_native_interpreter
+1 failed, 23 deselected in 0.11s

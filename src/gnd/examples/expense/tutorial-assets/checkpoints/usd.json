@@ -1,0 +1,16 @@
+{
+  "exit_code": 1,
+  "accepted": false,
+  "published": false,
+  "policy": null,
+  "calculation": null,
+  "source_binding": {
+    "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+    "input_sha256": "e39648eef481c6912a85addced101e0eb38bbf5d4ea5d05e77700bb707c7a561"
+  },
+  "application_refusal": {
+    "exit_code": 1,
+    "kind": "unsupported-currency",
+    "reason": "only explicit EUR is supported; no currency conversion"
+  }
+}

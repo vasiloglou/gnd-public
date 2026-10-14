@@ -1,0 +1,125 @@
+{
+  "policy": {
+    "accepted": false,
+    "backend": "duckdb-local",
+    "binding": {
+      "model_sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+      "population_sha256": "be5ce520195f10368f7b51bd73a9b852990f4192f7e67b162c807484e2fdb679"
+    },
+    "derivations": [
+      {
+        "computed": [
+          {
+            "book": "night",
+            "user": "ada"
+          }
+        ],
+        "derivation_ref": "derivation:book_is_blocked_for",
+        "extra": [],
+        "fact_type": "book_is_blocked_for",
+        "missing": [],
+        "reason": null,
+        "status": "satisfied"
+      },
+      {
+        "computed": [
+          {
+            "book": "map",
+            "user": "ada"
+          },
+          {
+            "book": "map",
+            "user": "ben"
+          },
+          {
+            "book": "night",
+            "user": "ben"
+          },
+          {
+            "book": "river",
+            "user": "ada"
+          },
+          {
+            "book": "river",
+            "user": "ben"
+          }
+        ],
+        "derivation_ref": "derivation:book_is_eligible",
+        "extra": [],
+        "fact_type": "book_is_eligible",
+        "missing": [],
+        "reason": null,
+        "status": "satisfied"
+      }
+    ],
+    "exit_code": 1,
+    "profile": "applications-v1",
+    "schema_version": 1,
+    "status": "rejected",
+    "verdicts": [
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "fact_types[book_has_genre].constraints[0]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "fact_types[book_has_genre].constraints[1]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[0]",
+        "constraint_type": "guarded",
+        "id": "unread_only",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[1]",
+        "constraint_type": "guarded",
+        "id": "age_appropriate",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[2]",
+        "constraint_type": "guarded",
+        "id": "preferred_genre",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[3]",
+        "constraint_type": "guarded",
+        "id": "all_eligible",
+        "modality": "alethic",
+        "reason": null,
+        "status": "violated",
+        "witnesses": [
+          {
+            "$b": "river",
+            "$u": "ada"
+          }
+        ]
+      }
+    ]
+  },
+  "case": "m2-r5-negative",
+  "matched": true,
+  "process_exit": 1,
+  "provenance": "PA2 full137 measured native corpus, unchanged runtime"
+}

@@ -1,0 +1,60 @@
+Edited tool receipt: operator repository/temp paths and pytest username sanitized; execution/result text otherwise retained. Original raw SHA-256 f7b305aae37321c3b9850dbcd1da2e37d85902b6bb651ddd198134cdef19ea37.
+
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_review_source_and_malformed_boundaries[erase-rating] ___________
+
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-630/test_review_source_and_malform0')
+fault = 'erase-rating'
+
+    @pytest.mark.parametrize('fault', ['erase-rating', 'malformed-candidate'])
+    def test_review_source_and_malformed_boundaries(tmp_path, fault):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        def damage(candidate):
+            if fault == 'erase-rating':
+                candidate['facts']['user_rated_book'] = [{'user': 'ben', 'book': 'read'}]
+                candidate['facts']['recommendation'].append({'user': 'ada', 'book': 'read'})
+            else:
+                candidate['facts']['recommendation'].append({'user': 'ada', 'book': 'map', 'x': 1})
+            return candidate
+        output = tmp_path / 'out.json'
+        result = execute_application(example / 'strict.orm.yaml', example / 'seed.population.json', output,
+                                     native_python=NATIVE, query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('recommend', 'ada', '2', 'true'), candidate_transform=damage)
+>       assert result['exit_code'] == 3 and not result['published'] and not output.exists(), result
+E       AssertionError: {'exit_code': 0, 'accepted': True, 'published': True, 'policy': {'accepted': True, 'backend': 'duckdb-local', 'binding...'population_sha256': 'c4728bead0a46ae05021c2270d1041c49cb374c71b1224ad17aeeaf0db6fe8b2'}, 'derivations': [], ...}, ...}
+E       assert (0 == 3)
+
+tests/test_bookrec_pyrel_application.py:138: AssertionError
+_______ test_review_source_and_malformed_boundaries[malformed-candidate] _______
+
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-630/test_review_source_and_malform1')
+fault = 'malformed-candidate'
+
+    @pytest.mark.parametrize('fault', ['erase-rating', 'malformed-candidate'])
+    def test_review_source_and_malformed_boundaries(tmp_path, fault):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        def damage(candidate):
+            if fault == 'erase-rating':
+                candidate['facts']['user_rated_book'] = [{'user': 'ben', 'book': 'read'}]
+                candidate['facts']['recommendation'].append({'user': 'ada', 'book': 'read'})
+            else:
+                candidate['facts']['recommendation'].append({'user': 'ada', 'book': 'map', 'x': 1})
+            return candidate
+        output = tmp_path / 'out.json'
+        result = execute_application(example / 'strict.orm.yaml', example / 'seed.population.json', output,
+                                     native_python=NATIVE, query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('recommend', 'ada', '2', 'true'), candidate_transform=damage)
+>       assert result['exit_code'] == 3 and not result['published'] and not output.exists(), result
+E       AssertionError: {'exit_code': 70, 'accepted': False, 'published': False, 'policy': None, ...}
+E       assert (70 == 3)
+
+tests/test_bookrec_pyrel_application.py:138: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_bookrec_pyrel_application.py::test_review_source_and_malformed_boundaries[erase-rating]
+FAILED tests/test_bookrec_pyrel_application.py::test_review_source_and_malformed_boundaries[malformed-candidate]
+2 failed, 13 deselected in 3.31s

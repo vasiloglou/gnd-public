@@ -1,0 +1,9 @@
+# Clean worktree at 50eba83ec9822ecbeae024069cb0ce1f125bb2c2, 2026-10-14T02:47:52Z
+E                   AssertionError: src/gnd/export/pyrel_runtime.py
+E                   assert ('src/gnd/expo...el_runtime.py' == 'src/gnd/expo...le_runtime.py'
+E                     
+E                     - src/gnd/export/souffle_runtime.py
+E       AssertionError: assert [('ring_fail'..., 'violated')] == []
+E         
+E         Left contains one more item: ('ring_fail', 'fact_types[rel_reflexive].constraints[0]', 'pass', 'violated')
+E         Use -v to get more diff

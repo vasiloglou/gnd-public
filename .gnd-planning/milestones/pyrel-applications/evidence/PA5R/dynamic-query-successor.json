@@ -1,0 +1,180 @@
+{
+  "added": [
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "calculate",
+      "[pair for pair in pairs if pair[0] == user][:limit]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "calculate",
+      "facts[name]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "_check_and_publish",
+      "checked.stderr.decode('utf-8', errors='replace')[-300:]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "check_proposal",
+      "document['facts'].get(name, [])",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "check_proposal",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "check_proposal",
+      "str(error)[:300]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "format_result",
+      "witnesses[:_WITNESS_LINES]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "__init__",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "__init__",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "__init__",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_derive",
+      "canonical[key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "candidate",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "candidate",
+      "self._oracle.computed[name]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "guarded",
+      "witnesses[key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "propose",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "ref",
+      "self._oracle.refs(fact_type)[role]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "rows",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "rows",
+      "list[list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "run_app",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "run_app",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "run_app",
+      "str(error)[:300]",
+      1
+    ]
+  ],
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/dynamic-query-successor.json",
+  "predecessor_sha256": "352cea9d83c324a37ddd66673ee9b60269a2648e2f3514e74aac4793172dd6e5",
+  "reason": "PA5R public native-query seam (A2 D1): the Expense query no longer reads index.fact_types; NativeApp.has reads it once inside the emitted program. Dynamic rows follow the seam, check_proposal, format_result and the rewritten example queries. Historical predecessors unchanged.",
+  "removed": [
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "calculate",
+      "[pair for pair in eligible if pair[0] == user][:limit]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "calculate",
+      "oracle.computed[name]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "main",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "main",
+      "str(error)[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/expense/native_query.py",
+      "main",
+      "f'{type(error).__name__}: {error}'[:300]",
+      1
+    ],
+    [
+      "src/gnd/examples/expense/native_query.py",
+      "main",
+      "str(error)[:300]",
+      1
+    ],
+    [
+      "src/gnd/export/applications.py",
+      "execute_application",
+      "checked.stderr.decode('utf-8', errors='replace')[-300:]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 5844,
+  "result_occurrences": 7370,
+  "schema_version": 1
+}

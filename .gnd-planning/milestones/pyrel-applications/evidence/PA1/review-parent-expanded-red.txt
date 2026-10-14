@@ -1,0 +1,106 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+___________ test_malformed_profile_shape_has_input_error[value-type] ___________
+tests/test_pyrel_application_review_regressions.py:24: in test_malformed_profile_shape_has_input_error
+    api()(model, pop, model_sha256='a' * 64, population_sha256='b' * 64)
+src/gnd/export/pyrel_runtime.py:1510: in acceptance_document
+    _profile_admit(index, population)
+src/gnd/export/pyrel_runtime.py:1374: in _profile_admit
+    if constraint.get('object_type') not in index.object_types or not isinstance(constraint.get('allowed'), list):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: unhashable type: 'list'
+__________ test_malformed_profile_shape_has_input_error[subset-role] ___________
+tests/test_pyrel_application_review_regressions.py:24: in test_malformed_profile_shape_has_input_error
+    api()(model, pop, model_sha256='a' * 64, population_sha256='b' * 64)
+src/gnd/export/pyrel_runtime.py:1510: in acceptance_document
+    _profile_admit(index, population)
+src/gnd/export/pyrel_runtime.py:1388: in _profile_admit
+    if ref.get('role') not in roles:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: unhashable type: 'list'
+_________ test_malformed_profile_shape_has_input_error[mandatory-role] _________
+tests/test_pyrel_application_review_regressions.py:23: in test_malformed_profile_shape_has_input_error
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+__________ test_consequent_work_is_part_of_conservative_guard_budget ___________
+tests/test_pyrel_application_review_regressions.py:32: in test_consequent_work_is_part_of_conservative_guard_budget
+    assert report['status'] == 'incomplete' and report['exit_code'] == 2
+E   AssertionError: assert ('runtime_failure' == 'incomplete'
+E     
+E     - incomplete
+E     + runtime_failure)
+_________________ test_unexpected_native_status_never_accepts __________________
+tests/test_pyrel_application_review_regressions.py:48: in test_unexpected_native_status_never_accepts
+    assert not report['accepted'] and report['exit_code'] == 2
+E   assert (not True)
+_______ test_missing_acceptance_output_directory_is_operational_failure ________
+tests/test_pyrel_application_review_regressions.py:59: in test_missing_acceptance_output_directory_is_operational_failure
+    assert main([str(path), '--accept', '--out', str(tmp_path / 'missing/report.json')]) == 70
+E   AssertionError: assert 66 == 70
+E    +  where 66 = <function program_main at 0x108c1a160>(['/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_missing_accept...n05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_missing_acceptance_output0/missing/report.json'])
+----------------------------- Captured stderr call -----------------------------
+missing input: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_missing_acceptance_output0/missing/report.json'
+_________ test_execution_context_refusal_writes_bound_report[require] __________
+tests/test_pyrel_application_review_regressions.py:139: in test_execution_context_refusal_writes_bound_report
+    report = json.loads(output.read_text())
+                        ^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_execution_context_refusal0/report.json'
+----------------------------- Captured stderr call -----------------------------
+applications-v1 requires in-memory local select execution
+__________ test_execution_context_refusal_writes_bound_report[named] ___________
+tests/test_pyrel_application_review_regressions.py:139: in test_execution_context_refusal_writes_bound_report
+    report = json.loads(output.read_text())
+                        ^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_execution_context_refusal1/report.json'
+----------------------------- Captured stderr call -----------------------------
+applications-v1 requires in-memory local select execution
+________ test_execution_context_refusal_writes_bound_report[persisted] _________
+tests/test_pyrel_application_review_regressions.py:139: in test_execution_context_refusal_writes_bound_report
+    report = json.loads(output.read_text())
+                        ^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/pathlib.py:1044: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_execution_context_refusal2/report.json'
+----------------------------- Captured stderr call -----------------------------
+applications-v1 requires in-memory local select execution
+_______ test_execution_context_refusal_writes_bound_report[config-file] ________
+tests/test_pyrel_application_review_regressions.py:138: in test_execution_context_refusal_writes_bound_report
+    assert main([str(path), '--out', str(output), '--accept', *options]) == 2
+E   AssertionError: assert 70 == 2
+E    +  where 70 = <function program_main at 0x10a0e2a20>(['/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_execution_cont...7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_execution_context_refusal3/ambient.yaml'])
+__________ test_raw_size_refusal_is_incomplete_without_false_binding ___________
+tests/test_pyrel_application_review_regressions.py:151: in test_raw_size_refusal_is_incomplete_without_false_binding
+    assert main([str(path), '--out', str(output), '--accept']) == 2
+E   AssertionError: assert 3 == 2
+E    +  where 3 = <function program_main at 0x109f300e0>(['/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_raw_size_refus...blnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_raw_size_refusal_is_incom0/report.json', '--accept'])
+----------------------------- Captured stderr call -----------------------------
+invalid input: input exceeds 1048576 bytes: /private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-554/test_raw_size_refusal_is_incom0/too-large.json
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_review_regressions.py::test_malformed_profile_shape_has_input_error[value-type]
+FAILED tests/test_pyrel_application_review_regressions.py::test_malformed_profile_shape_has_input_error[subset-role]
+FAILED tests/test_pyrel_application_review_regressions.py::test_malformed_profile_shape_has_input_error[mandatory-role]
+FAILED tests/test_pyrel_application_review_regressions.py::test_consequent_work_is_part_of_conservative_guard_budget
+FAILED tests/test_pyrel_application_review_regressions.py::test_unexpected_native_status_never_accepts
+FAILED tests/test_pyrel_application_review_regressions.py::test_missing_acceptance_output_directory_is_operational_failure
+FAILED tests/test_pyrel_application_review_regressions.py::test_execution_context_refusal_writes_bound_report[require]
+FAILED tests/test_pyrel_application_review_regressions.py::test_execution_context_refusal_writes_bound_report[named]
+FAILED tests/test_pyrel_application_review_regressions.py::test_execution_context_refusal_writes_bound_report[persisted]
+FAILED tests/test_pyrel_application_review_regressions.py::test_execution_context_refusal_writes_bound_report[config-file]
+FAILED tests/test_pyrel_application_review_regressions.py::test_raw_size_refusal_is_incomplete_without_false_binding
+11 failed, 6 deselected in 0.21s

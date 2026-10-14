@@ -1,0 +1,254 @@
+{
+  "accepted": true,
+  "calculation": {
+    "approved_expenses": [
+      [
+        103
+      ]
+    ],
+    "currency_mode": "explicit",
+    "report": {
+      "approved": 1,
+      "submitted": 3,
+      "totals_by_currency": {
+        "EUR": 2260
+      }
+    },
+    "submitted_expenses": [
+      [
+        101
+      ],
+      [
+        102
+      ],
+      [
+        103
+      ]
+    ],
+    "unit": "EUR"
+  },
+  "exit_code": 0,
+  "policy": {
+    "accepted": true,
+    "backend": "duckdb-local",
+    "binding": {
+      "model_sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e",
+      "population_sha256": "84608300d0a2aabeb25596ab42ac22f8810343e04e2463caa8e77d8ce643f174"
+    },
+    "derivations": [],
+    "exit_code": 0,
+    "profile": "applications-v1",
+    "schema_version": 1,
+    "status": "accepted",
+    "verdicts": [
+      {
+        "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "one_expense_submitted_by_employee",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_submitted_by_employee].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "required_expense_submitted_by_employee",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_has_amount].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "one_expense_has_amount",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_has_amount].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "required_expense_has_amount",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_in_category].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "one_expense_in_category",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_in_category].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "required_expense_in_category",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_is_approved].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "one_expense_is_approved",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_approved_by_chain].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "one_expense_approved_by_chain",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_has_currency].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "one_expense_has_currency",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[expense_has_currency].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "required_expense_has_currency",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[0]",
+        "constraint_type": "value",
+        "id": "known_categories",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[1]",
+        "constraint_type": "value",
+        "id": "known_chains",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[2]",
+        "constraint_type": "guarded",
+        "id": "positive_amount",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[3]",
+        "constraint_type": "subset",
+        "id": "approval_needs_submission",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[4]",
+        "constraint_type": "subset",
+        "id": "approval_needs_chain",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[5]",
+        "constraint_type": "subset",
+        "id": "chain_needs_approval",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[6]",
+        "constraint_type": "guarded",
+        "id": "policy_meals",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[7]",
+        "constraint_type": "guarded",
+        "id": "policy_training",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[8]",
+        "constraint_type": "guarded",
+        "id": "policy_travel",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[9]",
+        "constraint_type": "guarded",
+        "id": "policy_equipment",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[10]",
+        "constraint_type": "guarded",
+        "id": "approval_limit_team_lead",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[11]",
+        "constraint_type": "guarded",
+        "id": "approval_limit_finance",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[12]",
+        "constraint_type": "value",
+        "id": "supported_currency",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      }
+    ]
+  },
+  "published": true
+}

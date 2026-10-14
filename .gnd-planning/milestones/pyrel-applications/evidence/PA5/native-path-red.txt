@@ -1,0 +1,31 @@
+Retained output edited: operator/checkout paths only. Raw SHA-256 6cc969b94f9337a730aa5d3a2785516d0a57d4c85fe3fea7dead714ccef1e3b5
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_native_path_contract_refuses_before_probe[relative/python] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e5eb10>
+native = 'relative/python'
+
+    @pytest.mark.parametrize('native',['relative/python',sys.executable])
+    def test_native_path_contract_refuses_before_probe(monkeypatch,native):
+        monkeypatch.setattr(runner.subprocess,'run',lambda *a,**k: type('Result',(),{'returncode':0,'stdout':'PyRel 1.30.1\nDuckDB 1.5.5','stderr':''})())
+>       with pytest.raises(AssertionError,match='absolute separate native interpreter'):
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:205: Failed
+_ test_native_path_contract_refuses_before_probe[<checkout>/.venv/bin/python] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e6fc90>
+native = '<checkout>/.venv/bin/python'
+
+    @pytest.mark.parametrize('native',['relative/python',sys.executable])
+    def test_native_path_contract_refuses_before_probe(monkeypatch,native):
+        monkeypatch.setattr(runner.subprocess,'run',lambda *a,**k: type('Result',(),{'returncode':0,'stdout':'PyRel 1.30.1\nDuckDB 1.5.5','stderr':''})())
+>       with pytest.raises(AssertionError,match='absolute separate native interpreter'):
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_pyrel_tutorial_experience.py:205: Failed
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_tutorial_experience.py::test_native_path_contract_refuses_before_probe[relative/python]
+FAILED tests/test_pyrel_tutorial_experience.py::test_native_path_contract_refuses_before_probe[<checkout>/.venv/bin/python]
+2 failed, 30 deselected in 0.07s

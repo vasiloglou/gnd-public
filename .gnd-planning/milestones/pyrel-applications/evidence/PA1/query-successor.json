@@ -1,0 +1,24 @@
+{
+  "added": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "constraint.get('roles')",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "_profile_admit",
+      "index.fact_types",
+      1
+    ]
+  ],
+  "original_metric_current": 301,
+  "predecessor": ".gnd-planning/milestones/code-refactoring/evidence/RF9-repair/query-allow-list.json",
+  "predecessor_sha256": "ac347d7d615dc81da050d19dfd8a77ea0322291ba484253d91c67d3aeaa3752e",
+  "reason": "PA1 opt-in standalone profile reads its independent ModelIndex. No GND import is allowed; exact counts only, original ceilings retained.",
+  "removed": [],
+  "result_distinct_rows": 287,
+  "result_occurrences": 356,
+  "schema_version": 1
+}

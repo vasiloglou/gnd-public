@@ -1,0 +1,129 @@
+{
+  "accepted": true,
+  "calculation": {
+    "already_read_pairs": [
+      {
+        "book": "read",
+        "user": "ada"
+      },
+      {
+        "book": "read",
+        "user": "ben"
+      }
+    ],
+    "blocked_pairs": [
+      {
+        "book": "night",
+        "user": "ada"
+      }
+    ],
+    "eligible_pairs": [
+      {
+        "book": "cosmos",
+        "user": "ada"
+      },
+      {
+        "book": "map",
+        "user": "ada"
+      },
+      {
+        "book": "river",
+        "user": "ada"
+      },
+      {
+        "book": "cosmos",
+        "user": "ben"
+      },
+      {
+        "book": "map",
+        "user": "ben"
+      },
+      {
+        "book": "night",
+        "user": "ben"
+      },
+      {
+        "book": "river",
+        "user": "ben"
+      }
+    ],
+    "selected_pairs": [
+      {
+        "book": "cosmos",
+        "user": "ada"
+      },
+      {
+        "book": "map",
+        "user": "ada"
+      }
+    ]
+  },
+  "exit_code": 0,
+  "policy": {
+    "accepted": true,
+    "backend": "duckdb-local",
+    "binding": {
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "population_sha256": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305"
+    },
+    "derivations": [],
+    "exit_code": 0,
+    "profile": "applications-v1",
+    "schema_version": 1,
+    "status": "accepted_with_warnings",
+    "verdicts": [
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[0]",
+        "constraint_type": "uniqueness",
+        "id": "fact_types[book_has_genre].constraints[0]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "fact_types[book_has_genre].constraints[1]",
+        "constraint_type": "mandatory",
+        "id": "fact_types[book_has_genre].constraints[1]",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[0]",
+        "constraint_type": "guarded",
+        "id": "unread_only",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[1]",
+        "constraint_type": "guarded",
+        "id": "age_appropriate",
+        "modality": "alethic",
+        "reason": null,
+        "status": "satisfied",
+        "witnesses": []
+      },
+      {
+        "constraint_ref": "constraints[2]",
+        "constraint_type": "guarded",
+        "id": "preferred_genre",
+        "modality": "deontic",
+        "reason": null,
+        "status": "warning",
+        "witnesses": [
+          {
+            "$b": "cosmos",
+            "$g": "science",
+            "$u": "ada"
+          }
+        ]
+      }
+    ]
+  },
+  "published": true
+}

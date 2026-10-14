@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_duplicate_derived_key_claims_cannot_false_accept _____________
+tests/test_pyrel_application_derivations.py:248: in test_duplicate_derived_key_claims_cannot_false_accept
+    assert report['exit_code'] == 2 and not report['accepted'], report
+E   AssertionError: {'accepted': True, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...score': 7}], 'derivation_ref': 'derivation:available_result', 'extra': [], 'fact_type': 'available_result', ...}], ...}
+E   assert (0 == 2)
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_derivations.py::test_duplicate_derived_key_claims_cannot_false_accept
+1 failed in 1.81s

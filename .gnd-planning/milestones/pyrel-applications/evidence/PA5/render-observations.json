@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "source": "Actual local Playwright rendering of built pages after review repairs",
+  "instrumentation": "Sticky header hidden only for cropped graphic captures; separate navigation/page captures use normal page. Mobile diagrams intentionally scroll at560px minimum; retained left/right views and keyboard checks cover all labels. No intrinsic SVG glyph overflow. In-app backend unavailable, local browser fallback used. Final clean mobile graphic-only crops hide the sticky header and floating TOC. Earlier ghost text was a transient TOC overlay (closed inner opacity0 measured), not SVG contents. Normal-page navigation frames are separate.",
+  "rows": [
+    {
+      "domain": "bookrec",
+      "viewport": "desktop",
+      "theme": "default",
+      "checks": [
+        {
+          "src": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec calculation and checking flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec reader, book and genre eligibility",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec advisory, strict and complete rules",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "bookrec",
+      "viewport": "desktop",
+      "theme": "slate",
+      "checks": [
+        {
+          "src": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec calculation and checking flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec reader, book and genre eligibility",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec advisory, strict and complete rules",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "bookrec",
+      "viewport": "mobile",
+      "theme": "default",
+      "checks": [
+        {
+          "src": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec calculation and checking flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec reader, book and genre eligibility",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec advisory, strict and complete rules",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "domain": "bookrec",
+      "viewport": "mobile",
+      "theme": "slate",
+      "checks": [
+        {
+          "src": "bookrec-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec calculation and checking flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-eligibility.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec reader, book and genre eligibility",
+          "glyph_overflows": []
+        },
+        {
+          "src": "bookrec-evolution.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "BookRec advisory, strict and complete rules",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "domain": "expense",
+      "viewport": "desktop",
+      "theme": "default",
+      "checks": [
+        {
+          "src": "expense-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense reporting and approval flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-limits.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense category caps and approval chain limits",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-currency.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense implicit and explicit currency evolution",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "expense",
+      "viewport": "desktop",
+      "theme": "slate",
+      "checks": [
+        {
+          "src": "expense-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense reporting and approval flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-limits.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense category caps and approval chain limits",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-currency.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense implicit and explicit currency evolution",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 1440,
+      "viewport_width": 1440
+    },
+    {
+      "domain": "expense",
+      "viewport": "mobile",
+      "theme": "default",
+      "checks": [
+        {
+          "src": "expense-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense reporting and approval flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-limits.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense category caps and approval chain limits",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-currency.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense implicit and explicit currency evolution",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "domain": "expense",
+      "viewport": "mobile",
+      "theme": "slate",
+      "checks": [
+        {
+          "src": "expense-flow.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense reporting and approval flow",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-limits.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense category caps and approval chain limits",
+          "glyph_overflows": []
+        },
+        {
+          "src": "expense-currency.svg",
+          "loaded": true,
+          "alt": true,
+          "region": "Expense implicit and explicit currency evolution",
+          "glyph_overflows": []
+        }
+      ],
+      "body_width": 390,
+      "viewport_width": 390
+    }
+  ]
+}

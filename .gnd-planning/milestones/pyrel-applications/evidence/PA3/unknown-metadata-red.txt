@@ -1,0 +1,28 @@
+Edited tool receipt: operator repository/temp paths and pytest username sanitized; execution/result text otherwise retained. Original raw SHA-256 f7d5f51c5378cf31b209c2ccbbe6603ffa4b415b31c11d1413826e12a78ecfd9.
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_native_complete_unknown_metadata_refuses_without_runtime_error ______
+
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-619/test_native_complete_unknown_m0')
+
+    def test_native_complete_unknown_metadata_refuses_without_runtime_error(tmp_path):
+        from gnd.export.applications import execute_application
+    
+        example = Path(str(files('gnd').joinpath('examples', 'bookrec')))
+        seed = json.loads((example / 'seed.population.json').read_text())
+        del seed['population']
+        source = tmp_path / 'unknown.json'; source.write_text(json.dumps(seed))
+        output = tmp_path / 'result.json'
+        result = execute_application(example / 'complete.orm.yaml', source, output,
+                                     native_python=NATIVE,
+                                     query_script=example / 'extension/bookrec/native_query.py',
+                                     query_args=('complete', '', '2', 'false'))
+>       assert result['exit_code'] == 2 and not result['published'] and not output.exists(), result
+E       AssertionError: {'exit_code': 70, 'accepted': False, 'published': False, 'policy': None, ...}
+E       assert (70 == 2)
+
+tests/test_bookrec_pyrel_application.py:119: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_bookrec_pyrel_application.py::test_native_complete_unknown_metadata_refuses_without_runtime_error
+1 failed, 12 deselected in 0.16s

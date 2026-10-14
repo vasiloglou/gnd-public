@@ -1202,14 +1202,677 @@ def write_new(path: Path, text: str) -> None:
         raise
 
 
+# applications-v1 is opt-in; legacy report/evaluator semantics above stay frozen.
+PROFILE = 'applications-v1'
+PROFILE_BYTES = 1_048_576
+PROFILE_ROWS = 1000
+PROFILE_WORK = 100_000
+PROFILE_RESULTS = 10_000
+
+
+class ProfileRefusal(Exception):
+    """An honest unsupported/coverage/work boundary, never a policy violation."""
+
+
+def _profile_literal(value: Any, primitive: str) -> None:
+    try:
+        _admit_scalar(value, primitive)
+    except ExportInputError as error:
+        raise ProfileRefusal('literal-type:' + primitive) from error
+    if type(value) is int and abs(value) > 2**53 - 1:
+        raise ProfileRefusal('integer-profile-limit')
+
+
+def _profile_guard(index: ModelIndex, constraint: dict[str, Any]) -> dict[str, str]:
+    atoms = constraint.get('antecedent')
+    consequent = constraint.get('consequent')
+    if not isinstance(atoms, list) or not 1 <= len(atoms) <= 8:
+        raise ProfileRefusal('guarded-antecedent-shape')
+    if not isinstance(consequent, dict) or len(consequent) != 1:
+        raise ProfileRefusal('guarded-consequent-shape')
+    variables: dict[str, str] = {}
+
+    def atom_shape(atom: Any, positive: bool) -> None:
+        if not isinstance(atom, dict) or set(atom) != {'fact_type', 'bind'}:
+            raise ProfileRefusal('guarded-atom-shape')
+        name, bindings = atom['fact_type'], atom['bind']
+        if not isinstance(name, str):
+            raise ProfileRefusal('guarded-fact-name')
+        try:
+            roles = {r['role_name']: r for r in index.roles(name)}
+        except KeyError as error:
+            raise ProfileRefusal('guarded-unknown-fact') from error
+        if not isinstance(bindings, dict) or set(bindings) - set(roles):
+            raise ProfileRefusal('guarded-unknown-role')
+        for role, term in bindings.items():
+            primitive = index.primitive(roles[role]['object_type'])
+            if isinstance(term, str) and term.startswith('$') and len(term) > 1:
+                if term in variables and variables[term] != primitive:
+                    raise ProfileRefusal('guarded-variable-type')
+                if not positive and term not in variables:
+                    raise ProfileRefusal('guarded-unbound-variable')
+                variables[term] = primitive
+            else:
+                _profile_literal(term, primitive)
+
+    for atom in atoms:
+        atom_shape(atom, True)
+    kind = next(iter(consequent))
+    payload = consequent[kind]
+    if kind in {'atom', 'absence'}:
+        atom_shape(payload, False)
+    elif kind == 'comparison':
+        if not isinstance(payload, dict) or set(payload) != {'operator', 'left', 'right'}:
+            raise ProfileRefusal('guarded-comparison-shape')
+        operator = payload['operator']
+        if not isinstance(operator, str) or operator not in _NEGATED_OP:
+            raise ProfileRefusal('guarded-comparison-operator')
+        primitives = []
+        for term in [payload['left'], payload['right']]:
+            if isinstance(term, str) and term.startswith('$') and len(term) > 1:
+                if term not in variables:
+                    raise ProfileRefusal('guarded-unbound-variable')
+                primitives.append(variables[term])
+            else:
+                primitive = {str: 'String', int: 'Integer', bool: 'Boolean'}.get(type(term))
+                if primitive is None:
+                    raise ProfileRefusal('guarded-comparison-literal')
+                _profile_literal(term, primitive)
+                primitives.append(primitive)
+        if primitives[0] != primitives[1]:
+            raise ProfileRefusal('guarded-comparison-type')
+        if primitives[0] != 'Integer' and operator not in {'=', '==', '!=', '<>'}:
+            raise ProfileRefusal('guarded-nonnumeric-order')
+    else:
+        raise ProfileRefusal('guarded-consequent-unsupported')
+    return variables
+
+
+def _profile_derivations(index: ModelIndex) -> list[str]:
+    """Validate the acyclic v2 join/project/negation fragment, not GND semantics."""
+    facts = index.fact_types
+    heads = {name for name, fact in facts.items()
+             if fact.get('derivation') not in (None, 'asserted') or 'derivation_rule' in fact}
+    if heads and index.doc.get('version') != 2:
+        raise ProfileRefusal('derivations-require-model-v2')
+    dependencies = {}
+    for name in sorted(heads):
+        fact = facts[name]
+        if fact.get('derivation') != 'derived' or fact.get('storage') != 'computed':
+            raise ProfileRefusal('only-derived-computed-relations')
+        rule = fact.get('derivation_rule')
+        if not isinstance(rule, dict) or set(rule) - {'body', 'head', 'negate'}:
+            raise ProfileRefusal('structured-derivation-rule-shape')
+        head = rule.get('head')
+        roles = {role['role_name'] for role in index.roles(name)}
+        if not isinstance(head, dict) or set(head) != roles:
+            raise ProfileRefusal('derivation-head-role-shape')
+        if any(not isinstance(term, str) or not term.startswith('$') or len(term) < 2
+               for term in head.values()):
+            raise ProfileRefusal('derivation-head-needs-bound-variables')
+        body, negative = rule.get('body'), rule.get('negate', [])
+        if not isinstance(negative, list) or len(negative) > 8:
+            raise ProfileRefusal('derivation-negative-shape')
+        _profile_guard(index, {'antecedent': body,
+                               'consequent': {'atom': {'fact_type': name, 'bind': head}}})
+        for atom in negative:
+            _profile_guard(index, {'antecedent': body, 'consequent': {'absence': atom}})
+        dependencies[name] = {atom['fact_type'] for atom in body + negative} & heads
+    ordered = []
+    while dependencies:
+        ready = sorted(name for name, needs in dependencies.items() if not needs)
+        if not ready:
+            raise ProfileRefusal('derivation-dependency-cycle')
+        ordered.extend(ready)
+        for name in ready:
+            del dependencies[name]
+        for needs in dependencies.values():
+            needs.difference_update(ready)
+    return ordered
+
+
+def _profile_guard_work(constraint: dict[str, Any], facts: dict[str, list]) -> None:
+    work = 1
+    for atom in constraint['antecedent']:
+        work *= len(facts[atom['fact_type']])
+        if work > PROFILE_WORK:
+            raise ProfileRefusal('guarded-join-work-limit')
+    consequent = constraint['consequent']
+    kind = next(iter(consequent))
+    if kind in {'atom', 'absence'}:
+        work *= max(1, len(facts[consequent[kind]['fact_type']]))
+        if work > PROFILE_WORK:
+            raise ProfileRefusal('guarded-join-work-limit')
+
+
+def _profile_admit(index: ModelIndex, population: dict[str, Any]) -> None:
+    facts = index.fact_types
+    entries = _constraint_entries(index)
+    if type(index.doc.get('version')) is not int or index.doc['version'] not in {1, 2}:
+        raise ProfileRefusal('model-version-not-in-application-profile')
+    if set(index.doc) - {'version', 'model_id', 'source', 'object_types', 'fact_types', 'constraints'}:
+        raise ProfileRefusal('model-declarations-outside-application-profile')
+    if len(index.object_types) > 64 or len(facts) > 32 or len(entries) > 64:
+        raise ProfileRefusal('declaration-limit')
+    for document in [index.doc, population]:
+        try:
+            size = len(json.dumps(document, ensure_ascii=False, allow_nan=False).encode('utf-8'))
+        except (TypeError, ValueError, RecursionError) as error:
+            raise ExportInputError('profile requires finite JSON data') from error
+        if size > PROFILE_BYTES:
+            raise ProfileRefusal('document-profile-limit')
+    metadata = population.get('population', {})
+    if not isinstance(metadata, dict):
+        raise ExportInputError('population metadata must be a mapping')
+    if metadata.get('model_id') is not None and metadata['model_id'] != index.doc.get('model_id'):
+        raise ExportInputError('population model_id differs from selected model')
+    covers = metadata.get('covers')
+    if not isinstance(covers, list) or any(not isinstance(x, str) for x in covers):
+        raise ProfileRefusal('coverage-not-declared')
+    rows = population.get('facts', {})
+    if any(name not in covers or name not in rows for name in facts):
+        raise ProfileRefusal('relation-not-covered-or-listed')
+    count = sum(len(values) for values in rows.values())
+    count += sum(len(values) for values in population.get('instances', {}).values())
+    if count > PROFILE_ROWS:
+        raise ProfileRefusal('population-row-limit')
+    for declaration in index.object_types.values():
+        if set(declaration) - {'id', 'name', 'kind', 'primitive', 'reference', 'inherits_reference',
+                               'subtype_of', 'description'}:
+            raise ProfileRefusal('object-declarations-outside-application-profile')
+        primitive = index.primitive(declaration['id'])
+        if primitive not in {'String', 'Integer', 'Boolean'}:
+            raise ProfileRefusal('primitive-not-in-application-profile')
+    for name, declaration in facts.items():
+        if set(declaration) - {'id', 'reading', 'roles', 'constraints', 'derivation', 'storage', 'derivation_rule'}:
+            raise ProfileRefusal('fact-declarations-outside-application-profile')
+        roles = index.roles(name)
+        if len(roles) > 8:
+            raise ProfileRefusal('role-limit')
+        if any(set(role) - {'role_name', 'object_type'} for role in roles):
+            raise ProfileRefusal('role-declarations-outside-application-profile')
+        if declaration.get('derivation') not in (None, 'asserted', 'derived'):
+            raise ProfileRefusal('derivation-not-in-application-profile')
+        if declaration.get('derivation') != 'derived' and 'derivation_rule' in declaration:
+            raise ProfileRefusal('asserted-relation-has-derivation-rule')
+        if declaration.get('derivation') != 'derived' and declaration.get('storage') not in (None, 'stored'):
+            raise ProfileRefusal('storage-not-in-application-profile')
+        if declaration.get('derivation') == 'derived' and any(
+                constraint['type'] == 'uniqueness' for constraint in declaration.get('constraints', [])):
+            claimed = [json.dumps(row, sort_keys=True, separators=(',', ':')) for row in rows[name]]
+            if len(set(claimed)) != len(claimed):
+                raise ProfileRefusal('duplicate-derived-key-claims')
+        for row in rows[name]:
+            for role in roles:
+                _profile_literal(row[role['role_name']], index.primitive(role['object_type']))
+    for oid, values in population.get('instances', {}).items():
+        for value in values:
+            _profile_literal(value, index.primitive(oid))
+    derived = _profile_derivations(index)
+    for _, constraint, ft_id in entries:
+        family = constraint['type']
+        common = {'type', 'id', 'source', 'status', 'modality', 'provenance', 'rationale', 'scope'}
+        fields = {'guarded': {'antecedent', 'consequent'}, 'uniqueness': {'roles'},
+                  'mandatory': {'role'}, 'value': {'object_type', 'allowed'},
+                  'subset': {'subset_role_seq', 'superset_role_seq'}}
+        if family not in fields or set(constraint) - common - fields[family]:
+            raise ProfileRefusal('constraint-shape-outside-application-profile')
+        if 'id' in constraint and (not isinstance(constraint['id'], str) or not constraint['id']):
+            raise ProfileRefusal('constraint-label-not-string')
+        if constraint.get('scope') not in (None, 'inline', 'internal'):
+            raise ProfileRefusal('constraint-scope-outside-application-profile')
+        if constraint.get('modality', 'alethic') not in ('alethic', 'deontic'):
+            raise ProfileRefusal('unsupported-modality')
+        if family == 'guarded':
+            if ft_id is not None:
+                raise ProfileRefusal('only-top-level-guarded')
+            _profile_guard(index, constraint)
+            references = [atom['fact_type'] for atom in constraint['antecedent']]
+            consequent = constraint['consequent']
+            kind = next(iter(consequent))
+            if kind in {'atom', 'absence'}:
+                references.append(consequent[kind]['fact_type'])
+            if not any(name in derived for name in references):
+                _profile_guard_work(constraint, rows)
+        elif family in {'uniqueness', 'mandatory'}:
+            if ft_id is None or constraint.get('scope') == 'external':
+                raise ProfileRefusal('only-inline-key-and-mandatory')
+            if family == 'uniqueness' and not constraint.get('roles'):
+                raise ProfileRefusal('uniqueness-needs-key-roles')
+            if family == 'mandatory' and not isinstance(constraint.get('role'), str):
+                raise ExportInputError('mandatory requires a role string')
+        elif family == 'value':
+            if not isinstance(constraint.get('object_type'), str):
+                raise ExportInputError('value requires an object_type string')
+            if ft_id is not None:
+                raise ProfileRefusal('only-top-level-object-value-enum')
+            if constraint.get('object_type') not in index.object_types or not isinstance(constraint.get('allowed'), list):
+                raise ProfileRefusal('only-object-value-enum')
+            for term in constraint['allowed']:
+                _profile_literal(term, index.primitive(constraint['object_type']))
+        elif family == 'subset':
+            if ft_id is not None:
+                raise ProfileRefusal('only-top-level-unary-subset')
+            for key in ['subset_role_seq', 'superset_role_seq']:
+                sequence = constraint.get(key)
+                if not isinstance(sequence, list) or len(sequence) != 1 or not isinstance(sequence[0], dict):
+                    raise ProfileRefusal('only-unary-projected-subset')
+                ref = sequence[0]
+                if not isinstance(ref.get('role'), str) or not isinstance(ref.get('fact_type'), str):
+                    raise ExportInputError('subset reference requires fact_type and role strings')
+                try:
+                    roles = {r['role_name'] for r in index.roles(ref.get('fact_type'))}
+                except (KeyError, TypeError) as error:
+                    raise ProfileRefusal('subset-unknown-fact') from error
+                if ref.get('role') not in roles:
+                    raise ProfileRefusal('subset-unknown-role')
+            sub = constraint['subset_role_seq'][0]
+            sup = constraint['superset_role_seq'][0]
+            if index.role_object_type(sub['fact_type'], sub['role']) != index.role_object_type(sup['fact_type'], sup['role']):
+                raise ProfileRefusal('subset-role-types-outside-application-profile')
+        else:
+            raise ProfileRefusal('family-not-in-application-profile:' + family)
+
+
+class ApplicationOracle(PyrelOracle):
+    """Native policy execution for the bounded, explicitly selected profile."""
+
+    def __init__(self, model: ModelIndex, population: dict[str, Any], *, config: dict[str, Any]):
+        ordered = _profile_derivations(model)
+        asserted = {**population, 'facts': {name: [] if name in ordered else rows
+                                            for name, rows in population.get('facts', {}).items()}}
+        super().__init__(model, asserted, config=config)
+        self.computed: dict[str, list[dict[str, Any]]] = {}
+        for ordinal, name in enumerate(ordered):
+            self._derive(name, ordinal)
+        # The legacy constructor eagerly snapshots entity members. Rebuild
+        # from asserted plus computed facts, never from supplied head claims.
+        self._universe_values.clear()
+
+    def _derive(self, name: str, ordinal: int) -> None:
+        from relationalai.semantics.frontend.base import Field
+
+        rule = self.model.fact_types[name]['derivation_rule']
+        roles = self.model.roles(name)
+        calculated = []
+        if all(self.facts[atom['fact_type']] for atom in rule['body']):
+            work = 1
+            for atom in rule['body'] + rule.get('negate', []):
+                work *= max(1, len(self.facts[atom['fact_type']]))
+                if work > PROFILE_WORK:
+                    raise ProfileRefusal('derivation-join-work-limit')
+            primitives = _profile_guard(self.model, {
+                'antecedent': rule['body'],
+                'consequent': {'atom': {'fact_type': name, 'bind': rule['head']}}})
+            variables = {var: self._concept_for(primitive).ref() for var, primitive in primitives.items()}
+
+            def atom(pattern):
+                return self.pattern(pattern['fact_type'], {
+                    role: variables[term] if isinstance(term, str) and term in variables else term
+                    for role, term in pattern['bind'].items()})
+
+            positive = [atom(pattern) for pattern in rule['body']]
+            negative = [self.m.not_(atom(pattern)) for pattern in rule.get('negate', [])]
+            concepts = self._concepts[name]
+            result = self.m.Relationship(fields=[Field(role['role_name'], concept)
+                                                 for role, concept in zip(roles, concepts, strict=True)],
+                                         short_name=f'profile_derived_{ordinal}')
+            self.m.where(*positive, *negative).define(result(*[variables[rule['head'][role['role_name']]] for role in roles]))
+            columns = [concept.ref() for concept in concepts]
+            tuples = self._rows(self.m.where(result(*columns)).select(*columns))
+            # Deduplicate by canonical text, keeping the original row (no re-parse).
+            canonical = {json.dumps(row, sort_keys=True, separators=(',', ':')): row for row in tuples}
+            calculated = [dict(zip([role['role_name'] for role in roles], canonical[key], strict=True))
+                          for key in sorted(canonical)]
+        if calculated:
+            self.m.define(*[self._relations[name](*[row[role['role_name']] for role in roles], i)
+                            for i, row in enumerate(calculated)])
+        self.facts[name] = calculated
+        self.computed[name] = calculated
+
+    def _mandatory(self, constraint: dict[str, Any], ft_id: str | None) -> tuple[str, Any]:
+        role_name = constraint['role']
+        ot = self.model.role_object_type(ft_id, role_name)
+        relation, concept = self.universe(ot)
+        member = concept.ref()
+        query = self.m.where(relation(member), self.m.not_(self.pattern(ft_id, {role_name: member}))).select(member)
+        return self._decide(self._witnesses(query))
+
+    def _subset(self, constraint: dict[str, Any], ft_id: str | None) -> tuple[str, Any]:
+        return self._one_direction(constraint['subset_role_seq'], constraint['superset_role_seq'], self.m.not_)
+
+    def _rows(self, fragment: Any) -> list[list[Any]]:
+        rows = super()._rows(fragment)
+        if len(rows) > PROFILE_RESULTS:
+            raise ProfileRefusal('native-result-tuple-limit')
+        return rows
+
+    def guarded(self, constraint: dict[str, Any]) -> tuple[str, Any]:
+        from relationalai.semantics import Int
+        from relationalai.semantics.frontend.base import Field
+
+        primitives = _profile_guard(self.model, constraint)
+        _profile_guard_work(constraint, self.facts)
+        variables = {name: self._concept_for(primitive).ref() for name, primitive in primitives.items()}
+        names = sorted(variables)
+
+        def atom(pattern: dict[str, Any]) -> Any:
+            bindings = {role: variables[term] if isinstance(term, str) and term in variables else term
+                        for role, term in pattern['bind'].items()}
+            return self.pattern(pattern['fact_type'], bindings)
+
+        positive = [atom(pattern) for pattern in constraint['antecedent']]
+        if any(not self.facts[pattern['fact_type']] for pattern in constraint['antecedent']):
+            return 'vacuous', []
+        selected = [variables[name] for name in names]
+        if not selected:
+            marker = self.m.Relationship(fields=[Field('token', Int)], short_name='profile_marker')
+            self.m.define(marker(0))
+            token = Int.ref()
+            positive.append(marker(token))
+            selected = [token]
+        if not self._rows(self.m.where(*positive).select(*selected)):
+            return 'satisfied', []
+        kind = next(iter(constraint['consequent']))
+        payload = constraint['consequent'][kind]
+        extra = []
+        if kind == 'atom':
+            breach = self.m.not_(atom(payload))
+        elif kind == 'absence':
+            breach = atom(payload)
+        else:
+            def operand(term: Any) -> Any:
+                if isinstance(term, str) and term in variables:
+                    return variables[term]
+                primitive = {str: 'String', int: 'Integer', bool: 'Boolean'}[type(term)]
+                concept = self._concept_for(primitive)
+                relation = self.m.Relationship(fields=[Field('value', concept)],
+                                               short_name=f'profile_literal_{len(extra)}')
+                self.m.define(relation(term))
+                reference = concept.ref()
+                extra.append(relation(reference))
+                return reference
+
+            left, right = operand(payload['left']), operand(payload['right'])
+            operator = _NEGATED_OP[payload['operator']]
+            if operator in {'=', '=='}:
+                breach = left == right
+            elif operator in {'!=', '<>'}:
+                breach = left != right
+            elif operator == '<':
+                breach = left < right
+            elif operator == '<=':
+                breach = left <= right
+            elif operator == '>':
+                breach = left > right
+            else:
+                breach = left >= right
+        rows = self._rows(self.m.where(*positive, *extra, breach).select(*selected))
+        witnesses = {}
+        for row in rows:
+            witness = dict(sorted(zip(names, row, strict=True))) if names else {}
+            witnesses[json.dumps(witness, sort_keys=True, separators=(',', ':'))] = witness
+        return ('violated', [witnesses[key] for key in sorted(witnesses)]) if witnesses else ('satisfied', [])
+
+    def profile_evaluate(self, constraint: dict[str, Any], ft_id: str | None) -> tuple[str, Any]:
+        family = constraint['type']
+        if family == 'guarded':
+            return self.guarded(constraint)
+        if family == 'uniqueness' and not self.facts[ft_id]:
+            return 'vacuous', []
+        if family == 'mandatory':
+            if not self.facts[ft_id]:
+                return 'vacuous', []
+            role = next(r for r in self.model.roles(ft_id) if r['role_name'] == constraint['role'])
+            if not self.universe_values(role['object_type']):
+                return 'vacuous', []
+        if family == 'value' and not self.universe_values(constraint['object_type']):
+            return 'vacuous', []
+        if family == 'subset':
+            refs = constraint['subset_role_seq'] + constraint['superset_role_seq']
+            if all(not self.facts[ref['fact_type']] for ref in refs):
+                return 'vacuous', []
+        return self.evaluate(constraint, ft_id)
+
+
+class NativeApp:
+    """Public seam for a developer-owned native query (applications-v1 profile).
+
+    Opened by ``open_app`` inside an emitted program. ``model`` is the ordinary
+    PyRel ``Model``: build queries with ``model.where(...).select(...)`` and
+    ``relationalai.semantics`` types. Admission, coverage, limits and the version
+    pin are enforced here exactly as for the policy check; execution is local.
+    """
+
+    def __init__(self, oracle: ApplicationOracle, source: dict[str, Any], working: dict[str, Any],
+                 derivations: tuple[str, ...], output: Path, binding: dict[str, str]):
+        self._oracle, self._working, self._output, self._binding = oracle, working, output, binding
+        import copy
+
+        self.model = oracle.m
+        self.source = copy.deepcopy(source)
+        self.derivations = derivations
+
+    def has(self, fact_type: str) -> bool:
+        return fact_type in self._oracle.model.fact_types
+
+    def ref(self, fact_type: str, role: str) -> Any:
+        return self._oracle.refs(fact_type)[role]
+
+    def match(self, fact_type: str, **roles: Any) -> Any:
+        return self._oracle.pattern(fact_type, roles)
+
+    def relationship(self, name: str, **fields: Any) -> Any:
+        from relationalai.semantics.frontend.base import Field
+
+        return self.model.Relationship(fields=[Field(role, kind) for role, kind in fields.items()],
+                                       short_name='app_' + name)
+
+    def rows(self, query: Any) -> list[list[Any]]:
+        return self._oracle._rows(query)
+
+    def check_work(self, estimate: int, what: str) -> None:
+        if estimate > PROFILE_WORK:
+            raise ProfileRefusal(what + ' work limit')
+
+    def candidate(self) -> dict[str, Any]:
+        import copy
+
+        document = copy.deepcopy(self._working)
+        for name in self.derivations:
+            document['facts'][name] = self._oracle.computed[name]
+        return document
+
+    def propose(self, candidate: dict[str, Any], calculation: dict[str, Any]) -> None:
+        self._output.write_text(json.dumps({'schema_version': 1, 'binding': self._binding,
+                                            'candidate': candidate, 'calculation': calculation},
+                                           sort_keys=True, indent=2) + '\n')
+
+    def refuse(self, kind: str, reason: str) -> None:
+        self._output.write_text(json.dumps({'schema_version': 1, 'binding': self._binding,
+                                            'guard_refusal': {'exit_code': 1, 'kind': kind, 'reason': reason}}))
+
+
+def open_app(population_path: str | Path, output_path: str | Path) -> NativeApp:
+    """Admit the input population and open a local PyRel model over it."""
+    import hashlib
+    from importlib.metadata import version
+
+    raw = Path(population_path).read_bytes()
+    if len(raw) > PROFILE_BYTES:
+        raise ProfileRefusal('native input byte limit')
+    source = _parse_document(raw.decode('utf-8'))
+    index = admit_model(_parse_document(MODEL_TEXT))
+    admit_population(source, index)
+    derivations = tuple(_profile_derivations(index))
+    import copy
+
+    working = copy.deepcopy(source)
+    if derivations:
+        metadata = working.get('population', {})
+        if not isinstance(metadata, dict):
+            raise ValueError('population metadata must be an object')
+        if not isinstance(metadata.get('covers'), list):
+            raise ProfileRefusal('coverage-not-declared')
+        # Computed claims belong to the new candidate; asserted coverage is never filled in.
+        working.setdefault('facts', {})
+        for name in derivations:
+            working['facts'].setdefault(name, [])
+            if name not in metadata['covers']:
+                metadata['covers'].append(name)
+    _profile_admit(index, working)
+    if version('relationalai') != '1.30.1' or version('duckdb') != '1.5.5':
+        raise RuntimeError('requires PyRel 1.30.1/DuckDB 1.5.5')
+    binding = {'model_sha256': hashlib.sha256(MODEL_TEXT.encode()).hexdigest(),
+               'input_sha256': hashlib.sha256(raw).hexdigest()}
+    oracle = ApplicationOracle(index, working, config=local_config())
+    return NativeApp(oracle, source, working, derivations, Path(output_path), binding)
+
+
+def run_app(handler: Any, argv: list[str]) -> int:
+    """Run ``handler(app, *args)`` with the applications exit protocol (0/2/3/70)."""
+    population, output, *args = argv
+    try:
+        handler(open_app(population, output), *args)
+        return 0
+    except ValueError as error:
+        print(str(error)[:300], file=sys.stderr)
+        return 3
+    except Exception as error:  # noqa: BLE001 -- native application refusal boundary
+        print(f'{type(error).__name__}: {error}'[:300], file=sys.stderr)
+        return 2 if isinstance(error, ProfileRefusal) else 70
+
+
+def acceptance_document(model: dict[str, Any], population: dict[str, Any], *,
+                        model_sha256: str, population_sha256: str,
+                        execution_refusal: str | None = None) -> dict[str, Any]:
+    """Explicit acceptance; supplied hashes bind caller-owned exact input reads.
+
+    Malformed input raises ExportInputError (the standalone CLI maps it to 3).
+    Unknown coverage/shape/work and native failures return nonaccepted reports.
+    """
+    import uuid
+    from importlib.metadata import version
+
+    if any(not isinstance(digest, str) or re.fullmatch('[0-9a-f]{64}', digest) is None
+           for digest in [model_sha256, population_sha256]):
+        raise ExportInputError('bindings require lowercase SHA-256 hex')
+    index = admit_model(model)
+    admit_population(population, index)
+    entries = _constraint_entries(index)
+    verdicts = [{'constraint_ref': ref, 'id': c.get('id', ref), 'constraint_type': c['type'],
+                 'modality': c.get('modality', 'alethic'), 'status': 'incomplete',
+                 'witnesses': [], 'reason': None} for ref, c, _ in entries]
+    report = {'schema_version': 1, 'profile': PROFILE, 'backend': 'duckdb-local',
+              'status': 'incomplete', 'exit_code': 2, 'accepted': False,
+              'binding': {'model_sha256': model_sha256, 'population_sha256': population_sha256},
+              'verdicts': verdicts, 'derivations': []}
+    for name, fact in index.fact_types.items():
+        if fact.get('derivation') not in (None, 'asserted') or 'derivation_rule' in fact:
+            report['derivations'].append({'derivation_ref': 'derivation:' + name, 'fact_type': name,
+                                          'status': 'incomplete', 'computed': None,
+                                          'missing': [], 'extra': [], 'reason': None})
+    all_rows = verdicts + report['derivations']
+    try:
+        _profile_admit(index, population)
+        if execution_refusal is not None:
+            if not isinstance(execution_refusal, str) or not execution_refusal:
+                raise ExportInputError('execution refusal must be a nonempty string')
+            raise ProfileRefusal(execution_refusal)
+    except ProfileRefusal as error:
+        for row in all_rows:
+            row['reason'] = str(error)
+        return report
+    try:
+        if version('relationalai') != '1.30.1' or version('duckdb') != '1.5.5':
+            raise RuntimeError('applications-v1 requires PyRel 1.30.1/DuckDB 1.5.5')
+        if 'RAI_BUILD_DIR' not in os.environ:
+            os.environ['RAI_BUILD_DIR'] = tempfile.mkdtemp(prefix='gnd-application-build-')
+        config = local_config()
+        config['deployment']['schema'] = 'gnd_application_' + uuid.uuid4().hex
+        oracle = ApplicationOracle(index, population, config=config)
+        for row in report['derivations']:
+            name = row['fact_type']
+            computed = oracle.computed[name]
+            claimed = population['facts'][name]
+            def keyed(rows):
+                return {json.dumps(value, sort_keys=True, separators=(',', ':')): value for value in rows}
+            actual, supplied = keyed(computed), keyed(claimed)
+            missing = [actual[key] for key in sorted(actual.keys() - supplied.keys())]
+            extra = [supplied[key] for key in sorted(supplied.keys() - actual.keys())]
+            row.update(computed=computed, missing=missing, extra=extra,
+                       status='violated' if missing or extra else 'satisfied')
+        for row, (_, constraint, ft_id) in zip(verdicts, entries, strict=True):
+            try:
+                status, payload = oracle.profile_evaluate(constraint, ft_id)
+                if status not in {'satisfied', 'violated', 'unsupported', 'vacuous', 'incomplete', 'error'}:
+                    raise ProfileRefusal('unexpected-native-status')
+                row['status'] = 'warning' if status == 'violated' and row['modality'] == 'deontic' else status
+                if status == 'violated':
+                    row['witnesses'] = payload
+                elif status == 'unsupported':
+                    row['reason'] = payload
+            except ProfileRefusal as error:
+                row.update(status='incomplete', reason=str(error))
+            except Exception as error:  # noqa: BLE001 -- explicit native failure verdict
+                row.update(status='error', reason=f'{type(error).__name__}: {error}'[:300])
+    except ProfileRefusal as error:
+        for row in all_rows:
+            row.update(status='incomplete', reason=str(error))
+        return report
+    except Exception as error:  # noqa: BLE001 -- optional backend construction boundary
+        for row in all_rows:
+            row.update(status='error', reason=f'{type(error).__name__}: {error}'[:300])
+        report.update(status='runtime_failure', exit_code=70)
+        return report
+    statuses = {row['status'] for row in all_rows}
+    if 'error' in statuses:
+        report.update(status='runtime_failure', exit_code=70)
+    elif statuses & {'unsupported', 'incomplete', 'vacuous'}:
+        report.update(status='incomplete', exit_code=2)
+    elif 'violated' in statuses:
+        report.update(status='rejected', exit_code=1)
+    elif statuses <= {'satisfied', 'warning'}:
+        report.update(status='accepted_with_warnings' if 'warning' in statuses else 'accepted',
+                      exit_code=0, accepted=True)
+    return report
+
+
 def program_main(argv: list[str] | None = None) -> int:
     parser = _UsageParser(description="Run exported PyRel constraints; exit 0 means report completion.")
     parser.add_argument("population", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--mode", choices=("select", "require"), default="select")
     parser.add_argument("--config", type=Path)
+    parser.add_argument("--accept", action="store_true", help="Require applications-v1 policy acceptance")
     args = parser.parse_args(argv)
     try:
+        if args.accept:
+            import hashlib
+            if len(MODEL_TEXT.encode('utf-8')) > PROFILE_BYTES:
+                raise ProfileRefusal('embedded model exceeds application-profile byte cap')
+            try:
+                text = _read_text(args.population, max_bytes=PROFILE_BYTES)
+            except ExportInputError as error:
+                if str(error).startswith(f'input exceeds {PROFILE_BYTES} bytes:'):
+                    raise ProfileRefusal(str(error)) from error
+                raise
+            model = _parse_document(MODEL_TEXT)
+            population = _parse_document(text)
+            context_refusal = None
+            if (args.mode != 'select' or args.config is not None or EXPORT_CONFIG['connection'] is not None
+                    or EXPORT_CONFIG['duckdb_path'] != ':memory:'):
+                context_refusal = 'applications-v1 requires in-memory local select execution'
+            report = acceptance_document(model, population,
+                                         model_sha256=hashlib.sha256(MODEL_TEXT.encode('utf-8')).hexdigest(),
+                                         population_sha256=hashlib.sha256(text.encode('utf-8')).hexdigest(),
+                                         execution_refusal=context_refusal)
+            try:
+                write_new(args.out, json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + '\n')
+            except FileNotFoundError as error:
+                print(f'output failure: {error}', file=sys.stderr)
+                return 70
+            return report['exit_code']
         model = _parse_document(MODEL_TEXT)
         population = load_document(args.population)
         index = admit_model(model)
@@ -1229,6 +1892,9 @@ def program_main(argv: list[str] | None = None) -> int:
             print(f"output failure: {error}", file=sys.stderr)
             return 70
         return 70 if any(row["status"] == "error" for row in report["verdicts"]) else 0
+    except ProfileRefusal as error:
+        print(f'application refusal: {error}', file=sys.stderr)
+        return 2
     except FileExistsError as error:
         print(f"output exists: {error}", file=sys.stderr)
         return 11

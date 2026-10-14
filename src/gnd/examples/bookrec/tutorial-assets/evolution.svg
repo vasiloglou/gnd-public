@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 710" role="img" aria-labelledby="title desc"><title id="title">Rules evolve; queries remain owned</title><desc id="desc">Same Ada cosmos/map candidate warns under advisory genre policy, fails strict genre policy; preferred repair yields map/river. Complete publishes all five eligible pairs.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="560" height="710" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Rules evolve; queries remain owned</text>
+<rect x="24" y="76" width="512" height="90" rx="12" fill="#eef5f8"/>
+<text x="40" y="106" class="strong">Same candidate: Ada → cosmos, map</text>
+<text x="40" y="135" class="">Ben → night is preserved</text>
+<path class="edge" d="M280 166L280 196"/>
+<rect x="24" y="202" width="512" height="103" rx="12" fill="#e9f4ec"/>
+<text x="40" y="232" class="strong">Advisory genre fit</text>
+<text x="40" y="261" class="">preferred_genre = deontic WARNING</text>
+<text x="40" y="288" class="">accepted_with_warnings; output published</text>
+<path class="edge" d="M280 305L280 335"/>
+<rect x="24" y="341" width="512" height="103" rx="12" fill="#fff0e4"/>
+<text x="40" y="371" class="strong">Strict genre fit</text>
+<text x="40" y="400" class="">preferred_genre = alethic FAIL</text>
+<text x="40" y="427" class="">Witness: Ada / cosmos / science</text>
+<path class="edge" d="M280 444L280 474"/>
+<rect x="24" y="480" width="512" height="90" rx="12" fill="#e9f4ec"/>
+<text x="40" y="510" class="strong">Repair: preferred-only</text>
+<text x="40" y="539" class="">Ada → map, river; accepted</text>
+<path class="edge" d="M280 570L280 598"/>
+<rect x="24" y="604" width="512" height="88" rx="12" fill="#eef5f8"/>
+<text x="40" y="634" class="strong">Complete mode: all 5 eligible pairs</text>
+<text x="40" y="663" class="">Omit a pair → all_eligible FAIL</text>
+</svg>

@@ -1,0 +1,13 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_native_computed_claims_and_negative_dependency_are_generic ________
+tests/test_pyrel_application_derivations.py:118: in test_native_computed_claims_and_negative_dependency_are_generic
+    assert [r['status'] for r in reports] == ['accepted', 'accepted', 'rejected', 'rejected', 'rejected', 'accepted', 'accepted', 'accepted'], reports
+E   AssertionError: [{'accepted': False, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...}, ...]
+E   assert ['incomplete'...omplete', ...] == ['accepted', ...ccepted', ...]
+E     
+E     At index 0 diff: 'incomplete' != 'accepted'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_derivations.py::test_native_computed_claims_and_negative_dependency_are_generic
+1 failed, 19 deselected in 0.11s

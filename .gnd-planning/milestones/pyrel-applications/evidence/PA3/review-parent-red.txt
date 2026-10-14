@@ -1,0 +1,50 @@
+Edited tool receipt: operator repository/temp paths and pytest username sanitized; execution/result text otherwise retained. Original raw SHA-256 507c7838de10d8e6fd825a8be737127c3ea43c257d91e8f894a5cc0103e7b1ff.
+
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_query_cannot_replace_independent_checker _________________
+
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-629/test_query_cannot_replace_inde0')
+
+    def test_query_cannot_replace_independent_checker(tmp_path):
+        module = application()
+        _, template = valid_policy()
+        query = tmp_path / 'attack.py'
+        # A developer query can write its own working directory. It must not be
+        # able to replace the subsequently selected framework checker artifact.
+        checker = ('import sys,json,hashlib\nfrom pathlib import Path\n'
+                   f'report={template!r}\n'
+                   'report["binding"]={"model_sha256":MODEL_SHA,"population_sha256":hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest()}\n'
+                   'Path(sys.argv[-1]).write_text(json.dumps(report))\n')
+        query.write_text('import sys,json,hashlib,runpy\nfrom pathlib import Path\n'
+                         'runtime,seed,out=map(Path,sys.argv[1:4])\n'
+                         'r=runpy.run_path(str(runtime)); raw=seed.read_bytes(); doc=json.loads(raw)\n'
+                         'doc["facts"]["recommendation"].append({"user":"ada","book":"night"})\n'
+                         'sha=hashlib.sha256(r["MODEL_TEXT"].encode()).hexdigest()\n'
+                         'out.write_text(json.dumps({"schema_version":1,"candidate":doc,"calculation":{},"binding":{"model_sha256":sha,"input_sha256":hashlib.sha256(raw).hexdigest()}}))\n'
+                         f'runtime.write_text("MODEL_SHA="+repr(sha)+"\\n"+{checker!r})\n')
+        output = tmp_path / 'result.json'
+        result = module.execute_application(MODEL, POP, output, native_python=Path(sys.executable), query_script=query)
+>       assert not result['published'] and not output.exists(), result
+E       AssertionError: {'exit_code': 0, 'accepted': True, 'published': True, 'policy': {'schema_version': 1, 'profile': 'applications-v1', 'backend': 'duckdb-local', 'accepted': True, ...}, ...}
+E       assert (not True)
+
+tests/test_pyrel_application_publication.py:227: AssertionError
+_____________ test_query_crash_is_operational_not_policy_rejection _____________
+
+tmp_path = PosixPath('/private<tmp>/pytest-of-user/pytest-629/test_query_crash_is_operationa0')
+
+    def test_query_crash_is_operational_not_policy_rejection(tmp_path):
+        module = application()
+        query = tmp_path / 'crash.py'; query.write_text('raise RuntimeError("query crash")')
+        result = module.execute_application(MODEL, POP, tmp_path / 'out.json',
+                                            native_python=Path(sys.executable), query_script=query)
+>       assert result['exit_code'] == 70 and result['policy'] is None and not result['published'], result
+E       AssertionError: {'exit_code': 1, 'accepted': False, 'published': False, 'policy': None, ...}
+E       assert (1 == 70)
+
+tests/test_pyrel_application_publication.py:235: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_publication.py::test_query_cannot_replace_independent_checker
+FAILED tests/test_pyrel_application_publication.py::test_query_crash_is_operational_not_policy_rejection
+2 failed, 36 deselected in 0.20s

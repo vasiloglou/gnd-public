@@ -1,0 +1,13 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________________ test_guarded_native_branch_table _______________________
+tests/test_pyrel_application_native.py:100: in test_guarded_native_branch_table
+    assert (row['status'], row['witnesses']) == (status, witnesses), (i, report)
+E   AssertionError: (16, {'accepted': False, 'backend': 'duckdb-local', 'binding': {'model_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aa', 'population_sha256': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}, 'derivations': [], ...})
+E   assert ('error', []) == ('satisfied', [])
+E     
+E     At index 0 diff: 'error' != 'satisfied'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_native.py::test_guarded_native_branch_table
+1 failed in 2.36s

@@ -1,0 +1,4 @@
+$ .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_rf6_query_policy.py tests/test_rf9_repairs.py tests/test_rf2_pre_move_pins.py tests/test_rf7_structure.py
+67 passed in 24.42s
+$ PATH=.venv/bin:$PATH .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_doctor_uninstall.py
+80 passed in 11.51s

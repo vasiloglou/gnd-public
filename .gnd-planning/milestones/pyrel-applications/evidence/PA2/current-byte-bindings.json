@@ -1,0 +1,14 @@
+{
+  "boundary": "Public CLI current-byte re-rendering exactly reproduces all measured program digests. Native execution is the bound repaired receipt.",
+  "measurement_tool_sha256": "301d7a3a45da27ddbf34c4fdb999281efd23bb0125295524704d239c79162053",
+  "native_receipt_sha256": "b5f3927432039250c20ce30f98f93b6297d38d906947b4a809ad9f463540bfbb",
+  "regenerated_program_sha256": {
+    "src/gnd/examples/bookrec/complete.orm.yaml": "615f479e96d1951cb169a01430089f4ee1d3317626fbfae508845d50bda5ac91",
+    "src/gnd/examples/bookrec/model.orm.yaml": "8d8884e24199005c6e92700f85a02729270257869f1d63e7b025fa2a90b234d4",
+    "src/gnd/examples/bookrec/strict.orm.yaml": "a51256e10bf76b7b79e80b821cecd17ebe6acb5345628c9e95e691282e4b6be6",
+    "src/gnd/examples/expense/currency.orm.json": "ec5b22bdb27181f5d7433b5314cea476636871cfb1c82715a2820999e1a66b1a",
+    "src/gnd/examples/expense/model.orm.json": "8db8479f9a1b592f0b88b45354a6451c8e0c090dc66ec9878c37868dd34eaa26"
+  },
+  "runtime_source_sha256": "9ba8784e872db9cd6daf8806836c08b953b013db48c539b4687b6204dc3030c8",
+  "verified_case_count": 137
+}

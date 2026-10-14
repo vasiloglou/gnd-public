@@ -1,0 +1,30 @@
+    def test_snowflake_is_context_or_boundary(path):
+        for paragraph in prose(path):
+            if 'snowflake' not in paragraph.lower():
+                continue
+>           assert any(phrase in paragraph.lower() for phrase in BOUNDARY), paragraph[:120]
+E           AssertionError: GND checks these with its own deterministic engine, which is portable native Python and needs no database or service. Fo
+E           assert False
+E            +  where False = any(<generator object test_snowflake_is_context_or_boundary.<locals>.<genexpr> at 0x10bd5dee0>)
+
+tests/test_pyrel_learning_path.py:94: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_learning_path.py::test_plain_words_only[docs/pyrel-apps.md]
+FAILED tests/test_pyrel_learning_path.py::test_plain_words_only[docs/bookrec/07-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_plain_words_only[docs/expense/04-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_short_paragraphs[docs/pyrel-apps.md]
+FAILED tests/test_pyrel_learning_path.py::test_witness_is_explained_on_first_use[docs/bookrec/07-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_witness_is_explained_on_first_use[docs/expense/04-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_exit_codes_only_in_troubleshooting_table[docs/bookrec/07-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_exit_codes_only_in_troubleshooting_table[docs/expense/04-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_required_claims_present[docs/pyrel-apps.md]
+FAILED tests/test_pyrel_learning_path.py::test_required_claims_present[docs/bookrec/07-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_required_claims_present[docs/expense/04-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_distinctions_survive_plain_wording[docs/bookrec/07-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_distinctions_survive_plain_wording[docs/expense/04-native.md]
+FAILED tests/test_pyrel_learning_path.py::test_snowflake_is_context_or_boundary[docs/pyrel-apps.md]
+FAILED tests/test_pyrel_learning_path.py::test_snowflake_is_context_or_boundary[README.md]
+FAILED tests/test_pyrel_learning_path.py::test_snowflake_is_context_or_boundary[docs/index.md]
+FAILED tests/test_pyrel_learning_path.py::test_snowflake_is_context_or_boundary[docs/tour.md]
+FAILED tests/test_pyrel_learning_path.py::test_snowflake_is_context_or_boundary[docs/agents/index.md]
+18 failed, 5 passed in 0.10s

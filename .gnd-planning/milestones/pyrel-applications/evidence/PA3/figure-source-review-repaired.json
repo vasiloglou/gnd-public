@@ -1,0 +1,70 @@
+{
+  "fact_paths": {
+    "adult": "facts.book_rated_adult",
+    "already_read": "facts.user_rated_book",
+    "catalogue": "facts.book_has_genre",
+    "minor": "facts.user_is_minor",
+    "preferences": "facts.user_prefers_genre"
+  },
+  "graphics": {
+    "candidate-warning": "advisory selected_pairs + verdict preferred_genre, strict rejected successor, preferred repaired candidate",
+    "catalogue": "shipped seed facts + advisory calculation.eligible_pairs/blocked_pairs/already_read_pairs",
+    "complete-derivation": "complete policy.derivations + all_eligible verdict + published facts"
+  },
+  "initial_source_snapshots": [
+    "parent-figure-initial.py",
+    "query-figure-initial.py"
+  ],
+  "input": "src/gnd/examples/bookrec/seed.population.json",
+  "input_sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9",
+  "limits": "Finite observed examples; no actor authority or source truth.",
+  "parent_sha256": "f2b1e15827840a5946d505f0465324903208b9883064c15375af835e52fe5396",
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-initial.json",
+  "predecessor_sha256": "78ccfd368f241f5ff44d5b915efbcf2421f1864fba9699d906363af242f96f0b",
+  "query_sha256": "0a27b63fda9d2a2160551e36cabb14a79a5bc87bc8ec5b5052ada0a1b25b4ba3",
+  "runtime_sha256": "1ff982e08fe41c0623ad6d62436ba205a6a490046c5e47112ac314689a2f76b8",
+  "scenarios": [
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/advisory.population.json",
+      "candidate_sha256": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305",
+      "exit_code": 0,
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "model_sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/advisory.report.json",
+      "report_sha256": "167b663325b3fe73317f746cecc20ca4ddf3471da78029bbf9fcba6d1d91ce70",
+      "scenario": "advisory"
+    },
+    {
+      "candidate": null,
+      "candidate_sha256": null,
+      "exit_code": 1,
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "model_sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/strict.report.json",
+      "report_sha256": "6528b160f86889f041c90da642d28b0fe3aeb2b45cbd4c6df43d872b2611df24",
+      "scenario": "strict"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/preferred.population.json",
+      "candidate_sha256": "1e6f53d90b15abb43a85c55388df99d35d5e4057d5fd7a38a833ac4227cb3b0c",
+      "exit_code": 0,
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "model_sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/preferred.report.json",
+      "report_sha256": "c4621dfc0974bcceccaa23f5914ce4ab86dd72c8d835e9f819add6a4f36019cc",
+      "scenario": "preferred"
+    },
+    {
+      "candidate": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/complete.population.json",
+      "candidate_sha256": "0d8617807ed9ecf395a0de1a1b2473cf57d356e1e11398a52468a57b80de7a99",
+      "exit_code": 0,
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "model_sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b",
+      "report": ".gnd-planning/milestones/pyrel-applications/evidence/PA3/figure-source-repaired/complete.report.json",
+      "report_sha256": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e",
+      "scenario": "complete"
+    }
+  ],
+  "schema_version": 1,
+  "source": "synthetic shipped BookRec catalogue and measured native calculation/checker outputs"
+}

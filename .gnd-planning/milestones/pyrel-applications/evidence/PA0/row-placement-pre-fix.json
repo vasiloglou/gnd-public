@@ -1,0 +1,11 @@
+{
+  "instrument": "Exact inversion of F3 additions in the recorded pre-fix function logic; reconstructed function, not an original-file byte replay. Independent Claude reading reproduced the same vulnerable row-placement path.",
+  "pre_fix_mismatches": [],
+  "post_fix_mismatches": [
+    "row-placement:fact_types[book_has_genre].constraints[0]",
+    "row-placement:fact_types[book_has_genre].constraints[1]",
+    "row-placement:constraints[0]",
+    "row-placement:constraints[1]",
+    "row-placement:constraints[2]"
+  ]
+}

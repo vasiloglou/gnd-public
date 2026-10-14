@@ -1,0 +1,13 @@
+m0-r0-distinct: exit=0 matches=True
+m1-r0-distinct: exit=0 matches=True
+m2-r0-distinct: exit=0 matches=True
+m3-r0-distinct: exit=0 matches=True
+m3-r2-distinct: exit=0 matches=True
+m3-r4-distinct: exit=0 matches=True
+m3-r7-distinct: exit=0 matches=True
+m4-r0-distinct: exit=0 matches=True
+m4-r2-distinct: exit=0 matches=True
+m4-r4-distinct: exit=0 matches=True
+m4-r7-distinct: exit=0 matches=True
+m4-r8-distinct: exit=0 matches=True
+m2-eligible-joint-omission: exit=0 matches=True

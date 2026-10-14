@@ -1,0 +1,32 @@
+/private/tmp/pyrel-applications-pa6-20261013-a/base/lib/python3.11/site-packages/gnd/__init__.py
+Traceback (most recent call last):
+  File "<checkout>/tools/accept_pyrel_applications_install.py", line 133, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "<checkout>/tools/accept_pyrel_applications_install.py", line 81, in main
+    isolation=json.loads(run([native,'-I','-c',"import importlib.util,json,sys;from importlib.metadata import version;assert importlib.util.find_spec('gnd') is None;print(json.dumps({'python':sys.version.split()[0],'relationalai':version('relationalai'),'duckdb':version('duckdb'),'gnd_absent':True}))"]))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/tools/accept_pyrel_applications_install.py", line 65, in run
+    if p.returncode:raise RuntimeError(f'{argv[0]} exit{p.returncode}: {p.stderr[-2000:]}')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: /private/tmp/pyrel-applications-pa6-20261013-a/tutorials/runtimes/.venv/bin/python exit1: Traceback (most recent call last):
+  File "<operator-home>/.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/importlib/metadata/__init__.py", line 407, in from_name
+    return next(iter(cls.discover(name=name)))
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import importlib.util,json,sys;from importlib.metadata import version;assert importlib.util.find_spec('gnd') is None;print(json.dumps({'python':sys.version.split()[0],'relationalai':version('relationalai'),'duckdb':version('duckdb'),'gnd_absent':True}))
+                                                                                                                                                                                          ~~~~~~~^^^^^^^^^^^^^^^^
+  File "<operator-home>/.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/importlib/metadata/__init__.py", line 987, in version
+    return distribution(distribution_name).version
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "<operator-home>/.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/importlib/metadata/__init__.py", line 960, in distribution
+    return Distribution.from_name(distribution_name)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "<operator-home>/.local/share/uv/python/cpython-3.13.12-macos-aarch64-none/lib/python3.13/importlib/metadata/__init__.py", line 409, in from_name
+    raise PackageNotFoundError(name)
+importlib.metadata.PackageNotFoundError: No package metadata was found for relationalai
+

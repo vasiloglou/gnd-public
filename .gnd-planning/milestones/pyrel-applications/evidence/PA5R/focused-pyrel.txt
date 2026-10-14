@@ -1,0 +1,19 @@
+........................................................................ [ 76%]
+............F.........                                                   [100%]
+=================================== FAILURES ===================================
+_________________________ test_decided_verdicts_agree __________________________
+
+comparisons = [{'case': 'ring_pass', 'ref': 'fact_types[rel_irreflexive].constraints[0]', 'family': 'ring', 'native': 'pass', ...}, ..._pass', 'ref': 'fact_types[rel_asymmetric_intransitive].constraints[0]', 'family': 'ring', 'native': 'pass', ...}, ...]
+
+    def test_decided_verdicts_agree(comparisons: list[dict]) -> None:
+        """Wherever both sides decided, they must decide alike."""
+>       assert _mismatches(comparisons) == []
+E       AssertionError: assert [('ring_fail'..., 'violated')] == []
+E         
+E         Left contains one more item: ('ring_fail', 'fact_types[rel_reflexive].constraints[0]', 'pass', 'violated')
+E         Use -v to get more diff
+
+tests/test_pyrel_constraint_oracle.py:232: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_constraint_oracle.py::test_decided_verdicts_agree - A...
+1 failed, 93 passed, 194 deselected in 433.47s (0:07:13)

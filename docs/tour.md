@@ -154,8 +154,8 @@ vulnerable dependency reaches. → [Soufflé: dependency impact](runtimes/souffl
 approval policy step is redundant, and find a counterexample to a tempting converse.
 → [Lean: policy proofs](runtimes/lean.md)
 
-**PyRel.** Export a standalone relational program that runs locally on DuckDB, or on
-Snowflake when the data lives there. → [PyRel: approval audits](runtimes/pyrel.md)
+**PyRel.** Export a standalone relational program that runs locally on DuckDB;
+Snowflake execution is not yet supported by gnd export. → [PyRel: approval audits](runtimes/pyrel.md)
 
 **Witnesses.** `gnd witness` produces a finite derivation certificate and `gnd replay`
 re-checks it with a separate kernel. → [Exports and witnesses](guides/exports.md)

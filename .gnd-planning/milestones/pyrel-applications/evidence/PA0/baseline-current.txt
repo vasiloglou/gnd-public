@@ -1,0 +1,7 @@
+m0-r0-positive: exit=0 target=satisfied
+m1-r0-positive: exit=0 target=satisfied
+m2-r0-positive: exit=0 target=satisfied
+m3-r0-positive: exit=0 target=satisfied
+m4-r0-positive: exit=0 target=satisfied
+m2-book_is_blocked_for-extra: exit=0 target=None
+m2-book_is_eligible-extra: exit=0 target=None

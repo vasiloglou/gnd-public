@@ -1,0 +1,14 @@
+{
+  "after": {
+    "sha256": "60a263a116a50f60070fa7d4c5b8affbc8d34ae163e4e4d7e8ef0476df82ea6f",
+    "size_bytes": 98872
+  },
+  "before": {
+    "sha256": "9d9eff25fb4f515613f49bb249c9676572609448090c2d5bc9cd736001d8542c",
+    "size_bytes": 93920
+  },
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/pyrel-successor.json",
+  "predecessor_sha256": "9b7730b4763dd9eec00fd2d10032c8f047a6f5610fe77cbb2814288a294af34a",
+  "reason": "PA5R adds the public native-query seam (NativeApp, open_app, run_app) to the emitted program, per amendment A2 D1. Existing names, policy checking and exit protocol are unchanged; native outputs are identical to the PA3/PA4 checkpoints.",
+  "schema_version": 1
+}

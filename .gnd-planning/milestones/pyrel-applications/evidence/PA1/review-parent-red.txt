@@ -1,0 +1,50 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___________ test_malformed_profile_shape_has_input_error[value-type] ___________
+tests/test_pyrel_application_review_regressions.py:24: in test_malformed_profile_shape_has_input_error
+    api()(model, pop, model_sha256='a' * 64, population_sha256='b' * 64)
+src/gnd/export/pyrel_runtime.py:1510: in acceptance_document
+    _profile_admit(index, population)
+src/gnd/export/pyrel_runtime.py:1374: in _profile_admit
+    if constraint.get('object_type') not in index.object_types or not isinstance(constraint.get('allowed'), list):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: unhashable type: 'list'
+__________ test_malformed_profile_shape_has_input_error[subset-role] ___________
+tests/test_pyrel_application_review_regressions.py:24: in test_malformed_profile_shape_has_input_error
+    api()(model, pop, model_sha256='a' * 64, population_sha256='b' * 64)
+src/gnd/export/pyrel_runtime.py:1510: in acceptance_document
+    _profile_admit(index, population)
+src/gnd/export/pyrel_runtime.py:1388: in _profile_admit
+    if ref.get('role') not in roles:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: unhashable type: 'list'
+_________ test_malformed_profile_shape_has_input_error[mandatory-role] _________
+tests/test_pyrel_application_review_regressions.py:23: in test_malformed_profile_shape_has_input_error
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+__________ test_consequent_work_is_part_of_conservative_guard_budget ___________
+tests/test_pyrel_application_review_regressions.py:32: in test_consequent_work_is_part_of_conservative_guard_budget
+    assert report['status'] == 'incomplete' and report['exit_code'] == 2
+E   AssertionError: assert ('runtime_failure' == 'incomplete'
+E     
+E     - incomplete
+E     + runtime_failure)
+_________________ test_unexpected_native_status_never_accepts __________________
+tests/test_pyrel_application_review_regressions.py:48: in test_unexpected_native_status_never_accepts
+    assert not report['accepted'] and report['exit_code'] == 2
+E   assert (not True)
+_______ test_missing_acceptance_output_directory_is_operational_failure ________
+tests/test_pyrel_application_review_regressions.py:59: in test_missing_acceptance_output_directory_is_operational_failure
+    assert main([str(path), '--accept', '--out', str(tmp_path / 'missing/report.json')]) == 70
+E   AssertionError: assert 66 == 70
+E    +  where 66 = <function program_main at 0x10834ec00>(['/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-550/test_missing_accept...n05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-550/test_missing_acceptance_output0/missing/report.json'])
+----------------------------- Captured stderr call -----------------------------
+missing input: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-550/test_missing_acceptance_output0/missing/report.json'
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_application_review_regressions.py::test_malformed_profile_shape_has_input_error[value-type]
+FAILED tests/test_pyrel_application_review_regressions.py::test_malformed_profile_shape_has_input_error[subset-role]
+FAILED tests/test_pyrel_application_review_regressions.py::test_malformed_profile_shape_has_input_error[mandatory-role]
+FAILED tests/test_pyrel_application_review_regressions.py::test_consequent_work_is_part_of_conservative_guard_budget
+FAILED tests/test_pyrel_application_review_regressions.py::test_unexpected_native_status_never_accepts
+FAILED tests/test_pyrel_application_review_regressions.py::test_missing_acceptance_output_directory_is_operational_failure
+6 failed, 6 deselected in 0.15s

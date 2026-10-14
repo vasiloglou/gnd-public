@@ -1,0 +1,14 @@
+FURB192 Prefer `min` over `sorted()` to compute the minimum value in a sequence
+  --> tools/accept_pyrel_applications_install.py:42:68
+   |
+40 |             if len(names)>10000 or len(names)!=len(set(names)):raise ValueError('wheel inventory invalid')
+41 |             missing=required-set(names)
+42 |             if missing:raise ValueError('missing wheel resource: '+sorted(missing)[0])
+   |                                                                    ^^^^^^^^^^^^^^^^^^
+43 |             rows={}
+44 |             for name in sorted(required):
+   |
+help: Replace with `min`
+
+Found 1 error.
+No fixes available (1 hidden fix can be enabled with the `--unsafe-fixes` option).

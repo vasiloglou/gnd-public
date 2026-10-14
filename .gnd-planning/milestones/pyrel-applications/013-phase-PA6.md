@@ -82,3 +82,11 @@ lock (versions recorded). Runs A-D superseded and retained.
 | Source identity omits wheel build inputs (pyproject.toml, uv.lock, README) and tests/fixtures/pyrel_applications/approval.json | Milestone close |
 | Isolation probe misses a bare tests module; AST check is a substring match | native-install-harness-maintenance |
 | Split PA5R and ci-repair successor links | Milestone close |
+
+## Superseded runs A-D, retained
+
+The earlier PA6 run outputs (receipt.json, corpora, step receipts, install-*.txt,
+focused/lint transcripts, screenshots, sanitization and retention notes) are
+committed under evidence/PA6 as superseded evidence; run E's files carry the e-
+prefix. installed-artifacts.zip (run D, 4.2 MB) stays local and uncommitted, bound
+here by digest: 6308a6441d32b109668f7173bb38df30aa9a0148b5bbd8b12aad3c3152d3c4df.

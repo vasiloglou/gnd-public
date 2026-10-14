@@ -31,8 +31,8 @@ does not prove who approved anything or that money moved.
 ## 2. Build a fresh project and check both environments
 
 Work in the folder where you created the two environments. Run Python blocks
-with the GND interpreter: save one as a file, for example `step.py`, and run
-`"$GND_TUTORIAL_GND_PYTHON" step.py`.
+with `python`, which is the GND interpreter after Set up: save one as a file,
+for example `step.py`, and run `python step.py`.
 
 Chapter 3 changed `expense-project` to the currency model, so repeat chapter 2's
 setup under fresh names. Copy the shipped example:
@@ -62,26 +62,15 @@ generated project for expense-native-demo/model.orm.json -> expense-native
 ...
 ```
 
-Install the same developer-owned files as chapter 2, plus the PyRel query:
+The shipped `project/` folder holds the developer-owned half: the CLI, the
+reporting module, the PyRel query, the architecture contract, and copies of the
+model and seed facts. Copy it over the generated project in one step:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```python
-from pathlib import Path
 import shutil
 
-source = Path("expense-native-demo")
-project = Path("expense-native")
-(project / "cli").mkdir()
-(project / "cli/__init__.py").write_text("")
-for origin, target in [
-    ("extension.py", "cli/expense_cli.py"),
-    ("reporting.py", "cli/reporting.py"),
-    ("native_query.py", "cli/native_query.py"),
-    ("architecture.contract.yaml", "architecture.contract.yaml"),
-    ("model.orm.json", "model.orm.json"),
-    ("seed.population.json", "seed.population.json"),
-]:
-    shutil.copy2(source / origin, project / target)
+shutil.copytree("expense-native-demo/project", "expense-native", dirs_exist_ok=True)
 print("Installed the expense app and its PyRel query in expense-native/")
 ```
 
@@ -91,7 +80,7 @@ Installed the expense app and its PyRel query in expense-native/
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-"$GND_TUTORIAL_GND_PYTHON" -c "import gnd; print('GND is ready')"
+python -c "import gnd; print('GND is ready')"
 ```
 
 ```text
@@ -100,7 +89,7 @@ GND is ready
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-"$GND_TUTORIAL_PYREL_PYTHON" -c "from importlib.metadata import version as v; print('PyRel', v('relationalai'), 'with DuckDB', v('duckdb'))"
+"$GND_PYREL_PYTHON" -c "from importlib.metadata import version as v; print('PyRel', v('relationalai'), 'with DuckDB', v('duckdb'))"
 ```
 
 ```text
@@ -130,9 +119,8 @@ what lets you change a limit without rewriting code.
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model model.orm.json --population seed.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native/model.orm.json --population expense-native/seed.population.json --backend pyrel
 ```
 
 ```text
@@ -148,9 +136,8 @@ Play the agent: propose that a team lead approves expense 102.
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli approve --expense 102 --chain team-lead \
-  --output team-lead-102.json --model model.orm.json --population seed.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py approve --expense 102 --chain team-lead \
+  --output team-lead-102.json --model expense-native/model.orm.json --population expense-native/seed.population.json --backend pyrel
 ```
 
 ```text
@@ -177,9 +164,8 @@ Finance may approve up to 3000 EUR:
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli approve --expense 102 --chain finance \
-  --output finance-102.json --model model.orm.json --population seed.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py approve --expense 102 --chain finance \
+  --output finance-102.json --model expense-native/model.orm.json --population expense-native/seed.population.json --backend pyrel
 ```
 
 ```text
@@ -192,9 +178,8 @@ The saved file is a new snapshot; `seed.population.json` is unchanged. Report on
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model model.orm.json --population finance-102.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native/model.orm.json --population finance-102.json --backend pyrel
 ```
 
 ```text
@@ -207,9 +192,8 @@ Category caps are checked too, separately from approvals. The shipped example
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model model.orm.json --population ../expense-native-demo/invalid-meal.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native/model.orm.json --population expense-native-demo/invalid-meal.population.json --backend pyrel
 ```
 
 ```text
@@ -246,9 +230,8 @@ The same query and the same facts now fail on the 60 EUR meal:
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model lower-cap.orm.json --population seed.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native/lower-cap.orm.json --population expense-native/seed.population.json --backend pyrel
 ```
 
 ```text
@@ -267,10 +250,9 @@ missing on 101 and 102, the check names both:
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model ../expense-native-demo/currency.orm.json \
-  --population ../expense-native-demo/currency-missing.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native-demo/currency.orm.json \
+  --population expense-native-demo/currency-missing.population.json --backend pyrel
 ```
 
 ```text
@@ -282,10 +264,9 @@ Nothing was published.
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model ../expense-native-demo/currency.orm.json \
-  --population ../expense-native-demo/currency.population.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native-demo/currency.orm.json \
+  --population expense-native-demo/currency.population.json --backend pyrel
 ```
 
 ```text
@@ -298,10 +279,9 @@ does not convert currencies:
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd expense-native && "$GND_TUTORIAL_GND_PYTHON" -m cli.expense_cli report \
-  --model ../expense-native-demo/currency.orm.json \
-  --population ../expense-native-demo/tutorial-assets/checkpoints/usd.input.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python expense-native/app.py report \
+  --model expense-native-demo/currency.orm.json \
+  --population expense-native-demo/tutorial-assets/checkpoints/usd.input.json --backend pyrel
 ```
 
 ```text
@@ -331,8 +311,7 @@ does not name is unknown, which is different from a list that is declared but em
 
 | What you see | Why | What to do |
 |---|---|---|
-| `--backend pyrel requires --pyrel-python` | No PyRel interpreter given | Add `--pyrel-python` with your PyRel interpreter |
-| `No module named 'cli'` | Command run outside `expense-native` | Keep the `(cd expense-native && ...)` form |
+| `--backend pyrel needs the PyRel interpreter` | `GND_PYREL_PYTHON` is not exported in this shell | Export it again as in [Set up](../pyrel-apps.md#set-up), or pass `--pyrel-python` |
 | `NOT RUN` mentioning the interpreter or `requires PyRel 1.30.1` | Wrong environment | Rebuild it as in [Set up](../pyrel-apps.md#set-up) |
 | `NOT ACCEPTED (some rules could not be decided)`, exit code 2 | A rule needs a fact list the input does not cover | Cover that list, or leave it out on purpose and accept the refusal |
 | `NOT RUN (...)`, exit code 3 | The input is malformed, or an approval changed facts it does not own | Fix the file and rerun |

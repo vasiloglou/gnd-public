@@ -21,6 +21,11 @@ def assert_routing(sources):
     for path, source in sources.items():
         if path in {
             'src/gnd/examples/expense/extension.py',
+            'src/gnd/examples/expense/project/cli/expense_cli.py',
+            'src/gnd/examples/expense/rules_in_pyrel.py',
+            'src/gnd/examples/bookrec/rules_in_pyrel.py',
+            'src/gnd/examples/bookrec/stand_in_agent.py',
+            'src/gnd/examples/expense/stand_in_agent.py',
             'src/gnd/examples/expense/prepare_currency.py',
             'src/gnd/examples/release_governance/prepare_facts.py',
             'src/gnd/examples/release_governance/pyrel_queries.py',

@@ -94,6 +94,26 @@ def _capture(path, cap):
     return artifact_read_regular_bounded(path.parent, path.name, max_bytes=cap)[0]
 
 
+INTERPRETER_ENV = 'GND_PYREL_PYTHON'
+
+
+def _interpreter(native_python):
+    """Resolve the PyRel interpreter: the explicit argument, else ``GND_PYREL_PYTHON``.
+
+    Both values are untrusted text. An absent or empty value names the variable; a
+    relative or missing path keeps the historical reason, so callers that passed a
+    bad path see the same result as before.
+    """
+    if native_python is None:
+        native_python = os.environ.get(INTERPRETER_ENV, '')
+        if not native_python:
+            raise RuntimeError('no PyRel interpreter: pass native_python or set ' + INTERPRETER_ENV)
+    interpreter = Path(native_python)
+    if not interpreter.is_absolute() or not interpreter.is_file():
+        raise RuntimeError('explicit native interpreter is unavailable')
+    return interpreter
+
+
 def _child(argv, home):
     env = {key: value for key, value in os.environ.items()
            if key in {'PATH', 'LANG', 'LC_ALL', 'LC_CTYPE', 'TMPDIR', 'TEMP', 'TMP', 'SystemRoot'}}
@@ -176,9 +196,12 @@ def _check_and_publish(result, *, interpreter, model_doc, model_sha, sources, ru
     return result
 
 
-def execute_application(model_path, input_path, output_path, *, native_python, query_script,
+def execute_application(model_path, input_path, output_path, *, native_python=None, query_script,
                         query_args=(), candidate_transform=None, owned_relations=(), allowed_guard_kinds=()):
-    """Only captured candidate bytes with complete native acceptance are published."""
+    """Only captured candidate bytes with complete native acceptance are published.
+
+    ``native_python`` may be omitted; the interpreter then comes from ``GND_PYREL_PYTHON``.
+    """
     result = {'exit_code': 70, 'accepted': False, 'published': False,
               'policy': None, 'calculation': None}
     try:
@@ -191,9 +214,7 @@ def execute_application(model_path, input_path, output_path, *, native_python, q
         if output.exists() or output.is_symlink():
             result.update(exit_code=2, reason='output already exists')
             return result
-        interpreter = Path(native_python)
-        if not interpreter.is_absolute() or not interpreter.is_file():
-            raise RuntimeError('explicit native interpreter is unavailable')
+        interpreter = _interpreter(native_python)
         model_bytes = _capture(model_path, INPUT_CAP)
         input_bytes = _capture(input_path, INPUT_CAP)
         load_model_bytes(model_bytes, source=model_path)
@@ -253,11 +274,12 @@ def execute_application(model_path, input_path, output_path, *, native_python, q
     return result
 
 
-def check_proposal(model_path, input_path, proposal_path, output_path, *, native_python, owned_relations=()):
+def check_proposal(model_path, input_path, proposal_path, output_path, *, native_python=None, owned_relations=()):
     """Check a supplied candidate, such as an agent's proposal, with the exported PyRel checker.
 
     No native query runs, so ``calculation`` stays ``None``. The proposal may change only
     ``owned_relations``; its bytes are captured and bound like the input's.
+    ``native_python`` may be omitted; the interpreter then comes from ``GND_PYREL_PYTHON``.
     """
     result = {'exit_code': 70, 'accepted': False, 'published': False,
               'policy': None, 'calculation': None}
@@ -266,9 +288,7 @@ def check_proposal(model_path, input_path, proposal_path, output_path, *, native
         if output.exists() or output.is_symlink():
             result.update(exit_code=2, reason='output already exists')
             return result
-        interpreter = Path(native_python)
-        if not interpreter.is_absolute() or not interpreter.is_file():
-            raise RuntimeError('explicit native interpreter is unavailable')
+        interpreter = _interpreter(native_python)
         model_bytes = _capture(model_path, INPUT_CAP)
         input_bytes = _capture(input_path, INPUT_CAP)
         proposal_bytes = _capture(proposal_path, INPUT_CAP)

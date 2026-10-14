@@ -41,21 +41,22 @@ repository until the next release:
 git clone https://github.com/vasiloglou/gnd-public.git
 uv venv gnd-env --python 3.13
 uv pip install --python gnd-env/bin/python ./gnd-public
-export GND_TUTORIAL_GND_PYTHON="$(pwd)/gnd-env/bin/python"
+export PATH="$PWD/gnd-env/bin:$PATH"
 ```
 
 Then the pinned PyRel environment, from the project GND ships:
 
 ```sh
-"$GND_TUTORIAL_GND_PYTHON" -c "from importlib.resources import files; import shutil; shutil.copytree(str(files('gnd').joinpath('examples', 'release_governance', 'runtime-environment')), 'pyrel-env')"
+python -c "from importlib.resources import files; import shutil; shutil.copytree(str(files('gnd').joinpath('examples', 'release_governance', 'runtime-environment')), 'pyrel-env')"
 uv sync --project pyrel-env --locked --only-group tutorial-runtimes --python 3.13
-export GND_TUTORIAL_PYREL_PYTHON="$(pwd)/pyrel-env/.venv/bin/python"
+export GND_PYREL_PYTHON="$PWD/pyrel-env/.venv/bin/python"
 ```
 
 Keep both `export` lines in your shell and stay in this folder: every chapter's
-commands run from here. `gnd` itself is in `gnd-env/bin`; add that folder to
-your `PATH` or type `gnd-env/bin/gnd`. Each chapter starts by checking that
-both environments answer.
+commands run from here. After the first line, `python` and `gnd` mean the GND
+environment. The PyRel interpreter is never on your path; the applications read
+it from `GND_PYREL_PYTHON`. Each chapter starts by checking that both
+environments answer.
 
 ## The query toolkit
 

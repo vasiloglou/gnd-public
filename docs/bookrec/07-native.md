@@ -32,8 +32,8 @@ they describe the world.
 ## 2. Get a fresh copy and check both environments
 
 Work in the folder where you created the two environments. Run Python blocks
-with the GND interpreter: save one as a file, for example `step.py`, and run
-`"$GND_TUTORIAL_GND_PYTHON" step.py`. Start from the shipped example,
+with `python`, which is the GND interpreter after Set up: save one as a file,
+for example `step.py`, and run `python step.py`. Start from the shipped example,
 so earlier chapters cannot change the starting facts:
 
 <!-- gnd-run expect=0 output=stdout -->
@@ -51,7 +51,7 @@ Copied the BookRec example to bookrec-native/
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-"$GND_TUTORIAL_GND_PYTHON" -c "import gnd; print('GND is ready')"
+python -c "import gnd; print('GND is ready')"
 ```
 
 ```text
@@ -60,7 +60,7 @@ GND is ready
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-"$GND_TUTORIAL_PYREL_PYTHON" -c "from importlib.metadata import version as v; print('PyRel', v('relationalai'), 'with DuckDB', v('duckdb'))"
+"$GND_PYREL_PYTHON" -c "from importlib.metadata import version as v; print('PyRel', v('relationalai'), 'with DuckDB', v('duckdb'))"
 ```
 
 ```text
@@ -102,20 +102,18 @@ The exclusion labels name the rules checked when a bad proposer inserts those pa
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli recommend --user ada \
-  --model ../model.orm.yaml --input ../seed.population.json --output ../ada.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py recommend --user ada \
+  --model bookrec-native/model.orm.yaml --input bookrec-native/seed.population.json --output ada.json --backend pyrel
 ```
 
 ```text
 Proposed for ada: cosmos, map
 Policy check: ACCEPTED with 1 warning
   warning     preferred_genre {"$b": "cosmos", "$g": "science", "$u": "ada"}
-Published: ../ada.json
+Published: ada.json
 ```
 
-Ada gets two books. The saved file is `bookrec-native/ada.json`; paths in the
-output are relative to `bookrec-native/extension`. `preferred_genre` is a should-rule in this model, so a
+Ada gets two books. The saved file is `ada.json` in your working folder. `preferred_genre` is a should-rule in this model, so a
 science book outside her preferred genres is a warning, not a failure, and the
 recommendations are saved. Each line under the verdict is a witness (the exact
 facts that break the rule), here Ada, cosmos and its genre. `$u`, `$b` and `$g`
@@ -130,10 +128,9 @@ with `--proposal` checks a supplied candidate instead of computing one:
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli check \
-  --model ../model.orm.yaml --input ../seed.population.json \
-  --proposal ../adult-for-minor.population.json --output ../agent.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py check \
+  --model bookrec-native/model.orm.yaml --input bookrec-native/seed.population.json \
+  --proposal bookrec-native/adult-for-minor.population.json --output agent.json --backend pyrel
 ```
 
 ```text
@@ -149,10 +146,9 @@ same happens when an agent recommends a book Ada has already read:
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli check \
-  --model ../model.orm.yaml --input ../seed.population.json \
-  --proposal ../tutorial-assets/checkpoints/already-read-refusal.input.json --output ../agent-read.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py check \
+  --model bookrec-native/model.orm.yaml --input bookrec-native/seed.population.json \
+  --proposal bookrec-native/tutorial-assets/checkpoints/already-read-refusal.input.json --output agent-read.json --backend pyrel
 ```
 
 ```text
@@ -170,17 +166,16 @@ the same picks the query made in step 4. The check accepts it and saves it:
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli check \
-  --model ../model.orm.yaml --input ../seed.population.json \
-  --proposal ../tutorial-assets/checkpoints/advisory.candidate.json --output ../fixed.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py check \
+  --model bookrec-native/model.orm.yaml --input bookrec-native/seed.population.json \
+  --proposal bookrec-native/tutorial-assets/checkpoints/advisory.candidate.json --output fixed.json --backend pyrel
 ```
 
 ```text
 Checking the agent's proposal: ben/night, ada/cosmos, ada/map
 Policy check: ACCEPTED with 1 warning
   warning     preferred_genre {"$b": "cosmos", "$g": "science", "$u": "ada"}
-Published: ../fixed.json
+Published: fixed.json
 ```
 
 ## 7. Change a rule without touching the query
@@ -189,9 +184,8 @@ Published: ../fixed.json
 
 <!-- gnd-run expect=1 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli recommend --user ada \
-  --model ../strict.orm.yaml --input ../seed.population.json --output ../strict.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py recommend --user ada \
+  --model bookrec-native/strict.orm.yaml --input bookrec-native/seed.population.json --output strict.json --backend pyrel
 ```
 
 ```text
@@ -206,15 +200,14 @@ not the same as a passing check. Ask the query for preferred genres only:
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli recommend --user ada --preferred-only \
-  --model ../strict.orm.yaml --input ../seed.population.json --output ../preferred.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py recommend --user ada --preferred-only \
+  --model bookrec-native/strict.orm.yaml --input bookrec-native/seed.population.json --output preferred.json --backend pyrel
 ```
 
 ```text
 Proposed for ada: map, river
 Policy check: ACCEPTED
-Published: ../preferred.json
+Published: preferred.json
 ```
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec advisory, strict and complete rules">
@@ -229,15 +222,14 @@ Published: ../preferred.json
 
 <!-- gnd-run expect=0 lane=pyrel output=stdout -->
 ```sh
-(cd bookrec-native/extension && "$GND_TUTORIAL_GND_PYTHON" -m bookrec.cli complete \
-  --model ../complete.orm.yaml --input ../seed.population.json --output ../complete.json \
-  --backend pyrel --pyrel-python "$GND_TUTORIAL_PYREL_PYTHON" --format text)
+python bookrec-native/app.py complete \
+  --model bookrec-native/complete.orm.yaml --input bookrec-native/seed.population.json --output complete.json --backend pyrel
 ```
 
 ```text
 Proposed: ada/map, ada/river, ben/map, ben/night, ben/river
 Policy check: ACCEPTED
-Published: ../complete.json
+Published: complete.json
 ```
 
 ## 8. Recap
@@ -256,7 +248,7 @@ does not name is unknown, which is different from a list that is declared but em
 
 | What you see | Why | What to do |
 |---|---|---|
-| `--backend pyrel requires --pyrel-python` | No PyRel interpreter given | Add `--pyrel-python` with your PyRel interpreter |
+| `--backend pyrel needs the PyRel interpreter` | `GND_PYREL_PYTHON` is not exported in this shell | Export it again as in [Set up](../pyrel-apps.md#set-up), or pass `--pyrel-python` |
 | `NOT RUN` mentioning the interpreter or `requires PyRel 1.30.1` | Wrong environment | Rebuild it as in [Set up](../pyrel-apps.md#set-up) |
 | `NOT RUN (ProfileRefusal: coverage-not-declared)`, exit code 2 | The input has no coverage list | Add the `covers` list for the facts you actually have |
 | `NOT ACCEPTED (some rules could not be decided)`, exit code 2 | A rule needs a fact list the input does not cover | Cover that list, or leave it out on purpose and accept the refusal |

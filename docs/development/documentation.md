@@ -40,9 +40,13 @@ placeholders and optional provider/native prerequisites in adjacent prose.
 Use `<!-- gnd-run expect=0 lane=souffle -->` (or `pyrel` / `lean`) for a native
 step. The default lane is offline; a selected native lane runs its offline
 prerequisites and refuses absent or wrong-version tools. PyRel uses a separate
-locked interpreter through `GND_TUTORIAL_PYREL_PYTHON` because its Pydantic pin
-conflicts with GND. See [runtime setup](../runtimes/scenario.md). Never count
-skipped native steps as successful execution.
+locked interpreter because its Pydantic pin conflicts with GND: the runner takes
+it from `GND_TUTORIAL_PYREL_PYTHON` and exports it to pyrel-lane blocks as
+`GND_PYREL_PYTHON`, the variable the applications read. Bare `python` and `gnd`
+keep meaning the GND environment in every block, as they do in a reader's shell.
+A `python` fence in the pyrel lane still runs under the PyRel interpreter. See
+[runtime setup](../runtimes/scenario.md). Never count skipped native steps as
+successful execution.
 
 Full native source is rendered with `pymdownx.snippets` from the packaged file;
 documented commands execute that same file. The site rejects missing includes

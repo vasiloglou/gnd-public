@@ -1,0 +1,550 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-tutorial:expense@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "expense",
+      "name": "Expense",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "expense_id"
+      }
+    },
+    {
+      "id": "expense_id",
+      "name": "ExpenseId",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "employee",
+      "name": "Employee",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "amount",
+      "name": "Amount",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "category",
+      "name": "Category",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "chain",
+      "name": "Chain",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "expense_submitted_by_employee",
+      "reading": "{Expense} is submitted by {Employee}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "employee",
+          "role_name": "employee"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_expense_submitted_by_employee",
+          "type": "uniqueness",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each expense has at most one value for this fact."
+          }
+        },
+        {
+          "id": "required_expense_submitted_by_employee",
+          "type": "mandatory",
+          "role": "expense",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Every expense must have a value for this fact."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_has_amount",
+      "reading": "{Expense} has {Amount}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "amount",
+          "role_name": "amount"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_expense_has_amount",
+          "type": "uniqueness",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each expense has at most one value for this fact."
+          }
+        },
+        {
+          "id": "required_expense_has_amount",
+          "type": "mandatory",
+          "role": "expense",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Every expense must have a value for this fact."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_in_category",
+      "reading": "{Expense} is in {Category}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "category",
+          "role_name": "category"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_expense_in_category",
+          "type": "uniqueness",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each expense has at most one value for this fact."
+          }
+        },
+        {
+          "id": "required_expense_in_category",
+          "type": "mandatory",
+          "role": "expense",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Every expense must have a value for this fact."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_is_approved",
+      "reading": "{Expense} is approved",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_expense_is_approved",
+          "type": "uniqueness",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each expense has at most one value for this fact."
+          }
+        }
+      ]
+    },
+    {
+      "id": "expense_approved_by_chain",
+      "reading": "{Expense} is approved by {Chain}",
+      "roles": [
+        {
+          "object_type": "expense",
+          "role_name": "expense"
+        },
+        {
+          "object_type": "chain",
+          "role_name": "chain"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "one_expense_approved_by_chain",
+          "type": "uniqueness",
+          "roles": [
+            "expense"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "Each expense has at most one value for this fact."
+          }
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "id": "known_categories",
+      "type": "value",
+      "object_type": "category",
+      "allowed": [
+        "meals",
+        "training",
+        "travel",
+        "equipment"
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The four tutorial expense categories are meals, training, travel and equipment."
+      }
+    },
+    {
+      "id": "known_chains",
+      "type": "value",
+      "object_type": "chain",
+      "allowed": [
+        "team-lead",
+        "finance"
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Approvals use either team-lead or finance."
+      }
+    },
+    {
+      "id": "positive_amount",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": ">",
+          "left": "$a",
+          "right": 0
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Each expense amount is greater than zero."
+      }
+    },
+    {
+      "id": "approval_needs_submission",
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "expense_is_approved",
+          "role": "expense"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "expense_submitted_by_employee",
+          "role": "expense"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The approval and chain must describe a submitted expense."
+      }
+    },
+    {
+      "id": "approval_needs_chain",
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "expense_is_approved",
+          "role": "expense"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "expense_approved_by_chain",
+          "role": "expense"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The approval and chain must describe a submitted expense."
+      }
+    },
+    {
+      "id": "chain_needs_approval",
+      "type": "subset",
+      "subset_role_seq": [
+        {
+          "fact_type": "expense_approved_by_chain",
+          "role": "expense"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "expense_is_approved",
+          "role": "expense"
+        }
+      ],
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The approval and chain must describe a submitted expense."
+      }
+    },
+    {
+      "id": "policy_meals",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "meals"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 75
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Meals expenses cost at most 75 EUR."
+      }
+    },
+    {
+      "id": "policy_training",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "training"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 1500
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Training expenses cost at most 1500 EUR."
+      }
+    },
+    {
+      "id": "policy_travel",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "travel"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 2000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Travel expenses cost at most 2000 EUR."
+      }
+    },
+    {
+      "id": "policy_equipment",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "equipment"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 3000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Equipment expenses cost at most 3000 EUR."
+      }
+    },
+    {
+      "id": "approval_limit_team_lead",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_approved_by_chain",
+          "bind": {
+            "expense": "$e",
+            "chain": "team-lead"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 100
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The team-lead chain approves at most 100 EUR."
+      }
+    },
+    {
+      "id": "approval_limit_finance",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_approved_by_chain",
+          "bind": {
+            "expense": "$e",
+            "chain": "finance"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 3000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The finance chain approves at most 3000 EUR."
+      }
+    }
+  ]
+}

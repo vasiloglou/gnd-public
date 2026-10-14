@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -39,20 +40,25 @@ def main(argv=None):
         sub.add_argument("--model", required=True, type=Path)
         sub.add_argument("--population", required=True, type=Path)
         sub.add_argument("--backend", choices=["gnd", "pyrel"], default="gnd")
-        sub.add_argument("--pyrel-python", type=Path)
-        sub.add_argument("--format", choices=["json", "text"], default="json")
+        sub.add_argument("--pyrel-python", type=Path,
+                         help="the PyRel interpreter; defaults to the GND_PYREL_PYTHON environment variable")
+        sub.add_argument("--format", choices=["json", "text"],
+                         help="defaults to text with --backend pyrel and to json otherwise")
         if name == "approve":
             sub.add_argument("--expense", required=True, type=int)
             sub.add_argument("--chain", required=True)
             sub.add_argument("--output", required=True, type=Path)
     args = parser.parse_args(argv)
+    if args.format is None:
+        args.format = "text" if args.backend == "pyrel" else "json"
     if args.format == "text" and args.backend != "pyrel":
         parser.error("--format text requires --backend pyrel")
     if args.backend == "pyrel":
         from gnd.export.applications import execute_application, format_result
 
-        if args.pyrel_python is None:
-            parser.error("--backend pyrel requires --pyrel-python")
+        if args.pyrel_python is None and not os.environ.get("GND_PYREL_PYTHON"):
+            parser.error("--backend pyrel needs the PyRel interpreter: "
+                         "pass --pyrel-python PATH or export GND_PYREL_PYTHON=PATH")
         with tempfile.TemporaryDirectory(prefix="expense-native-report-") as directory:
             output = args.output if args.command == "approve" else Path(directory) / "checked.json"
             result = execute_application(

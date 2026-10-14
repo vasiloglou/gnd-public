@@ -45,11 +45,15 @@ def main(argv=None):
     parser.add_argument("--limit", type=int, default=2)
     parser.add_argument("--preferred-only", action="store_true")
     parser.add_argument("--backend", choices=["gnd", "pyrel"], default="gnd")
-    parser.add_argument("--pyrel-python", type=Path)
+    parser.add_argument("--pyrel-python", type=Path,
+                        help="the PyRel interpreter; defaults to the GND_PYREL_PYTHON environment variable")
     parser.add_argument("--proposal", type=Path,
                         help="check this candidate (for example an agent's output) instead of computing one")
-    parser.add_argument("--format", choices=["json", "text"], default="json")
+    parser.add_argument("--format", choices=["json", "text"],
+                        help="defaults to text with --backend pyrel and to json otherwise")
     args = parser.parse_args(argv)
+    if args.format is None:
+        args.format = "text" if args.backend == "pyrel" else "json"
     if args.format == "text" and args.backend != "pyrel":
         parser.error("--format text requires --backend pyrel")
     if (args.command == "check") != (args.proposal is not None):
@@ -59,8 +63,9 @@ def main(argv=None):
     if args.backend == "pyrel":
         from gnd.export.applications import check_proposal, execute_application, format_result
 
-        if args.pyrel_python is None:
-            parser.error("--backend pyrel requires --pyrel-python")
+        if args.pyrel_python is None and not os.environ.get("GND_PYREL_PYTHON"):
+            parser.error("--backend pyrel needs the PyRel interpreter: "
+                         "pass --pyrel-python PATH or export GND_PYREL_PYTHON=PATH")
         if args.proposal is not None:
             result = check_proposal(args.model, args.input, args.proposal, args.output,
                                     native_python=args.pyrel_python, owned_relations=("recommendation",))

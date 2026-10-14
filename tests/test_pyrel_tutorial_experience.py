@@ -87,11 +87,15 @@ def test_native_block_receives_explicit_base_python(tmp_path, monkeypatch):
     monkeypatch.setenv('GND_TUTORIAL_PYREL_PYTHON',str(native))
     page = tmp_path / 'lesson.md'
     page.write_text('<!-- gnd-run expect=0 lane=pyrel -->\n```python\n'
-                    f'import os,sys\nassert os.environ["GND_TUTORIAL_GND_PYTHON"] == {sys.executable!r}\nassert sys.executable == {str(native)!r}\n```')
+                    f'import os,sys\nassert os.environ["GND_TUTORIAL_GND_PYTHON"] == {sys.executable!r}\nassert sys.executable == {str(native)!r}\n'
+                    f'assert os.environ["GND_PYREL_PYTHON"] == {str(native)!r}\n'
+                    f'assert os.environ["PATH"].split(os.pathsep)[0] == {str(Path(sys.executable).parent)!r}\n```\n'
+                    '<!-- gnd-run expect=0 -->\n```python\nimport os\nassert "GND_PYREL_PYTHON" not in os.environ\n```')
     monkeypatch.setattr(runner, 'require_runtime', lambda *a: None)
     records = []
-    assert runner.run_pages([page], tmp_path / 'work', Path(sys.executable), 'pyrel', receipts=records) == 1
+    assert runner.run_pages([page], tmp_path / 'work', Path(sys.executable), 'pyrel', receipts=records) == 2
     assert records[0]['lane'] == 'pyrel' and records[0]['status'] == 'passed'
+    assert records[1]['lane'] == 'offline' and records[1]['status'] == 'passed'
     assert records[0]['base_python']==sys.executable and records[0]['block_python']==str(native)
 
 

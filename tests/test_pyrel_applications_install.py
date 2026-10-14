@@ -33,6 +33,8 @@ def test_candidate_resources_match_source(tmp_path):
 
 @pytest.mark.parametrize('name',['gnd/examples/bookrec/tutorial-assets/eligibility.svg',
     'gnd/examples/expense/tutorial-assets/currency.svg','gnd/examples/expense/native_query.py',
+    'gnd/examples/expense/project/cli/expense_cli.py','gnd/examples/bookrec/app.py',
+    'gnd/examples/bookrec/rules_in_pyrel.py','gnd/examples/expense/stand_in_agent.py',
     'gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json'])
 def test_missing_required_resource_refuses(tmp_path,name):
     with pytest.raises(ValueError,match='missing'):

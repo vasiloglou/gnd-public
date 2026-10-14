@@ -30,7 +30,7 @@ def launch(home, command, *, model='model.orm.json', population='seed.population
     help_run = subprocess.run([sys.executable, '-m', 'cli.expense_cli', command, '--help'], cwd=home,
                               capture_output=True, text=True, timeout=20, check=False)
     assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native expense interface is absent'
-    args = [command, '--model', model, '--population', population, '--backend', 'pyrel', '--pyrel-python', str(NATIVE)]
+    args = [command, '--model', model, '--population', population, '--backend', 'pyrel', '--pyrel-python', str(NATIVE), '--format', 'json']
     if command == 'approve':
         args += ['--expense', str(expense), '--chain', chain, '--output', 'result.json']
     return subprocess.run([sys.executable, '-m', 'cli.expense_cli', *args], cwd=home,

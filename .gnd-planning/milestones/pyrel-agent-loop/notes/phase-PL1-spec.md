@@ -158,3 +158,28 @@ Estimate: ~120 source lines, ~150 test lines, ~60 page lines changed.
 ## 11. Approval instrument
 
 This prose, plus the test list in §8 authored red before the seam change.
+
+## Owner gate
+
+Delegated approval (auto=true), 2026-10-14, under the owner's default plan
+approval recorded in [001-plan-gate.md](../001-plan-gate.md). Instrument: this
+prose with the §8 test list authored red first. No spec panel. Spec SHA-256
+before this section: ef98f1f177af4067389204afd8b1564a225c58966c2f250c427bc71e19c28680. Rulings D1–D3 as marked in §7.
+
+## Implementation findings
+
+- F1 The seam's exception handler prefixes `reason` with the exception type, so
+  the reason reads `RuntimeError: no PyRel interpreter: ...`. Tests assert the
+  suffix; the page's troubleshooting row names the message, not the prefix.
+- F2 Expense's top-level `--help` lists only subcommands; the launcher test asks
+  for `report --help`.
+- F3 The ready folder also carries `model.orm.json` and `seed.population.json`
+  twins so every chapter command points at one project folder. Added to the
+  byte-twin test; codegen over the result stays idempotent (second run: 0
+  written, 1 skipped; contract preserved) and `gnd conformance` exits 0.
+- F4 `python` resolves in a uv virtual environment's `bin`, so page blocks can
+  use it once the GND environment is first on `PATH`; the runner already puts
+  the base interpreter's directory first.
+- F5 Measured: BookRec 59 blocks and Expense 45 blocks pass in both lanes with
+  the rewritten commands; `runtime-pyrel` (13 blocks) still passes because
+  those pages name the interpreter explicitly.

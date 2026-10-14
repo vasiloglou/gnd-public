@@ -175,6 +175,15 @@ LOCAL_SKILL_FILES: frozenset[str] = frozenset(
         ".codex/skills/process-phase/references/spec-note-contract.md",
         ".codex/skills/process-phase/references/standing-rules.md",
         ".codex/skills/process-phase/references/verification-selection.md",
+        # The milestone skills (00efef2 and its start-milestone sibling) are the same kind.
+        ".claude/skills/process-milestone/SKILL.md",
+        ".claude/skills/process-milestone/agents/openai.yaml",
+        ".claude/skills/start-milestone/SKILL.md",
+        ".claude/skills/start-milestone/agents/openai.yaml",
+        ".codex/skills/process-milestone/SKILL.md",
+        ".codex/skills/process-milestone/agents/openai.yaml",
+        ".codex/skills/start-milestone/SKILL.md",
+        ".codex/skills/start-milestone/agents/openai.yaml",
     }
 )
 
@@ -182,6 +191,9 @@ LOCAL_SKILL_FILES: frozenset[str] = frozenset(
 #: whoever wrote it. This is the set the tracked-file partition runs against; the
 #: two halves stay separately pinned so a change to one cannot be absorbed by the
 #: other.
+#: The repository-development skills those files belong to.
+LOCAL_SKILL_NAMES: tuple[str, ...] = ("process-phase", "process-milestone", "start-milestone")
+
 UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
 
 #: The two native discovery roots an agent working IN this checkout reads, each
@@ -193,8 +205,8 @@ UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
 #: directory of real files the installer never wrote, never hashed, and must
 #: never adopt. ``process-phase`` is ours and equally unmanaged.
 UNMANAGED_ROOT_ENTRIES: dict[str, frozenset[str]] = {
-    ".claude/skills": frozenset({"plan-review-panel", "process-phase"}),
-    ".codex/skills": frozenset({"plan-review-panel", "process-phase"}),
+    ".claude/skills": frozenset({"plan-review-panel", "process-phase", "process-milestone", "start-milestone"}),
+    ".codex/skills": frozenset({"plan-review-panel", "process-phase", "process-milestone", "start-milestone"}),
 }
 
 #: A second real packaged skill, used wherever a divergence has to point at
@@ -1685,27 +1697,29 @@ def test_the_local_process_skill_stays_unpackaged_and_unmanaged() -> None:
     """
     contents: set[str] = set()
     for root_rel in UNMANAGED_ROOT_ENTRIES:
-        local = REPO_ROOT / root_rel / "process-phase"
-        assert not stat.S_ISLNK(os.lstat(local).st_mode), f"{root_rel}: must be a real directory"
-        assert local.is_dir()
-        contents |= {
-            entry.relative_to(REPO_ROOT).as_posix()
-            for entry in local.rglob("*")
-            if not entry.is_dir()
-        }
-        # The open skills standard keys discovery off the frontmatter name, and a
-        # name that disagrees with its directory is discoverable under one spelling
-        # and referenced under the other. Asserted per ROOT: a copy whose
-        # frontmatter drifted is undiscoverable in the runtime that reads it.
-        head = (local / "SKILL.md").read_text().split("---")[1]
-        assert "name: process-phase" in head, f"{root_rel}: frontmatter name must match directory"
-    assert "process-phase" not in EXPECTED_SKILL_NAMES
-    assert "process-phase" not in _packaged_skill_names(), (
-        "GND does not ship it, so no install of any kind may place it"
-    )
-    assert not any("process-phase" in rel for rel in REPOSITORY_LINK_TARGETS), (
-        "it is outside the managed map, and the managed map is what uninstall drives off"
-    )
+        for name in LOCAL_SKILL_NAMES:
+            local = REPO_ROOT / root_rel / name
+            assert not stat.S_ISLNK(os.lstat(local).st_mode), f"{root_rel}/{name}: must be a real directory"
+            assert local.is_dir()
+            contents |= {
+                entry.relative_to(REPO_ROOT).as_posix()
+                for entry in local.rglob("*")
+                if not entry.is_dir()
+            }
+            # The open skills standard keys discovery off the frontmatter name, and a
+            # name that disagrees with its directory is discoverable under one spelling
+            # and referenced under the other. Asserted per ROOT: a copy whose
+            # frontmatter drifted is undiscoverable in the runtime that reads it.
+            head = (local / "SKILL.md").read_text().split("---")[1]
+            assert f"name: {name}" in head, f"{root_rel}/{name}: frontmatter name must match directory"
+    for name in LOCAL_SKILL_NAMES:
+        assert name not in EXPECTED_SKILL_NAMES
+        assert name not in _packaged_skill_names(), (
+            "GND does not ship it, so no install of any kind may place it"
+        )
+        assert not any(name in rel for rel in REPOSITORY_LINK_TARGETS), (
+            "it is outside the managed map, and the managed map is what uninstall drives off"
+        )
     assert contents == set(LOCAL_SKILL_FILES), (
         f"the local skill tree changed shape: unexpected {sorted(contents - LOCAL_SKILL_FILES)}, "
         f"absent {sorted(LOCAL_SKILL_FILES - contents)}"

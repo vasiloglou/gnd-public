@@ -1,0 +1,25 @@
+{
+  "added": [
+    [
+      "src/gnd/export/pyrel_runtime.py",
+      "has",
+      "self._oracle.model.fact_types",
+      1
+    ]
+  ],
+  "original_metric_current": 307,
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA4/query-successor.json",
+  "predecessor_sha256": "e2e7faaf407633e27a543c390489038ef5a123e8bb564740eee1fccbef0d1612",
+  "reason": "PA5R public native-query seam (A2 D1): the Expense query no longer reads index.fact_types; NativeApp.has reads it once inside the emitted program. Dynamic rows follow the seam, check_proposal, format_result and the rewritten example queries. Historical predecessors unchanged.",
+  "removed": [
+    [
+      "src/gnd/examples/expense/native_query.py",
+      "calculate",
+      "index.fact_types",
+      1
+    ]
+  ],
+  "result_distinct_rows": 293,
+  "result_occurrences": 362,
+  "schema_version": 1
+}

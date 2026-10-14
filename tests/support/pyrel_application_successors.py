@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = ROOT / '.gnd-planning/milestones/pyrel-applications/evidence'
-PHASES = ['PA1', 'PA2', 'PA3', 'PA4']
+PHASES = ['PA1', 'PA2', 'PA3', 'PA4', 'PA5R']
 
 
 def authenticated(name, predecessor, phase):
@@ -62,12 +62,8 @@ def dynamic_rows(rows, predecessor):
     return rows
 
 
-# PA5R changed only the emitted program bytes (A2 D1); its query inventories are unchanged.
-RENDER_PHASES = [*PHASES, 'PA5R']
-
-
 def rendered_bytes(expected, predecessor):
-    for phase in RENDER_PHASES:
+    for phase in PHASES:
         data = authenticated('pyrel-successor.json', predecessor, phase)
         assert data['before'] == expected
         expected = data['after']

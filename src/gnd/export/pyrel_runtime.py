@@ -1520,9 +1520,10 @@ class ApplicationOracle(PyrelOracle):
             self.m.where(*positive, *negative).define(result(*[variables[rule['head'][role['role_name']]] for role in roles]))
             columns = [concept.ref() for concept in concepts]
             tuples = self._rows(self.m.where(result(*columns)).select(*columns))
-            canonical = {json.dumps(row, sort_keys=True, separators=(',', ':')) for row in tuples}
-            calculated = [dict(zip([role['role_name'] for role in roles], json.loads(row), strict=True))
-                          for row in sorted(canonical)]
+            # Deduplicate by canonical text, keeping the original row (no re-parse).
+            canonical = {json.dumps(row, sort_keys=True, separators=(',', ':')): row for row in tuples}
+            calculated = [dict(zip([role['role_name'] for role in roles], canonical[key], strict=True))
+                          for key in sorted(canonical)]
         if calculated:
             self.m.define(*[self._relations[name](*[row[role['role_name']] for role in roles], i)
                             for i, row in enumerate(calculated)])
@@ -1607,9 +1608,11 @@ class ApplicationOracle(PyrelOracle):
             else:
                 breach = left >= right
         rows = self._rows(self.m.where(*positive, *extra, breach).select(*selected))
-        witnesses = {json.dumps(dict(zip(names, row, strict=True)) if names else {},
-                                sort_keys=True, separators=(',', ':')) for row in rows}
-        return ('violated', [json.loads(row) for row in sorted(witnesses)]) if witnesses else ('satisfied', [])
+        witnesses = {}
+        for row in rows:
+            witness = dict(sorted(zip(names, row, strict=True))) if names else {}
+            witnesses[json.dumps(witness, sort_keys=True, separators=(',', ':'))] = witness
+        return ('violated', [witnesses[key] for key in sorted(witnesses)]) if witnesses else ('satisfied', [])
 
     def profile_evaluate(self, constraint: dict[str, Any], ft_id: str | None) -> tuple[str, Any]:
         family = constraint['type']

@@ -137,6 +137,7 @@ SHIPPED = [
 ]
 
 
+@pytest.mark.pyrel_oracle
 def test_shipped_population_with_a_repeated_fact_is_refused(tmp_path):
     """cycle.pop.json lists one dependency twice. PyRel relations are sets, so the program refuses repeated
     facts (PL12, B5) where GND accepts them; widening that is open question PL13b-Q1."""

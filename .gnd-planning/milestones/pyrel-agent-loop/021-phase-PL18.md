@@ -229,3 +229,20 @@ refusal was a chained command.
 | PL18-Q6 | The gnd-model-evolve skill's pages do not give the proposal format in full; both runs read GND's source to find it | skill update, outside this milestone |
 
 Gate after the change: 308 docs tests, 20 runnable blocks, 10371 links.
+
+## Local CI before the PR (2026-10-15)
+
+The owner asked for the CI to be run locally before any merge. The replay of
+`.github/workflows/development.yml` ran in a clean worktree of a1d9452, Python
+3.11, full suite: 9 failed, 14882 passed. Seven of the nine fail on origin/main
+too (a9a2f08), run the same way: the five known inherited failures, plus
+`test_rf4_peripheral` ×2.
+
+Two came from this branch, and both are fixed:
+- `test_pyrel_rules_derivations::test_shipped_population_with_a_repeated_fact_is_refused`
+  needs the PyRel interpreter but lacked the `pyrel_oracle` marker, so it erred
+  in a checkout without one. The marker is added.
+- `test_development_scaffold` read the code span on line 10 of
+  `notes/plan-amendment-a1.md`, an image shown as Markdown, as a broken link
+  (PL18-Q4). The sentence now describes the Markdown in words; the meaning is
+  unchanged.

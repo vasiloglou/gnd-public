@@ -7,7 +7,8 @@ Draft, 2026-10-14. Milestone `pyrel-agent-loop`. Supersedes the PL5 page design
 
 After PL5/PL6 the owner rejected the pages again (2026-10-14):
 
-1. Figures render as literal `![...](...svg)` text.
+1. Figures render as literal Markdown image text (an exclamation mark, the alt
+   text in brackets and the SVG path) instead of the picture.
 2. The docs should look like GSD (open-gsd/gsd-core), which inspired GND: how to
    build agentic apps easily. "Users will not write python code, coding
    assistants would", so the Python snippets are not useful.

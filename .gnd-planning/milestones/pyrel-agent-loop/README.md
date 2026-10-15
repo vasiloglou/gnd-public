@@ -41,3 +41,21 @@ The latest focused run passes 224 tests; both native chapter paths and all
 137 corpus cases pass. Documentation is ready for owner review.
 The missing Claude recording, four-reader milestone-close review and seven
 inherited refactoring failures remain explicit open work. No merge is authorized.
+
+## Status at the close, 2026-10-15
+
+The owner rejected the PL5 pages a second time. [Amendment A1](notes/plan-amendment-a1.md),
+with the owner's decisions in [012](012-owner-decisions-a1.md), replaced the
+remaining phases:
+
+| Phases | Records | What they did |
+|---|---|---|
+| PL12–PL15 | [011](011-phase-PL12.md), [013](013-phase-PL13a.md), [014](014-phase-PL13b.md), [015](015-phase-PL14.md), [016](016-phase-PL15.md) | rules as PyRel requirements: families, derived facts, dates, references, operation plans |
+| PL16 | [017](017-phase-PL16.md) | five plan apps whose bots answer with checked plans |
+| PL17 | [018](018-recording-gate-PL17.md) (gate), [020](020-phase-PL17.md) | real models behind the apps, every run kept |
+| PL18 | [019](019-recording-gate-PL18-skills.md) (gate), [021](021-phase-PL18.md) | GSD-style tutorials, how-to and explanation pages, with recorded replays |
+| PL19 | [022](022-owner-decisions-close.md) (owner rulings), [023](023-milestone-close.md) (close) | four close readers, local CI, open questions carried forward |
+
+The owner ruled on the close findings in [022](022-owner-decisions-close.md),
+which also closes PL4-Q1. On 2026-10-15 the owner authorized pushing and
+merging PR #22 once the local CI had run.

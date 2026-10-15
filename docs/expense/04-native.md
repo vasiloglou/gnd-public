@@ -13,6 +13,7 @@ the rule, then repairs. The recorded Codex sessions instead passed first time. Y
 ## 1. What you'll build
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Expense reporting and approval flow">
+
 ![Three submitted expenses total 2260 EUR and one is approved. Reporting calculations and approval proposals enter a separate policy check; only accepted results are presented or published.](../assets/applications/expense-flow.svg)
 </div>
 
@@ -508,6 +509,7 @@ Nothing was published.
     passing check.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Expense category caps and approval chain limits">
+
 ![Meal 101 costs 60 EUR, below category 75 and team-lead 100. Travel 102 costs 800, within category 2000 but beyond team-lead 100, violating approval_limit_team_lead. Finance 3000 accepts 102.](../assets/applications/expense-limits.svg)
 </div>
 
@@ -705,6 +707,7 @@ Nothing was published.
 ```
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Expense implicit and explicit currency evolution">
+
 ![Implicit EUR gives 2260. The evolved model requires expense_has_currency and allows only EUR. Missing 101/102 currency violates required_expense_has_currency; supplying EUR for all three yields labeled EUR 2260. No conversion is performed.](../assets/applications/expense-currency.svg)
 </div>
 

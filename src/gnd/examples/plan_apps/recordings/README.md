@@ -13,6 +13,7 @@ Outcomes per model and app, over 5 runs (the served model ids are in brackets):
 - **refused**: no plan accepted in the attempts allowed;
 - **crash**: the run did not finish normally.
 
+<!-- --8<-- [start:table] -->
 | Model | course | access | lease | clinic | trip |
 |---|---|---|---|---|---|
 | claude-haiku (`claude-haiku-5-5`) | 5 first | 5 declined | 3 first, 2 repaired-format | 5 first | 4 first, 1 repaired-format |
@@ -20,6 +21,7 @@ Outcomes per model and app, over 5 runs (the served model ids are in brackets):
 | llama-3.1-8b (`meta-llama/llama-3.1-8b-instruct`) | 5 refused | 3 repaired-rule, 2 refused | 3 first, 1 repaired-format, 1 refused | 1 repaired-format, 1 declined, 3 refused | 2 first, 3 repaired-rule |
 | gemma-3-4b (`google/gemma-3-4b-it`) | 5 refused | 5 refused | 5 refused | 1 declined, 4 refused | 1 first, 1 repaired-rule, 3 refused |
 | llama-3.2-3b (`meta-llama/llama-3.2-3b-instruct`) | 1 repaired-rule, 4 refused | 5 refused | 5 refused | 2 first, 3 refused | 1 repaired-rule, 1 repaired-format, 3 refused |
+<!-- --8<-- [end:table] -->
 
 ## The replayed run
 
@@ -39,6 +41,7 @@ Claude Code reported $0.62 for its runs; OpenRouter reported $0.0135.
 - `tools/plan_app_bot.py`: after the recording: replies named by attempt, failed calls logged, requested and served model kept apart, API keys kept from Claude Code, project-only settings, a type-neutral template
 - `tools/record_plan_apps.py`: after the recording: --rebind, --reindex, the summary and outcome split, timeouts by process group, per-run error rows, the wider leak search
 
+<!-- --8<-- [start:caveats] -->
 ## Caveats
 
 - **Two launches before this one were stopped and discarded.** The cause was a
@@ -82,3 +85,4 @@ Claude Code reported $0.62 for its runs; OpenRouter reported $0.0135.
   recording (PL16 review, C1). No run's verdict depends on Frank's approval.
 - **Small models are nondeterministic.** These are 5 runs each, at the
   provider's default temperature; another 5 runs would differ.
+<!-- --8<-- [end:caveats] -->

@@ -1,0 +1,11 @@
+attempt 1
+  the bot says: warfarin is not refilled because it would be given before the refill interval has passed since the last refill.
+  plan  refill_drug(patient='sam', drug='aspirin', on='2024-03-10')
+  plan  refill_drug(patient='sam', drug='statin', on='2024-03-10')
+  pyrel check: exit 1
+    states 0-2  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    state 2  refill_not_early  violated  {"$d": "statin", "$last": "2024-02-20", "$n": 30, "$on": "2024-03-10", "$p": "sam"}
+      the rule in PyRel: m.where(refill(step, p, d, on), last_refill(step, p, d, last), refill_interval(step, d, n)).require(on >= std_date.add(last, days(n)))
+attempt 2
+  the bot made no plan: attempted to refill stata_in_a_row which breaks rule: A patient should not get two drugs from the same class of reasons on the same day.
+no plan was made

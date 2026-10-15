@@ -302,7 +302,7 @@ def write_readme(out: Path) -> None:
         "- **declined**: the model answered that no useful plan exists, with a reason;",
         "- **refused**: no plan accepted in the attempts allowed;",
         "- **crash**: the run did not finish normally.", "",
-        *readme_table(rows), "",
+        "<!-- --8<-- [start:table] -->", *readme_table(rows), "<!-- --8<-- [end:table] -->", "",
         "## The replayed run", "",
         (f"Replayed run: `{chosen['model']}/{chosen['example']}/run-{chosen['run']}`, the first run in results.json "
          "order (model, example, run) refused on a rule and then accepted (A1 protocol). The model lanes ran side "
@@ -317,7 +317,8 @@ def write_readme(out: Path) -> None:
         *[f"- `{source}`: {why}" for source, why in sorted(manifest.get("drift", {}).items())], "",
     ]
     if caveats.exists():
-        text += [caveats.read_text(encoding="utf-8").rstrip(), ""]
+        text += ["<!-- --8<-- [start:caveats] -->", caveats.read_text(encoding="utf-8").rstrip(),
+                 "<!-- --8<-- [end:caveats] -->", ""]
     (out / "README.md").write_text("\n".join(text), encoding="utf-8")
 
 

@@ -10,6 +10,7 @@ Codex sessions instead passed first time. You need the two environments from [Py
 ## 1. What you'll build
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec calculation and checking flow">
+
 ![BookRec facts feed native queries, then a separate policy audit; advisory warnings publish and strict genre failures withhold output.](../assets/applications/bookrec-flow.svg)
 </div>
 
@@ -215,6 +216,7 @@ lines earlier in the full source below. GND still checks the result against the
 rule itself, whatever the query did.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec reader, book and genre eligibility">
+
 ![Eligibility arrows show Ada to map/river and Ben to map/night/river. Ada/night violates age_appropriate; Ada/read and Ben/read violate unread_only. Cosmos is legal in baseline but outside the preferred complete set.](../assets/applications/bookrec-eligibility.svg)
 </div>
 
@@ -649,6 +651,7 @@ Published: preferred.json
 ```
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="BookRec advisory, strict and complete rules">
+
 ![The same cosmos/map candidate warns with advisory genre fit and fails with strict fit; preferred-only repairs Ada to map/river. Complete mode requires all five eligible pairs.](../assets/applications/bookrec-evolution.svg)
 </div>
 

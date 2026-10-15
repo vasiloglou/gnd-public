@@ -1,0 +1,123 @@
+{
+ "gate": ".gnd-planning/milestones/pyrel-agent-loop/019-recording-gate-PL18-skills.md",
+ "skill": "gnd-model-from-text",
+ "example": "course",
+ "user_turns": [
+  "/gnd:gnd-model-from-text rules.md",
+  "MVP-fast. The rules file is complete: model what it states, including what the registrar does, and ask me only about what it leaves open.",
+  "Yes, as you propose."
+ ],
+ "recorded": "2026-10-15",
+ "runs": [
+  {
+   "model": "claude-haiku",
+   "run": 1,
+   "turns": 1,
+   "turn_log": [
+    {
+     "user": "/gnd:gnd-model-from-text rules.md",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": true
+    }
+   ],
+   "model_written": "model.orm.yaml",
+   "validate_exit": 0,
+   "seconds": 200.4
+  },
+  {
+   "model": "claude-haiku",
+   "run": 2,
+   "turns": 2,
+   "turn_log": [
+    {
+     "user": "/gnd:gnd-model-from-text rules.md",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": false
+    },
+    {
+     "user": "MVP-fast. The rules file is complete: model what it states, including what the registrar does, and ask me only about what it leaves open.",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": true
+    }
+   ],
+   "model_written": "model.orm.yaml",
+   "validate_exit": 0,
+   "seconds": 181.0
+  },
+  {
+   "model": "claude-default",
+   "run": 1,
+   "turns": 2,
+   "turn_log": [
+    {
+     "user": "/gnd:gnd-model-from-text rules.md",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": false
+    },
+    {
+     "user": "MVP-fast. The rules file is complete: model what it states, including what the registrar does, and ask me only about what it leaves open.",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": true
+    }
+   ],
+   "model_written": "model.orm.yaml",
+   "validate_exit": 0,
+   "seconds": 284.0
+  },
+  {
+   "model": "claude-default",
+   "run": 2,
+   "turns": 5,
+   "turn_log": [
+    {
+     "user": "/gnd:gnd-model-from-text rules.md",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": false
+    },
+    {
+     "user": "MVP-fast. The rules file is complete: model what it states, including what the registrar does, and ask me only about what it leaves open.",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": false
+    },
+    {
+     "user": "Yes, as you propose.",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": false
+    },
+    {
+     "user": "Yes, as you propose.",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": false
+    },
+    {
+     "user": "Yes, as you propose.",
+     "exit": 0,
+     "cost_usd": null,
+     "assistant_last": "",
+     "model_valid_after_turn": true
+    }
+   ],
+   "model_written": "model.orm.json",
+   "validate_exit": 0,
+   "seconds": 609.7
+  }
+ ]
+}

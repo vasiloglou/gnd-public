@@ -1,0 +1,20 @@
+attempt 1
+  the bot says: Fado night cannot be booked due to exceeding budget on any combination of its two possibilities
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='sintra-day')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  pyrel check: exit 1
+    states 4-6  no_overlap  violated  [{"activity": "belem-walk", "day": "2025-05-13", "period": "morning", "trip": "lisbon"}, {"activity": "sintra-day", "day": "2025-05-13", "period": "morning", "trip": "lisbon"}]
+      the rule in PyRel: m.where(booked_slot(step, trip, activity_1, day, period), booked_slot(step, trip, activity_2, day, period)).require(activity_1 == activity_2)
+attempt 2
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='fado-night')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

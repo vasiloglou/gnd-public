@@ -1,0 +1,1 @@
+OK: <workspace>/model.orm.yaml is a valid GND ORM model

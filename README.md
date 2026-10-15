@@ -80,10 +80,27 @@ Then ask your agent, for example: *"Use gnd-model-from-text to model our expense
 approval policy, then validate it."* See
 [Work with an agent](docs/agents/index.md) for every skill and the artifacts it produces.
 
+## How it works
+
+1. Write the rules in plain English, in a file such as `rules.md`.
+2. Model them: `/gnd:gnd-model-from-text rules.md`.
+3. Set up a bot: any model behind a command, or a project from `/gnd:gnd-codegen`.
+4. Ask the bot a question in your own words.
+5. It proposes a plan: named operation steps, not prose.
+6. GND checks the plan against every rule and names the facts that break one.
+7. An accepted plan runs; a refused plan goes back to the bot with the feedback.
+8. Change a rule with `/gnd:gnd-model-evolve`; the next plan is checked against it.
+
+The [course planner tutorial](docs/tutorials/course-planner.md) walks through all
+eight with recorded sessions.
+
 ## Start with something that runs
 
 - **[Run a check in 60 seconds](docs/quickstart.md):** find a shipping deadline
   violation, inspect the changed facts and verify the repair. No API key needed.
+- **[Build a course planner](docs/tutorials/course-planner.md):** Claude Code models a
+  registrar's rules, a small model plans a semester, and GND refuses the plan that
+  skips a prerequisite. Every session shown is a real recording.
 - **[Build BookRec](docs/bookrec/01-model.md):** a recommender with hard rules,
   advisory warnings and checked output publication.
 - **[Build expense approvals](docs/expense/01-model.md):** a workflow that rejects an

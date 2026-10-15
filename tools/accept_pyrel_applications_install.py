@@ -109,7 +109,7 @@ def main():
     origin=run([base,'-I','-c','import gnd; print(gnd.__file__)']).strip();verify_origin(origin,out/'base',ROOT)
     package=Path(origin).parent
     # Only resource mirrors, no importable source package or editable .pth.
-    for domain in ['bookrec','expense','release_governance']:
+    for domain in ['bookrec','expense','release_governance','plan_apps']:  # plan_apps: the PL18 pages include its files
         shutil.copytree(package/'examples'/domain,out/'src/gnd/examples'/domain)
     runtime=out/'src/gnd/export/pyrel_runtime.py';runtime.parent.mkdir(parents=True);shutil.copy2(package/'export/pyrel_runtime.py',runtime)
     lock_home=package/'examples/release_governance/runtime-environment'

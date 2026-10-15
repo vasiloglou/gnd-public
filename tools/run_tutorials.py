@@ -204,6 +204,9 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'runtime-souffle': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/souffle.md'],
         'runtime-lean': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/lean.md'],
         'runtime-decision': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/decision.md'],
+        'plan-apps': [root / 'docs/tutorials/course-planner.md', root / 'docs/tutorials/clinic-refills.md',
+                      root / 'docs/how-to/access-requests.md', root / 'docs/how-to/trip-budget.md',
+                      root / 'docs/how-to/lease-schedule.md', root / 'docs/explanation/rules-as-pyrel.md'],
     }
 
 

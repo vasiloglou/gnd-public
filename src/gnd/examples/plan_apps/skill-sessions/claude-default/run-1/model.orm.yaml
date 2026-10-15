@@ -1,0 +1,338 @@
+# Registrar enrollment model — CSDP, MVP-fast mode, authored from rules.md.
+# Everything rules.md states is `explicit` + `confirmed` + `alethic`. Points it
+# leaves open are listed under deontic_notes and called out in the run report.
+
+version: 4
+
+model_id: urn:registrar:enrollment@1
+
+source:
+  kind: text-conversation
+  session_id: csdp_2026_10_15_registrar
+  artifacts:
+    - "rules.md"
+  started_at: "2026-10-15T00:34:00Z"
+  confidence: standard
+  mode: mvp-fast
+
+# OPEN — pending owner decision: bind the catalogue as a fixed reference population.
+# The file is written (references/spring-catalogue.pop.json); enabling this block
+# needs its exact sha256, and gnd synth / codegen refuse reference-bearing models.
+# reference_populations:
+#   - id: spring_catalogue
+#     path: references/spring-catalogue.pop.json
+#     sha256: "<sha256 of the file bytes>"
+#     fact_types: [course_has_title, course_has_credits, course_needs_course, course_offered_in_term]
+
+object_types:
+  - id: student
+    name: Student
+    kind: entity
+    reference: { mode: popular, value_type: student_name }
+    independent: true            # an admitted student exists before enrolling in anything
+
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+
+  - id: term
+    name: Term
+    kind: entity
+    reference: { mode: popular, value_type: term_name }
+
+  - id: grade
+    name: Grade
+    kind: entity
+    reference: { mode: popular, value_type: grade_code }
+
+  - { id: student_name, name: StudentName, kind: value, primitive: String }
+  - { id: course_code, name: CourseCode, kind: value, primitive: String }
+  - { id: course_title, name: CourseTitle, kind: value, primitive: String }
+  - { id: credits, name: Credits, kind: value, primitive: Integer }
+  - { id: credit_total, name: CreditTotal, kind: value, primitive: Integer }
+  - { id: term_name, name: TermName, kind: value, primitive: String }
+  - { id: grade_code, name: GradeCode, kind: value, primitive: String }
+
+fact_types:
+  # ---- The catalogue (fixed reference population: references/spring-catalogue.pop.json)
+  - id: course_has_title
+    reading: "{Course} has title {CourseTitle}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course_title, role_name: title }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "| Course | Credits | Needs | Offered |" }
+    constraints:
+      - type: uniqueness
+        roles: [course]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 1, user_quote: "| CS101 Intro to Programming | 4 | | spring |" }
+      - type: mandatory
+        role: course
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 5, dialogue_turn: 1, user_quote: "| CS101 Intro to Programming | 4 | | spring |" }
+
+  - id: course_has_credits
+    reading: "{Course} is worth {Credits} credits"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: credits, role_name: credits }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "| Course | Credits | Needs | Offered |" }
+    constraints:
+      - type: uniqueness
+        roles: [course]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 1, user_quote: "| Course | Credits | Needs | Offered |" }
+      - type: mandatory
+        role: course
+        source: explicit
+        status: confirmed
+        modality: alethic
+        rationale: "Every catalogue row carries a credit value, and the 18-credit term limit sums it."
+        provenance: { csdp_step: 5, dialogue_turn: 1, user_quote: "A student takes at most 18 credits in a term." }
+
+  - id: course_needs_course
+    reading: "{Course} needs {Course:prerequisite}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course, role_name: prerequisite }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "| CS340 Machine Learning | 4 | CS230, MATH220, STAT210 | spring |" }
+
+  - id: course_offered_in_term
+    reading: "{Course} is offered in {Term}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: term, role_name: term }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "| CS250 Databases | 3 | CS101 | fall |" }
+
+  # ---- Derived: the full prerequisite chain
+  - id: course_requires_course
+    reading: "{Course} requires {Course:prerequisite}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course, role_name: prerequisite }
+    derivation: derived
+    storage: computed
+    derivation_rule:
+      clauses:
+        - body:
+            - { fact_type: course_needs_course, bind: { course: "$c", prerequisite: "$p" } }
+        - body:
+            - { fact_type: course_needs_course, bind: { course: "$c", prerequisite: "$m" } }
+            - { fact_type: course_requires_course, bind: { course: "$m", prerequisite: "$p" } }
+      head: { course: "$c", prerequisite: "$p" }
+    provenance:
+      csdp_step: 3
+      dialogue_turn: 1
+      user_quote: "every course it needs, directly or through a chain of prerequisites"
+
+  # ---- Student history and enrollment
+  - id: student_passed_course
+    reading: "{Student} passed {Course}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+    sample_population:
+      - { student: "Maya", course: "CS101" }
+      - { student: "Maya", course: "MATH120" }
+      - { student: "Maya", course: "CS230" }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "Maya has passed CS101, MATH120 and CS230." }
+
+  - id: student_enrolled_in_course_in_term
+    reading: "{Student} is enrolled in {Course} in {Term}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+      - { object_type: term, role_name: term }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "Enroll a student in a course for a term." }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [student, term]
+        bound: { max: 6 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 1, user_quote: "A student takes at most 6 courses in a term." }
+
+  - id: student_received_grade_in_course
+    reading: "{Student} received {Grade} in {Course}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: grade, role_name: grade }
+      - { object_type: course, role_name: course }
+    provenance: { csdp_step: 1, dialogue_turn: 1, user_quote: "Record a grade, which also marks the course as passed." }
+    constraints:
+      - type: uniqueness
+        roles: [student, course]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, dialogue_turn: 1, user_quote: "A student has one grade per course" }
+
+  # ---- Derived: credit load per student per term
+  - id: student_carries_credits_in_term
+    reading: "{Student} carries {CreditTotal} credits in {Term}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: credit_total, role_name: total }
+      - { object_type: term, role_name: term }
+    derivation: derived
+    storage: computed
+    derivation_rule:
+      body:
+        - { fact_type: student_enrolled_in_course_in_term, bind: { student: "$s", course: "$c", term: "$t" } }
+        - { fact_type: course_has_credits, bind: { course: "$c", credits: "$cr" } }
+      aggregate: { fn: sum, of: "$cr", over: ["$c"], as: "$total" }
+      head: { student: "$s", total: "$total", term: "$t" }
+    provenance: { csdp_step: 3, dialogue_turn: 1, user_quote: "A student takes at most 18 credits in a term." }
+
+constraints:
+  - id: enroll_only_when_prerequisites_passed
+    type: guarded
+    antecedent:
+      - { fact_type: student_enrolled_in_course_in_term, bind: { student: "$s", course: "$c", term: "$t" } }
+      - { fact_type: course_requires_course, bind: { course: "$c", prerequisite: "$p" } }
+    consequent:
+      atom: { fact_type: student_passed_course, bind: { student: "$s", course: "$p" } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance:
+      csdp_step: 6
+      dialogue_turn: 1
+      user_quote: "A student can't take a course before passing every course it needs, directly or through a chain of prerequisites."
+
+  - id: enroll_only_in_offered_courses
+    type: subset
+    subset_role_seq:
+      - { fact_type: student_enrolled_in_course_in_term, role: course }
+      - { fact_type: student_enrolled_in_course_in_term, role: term }
+    superset_role_seq:
+      - { fact_type: course_offered_in_term, role: course }
+      - { fact_type: course_offered_in_term, role: term }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Only courses offered that term can be taken." }
+
+  - id: term_credit_limit
+    type: value
+    object_type: credit_total
+    range: { max: 18, max_inclusive: true }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "A student takes at most 18 credits in a term." }
+
+  - id: no_enrollment_in_passed_course
+    type: textual
+    expression: "A Student does not enroll in a Course that the Student has already passed."
+    formal_language: natural
+    source: explicit
+    status: confirmed
+    modality: deontic
+    rationale: >-
+      OPEN — provisional modality. The rule is about the moment of enrolment, so it cannot be an
+      operation precondition (absence is not expressible) nor a standing invariant (a graded
+      enrolment and its pass legitimately coexist). Kept deontic because an alethic textual
+      constraint makes every check permanently indeterminate (exit 4); awaiting the owner's choice.
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "A student doesn't enroll in a course they have already passed." }
+
+operations:
+  - id: admit_student
+    reading: "Admit {Student}"
+    parameters:
+      - { name: student, object_type: student }
+    effects:
+      - create: { object_type: student, param: student }
+    frame: { modality: deontic }   # OPEN — provisional, awaiting owner answer
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Admit a new student." }
+
+  - id: enroll
+    reading: "Enroll {Student} in {Course} for {Term}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: course, object_type: course }
+      - { name: term, object_type: term }
+    preconditions:
+      - id: course_is_offered_that_term
+        require:
+          - { fact_type: course_offered_in_term, bind: { course: "$course", term: "$term" } }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Only courses offered that term can be taken." }
+    effects:
+      - assert: { fact_type: student_enrolled_in_course_in_term, bind: { student: "$student", course: "$course", term: "$term" } }
+    frame: { modality: deontic }   # OPEN — provisional, awaiting owner answer
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Enroll a student in a course for a term." }
+
+  - id: drop_course
+    reading: "Drop {Course} for {Student} in {Term}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: course, object_type: course }
+      - { name: term, object_type: term }
+    effects:
+      - retract: { fact_type: student_enrolled_in_course_in_term, bind: { student: "$student", course: "$course", term: "$term" } }
+    frame: { modality: deontic }   # OPEN — provisional, awaiting owner answer
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Drop a course, or every course in a term." }
+
+  - id: drop_term
+    reading: "Drop every course for {Student} in {Term}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: term, object_type: term }
+    effects:
+      - retract: { fact_type: student_enrolled_in_course_in_term, bind: { student: "$student", term: "$term" } }
+    frame: { modality: deontic }   # OPEN — provisional, awaiting owner answer
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Drop a course, or every course in a term." }
+
+  - id: record_grade
+    reading: "Record {Grade} for {Student} in {Course}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: course, object_type: course }
+      - { name: grade, object_type: grade }
+    effects:
+      - assert: { fact_type: student_received_grade_in_course, bind: { student: "$student", grade: "$grade", course: "$course" } }
+      - assert: { fact_type: student_passed_course, bind: { student: "$student", course: "$course" } }
+    dynamic_rules:
+      - id: recorded_grade_never_changes
+        subject: { fact_type: student_received_grade_in_course, value_role: grade, bind: { student: "$student", course: "$course" } }
+        op: "="
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "once a grade is recorded it never changes." }
+    frame: { modality: deontic }   # OPEN — provisional, awaiting owner answer
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, dialogue_turn: 1, user_quote: "Record a grade, which also marks the course as passed." }
+
+rejected_proposals: []
+
+deontic_notes:
+  - text: "OPEN: Is a Term a season (spring/fall, as the catalogue's Offered column reads) or a dated term such as Spring 2026 that belongs to a season?"
+    rationale: "Modeled as Term(.name) with values 'spring'/'fall' because that is all rules.md supplies."
+  - text: "OPEN: MATH120 is offered in no term, so no student can enroll in it. Intended?"
+    rationale: "Modeled literally from the blank Offered cell."
+  - text: "OPEN: Does every recorded grade (including a failing one) mark the course as passed?"
+    rationale: "Modeled literally: record_grade always asserts the pass. Grade values are unconstrained until the owner lists them."
+  - text: "OPEN: How is a Student identified?"
+    rationale: "Provisionally Student(.name), from 'Maya'."

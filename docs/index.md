@@ -19,7 +19,7 @@ hide:
 
 <figure class="hero-media">
 --8<-- "docs/assets/hero.svg"
-<figcaption class="caption">You ask for a payment. The agent answers with a plan: operations over the model, not prose. GND checks the plan, names the precondition that failed, and the agent resubmits a plan that passes. <a href="agents/plans.md">Run this example yourself →</a></figcaption>
+<figcaption class="caption">You ask for a payment. The agent answers with a plan: operations over the model, not prose. GND checks the plan, names the precondition that failed, and the agent resubmits a plan that passes. <a href="agents/plans.md">Run this example yourself →</a> · <a href="tutorials/course-planner.md">Build an app like it, with real recorded sessions →</a></figcaption>
 </figure>
 
 ## How it works
@@ -56,6 +56,45 @@ checker confirmed the failure when a 3B model did not converge, so you know the 
 state either way. Claude Code, Codex, any
 declared command or any OpenAI-compatible endpoint can be the agent
 ([sessions](agents/dev-session.md)).
+
+### The loop, step by step
+
+1. **Write the rules** in plain English, in a file such as `rules.md`.
+2. **Model them.** `/gnd:gnd-model-from-text rules.md` reads each rule, asks
+   when a rule could mean two things, and validates the model.
+3. **Set up the bot.** Any model behind a command can answer; the
+   [plan apps](tutorials/course-planner.md) show the interface, and
+   `/gnd:gnd-codegen` builds a project for your own model.
+4. **Ask the bot** a question in your own words.
+5. **It proposes a plan**: named operation steps, not prose.
+6. **GND checks the plan** against every rule, state by state, and names the
+   rule that fails and the facts that break it.
+7. **Execute or repair.** An accepted plan runs. A refused plan goes back to
+   the bot with the feedback, and it tries again.
+8. **Change a rule.** `/gnd:gnd-model-evolve` edits the model; the next plan is
+   checked against the new rule.
+
+### Quickstart
+
+In Claude Code, install the plugin:
+
+```text
+/plugin marketplace add vasiloglou/gnd-public
+/plugin install gnd@gnd-marketplace
+```
+
+Then follow the [course planner tutorial](tutorials/course-planner.md). It uses
+recorded sessions of Claude Code and of small models, so you see what each one
+actually did. To run the same rules on PyRel, see
+[the PyRel runtime](runtimes/pyrel.md).
+
+### Learn by building
+
+| Kind | Pages |
+|---|---|
+| Tutorials | [Build a course planner](tutorials/course-planner.md), [Refill prescriptions on a schedule](tutorials/clinic-refills.md) |
+| How-to guides | [Access requests](how-to/access-requests.md), [Trip budget](how-to/trip-budget.md), [Rent schedule](how-to/lease-schedule.md), [Recorded model runs](how-to/model-runs.md) |
+| Explanation | [How a rule becomes a PyRel check](explanation/rules-as-pyrel.md) |
 
 ## One model in the middle
 

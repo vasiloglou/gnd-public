@@ -1,0 +1,92 @@
+{
+ "version": 3,
+ "model_id": "urn:gnd:pl14:workload",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "item",
+   "name": "Item",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "item_code"
+   }
+  },
+  {
+   "id": "item_code",
+   "name": "ItemCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "day",
+   "name": "Day",
+   "kind": "value",
+   "primitive": "Date"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "due",
+   "reading": "{Item} is due on {Day}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "window",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "An item's window is open."
+   },
+   "antecedent": [
+    {
+     "fact_type": "due",
+     "bind": {
+      "item": "$i",
+      "day": "$d"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": {
+      "fn": "date_add",
+      "args": [
+       "$d",
+       {
+        "duration_days": 1
+       }
+      ]
+     },
+     "operator": ">",
+     "right": {
+      "fn": "date_sub",
+      "args": [
+       "$d",
+       {
+        "duration_days": 1
+       }
+      ]
+     }
+    }
+   }
+  }
+ ]
+}

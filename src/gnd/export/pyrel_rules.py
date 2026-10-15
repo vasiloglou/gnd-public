@@ -23,6 +23,7 @@ The checker that GND's applications run (``pyrel_runtime.py``) is separate;
 """
 from __future__ import annotations
 
+import datetime as _dt
 import json
 import keyword
 import re
@@ -38,7 +39,9 @@ from .pyrel_runtime import ExportInputError, _parse_document
 
 TARGETS = ("duckdb", "lqp")
 PYREL_VERSION = "1.30.1"
-_TYPES = {"String": "String", "Integer": "Integer", "Float": "Float", "Boolean": "Boolean"}
+# model primitive -> PyRel type; a Duration is a whole number of days (GND has no other durations)
+_TYPES = {"String": "String", "Integer": "Integer", "Float": "Float", "Boolean": "Boolean", "Date": "Date",
+          "Duration": "Integer"}
 _NEGATED = {"<": ">=", "<=": ">", "=": "!=", "!=": "==", ">=": "<", ">": "<="}
 _PYOP = {"<": "<", "<=": "<=", "=": "==", "==": "==", "!=": "!=", ">=": ">=", ">": ">"}
 _RESERVED = {"m", "not_", "Field", "String", "Integer", "Float", "Boolean", "Model", "Config",
@@ -48,7 +51,7 @@ _RESERVED = {"m", "not_", "Field", "String", "Integer", "Float", "Boolean", "Mod
              "warnings", "create_config", "argparse", "args", "parser", "problems", "caught", "w",
              "directory", "error", "rule", "name", "hits", "hit", "status", "row", "rows_", "path",
              "document", "relation", "roles", "r", "v", "k", "f", "g", "key", "fact", "seen", "aggregates",
-             "std_math", "h_row", "h_a", "h_b", "h_c", "h_x", "Fraction"}
+             "std_math", "h_row", "h_a", "h_b", "h_c", "h_x", "Fraction", "Date", "datetime", "std_date", "days"}
 
 
 @dataclass(frozen=True)
@@ -124,6 +127,10 @@ class _Model:
         return [{"role_name": name, "object_type": object_id} for name, object_id in self._roles[fact_id].items()]
 
     def primitive(self, object_id: str) -> str:
+        return _TYPES[self.raw_primitive(object_id)]
+
+    def raw_primitive(self, object_id: str) -> str:
+        """The model's own primitive (Date, Duration, ...), checked against what the programs support."""
         obj = self.objects.get(object_id)
         if obj is None:
             raise ExportInputError(f"unknown object type {object_id!r}")
@@ -137,6 +144,12 @@ class _Model:
         if primitive not in _TYPES:
             raise ExportInputError(f"primitive {primitive!r} is not supported by the rules programs yet")
         return primitive
+
+    def raw_role_type(self, fact_id: str, role_name: str) -> str:
+        for role in self.roles(fact_id):
+            if role["role_name"] == role_name:
+                return self.raw_primitive(role["object_type"])
+        raise ExportInputError(f"fact type {fact_id!r} has no role {role_name!r}")
 
     def role_type(self, fact_id: str, role_name: str) -> str:
         for role in self.roles(fact_id):
@@ -198,10 +211,10 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     elif kind == "comparison":
         if payload.get("operator") not in _NEGATED:
             raise ExportInputError(f"{c.get('id')}: unknown operator {payload.get('operator')!r}")
-        for side in ("left", "right"):
-            if isinstance(payload.get(side), dict):
-                raise ExportInputError(f"{c.get('id')}: function terms are a later phase")
-        check = Check("compare", compare=Compare(payload["operator"], payload["left"], payload["right"]))
+        types = _atom_types(model, domain)
+        left, right = (_typed_term(model, c["id"], payload[side], types, payload["right" if side == "left" else "left"])
+                       for side in ("left", "right"))
+        check = Check("compare", compare=Compare(payload["operator"], left, right))
     else:
         raise ExportInputError(f"{c.get('id')}: consequent kind {kind!r} is not supported")
     if not _connected(domain):
@@ -210,8 +223,79 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     # GND calls the rule vacuous when any antecedent fact type is empty, as the constraint reads it
     antecedents = tuple(dict.fromkeys(a.relation for a in domain))
     refs = tuple(dict.fromkeys([a.relation for a in domain] + ([check.atom.relation] if check.atom else [])))
-    return Requirement(c["id"], "guarded", c["modality"], _quote(c), domain, check, _variables(domain),
-                       ("any", antecedents), refs)
+    temporal = _date_functions(check.compare) if check.compare else []
+    info = (("temporal", temporal),) if temporal else ()
+    found = [Requirement(c["id"], "guarded", c["modality"], _quote(c), domain, check, _variables(domain),
+                         ("any", antecedents), refs, info=info)]
+    if temporal:
+        # GND leaves the rule unchecked when a computed date leaves years 1..9999 or past 10,000 date
+        # applications; the report decides that from every binding, before reading the verdict. The
+        # listing comes first: with no bindings the date arithmetic is not run at all (an empty Date
+        # relation reaches DuckDB untyped, and NULL + INTERVAL does not bind).
+        found.insert(0, Requirement(c["id"], "guarded", c["modality"], _quote(c), domain, Check("none"),
+                                    _variables(domain), ("any", antecedents), refs, part="bindings", listing=True,
+                                    info=info))
+    return found
+
+
+_DATE_FUNCTIONS = {"date_add": "add", "date_sub": "subtract"}
+
+
+def _atom_types(model: _Model, atoms: tuple[Atom, ...]) -> dict[str, str]:
+    """Each variable's model primitive (Date, Duration, Integer, ...), from the roles it fills."""
+    types: dict[str, str] = {}
+    for atom in atoms:
+        for role, arg in zip(model.roles(atom.relation), atom.args):
+            if isinstance(arg, str) and arg.startswith("$"):
+                types.setdefault(arg, model.raw_role_type(atom.relation, role["role_name"]))
+    return types
+
+
+def _term_type(term: Any, types: dict[str, str]) -> str | None:
+    if isinstance(term, str) and term.startswith("$"):
+        return types.get(term)
+    if isinstance(term, dict):
+        if "date" in term:
+            return "Date"
+        if "duration_days" in term:
+            return "Duration"
+        if term.get("fn") in _DATE_FUNCTIONS:
+            return "Date"
+        return "Integer"
+    return None
+
+
+def _typed_term(model: _Model, cid: str, term: Any, types: dict[str, str], other: Any) -> Any:
+    """Validate one guarded comparison operand; an untagged ISO string facing a Date becomes a Date literal."""
+    if isinstance(term, str) and not term.startswith("$") and _term_type(other, types) == "Date":
+        return {"date": term}
+    if not isinstance(term, dict):
+        return term
+    if set(term) in ({"date"}, {"duration_days"}):
+        return term
+    fn, args = term.get("fn"), term.get("args") or []
+    if fn in _DATE_FUNCTIONS:
+        if len(args) != 2 or any(isinstance(a, dict) and "fn" in a for a in args):
+            raise ExportInputError(f"{cid}: {fn} takes a date and a duration; nested date terms are a later phase")
+        return {"fn": fn, "args": [_typed_term(model, cid, args[0], types, {"date": ""}), args[1]]}
+    if fn in _ARITHMETIC:
+        for v in _term_variables(term):
+            if types.get(v) not in ("Integer", "Duration"):
+                raise ExportInputError(f"{cid}: arithmetic on {types.get(v)} values is not supported by the rules programs")
+        for literal in _term_literals(term):
+            if not isinstance(literal, int) or isinstance(literal, bool):
+                raise ExportInputError(f"{cid}: arithmetic with the literal {literal!r} is not supported by the rules programs")
+        return term
+    raise ExportInputError(f"{cid}: the function {fn!r} is not supported in rules programs' comparisons yet")
+
+
+def _date_functions(compare: Compare) -> list[list[Any]]:
+    """Every date_add/date_sub application in a comparison, as [function, date, days]."""
+    found = []
+    for side in (compare.left, compare.right):
+        if isinstance(side, dict) and side.get("fn") in _DATE_FUNCTIONS:
+            found.append([side["fn"], *side["args"]])
+    return found
 
 
 def _connected(atoms: tuple[Atom, ...]) -> bool:
@@ -517,6 +601,9 @@ def _refuse_unsupported_model(doc: dict[str, Any]) -> None:
     if doc.get("operations"):
         raise ExportInputError("operations (plans) are a later phase of the rules programs")
     for obj in doc.get("object_types", []):
+        if obj.get("primitive") == "DateTime":
+            raise ExportInputError(f"object type {obj['id']!r} is a DateTime; times of day and offsets are a later "
+                                   "phase of the rules programs ('DateTime')")
         if obj.get("subtype_of"):
             raise ExportInputError(f"object type {obj['id']!r} is a subtype; subtype universes are a later phase "
                                    "of the rules programs")
@@ -670,7 +757,7 @@ def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requi
     for c in doc.get("constraints", []):
         family = c.get("type")
         if family == "guarded":
-            found.append(_guarded(model, c))
+            found += _guarded(model, c)
         elif family == "subset":
             found.append(_subset(model, c))
         elif family == "value":
@@ -770,12 +857,42 @@ def _relation_roles(model: _Model, relation: str) -> list[tuple[str, str]]:
     raise ExportInputError(f"unknown relation {relation!r}")
 
 
+def _iso_date(value: Any) -> bool:
+    """GND's date: exactly YYYY-MM-DD and a real Gregorian day (gnd.terms.valid_date)."""
+    if not isinstance(value, str) or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", value):
+        return False
+    try:
+        _dt.date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
+
+
+def _literal(value: Any, primitive: str) -> str:
+    """A model literal as Python source for the PyRel type it fills (dates become datetime.date).
+
+    GND compares a string that is not a strict YYYY-MM-DD date with dates as text, so it never equals one,
+    and an ordered comparison with it is unchecked; the rules programs refuse such a literal by name.
+    """
+    if isinstance(value, dict) and set(value) == {"date"}:
+        value, primitive = value["date"], "Date"
+    if isinstance(value, dict) and set(value) == {"duration_days"}:
+        return repr(value["duration_days"])
+    if primitive == "Date" and isinstance(value, str):
+        if not _iso_date(value):
+            raise ExportInputError(f"the date literal {value!r} is not a YYYY-MM-DD date; GND compares it with dates "
+                                   "as text, which the rules programs do not reproduce")
+        year, month, day = (int(part) for part in value.split("-"))
+        return f"datetime.date({year}, {month}, {day})"
+    return repr(value)
+
+
 def _term(arg: Any, names: _Names, model: _Model, primitive: str) -> str:
     if isinstance(arg, str) and arg.startswith("$"):
         return names.var(arg)
     if arg is None:
         return f"{primitive}.ref()"
-    return repr(arg)
+    return _literal(arg, primitive)
 
 
 def _atom_text(atom: Atom, names: _Names, model: _Model) -> str:
@@ -788,6 +905,13 @@ def _operand(value: Any, names: _Names) -> str:
     if isinstance(value, Count):
         text = f"aggregates.count({', '.join(names.var(v) for v in value.of)})"
         return text + (f".per({', '.join(names.var(v) for v in value.per)})" if value.per else "")
+    if isinstance(value, dict) and value.get("fn") in _DATE_FUNCTIONS:
+        when, length = (_operand(a, names) for a in value["args"])
+        return f"std_date.{_DATE_FUNCTIONS[value['fn']]}({when}, days({length}))"
+    if isinstance(value, dict) and "fn" in value:
+        return _FN[value["fn"]].format(*(_operand(a, names) for a in value["args"]))
+    if isinstance(value, dict):
+        return _literal(value, "")
     return names.var(value) if isinstance(value, str) and value.startswith("$") else repr(value)
 
 
@@ -847,7 +971,7 @@ def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[st
             lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(h_x))")
         rosters = _rosters(model, object_id)
         lines.append(f"    for value in [v for key in {rosters!r} for v in instances.get(key, [])]:")
-        lines.append(f"        m.define({rel}(value))")
+        lines.append(f"        m.define({rel}({'datetime.date.fromisoformat(value)' if primitive == 'Date' else 'value'}))")
     return lines
 
 
@@ -859,7 +983,10 @@ def _allowed(model: _Model, reqs: list[Requirement], names: _Names) -> list[str]
             primitive = model.primitive(c["object_type"])
             lines.append(f"    # {c['id']}: the declared list of allowed values")
             lines.append(f"    {rel} = m.Relationship(fields=[Field('value', {primitive})], short_name='{c['id']}_allowed')")
-            lines.append(f"    m.define(*[{rel}(v) for v in {c['allowed']!r}])")
+            # a malformed date in the list can never equal a date value, as in GND: it is left out
+            listed = [v for v in c["allowed"] if primitive != "Date" or _iso_date(v)]
+            values = ", ".join(_literal(v, primitive) for v in listed)
+            lines.append(f"    m.define(*[{rel}(v) for v in [{values}]])")
     return lines
 
 
@@ -898,10 +1025,11 @@ def _helpers(model: _Model, names: _Names, kinds: tuple[str, ...] | None = None)
             lines.insert(-1, f"    # the values of {spec['object_type']} that fall inside a declared range")
             for bounds in spec["ranges"]:
                 conditions = []
+                kind = spec["fields"][0][1]
                 if bounds.get("min") is not None:
-                    conditions.append(f"h_x {'>=' if bounds.get('min_inclusive', True) else '>'} {bounds['min']!r}")
+                    conditions.append(f"h_x {'>=' if bounds.get('min_inclusive', True) else '>'} {_literal(bounds['min'], kind)}")
                 if bounds.get("max") is not None:
-                    conditions.append(f"h_x {'<=' if bounds.get('max_inclusive', True) else '<'} {bounds['max']!r}")
+                    conditions.append(f"h_x {'<=' if bounds.get('max_inclusive', True) else '<'} {_literal(bounds['max'], kind)}")
                 lines.append(f"    h_x = {spec['fields'][0][1]}.ref()")
                 lines.append(f"    m.where({universe}(h_x){''.join(', ' + c for c in conditions)}).define({rel}(h_x))")
         else:
@@ -922,7 +1050,9 @@ def _relations(model: _Model, names: _Names) -> list[str]:
             target = f"{fact_id}_claimed"
             lines.append(f"    # the claimed {fact_id} facts; constraints read the computed ones (as GND does)")
             lines.append(f"    {names.relation(target)} = m.Relationship(fields=[{fields}], short_name={target!r})")
-        lines.append(f"    load(m, {names.relation(target)}, facts.get({fact_id!r}, []), {roles!r})")
+        dates = tuple(r for r in roles if model.raw_role_type(fact_id, r) == "Date")
+        lines.append(f"    load(m, {names.relation(target)}, facts.get({fact_id!r}, []), {roles!r}"
+                     + (f", dates={dates!r})" if dates else ")"))
     return lines
 
 
@@ -1073,7 +1203,10 @@ def _rule_block(req: Requirement, model: _Model, names: _Names, target: str) -> 
     else:
         lines.append(f"    #   rule:      {require_text(req, names, model)}")
         lines.append("    #   violation: the facts that match the domain and fail the check")
-        lines.append(f"    found[{key!r}] = rows({denial_text(req, names, model)})")
+        query = f"rows({denial_text(req, names, model)})"
+        if dict(req.info).get("temporal"):   # violations come from bindings; with none, skip the date arithmetic
+            query = f"{query} if found[{req.id + '::bindings'!r}] else []"
+        lines.append(f"    found[{key!r}] = {query}")
     return lines
 
 
@@ -1256,6 +1389,12 @@ def report(population, found):
             vacuous = True
             continue
         status = 'violated' if rule['modality'] == 'alethic' else 'warning'
+        if rule['info'].get('temporal'):
+            reason = date_reason(rule, found[f'{name}::bindings'])
+            if reason:
+                print(f'{name}  not checked  ({reason})')
+                unchecked = unchecked or rule['modality'] == 'alethic'
+                continue
         if rule['family'] in GROUPED:
             verdict, witness = judge(parts, found, facts)
             if verdict == 'vacuous':
@@ -1278,6 +1417,27 @@ def report(population, found):
         print(f"{rule['id']}  not checked  (textual rule: {rule['expression']})")
         unchecked = unchecked or rule['modality'] == 'alethic'
     return 1 if violated else 4 if unchecked else 2 if vacuous else 0
+
+
+def date_reason(rule, bindings):
+    """Why GND would leave a rule with date_add/date_sub unchecked, or None.
+
+    GND evaluates at most 10,000 date functions per rule, and a computed date must stay within
+    0001-01-01..9999-12-31. The requirement decides the rule only when both hold for every binding.
+    """
+    functions = rule['info']['temporal']
+    if len(bindings) * len(functions) > 10_000:
+        return 'term:temporal-work-limit'
+    names = rule['witness']
+    for row in bindings:
+        values = dict(zip(names, row))
+        for function, when, length in functions:
+            day = values[when] if isinstance(when, str) and when.startswith('$') else when['date']
+            span = values[length] if isinstance(length, str) else length['duration_days']
+            ordinal = datetime.date.fromisoformat(day).toordinal() + (span if function == 'date_add' else -span)
+            if not 1 <= ordinal <= datetime.date.max.toordinal():
+                return 'term:date-out-of-range'
+    return None
 
 
 def witnesses(rule, found):
@@ -1403,16 +1563,59 @@ if __name__ == '__main__':
 '''
 
 
+def _roster_types(model: _Model) -> dict[str, str]:
+    """The primitive each instances roster holds; rosters are checked like fact cells, as GND checks them."""
+    found = {}
+    for object_id in model.objects:
+        try:
+            found[object_id] = model.raw_primitive(object_id)
+        except ExportInputError:
+            continue
+    return found
+
+
+def _bind_reference(loaded: Any, model_path: Path) -> dict[str, Any] | None:
+    """Bind the model's reference populations with GND's own binder; the program embeds what it bound.
+
+    GND verifies each file's SHA-256, ownership and identity before checking; a refusal here stops the
+    export by name. The snapshot is taken now, so a later edit to a reference file needs a new export.
+    """
+    declared = list(getattr(loaded, "reference_populations", None) or [])
+    if not declared:
+        return None
+    from gnd.artifacts import ArtifactError
+    from gnd.model import ReferenceInputError
+    from gnd.references import bind_references
+    try:
+        context = bind_references(loaded, root=model_path.parent)
+    except (ReferenceInputError, ArtifactError, OSError, ValueError) as error:
+        raise ExportInputError(f"reference population: {error}") from error
+    facts: dict[str, list[dict[str, Any]]] = {}
+    instances: dict[str, list[Any]] = {}
+    covers: list[str] = []
+    for population in context._populations:   # the validated snapshots GND itself checks against
+        for fact_type, rows in population.facts.items():
+            facts[fact_type] = [dict(row) for row in rows]
+        for object_type, values in population.instances.items():
+            instances.setdefault(object_type, []).extend(values)
+        covers += [f for f in population.covers if f not in covers]
+    return {"files": [[d["id"], d["path"], d["sha256"]] for d in declared],
+            "owned": sorted(fact_type for fact_type, _ in context._owners),
+            "facts": facts, "instances": instances, "covers": covers}
+
+
 def render(model_path: Path, target: str) -> str:
     if target not in TARGETS:
         raise ExportInputError(f"target must be one of {TARGETS}")
     raw = Path(model_path).read_bytes()
+    from gnd.model import ReferenceInputError
     try:
-        load_model_bytes(raw, source=str(model_path))
-    except (ModelLoadError, ModelValidationError) as error:
+        loaded = load_model_bytes(raw, source=str(model_path))
+    except (ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise ExportInputError(f"invalid model: {error}") from error
     doc = _parse_document(raw.decode("utf-8"))
     model = _Model(doc)
+    reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
     reqs = requirements(doc, model)
     names = _Names(model)
     spanning = spanning_uniqueness(doc)
@@ -1427,7 +1630,9 @@ def render(model_path: Path, target: str) -> str:
                   "violation. The local DuckDB backend does NOT enforce require, so run this with\n"
                   "--connection NAME, or use --compile to see how PyRel compiled each requirement.\n"
                   "The duckdb version of this program checks the same rules on your laptop, and also\n"
-                  "reports vacuous rules and exit bands, which this version does not.\n\n"
+                  "reports vacuous rules and exit bands, which this version does not. It also decides when\n"
+                  "GND would leave a date rule unchecked (a date outside years 1 to 9999, or more than\n"
+                  "10,000 date calculations); an engine running this version reports such a rule as broken.\n\n"
                   "ENGINE-UNVERIFIED: GND's tests compile this program but have not run --connection\n"
                   "against an engine.\n\n"
                   "Generated by `gnd export pyrel --rules lqp`. Do not edit; change the model instead.\n"
@@ -1442,15 +1647,21 @@ def render(model_path: Path, target: str) -> str:
                   "Usage: python THIS_FILE POPULATION.json\n"
                   "Generated by `gnd export pyrel --rules duckdb`. Do not edit; change the model instead.\n"
                   '"""\n')
+    if reference:
+        listed = "".join(f"  {i}  {path}  sha256 {digest}\n" for i, path, digest in reference["files"])
+        spanning_note += ("Reference populations, verified and embedded when this program was generated:\n"
+                          f"{listed}A changed reference file needs a new export.\n\n")
     out = [
         f"# /// script\n# requires-python = \">=3.11,<3.14\"\n# dependencies = [\"relationalai=={PYREL_VERSION}\"]\n# ///",
         header.rstrip("\n").replace("Generated by", spanning_note + "Generated by", 1),
-        "from __future__ import annotations\n\nimport json\nimport os\nimport re\nimport sys\nimport tempfile"
+        "from __future__ import annotations\n\nimport datetime\nimport json\nimport os\nimport re\nimport sys\nimport tempfile"
         + ("\nfrom fractions import Fraction" if target == "duckdb" else ""),
         (f"\nSCHEMA = {schema!r}\nRULES = json.loads({_rules_table(reqs)!r})\n"
          f"SEMIDERIVED = {[h for h in model.derived if model.facts[h]['derivation'] == 'semiderived']!r}\n"
-         f"ROLES = {({f: [[r['role_name'], model.role_type(f, r['role_name'])] for r in model.roles(f)] for f in model.facts})!r}\n"
-         f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\nLIMIT = 1 << 20\n"),
+         f"ROLES = {({f: [[r['role_name'], model.raw_role_type(f, r['role_name'])] for r in model.roles(f)] for f in model.facts})!r}\n"
+         f"ROSTERS = {_roster_types(model)!r}\n"
+         f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\n"
+         f"REFERENCE = json.loads({json.dumps(reference)!r})\nLIMIT = 1 << 20\n"),
         ("\ndef read_population(path):\n"
         "    with open(path, 'rb') as handle:\n"
         "        raw = handle.read(LIMIT + 1)\n"
@@ -1463,6 +1674,11 @@ def render(model_path: Path, target: str) -> str:
         "    if not isinstance(header, dict):\n"
         "        raise ValueError('population header must be a mapping')\n"
         "    covers = header.setdefault('covers', [])   # absent covers: nothing is vouched for\n"
+        "    for object_type, values in (document.get('instances') or {}).items():\n"
+        "        for value in values if object_type in ROSTERS else ():\n"
+        "            check_cell('instances', object_type, ROSTERS[object_type], value)\n"
+        "    if REFERENCE and any(f in REFERENCE['owned'] for f in document['facts']):\n"
+        "        raise ValueError('candidate cannot mention a reference-owned fact type')\n"
         "    if not isinstance(covers, list):\n"
         "        raise ValueError('covers must be a list of fact types')\n"
         "    # GND's checker reads every fact list; only mandatory roles consult covers (see report).\n"
@@ -1480,23 +1696,45 @@ def render(model_path: Path, target: str) -> str:
         "                raise ValueError(f'duplicate rows in {fact_type}: PyRel relations are sets, so '\n"
         "                                 'repeated facts cannot be checked here; GND reports them')\n"
         "            seen.add(key)\n"
+        "    if REFERENCE:   # the candidate plus the embedded reference facts, as GND checks them\n"
+        "        document['facts'].update(REFERENCE['facts'])\n"
+        "        for object_type, values in REFERENCE['instances'].items():\n"
+        "            document.setdefault('instances', {}).setdefault(object_type, []).extend(values)\n"
+        "        covers += [f for f in REFERENCE['covers'] if f not in covers]\n"
         "    return document\n"),
         ("\ndef check_cell(fact_type, role, primitive, value):\n"
         "    \"\"\"GND refuses a cell of the wrong type (exit 3); so does this program, before PyRel sees it.\"\"\"\n"
         "    if isinstance(value, dict):\n"
         "        raise ValueError(f'{fact_type}.{role} holds an opaque value; the rules programs do not check those')\n"
+        "    number = isinstance(value, (int, float)) and not isinstance(value, bool)\n"
         "    ok = {'String': isinstance(value, str), 'Boolean': isinstance(value, bool),\n"
-        "          'Integer': isinstance(value, int) and not isinstance(value, bool),\n"
-        "          'Float': isinstance(value, (int, float)) and not isinstance(value, bool)}[primitive]\n"
+        "          'Integer': number and isinstance(value, int), 'Float': number,\n"
+        "          'Duration': number and isinstance(value, int) and 0 <= value <= 1_000_000,\n"
+        "          'Date': is_date(value)}[primitive]\n"
         "    if not ok:\n"
         "        raise ValueError(f'{fact_type}.{role} is {value!r}, which is not a valid {primitive}')\n"),
-        ("\ndef load(m, relation, rows, roles):\n"
+        ("\ndef is_date(value):\n"
+        "    \"\"\"A real Gregorian day written YYYY-MM-DD, as GND requires.\"\"\"\n"
+        "    if not isinstance(value, str) or not re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}', value):\n"
+        "        return False\n"
+        "    try:\n"
+        "        datetime.date.fromisoformat(value)\n"
+        "    except ValueError:\n"
+        "        return False\n"
+        "    return True\n"),
+        ("\ndef load(m, relation, rows, roles, dates=()):\n"
+        "    \"\"\"Define the facts; dates go in as datetime.date (PyRel Date fields reject ISO strings).\"\"\"\n"
         "    if rows:\n"
-        "        m.define(*[relation(*[row[r] for r in roles]) for row in rows])\n"),
+        "        m.define(*[relation(*[datetime.date.fromisoformat(row[r]) if r in dates else row[r] for r in roles])\n"
+        "                   for row in rows])\n"),
         ("\ndef rows(query):\n"
-        "    return sorted(list(row) for row in query.to_df().itertuples(index=False, name=None))\n"),
+        "    \"\"\"Query rows, sorted, with dates printed as GND prints them (YYYY-MM-DD).\"\"\"\n"
+        "    return sorted([v.isoformat() if isinstance(v, datetime.date) else v for v in row]\n"
+        "                  for row in query.to_df().itertuples(index=False, name=None))\n"),
         "\ndef build(population, config):\n"
-        "    from relationalai.semantics import Boolean, Field, Float, Integer, Model, String, not_  # noqa: F401\n"
+        "    from relationalai.semantics import Boolean, Date, Field, Float, Integer, Model, String, not_  # noqa: F401\n"
+        "    from relationalai.semantics.std import datetime as std_datetime  # noqa: F401\n"
+        "    std_date, days = std_datetime.date, std_datetime.days  # noqa: F841\n"
         "    from relationalai.semantics.std import aggregates  # noqa: F401\n"
         "    from relationalai.semantics.std import math as std_math  # noqa: F401\n"
         "    m = Model(SCHEMA, config=config)\n"

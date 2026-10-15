@@ -1,0 +1,391 @@
+{
+ "version": 3,
+ "model_id": "urn:gnd:review:fam",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "day",
+   "name": "Day",
+   "kind": "value",
+   "primitive": "Date"
+  },
+  {
+   "id": "who",
+   "name": "Who",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "span",
+   "name": "Span",
+   "kind": "value",
+   "primitive": "Duration"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "precedes",
+   "reading": "{Day} precedes {Day}",
+   "roles": [
+    {
+     "object_type": "day",
+     "role_name": "a"
+    },
+    {
+     "object_type": "day",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "acyc",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "acyc"
+     },
+     "variant": "acyclic"
+    },
+    {
+     "id": "irr",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "irr"
+     },
+     "variant": "irreflexive"
+    },
+    {
+     "id": "asym",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "asym"
+     },
+     "variant": "asymmetric"
+    }
+   ]
+  },
+  {
+   "id": "trans",
+   "reading": "{Day} links {Day}",
+   "roles": [
+    {
+     "object_type": "day",
+     "role_name": "a"
+    },
+    {
+     "object_type": "day",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "tr",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "tr"
+     },
+     "variant": "transitive"
+    },
+    {
+     "id": "sym",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "sym"
+     },
+     "variant": "symmetric"
+    }
+   ]
+  },
+  {
+   "id": "holiday",
+   "reading": "{Day} is a holiday",
+   "roles": [
+    {
+     "object_type": "day",
+     "role_name": "d"
+    }
+   ],
+   "constraints": []
+  },
+  {
+   "id": "workday",
+   "reading": "{Day} is a workday",
+   "roles": [
+    {
+     "object_type": "day",
+     "role_name": "d"
+    }
+   ],
+   "constraints": []
+  },
+  {
+   "id": "observed",
+   "reading": "{Day} is observed",
+   "roles": [
+    {
+     "object_type": "day",
+     "role_name": "d"
+    }
+   ],
+   "constraints": []
+  },
+  {
+   "id": "visit",
+   "reading": "{Who} visits on {Day}",
+   "roles": [
+    {
+     "object_type": "who",
+     "role_name": "who"
+    },
+    {
+     "object_type": "day",
+     "role_name": "d"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "uq_who",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "uq_who"
+     },
+     "roles": [
+      "who"
+     ]
+    },
+    {
+     "id": "fq_day",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "fq_day"
+     },
+     "scope": "internal",
+     "roles": [
+      "d"
+     ],
+     "bound": {
+      "min": 2,
+      "max": 3
+     }
+    }
+   ]
+  },
+  {
+   "id": "stay",
+   "reading": "{Who} stays {Span}",
+   "roles": [
+    {
+     "object_type": "who",
+     "role_name": "who"
+    },
+    {
+     "object_type": "span",
+     "role_name": "n"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "uq_n",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "uq_n"
+     },
+     "roles": [
+      "n"
+     ]
+    },
+    {
+     "id": "mand",
+     "type": "mandatory",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "mand"
+     },
+     "role": "who"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "ex",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "ex"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "holiday",
+     "role": "d"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "workday",
+     "role": "d"
+    }
+   ]
+  },
+  {
+   "id": "eq",
+   "type": "equality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "eq"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "holiday",
+     "role": "d"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "observed",
+     "role": "d"
+    }
+   ]
+  },
+  {
+   "id": "sub",
+   "type": "subset",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "sub"
+   },
+   "subset_role_seq": [
+    {
+     "fact_type": "visit",
+     "role": "d"
+    }
+   ],
+   "superset_role_seq": [
+    {
+     "fact_type": "workday",
+     "role": "d"
+    }
+   ]
+  },
+  {
+   "id": "card",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "card"
+   },
+   "scope": "object",
+   "object_type": "day",
+   "bound": {
+    "min": 1,
+    "max": 4
+   }
+  },
+  {
+   "id": "cardr",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "cardr"
+   },
+   "scope": "role",
+   "role_ref": {
+    "fact_type": "holiday",
+    "role": "d"
+   },
+   "bound": {
+    "max": 1
+   }
+  },
+  {
+   "id": "md",
+   "type": "mandatory-disjunctive",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "md"
+   },
+   "role_refs": [
+    {
+     "fact_type": "holiday",
+     "role": "d"
+    },
+    {
+     "fact_type": "workday",
+     "role": "d"
+    }
+   ]
+  },
+  {
+   "id": "vr",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "vr"
+   },
+   "object_type": "day",
+   "range": {
+    "min": "2000-01-01",
+    "max": "2030-12-31",
+    "max_inclusive": false
+   }
+  },
+  {
+   "id": "vs",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "vs"
+   },
+   "object_type": "span",
+   "range": {
+    "min": 0,
+    "max": 10
+   }
+  }
+ ]
+}

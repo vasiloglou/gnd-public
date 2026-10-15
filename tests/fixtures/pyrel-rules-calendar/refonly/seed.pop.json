@@ -1,0 +1,73 @@
+{
+ "facts": {
+  "dispatch_flag": [
+   {
+    "job": "SHIP-0",
+    "value": false
+   },
+   {
+    "job": "SHIP-0",
+    "value": true
+   }
+  ],
+  "dispatch_metric": [
+   {
+    "job": "SHIP-0",
+    "value": -1
+   },
+   {
+    "job": "SHIP-0",
+    "value": 2
+   }
+  ],
+  "dispatch_reachable": [
+   {
+    "source": "WH-A",
+    "target": "WH-B"
+   },
+   {
+    "source": "WH-A",
+    "target": "WH-C"
+   },
+   {
+    "source": "WH-A",
+    "target": "DEST-D"
+   },
+   {
+    "source": "WH-B",
+    "target": "WH-C"
+   },
+   {
+    "source": "WH-B",
+    "target": "DEST-D"
+   },
+   {
+    "source": "WH-C",
+    "target": "DEST-D"
+   }
+  ],
+  "dispatch_request": [
+   {
+    "job": "SHIP-0",
+    "node": "WH-A"
+   }
+  ]
+ },
+ "format_version": 2,
+ "instances": {
+  "dispatch_type_job": [
+   "SHIP-0"
+  ]
+ },
+ "population": {
+  "covers": [
+   "dispatch_request",
+   "dispatch_metric",
+   "dispatch_flag",
+   "dispatch_reachable"
+  ],
+  "model": "model.orm.json",
+  "model_id": "urn:gnd-fixture:v71-dispatch-integrated@1",
+  "source": "fixture"
+ }
+}

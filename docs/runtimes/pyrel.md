@@ -135,7 +135,18 @@ Both versions cover these rule families:
 - guarded rules;
 - derived facts: joins, negation, comparisons, several clauses, recursion,
   `count`, `sum`, `min` and `max`, and the arithmetic `add`, `sub`, `mul`,
-  `neg` and `abs`.
+  `neg` and `abs`;
+- dates and durations: Date roles, Date ranges, date comparisons, and
+  `date_add` and `date_sub` in guarded comparisons;
+- reference populations.
+
+Dates are PyRel `Date` values, and `date_add(x, n)` becomes
+`std_date.add(x, days(n))`. A rule whose computed date would fall outside
+years 1 to 9999, or that needs more than 10,000 date calculations, is reported
+as not checked, as GND reports it. Reference populations are verified with
+GND's own checks when the program is generated, and embedded in it; its header
+names each file and its SHA-256. A plan that restates a reference-owned fact
+type is refused, as GND refuses it.
 
 A derived fact type becomes PyRel `define` rules, and GND's derivation check
 becomes two requirements: every computed fact is in the input, and every fact
@@ -145,8 +156,8 @@ reported as not checked, as GND reports it.
 Textual rules are listed as not checked, as GND lists them. External uniqueness
 and frequency, exclusive-or over role sequences, subtypes, disconnected rule
 bodies, opaque derivation rules, `avg`, division, rounding, the other
-non-exact functions and arithmetic on Float values are refused by name when you
-export. So is a fact type
+non-exact functions, arithmetic on Float values and times of day (`DateTime`)
+are refused by name when you export. So is a fact type
 whose name the program needs for a helper relation, such as `likes_reverse`.
 
 The DuckDB version reads every fact list in the input, as GND does. A mandatory

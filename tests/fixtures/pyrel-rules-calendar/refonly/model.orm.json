@@ -1,0 +1,219 @@
+{
+ "constraints": [
+  {
+   "id": "dispatch_approved_node",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Fixture-authored mechanical rule."
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "subset_role_seq": [
+    {
+     "fact_type": "dispatch_request",
+     "role": "node"
+    }
+   ],
+   "superset_role_seq": [
+    {
+     "fact_type": "dispatch_allowed",
+     "role": "node"
+    }
+   ],
+   "type": "subset"
+  }
+ ],
+ "fact_types": [
+  {
+   "constraints": [
+    {
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "Fixture-authored mechanical rule."
+     },
+     "role": "job",
+     "source": "explicit",
+     "status": "confirmed",
+     "type": "mandatory"
+    },
+    {
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "Fixture-authored mechanical rule."
+     },
+     "roles": [
+      "job"
+     ],
+     "source": "explicit",
+     "status": "confirmed",
+     "type": "uniqueness"
+    }
+   ],
+   "id": "dispatch_request",
+   "reading": "{Shipment} relates {Warehouse}",
+   "roles": [
+    {
+     "object_type": "dispatch_type_job",
+     "role_name": "job"
+    },
+    {
+     "object_type": "dispatch_type_node",
+     "role_name": "node"
+    }
+   ]
+  },
+  {
+   "id": "dispatch_allowed",
+   "reading": "{Warehouse}",
+   "roles": [
+    {
+     "object_type": "dispatch_type_node",
+     "role_name": "node"
+    }
+   ]
+  },
+  {
+   "id": "dispatch_leg",
+   "reading": "{Warehouse} relates {Warehouse}",
+   "roles": [
+    {
+     "object_type": "dispatch_type_node",
+     "role_name": "source"
+    },
+    {
+     "object_type": "dispatch_type_node",
+     "role_name": "target"
+    }
+   ]
+  },
+  {
+   "derivation": "derived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "bind": {
+         "source": "$x",
+         "target": "$y"
+        },
+        "fact_type": "dispatch_leg"
+       }
+      ],
+      "head": {
+       "source": "$x",
+       "target": "$y"
+      }
+     },
+     {
+      "body": [
+       {
+        "bind": {
+         "source": "$x",
+         "target": "$z"
+        },
+        "fact_type": "dispatch_leg"
+       },
+       {
+        "bind": {
+         "source": "$z",
+         "target": "$y"
+        },
+        "fact_type": "dispatch_reachable"
+       }
+      ],
+      "head": {
+       "source": "$x",
+       "target": "$y"
+      }
+     }
+    ]
+   },
+   "id": "dispatch_reachable",
+   "reading": "{Warehouse} relates {Warehouse}",
+   "roles": [
+    {
+     "object_type": "dispatch_type_node",
+     "role_name": "source"
+    },
+    {
+     "object_type": "dispatch_type_node",
+     "role_name": "target"
+    }
+   ]
+  },
+  {
+   "id": "dispatch_metric",
+   "reading": "{Shipment} relates {Quantity}",
+   "roles": [
+    {
+     "object_type": "dispatch_type_job",
+     "role_name": "job"
+    },
+    {
+     "object_type": "dispatch_type_metric",
+     "role_name": "value"
+    }
+   ]
+  },
+  {
+   "id": "dispatch_flag",
+   "reading": "{Shipment} relates {Approved}",
+   "roles": [
+    {
+     "object_type": "dispatch_type_job",
+     "role_name": "job"
+    },
+    {
+     "object_type": "dispatch_type_flag",
+     "role_name": "value"
+    }
+   ]
+  }
+ ],
+ "model_id": "urn:gnd-fixture:v71-dispatch-integrated@1",
+ "object_types": [
+  {
+   "id": "dispatch_type_job",
+   "kind": "value",
+   "name": "Shipment",
+   "primitive": "String"
+  },
+  {
+   "id": "dispatch_type_node",
+   "kind": "value",
+   "name": "Warehouse",
+   "primitive": "String"
+  },
+  {
+   "id": "dispatch_type_metric",
+   "kind": "value",
+   "name": "Quantity",
+   "primitive": "Integer"
+  },
+  {
+   "id": "dispatch_type_flag",
+   "kind": "value",
+   "name": "Approved",
+   "primitive": "Boolean"
+  }
+ ],
+ "reference_populations": [
+  {
+   "fact_types": [
+    "dispatch_allowed",
+    "dispatch_leg"
+   ],
+   "id": "catalog",
+   "path": "references/catalog.pop.json",
+   "sha256": "a56ea3ba86db90da81e1bcf11eaf6703e031d73140c7543f2bd501ffcbf066c1"
+  }
+ ],
+ "rejected_proposals": [],
+ "source": {
+  "confidence": "standard",
+  "kind": "text-conversation",
+  "mode": "one-shot"
+ },
+ "version": 4
+}

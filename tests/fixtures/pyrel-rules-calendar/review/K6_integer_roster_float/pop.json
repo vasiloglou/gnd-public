@@ -1,0 +1,30 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "model_id": "urn:gnd:review:ints",
+  "source": "fixture",
+  "covers": [
+   "has_qty",
+   "has_cap"
+  ]
+ },
+ "facts": {
+  "has_qty": [
+   {
+    "item": "a",
+    "qty": 1
+   }
+  ],
+  "has_cap": [
+   {
+    "item": "a",
+    "cap": 2
+   }
+  ]
+ },
+ "instances": {
+  "qty": [
+   1.5
+  ]
+ }
+}

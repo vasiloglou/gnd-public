@@ -1,0 +1,85 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "model_id": "urn:gnd:pl14:clinic",
+  "source": "fixture",
+  "covers": [
+   "born",
+   "refill_interval",
+   "last_refill",
+   "refill_request",
+   "prescribed_from",
+   "prescribed_until",
+   "recent_request"
+  ]
+ },
+ "facts": {
+  "born": [
+   {
+    "patient": "ann",
+    "day": "1980-04-02"
+   },
+   {
+    "patient": "ben",
+    "day": "2001-11-30"
+   }
+  ],
+  "refill_interval": [
+   {
+    "drug": "statin",
+    "days": 30
+   },
+   {
+    "drug": "inhaler",
+    "days": 14
+   }
+  ],
+  "last_refill": [
+   {
+    "patient": "ann",
+    "drug": "statin",
+    "day": "2024-01-31"
+   },
+   {
+    "patient": "ben",
+    "drug": "inhaler",
+    "day": "2024-06-20"
+   }
+  ],
+  "refill_request": [
+   {
+    "patient": "ann",
+    "drug": "statin",
+    "day": "2024-03-01"
+   },
+   {
+    "patient": "ben",
+    "drug": "inhaler",
+    "day": "2024-07-04"
+   }
+  ],
+  "prescribed_from": [
+   {
+    "patient": "ann",
+    "drug": "statin",
+    "day": "2023-12-01"
+   },
+   {
+    "patient": "ben",
+    "drug": "inhaler",
+    "day": "2024-05-01"
+   }
+  ],
+  "prescribed_until": [],
+  "recent_request": [
+   {
+    "patient": "ann",
+    "drug": "statin"
+   },
+   {
+    "patient": "ben",
+    "drug": "inhaler"
+   }
+  ]
+ }
+}

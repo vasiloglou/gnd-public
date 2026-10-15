@@ -57,7 +57,7 @@ def _ids(doc):
     return ids
 
 
-_PER_LINE = ('value', 'guarded', 'mandatory')
+_PER_LINE = ('value', 'guarded', 'mandatory', 'subset')
 
 
 def _assert_agrees(stdout, verdicts):

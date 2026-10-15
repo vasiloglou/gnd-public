@@ -56,6 +56,10 @@ remaining phases:
 | PL18 | [019](019-recording-gate-PL18-skills.md) (gate), [021](021-phase-PL18.md) | GSD-style tutorials, how-to and explanation pages, with recorded replays |
 | PL19 | [022](022-owner-decisions-close.md) (owner rulings), [023](023-milestone-close.md) (close) | four close readers, local CI, open questions carried forward |
 
+[024](024-close-correction.md) corrects 022 and 023 on who created the five
+untracked BookRec rules files: the PL12 review subagent did, not an earlier session;
+they were deleted.
+
 The owner ruled on the close findings in [022](022-owner-decisions-close.md),
 which also closes PL4-Q1. On 2026-10-15 the owner authorized pushing and
 merging PR #22 once the local CI had run.

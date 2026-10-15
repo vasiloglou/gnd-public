@@ -87,7 +87,7 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
                     text = content if isinstance(content, str) else " ".join(
                         c.get("text", "") for c in content or [] if isinstance(c, dict))
                     if part.get("type") == "tool_result" and part.get("tool_use_id") in denied:
-                        lines.append(("fail", "    → refused by Claude Code's permission rules (a chained shell command)"))
+                        lines.append(("fail", "    → refused by Claude Code's permission rules"))
                     elif part.get("type") == "tool_result" and part.get("is_error") and text.endswith("output not kept]"):
                         lines.append(("fail", "    → returned an error (its output is not kept)"))
                     elif text and not text.endswith("output not kept]"):

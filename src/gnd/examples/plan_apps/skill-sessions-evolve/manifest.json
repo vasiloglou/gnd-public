@@ -1,0 +1,18 @@
+{
+ "files": {
+  "claude-haiku/run-1/model.orm.json": "b86855c17e26fd25ca1633c81d3aeb201a83f368b646f4c93b789b5a10c9b3af",
+  "claude-haiku/run-1/turn-01.jsonl": "9a17bc8b71d34611aaa9ca2e4462e2b2ff9d3b1c71034c6d0f3c25de1e39e7bb",
+  "claude-haiku/run-1/validate.txt": "340e26dd82980e37d409b9ef08b2f9261a763afaa71a1d75aed516153e790d6f",
+  "claude-haiku/run-2/model.orm.json": "ad28ef84a1eaf891812c04c2b15da9298db61cf9b847db94401c15f2e3e2ab29",
+  "claude-haiku/run-2/turn-01.jsonl": "091572c72c03f36195fc8a5b0e0ca3c8e8058d2b901beb4b702b5634473b5a44",
+  "claude-haiku/run-2/validate.txt": "340e26dd82980e37d409b9ef08b2f9261a763afaa71a1d75aed516153e790d6f",
+  "results.json": "fb2db8e03d6e67611c385f3dd2354a4cdf392f8faca2d94e3d364983cfdb2022"
+ },
+ "sources": {
+  "tools/record_skill_sessions.py": "d58a08f4a675b9db7ca8821cd5d01713e9ff1cf2ec756dd51eeb9d133b7bb74c",
+  "src/gnd/examples/plan_apps/course/rules.md": "346f640129c646d1a99775d6a677dad6fcdc6b0d12d2cbd9bc72a1aaf1c1409d",
+  "src/gnd/examples/plan_apps/course/model.orm.json": "c34b1902e4dbef537b378d83bb32f8a0b2acf07a0061c161a1bfda3bb56087be",
+  "src/gnd/skills/gnd-model-from-text/SKILL.md": "ad156002a528eed796db1c8f9eeeb14d12bdb4c1f7150939381973fa3e5ee18b",
+  "src/gnd/skills/gnd-model-evolve/SKILL.md": "e818c3e66d5bbbfa7802ab5bd4509c4eb3bc2dd31e0316b473e375a456d7e572"
+ }
+}

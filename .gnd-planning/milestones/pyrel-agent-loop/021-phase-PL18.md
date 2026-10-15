@@ -181,3 +181,51 @@ Changes:
   mentions PyRel, the `app.py` explanation, and the untested-path statement.
 
 Gate after the change: 303 docs tests, 20 runnable blocks, 10277 links.
+
+## Owner feedback: step 8 should use the evolve skill in natural language (2026-10-15)
+
+The owner asked why step 8 shipped a proposal instead of `/gnd:gnd-model-evolve`
+taking the change in plain English. The skill does take it that way; step 8
+showed a file only because the skill had not been recorded.
+
+**Recording** (gate 019, amendments 2 and 3), `tools/record_skill_sessions.py
+--skill model-evolve`, Haiku, 2 runs.
+
+- **The first launch was discarded.** It measured the setup, not the skill. Its
+  runs are kept in the session scratchpad, `pl18/evolve-rec1`.
+  - Run 1 found the course example's shipped `credit-cap-proposal.json` through
+    the plugin folder (the repository root) and used it as a template.
+  - Run 2 stopped after five permission refusals, model unchanged; `shasum` was
+    not allowed.
+- **The relaunch** loaded the plugin from a copy holding only the skills, and
+  allowed `shasum`. Both runs wrote, previewed and applied the change in one
+  turn. Each model validates with the cap at 6, and neither touched the shipped
+  proposal. The runs are in `src/gnd/examples/plan_apps/skill-sessions-evolve/`.
+  Claude Code reported $0.24 and $0.22.
+
+**Step 8 now has the full sequence:**
+1. You type the sentence.
+2. Claude Code does: the replay of run 1.
+3. What happened and why it is safe: the digests, preview and apply, and when
+   a breaking change would stop.
+4. Each failure explained:
+   - three permission refusals, two chained commands and one Python script;
+   - one GND refusal, "candidate model media type must be
+     application/yaml", which Haiku fixed;
+   - one `ls` error.
+5. The shipped proposal as "try it without a model".
+6. GND says: the step-7 plan is now refused.
+
+Tests bind the page to the recording: denials, the quoted refusal, the run
+name, the sentence, and that each recorded model has the cap at 6. The replay
+label now reads "refused by Claude Code's permission rules", since not every
+refusal was a chained command.
+
+**Open questions added:**
+
+| # | Question | Target |
+|---|---|---|
+| PL18-Q5 | `gnd evolve` needs SHA-256 digests an agent must compute outside GND; GND could fill them (for example a `gnd evolve propose` that takes the candidate model) | GND, outside this milestone |
+| PL18-Q6 | The gnd-model-evolve skill's pages do not give the proposal format in full; both runs read GND's source to find it | skill update, outside this milestone |
+
+Gate after the change: 308 docs tests, 20 runnable blocks, 10371 links.

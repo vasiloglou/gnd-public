@@ -362,10 +362,63 @@ recordings used `tools/plan_app_bot.py` from the GND repository, for example
 ## 8. Change a rule
 
 The registrar lowers the credit cap from 18 to 6 credits a term, for every
-student.
-In Claude Code you would ask `/gnd:gnd-model-evolve` for the change. Here the
-proposal it would write ships with the example, so you can preview it and
-apply it yourself:
+student. You say the change in plain English. The `gnd-model-evolve` skill turns
+it into an exact change to the model, and GND checks that change before it is
+applied.
+
+**You type**
+
+```text
+/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.
+```
+
+**Claude Code does**
+
+<figure class="gnd-replay" tabindex="0" role="region" aria-label="Replay: Claude Code (Haiku) changes the credit cap (recorded run 1)">
+--8<-- "docs/assets/replays/course-model-evolve-haiku-run-1.svg"
+</figure>
+
+??? note "Transcript of the replay (condensed: long messages are cut and each tool result shows its first line)"
+
+    ```text
+    --8<-- "docs/assets/replays/course-model-evolve-haiku-run-1.txt"
+    ```
+
+This is a recorded session with Claude Haiku,
+`skill-sessions-evolve/claude-haiku/run-1`. It took one turn and no help.
+
+### What happened, and why it is safe
+
+The skill found the rule, `credit_cap`, and wrote a copy of the model with the
+cap at 6. The changed rule now quotes your words as its source. Then it wrote a
+proposal: the change, plus a SHA-256 digest of the model before, of the new
+model, and of the exact rule it replaces.
+
+The digests make the change exact. `gnd evolve preview` checks every one of
+them and shows the blast radius: here, only `credit_cap`, not breaking. Then
+`gnd evolve apply` publishes the new model and writes a record. If anyone had
+changed the model in between, apply would refuse. A breaking change, such as a
+rename or a delete, would also stop until you accept the preview.
+
+The replay shows a few failures. None of them changed the model:
+
+- **Three commands refused by the recording's permission rules:** two chained
+  shell commands, and one Python script. In your own session, Claude Code would
+  ask you instead. Without Python, Haiku wrote the rule's canonical JSON itself
+  and hashed it with `shasum`; a wrong digest would have been refused.
+- **One refusal from GND.** The first preview stopped with this message:
+  `candidate model media type must be application/yaml`.
+  Haiku set the type and ran the preview again, which passed.
+- **One `ls` error.** Haiku looked for a folder of linked projects; there is none,
+  because no generated project uses this model.
+
+Two gaps showed up. The skill's pages don't give the proposal format in full,
+so Haiku read GND's source code to find it. And an agent has to compute the
+digests outside GND. Both are noted as GND improvements.
+
+**Try it without a model.** The proposal the skill writes ships with the
+example as `credit-cap-proposal.json`, so you can preview and apply it
+yourself:
 
 <!-- gnd-run expect=0 -->
 ```sh
@@ -378,7 +431,7 @@ gnd evolve apply model.orm.json credit-cap-proposal.json --preview preview.json 
 applied
 ```
 
-The plan GND accepted in step 7 now breaks the new rule:
+Check the plan from step 7 against the changed model:
 
 <!-- gnd-run expect=1 -->
 ```sh
@@ -391,8 +444,9 @@ gnd check: exit 1
   state 3  credit_cap  violated  [{"$student": "maya", "$total": 10, "$term": "spring"}]
 ```
 
-Nobody edited the checker or the bot. The rule changed in one place, the
-model, and the next check used it.
+**GND says** the plan it accepted in step 7 now breaks the new rule. Nobody
+edited the checker or the bot. The rule changed in one place, the model, and the
+next check used it.
 
 ## What you did
 

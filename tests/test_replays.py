@@ -60,12 +60,14 @@ def test_replay_figures_are_raw_html_so_the_svg_is_not_rewritten():
 def test_each_replay_is_named_after_the_run_it_replays(name):
     source = TABLE[name]['sources'][0]
     session = re.fullmatch(r'src/gnd/examples/plan_apps/recordings/([\w.-]+)/(\w+)/run-(\d)/session\.txt', source)
-    skill = re.fullmatch(r'src/gnd/examples/plan_apps/skill-sessions/claude-(\w+)/run-(\d)/turn-01\.jsonl', source)
+    skill = re.fullmatch(r'src/gnd/examples/plan_apps/skill-sessions(-evolve)?/claude-(\w+)/run-(\d)/turn-01\.jsonl',
+                         source)
     if session:
         model, example, run = session.groups()
         assert name == f'{example}-{model}-run-{run}', (name, source)
         assert f'run {run})' in TABLE[name]['title']
     else:
         assert skill, source
-        model, run = skill.groups()
-        assert name == f'course-model-from-text-{model}-run-{run}' and f'run {run})' in TABLE[name]['title']
+        evolve, model, run = skill.groups()
+        skill_name = 'model-evolve' if evolve else 'model-from-text'
+        assert name == f'course-{skill_name}-{model}-run-{run}' and f'run {run})' in TABLE[name]['title']

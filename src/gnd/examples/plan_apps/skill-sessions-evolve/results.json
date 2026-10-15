@@ -1,0 +1,46 @@
+{
+ "gate": ".gnd-planning/milestones/pyrel-agent-loop/019-recording-gate-PL18-skills.md",
+ "skill": "gnd-model-evolve",
+ "example": "course",
+ "user_turns": [
+  "/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.",
+  "Yes, apply it."
+ ],
+ "recorded": "2026-10-15",
+ "runs": [
+  {
+   "model": "claude-haiku",
+   "run": 1,
+   "turns": 1,
+   "turn_log": [
+    {
+     "user": "/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.",
+     "exit": 0,
+     "cost_usd": 0.24294045000000003,
+     "assistant_last": "me. The record is immutable now, so it can't be corrected in place.\n- **File format:** the model is `model.orm.json`, not `.yaml`. gnd accepted it, but the candidate had to be declared `application/yaml` (JSON is valid YAML).\n- **Tooling:** running Python needed an approval I couldn't get, so I built the proposal with file writes and `shasum`. gnd's preview verified every digest.\n\n**Not done, pending your go-ahead**\n- No git repository and no `.gnd-planning/`, so the milestone record and `feat(evolve-credit-cap-6)` commit weren't made. I can scaffold `.gnd-planning` with gnd-new-project first.",
+     "model_valid_after_turn": true
+    }
+   ],
+   "model_written": "model.orm.json",
+   "validate_exit": 0,
+   "seconds": 213.7
+  },
+  {
+   "model": "claude-haiku",
+   "run": 2,
+   "turns": 1,
+   "turn_log": [
+    {
+     "user": "/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.",
+     "exit": 0,
+     "cost_usd": 0.21926663999999998,
+     "assistant_last": "r 6 credits now violates the rule and needs review. Because no population was present, I did not bump the model version.\n- **Stale source:** `rules.md` still says 18 credits. The model is now authoritative, so you may want to update that file.\n- **Not committed or recorded:** this directory is not a git repo and has no `.gnd-planning`, so no milestone record or commit was made. I can scaffold `.gnd-planning` with `gnd-new-project` if you want the record.\n- **Format:** the model is JSON, not the `.orm.yaml` the skill docs assume. The CLI accepted it, and the file on disk is the candidate bytes.",
+     "model_valid_after_turn": true
+    }
+   ],
+   "model_written": "model.orm.json",
+   "validate_exit": 0,
+   "seconds": 228.1
+  }
+ ]
+}

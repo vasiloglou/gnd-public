@@ -171,3 +171,35 @@ def test_the_pyrel_page_states_what_is_untested():
     text = (ROOT / 'docs/explanation/what-is-pyrel.md').read_text(encoding='utf-8')
     assert "You don't need PyRel to use GND." in text
     assert 'Snowflake execution is not yet supported by gnd export' in text
+
+
+EVOLVE = APPS / 'skill-sessions-evolve'
+
+
+def test_the_evolve_sessions_are_bound_clean_and_did_the_change():
+    manifest = json.loads((EVOLVE / 'manifest.json').read_text(encoding='utf-8'))
+    on_disk = {str(p.relative_to(EVOLVE)) for p in EVOLVE.rglob('*') if p.is_file()} - {'manifest.json', 'README.md'}
+    assert set(manifest['files']) == on_disk
+    for name, digest in manifest['files'].items():
+        data = (EVOLVE / name).read_bytes()
+        assert hashlib.sha256(data).hexdigest() == digest, name
+        for needle in ('/Users/', '/private/', '/home/', '/var/folders/', 'sk-ant-', 'sk-or-', 'credit-cap-proposal'):
+            assert needle not in data.decode('utf-8'), (name, needle)
+    results = json.loads((EVOLVE / 'results.json').read_text(encoding='utf-8'))
+    assert results['skill'] == 'gnd-model-evolve' and len(results['runs']) == 2
+    for row in results['runs']:
+        model = json.loads((EVOLVE / row['model'] / f"run-{row['run']}" / 'model.orm.json').read_text())
+        caps = [c['consequent']['comparison']['right'] for c in model['constraints'] if c['id'] == 'credit_cap']
+        assert row['validate_exit'] == 0 and caps == [6]
+
+
+def test_step_eight_tells_the_recorded_story():
+    session = (EVOLVE / 'claude-haiku/run-1/turn-01.jsonl').read_text(encoding='utf-8')
+    events = [json.loads(line) for line in session.splitlines()]
+    result = next(e for e in events if e['type'] == 'result')
+    page = (ROOT / 'docs/tutorials/course-planner.md').read_text(encoding='utf-8')
+    assert len(result['permission_denials']) == 3 and 'Three commands refused' in page
+    assert 'candidate model media type must be application/yaml' in session
+    assert 'candidate model media type must be application/yaml' in page
+    assert '`skill-sessions-evolve/claude-haiku/run-1`' in page
+    assert '/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.' in page

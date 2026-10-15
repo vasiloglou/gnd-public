@@ -11,7 +11,7 @@
 <text class="l c-ink" x="18" y="126" xml:space="preserve" style="animation-delay:0.88s">    → 1 # Registrar rules</text>
 <text class="l c-plan" x="18" y="143" xml:space="preserve" style="animation-delay:1.10s">  Bash cd &lt;repo&gt;/src/gnd/skills &amp;&amp; ls gnd-model-from-text gnd-model-from-text/references gnd-</text>
 <text class="l c-plan" x="18" y="160" xml:space="preserve" style="animation-delay:1.32s">      orm-core gnd-orm-core/references &amp;&amp; wc -l gnd-orm-core/references/*.md &amp;&amp;…</text>
-<text class="l c-fail" x="18" y="177" xml:space="preserve" style="animation-delay:1.54s">    → refused by Claude Code's permission rules (a chained shell command)</text>
+<text class="l c-fail" x="18" y="177" xml:space="preserve" style="animation-delay:1.54s">    → refused by Claude Code's permission rules</text>
 <text class="l c-muted" x="18" y="194" xml:space="preserve" style="animation-delay:1.76s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
 <text class="l c-plan" x="18" y="211" xml:space="preserve" style="animation-delay:1.98s">  Bash cd &lt;repo&gt;/src/gnd/skills &amp;&amp; cat gnd-model-from-text/examples/movie_catalog.orm.yaml; echo</text>
 <text class="l c-plan" x="18" y="228" xml:space="preserve" style="animation-delay:2.20s">       ======; cat gnd-orm-core/references/provenance-and-modality.md</text>
@@ -19,11 +19,11 @@
 <text class="l c-muted" x="18" y="262" xml:space="preserve" style="animation-delay:2.64s">  … reads the skill's reference pages (10 calls; all in the transcript)</text>
 <text class="l c-plan" x="18" y="279" xml:space="preserve" style="animation-delay:2.86s">  Bash cd &lt;repo&gt;/src/gnd/skills/gnd-orm-core/references &amp;&amp; grep -n -i "aggregat\|recurs\|sum("</text>
 <text class="l c-plan" x="18" y="296" xml:space="preserve" style="animation-delay:3.08s">      representation-format.md | head -40; echo ----; grep -n -A4 '"dialogue_…</text>
-<text class="l c-fail" x="18" y="313" xml:space="preserve" style="animation-delay:3.30s">    → refused by Claude Code's permission rules (a chained shell command)</text>
+<text class="l c-fail" x="18" y="313" xml:space="preserve" style="animation-delay:3.30s">    → refused by Claude Code's permission rules</text>
 <text class="l c-muted" x="18" y="330" xml:space="preserve" style="animation-delay:3.52s">  … reads the skill's reference pages (5 calls; all in the transcript)</text>
 <text class="l c-plan" x="18" y="347" xml:space="preserve" style="animation-delay:3.74s">  Bash cd &lt;repo&gt;/src/gnd/skills/gnd-orm-core/references &amp;&amp; grep -n "^| *\`\?ring\|id:</text>
 <text class="l c-plan" x="18" y="364" xml:space="preserve" style="animation-delay:3.96s">      ring\|ring-" constraint-inference.md | head -20; gnd --help 2&gt;&amp;1 | head -40</text>
-<text class="l c-fail" x="18" y="381" xml:space="preserve" style="animation-delay:4.18s">    → refused by Claude Code's permission rules (a chained shell command)</text>
+<text class="l c-fail" x="18" y="381" xml:space="preserve" style="animation-delay:4.18s">    → refused by Claude Code's permission rules</text>
 <text class="l c-muted" x="18" y="398" xml:space="preserve" style="animation-delay:4.40s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
 <text class="l c-plan" x="18" y="415" xml:space="preserve" style="animation-delay:4.62s">  Bash gnd --help</text>
 <text class="l c-ink" x="18" y="432" xml:space="preserve" style="animation-delay:4.84s">    → usage: gnd [-h] [--version]</text>
@@ -33,7 +33,7 @@
 <text class="l c-plan" x="18" y="500" xml:space="preserve" style="animation-delay:5.72s">  Write &lt;workspace&gt;/model.orm.yaml</text>
 <text class="l c-ink" x="18" y="517" xml:space="preserve" style="animation-delay:5.94s">    → File created successfully at: &lt;workspace&gt;/model.orm.yaml</text>
 <text class="l c-plan" x="18" y="534" xml:space="preserve" style="animation-delay:6.16s">  Bash gnd validate model.orm.yaml; echo "EXIT=$?"</text>
-<text class="l c-fail" x="18" y="551" xml:space="preserve" style="animation-delay:6.38s">    → refused by Claude Code's permission rules (a chained shell command)</text>
+<text class="l c-fail" x="18" y="551" xml:space="preserve" style="animation-delay:6.38s">    → refused by Claude Code's permission rules</text>
 <text class="l c-plan" x="18" y="568" xml:space="preserve" style="animation-delay:6.60s">  Bash gnd validate model.orm.yaml</text>
 <text class="l c-fail" x="18" y="585" xml:space="preserve" style="animation-delay:6.82s">    → Exit code 3: ERROR at $.fact_types[id=student_course_grade].reading: reading placeholder</text>
 <text class="l c-fail" x="18" y="602" xml:space="preserve" style="animation-delay:7.04s">        '{Grade}' at position 1 does not name role 1's object type 'course' [semantic:reading-</text>

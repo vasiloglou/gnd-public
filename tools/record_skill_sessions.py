@@ -34,9 +34,27 @@ TURNS = [
     "and ask me only about what it leaves open.",
 ]
 AGREE = "Yes, as you propose."
+
+
+def _cap_is_six(model: Path) -> bool:
+    """The evolve session is done when no rule compares a total with 18 any more and one compares it with 6."""
+    from ruamel.yaml import YAML   # reads JSON and YAML models alike
+    document = YAML(typ="safe").load(model.read_text(encoding="utf-8"))
+    rights = [((c.get("consequent") or {}).get("comparison") or {}).get("right")
+              for c in document.get("constraints") or [] if isinstance(c, dict)]
+    return 6 in rights and 18 not in rights
+
+
+SKILLS = {   # declared before any run; gate record 019 and its amendments name each one
+    "model-from-text": {"files": ["rules.md"], "turns": TURNS, "agree": AGREE, "done": lambda model: True},
+    "model-evolve": {"files": ["rules.md", "model.orm.json"],
+                     "turns": ["/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every "
+                               "student."],
+                     "agree": "Yes, apply it.", "done": _cap_is_six},
+}
 MAX_TURNS = 6
 TURN_SECONDS = 900
-TOOLS = f"Bash(gnd *),Bash({ROOT / '.venv/bin/gnd'} *),Read,Write,Edit,Glob,Grep"  # `which gnd` gives the absolute path
+TOOLS = f"Bash(gnd *),Bash({ROOT / '.venv/bin/gnd'} *),Bash(shasum *),Read,Write,Edit,Glob,Grep"  # `which gnd` is absolute
 TEMPORARY = re.compile(r"(?:/private)?/var/folders/[^\s\"'\\]+|/private/tmp/claude-\d+/[^\s\"'\\]+"
                        r"|-private-var-folders-[A-Za-z0-9_-]+|/private/tmp\b")   # also Claude Code's mangled names
 LOCAL = ("/Users/", "/private/", "/home/", "/var/folders/")
@@ -97,18 +115,24 @@ def model_file(workspace: Path) -> Path | None:
     return found[0] if found else None
 
 
-def record_run(name: str, run: int, out: Path) -> dict:
+def record_run(name: str, run: int, out: Path, skill: str = "model-from-text") -> dict:
+    plan = SKILLS[skill]
     target = out / name / f"run-{run}"
     target.mkdir(parents=True)
     session, started, turns = str(uuid.uuid4()), time.monotonic(), []
     environment = {k: v for k, v in os.environ.items() if not k.startswith(("ANTHROPIC_", "OPENROUTER_"))}
     environment["PATH"] = f"{ROOT / '.venv/bin'}{os.pathsep}{environment.get('PATH', '')}"
-    with tempfile.TemporaryDirectory(prefix="skill-rec-") as directory:
+    with tempfile.TemporaryDirectory(prefix="skill-rec-") as directory, \
+            tempfile.TemporaryDirectory(prefix="skill-plugin-") as plugin_directory:
         workspace = Path(directory).resolve()   # gnd validate refuses a model with references through a symlink
-        shutil.copyfile(EXAMPLE / "rules.md", workspace / "rules.md")
+        plugin = Path(plugin_directory).resolve()   # only the plugin and its skills: no examples, no answers
+        shutil.copytree(ROOT / ".claude-plugin", plugin / ".claude-plugin")
+        shutil.copytree(ROOT / "src/gnd/skills", plugin / "src/gnd/skills")
+        for name_ in plan["files"]:
+            shutil.copyfile(EXAMPLE / name_, workspace / name_)
         for number in range(1, MAX_TURNS + 1):
-            said = TURNS[number - 1] if number <= len(TURNS) else AGREE
-            command = ["claude", "--print", "--plugin-dir", str(ROOT), "--permission-mode", "acceptEdits",
+            said = plan["turns"][number - 1] if number <= len(plan["turns"]) else plan["agree"]
+            command = ["claude", "--print", "--plugin-dir", str(plugin), "--permission-mode", "acceptEdits",
                        "--allowedTools", TOOLS, "--output-format", "stream-json", "--verbose", "--strict-mcp-config"]
             if MODELS[name]:
                 command += ["--model", MODELS[name]]
@@ -119,7 +143,8 @@ def record_run(name: str, run: int, out: Path) -> dict:
                 stream, code = done.stdout, done.returncode
             except subprocess.TimeoutExpired as error:
                 stream, code = (error.stdout or b"").decode() if isinstance(error.stdout, bytes) else (error.stdout or ""), None
-            (target / f"turn-{number:02d}.jsonl").write_text(kept_stream(redact(stream, workspace)), encoding="utf-8")
+            (target / f"turn-{number:02d}.jsonl").write_text(
+                kept_stream(redact(stream.replace(str(plugin), "<plugin>"), workspace)), encoding="utf-8")
             result = {}
             for line in stream.splitlines():
                 try:
@@ -134,8 +159,9 @@ def record_run(name: str, run: int, out: Path) -> dict:
             valid = written is not None and subprocess.run(
                 [str(ROOT / ".venv/bin/gnd"), "validate", str(written)], capture_output=True, timeout=300,
                 check=False).returncode == 0
+            valid = valid and plan["done"](written)
             turns[-1]["model_valid_after_turn"] = valid
-            if code != 0 or valid:   # the user stops answering once the model validates
+            if code != 0 or valid:   # the user stops answering once the model validates (with the change asked for)
                 break
         written = model_file(workspace)
         row = {"model": name, "run": run, "turns": len(turns), "turn_log": turns,
@@ -168,7 +194,8 @@ def finish(out: Path, finished_later: bool = False) -> int:
               + ", ".join(found), file=sys.stderr)
         return 1
     sources = ["tools/record_skill_sessions.py", "src/gnd/examples/plan_apps/course/rules.md",
-               "src/gnd/skills/gnd-model-from-text/SKILL.md"]
+               "src/gnd/examples/plan_apps/course/model.orm.json", "src/gnd/skills/gnd-model-from-text/SKILL.md",
+               "src/gnd/skills/gnd-model-evolve/SKILL.md"]
     manifest = {"files": {str(p.relative_to(out)): sha256(p.read_bytes()) for p in sorted(out.rglob("*"))
                           if p.is_file() and p.name not in ("README.md", "manifest.json")},
                 "sources": {s: sha256((ROOT / s).read_bytes()) for s in sources}}
@@ -185,6 +212,7 @@ def main() -> int:
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--models", nargs="+", default=list(MODELS), choices=list(MODELS))
     parser.add_argument("--runs", type=int, default=2)
+    parser.add_argument("--skill", choices=list(SKILLS), default="model-from-text")
     parser.add_argument("--finish", action="store_true",
                         help="apply the keep filter and redactions to the recording in --out, then the leak search "
                              "and the manifest (for a recording made before the filter existed)")
@@ -201,10 +229,10 @@ def main() -> int:
     if not 1 <= args.runs <= 2:
         parser.error("--runs must be 1 or 2 (the gate's bound)")
     args.out.mkdir(parents=True)
-    rows = [record_run(name, run, args.out) for name in args.models for run in range(1, args.runs + 1)]
+    rows = [record_run(name, run, args.out, args.skill) for name in args.models for run in range(1, args.runs + 1)]
     (args.out / "results.json").write_text(json.dumps({
-        "gate": str(gate.relative_to(ROOT)), "skill": "gnd-model-from-text", "example": "course",
-        "user_turns": TURNS + [AGREE], "recorded": time.strftime("%Y-%m-%d"), "runs": rows}, indent=1) + "\n",
+        "gate": str(gate.relative_to(ROOT)), "skill": f"gnd-{args.skill}", "example": "course",
+        "user_turns": SKILLS[args.skill]["turns"] + [SKILLS[args.skill]["agree"]], "recorded": time.strftime("%Y-%m-%d"), "runs": rows}, indent=1) + "\n",
         encoding="utf-8")
     if finish(args.out):
         return 1

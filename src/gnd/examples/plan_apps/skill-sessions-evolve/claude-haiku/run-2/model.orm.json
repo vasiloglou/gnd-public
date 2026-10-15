@@ -1,0 +1,684 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd-example:course",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "student",
+   "name": "Student",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "student_code"
+   }
+  },
+  {
+   "id": "student_code",
+   "name": "StudentCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "course",
+   "name": "Course",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "course_code"
+   }
+  },
+  {
+   "id": "course_code",
+   "name": "CourseCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "term",
+   "name": "Term",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "term_code"
+   }
+  },
+  {
+   "id": "term_code",
+   "name": "TermCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "credits",
+   "name": "Credits",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "total_credits",
+   "name": "TotalCredits",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "grade",
+   "name": "Grade",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "course_needs",
+   "reading": "{Course} needs {Course}",
+   "roles": [
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "course",
+     "role_name": "prerequisite"
+    }
+   ]
+  },
+  {
+   "id": "course_credits",
+   "reading": "{Course} is worth {Credits}",
+   "roles": [
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "credits",
+     "role_name": "credits"
+    }
+   ]
+  },
+  {
+   "id": "offered",
+   "reading": "{Course} is offered in {Term}",
+   "roles": [
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "term",
+     "role_name": "term"
+    }
+   ]
+  },
+  {
+   "id": "passed",
+   "reading": "{Student} passed {Course}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    }
+   ]
+  },
+  {
+   "id": "enrolls",
+   "reading": "{Student} enrolls in {Course} in {Term}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "term",
+     "role_name": "term"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "term_load",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "A student takes at most 6 courses in a term."
+     },
+     "scope": "internal",
+     "roles": [
+      "student",
+      "term"
+     ],
+     "bound": {
+      "max": 6
+     }
+    }
+   ]
+  },
+  {
+   "id": "grade_of",
+   "reading": "{Student} got {Grade} in {Course}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "grade",
+     "role_name": "grade"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one_grade",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "A student has one grade per course."
+     },
+     "roles": [
+      "student",
+      "course"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "prerequisite_chain",
+   "reading": "{Course} needs {Course}, directly or through a chain",
+   "roles": [
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "course",
+     "role_name": "prerequisite"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "course_needs",
+        "bind": {
+         "course": "$c",
+         "prerequisite": "$p"
+        }
+       }
+      ]
+     },
+     {
+      "body": [
+       {
+        "fact_type": "course_needs",
+        "bind": {
+         "course": "$c",
+         "prerequisite": "$x"
+        }
+       },
+       {
+        "fact_type": "prerequisite_chain",
+        "bind": {
+         "course": "$x",
+         "prerequisite": "$p"
+        }
+       }
+      ]
+     }
+    ],
+    "head": {
+     "course": "$c",
+     "prerequisite": "$p"
+    }
+   }
+  },
+  {
+   "id": "term_credits",
+   "reading": "{Student} takes {TotalCredits} credits in {Term}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "total_credits",
+     "role_name": "total"
+    },
+    {
+     "object_type": "term",
+     "role_name": "term"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "enrolls",
+      "bind": {
+       "student": "$s",
+       "course": "$c",
+       "term": "$t"
+      }
+     },
+     {
+      "fact_type": "course_credits",
+      "bind": {
+       "course": "$c",
+       "credits": "$n"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$n",
+     "over": [
+      "$c"
+     ],
+     "as": "$total"
+    },
+    "head": {
+     "student": "$s",
+     "total": "$total",
+     "term": "$t"
+    }
+   }
+  }
+ ],
+ "constraints": [
+  {
+   "id": "prerequisites_first",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A student can't take a course before passing every course it needs, directly or through a chain."
+   },
+   "antecedent": [
+    {
+     "fact_type": "enrolls",
+     "bind": {
+      "student": "$student",
+      "course": "$course",
+      "term": "$term"
+     }
+    },
+    {
+     "fact_type": "prerequisite_chain",
+     "bind": {
+      "course": "$course",
+      "prerequisite": "$needs"
+     }
+    }
+   ],
+   "consequent": {
+    "atom": {
+     "fact_type": "passed",
+     "bind": {
+      "student": "$student",
+      "course": "$needs"
+     }
+    }
+   }
+  },
+  {
+   "id": "no_retake",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A student doesn't enroll in a course they already passed."
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "enrolls",
+     "role": "student"
+    },
+    {
+     "fact_type": "enrolls",
+     "role": "course"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "passed",
+     "role": "student"
+    },
+    {
+     "fact_type": "passed",
+     "role": "course"
+    }
+   ]
+  },
+  {
+   "id": "credit_cap",
+   "type": "guarded",
+   "source": "user-supplied",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "added_at_step": "evolve-p001",
+    "user_quote": "Lower the credit cap from 18 to 6 credits a term, for every student."
+   },
+   "antecedent": [
+    {
+     "fact_type": "term_credits",
+     "bind": {
+      "student": "$student",
+      "total": "$total",
+      "term": "$term"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$total",
+     "operator": "<=",
+     "right": 6
+    }
+   }
+  }
+ ],
+ "operations": [
+  {
+   "id": "enroll",
+   "reading": "{Student} enrolls in {Course} in {Term}",
+   "parameters": [
+    {
+     "name": "student",
+     "object_type": "student"
+    },
+    {
+     "name": "course",
+     "object_type": "course"
+    },
+    {
+     "name": "term",
+     "object_type": "term"
+    }
+   ],
+   "preconditions": [
+    {
+     "id": "pre_offered",
+     "require": [
+      {
+       "fact_type": "offered",
+       "bind": {
+        "course": "$course",
+        "term": "$term"
+       }
+      }
+     ],
+     "modality": "alethic",
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "Only courses offered that term can be taken."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "enrolls",
+      "bind": {
+       "student": "$student",
+       "course": "$course",
+       "term": "$term"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Student} enrolls in {Course} in {Term}"
+   }
+  },
+  {
+   "id": "drop",
+   "reading": "{Student} drops {Course} in {Term}",
+   "parameters": [
+    {
+     "name": "student",
+     "object_type": "student"
+    },
+    {
+     "name": "course",
+     "object_type": "course"
+    },
+    {
+     "name": "term",
+     "object_type": "term"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "enrolls",
+      "bind": {
+       "student": "$student",
+       "course": "$course",
+       "term": "$term"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Student} drops {Course} in {Term}"
+   }
+  },
+  {
+   "id": "drop_term",
+   "reading": "{Student} drops everything in {Term}",
+   "parameters": [
+    {
+     "name": "student",
+     "object_type": "student"
+    },
+    {
+     "name": "term",
+     "object_type": "term"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "enrolls",
+      "bind": {
+       "student": "$student",
+       "term": "$term"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Student} drops everything in {Term}"
+   }
+  },
+  {
+   "id": "record_grade",
+   "reading": "{Student} gets {Grade} in {Course}",
+   "parameters": [
+    {
+     "name": "student",
+     "object_type": "student"
+    },
+    {
+     "name": "course",
+     "object_type": "course"
+    },
+    {
+     "name": "grade",
+     "object_type": "grade"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "grade_of",
+      "bind": {
+       "student": "$student",
+       "course": "$course",
+       "grade": "$grade"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "passed",
+      "bind": {
+       "student": "$student",
+       "course": "$course"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Student} gets {Grade} in {Course}"
+   }
+  },
+  {
+   "id": "change_grade",
+   "reading": "{Student}'s grade in {Course} becomes {Grade}",
+   "parameters": [
+    {
+     "name": "student",
+     "object_type": "student"
+    },
+    {
+     "name": "course",
+     "object_type": "course"
+    },
+    {
+     "name": "grade",
+     "object_type": "grade"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "grade_of",
+      "bind": {
+       "student": "$student",
+       "course": "$course"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "grade_of",
+      "bind": {
+       "student": "$student",
+       "course": "$course",
+       "grade": "$grade"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "id": "grade_final",
+     "subject": {
+      "fact_type": "grade_of",
+      "value_role": "grade",
+      "bind": {
+       "student": "$student",
+       "course": "$course"
+      }
+     },
+     "op": "=",
+     "modality": "alethic",
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "Once a grade is recorded, it never changes."
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Student}'s grade in {Course} becomes {Grade}"
+   }
+  },
+  {
+   "id": "admit",
+   "reading": "{Student} is admitted",
+   "parameters": [
+    {
+     "name": "student",
+     "object_type": "student"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "create": {
+      "object_type": "student",
+      "param": "student"
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Student} is admitted"
+   }
+  }
+ ]
+}

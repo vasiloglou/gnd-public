@@ -4,6 +4,17 @@ Use this when a bot grants access to systems and the approver must not be in
 the requester's management chain. GND follows the chain however long it is,
 and refuses the plan before any access is granted.
 
+!!! info "Files on GitHub"
+
+    - [`access/rules.md`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/access/rules.md): the rules as written
+    - [`access/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/access/model.orm.json): the model
+    - [`access/state.pop.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/access/state.pop.json): the starting state
+    - [`access/app.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/access/app.py): the example's app (not a GND command)
+    - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
+    - [`access/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/access/stand_in_bot.py): the scripted stand-in bot
+    - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/access-requests.md)
+
 ## Before you start
 
 Get the example and check its model, as in the

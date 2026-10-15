@@ -5,6 +5,14 @@ answered each plan app's question five times, and every run was kept. Use it
 to see how often a model gets a plan right, how often GND refuses one, and
 whether the model repairs it from the feedback.
 
+!!! info "Files on GitHub"
+
+    - [`results.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/results.json): one row per run
+    - [the recordings README](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): the table and the caveats
+    - [`tools/plan_app_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/plan_app_bot.py): how a model is called
+    - [`tools/record_plan_apps.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/record_plan_apps.py): how the runs were recorded
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/model-runs.md)
+
 ## How the runs were made
 
 Each run is one `app.py ask QUESTION` with a model behind the bot, at most

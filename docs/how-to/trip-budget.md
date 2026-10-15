@@ -4,6 +4,17 @@ Use this when a bot books several things that share one budget. GND sums the
 bookings in each state of the plan and refuses the step that goes over, and it
 refuses two activities booked for the same time.
 
+!!! info "Files on GitHub"
+
+    - [`trip/rules.md`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/trip/rules.md): the rules as written
+    - [`trip/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/trip/model.orm.json): the model
+    - [`trip/state.pop.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/trip/state.pop.json): the starting state
+    - [`trip/app.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/trip/app.py): the example's app (not a GND command)
+    - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
+    - [`trip/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/trip/stand_in_bot.py): the scripted stand-in bot
+    - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/trip-budget.md)
+
 ## Before you start
 
 <!-- gnd-run expect=0 -->

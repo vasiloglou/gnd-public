@@ -4,6 +4,17 @@ Use this when a bot writes dated entries that must fall inside a contract's
 term. GND compares every due date with the lease's start and end, refuses dates
 outside them, and warns about a payment due in the last week.
 
+!!! info "Files on GitHub"
+
+    - [`lease/rules.md`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/lease/rules.md): the rules as written
+    - [`lease/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/lease/model.orm.json): the model
+    - [`lease/state.pop.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/lease/state.pop.json): the starting state
+    - [`lease/app.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/lease/app.py): the example's app (not a GND command)
+    - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
+    - [`lease/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/lease/stand_in_bot.py): the scripted stand-in bot
+    - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/lease-schedule.md)
+
 ## Before you start
 
 <!-- gnd-run expect=0 -->

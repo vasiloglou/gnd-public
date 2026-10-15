@@ -10,6 +10,17 @@ It follows the [course planner tutorial](course-planner.md). Read that first if
 you haven't: it shows Claude Code writing the model with
 `/gnd:gnd-model-from-text`, which works the same way here.
 
+!!! info "Files on GitHub"
+
+    - [`clinic/rules.md`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/clinic/rules.md): the rules as written
+    - [`clinic/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/clinic/model.orm.json): the model
+    - [`clinic/state.pop.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/clinic/state.pop.json): the starting state
+    - [`clinic/app.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/clinic/app.py): the example's app (not a GND command)
+    - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
+    - [`clinic/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/clinic/stand_in_bot.py): the scripted stand-in bot
+    - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/clinic-refills.md)
+
 ## What you'll build
 
 A folder with the pharmacy's rules, a model of them, Sam's prescriptions and a

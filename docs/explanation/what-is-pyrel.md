@@ -7,6 +7,11 @@ extra runtime. Everything in the tutorials works that way.
 PyRel is an optional extension, for when the facts you want to check live in
 your company's data platform rather than in files.
 
+!!! info "Files on GitHub"
+
+    - [`pyrel_rules.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/export/pyrel_rules.py): the code that writes the PyRel programs
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/explanation/what-is-pyrel.md)
+
 ## What PyRel is
 
 PyRel is RelationalAI's Python library (the `relationalai` package) for writing

@@ -6,6 +6,12 @@ it, and says what each program can and cannot do. PyRel is optional: GND's own
 checker needs none of this. [What PyRel is, and when you need it](what-is-pyrel.md)
 explains where PyRel runs and why you might want it.
 
+!!! info "Files on GitHub"
+
+    - [`pyrel_rules.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/export/pyrel_rules.py): the code that writes both PyRel programs
+    - [`course/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/model.orm.json): the model used on this page
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/explanation/rules-as-pyrel.md)
+
 ## One rule, three forms
 
 The registrar wrote:

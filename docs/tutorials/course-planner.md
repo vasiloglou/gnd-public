@@ -7,6 +7,22 @@ small model, so you'll see it get the plan wrong, read GND's feedback and fix
 it. Every replay on this page is a recording of a real run, not a mockup. The
 runs you can try yourself use a scripted stand-in bot, and say so.
 
+!!! info "Files on GitHub"
+
+    - [`course/rules.md`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/rules.md): the rules as written
+    - [`course/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/model.orm.json): the model
+    - [`course/state.pop.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/state.pop.json): the starting state
+    - [`course/app.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/app.py): the example's app (not a GND command)
+    - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
+    - [`course/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/stand_in_bot.py): the scripted stand-in bot
+    - [`course/credit-cap-proposal.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/credit-cap-proposal.json): the proposal the evolve skill writes
+    - [`gnd-model-from-text`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/SKILL.md): the skill's instructions
+    - [`gnd-model-evolve`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-evolve/SKILL.md): the skill's instructions
+    - [the modelling sessions](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions/README.md): Claude Code running gnd-model-from-text
+    - [the evolve sessions](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions-evolve/README.md): Claude Code running gnd-model-evolve
+    - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/course-planner.md)
+
 ## What you'll build
 
 A folder with the registrar's rules, a model of them, and a bot that answers

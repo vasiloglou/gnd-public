@@ -203,3 +203,11 @@ def test_step_eight_tells_the_recorded_story():
     assert 'candidate model media type must be application/yaml' in page
     assert '`skill-sessions-evolve/claude-haiku/run-1`' in page
     assert '/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.' in page
+
+
+@pytest.mark.parametrize('page', PAGES, ids=lambda p: p.name)
+def test_every_github_link_names_a_file_in_the_repository(page):
+    text = page.read_text(encoding='utf-8')
+    assert '!!! info "Files on GitHub"' in text, page.name
+    for path in re.findall(r'https://github\.com/vasiloglou/gnd-public/blob/main/([^)#\s]+)', text):
+        assert (ROOT / path).exists(), (page.name, path)

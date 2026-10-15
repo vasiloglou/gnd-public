@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 APPS = ROOT / 'src/gnd/examples/plan_apps'
 SKILLS = APPS / 'skill-sessions'
 TUTORIALS = sorted((ROOT / 'docs/tutorials').glob('*.md'))
-PAGES = [*TUTORIALS, *sorted((ROOT / 'docs/how-to').glob('*.md')), ROOT / 'docs/explanation/rules-as-pyrel.md']
+PAGES = [*TUTORIALS, *sorted((ROOT / 'docs/how-to').glob('*.md')), *sorted((ROOT / 'docs/explanation').glob('*.md'))]
 BANNED = ['covers_fact_types', 'nonowned', 'bounded profile', 'operational failure', 'exit 70', 'receipt',
           'binding digest', 'admission', 'certified', 'enterprise-ready', 'production']
 
@@ -151,3 +151,23 @@ def test_the_course_page_quotes_haikus_session_as_recorded():
         after = re.search(r'"(.*)"', edit['new_string']).group(1)
         assert f'`{before}` | `{after}`' in page, (before, after)
     assert len(denials) == 4 and 'Four times Haiku chained' in page
+
+
+@pytest.mark.parametrize('page', [p for p in PAGES if p.name != 'what-is-pyrel.md'], ids=lambda p: p.name)
+def test_pyrel_is_presented_as_optional_with_a_link_to_what_it_is(page):
+    """Owner feedback: PyRel is an optional extension (local DuckDB, or Snowflake through RelationalAI)."""
+    text = page.read_text(encoding='utf-8')
+    if 'PyRel' in text:
+        assert 'what-is-pyrel.md' in text, page.name
+        assert re.search(r'[Oo]ptional', text), page.name
+
+
+def test_the_course_page_explains_that_app_py_is_not_a_gnd_command():
+    text = (ROOT / 'docs/tutorials/course-planner.md').read_text(encoding='utf-8')
+    assert '`app.py` is not a GND command' in text and 'gnd export pyrel' in text
+
+
+def test_the_pyrel_page_states_what_is_untested():
+    text = (ROOT / 'docs/explanation/what-is-pyrel.md').read_text(encoding='utf-8')
+    assert "You don't need PyRel to use GND." in text
+    assert 'Snowflake execution is not yet supported by gnd export' in text

@@ -27,7 +27,8 @@ The rules are in `plan_apps/access/rules.md`. The two that matter here:
 - Access is granted only after it is approved.
 ```
 
-In PyRel, the first one is one line over a derived management chain:
+Optionally, in PyRel ([What PyRel is, and when you need it](../explanation/what-is-pyrel.md)), the first one is one line
+over a derived management chain:
 
 ```text
 m.where(approved_by(step, approver, employee, String.ref())).require(not_(management_chain_reverse(step, approver, employee)))
@@ -54,8 +55,8 @@ the chain, and the request itself breaks a rule.
     --8<-- "docs/assets/replays/access-llama-3.1-8b-run-1.txt"
     ```
 
-Llama 3.1 8B plans exactly what was asked. The checker, here the DuckDB program
-GND generates, refuses it at state 1, after the
+Llama 3.1 8B plans exactly what was asked. The checker, here the app's optional PyRel
+backend (the DuckDB program GND generates), refuses it at state 1, after the
 approval step: `approver_outside_the_chain violated`, with the witness
 `["bob", "carol"]`. Nothing has been granted.
 

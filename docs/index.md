@@ -85,8 +85,10 @@ In Claude Code, install the plugin:
 
 Then follow the [course planner tutorial](tutorials/course-planner.md). It uses
 recorded sessions of Claude Code and of small models, so you see what each one
-actually did. To run the same rules on PyRel, see
-[the PyRel runtime](runtimes/pyrel.md).
+actually did. PyRel is optional: GND's own checker needs nothing else. If your
+data lives in Snowflake, see [what PyRel is](explanation/what-is-pyrel.md): you
+can prototype the same rules locally on DuckDB; Snowflake execution is not yet
+supported by gnd export.
 
 ### Learn by building
 
@@ -94,7 +96,7 @@ actually did. To run the same rules on PyRel, see
 |---|---|
 | Tutorials | [Build a course planner](tutorials/course-planner.md), [Refill prescriptions on a schedule](tutorials/clinic-refills.md) |
 | How-to guides | [Access requests](how-to/access-requests.md), [Trip budget](how-to/trip-budget.md), [Rent schedule](how-to/lease-schedule.md), [Recorded model runs](how-to/model-runs.md) |
-| Explanation | [How a rule becomes a PyRel check](explanation/rules-as-pyrel.md) |
+| Explanation | [What PyRel is, and when you need it](explanation/what-is-pyrel.md), [How a rule becomes a PyRel check](explanation/rules-as-pyrel.md) |
 
 ## One model in the middle
 

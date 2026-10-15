@@ -65,7 +65,12 @@ gnd validate plan_apps/clinic/model.orm.json
 OK: plan_apps/clinic/model.orm.json is a valid GND ORM model
 ```
 
-## 3. Read the rules as PyRel
+## 3. Optional: read the rules as PyRel
+
+As in the course tutorial, you can skip this step: GND's own checker needs no
+PyRel. PyRel matters when the facts live in your data platform; see
+[What PyRel is, and when you need it](../explanation/what-is-pyrel.md). The example app prints the rules that `gnd export pyrel`
+generates:
 
 <!-- gnd-run expect=0 -->
 ```sh
@@ -143,8 +148,8 @@ about the statin, and warfarin is due.
 ## 6. GND checks it
 
 **The checker says** the plan is refused at state 2, the state after the statin
-refill. In the recording the checker was the DuckDB program GND generates; GND's
-own checker gives this plan the same verdict:
+refill. The recording used the app's optional PyRel backend, the DuckDB program
+GND generates; GND's own checker gives this plan the same verdict:
 `refill_not_early violated`. The witness shows the dates: last refill 20
 February, interval 30 days, refill on 10 March. The judgement rule is listed as
 not checked, as it is on every plan.
@@ -246,7 +251,7 @@ not checked: a person has to decide that one, and the report says so.
 
 | Step | What happened | Who checked it |
 |---|---|---|
-| 1-3 | dated rules became PyRel requirements over dates | generated from the model |
+| 1-3 | dated rules became a model; optionally, PyRel requirements over dates | `gnd validate`; `gnd export pyrel` |
 | 4-6 | a small model's plan was refused at the step that refilled too early | GND, before anything was dispensed |
 | 7 | the model declined for a reason that is not a rule; Claude got it right first time | GND checked every answer |
 | 8 | a late refill was accepted with a warning; the judgement rule was reported as not checked | GND |

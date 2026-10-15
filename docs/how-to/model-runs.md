@@ -8,7 +8,8 @@ whether the model repairs it from the feedback.
 ## How the runs were made
 
 Each run is one `app.py ask QUESTION` with a model behind the bot, at most
-three attempts. The generated PyRel program checked every plan. In the tests,
+three attempts. The app's optional PyRel backend, the DuckDB program GND
+generates ([What PyRel is, and when you need it](../explanation/what-is-pyrel.md)), checked every plan. In the tests,
 GND checks every recorded plan again and gives each the same verdict.
 
 | Model | How it was called |

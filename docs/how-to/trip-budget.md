@@ -16,7 +16,8 @@ gnd validate plan_apps/trip/model.orm.json
 OK: plan_apps/trip/model.orm.json is a valid GND ORM model
 ```
 
-The rules in PyRel, from `python plan_apps/trip/app.py rules`:
+Optionally, the rules in PyRel ([What PyRel is, and when you need it](../explanation/what-is-pyrel.md)), from
+`python plan_apps/trip/app.py rules`:
 
 ```text
 m.where(hotel_total(step, t, h), activity_total(step, t, a), budget(step, t, b)).require((h + a) <= b)
@@ -45,8 +46,8 @@ Plan three days in Lisbon under 900 EUR.
     ```
 
 Llama 3.1 8B stays inside the budget but books the Sintra day trip and the
-Belém walk for the same morning. The checker, here the DuckDB program GND
-generates, refuses the plan from state 4, where the
+Belém walk for the same morning. The checker, here the app's optional PyRel
+backend (the DuckDB program GND generates), refuses the plan from state 4, where the
 second booking lands, and names both activities, the day and the period.
 
 ## The repaired plan

@@ -2,7 +2,9 @@
 
 Every rule in a GND model becomes PyRel code that GND writes for you. This page
 follows one rule from the registrar's sentence to the two programs that check
-it, and says what each program can and cannot do.
+it, and says what each program can and cannot do. PyRel is optional: GND's own
+checker needs none of this. [What PyRel is, and when you need it](what-is-pyrel.md)
+explains where PyRel runs and why you might want it.
 
 ## One rule, three forms
 

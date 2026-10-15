@@ -151,3 +151,33 @@ Changes:
 - A test pins the quoted errors, edits and denial count to the recorded session.
 
 Gate after the change: 293 docs tests, 19 runnable blocks, 10095 links.
+
+## Owner feedback: PyRel is optional, and what app.py is (2026-10-15)
+
+The owner noted that step 3 read as if PyRel were required, and asked what
+`python plan_apps/course/app.py rules` is, since GND's commands start with
+`gnd`.
+
+Changes:
+- **A new page,** `docs/explanation/what-is-pyrel.md`, says:
+  - you don't need PyRel to use GND;
+  - PyRel is RelationalAI's Python library, an optional extension for facts
+    that live in a data platform;
+  - you can prototype locally on DuckDB, or reach Snowflake through
+    RelationalAI's Native App;
+  - what GND has tested: GND's checker, and the DuckDB program, which agrees on
+    every recorded plan;
+  - what it has not: the RelationalAI engine path is compiled, not run;
+    "Snowflake execution is not yet supported by gnd export".
+- **Step 3** is "Optional: read the rules as PyRel". It links that page and
+  shows the GND command `gnd export pyrel ... --rules lqp` beside the app's
+  printout.
+- **"Before you start"** explains that `app.py` is the example's own program
+  built on GND, not a GND command, with a table of its four commands. It points
+  to `/gnd:gnd-codegen` for a project of your own.
+- **Every page that mentions PyRel** marks it optional and links the new page.
+  The recorded checks are attributed to "the app's optional PyRel backend".
+- **Tests** enforce the link and the "optional" wording on every page that
+  mentions PyRel, the `app.py` explanation, and the untested-path statement.
+
+Gate after the change: 303 docs tests, 20 runnable blocks, 10277 links.

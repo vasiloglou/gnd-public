@@ -16,7 +16,7 @@ gnd validate plan_apps/lease/model.orm.json
 OK: plan_apps/lease/model.orm.json is a valid GND ORM model
 ```
 
-The date rules in PyRel:
+Optionally, the date rules in PyRel ([What PyRel is, and when you need it](../explanation/what-is-pyrel.md)):
 
 ```text
 m.where(payment_due(step, l, a, due), lease_starts(step, l, start)).require(due >= start)

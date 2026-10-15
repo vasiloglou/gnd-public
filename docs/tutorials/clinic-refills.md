@@ -19,13 +19,17 @@ you haven't: it shows Claude Code writing the model with
     - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
     - [`clinic/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/clinic/stand_in_bot.py): the scripted stand-in bot
     - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/clinic-refills.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/clinic-refills.md): replays and included files show only as include lines there; they render on the docs site
 
 ## What you'll build
 
 A folder with the pharmacy's rules, a model of them, Sam's prescriptions and a
 bot that answers "refill this patient's prescriptions" with `refill_drug`
 steps.
+
+Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+shows: these pages need a GND newer than the 0.1.0 release, installed from a
+checkout, and `python` must be that environment's Python.
 
 <!-- gnd-run expect=0 -->
 ```sh

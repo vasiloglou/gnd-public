@@ -14,8 +14,9 @@ and operation plans, not paragraphs), and GND checks it with its own determinist
 engine, which is lightweight, portable native Python. When you need more, GND hands the same model to
 [Soufflé](https://souffle-lang.github.io/), [Lean](https://lean-lang.org/) or
 [PyRel](https://pypi.org/project/relationalai/). If your team already works in PyRel,
-GND exports its rules as an ordinary PyRel program you can read and run. These
-programs run locally on DuckDB; Snowflake execution is not yet supported by gnd export.
+GND exports its rules as an ordinary PyRel program you can read and run. The
+DuckDB version runs locally; the version for a RelationalAI engine is compiled but
+not yet run, and Snowflake execution is not yet supported by gnd export.
 **GND is agent skills plus Python code.**
 
 ![Animated: an agent proposes a payment plan, GND names the failed precondition, the agent adds the missing steps, and the revised plan is accepted.](docs/assets/hero.svg)

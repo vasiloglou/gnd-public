@@ -11,7 +11,7 @@ whether the model repairs it from the feedback.
     - [the recordings README](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): the table and the caveats
     - [`tools/plan_app_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/plan_app_bot.py): how a model is called
     - [`tools/record_plan_apps.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/record_plan_apps.py): how the runs were recorded
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/model-runs.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/model-runs.md): replays and included files show only as include lines there; they render on the docs site
 
 ## How the runs were made
 
@@ -59,7 +59,8 @@ Three things to read from it:
 
 ## Look at a run yourself
 
-Each run folder in `src/gnd/examples/plan_apps/recordings/` holds what the app
+Each run folder in `src/gnd/examples/plan_apps/recordings/` of the GND
+repository (the example copy in the tutorials leaves it out) holds what the app
 printed (`session.txt`) and the model's raw reply to each attempt. The
 [course tutorial](../tutorials/course-planner.md) replays
 `llama-3.2-3b/course/run-2`, the first course run refused on a rule and then

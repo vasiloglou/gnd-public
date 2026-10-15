@@ -21,7 +21,7 @@ runs you can try yourself use a scripted stand-in bot, and say so.
     - [the modelling sessions](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions/README.md): Claude Code running gnd-model-from-text
     - [the evolve sessions](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions-evolve/README.md): Claude Code running gnd-model-evolve
     - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/course-planner.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/course-planner.md): replays and included files show only as include lines there; they render on the docs site
 
 ## What you'll build
 
@@ -35,7 +35,18 @@ A folder with the registrar's rules, a model of them, and a bot that answers
 | The bot (any model behind a command) | proposes plans |
 | GND | checks each plan and names the rule that fails and the facts that break it |
 
-**Before you start.** Install the GND plugin in Claude Code, as the
+**Before you start.** These pages need a GND newer than the 0.1.0 release on
+PyPI, so until the next release install it from a checkout of the repository.
+After the `export` line, `python` and `gnd` mean that environment:
+
+```sh
+git clone https://github.com/vasiloglou/gnd-public.git
+uv venv gnd-env --python 3.13
+uv pip install --python gnd-env/bin/python ./gnd-public
+export PATH="$PWD/gnd-env/bin:$PATH"
+```
+
+For the Claude Code steps, also install the GND plugin, as the
 [plugin page](../marketplace-plugins.md) shows. Then get the example folder:
 
 <!-- gnd-run expect=0 -->
@@ -183,9 +194,10 @@ You can skip this step. GND checks every plan with its own checker, and nothing
 in this tutorial needs PyRel.
 
 PyRel is RelationalAI's Python library. It matters when the facts you want to
-check live in your company's data platform: you can prototype locally with
-DuckDB, then point the same rules at your data in Snowflake through
-RelationalAI's Native App. [What PyRel is, and when you need it](../explanation/what-is-pyrel.md)
+check live in your company's data platform. You can prototype locally with
+DuckDB, a small database that runs inside Python. For data in Snowflake,
+RelationalAI's Native App runs PyRel there; Snowflake execution is not yet
+supported by gnd export. [What PyRel is, and when you need it](../explanation/what-is-pyrel.md)
 explains both, and which of them GND has tested.
 
 GND writes the PyRel version of every rule from the model; nobody writes it by
@@ -200,7 +212,9 @@ gnd export pyrel plan_apps/course/model.orm.json --rules lqp --out course_rules.
 Exported the model's rules as PyRel requirements (lqp version) to course_rules.py
 ```
 
-The example app prints the same rules, one per registrar sentence. Exporting
+In the printout below, "the LQP program" is the version for a RelationalAI
+engine and "the DuckDB program" is the one that runs locally. The example app
+prints the same rules, one per registrar sentence. Exporting
 and printing need only GND; running them needs PyRel.
 
 **You type**
@@ -438,9 +452,11 @@ yourself:
 
 <!-- gnd-run expect=0 -->
 ```sh
-cd plan_apps/course
-gnd evolve preview model.orm.json credit-cap-proposal.json --workspace . --records records --out preview.json > /dev/null
-gnd evolve apply model.orm.json credit-cap-proposal.json --preview preview.json --workspace . --records records > /dev/null && echo "applied"
+(
+  cd plan_apps/course
+  gnd evolve preview model.orm.json credit-cap-proposal.json --workspace . --records records --out preview.json > /dev/null
+  gnd evolve apply model.orm.json credit-cap-proposal.json --preview preview.json --workspace . --records records > /dev/null && echo "applied"
+)
 ```
 
 ```text

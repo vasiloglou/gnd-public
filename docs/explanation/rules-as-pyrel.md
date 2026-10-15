@@ -10,7 +10,7 @@ explains where PyRel runs and why you might want it.
 
     - [`pyrel_rules.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/export/pyrel_rules.py): the code that writes both PyRel programs
     - [`course/model.orm.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/course/model.orm.json): the model used on this page
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/explanation/rules-as-pyrel.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/explanation/rules-as-pyrel.md): replays and included files show only as include lines there; they render on the docs site
 
 ## One rule, three forms
 

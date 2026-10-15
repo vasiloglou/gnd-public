@@ -10,7 +10,7 @@ your company's data platform rather than in files.
 !!! info "Files on GitHub"
 
     - [`pyrel_rules.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/export/pyrel_rules.py): the code that writes the PyRel programs
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/explanation/what-is-pyrel.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/explanation/what-is-pyrel.md): replays and included files show only as include lines there; they render on the docs site
 
 ## What PyRel is
 
@@ -46,8 +46,8 @@ last step is not yet tested.
 ## Set up PyRel locally
 
 PyRel runs in its own Python environment, separate from GND's, and GND finds it
-through `GND_PYREL_PYTHON`. The [PyRel runtime page](../runtimes/pyrel.md) and
-its [shared setup](../runtimes/scenario.md) show how to create that environment.
+through `GND_PYREL_PYTHON`. The [PyRel applications page](../pyrel-apps.md#set-up)
+shows how to create that environment and set the variable.
 Then add `--backend pyrel` to an example app's `check` or `ask` command.
 
 ## Read more

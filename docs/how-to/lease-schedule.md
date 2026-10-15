@@ -13,9 +13,13 @@ outside them, and warns about a payment due in the last week.
     - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
     - [`lease/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/lease/stand_in_bot.py): the scripted stand-in bot
     - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/lease-schedule.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/lease-schedule.md): replays and included files show only as include lines there; they render on the docs site
 
 ## Before you start
+
+Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+shows: these pages need a GND newer than the 0.1.0 release, installed from a
+checkout, and `python` must be that environment's Python.
 
 <!-- gnd-run expect=0 -->
 ```sh
@@ -33,9 +37,9 @@ Optionally, the date rules in PyRel ([What PyRel is, and when you need it](../ex
 m.where(payment_due(step, l, a, due), lease_starts(step, l, start)).require(due >= start)
 ```
 
-The lease itself is a document. Pulling its terms out of the signed PDF, and
-checking that each fact points at the sentence it came from, is
-`gnd extract` and `gnd verify`, which run on GND only. In this example the
+The lease itself is a document. Pulling its terms out of the signed PDF is the
+`gnd-extract` skill's job, and `gnd verify` checks that each extracted fact
+points at the sentence it came from; both run on GND only. In this example the
 lease terms are typed in, so there is nothing to anchor; the schedule rules run
 on GND and on PyRel.
 

@@ -13,9 +13,13 @@ refuses two activities booked for the same time.
     - [`core.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/core.py): the code every example app shares
     - [`trip/stand_in_bot.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/trip/stand_in_bot.py): the scripted stand-in bot
     - [the recorded runs](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/recordings/README.md): every model run, with caveats
-    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/trip-budget.md)
+    - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/trip-budget.md): replays and included files show only as include lines there; they render on the docs site
 
 ## Before you start
+
+Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+shows: these pages need a GND newer than the 0.1.0 release, installed from a
+checkout, and `python` must be that environment's Python.
 
 <!-- gnd-run expect=0 -->
 ```sh

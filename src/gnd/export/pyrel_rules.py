@@ -42,12 +42,13 @@ _TYPES = {"String": "String", "Integer": "Integer", "Float": "Float", "Boolean":
 _NEGATED = {"<": ">=", "<=": ">", "=": "!=", "!=": "==", ">=": "<", ">": "<="}
 _PYOP = {"<": "<", "<=": "<=", "=": "==", "==": "==", "!=": "!=", ">=": ">=", ">": ">"}
 _RESERVED = {"m", "not_", "Field", "String", "Integer", "Float", "Boolean", "Model", "Config",
-             "rows", "facts", "report", "load", "json", "sys", "os", "re", "tempfile", "found", "x",
+             "rows", "facts", "report", "load", "json", "sys", "os", "re", "tempfile", "found",
              "value", "values", "probe_vars", "instances", "population", "config", "build", "main",
              "read_population", "witnesses", "compile_only", "RULES", "SCHEMA", "LIMIT", "EXPECTED",
              "warnings", "create_config", "argparse", "args", "parser", "problems", "caught", "w",
              "directory", "error", "rule", "name", "hits", "hit", "status", "row", "rows_", "path",
-             "document", "relation", "roles", "r", "v", "k", "f", "g", "key", "fact", "seen"}
+             "document", "relation", "roles", "r", "v", "k", "f", "g", "key", "fact", "seen", "aggregates",
+             "std_math", "h_row", "h_a", "h_b", "h_c", "h_x", "Fraction"}
 
 
 @dataclass(frozen=True)
@@ -105,6 +106,12 @@ class _Model:
         self.facts = {fact_id: self.index.fact_type(fact_id) for fact_id in self._roles}
         self.helpers: dict[str, dict[str, Any]] = {}
         self.unchecked: list[dict[str, str]] = []   # textual rules: listed, never evaluated (as GND)
+        # structured derived heads, lower strata first; each gets <head>_derived (computed) and, when
+        # semiderived, <head>_claimed (the claim), while <head> is what constraints read (GND's view)
+        self.derived = _strata({f: fact for f, fact in self.facts.items() if isinstance(fact.get("derivation_rule"), dict)})
+        self.derived_relations = {f"{head}_derived": head for head in self.derived}
+        self.derived_relations.update({f"{head}_claimed": head for head in self.derived
+                                       if self.facts[head].get("derivation") == "semiderived"})
 
     def helper(self, name: str, fields: list[tuple[str, str]], kind: str, **data: Any) -> str:
         """Register a helper relation the rules refer to; rendered once, in registration order."""
@@ -200,10 +207,11 @@ def _guarded(model: _Model, c: dict[str, Any]) -> Requirement:
     if not _connected(domain):
         raise ExportInputError(f"{c.get('id')}: a disconnected antecedent is left unchecked by GND; "
                                "the rules programs refuse it rather than cross-join it")
-    asserted = tuple(dict.fromkeys(a.relation for a in domain if not _is_derived(model, a.relation)))
+    # GND calls the rule vacuous when any antecedent fact type is empty, as the constraint reads it
+    antecedents = tuple(dict.fromkeys(a.relation for a in domain))
     refs = tuple(dict.fromkeys([a.relation for a in domain] + ([check.atom.relation] if check.atom else [])))
     return Requirement(c["id"], "guarded", c["modality"], _quote(c), domain, check, _variables(domain),
-                       ("any", asserted), refs)
+                       ("any", antecedents), refs)
 
 
 def _connected(atoms: tuple[Atom, ...]) -> bool:
@@ -232,10 +240,11 @@ def _mandatory(model: _Model, c: dict[str, Any], fact_id: str) -> Requirement:
     if owner is None:
         raise ExportInputError(f"{c.get('id')}: mandatory needs one role of {fact_id}")
     universe = f"{owner['object_type']}_any"
-    domain = (Atom(universe, ("$x",)),)
-    check = Check("holds", atom=Atom(fact_id, tuple("$x" if r["role_name"] == role else None for r in roles)))
+    var = f"${owner['object_type']}"
+    domain = (Atom(universe, (var,)),)
+    check = Check("holds", atom=Atom(fact_id, tuple(var if r["role_name"] == role else None for r in roles)))
     return Requirement(c.get("id") or f"{fact_id}#mandatory", "mandatory", c["modality"], _quote(c),
-                       domain, check, ("$x",), ("any", (fact_id,)), (fact_id,),
+                       domain, check, (var,), ("any", (fact_id,)), (fact_id,),
                        info=(("uncovered_vacuous", [fact_id]),))
 
 
@@ -246,7 +255,7 @@ def _subset(model: _Model, c: dict[str, Any]) -> Requirement:
     for seq in (sub, sup):
         if len({ref["fact_type"] for ref in seq}) != 1:
             raise ExportInputError(f"{c.get('id')}: role sequences spanning fact types are a later phase")
-    names = [f"$k{i}" for i in range(len(sub))]
+    names = _sequence_names(sub)
 
     def atom_for(seq):
         fact_id = seq[0]["fact_type"]
@@ -268,11 +277,12 @@ def _value(model: _Model, c: dict[str, Any]) -> Requirement:
             raise ExportInputError(f"{c.get('id')}: a value constraint needs allowed, range or ranges")
         model.helper(f"{c['id']}_allowed", [("value", model.primitive(object_id))], "ranges",
                      object_type=object_id, ranges=ranges)
+    var = f"${object_id}"
     plays = tuple(dict.fromkeys(fact for fact, _ in model.plays(object_id)))
     # GND evaluates a value rule over every fact and the instances roster; it is vacuous only when
     # both are empty, so the report checks the rosters too (vacuous_when "universe").
-    return Requirement(c["id"], "value", c["modality"], _quote(c), (Atom(f"{object_id}_any", ("$x",)),),
-                       Check("holds", atom=Atom(f"{c['id']}_allowed", ("$x",))), ("$x",), ("universe", plays), plays,
+    return Requirement(c["id"], "value", c["modality"], _quote(c), (Atom(f"{object_id}_any", (var,)),),
+                       Check("holds", atom=Atom(f"{c['id']}_allowed", (var,))), (var,), ("universe", plays), plays,
                        info=(("rosters", _rosters(model, object_id)),))
 
 
@@ -280,6 +290,18 @@ def _rosters(model: _Model, object_id: str) -> list[str]:
     """The instances keys that populate an object type: its own, and entities it is the reference value of."""
     return [object_id] + sorted(o for o, obj in model.objects.items()
                                 if (obj.get("reference") or {}).get("value_type") == object_id)
+
+
+def _sequence_names(seq: list[dict[str, Any]]) -> list[str]:
+    """Readable variables for a role sequence: the role names, numbered only when one repeats."""
+    names: list[str] = []
+    for ref in seq:
+        base = f"${ref.get('role')}"
+        name, n = base, 2
+        while name in names:
+            name, n = f"{base}_{n}", n + 1
+        names.append(name)
+    return names
 
 
 def _seq_atom(model: _Model, seq: list[dict[str, Any]], names: list[str], cid: str) -> Atom:
@@ -318,17 +340,18 @@ def _mandatory_disjunctive(model: _Model, c: dict[str, Any]) -> list[Requirement
     if len(refs) < 2:
         raise ExportInputError(f"{c['id']}: inclusive-or needs two or more roles")
     helper, object_id = _plays(model, c, refs)
+    var = f"${object_id}"
     facts = tuple(dict.fromkeys(ref["fact_type"] for ref in refs))
     return [Requirement(c["id"], "mandatory-disjunctive", c["modality"], _quote(c),
-                        (Atom(f"{object_id}_any", ("$x",)),), Check("holds", atom=Atom(helper, ("$x",))),
-                        ("$x",), ("all", facts), facts, info=(("uncovered_vacuous", list(facts)),))]
+                        (Atom(f"{object_id}_any", (var,)),), Check("holds", atom=Atom(helper, (var,))),
+                        (var,), ("all", facts), facts, info=(("uncovered_vacuous", list(facts)),))]
 
 
 def _two_sequences(model: _Model, c: dict[str, Any]) -> tuple[Atom, Atom, tuple[str, ...]]:
     a, b = c.get("role_seq_a") or [], c.get("role_seq_b") or []
     if not a or len(a) != len(b):
         raise ExportInputError(f"{c['id']}: the two role sequences must have the same, non-zero length")
-    names = [f"$k{i}" for i in range(len(a))]
+    names = _sequence_names(a)
     return _seq_atom(model, a, names, c["id"]), _seq_atom(model, b, names, c["id"]), tuple(names)
 
 
@@ -354,16 +377,17 @@ def _exclusive_or(model: _Model, c: dict[str, Any]) -> list[Requirement]:
                                "exclusion half (unchecked otherwise); the rules programs refuse it")
     refs = [seq[0] for seq in seqs]
     helper, object_id = _plays(model, c, refs)
-    atoms = [_seq_atom(model, seq, ["$x"], c["id"]) for seq in seqs]
+    var = f"${object_id}"
+    atoms = [_seq_atom(model, seq, [var], c["id"]) for seq in seqs]
     facts = tuple(dict.fromkeys(atom.relation for atom in atoms))
     found = []
     for i in range(len(atoms)):
         for j in range(i + 1, len(atoms)):
             found.append(Requirement(c["id"], "exclusive-or", c["modality"], _quote(c), (atoms[i],),
-                                     Check("absent", atom=atoms[j]), ("$x",), ("all", facts), facts,
+                                     Check("absent", atom=atoms[j]), (var,), ("all", facts), facts,
                                      part=f"both_{i}_{j}"))
-    found.append(Requirement(c["id"], "exclusive-or", c["modality"], _quote(c), (Atom(f"{object_id}_any", ("$x",)),),
-                             Check("holds", atom=Atom(helper, ("$x",))), ("$x",), ("all", facts), facts,
+    found.append(Requirement(c["id"], "exclusive-or", c["modality"], _quote(c), (Atom(f"{object_id}_any", (var,)),),
+                             Check("holds", atom=Atom(helper, (var,))), (var,), ("all", facts), facts,
                              part="none"))
     return found
 
@@ -439,21 +463,23 @@ def _ring(model: _Model, c: dict[str, Any], fact_id: str) -> list[Requirement]:
 def _cardinality(model: _Model, c: dict[str, Any]) -> list[Requirement]:
     bound, scope = c.get("bound") or {}, c.get("scope")
     if scope == "object":
-        domain, facts = (Atom(f"{c['object_type']}_any", ("$x",)),), ()
+        var = f"${c['object_type']}"
+        domain, facts = (Atom(f"{c['object_type']}_any", (var,)),), ()
     elif scope == "role":
         ref = c.get("role_ref") or {}
-        atom = _seq_atom(model, [ref], ["$x"], c["id"])
+        var = f"${ref.get('role')}"
+        atom = _seq_atom(model, [ref], [var], c["id"])
         domain, facts = (atom,), (atom.relation,)
     else:
         raise ExportInputError(f"{c['id']}: cardinality scope must be object or role")
     info = (("scope", scope), ("min", bound.get("min")), ("max", bound.get("max")))
-    found = [Requirement(c["id"], "cardinality", c["modality"], _quote(c), domain, Check("none"), ("$x",),
+    found = [Requirement(c["id"], "cardinality", c["modality"], _quote(c), domain, Check("none"), (var,),
                          ("any", facts), facts, part="members", listing=True, info=info)]
     for part, operator in (("min", ">="), ("max", "<=")):
         if bound.get(part) is not None:
             found.append(Requirement(c["id"], "cardinality", c["modality"], _quote(c), domain,
-                                     Check("compare", compare=Compare(operator, Count(("$x",)), int(bound[part]))),
-                                     ("$x",), ("any", facts), facts, part=part, info=info))
+                                     Check("compare", compare=Compare(operator, Count((var,)), int(bound[part]))),
+                                     (var,), ("any", facts), facts, part=part, info=info))
     return found
 
 
@@ -495,9 +521,123 @@ def _refuse_unsupported_model(doc: dict[str, Any]) -> None:
             raise ExportInputError(f"object type {obj['id']!r} is a subtype; subtype universes are a later phase "
                                    "of the rules programs")
     for fact_id, fact in _Model(doc).facts.items():
-        if fact.get("derivation_rule") is not None or fact.get("derivation") in {"derived", "semiderived"}:
-            raise ExportInputError(f"fact type {fact_id!r} is derived; GND compares claimed derived facts with "
-                                   "computed ones, which the rules programs do not reproduce yet (later phase)")
+        rule = fact.get("derivation_rule")
+        if rule is None:
+            continue
+        if not isinstance(rule, dict):
+            raise ExportInputError(f"fact type {fact_id!r} has an opaque (text) derivation rule; GND's treatment of "
+                                   "those depends on the rest of the model, so the rules programs refuse them")
+        if rule.get("aggregate") and fact.get("derivation") == "semiderived":
+            raise ExportInputError(f"fact type {fact_id!r} is semiderived with an aggregate; GND's checker stops "
+                                   "with an internal error on that combination, so there is no verdict to match")
+        if (rule.get("aggregate") or {}).get("fn") == "avg":
+            raise ExportInputError(f"fact type {fact_id!r} uses avg; exact averages are a later phase of the rules programs")
+        for name in sorted(_functions(rule) - _ARITHMETIC):
+            raise ExportInputError(f"fact type {fact_id!r} uses the function {name!r}; only "
+                                   f"{', '.join(sorted(_ARITHMETIC))} are supported by the rules programs yet")
+
+
+_ARITHMETIC = {"add", "sub", "mul", "neg", "abs"}
+
+
+def _functions(value: Any) -> set[str]:
+    """Every function name used anywhere in a derivation rule."""
+    if isinstance(value, dict):
+        found = {value["fn"]} if isinstance(value.get("fn"), str) and "args" in value else set()
+        return found.union(*(_functions(v) for v in value.values()))
+    if isinstance(value, list):
+        return set().union(*(_functions(v) for v in value))
+    return set()
+
+
+def _rule_atoms(rule: dict[str, Any]) -> list[dict[str, Any]]:
+    clauses = rule.get("clauses") or [rule]
+    return [a for clause in clauses for a in (*clause.get("body", []), *clause.get("negate", []))]
+
+
+def _strata(heads: dict[str, dict[str, Any]]) -> list[str]:
+    """Derived heads ordered so every head comes after the heads it reads (recursive groups stay together)."""
+    reads = {h: [a["fact_type"] for a in _rule_atoms(f["derivation_rule"]) if a["fact_type"] in heads] for h, f in heads.items()}
+    order: list[str] = []
+    index: dict[str, int] = {}
+    low: dict[str, int] = {}
+    stack: list[str] = []
+    for root in heads:   # Tarjan's algorithm, iterative; components come out dependencies first
+        if root in index:
+            continue
+        work = [(root, 0)]
+        while work:
+            node, i = work.pop()
+            if i == 0:
+                index[node] = low[node] = len(index)
+                stack.append(node)
+            if i < len(reads[node]):
+                work.append((node, i + 1))
+                nxt = reads[node][i]
+                if nxt not in index:
+                    work.append((nxt, 0))
+                elif nxt in stack:
+                    low[node] = min(low[node], index[nxt])
+                continue
+            if low[node] == index[node]:
+                while True:
+                    member = stack.pop()
+                    order.append(member)
+                    if member == node:
+                        break
+            if work:
+                parent = work[-1][0]
+                low[parent] = min(low[parent], low[node])
+    return order
+
+
+def _unswap(model: _Model, atoms: list[Atom]) -> list[Atom]:
+    """Rewrite R(y, x) as R_reverse(x, y) when an earlier atom already joined (x, y) in that order.
+
+    PyRel 1.30.1 cannot compile a join whose second atom takes the same two variables swapped
+    ("reordering loop did not reach a fixpoint"); reading through a reversed copy avoids it.
+    """
+    seen: set[tuple[str, str]] = set()
+    out = []
+    for atom in atoms:
+        args = atom.args
+        if len(args) == 2 and all(isinstance(a, str) and a.startswith("$") for a in args) and args[0] != args[1]:
+            if (args[1], args[0]) in seen:
+                primitive = _relation_roles(model, atom.relation)[0][1]
+                reverse = model.helper(f"{atom.relation}_reverse", [("a", primitive), ("b", primitive)], "reverse",
+                                       fact=atom.relation)
+                atom = Atom(reverse, (args[1], args[0]))
+            seen.add((atom.args[0], atom.args[1]))
+        out.append(atom)
+    return out
+
+
+def _unswapped(model: _Model, req: Requirement) -> Requirement:
+    atoms = _unswap(model, [*req.domain, *([req.check.atom] if req.check.atom else [])])
+    domain = tuple(atoms[: len(req.domain)])
+    check = req.check if not req.check.atom else Check(req.check.kind, atom=atoms[-1], compare=req.check.compare,
+                                                       pairs=req.check.pairs)
+    return Requirement(req.id, req.family, req.modality, req.quote, domain, check, req.witness, req.vacuous_when,
+                       req.refs, req.part, req.listing, req.info)
+
+
+def _derivation(model: _Model, head: str) -> list[Requirement]:
+    """GND's derivation check as requirements: every computed fact is claimed; every claimed fact is computed."""
+    fact = model.facts[head]
+    kind = fact["derivation"]
+    roles = [r["role_name"] for r in model.roles(head)]
+    variables = tuple(f"${r}" for r in roles)
+    claims = f"{head}_claimed" if kind == "semiderived" else head
+    computed = Atom(f"{head}_derived", variables)
+    claimed = Atom(claims, variables)
+    info = (("head", head), ("roles", roles), ("kind", kind))
+    quote = fact.get("reading", head)
+    found = [Requirement(f"derivation:{head}", "derivation", "alethic", quote, (computed,), Check("holds", atom=claimed),
+                         variables, ("all", ()), (head,), part="incomplete", info=info)]
+    if kind == "derived":   # a semiderived claim may add facts of its own
+        found.append(Requirement(f"derivation:{head}", "derivation", "alethic", quote, (claimed,),
+                                 Check("holds", atom=computed), variables, ("all", ()), (head,), part="unsound", info=info))
+    return found
 
 
 def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requirement]:
@@ -551,6 +691,9 @@ def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requi
             model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"]})
         else:
             raise ExportInputError(f"{c.get('id')}: family {family!r} is a later phase of the rules programs")
+    for head in model.derived:
+        found += _derivation(model, head)
+    found = [_unswapped(model, r) for r in found]
     _refuse_name_collisions(model, found)
     return found
 
@@ -558,12 +701,13 @@ def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requi
 def _refuse_name_collisions(model: _Model, found: list[Requirement]) -> None:
     """Helper relations share the fact types' namespace, so a fact type may not take a generated name."""
     used = {atom.relation for r in found for atom in (*r.domain, *([r.check.atom] if r.check.atom else []))}
-    generated = set(model.helpers) | ({f"{o}_any" for o in model.objects} & used) | {
+    generated = set(model.helpers) | set(model.derived_relations) | ({f"{o}_any" for o in model.objects} & used) | {
         f"{r.id}_allowed" for r in found if r.family == "value"}
     clash = sorted(generated & set(model.facts))
     if clash:
         raise ExportInputError(f"fact type {clash[0]!r} has the name of a relation the rules programs generate "
-                               "(<fact>_reverse, <fact>_closure, <id>_plays, <id>_allowed, <type>_any); rename it")
+                               "(<fact>_reverse, <fact>_closure, <fact>_derived, <fact>_claimed, <id>_plays, <id>_allowed, <type>_any); "
+                               "rename it")
 
 
 # ---------------------------------------------------------------- rendering
@@ -585,6 +729,7 @@ class _Names:
             self.relations[fact_id] = _ident(fact_id, taken)
             taken.add(self.relations[fact_id])
         self.taken = taken
+        self.vars: dict[str, str] = {}
 
     def relation(self, name: str) -> str:
         if name not in self.relations:
@@ -593,7 +738,11 @@ class _Names:
         return self.relations[name]
 
     def var(self, name: str) -> str:
-        return _ident(name, self.taken)
+        """The same Python name for a variable everywhere; distinct variables never share one."""
+        if name not in self.vars:
+            self.vars[name] = _ident(name, self.taken)
+            self.taken.add(self.vars[name])
+        return self.vars[name]
 
 
 def _types(model: _Model, req: Requirement) -> dict[str, str]:
@@ -611,6 +760,8 @@ def _relation_roles(model: _Model, relation: str) -> list[tuple[str, str]]:
         return list(model.helpers[relation]["fields"])
     if relation in model.facts:
         return [(r["role_name"], model.role_type(relation, r["role_name"])) for r in model.roles(relation)]
+    if relation in model.derived_relations:
+        return _relation_roles(model, model.derived_relations[relation])
     if relation.endswith("_allowed"):
         constraint = next(c for c in model.doc.get("constraints", []) if f"{c.get('id')}_allowed" == relation)
         return [("value", model.primitive(constraint["object_type"]))]
@@ -667,6 +818,10 @@ def require_text(req: Requirement, names: _Names, model: _Model) -> str:
     if req.listing:
         return f"(listing for the report) {denial_text(req, names, model)}"
     domain = ", ".join(_atom_text(a, names, model) for a in req.domain)
+    if req.family == "cardinality" and req.part == "min":
+        # no outer domain: with none, the rule still applies to an empty universe, which GND fails
+        count = _operand(req.check.compare.left, names)
+        return f"m.require({count}.where({domain}) >= {req.check.compare.right!r})"
     check = ", ".join(_check_text(req.check, names, model, negate=False))
     return f"m.where({domain}).require({check})"
 
@@ -685,11 +840,11 @@ def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[st
         rel = names.relation(f"{object_id}_any")
         lines.append(f"    # every {object_id} mentioned in any fact, plus the population's instances roster")
         lines.append(f"    {rel} = m.Relationship(fields=[Field('member', {primitive})], short_name='{object_id}_any')")
-        lines.append(f"    x = {primitive}.ref()")
+        lines.append(f"    h_x = {primitive}.ref()")
         for fact_id, role_name in model.plays(object_id):
-            args = ", ".join("x" if r["role_name"] == role_name else f"{model.role_type(fact_id, r['role_name'])}.ref()"
+            args = ", ".join("h_x" if r["role_name"] == role_name else f"{model.role_type(fact_id, r['role_name'])}.ref()"
                              for r in model.roles(fact_id))
-            lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(x))")
+            lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(h_x))")
         rosters = _rosters(model, object_id)
         lines.append(f"    for value in [v for key in {rosters!r} for v in instances.get(key, [])]:")
         lines.append(f"        m.define({rel}(value))")
@@ -708,10 +863,13 @@ def _allowed(model: _Model, reqs: list[Requirement], names: _Names) -> list[str]
     return lines
 
 
-def _helpers(model: _Model, names: _Names) -> list[str]:
-    """Render every registered helper relation: reverses, closures, role-player sets and ranges."""
+def _helpers(model: _Model, names: _Names, kinds: tuple[str, ...] | None = None) -> list[str]:
+    """Render registered helper relations (reverses, closures, role-player sets, ranges), each once."""
     lines = []
     for name, spec in model.helpers.items():
+        if (kinds is not None and spec["kind"] not in kinds) or spec.get("rendered"):
+            continue
+        spec["rendered"] = True
         rel = names.relation(name)
         fields = ", ".join(f"Field({field!r}, {primitive})" for field, primitive in spec["fields"])
         lines.append(f"    {rel} = m.Relationship(fields=[{fields}], short_name={name!r})")
@@ -758,9 +916,136 @@ def _relations(model: _Model, names: _Names) -> list[str]:
                            for r in model.roles(fact_id))
         lines.append(f"    # {fact.get('reading', fact_id)}")
         lines.append(f"    {names.relation(fact_id)} = m.Relationship(fields=[{fields}], short_name={fact_id!r})")
-        if not isinstance(fact.get("derivation_rule"), dict):
-            roles = tuple(r["role_name"] for r in model.roles(fact_id))
-            lines.append(f"    load(m, {names.relation(fact_id)}, facts.get({fact_id!r}, []), {roles!r})")
+        roles = tuple(r["role_name"] for r in model.roles(fact_id))
+        target = fact_id
+        if fact.get("derivation") == "semiderived" and fact_id in model.derived:
+            target = f"{fact_id}_claimed"
+            lines.append(f"    # the claimed {fact_id} facts; constraints read the computed ones (as GND does)")
+            lines.append(f"    {names.relation(target)} = m.Relationship(fields=[{fields}], short_name={target!r})")
+        lines.append(f"    load(m, {names.relation(target)}, facts.get({fact_id!r}, []), {roles!r})")
+    return lines
+
+
+def _clauses(rule: dict[str, Any]) -> list[dict[str, Any]]:
+    """One entry per clause, with the root's where and aggregate applied to each (GND's union of clauses)."""
+    clauses = rule.get("clauses") or [rule]
+    return [{"body": c.get("body", []), "negate": c.get("negate", []),
+             "where": [*c.get("where", []), *rule.get("where", [])] if "clauses" in rule else c.get("where", []),
+             "head": c.get("head") or rule["head"], "aggregate": rule.get("aggregate")} for c in clauses]
+
+
+_FN = {"add": "({} + {})", "sub": "({} - {})", "mul": "({} * {})", "neg": "(-{})", "abs": "std_math.abs({})"}
+
+
+def _expr(term: Any, names: _Names) -> str:
+    if isinstance(term, dict):
+        args = [_expr(a, names) for a in term["args"]]
+        if term["fn"] == "add" and len(args) > 2:
+            return "(" + " + ".join(args) + ")"
+        return _FN[term["fn"]].format(*args)
+    return names.var(term) if isinstance(term, str) and term.startswith("$") else repr(term)
+
+
+def _term_variables(term: Any) -> list[str]:
+    if isinstance(term, dict):
+        return [v for a in term.get("args", []) for v in _term_variables(a)]
+    return [term] if isinstance(term, str) and term.startswith("$") else []
+
+
+def _refuse_inexact(head: str, clause: dict[str, Any], types: dict[str, str]) -> None:
+    """GND computes add, sub, mul, neg and abs as exact rationals; PyRel uses binary floats for Float values.
+
+    So arithmetic is admitted only over Integer variables and integer literals, and a where comparison
+    may not mix a Float variable with an Integer one (PyRel 1.30.1 cannot ground that comparison).
+    """
+    terms = [*[t for c in clause["where"] for t in (c["left"], c["right"])], *clause["head"].values()]
+    for term in terms:
+        if not isinstance(term, dict):
+            continue
+        floats = [v for v in _term_variables(term) if types.get(v) == "Float"]
+        literals = [a for a in _term_literals(term) if isinstance(a, float) and not a.is_integer()]
+        if floats or literals:
+            raise ExportInputError(f"{head}: arithmetic on Float values ({', '.join(map(str, floats + literals))}) is exact "
+                                   "in GND and binary in PyRel; the rules programs refuse it (later phase)")
+    for comparison in clause["where"]:
+        kinds = {types.get(t) for t in (comparison["left"], comparison["right"]) if isinstance(t, str) and t.startswith("$")}
+        if kinds == {"Float", "Integer"}:
+            raise ExportInputError(f"{head}: comparing a Float variable with an Integer variable is a later phase of the "
+                                   "rules programs")
+
+
+def _term_literals(term: Any) -> list[Any]:
+    if isinstance(term, dict):
+        return [v for a in term.get("args", []) for v in _term_literals(a)]
+    return [] if isinstance(term, str) and term.startswith("$") else [term]
+
+
+def _derived_relation(model: _Model, fact_id: str) -> str:
+    """Derivation bodies read the computed relation of a derived head, never its claim (GND's strata)."""
+    return f"{fact_id}_derived" if fact_id in model.derived else fact_id
+
+
+def _derivations(model: _Model, names: _Names, target: str) -> list[str]:
+    if not model.derived:
+        return []
+    lines = ["\n    # ---- derived facts: computed from their rules, lower strata first"]
+    for head in model.derived:
+        fields = ", ".join(f"Field({r['role_name']!r}, {model.role_type(head, r['role_name'])})" for r in model.roles(head))
+        rel = names.relation(f"{head}_derived")
+        lines.append(f"    {rel} = m.Relationship(fields=[{fields}], short_name='{head}_derived')")
+    clauses = []
+    for head in model.derived:
+        fact = model.facts[head]
+        clauses.append(f"    # {head} ({fact['derivation']}): {fact.get('reading', head)}")
+        for clause in _clauses(fact["derivation_rule"]):
+            clauses += _clause_lines(model, names, head, clause)
+    lines += _helpers(model, names, kinds=("reverse",))   # registered while lowering the clauses
+    lines += clauses
+    for head in (h for h in model.derived if model.facts[h]["derivation"] == "semiderived"):
+        # constraints read a semiderived head as computed; defined only after every clause exists
+        args = ", ".join(f"{model.role_type(head, r['role_name'])}.ref()" for r in model.roles(head))
+        lines.append(f"    h_row = [{args}]")
+        lines.append(f"    m.where({names.relation(head + '_derived')}(*h_row)).define({names.relation(head)}(*h_row))")
+        if target == "duckdb":   # the report reads it for vacuity and for witnesses built from facts
+            lines.append(f"    found['computed:{head}'] = rows(m.where({names.relation(head)}(*h_row)).select(*h_row))")
+    return lines
+
+def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any]) -> list[str]:
+    types: dict[str, str] = {}
+    atoms = []
+    for pattern in clause["body"]:
+        atom = _atom(model, pattern)
+        for (role_name, primitive), arg in zip(_relation_roles(model, atom.relation), atom.args):
+            if isinstance(arg, str) and arg.startswith("$"):
+                types.setdefault(arg, primitive)
+        atoms.append(Atom(_derived_relation(model, atom.relation), atom.args))
+    negated = [_atom(model, pattern) for pattern in clause["negate"]]
+    negated = [Atom(_derived_relation(model, a.relation), a.args) for a in negated]
+    unswapped = _unswap(model, atoms + negated)
+    atoms, negated = unswapped[: len(atoms)], unswapped[len(atoms):]
+    _refuse_inexact(head, clause, types)
+    lines = []
+    if types:
+        lines.append(_declare(sorted(types), types, names))
+    parts = [_atom_text(a, names, model) for a in atoms] + [f"not_({_atom_text(a, names, model)})" for a in negated]
+    aggregate = clause["aggregate"]
+    head_terms = [clause["head"][r["role_name"]] for r in model.roles(head)]
+    if aggregate:
+        of, over, bound = aggregate["of"], list(aggregate["over"]), aggregate["as"]
+        if not (isinstance(of, str) and of.startswith("$")):
+            raise ExportInputError(f"{head}: an aggregate of a computed term is a later phase of the rules programs")
+        group = [v for t in head_terms for v in _term_variables(t) if v != bound]
+        group = list(dict.fromkeys(group))
+        counted = list(dict.fromkeys([*over, of])) if aggregate["fn"] == "count" else (
+            [*[v for v in over if v != of], of] if aggregate["fn"] == "sum" else [of])
+        text = f"aggregates.{aggregate['fn']}({', '.join(names.var(v) for v in counted)})"
+        if group:
+            text += f".per({', '.join(names.var(v) for v in group)})"
+        lines.append(f"    {names.var(bound)} = {text}   # GND counts each distinct ({', '.join([*over, of])}) once")
+    for comparison in clause["where"]:
+        parts.append(f"{_expr(comparison['left'], names)} {_PYOP[comparison['operator']]} {_expr(comparison['right'], names)}")
+    head_args = ", ".join(_expr(t, names) for t in head_terms)
+    lines.append(f"    m.where({', '.join(parts)}).define({names.relation(head + '_derived')}({head_args}))")
     return lines
 
 
@@ -809,7 +1094,8 @@ def _rules_table(reqs: list[Requirement]) -> str:
 
 _DUCKDB_MAIN = '''
 
-GROUPED = ('mandatory-disjunctive', 'equality', 'exclusion', 'exclusive-or', 'frequency', 'ring', 'cardinality')
+GROUPED = ('mandatory-disjunctive', 'equality', 'exclusion', 'exclusive-or', 'frequency', 'ring', 'cardinality',
+           'derivation')
 
 
 def scalar_key(value):
@@ -864,6 +1150,25 @@ def cycle_witness(pairs):
     return []
 
 
+def identity_token(value):
+    """GND's identity token for one value (representation-format.md), compared as UTF-8 bytes."""
+    if isinstance(value, bool):
+        payload = ['boolean', value]
+    elif isinstance(value, int):
+        payload = ['number', [value, 1]]
+    elif isinstance(value, float):
+        payload = ['number', list(value.as_integer_ratio())]
+    else:
+        payload = ['string', value]
+    return json.dumps(payload, ensure_ascii=False, separators=(',', ':')).encode()
+
+
+def first_row(rows_, roles):
+    """The one row GND shows for a derivation finding: the least by identity tokens, as {role: value}."""
+    row = min(rows_, key=lambda r: tuple(identity_token(v) for v in r))
+    return dict(zip(roles, row))
+
+
 def distinct_sorted(rows_):
     seen = {json.dumps(list(row)): list(row) for row in rows_}
     return sorted(seen.values(), key=canon)
@@ -880,10 +1185,14 @@ def judge(parts, found, facts):
             if info.get('min'):
                 return 'fail', []
             return 'vacuous', None
-        count = len(members)
-        low = info.get('min') is not None and count < info['min']
-        high = info.get('max') is not None and count > info['max']
+        # the count requirements decide; the member listing supplies GND's witness (every member)
+        low, high = bool(rows_of.get('min')), bool(rows_of.get('max'))
         return ('fail', sorted(members, key=canon)) if low or high else ('pass', None)
+    if family == 'derivation':
+        # GND reports at most one missing and one extra fact, the first of each
+        witness = [{label: first_row(rows_of[part], info['roles'])}
+                   for part, label in (('incomplete', 'missing'), ('unsound', 'extra')) if rows_of.get(part)]
+        return ('fail', witness) if witness else ('pass', None)
     if family == 'mandatory-disjunctive':
         witness = sorted({row[0] for row in rows_of['']}, key=canon)
     elif family == 'equality':
@@ -902,7 +1211,11 @@ def judge(parts, found, facts):
             if component == 'acyclic':
                 if component_rows:
                     first, second = info['roles']
-                    witness.append(cycle_witness([(row[first], row[second]) for row in facts.get(info['fact'], [])]))
+                    if info['fact'] in SEMIDERIVED:   # the constraint reads the computed facts
+                        pairs = [tuple(row) for row in found.get(f"computed:{info['fact']}", [])]
+                    else:
+                        pairs = [(row[first], row[second]) for row in facts.get(info['fact'], [])]
+                    witness.append(cycle_witness(pairs))
             else:
                 witness += distinct_sorted(component_rows)
     else:
@@ -926,8 +1239,13 @@ def report(population, found):
         groups.setdefault(rule['id'], []).append(rule)
     for name, parts in groups.items():
         rule = parts[0]
+        if rule['family'] == 'derivation' and rule['info']['head'] not in covers:
+            print(f'{name}  not checked  (no claim: {rule["info"]["head"]} is not in covers)')
+            unchecked = True
+            continue
         mode, lists = rule['vacuous_when']
-        empty = [not facts.get(ref) for ref in lists]
+        # a semiderived fact type is read as computed, so its emptiness is the computed relation's
+        empty = [not (found.get(f'computed:{ref}') if ref in SEMIDERIVED else facts.get(ref)) for ref in lists]
         if mode == 'universe':   # no facts and no roster members: nothing to check
             nothing = all(empty) and not any(instances.get(key) for key in rule['info']['rosters'])
         else:
@@ -1130,6 +1448,8 @@ def render(model_path: Path, target: str) -> str:
         "from __future__ import annotations\n\nimport json\nimport os\nimport re\nimport sys\nimport tempfile"
         + ("\nfrom fractions import Fraction" if target == "duckdb" else ""),
         (f"\nSCHEMA = {schema!r}\nRULES = json.loads({_rules_table(reqs)!r})\n"
+         f"SEMIDERIVED = {[h for h in model.derived if model.facts[h]['derivation'] == 'semiderived']!r}\n"
+         f"ROLES = {({f: [[r['role_name'], model.role_type(f, r['role_name'])] for r in model.roles(f)] for f in model.facts})!r}\n"
          f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\nLIMIT = 1 << 20\n"),
         ("\ndef read_population(path):\n"
         "    with open(path, 'rb') as handle:\n"
@@ -1146,15 +1466,30 @@ def render(model_path: Path, target: str) -> str:
         "    if not isinstance(covers, list):\n"
         "        raise ValueError('covers must be a list of fact types')\n"
         "    # GND's checker reads every fact list; only mandatory roles consult covers (see report).\n"
+        "    for rule in RULES:\n"
+        "        head = rule['info'].get('head') if rule['family'] == 'derivation' else None\n"
+        "        if head and head not in covers and document['facts'].get(head):\n"
+        "            raise ValueError(f'{head} lists derived facts but is not in covers; GND refuses that input')\n"
         "    for fact_type, rows_ in document['facts'].items():\n"
         "        seen = set()\n"
         "        for row in rows_:\n"
+        "            for role, primitive in ROLES.get(fact_type, []):\n"
+        "                check_cell(fact_type, role, primitive, row.get(role))\n"
         "            key = json.dumps(row, sort_keys=True)\n"
         "            if key in seen:\n"
         "                raise ValueError(f'duplicate rows in {fact_type}: PyRel relations are sets, so '\n"
         "                                 'repeated facts cannot be checked here; GND reports them')\n"
         "            seen.add(key)\n"
         "    return document\n"),
+        ("\ndef check_cell(fact_type, role, primitive, value):\n"
+        "    \"\"\"GND refuses a cell of the wrong type (exit 3); so does this program, before PyRel sees it.\"\"\"\n"
+        "    if isinstance(value, dict):\n"
+        "        raise ValueError(f'{fact_type}.{role} holds an opaque value; the rules programs do not check those')\n"
+        "    ok = {'String': isinstance(value, str), 'Boolean': isinstance(value, bool),\n"
+        "          'Integer': isinstance(value, int) and not isinstance(value, bool),\n"
+        "          'Float': isinstance(value, (int, float)) and not isinstance(value, bool)}[primitive]\n"
+        "    if not ok:\n"
+        "        raise ValueError(f'{fact_type}.{role} is {value!r}, which is not a valid {primitive}')\n"),
         ("\ndef load(m, relation, rows, roles):\n"
         "    if rows:\n"
         "        m.define(*[relation(*[row[r] for r in roles]) for row in rows])\n"),
@@ -1163,6 +1498,7 @@ def render(model_path: Path, target: str) -> str:
         "\ndef build(population, config):\n"
         "    from relationalai.semantics import Boolean, Field, Float, Integer, Model, String, not_  # noqa: F401\n"
         "    from relationalai.semantics.std import aggregates  # noqa: F401\n"
+        "    from relationalai.semantics.std import math as std_math  # noqa: F401\n"
         "    m = Model(SCHEMA, config=config)\n"
         "    facts = population['facts']\n"
         "    instances = population.get('instances', {})\n"
@@ -1170,7 +1506,9 @@ def render(model_path: Path, target: str) -> str:
         "\n    # ---- facts: one relationship per fact type",
         *_relations(model, names),
     ]
-    universes = _universes(model, reqs, names) + _allowed(model, reqs, names) + _helpers(model, names)
+    out += _derivations(model, names, target)
+    universes = _universes(model, reqs, names) + _allowed(model, reqs, names) + _helpers(model, names, kinds=("reverse",))
+    universes += _helpers(model, names)
     if universes:
         out += ["\n    # ---- helper relations the rules refer to", *universes]
     out.append("\n    # ---- rules: `require` says what must hold")

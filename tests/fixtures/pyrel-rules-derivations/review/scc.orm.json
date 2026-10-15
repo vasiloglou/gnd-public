@@ -1,0 +1,139 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:scc",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "pcode",
+   "name": "Pcode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "pcode"
+   }
+  },
+  {
+   "id": "num",
+   "name": "Num",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "base",
+   "reading": "{Person} r {Num}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "num",
+     "role_name": "num"
+    }
+   ]
+  },
+  {
+   "id": "alpha",
+   "reading": "{Person} r {Num}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "num",
+     "role_name": "num"
+    }
+   ],
+   "derivation": "semiderived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "base",
+        "bind": {
+         "person": "$p",
+         "num": "$n"
+        }
+       }
+      ]
+     },
+     {
+      "body": [
+       {
+        "fact_type": "beta",
+        "bind": {
+         "person": "$p",
+         "num": "$n"
+        }
+       }
+      ]
+     }
+    ],
+    "head": {
+     "person": "$p",
+     "num": "$n"
+    }
+   }
+  },
+  {
+   "id": "beta",
+   "reading": "{Person} r {Num}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "num",
+     "role_name": "num"
+    }
+   ],
+   "derivation": "semiderived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "alpha",
+      "bind": {
+       "person": "$p",
+       "num": "$n"
+      }
+     }
+    ],
+    "head": {
+     "person": "$p",
+     "num": "$n"
+    }
+   },
+   "constraints": [
+    {
+     "id": "beta_unique",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "beta_unique"
+     },
+     "roles": [
+      "person"
+     ]
+    }
+   ]
+  }
+ ],
+ "constraints": []
+}

@@ -1,0 +1,296 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:num",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "icode",
+   "name": "Icode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "item",
+   "name": "Item",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "icode"
+   }
+  },
+  {
+   "id": "amount",
+   "name": "Amount",
+   "kind": "value",
+   "primitive": "Float"
+  },
+  {
+   "id": "qty",
+   "name": "Qty",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "price",
+   "reading": "{Item} r {Amount}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "amount",
+     "role_name": "amount"
+    }
+   ]
+  },
+  {
+   "id": "stock",
+   "reading": "{Item} r {Qty}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "qty",
+     "role_name": "qty"
+    }
+   ]
+  },
+  {
+   "id": "absorb",
+   "reading": "{Item}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "price",
+      "bind": {
+       "item": "$i",
+       "amount": "$a"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "=",
+      "left": {
+       "fn": "add",
+       "args": [
+        "$a",
+        1
+       ]
+      },
+      "right": "$a"
+     }
+    ],
+    "head": {
+     "item": "$i"
+    }
+   }
+  },
+  {
+   "id": "triple",
+   "reading": "{Item}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "price",
+      "bind": {
+       "item": "$i",
+       "amount": "$a"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "=",
+      "left": {
+       "fn": "mul",
+       "args": [
+        "$a",
+        3
+       ]
+      },
+      "right": 0.30000000000000004
+     }
+    ],
+    "head": {
+     "item": "$i"
+    }
+   }
+  },
+  {
+   "id": "square",
+   "reading": "{Item} r {Qty}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "qty",
+     "role_name": "qty"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "stock",
+      "bind": {
+       "item": "$i",
+       "qty": "$q"
+      }
+     }
+    ],
+    "head": {
+     "item": "$i",
+     "qty": {
+      "fn": "mul",
+      "args": [
+       "$q",
+       "$q"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "total",
+   "reading": "{Qty}",
+   "roles": [
+    {
+     "object_type": "qty",
+     "role_name": "qty"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "stock",
+      "bind": {
+       "item": "$i",
+       "qty": "$q"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$q",
+     "over": [
+      "$i"
+     ],
+     "as": "$t"
+    },
+    "head": {
+     "qty": "$t"
+    }
+   }
+  },
+  {
+   "id": "three",
+   "reading": "{Item}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "price",
+      "bind": {
+       "item": "$i",
+       "amount": 3
+      }
+     }
+    ],
+    "head": {
+     "item": "$i"
+    }
+   }
+  },
+  {
+   "id": "threeq",
+   "reading": "{Item}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "stock",
+      "bind": {
+       "item": "$i",
+       "qty": 3
+      }
+     }
+    ],
+    "head": {
+     "item": "$i"
+    }
+   }
+  },
+  {
+   "id": "cmpmix",
+   "reading": "{Item}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "stock",
+      "bind": {
+       "item": "$i",
+       "qty": "$q"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": ">",
+      "left": "$q",
+      "right": 2.5
+     }
+    ],
+    "head": {
+     "item": "$i"
+    }
+   }
+  }
+ ],
+ "constraints": []
+}

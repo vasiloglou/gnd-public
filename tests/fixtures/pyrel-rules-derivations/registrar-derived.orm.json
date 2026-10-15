@@ -1,0 +1,242 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:pl13b:registrar-derived",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "student",
+   "name": "Student",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "student_code"
+   }
+  },
+  {
+   "id": "student_code",
+   "name": "StudentCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "course",
+   "name": "Course",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "course_code"
+   }
+  },
+  {
+   "id": "course_code",
+   "name": "CourseCode",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "course_needs",
+   "reading": "{Course} needs {Course}",
+   "roles": [
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "course",
+     "role_name": "prerequisite"
+    }
+   ]
+  },
+  {
+   "id": "passed",
+   "reading": "{Student} passed {Course}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    }
+   ]
+  },
+  {
+   "id": "enrolls",
+   "reading": "{Student} enrolls in {Course}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    }
+   ]
+  },
+  {
+   "id": "prerequisite_chain",
+   "reading": "{Course} needs {Course}, directly or through a chain",
+   "roles": [
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "course",
+     "role_name": "prerequisite"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "course_needs",
+        "bind": {
+         "course": "$c",
+         "prerequisite": "$p"
+        }
+       }
+      ],
+      "head": {
+       "course": "$c",
+       "prerequisite": "$p"
+      }
+     },
+     {
+      "body": [
+       {
+        "fact_type": "course_needs",
+        "bind": {
+         "course": "$c",
+         "prerequisite": "$x"
+        }
+       },
+       {
+        "fact_type": "prerequisite_chain",
+        "bind": {
+         "course": "$x",
+         "prerequisite": "$p"
+        }
+       }
+      ],
+      "head": {
+       "course": "$c",
+       "prerequisite": "$p"
+      }
+     }
+    ]
+   },
+   "constraints": [
+    {
+     "id": "chain_irreflexive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "No course needs itself, even through a chain."
+     },
+     "variant": "irreflexive"
+    }
+   ]
+  },
+  {
+   "id": "missing_prerequisite",
+   "reading": "{Student} takes {Course} without having passed {Course}",
+   "roles": [
+    {
+     "object_type": "student",
+     "role_name": "student"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    },
+    {
+     "object_type": "course",
+     "role_name": "prerequisite"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "enrolls",
+      "bind": {
+       "student": "$s",
+       "course": "$c"
+      }
+     },
+     {
+      "fact_type": "prerequisite_chain",
+      "bind": {
+       "course": "$c",
+       "prerequisite": "$p"
+      }
+     }
+    ],
+    "negate": [
+     {
+      "fact_type": "passed",
+      "bind": {
+       "student": "$s",
+       "course": "$p"
+      }
+     }
+    ],
+    "head": {
+     "student": "$s",
+     "course": "$c",
+     "prerequisite": "$p"
+    }
+   }
+  }
+ ],
+ "constraints": [
+  {
+   "id": "prerequisites_first",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A student can't take a course before passing every course it needs."
+   },
+   "antecedent": [
+    {
+     "fact_type": "enrolls",
+     "bind": {
+      "student": "$s",
+      "course": "$c"
+     }
+    },
+    {
+     "fact_type": "prerequisite_chain",
+     "bind": {
+      "course": "$c",
+      "prerequisite": "$p"
+     }
+    }
+   ],
+   "consequent": {
+    "atom": {
+     "fact_type": "passed",
+     "bind": {
+      "student": "$s",
+      "course": "$p"
+     }
+    }
+   }
+  }
+ ]
+}

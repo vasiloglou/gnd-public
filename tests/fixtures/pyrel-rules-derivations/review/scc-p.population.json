@@ -1,0 +1,26 @@
+{
+ "population": {
+  "model": "scc.orm.json",
+  "model_id": "urn:gnd:review:scc",
+  "source": "fixture",
+  "covers": [
+   "base",
+   "alpha",
+   "beta"
+  ]
+ },
+ "facts": {
+  "base": [
+   {
+    "person": "ann",
+    "num": 1
+   },
+   {
+    "person": "ann",
+    "num": 2
+   }
+  ],
+  "alpha": [],
+  "beta": []
+ }
+}

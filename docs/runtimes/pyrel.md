@@ -132,11 +132,21 @@ Both versions cover these rule families:
 - value lists and value ranges;
 - every ring variant, including acyclic through a recursive closure;
 - object and role cardinality;
-- guarded rules.
+- guarded rules;
+- derived facts: joins, negation, comparisons, several clauses, recursion,
+  `count`, `sum`, `min` and `max`, and the arithmetic `add`, `sub`, `mul`,
+  `neg` and `abs`.
+
+A derived fact type becomes PyRel `define` rules, and GND's derivation check
+becomes two requirements: every computed fact is in the input, and every fact
+the input states is computed. A derived fact type that is not in `covers` is
+reported as not checked, as GND reports it.
 
 Textual rules are listed as not checked, as GND lists them. External uniqueness
-and frequency, exclusive-or over role sequences, subtypes, derived facts and
-disconnected rule bodies are refused by name when you export. So is a fact type
+and frequency, exclusive-or over role sequences, subtypes, disconnected rule
+bodies, opaque derivation rules, `avg`, division, rounding, the other
+non-exact functions and arithmetic on Float values are refused by name when you
+export. So is a fact type
 whose name the program needs for a helper relation, such as `likes_reverse`.
 
 The DuckDB version reads every fact list in the input, as GND does. A mandatory

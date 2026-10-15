@@ -57,6 +57,9 @@ def _ids(doc):
     return ids
 
 
+_PER_LINE = ('value', 'guarded', 'mandatory')
+
+
 def _assert_agrees(stdout, verdicts):
     """Every GND verdict matches the program's line(s) for that rule; every other rule prints OK."""
     ours = _lines(stdout)
@@ -67,9 +70,13 @@ def _assert_agrees(stdout, verdicts):
         assert {status for status, _ in lines} == {want}, (cid, lines, verdict['verdict'])
         if want not in ('violated', 'warning'):
             continue
-        if verdict['constraint_type'] == 'value':
-            # GND lists one value per offending fact; the program lists each distinct value once.
-            assert {json.dumps(w) for _, w in lines} == {json.dumps(v) for v in verdict['offending_facts']}, cid
+        if verdict['constraint_type'] in _PER_LINE:
+            # One line per witness. GND lists one value per offending fact (value), bindings in its own
+            # order (guarded), or bare values (mandatory, where each line is [value]); compared as sets,
+            # as tests/test_pyrel_rules.py does for these families.
+            flat = verdict['constraint_type'] == 'mandatory'
+            ours_set = {json.dumps(w[0] if flat else w, sort_keys=True) for _, w in lines}
+            assert ours_set == {json.dumps(v, sort_keys=True) for v in verdict['offending_facts']}, (cid, lines)
         else:
             assert lines == [(want, verdict['offending_facts'])], (cid, lines, verdict['offending_facts'])
     assert all(lines == [('OK', None)] for lines in ours.values()), ours

@@ -1,0 +1,47 @@
+{
+ "population": {
+  "model": "names3.orm.json",
+  "model_id": "urn:gnd:review:names3",
+  "source": "fixture",
+  "covers": [
+   "takes",
+   "rows",
+   "same",
+   "found"
+  ]
+ },
+ "facts": {
+  "takes": [
+   {
+    "m": "a",
+    "found": "b"
+   },
+   {
+    "m": "b",
+    "found": "c"
+   }
+  ],
+  "rows": [
+   {
+    "h_x": "z",
+    "std_math": "a"
+   }
+  ],
+  "same": [
+   {
+    "aggregates": "a",
+    "facts": "b"
+   },
+   {
+    "aggregates": "b",
+    "facts": "c"
+   }
+  ],
+  "found": [
+   {
+    "m": "z",
+    "h_row": "b"
+   }
+  ]
+ }
+}

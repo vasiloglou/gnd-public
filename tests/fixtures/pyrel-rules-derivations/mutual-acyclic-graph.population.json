@@ -1,0 +1,40 @@
+{
+ "population": {
+  "model": "mutual.orm.json",
+  "model_id": "urn:gnd:pl13b:mutual",
+  "source": "fixture",
+  "covers": [
+   "edge",
+   "odd_path",
+   "even_path"
+  ]
+ },
+ "facts": {
+  "edge": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "odd_path": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n3"
+   }
+  ],
+  "even_path": [
+   {
+    "a": "n1",
+    "b": "n3"
+   }
+  ]
+ }
+}

@@ -287,7 +287,6 @@ def test_later_families_are_refused_by_name(family, constraint):
 
 
 @pytest.mark.parametrize('model,reason', [
-    (BOOKREC / 'complete.orm.yaml', 'derived'),
     (PROBES / 'sub.orm.json', 'subtype'),
     (PROBES / 'disc.orm.json', 'disconnected'),
     (PROBES / 'invalid.orm.json', 'invalid model'),

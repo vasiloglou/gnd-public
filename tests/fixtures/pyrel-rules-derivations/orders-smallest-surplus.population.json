@@ -1,0 +1,168 @@
+{
+ "population": {
+  "model": "orders.orm.json",
+  "model_id": "urn:gnd:pl13b:orders",
+  "source": "fixture",
+  "covers": [
+   "line",
+   "placed_by",
+   "gold",
+   "order_total",
+   "customer_orders",
+   "largest_line",
+   "smallest_line",
+   "big_order",
+   "line_cents",
+   "priority"
+  ]
+ },
+ "facts": {
+  "line": [
+   {
+    "order": "o1",
+    "sku": "a",
+    "quantity": 2
+   },
+   {
+    "order": "o1",
+    "sku": "b",
+    "quantity": 2
+   },
+   {
+    "order": "o1",
+    "sku": "c",
+    "quantity": 9
+   },
+   {
+    "order": "o2",
+    "sku": "a",
+    "quantity": 1
+   },
+   {
+    "order": "o3",
+    "sku": "b",
+    "quantity": 4
+   },
+   {
+    "order": "o3",
+    "sku": "c",
+    "quantity": 3
+   }
+  ],
+  "placed_by": [
+   {
+    "order": "o1",
+    "customer": "ann"
+   },
+   {
+    "order": "o2",
+    "customer": "ann"
+   },
+   {
+    "order": "o3",
+    "customer": "bob"
+   }
+  ],
+  "gold": [
+   {
+    "customer": "bob"
+   }
+  ],
+  "order_total": [
+   {
+    "order": "o1",
+    "total": 13
+   },
+   {
+    "order": "o2",
+    "total": 1
+   },
+   {
+    "order": "o3",
+    "total": 7
+   }
+  ],
+  "customer_orders": [
+   {
+    "customer": "ann",
+    "count": 2
+   },
+   {
+    "customer": "bob",
+    "count": 1
+   }
+  ],
+  "largest_line": [
+   {
+    "order": "o1",
+    "quantity": 9
+   },
+   {
+    "order": "o2",
+    "quantity": 1
+   },
+   {
+    "order": "o3",
+    "quantity": 4
+   }
+  ],
+  "smallest_line": [
+   {
+    "order": "o1",
+    "quantity": 2
+   },
+   {
+    "order": "o2",
+    "quantity": 1
+   },
+   {
+    "order": "o3",
+    "quantity": 3
+   },
+   {
+    "order": "o9",
+    "quantity": 1
+   }
+  ],
+  "big_order": [
+   {
+    "order": "o1"
+   }
+  ],
+  "line_cents": [
+   {
+    "order": "o1",
+    "sku": "a",
+    "cents": 300
+   },
+   {
+    "order": "o1",
+    "sku": "b",
+    "cents": 300
+   },
+   {
+    "order": "o1",
+    "sku": "c",
+    "cents": 1350
+   },
+   {
+    "order": "o3",
+    "sku": "b",
+    "cents": 600
+   },
+   {
+    "order": "o3",
+    "sku": "c",
+    "cents": 450
+   }
+  ],
+  "priority": [
+   {
+    "order": "o1"
+   },
+   {
+    "order": "o3"
+   }
+  ]
+ }
+}

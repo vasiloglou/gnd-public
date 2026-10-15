@@ -1,0 +1,132 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:pl13b:mutual",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "node",
+   "name": "Node",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "node_code"
+   }
+  },
+  {
+   "id": "node_code",
+   "name": "NodeCode",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "edge",
+   "reading": "{Node} links to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ]
+  },
+  {
+   "id": "odd_path",
+   "reading": "{Node} reaches {Node} in an odd number of steps",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "edge",
+        "bind": {
+         "a": "$x",
+         "b": "$y"
+        }
+       }
+      ]
+     },
+     {
+      "body": [
+       {
+        "fact_type": "even_path",
+        "bind": {
+         "a": "$x",
+         "b": "$z"
+        }
+       },
+       {
+        "fact_type": "edge",
+        "bind": {
+         "a": "$z",
+         "b": "$y"
+        }
+       }
+      ]
+     }
+    ],
+    "head": {
+     "a": "$x",
+     "b": "$y"
+    }
+   }
+  },
+  {
+   "id": "even_path",
+   "reading": "{Node} reaches {Node} in an even number of steps",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "odd_path",
+      "bind": {
+       "a": "$x",
+       "b": "$z"
+      }
+     },
+     {
+      "fact_type": "edge",
+      "bind": {
+       "a": "$z",
+       "b": "$y"
+      }
+     }
+    ],
+    "head": {
+     "a": "$x",
+     "b": "$y"
+    }
+   }
+  }
+ ],
+ "constraints": []
+}

@@ -1,0 +1,112 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:ring",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "node_code",
+   "name": "Node_Code",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "node",
+   "name": "Node",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "node_code"
+   }
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "edge",
+   "reading": "{Node} r {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ]
+  },
+  {
+   "id": "reach",
+   "reading": "{Node} r {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "derivation": "semiderived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "edge",
+        "bind": {
+         "a": "$x",
+         "b": "$y"
+        }
+       }
+      ],
+      "head": {
+       "a": "$x",
+       "b": "$y"
+      }
+     },
+     {
+      "body": [
+       {
+        "fact_type": "edge",
+        "bind": {
+         "a": "$x",
+         "b": "$z"
+        }
+       },
+       {
+        "fact_type": "reach",
+        "bind": {
+         "a": "$z",
+         "b": "$y"
+        }
+       }
+      ],
+      "head": {
+       "a": "$x",
+       "b": "$y"
+      }
+     }
+    ]
+   },
+   "constraints": [
+    {
+     "id": "reach_acyclic",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "reach_acyclic"
+     },
+     "variant": "acyclic"
+    }
+   ]
+  }
+ ],
+ "constraints": []
+}

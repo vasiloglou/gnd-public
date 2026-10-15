@@ -1,0 +1,1901 @@
+{
+ "generated_by": "gnd.api.check(model, population, unredacted=True)",
+ "results": {
+  "mutual-acyclic-graph": {
+   "model": "mutual.orm.json",
+   "population": "mutual-acyclic-graph.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [],
+   "derivations": [
+    {
+     "fact_type": "odd_path",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "even_path",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "mutual-exact": {
+   "model": "mutual.orm.json",
+   "population": "mutual-exact.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [],
+   "derivations": [
+    {
+     "fact_type": "odd_path",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "even_path",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "mutual-odd-incomplete": {
+   "model": "mutual.orm.json",
+   "population": "mutual-odd-incomplete.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [],
+   "derivations": [
+    {
+     "fact_type": "odd_path",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "a": "n1",
+        "b": "n1"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "even_path",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-big-missing": {
+   "model": "orders.orm.json",
+   "population": "orders-big-missing.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "order": "o1"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-cents-wrong": {
+   "model": "orders.orm.json",
+   "population": "orders-cents-wrong.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "order": "o3",
+        "sku": "c",
+        "cents": 450
+       }
+      },
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "order": "o3",
+        "sku": "c",
+        "cents": 451
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-count-zero-claimed": {
+   "model": "orders.orm.json",
+   "population": "orders-count-zero-claimed.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "customer": "cy",
+        "count": 0
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-exact": {
+   "model": "orders.orm.json",
+   "population": "orders-exact.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-numeric-witness-order": {
+   "model": "orders.orm.json",
+   "population": "orders-numeric-witness-order.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "order": "o1",
+        "sku": "a",
+        "cents": 11
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-priority-unsound": {
+   "model": "orders.orm.json",
+   "population": "orders-priority-unsound.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "order": "o2"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "orders-smallest-missing": {
+   "model": "orders.orm.json",
+   "population": "orders-smallest-missing.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "order": "o1",
+        "quantity": 2
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-smallest-surplus": {
+   "model": "orders.orm.json",
+   "population": "orders-smallest-surplus.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "order": "o9",
+        "quantity": 1
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-total-claim-duplicated-key": {
+   "model": "orders.orm.json",
+   "population": "orders-total-claim-duplicated-key.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "order": "o1",
+       "total": 13
+      },
+      {
+       "order": "o1",
+       "total": 99
+      }
+     ]
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "offending_facts": [
+      99
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "order": "o1",
+        "total": 99
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-total-out-of-range": {
+   "model": "orders.orm.json",
+   "population": "orders-total-out-of-range.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "offending_facts": [
+      34
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-total-wrong": {
+   "model": "orders.orm.json",
+   "population": "orders-total-wrong.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "order": "o2",
+        "total": 1
+       }
+      },
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "order": "o2",
+        "total": 2
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "orders-uncovered-total": {
+   "model": "orders.orm.json",
+   "population": "orders-uncovered-total.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "total_unique",
+     "constraint_type": "uniqueness",
+     "verdict": "vacuous",
+     "offending_facts": []
+    },
+    {
+     "id": "total_range",
+     "constraint_type": "value",
+     "verdict": "vacuous",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "order_total",
+     "verdict": "unchecked",
+     "reason_code": "derivation-not-covered",
+     "findings": []
+    },
+    {
+     "fact_type": "customer_orders",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "largest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "smallest_line",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "big_order",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "line_cents",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "priority",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-all-passed": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-all-passed.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-chain-both": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-chain-both.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "fail",
+     "offending_facts": [
+      [
+       "Q",
+       "Q"
+      ]
+     ]
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "course": "DB",
+        "prerequisite": "CS1"
+       }
+      },
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "course": "Q",
+        "prerequisite": "Q"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-chain-incomplete": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-chain-incomplete.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "course": "DB",
+        "prerequisite": "CS1"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-chain-unsound": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-chain-unsound.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "fail",
+     "offending_facts": [
+      [
+       "Q",
+       "Q"
+      ]
+     ]
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "course": "Q",
+        "prerequisite": "Q"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-cycle": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-cycle.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "fail",
+     "offending_facts": [
+      [
+       "CALC",
+       "CALC"
+      ],
+      [
+       "LA",
+       "LA"
+      ],
+      [
+       "ML",
+       "ML"
+      ],
+      [
+       "PROB",
+       "PROB"
+      ]
+     ]
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "ML"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      },
+      {
+       "$s": "omar",
+       "$c": "ML",
+       "$p": "ML"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-exact": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-exact.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-derived-missing-incomplete": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-missing-incomplete.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "student": "maya",
+        "course": "ML",
+        "prerequisite": "LA"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "registrar-derived-missing-unsound": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-missing-unsound.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "student": "Q",
+        "course": "Q",
+        "prerequisite": "Q"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "registrar-derived-uncovered": {
+   "model": "registrar-derived.orm.json",
+   "population": "registrar-derived-uncovered.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "vacuous",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "vacuous",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "unchecked",
+     "reason_code": "derivation-not-covered",
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "unchecked",
+     "reason_code": "derivation-not-covered",
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-all-passed": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-all-passed.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-chain-both": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-chain-both.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "course": "DB",
+        "prerequisite": "CS1"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-chain-incomplete": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-chain-incomplete.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "course": "DB",
+        "prerequisite": "CS1"
+       }
+      }
+     ]
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-chain-unsound": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-chain-unsound.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-cycle": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-cycle.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "fail",
+     "offending_facts": [
+      [
+       "CALC",
+       "CALC"
+      ],
+      [
+       "LA",
+       "LA"
+      ],
+      [
+       "ML",
+       "ML"
+      ],
+      [
+       "PROB",
+       "PROB"
+      ]
+     ]
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "ML"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      },
+      {
+       "$s": "omar",
+       "$c": "ML",
+       "$p": "ML"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-exact": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-exact.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "registrar-semiderived-missing-incomplete": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-missing-incomplete.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-incomplete",
+       "witness": {
+        "student": "maya",
+        "course": "ML",
+        "prerequisite": "LA"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "registrar-semiderived-missing-unsound": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-missing-unsound.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "student": "Q",
+        "course": "Q",
+        "prerequisite": "Q"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "registrar-semiderived-uncovered": {
+   "model": "registrar-semiderived.orm.json",
+   "population": "registrar-semiderived-uncovered.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "chain_irreflexive",
+     "constraint_type": "ring",
+     "verdict": "pass",
+     "offending_facts": []
+    },
+    {
+     "id": "prerequisites_first",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "LA"
+      },
+      {
+       "$s": "maya",
+       "$c": "ML",
+       "$p": "PROB"
+      }
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "prerequisite_chain",
+     "verdict": "unchecked",
+     "reason_code": "derivation-not-covered",
+     "findings": []
+    },
+    {
+     "fact_type": "missing_prerequisite",
+     "verdict": "unchecked",
+     "reason_code": "derivation-not-covered",
+     "findings": []
+    }
+   ]
+  }
+ }
+}

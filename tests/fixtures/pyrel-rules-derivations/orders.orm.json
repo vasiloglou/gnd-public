@@ -1,0 +1,448 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:pl13b:orders",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "order",
+   "name": "Order",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "order_code"
+   }
+  },
+  {
+   "id": "order_code",
+   "name": "OrderCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "sku",
+   "name": "Sku",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "sku_code"
+   }
+  },
+  {
+   "id": "sku_code",
+   "name": "SkuCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "customer",
+   "name": "Customer",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "customer_code"
+   }
+  },
+  {
+   "id": "customer_code",
+   "name": "CustomerCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "quantity",
+   "name": "Quantity",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "total",
+   "name": "Total",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "cents",
+   "name": "Cents",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "count",
+   "name": "Count",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "line",
+   "reading": "{Order} lists {Sku} at {Quantity}",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    },
+    {
+     "object_type": "sku",
+     "role_name": "sku"
+    },
+    {
+     "object_type": "quantity",
+     "role_name": "quantity"
+    }
+   ]
+  },
+  {
+   "id": "placed_by",
+   "reading": "{Order} was placed by {Customer}",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    },
+    {
+     "object_type": "customer",
+     "role_name": "customer"
+    }
+   ]
+  },
+  {
+   "id": "gold",
+   "reading": "{Customer} is a gold customer",
+   "roles": [
+    {
+     "object_type": "customer",
+     "role_name": "customer"
+    }
+   ]
+  },
+  {
+   "id": "order_total",
+   "reading": "{Order} totals {Total}",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    },
+    {
+     "object_type": "total",
+     "role_name": "total"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "line",
+      "bind": {
+       "order": "$o",
+       "sku": "$s",
+       "quantity": "$q"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$q",
+     "over": [
+      "$s"
+     ],
+     "as": "$t"
+    },
+    "head": {
+     "order": "$o",
+     "total": "$t"
+    }
+   },
+   "constraints": [
+    {
+     "id": "total_unique",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "Each order has one total."
+     },
+     "roles": [
+      "order"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "customer_orders",
+   "reading": "{Customer} placed {Count} orders",
+   "roles": [
+    {
+     "object_type": "customer",
+     "role_name": "customer"
+    },
+    {
+     "object_type": "count",
+     "role_name": "count"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "placed_by",
+      "bind": {
+       "order": "$o",
+       "customer": "$c"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "count",
+     "of": "$o",
+     "over": [
+      "$o"
+     ],
+     "as": "$n"
+    },
+    "head": {
+     "customer": "$c",
+     "count": "$n"
+    }
+   }
+  },
+  {
+   "id": "largest_line",
+   "reading": "{Order} has a largest line of {Quantity}",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    },
+    {
+     "object_type": "quantity",
+     "role_name": "quantity"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "line",
+      "bind": {
+       "order": "$o",
+       "sku": "$s",
+       "quantity": "$q"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "max",
+     "of": "$q",
+     "over": [
+      "$s"
+     ],
+     "as": "$m"
+    },
+    "head": {
+     "order": "$o",
+     "quantity": "$m"
+    }
+   }
+  },
+  {
+   "id": "smallest_line",
+   "reading": "{Order} has a smallest line of {Quantity}",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    },
+    {
+     "object_type": "quantity",
+     "role_name": "quantity"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "line",
+      "bind": {
+       "order": "$o",
+       "sku": "$s",
+       "quantity": "$q"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "min",
+     "of": "$q",
+     "over": [
+      "$s"
+     ],
+     "as": "$m"
+    },
+    "head": {
+     "order": "$o",
+     "quantity": "$m"
+    }
+   }
+  },
+  {
+   "id": "big_order",
+   "reading": "{Order} is big",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "line",
+      "bind": {
+       "order": "$o",
+       "sku": "$s",
+       "quantity": "$q"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$q",
+     "over": [
+      "$s"
+     ],
+     "as": "$t"
+    },
+    "where": [
+     {
+      "operator": ">",
+      "left": "$t",
+      "right": 10
+     }
+    ],
+    "head": {
+     "order": "$o"
+    }
+   }
+  },
+  {
+   "id": "line_cents",
+   "reading": "{Order} line of {Sku} costs {Cents}",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    },
+    {
+     "object_type": "sku",
+     "role_name": "sku"
+    },
+    {
+     "object_type": "cents",
+     "role_name": "cents"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "line",
+      "bind": {
+       "order": "$o",
+       "sku": "$s",
+       "quantity": "$q"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": ">=",
+      "left": "$q",
+      "right": 2
+     }
+    ],
+    "head": {
+     "order": "$o",
+     "sku": "$s",
+     "cents": {
+      "fn": "mul",
+      "args": [
+       "$q",
+       150
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "priority",
+   "reading": "{Order} is a priority order",
+   "roles": [
+    {
+     "object_type": "order",
+     "role_name": "order"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "placed_by",
+        "bind": {
+         "order": "$o",
+         "customer": "$c"
+        }
+       },
+       {
+        "fact_type": "gold",
+        "bind": {
+         "customer": "$c"
+        }
+       }
+      ]
+     },
+     {
+      "body": [
+       {
+        "fact_type": "big_order",
+        "bind": {
+         "order": "$o"
+        }
+       }
+      ]
+     }
+    ],
+    "head": {
+     "order": "$o"
+    }
+   }
+  }
+ ],
+ "constraints": [
+  {
+   "id": "total_range",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "An order totals between 1 and 20 items."
+   },
+   "object_type": "total",
+   "range": {
+    "min": 1,
+    "max": 20,
+    "min_inclusive": true,
+    "max_inclusive": true
+   }
+  }
+ ]
+}

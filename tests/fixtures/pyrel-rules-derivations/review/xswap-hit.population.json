@@ -1,0 +1,25 @@
+{
+ "population": {
+  "model": "xswap.orm.json",
+  "model_id": "urn:gnd:review:xswap",
+  "source": "fixture",
+  "covers": [
+   "ta",
+   "tb"
+  ]
+ },
+ "facts": {
+  "ta": [
+   {
+    "p": "a",
+    "q": "b"
+   }
+  ],
+  "tb": [
+   {
+    "r": "b",
+    "s": "a"
+   }
+  ]
+ }
+}

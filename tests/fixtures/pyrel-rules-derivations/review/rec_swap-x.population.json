@@ -1,0 +1,41 @@
+{
+ "population": {
+  "model": "rec_swap.orm.json",
+  "model_id": "urn:gnd:review:rec-swap",
+  "source": "fixture",
+  "covers": [
+   "edge",
+   "swap"
+  ]
+ },
+ "facts": {
+  "edge": [
+   {
+    "a": "a",
+    "b": "b"
+   },
+   {
+    "a": "b",
+    "b": "c"
+   },
+   {
+    "a": "c",
+    "b": "d"
+   },
+   {
+    "a": "d",
+    "b": "c"
+   }
+  ],
+  "swap": [
+   {
+    "a": "c",
+    "b": "d"
+   },
+   {
+    "a": "d",
+    "b": "c"
+   }
+  ]
+ }
+}

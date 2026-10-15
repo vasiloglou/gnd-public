@@ -1,0 +1,22 @@
+{
+ "population": {
+  "model": "ring.orm.json",
+  "model_id": "urn:gnd:review:ring",
+  "source": "fixture",
+  "covers": [
+   "edge"
+  ]
+ },
+ "facts": {
+  "edge": [
+   {
+    "a": "n1",
+    "b": "n2"
+   },
+   {
+    "a": "n2",
+    "b": "n1"
+   }
+  ]
+ }
+}

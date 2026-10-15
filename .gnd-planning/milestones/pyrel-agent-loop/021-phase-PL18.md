@@ -127,3 +127,27 @@ Deferred: none beyond the open questions below.
 | PL18-Q2 | Clinic model: tie a refill to the day (shown by `claude-haiku/clinic/run-3`) | with PL16-Q1 |
 | PL18-Q3 | GND: `gnd validate` refuses a model with references through a symlinked path; `gnd check` exited 70 ("derived origin lineage missing") in `claude-default/run-2` | checker issues, outside this milestone |
 | PL18-Q4 | `test_development_scaffold` fails on a code-span link in the approved `plan-amendment-a1.md:10` (inherited since PL12) and on an untracked `.claude/worktrees` checkout | PL19 |
+
+## Owner feedback after the commit (2026-10-15)
+
+On the review copy, the owner asked that the Haiku skill replay explain its
+failures: why each failed, what the issue was, and how `gnd validate` helped.
+The recording holds the answer:
+
+- **Four chained shell commands were refused by Claude Code's permission rules.**
+  This includes `gnd validate ...; echo "EXIT=$?"`. They are listed in the
+  turn's `permission_denials`.
+- **One combined read returned an error.** Its output was not kept.
+- **The modelling mistake.** Two readings had their placeholders out of role
+  order (`student_course_grade`, `student_credits_in_term`). `gnd validate`
+  refused the model with `semantic:reading-placeholders`, naming each fact type
+  and position. Haiku fixed both with two edits, and the model validated.
+
+Changes:
+- The replay marks each failed call with its reason, and keeps the failing
+  command visible.
+- Step 2 of the course page gains "What went wrong, and how it was caught", with
+  the two readings before and after and the verbatim errors.
+- A test pins the quoted errors, edits and denial count to the recorded session.
+
+Gate after the change: 293 docs tests, 19 runnable blocks, 10095 links.

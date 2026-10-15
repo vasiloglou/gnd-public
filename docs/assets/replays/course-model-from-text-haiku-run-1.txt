@@ -4,10 +4,10 @@ you: /gnd:gnd-model-from-text rules.md
   Read <workspace>/rules.md
     → 1 # Registrar rules
   Bash cd <repo>/src/gnd/skills && ls gnd-model-from-text gnd-model-from-text/references gnd-orm-core gnd-orm-core/references && wc -l gnd-orm-core/references/*.md &&…
-    → refused or failed (its output is not kept)
+    → refused by Claude Code's permission rules (a chained shell command)
   Bash ls <repo>/src/gnd/skills/gnd-model-from-text <repo>/src/gnd/skills/gnd-model-from-text/references <repo>/src/gnd/skills/gnd-orm-core/references; wc -l <repo>/s…
   Bash cd <repo>/src/gnd/skills && cat gnd-model-from-text/examples/movie_catalog.orm.yaml; echo ======; cat gnd-orm-core/references/provenance-and-modality.md
-    → refused or failed (its output is not kept)
+    → returned an error (its output is not kept)
   Read <repo>/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md
   Grep ^#+ |^\| `?type`? |type: (uniqueness|mandatory|value|frequency|subset|equality|exclusion|exclusive_or|ring|subtype|textual|external_uniqueness|role_value|set_c…
   Read <repo>/src/gnd/skills/gnd-orm-core/references/constraint-reference.md
@@ -19,14 +19,14 @@ you: /gnd:gnd-model-from-text rules.md
   Read <repo>/src/gnd/skills/gnd-orm-core/references/representation-format.md
   Read <repo>/src/gnd/skills/gnd-orm-core/references/representation-format.md
   Bash cd <repo>/src/gnd/skills/gnd-orm-core/references && grep -n -i "aggregat\|recurs\|sum(" representation-format.md | head -40; echo ----; grep -n -A4 '"dialogue_…
-    → refused or failed (its output is not kept)
+    → refused by Claude Code's permission rules (a chained shell command)
   Grep aggregat|recurs|sum\(
   Grep dialogue_turn|csdp_step
   Read <repo>/src/gnd/skills/gnd-orm-core/references/representation-format.md
   Read <repo>/src/gnd/skills/gnd-orm-core/references/representation-format.md
   Read <repo>/src/gnd/skills/gnd-orm-core/references/representation-format.md
   Bash cd <repo>/src/gnd/skills/gnd-orm-core/references && grep -n "^| *\`\?ring\|id: ring\|ring-" constraint-inference.md | head -20; gnd --help 2>&1 | head -40
-    → refused or failed (its output is not kept)
+    → refused by Claude Code's permission rules (a chained shell command)
   Grep ring-[a-z-]+
   Bash gnd --help
     → usage: gnd [-h] [--version]
@@ -34,7 +34,7 @@ claude: Ground truth is clear now: the input is a rich, self-contained rules doc
   Write <workspace>/model.orm.yaml
     → File created successfully at: <workspace>/model.orm.yaml
   Bash gnd validate model.orm.yaml; echo "EXIT=$?"
-    → This Bash command contains multiple operations. The following part requires approval: echo "EXIT=$?"
+    → refused by Claude Code's permission rules (a chained shell command)
   Bash gnd validate model.orm.yaml
     → Exit code 3: ERROR at $.fact_types[id=student_course_grade].reading: reading placeholder '{Grade}' at position 1 does not name role 1's object type 'course' [semantic:reading-placeholders]
   Edit <workspace>/model.orm.yaml

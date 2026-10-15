@@ -74,17 +74,54 @@ over.
     --8<-- "docs/assets/replays/course-model-from-text-haiku-run-1.txt"
     ```
 
-This is a recorded session with Claude Haiku; the
+This is a recorded session with Claude Haiku, a small, cheap model, on purpose:
+the point of GND is that a weaker model can still build a correct app, because
+every mistake it makes is caught and named. The
 [full session](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/turn-01.jsonl)
-is in the repository. The skill read its own reference
-pages, saw that `rules.md` was complete, and chose its one-shot mode.
+is in the repository.
 
-Its first
-model failed `gnd validate`: a reading named the wrong object type. It fixed
-the model and validated again. In two of the other three recorded sessions,
-the skill asked questions first and the scripted user answered. In the third,
-Claude Code's default model also drafted at once. All four ended with a valid
-model; the [session notes](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions/README.md)
+### What went wrong, and how it was caught
+
+The replay shows two kinds of failure. Only the second is a modelling mistake.
+
+**Refused shell commands.** The recording let the assistant run `gnd`
+commands and simple read-only commands, nothing more. Four times Haiku chained
+commands with `&&`, `;` or `|`, for example `cd … && ls … && which gnd`, and
+Claude Code refused each one because it could not check the whole chain. One of
+them was `gnd validate model.orm.yaml; echo "EXIT=$?"`.
+
+Each time, Haiku read
+the files one at a time instead, or ran `gnd validate` on its own. A fifth
+combined read returned an error; the recording keeps the command but not why.
+None of this touched the model.
+
+**A modelling mistake that `gnd validate` caught.** In two fact types, Haiku
+wrote the sentence with its placeholders in a different order from the roles:
+
+| Fact type | Roles, in order | Haiku's first reading | After the fix |
+|---|---|---|---|
+| `student_course_grade` | student, course, grade | `{Student} got grade {Grade} in {Course}` | `{Student} in {Course} got grade {Grade}` |
+| `student_credits_in_term` | student, term, credits | `{Student} takes {Credits} credits in {Term}` | `{Student} in {Term} takes {Credits} credits` |
+
+Both first readings sound fine to a person, but GND reads a reading by
+position: the second placeholder names the second role. With Haiku's first
+version, every sentence GND writes about a grade would put the course where
+the grade belongs. `gnd validate` refused the model and said exactly where:
+
+```text
+ERROR at $.fact_types[id=student_course_grade].reading: reading placeholder '{Grade}' at position 1 does not name role 1's object type 'course' [semantic:reading-placeholders]
+ERROR at $.fact_types[id=student_credits_in_term].reading: reading placeholder '{Credits}' at position 1 does not name role 1's object type 'term' [semantic:reading-placeholders]
+```
+
+GND did not fix the model; it found the mistake precisely enough that Haiku
+fixed it in two small edits, reordering each sentence to match its roles. It
+then ran `gnd validate` again, which passed. Positions count from 0, so
+"position 1" is the second placeholder.
+
+In two of the other three recorded sessions, the skill asked questions first
+and the scripted user answered. In the third, Claude Code's default model also
+drafted at once. All four ended with a valid model; the
+[session notes](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/plan_apps/skill-sessions/README.md)
 list each run.
 
 **You get** a model whose every rule keeps the registrar's words. Here is the

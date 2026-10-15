@@ -55,6 +55,14 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
     """(class, text) per event of Claude Code stream-json turns: what the user said, what the assistant
     said, and each tool it used, with a short result."""
     lines = []
+    denied = set()   # tool calls Claude Code's permission rules refused, from each turn's closing result event
+    for text in texts:
+        for raw in text.splitlines():
+            if '"permission_denials"' in raw:
+                try:
+                    denied |= {d.get("tool_use_id") for d in json.loads(raw).get("permission_denials") or []}
+                except ValueError:
+                    pass
     for number, text in enumerate(texts, 1):
         for raw in text.splitlines():
             try:
@@ -78,8 +86,10 @@ def stream_lines(texts: list[str]) -> list[tuple[str, str]]:
                     content = part.get("content") if part.get("type") == "tool_result" else None
                     text = content if isinstance(content, str) else " ".join(
                         c.get("text", "") for c in content or [] if isinstance(c, dict))
-                    if part.get("type") == "tool_result" and part.get("is_error") and text.endswith("output not kept]"):
-                        lines.append(("fail", "    → refused or failed (its output is not kept)"))
+                    if part.get("type") == "tool_result" and part.get("tool_use_id") in denied:
+                        lines.append(("fail", "    → refused by Claude Code's permission rules (a chained shell command)"))
+                    elif part.get("type") == "tool_result" and part.get("is_error") and text.endswith("output not kept]"):
+                        lines.append(("fail", "    → returned an error (its output is not kept)"))
                     elif text and not text.endswith("output not kept]"):
                         text = re.sub(r" \(file state is current in your context[^)]*\)", "", text)
                         shown = [line for line in text.splitlines() if line.strip()][:2]
@@ -109,9 +119,11 @@ def condensed(lines: list[tuple[str, str]]) -> list[tuple[str, str]]:
         return text.startswith(("  Read <repo>/src/gnd/skills", "  Grep ")) or (
             text.startswith("  Bash ") and "<repo>/src/gnd/skills" in text)
 
-    for kind, text in lines + [("end", "")]:
-        if reading(text) or (run and text.startswith("    → ") and not text.startswith("    → OK")
-                             and "ERROR" not in text and kind not in ("end", "fail")):
+    padded = lines + [("end", "")]
+    for index, (kind, text) in enumerate(padded):
+        failed_next = index + 1 < len(padded) and padded[index + 1][0] == "fail"
+        if (reading(text) and not failed_next) or (run and text.startswith("    → ") and not text.startswith("    → OK")
+                                                   and "ERROR" not in text and kind not in ("end", "fail")):
             run += 0 if text.startswith("    → ") else 1
             continue
         if run:

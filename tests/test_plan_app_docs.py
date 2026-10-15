@@ -132,3 +132,22 @@ def test_the_clinic_runs_table_is_the_recorded_one():
                   for k in ('first', 'refused', 'declined', 'repaired-format')]
         assert f"| {label} | {' | '.join(map(str, counts))} |" in page, (model, counts)
         assert not any(recorder.outcome(r) == 'repaired-rule' for r in rows)
+
+
+def test_the_course_page_quotes_haikus_session_as_recorded():
+    """The step 2 explanation: the errors and the edits it quotes are the recorded ones."""
+    session = (SKILLS / 'claude-haiku/run-1/turn-01.jsonl').read_text(encoding='utf-8')
+    events = [json.loads(line) for line in session.splitlines()]
+    results = ' '.join(str(p.get('content')) for e in events if e['type'] == 'user'
+                       and isinstance(e['message'].get('content'), list) for p in e['message']['content'])
+    edits = [p['input'] for e in events if e['type'] == 'assistant' for p in e['message']['content']
+             if p.get('type') == 'tool_use' and p['name'] == 'Edit' and p['input']['file_path'].endswith('.yaml')]
+    denials = next(e for e in events if e['type'] == 'result')['permission_denials']
+    page = (ROOT / 'docs/tutorials/course-planner.md').read_text(encoding='utf-8')
+    for line in re.findall(r'^ERROR at .*$', page, re.M):
+        assert line in results, line
+    for edit in edits:
+        before = re.search(r'"(.*)"', edit['old_string']).group(1)
+        after = re.search(r'"(.*)"', edit['new_string']).group(1)
+        assert f'`{before}` | `{after}`' in page, (before, after)
+    assert len(denials) == 4 and 'Four times Haiku chained' in page

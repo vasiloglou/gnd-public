@@ -1,0 +1,16 @@
+{
+ "steps_schema": 1,
+ "model": "registrar-nonfunctional.orm.json",
+ "model_digest": "sha256:062f48b775c2881070d76076359f03b96e7f1d151f556a65fbdff24301bee02a",
+ "operations_digest": "sha256:da9f1b78fa0cb0b15929d84dcc416e47e10b6a6610e9bd8a32f77cf196c22bbf",
+ "steps": [
+  {
+   "op": "change_grade",
+   "bindings": {
+    "student": "maya",
+    "course": "CS101",
+    "grade": "A"
+   }
+  }
+ ]
+}

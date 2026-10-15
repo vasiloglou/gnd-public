@@ -1,0 +1,24 @@
+{
+ "steps_schema": 1,
+ "model": "registrar-semiderived.orm.json",
+ "model_digest": "sha256:81131606f7985adecfd680194b451017eb72f69c105a7132e7b4a00a472278a8",
+ "operations_digest": "sha256:da9f1b78fa0cb0b15929d84dcc416e47e10b6a6610e9bd8a32f77cf196c22bbf",
+ "steps": [
+  {
+   "op": "enroll",
+   "bindings": {
+    "student": "maya",
+    "course": "CS340",
+    "term": "spring"
+   }
+  },
+  {
+   "op": "enroll",
+   "bindings": {
+    "student": "maya",
+    "course": "MATH220",
+    "term": "spring"
+   }
+  }
+ ]
+}

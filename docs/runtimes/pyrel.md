@@ -160,6 +160,21 @@ non-exact functions, arithmetic on Float values and times of day (`DateTime`)
 are refused by name when you export. So is a fact type
 whose name the program needs for a helper relation, such as `likes_reverse`.
 
+For a model with operations, the program also checks plans:
+
+```text
+python RULES.py --pre STATE.json --steps PLAN.steps.json
+```
+
+It validates the plan as `gnd check --pre --steps` does: the digests, the
+operations and their arguments, and the coverage of the pre-state. It then
+builds every state of the plan and checks them all in one PyRel model: each
+step's preconditions on the state before it, each rule on the state after it,
+and GND's step checks (retracts with a target, redundant asserts, fresh
+creates, dynamic rules). Failures are printed with GND's locators, such as
+`$.steps[3].preconditions[id=pre_offered]`. A declared after-state (`--post`,
+GND's frame comparison) is refused by name.
+
 The DuckDB version reads every fact list in the input, as GND does. A mandatory
 or inclusive-or rule is vacuous when a fact type it needs is missing from
 `covers`. It also refuses an input that repeats a fact, because PyRel relations

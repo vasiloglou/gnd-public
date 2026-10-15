@@ -51,7 +51,8 @@ _RESERVED = {"m", "not_", "Field", "String", "Integer", "Float", "Boolean", "Mod
              "warnings", "create_config", "argparse", "args", "parser", "problems", "caught", "w",
              "directory", "error", "rule", "name", "hits", "hit", "status", "row", "rows_", "path",
              "document", "relation", "roles", "r", "v", "k", "f", "g", "key", "fact", "seen", "aggregates",
-             "std_math", "h_row", "h_a", "h_b", "h_c", "h_x", "Fraction", "Date", "datetime", "std_date", "days"}
+             "std_math", "h_row", "h_a", "h_b", "h_c", "h_x", "Fraction", "Date", "datetime", "std_date", "days",
+             "step", "before", "states", "previous", "stepped"}
 
 
 @dataclass(frozen=True)
@@ -598,8 +599,17 @@ def spanning_uniqueness(doc: dict[str, Any]) -> list[str]:
 
 def _refuse_unsupported_model(doc: dict[str, Any]) -> None:
     """Constructs whose GND semantics these programs do not reproduce yet are refused by name."""
-    if doc.get("operations"):
-        raise ExportInputError("operations (plans) are a later phase of the rules programs")
+    model = _Model(doc)
+    names_used = {r["role_name"] for f in model.facts for r in model.roles(f)} | {
+        p.get("name") for op in doc.get("operations") or [] for p in op.get("parameters") or []}
+    if "gnd_step" in names_used or "gnd_before" in names_used:
+        raise ExportInputError("a role or parameter named gnd_step or gnd_before clashes with the plan's state field; "
+                               "rename it")
+    for op in doc.get("operations") or []:
+        for rule in op.get("dynamic_rules") or []:
+            if rule.get("subject", {}).get("fact_type") in model.derived:
+                raise ExportInputError(f"operation {op['id']!r}: a dynamic rule on a derived fact type is a later phase "
+                                       "of the rules programs")
     for obj in doc.get("object_types", []):
         if obj.get("primitive") == "DateTime":
             raise ExportInputError(f"object type {obj['id']!r} is a DateTime; times of day and offsets are a later "
@@ -678,23 +688,37 @@ def _strata(heads: dict[str, dict[str, Any]]) -> list[str]:
     return order
 
 
-def _unswap(model: _Model, atoms: list[Atom]) -> list[Atom]:
-    """Rewrite R(y, x) as R_reverse(x, y) when an earlier atom already joined (x, y) in that order.
+def _unswap(model: _Model, atoms: list[Atom], seen_order: list[str] | tuple[str, ...] = ()) -> list[Atom]:
+    """Read an atom through a reordered copy when it takes variables in a different order than earlier atoms.
 
-    PyRel 1.30.1 cannot compile a join whose second atom takes the same two variables swapped
-    ("reordering loop did not reach a fixpoint"); reading through a reversed copy avoids it.
+    PyRel 1.30.1 cannot compile a join in which two atoms share variables in different orders
+    ("reordering loop did not reach a fixpoint"), as in R(x, y), R(y, x) or do(s, c, g), grade(s, g, c).
+    A binary atom is read through <relation>_reverse; a wider one through <relation>_as_<permutation>,
+    whose fields follow the order in which the variables first appeared. seen_order: variables bound
+    before the first atom (an operation's parameters).
     """
-    seen: set[tuple[str, str]] = set()
+    order: list[str] = list(seen_order)
+    seen = {(a, b) for i, a in enumerate(order) for b in order[i + 1:]}
     out = []
     for atom in atoms:
         args = atom.args
-        if len(args) == 2 and all(isinstance(a, str) and a.startswith("$") for a in args) and args[0] != args[1]:
-            if (args[1], args[0]) in seen:
-                primitive = _relation_roles(model, atom.relation)[0][1]
-                reverse = model.helper(f"{atom.relation}_reverse", [("a", primitive), ("b", primitive)], "reverse",
-                                       fact=atom.relation)
-                atom = Atom(reverse, (args[1], args[0]))
-            seen.add((atom.args[0], atom.args[1]))
+        names = [a for a in args if isinstance(a, str) and a.startswith("$")]
+        clash = any((v, u) in seen for i, u in enumerate(names) for v in names[i + 1:] if u != v)
+        if clash and len(args) == 2:
+            primitive = _relation_roles(model, atom.relation)[0][1]
+            reverse = model.helper(f"{atom.relation}_reverse", [("a", primitive), ("b", primitive)], "reverse",
+                                   fact=atom.relation)
+            atom = Atom(reverse, (args[1], args[0]))
+        elif clash:
+            rank = {v: i for i, v in enumerate(order)}
+            perm = sorted(range(len(args)), key=lambda i: (0, rank[args[i]]) if args[i] in rank else (1, i))
+            fields = _relation_roles(model, atom.relation)
+            name = model.helper(f"{atom.relation}_as_{''.join(map(str, perm))}", [fields[i] for i in perm], "permute",
+                                fact=atom.relation, perm=perm)
+            atom = Atom(name, tuple(args[i] for i in perm))
+        names = [a for a in atom.args if isinstance(a, str) and a.startswith("$")]
+        seen |= {(u, v) for i, u in enumerate(names) for v in names[i + 1:] if u != v}
+        order += [v for v in names if v not in order]
         out.append(atom)
     return out
 
@@ -817,6 +841,10 @@ class _Names:
             taken.add(self.relations[fact_id])
         self.taken = taken
         self.vars: dict[str, str] = {}
+        # with operations, every state of a plan lives in one PyRel model: relations get a leading step
+        self.step: str | None = "step" if model.doc.get("operations") else None
+        self.constant = {f"{c.get('id')}_allowed" for c in model.doc.get("constraints", [])
+                         if c.get("type") == "value" and "allowed" in c}
 
     def relation(self, name: str) -> str:
         if name not in self.relations:
@@ -895,16 +923,27 @@ def _term(arg: Any, names: _Names, model: _Model, primitive: str) -> str:
     return _literal(arg, primitive)
 
 
-def _atom_text(atom: Atom, names: _Names, model: _Model) -> str:
+def _at(names: _Names, at: str | None = None) -> str:
+    """The state argument a relation takes in a plan's model ("" outside plans)."""
+    return f"{at or names.step}, " if names.step else ""
+
+
+def _step_field(names: _Names) -> str:
+    return "Field('gnd_step', Integer), " if names.step else ""
+
+
+def _atom_text(atom: Atom, names: _Names, model: _Model, at: str | None = None) -> str:
     roles = _relation_roles(model, atom.relation)
     args = ", ".join(_term(arg, names, model, primitive) for (_, primitive), arg in zip(roles, atom.args))
-    return f"{names.relation(atom.relation)}({args})"
+    state = "" if atom.relation in names.constant else _at(names, at)
+    return f"{names.relation(atom.relation)}({state}{args})"
 
 
 def _operand(value: Any, names: _Names) -> str:
     if isinstance(value, Count):
         text = f"aggregates.count({', '.join(names.var(v) for v in value.of)})"
-        return text + (f".per({', '.join(names.var(v) for v in value.per)})" if value.per else "")
+        per = ([names.step] if names.step else []) + [names.var(v) for v in value.per]
+        return text + (f".per({', '.join(per)})" if per else "")
     if isinstance(value, dict) and value.get("fn") in _DATE_FUNCTIONS:
         when, length = (_operand(a, names) for a in value["args"])
         return f"std_date.{_DATE_FUNCTIONS[value['fn']]}({when}, days({length}))"
@@ -942,7 +981,7 @@ def require_text(req: Requirement, names: _Names, model: _Model) -> str:
     if req.listing:
         return f"(listing for the report) {denial_text(req, names, model)}"
     domain = ", ".join(_atom_text(a, names, model) for a in req.domain)
-    if req.family == "cardinality" and req.part == "min":
+    if req.family == "cardinality" and req.part == "min" and not names.step:
         # no outer domain: with none, the rule still applies to an empty universe, which GND fails
         count = _operand(req.check.compare.left, names)
         return f"m.require({count}.where({domain}) >= {req.check.compare.right!r})"
@@ -952,26 +991,35 @@ def require_text(req: Requirement, names: _Names, model: _Model) -> str:
 
 def denial_text(req: Requirement, names: _Names, model: _Model) -> str:
     parts = [*(_atom_text(a, names, model) for a in req.domain), *_check_text(req.check, names, model, negate=True)]
-    selected = ", ".join(names.var(v) for v in req.witness)
+    selected = ", ".join(([names.step] if names.step else []) + [names.var(v) for v in req.witness])
     return f"m.where({', '.join(parts)}).select({selected})"
 
 
 def _universes(model: _Model, reqs: list[Requirement], names: _Names) -> list[str]:
-    wanted = sorted({a.relation[: -len("_any")] for r in reqs for a in r.domain if a.relation.endswith("_any")})
+    wanted = sorted({a.relation[: -len("_any")] for r in reqs for a in r.domain if a.relation.endswith("_any")}
+                    | {e["create"]["object_type"] for o in model.doc.get("operations") or [] for e in o.get("effects", [])
+                       if "create" in e})
     lines = []
     for object_id in wanted:
         primitive = model.primitive(object_id)
         rel = names.relation(f"{object_id}_any")
         lines.append(f"    # every {object_id} mentioned in any fact, plus the population's instances roster")
-        lines.append(f"    {rel} = m.Relationship(fields=[Field('member', {primitive})], short_name='{object_id}_any')")
+        lines.append(f"    {rel} = m.Relationship(fields=[{_step_field(names)}Field('member', {primitive})], short_name='{object_id}_any')")
         lines.append(f"    h_x = {primitive}.ref()")
+        st = _at(names)
         for fact_id, role_name in model.plays(object_id):
             args = ", ".join("h_x" if r["role_name"] == role_name else f"{model.role_type(fact_id, r['role_name'])}.ref()"
                              for r in model.roles(fact_id))
-            lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(h_x))")
+            lines.append(f"    m.where({names.relation(fact_id)}({st}{args})).define({rel}({st}h_x))")
         rosters = _rosters(model, object_id)
-        lines.append(f"    for value in [v for key in {rosters!r} for v in instances.get(key, [])]:")
-        lines.append(f"        m.define({rel}({'datetime.date.fromisoformat(value)' if primitive == 'Date' else 'value'}))")
+        value = "datetime.date.fromisoformat(value)" if primitive == "Date" else "value"
+        if names.step:
+            lines.append(f"    for k, value in [(k, v) for k, state in enumerate(states) for key in {rosters!r}")
+            lines.append("                     for v in state.get('instances', {}).get(key, [])]:")
+            lines.append(f"        m.define({rel}(k, {value}))")
+        else:
+            lines.append(f"    for value in [v for key in {rosters!r} for v in instances.get(key, [])]:")
+            lines.append(f"        m.define({rel}({value}))")
     return lines
 
 
@@ -999,27 +1047,37 @@ def _helpers(model: _Model, names: _Names, kinds: tuple[str, ...] | None = None)
         spec["rendered"] = True
         rel = names.relation(name)
         fields = ", ".join(f"Field({field!r}, {primitive})" for field, primitive in spec["fields"])
-        lines.append(f"    {rel} = m.Relationship(fields=[{fields}], short_name={name!r})")
+        lines.append(f"    {rel} = m.Relationship(fields=[{_step_field(names)}{fields}], short_name={name!r})")
+        st = _at(names)
         if spec["kind"] == "reverse":
             primitive = spec["fields"][0][1]
             fact = names.relation(spec["fact"])
             lines.insert(-1, f"    # {spec['fact']} read backwards (joining a relation with itself, swapped, trips a PyRel 1.30.1 bug)")
             lines.append(f"    h_a, h_b = {primitive}.ref(), {primitive}.ref()")
-            lines.append(f"    m.where({fact}(h_a, h_b)).define({rel}(h_b, h_a))")
+            lines.append(f"    m.where({fact}({st}h_a, h_b)).define({rel}({st}h_b, h_a))")
+        elif spec["kind"] == "permute":
+            source = names.relation(spec["fact"])
+            width = len(spec["perm"])
+            kinds = [primitive for _, primitive in _relation_roles(model, spec["fact"])]
+            lines.insert(-1, f"    # {spec['fact']} with its fields reordered (two atoms sharing variables in different orders "
+                             "trip a PyRel 1.30.1 bug)")
+            source_vars = ", ".join(f"h_{i}" for i in range(width))
+            lines.append(f"    {source_vars} = {', '.join(f'{kinds[i]}.ref()' for i in range(width))}")
+            lines.append(f"    m.where({source}({st}{source_vars})).define({rel}({st}{', '.join(f'h_{i}' for i in spec['perm'])}))")
         elif spec["kind"] == "closure":
             primitive = spec["fields"][0][1]
             fact = names.relation(spec["fact"])
             lines.insert(-1, f"    # every pair connected by a chain of {spec['fact']} facts (recursive)")
             lines.append(f"    h_a, h_b, h_c = {primitive}.ref(), {primitive}.ref(), {primitive}.ref()")
-            lines.append(f"    m.where({fact}(h_a, h_b)).define({rel}(h_a, h_b))")
-            lines.append(f"    m.where({rel}(h_a, h_b), {fact}(h_b, h_c)).define({rel}(h_a, h_c))")
+            lines.append(f"    m.where({fact}({st}h_a, h_b)).define({rel}({st}h_a, h_b))")
+            lines.append(f"    m.where({rel}({st}h_a, h_b), {fact}({st}h_b, h_c)).define({rel}({st}h_a, h_c))")
         elif spec["kind"] == "plays":
             lines.insert(-1, f"    # every instance that plays one of the roles {[f'{f}.{r}' for f, r in spec['refs']]}")
             for fact_id, role_name in spec["refs"]:
                 args = ", ".join("h_x" if r["role_name"] == role_name else f"{model.role_type(fact_id, r['role_name'])}.ref()"
                                  for r in model.roles(fact_id))
                 lines.append(f"    h_x = {spec['fields'][0][1]}.ref()")
-                lines.append(f"    m.where({names.relation(fact_id)}({args})).define({rel}(h_x))")
+                lines.append(f"    m.where({names.relation(fact_id)}({st}{args})).define({rel}({st}h_x))")
         elif spec["kind"] == "ranges":
             universe = names.relation(f"{spec['object_type']}_any")
             lines.insert(-1, f"    # the values of {spec['object_type']} that fall inside a declared range")
@@ -1031,7 +1089,7 @@ def _helpers(model: _Model, names: _Names, kinds: tuple[str, ...] | None = None)
                 if bounds.get("max") is not None:
                     conditions.append(f"h_x {'<=' if bounds.get('max_inclusive', True) else '<'} {_literal(bounds['max'], kind)}")
                 lines.append(f"    h_x = {spec['fields'][0][1]}.ref()")
-                lines.append(f"    m.where({universe}(h_x){''.join(', ' + c for c in conditions)}).define({rel}(h_x))")
+                lines.append(f"    m.where({universe}({st}h_x){''.join(', ' + c for c in conditions)}).define({rel}({st}h_x))")
         else:
             raise ExportInputError(f"unknown helper kind {spec['kind']}")
     return lines
@@ -1040,8 +1098,8 @@ def _helpers(model: _Model, names: _Names, kinds: tuple[str, ...] | None = None)
 def _relations(model: _Model, names: _Names) -> list[str]:
     lines = []
     for fact_id, fact in model.facts.items():
-        fields = ", ".join(f"Field({r['role_name']!r}, {model.role_type(fact_id, r['role_name'])})"
-                           for r in model.roles(fact_id))
+        fields = _step_field(names) + ", ".join(f"Field({r['role_name']!r}, {model.role_type(fact_id, r['role_name'])})"
+                                                for r in model.roles(fact_id))
         lines.append(f"    # {fact.get('reading', fact_id)}")
         lines.append(f"    {names.relation(fact_id)} = m.Relationship(fields=[{fields}], short_name={fact_id!r})")
         roles = tuple(r["role_name"] for r in model.roles(fact_id))
@@ -1051,7 +1109,9 @@ def _relations(model: _Model, names: _Names) -> list[str]:
             lines.append(f"    # the claimed {fact_id} facts; constraints read the computed ones (as GND does)")
             lines.append(f"    {names.relation(target)} = m.Relationship(fields=[{fields}], short_name={target!r})")
         dates = tuple(r for r in roles if model.raw_role_type(fact_id, r) == "Date")
-        lines.append(f"    load(m, {names.relation(target)}, facts.get({fact_id!r}, []), {roles!r}"
+        rows_text = f"stepped(states, {fact_id!r})" if names.step else f"facts.get({fact_id!r}, [])"
+        roles_text = ("gnd_step",) + roles if names.step else roles
+        lines.append(f"    load(m, {names.relation(target)}, {rows_text}, {roles_text!r}"
                      + (f", dates={dates!r})" if dates else ")"))
     return lines
 
@@ -1120,7 +1180,8 @@ def _derivations(model: _Model, names: _Names, target: str) -> list[str]:
         return []
     lines = ["\n    # ---- derived facts: computed from their rules, lower strata first"]
     for head in model.derived:
-        fields = ", ".join(f"Field({r['role_name']!r}, {model.role_type(head, r['role_name'])})" for r in model.roles(head))
+        fields = _step_field(names) + ", ".join(f"Field({r['role_name']!r}, {model.role_type(head, r['role_name'])})"
+                                                for r in model.roles(head))
         rel = names.relation(f"{head}_derived")
         lines.append(f"    {rel} = m.Relationship(fields=[{fields}], short_name='{head}_derived')")
     clauses = []
@@ -1129,15 +1190,21 @@ def _derivations(model: _Model, names: _Names, target: str) -> list[str]:
         clauses.append(f"    # {head} ({fact['derivation']}): {fact.get('reading', head)}")
         for clause in _clauses(fact["derivation_rule"]):
             clauses += _clause_lines(model, names, head, clause)
-    lines += _helpers(model, names, kinds=("reverse",))   # registered while lowering the clauses
+    lines += _helpers(model, names, kinds=("reverse", "permute"))   # registered while lowering the clauses
     lines += clauses
-    for head in (h for h in model.derived if model.facts[h]["derivation"] == "semiderived"):
-        # constraints read a semiderived head as computed; defined only after every clause exists
-        args = ", ".join(f"{model.role_type(head, r['role_name'])}.ref()" for r in model.roles(head))
+    for head in model.derived:
+        semi = model.facts[head]["derivation"] == "semiderived"
+        if not semi and not names.step:
+            continue
+        # constraints read a semiderived head as computed, and in a plan every head from state 1 on;
+        # defined only after every clause exists
+        args = ", ".join(([names.step] if names.step else []) + [f"{model.role_type(head, r['role_name'])}.ref()"
+                                                                   for r in model.roles(head)])
+        when = "" if semi else f", {names.step} >= 1"
         lines.append(f"    h_row = [{args}]")
-        lines.append(f"    m.where({names.relation(head + '_derived')}(*h_row)).define({names.relation(head)}(*h_row))")
+        lines.append(f"    m.where({names.relation(head + '_derived')}(*h_row){when}).define({names.relation(head)}(*h_row))")
         if target == "duckdb":   # the report reads it for vacuity and for witnesses built from facts
-            lines.append(f"    found['computed:{head}'] = rows(m.where({names.relation(head)}(*h_row)).select(*h_row))")
+            lines.append(f"    found['computed:{head}'] = rows(m.where({names.relation(head + '_derived')}(*h_row)).select(*h_row))")
     return lines
 
 def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any]) -> list[str]:
@@ -1169,13 +1236,14 @@ def _clause_lines(model: _Model, names: _Names, head: str, clause: dict[str, Any
         counted = list(dict.fromkeys([*over, of])) if aggregate["fn"] == "count" else (
             [*[v for v in over if v != of], of] if aggregate["fn"] == "sum" else [of])
         text = f"aggregates.{aggregate['fn']}({', '.join(names.var(v) for v in counted)})"
-        if group:
-            text += f".per({', '.join(names.var(v) for v in group)})"
+        per = ([names.step] if names.step else []) + [names.var(v) for v in group]
+        if per:
+            text += f".per({', '.join(per)})"
         lines.append(f"    {names.var(bound)} = {text}   # GND counts each distinct ({', '.join([*over, of])}) once")
     for comparison in clause["where"]:
         parts.append(f"{_expr(comparison['left'], names)} {_PYOP[comparison['operator']]} {_expr(comparison['right'], names)}")
     head_args = ", ".join(_expr(t, names) for t in head_terms)
-    lines.append(f"    m.where({', '.join(parts)}).define({names.relation(head + '_derived')}({head_args}))")
+    lines.append(f"    m.where({', '.join(parts)}).define({names.relation(head + '_derived')}({_at(names)}{head_args}))")
     return lines
 
 
@@ -1307,7 +1375,7 @@ def distinct_sorted(rows_):
     return sorted(seen.values(), key=canon)
 
 
-def judge(parts, found, facts):
+def judge(parts, found, facts, computed=()):
     """One constraint made of several requirements: (status, witness list) in GND's shape."""
     head = parts[0]
     family, info = head['family'], head['info']
@@ -1344,7 +1412,7 @@ def judge(parts, found, facts):
             if component == 'acyclic':
                 if component_rows:
                     first, second = info['roles']
-                    if info['fact'] in SEMIDERIVED:   # the constraint reads the computed facts
+                    if info['fact'] in computed:   # the constraint reads the computed facts
                         pairs = [tuple(row) for row in found.get(f"computed:{info['fact']}", [])]
                     else:
                         pairs = [(row[first], row[second]) for row in facts.get(info['fact'], [])]
@@ -1363,6 +1431,22 @@ def report(population, found):
     GND's checker reads every fact list, covered or not; only mandatory roles treat a fact
     list missing from the input's covers as unknown, and report the rule vacuous.
     """
+    lines, flags = state_lines(population, found)
+    for line in lines:
+        print(line)
+    return band(flags)
+
+
+def band(flags):
+    return 1 if flags['violated'] else 4 if flags['unchecked'] else 2 if flags['vacuous'] else 0
+
+
+def state_lines(population, found, computed=None, derivations=True):
+    """The report lines for one state. computed: derived fact types read as computed (semiderived ones in a
+    snapshot; every derived one in a plan's later states, where GND drops the claims)."""
+    computed = SEMIDERIVED if computed is None else computed
+    out = []
+    print = out.append  # noqa: A001 -- the lines are returned, not printed
     facts = population['facts']
     instances = population.get('instances', {})
     covers = set(population['population']['covers'])
@@ -1372,13 +1456,15 @@ def report(population, found):
         groups.setdefault(rule['id'], []).append(rule)
     for name, parts in groups.items():
         rule = parts[0]
+        if rule['family'] == 'derivation' and not derivations:
+            continue
         if rule['family'] == 'derivation' and rule['info']['head'] not in covers:
             print(f'{name}  not checked  (no claim: {rule["info"]["head"]} is not in covers)')
             unchecked = True
             continue
         mode, lists = rule['vacuous_when']
         # a semiderived fact type is read as computed, so its emptiness is the computed relation's
-        empty = [not (found.get(f'computed:{ref}') if ref in SEMIDERIVED else facts.get(ref)) for ref in lists]
+        empty = [not (found.get(f'computed:{ref}') if ref in computed else facts.get(ref)) for ref in lists]
         if mode == 'universe':   # no facts and no roster members: nothing to check
             nothing = all(empty) and not any(instances.get(key) for key in rule['info']['rosters'])
         else:
@@ -1396,7 +1482,7 @@ def report(population, found):
                 unchecked = unchecked or rule['modality'] == 'alethic'
                 continue
         if rule['family'] in GROUPED:
-            verdict, witness = judge(parts, found, facts)
+            verdict, witness = judge(parts, found, facts, computed)
             if verdict == 'vacuous':
                 print(f'{name}  vacuous  (no facts for it to apply to)')
                 vacuous = True
@@ -1416,7 +1502,7 @@ def report(population, found):
     for rule in UNCHECKED:
         print(f"{rule['id']}  not checked  (textual rule: {rule['expression']})")
         unchecked = unchecked or rule['modality'] == 'alethic'
-    return 1 if violated else 4 if unchecked else 2 if vacuous else 0
+    return out, {'violated': violated, 'unchecked': unchecked, 'vacuous': vacuous}
 
 
 def date_reason(rule, bindings):
@@ -1491,6 +1577,312 @@ if __name__ == '__main__':
     raise SystemExit(main())
 '''
 
+_PLAN_HELPERS = '''
+
+def stepped(states, fact_type):
+    """Every state's facts of one type, each row tagged with its state's step."""
+    return [dict(row, gnd_step=k) for k, state in enumerate(states) for row in state['facts'].get(fact_type, [])]
+'''
+
+_PLAN_MAIN = '''
+
+STEPS_LIMIT = 500   # about 0.35 s per step on local DuckDB (measured)
+STEPS_BYTES = 10 * 1024 * 1024
+
+
+class PlanInputError(ValueError):
+    pass
+
+
+def read_steps(path, pre_raw):
+    """Validate a steps document as GND does (gnd.transition), refusing with GND's codes."""
+    import hashlib
+    with open(path, 'rb') as handle:
+        raw = handle.read(STEPS_BYTES + 1)
+    if len(raw) > STEPS_BYTES:
+        raise PlanInputError(f'[transition:steps-too-large] steps file is over the {STEPS_BYTES}-byte cap')
+    try:
+        document = json.loads(raw)
+    except ValueError as error:
+        raise PlanInputError(f'[transition:steps-shape] steps document is not valid JSON: {error}') from error
+    shape_error = steps_shape_error(document)
+    if shape_error:
+        raise PlanInputError(f'[transition:steps-shape] {shape_error}')
+    if document['model_digest'] != MODEL_DIGEST:
+        raise PlanInputError(f"[transition:model-digest-mismatch] the steps were written for {document['model_digest']}; "
+                             f'this model is {MODEL_DIGEST}')
+    if document['operations_digest'] != OPERATIONS_DIGEST:
+        raise PlanInputError(f"[transition:operations-digest-mismatch] the steps were written for operations "
+                             f"{document['operations_digest']}; this model's are {OPERATIONS_DIGEST}")
+    if document.get('pre_digest') is not None and document['pre_digest'] != 'sha256:' + hashlib.sha256(pre_raw).hexdigest():
+        raise PlanInputError('[transition:pre-digest-mismatch] pre_digest does not match the pre-population')
+    if len(document['steps']) > STEPS_LIMIT:
+        raise PlanInputError(f'plans of more than {STEPS_LIMIT} steps are refused by the rules programs')
+    plan = []
+    for index, step in enumerate(document['steps'], 1):
+        op, bindings = step.get('op'), step.get('bindings')
+        if op not in OPERATIONS:
+            raise PlanInputError(f'[transition:unknown-operation] step {index} names operation {op!r}, which this model '
+                                 'does not declare')
+        params = dict(OPERATIONS[op]['params'])
+        if not isinstance(bindings, dict) or set(bindings) != set(params):
+            missing = sorted(set(params) - set(bindings or {}))
+            raise PlanInputError(f'[transition:bindings-mismatch] step {index} binds {sorted(bindings or {})} for '
+                                 f"operation {op!r}, which declares {sorted(params)}; missing {missing}")
+        for name, value in bindings.items():
+            try:
+                check_cell(f'step {index}', name, params[name], value)
+            except ValueError as error:
+                raise PlanInputError(f'[transition:binding-type] {error}') from error
+        plan.append((op, bindings))
+    return plan
+
+
+DIGEST = re.compile(r'sha256:[0-9a-f]{64}')
+
+
+def steps_shape_error(document):
+    """GND's steps.schema.json, checked by hand: exact keys, types and digest shapes."""
+    if not isinstance(document, dict):
+        return 'a steps document is a JSON object'
+    allowed, required = {'steps_schema', 'model', 'model_digest', 'operations_digest', 'pre_digest', 'steps'}, {
+        'steps_schema', 'model', 'model_digest', 'operations_digest', 'steps'}
+    if set(document) - allowed or required - set(document):
+        return f'keys must be {sorted(required)} plus optional pre_digest; got {sorted(document)}'
+    if type(document['steps_schema']) is not int or document['steps_schema'] != 1:
+        return 'steps_schema must be the integer 1'
+    if not isinstance(document['model'], str):
+        return 'model must be a string'
+    for key in ('model_digest', 'operations_digest', 'pre_digest'):
+        if key in document and not (isinstance(document[key], str) and DIGEST.fullmatch(document[key])):
+            return f'{key} must be sha256:<64 hex digits>'
+    steps = document['steps']
+    if not isinstance(steps, list) or not steps:
+        return 'steps must be a non-empty list'
+    for index, step in enumerate(steps, 1):
+        if not isinstance(step, dict) or set(step) != {'op', 'bindings'} or not isinstance(step['op'], str):
+            return f'step {index} must be exactly {{"op": name, "bindings": {{...}}}}'
+        if not isinstance(step['bindings'], dict) or any(isinstance(v, (dict, list)) for v in step['bindings'].values()):
+            return f'step {index} bindings must map parameter names to single values'
+    return None
+
+
+def check_coverage(pre, plan):
+    """GND's coverage gates (transition.assert_*_coverage), in GND's order; refused with GND's codes."""
+    covered = set(pre['population'].get('covers') or [])
+    ops = [COVERAGE['ops'][op] for op, _ in plan]
+
+    def frame():
+        gaps = sorted(set().union(*(set(o['frame']) for o in ops)) - covered)
+        if gaps:
+            raise PlanInputError(f'[transition:frame-coverage] the pre-population does not cover {gaps}, which this '
+                                 "walk's operations touch")
+
+    def static():
+        required = {d for o in ops for deps in o['static'].values() for d in deps}
+        gaps = sorted(required - covered)
+        if gaps:
+            raise PlanInputError(f'[transition:static-derivation-coverage] the pre-population does not cover {gaps}, '
+                                 'which are asserted dependencies of static derivations read by this walk')
+
+    def dynamic():
+        selected = set(COVERAGE['standing']).union(*(set(o['dynamic']) for o in ops))
+        for head in sorted(selected):
+            gaps = sorted(set(COVERAGE['closure'][head]) - covered)
+            if gaps:
+                raise PlanInputError(f'[transition:dynamic-derivation-coverage] the pre-population omits {gaps} '
+                                     f"required for dynamic derivation '{head}'")
+    for gate in ((dynamic, frame, static) if COVERAGE['multi_clause'] else (frame, static, dynamic)):
+        gate()
+
+
+def apply_step(state, op, bindings):
+    """GND's transition equation: retract selectors read the state before, all retracts precede all asserts."""
+    def value(v):
+        return bindings[v[1:]] if isinstance(v, str) and v.startswith('$') else v
+    facts = {k: list(v) for k, v in state['facts'].items()}
+    doomed = {}
+    for effect in OPERATIONS[op]['effects']:
+        (kind, spec), = effect.items()
+        if kind == 'retract':
+            selector = {r: value(v) for r, v in spec['bind'].items()}
+            doomed.setdefault(spec['fact_type'], set()).update(
+                i for i, row in enumerate(state['facts'].get(spec['fact_type'], []))
+                if all(row.get(r) == v for r, v in selector.items()))
+    for fact_type, indices in doomed.items():
+        facts[fact_type] = [row for i, row in enumerate(facts.get(fact_type, [])) if i not in indices]
+    slots = {fact_type: sorted(indices) for fact_type, indices in doomed.items()}
+    for effect in OPERATIONS[op]['effects']:   # creates add nothing: GND's states are facts only
+        (kind, spec), = effect.items()
+        if kind != 'assert':
+            continue
+        row = {r: value(v) for r, v in spec['bind'].items()}
+        rows_ = facts.setdefault(spec['fact_type'], [])
+        if row in rows_:
+            continue   # duplicate asserts collapse
+        free = slots.get(spec['fact_type'], [])
+        if free:   # GND puts an asserted fact where a retracted one was (a replace keeps its place)
+            rows_.insert(min(free.pop(0), len(rows_)), row)
+        else:
+            rows_.append(row)
+    return {'population': state['population'], 'facts': facts, 'instances': {}}
+
+
+def plan_states(pre, plan):
+    """S(0) is the pre-population; later states carry asserted facts only (GND computes derived facts)."""
+    states = [pre]
+    # GND re-loads each later state from its facts alone: no derived claims and no instance rosters
+    current = {'population': pre['population'], 'facts': {k: v for k, v in pre['facts'].items() if k not in DERIVED},
+               'instances': {}}
+    for op, bindings in plan:
+        current = apply_step(current, op, bindings)
+        states.append(current)
+    return states
+
+
+def at_state(found, k):
+    """The rows of one state, without the step column."""
+    return {key: [row[1:] for row in rows_ if row[0] == k] for key, rows_ in found.items() if not key.startswith('step:')}
+
+
+def step_lines(k, op, bindings, found):
+    """GND's step verdicts for step k that do not pass, with GND's locators."""
+    out = []
+    minted = set()
+    for check in (c for c in STEP_CHECKS if c['op'] == op):
+        where = f"$.steps[{k}].{check['locator']}"
+        if check['kind'] == 'create-freshness':
+            value = bindings[check['param']]
+            existing = any(r[0] == k for r in found[check['key']])
+            if existing or (check['object_type'], json.dumps(value)) in minted:
+                out.append((f'{where}  violated  {json.dumps(value)}', 'violated'))
+            minted.add((check['object_type'], json.dumps(value)))
+            continue
+        alethic = check['modality'] == 'alethic'
+        status = 'violated' if alethic else 'warning'
+        if check['kind'] == 'dynamic-rule':
+            if not check['functional']:
+                out.append((f'{where}  not checked  (no uniqueness rule makes the value single)',
+                            'unchecked' if alethic else None))
+                continue
+            old = [r for r in found[check['key'] + ':old'] if r[0] == k]
+            new = [r for r in found[check['key'] + ':new'] if r[0] == k]
+            if not old or not new:
+                out.append((f"{where}  vacuous  (no {'old' if not old else 'new'} value)", 'vacuous'))
+                continue
+            hits = [r for r in found[check['key']] if r[0] == k]
+            if hits:
+                out.append((f"{where}  {status}  {json.dumps([{'old': r[1], 'new': r[2]} for r in hits])}",
+                            'violated' if alethic else None))
+            continue
+        if any(r[0] == k for r in found[check['key']]):
+            if check['kind'] == 'create-freshness':
+                witness = bindings[check['param']]
+            elif check['kind'] == 'precondition':
+                witness = bindings
+            else:
+                witness = {r: bindings[v[1:]] if isinstance(v, str) and v.startswith('$') else v
+                           for r, v in check['selector'].items()}
+            out.append((f'{where}  {status}  {json.dumps(witness, sort_keys=True)}', 'violated' if alethic else None))
+    return out
+
+
+def compiled_verdicts(pre, found):
+    """GND's compiled precondition obligations on the pre-state, when both fact types are covered."""
+    covered = set(pre['population'].get('covers') or [])
+    lines, flags = [], {'violated': False, 'unchecked': False, 'vacuous': False}
+    for entry in COMPILED:
+        if {entry['of'], entry['in']} - covered:
+            continue
+        rows_ = [dict(zip(entry['roles'], r[1:])) for r in found[entry['key']] if r[0] == 0]
+        if rows_:
+            alethic = entry['modality'] == 'alethic'
+            lines.append(f"{entry['locator']}  {'violated' if alethic else 'warning'}  {json.dumps(rows_, sort_keys=True)}")
+            flags['violated'] = flags['violated'] or alethic
+    return lines, flags
+
+
+def report_plan(states, plan, found):
+    """Each step's checks, then the state it leads to; only what does not pass is listed."""
+    flags = {'violated': False, 'unchecked': False, 'vacuous': False}
+    for k, state in enumerate(states):
+        if k:
+            op, bindings = plan[k - 1]
+            print(f"step {k}  {op}({', '.join(f'{n}={v!r}' for n, v in bindings.items())})")
+            for line, flag in step_lines(k, op, bindings, found):
+                print(f'step {k}  {line}')
+                if flag:
+                    flags[flag] = True
+        lines, state_flags = state_lines(state, at_state(found, k), computed=DERIVED if k else None, derivations=not k)
+        if not k:
+            compiled_lines, compiled_flags = compiled_verdicts(state, found)
+            lines += compiled_lines
+            for key in flags:
+                flags[key] = flags[key] or compiled_flags[key]
+        for key in flags:
+            flags[key] = flags[key] or state_flags[key]
+        problems = [line for line in lines if not line.endswith('  OK')]
+        for line in problems:
+            print(f'state {k}  {line}')
+        if not problems:
+            print(f'state {k}  every rule holds')
+    return band(flags)
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if '--post' in argv:
+        print('--post (comparing a plan with a declared after-state, the frame check of GND) is not supported by the rules '
+              'programs; run the plan with --pre and --steps', file=sys.stderr)
+        return 3
+    plan_mode = '--steps' in argv or '--pre' in argv
+    if plan_mode:
+        flags = dict(zip(argv[::2], argv[1::2]))
+        if len(argv) != 4 or set(flags) != {'--pre', '--steps'}:
+            print('usage: python THIS_FILE --pre PRE.json --steps STEPS.json   (or: python THIS_FILE POPULATION.json)',
+                  file=sys.stderr)
+            return 64
+        population_path, steps_path = flags['--pre'], flags['--steps']
+    elif len(argv) != 1:
+        print('usage: python THIS_FILE POPULATION.json   (or: python THIS_FILE --pre PRE.json --steps STEPS.json)',
+              file=sys.stderr)
+        return 64
+    else:
+        population_path = argv[0]
+    try:
+        population = read_population(population_path)
+        plan = []
+        if plan_mode:
+            with open(population_path, 'rb') as handle:
+                plan = read_steps(steps_path, handle.read(LIMIT + 1))
+            check_coverage(population, plan)
+    except PlanInputError as error:
+        print(f'{steps_path}: refused: {error}', file=sys.stderr)
+        return 3
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError) as error:
+        print(f'{population_path}: not a readable plan or population ({type(error).__name__}: {error})', file=sys.stderr)
+        return 3
+    states = plan_states(population, plan) if plan else [population]
+    try:
+        with tempfile.TemporaryDirectory(prefix='gnd-rules-') as directory:
+            os.environ['RAI_BUILD_DIR'] = directory   # explicit local build state; no remote discovery
+            from relationalai.config import Config
+            config = Config(connections={'local': {'type': 'duckdb', 'path': ':memory:'}},
+                            default_connection='local',
+                            deployment={'schema': SCHEMA, 'auto_deploy': True})
+            found = build(states, plan, config)
+    except Exception as error:  # noqa: BLE001 -- a crash must never read as a rule violation (exit 1)
+        print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
+        return 70
+    if plan:
+        return report_plan(states, plan, found)
+    return report(population, at_state(found, 0))
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
+'''
+
 _LQP_MAIN = '''
 
 def main(argv=None):
@@ -1551,7 +1943,7 @@ def compile_only():
 
     walker = Requires()
     walker(compiled.root)
-    expected = sum(rule['requires'] for rule in RULES)
+    expected = sum(rule['requires'] for rule in RULES) + PLAN_REQUIRES
     print(f'{len(walker.found)} requirements compiled for {len(RULES)} rules (expected {expected})')
     for node in walker.found:
         print(' '.join(str(node).split()))
@@ -1561,6 +1953,245 @@ def compile_only():
 if __name__ == '__main__':
     raise SystemExit(main())
 '''
+
+
+# ---------------------------------------------------------------- plans (operations)
+
+def _op_params(model: _Model, op: dict[str, Any]) -> list[tuple[str, str]]:
+    return [(p["name"], model.raw_primitive(p["object_type"])) for p in op.get("parameters") or []]
+
+
+def _op_atom(model: _Model, pattern: dict[str, Any], derived: bool) -> Atom:
+    """An operation atom; $name binds a parameter, an omitted role is any value."""
+    atom = _atom(model, pattern)
+    return Atom(_derived_relation(model, atom.relation) if derived else atom.relation, atom.args)
+
+
+def _functional(model: _Model, fact_id: str, bound: set[str]) -> bool:
+    """GND's gate: an internal uniqueness constraint over roles the dynamic rule binds proves one value."""
+    return any(c.get("type") == "uniqueness" and set(ModelIndex.constraint_roles(c)) <= bound
+               for c in model.facts[fact_id].get("constraints") or [])
+
+
+def _plan_checks(model: _Model, names: _Names, target: str) -> tuple[list[str], list[dict[str, Any]]]:
+    """Every step check of GND's transition walk, as a PyRel query over consecutive states.
+
+    A check's rows name the steps where it fails; the report prints them with GND's locators.
+    """
+    lines = ["\n    # ---- the plan: one row per step, and which state each step starts from",
+             "    previous = m.Relationship(fields=[Field('gnd_step', Integer), Field('gnd_before', Integer)], short_name='previous')",
+             ("    load(m, previous, [{'gnd_step': k, 'gnd_before': k - 1} for k in range(1, len(plan) + 1)], "
+              "('gnd_step', 'gnd_before'))")]
+    table: list[dict[str, Any]] = []
+    for op in model.doc.get("operations") or []:
+        params = _op_params(model, op)
+        do = names.relation(f"do_{op['id']}")
+        fields = ", ".join(["Field('gnd_step', Integer)"] + [f"Field({n!r}, {_TYPES[t]})" for n, t in params])
+        dates = tuple(n for n, t in params if t == "Date")
+        lines.append(f"    # {op['id']}: {op.get('reading', op['id'])}")
+        lines.append(f"    {do} = m.Relationship(fields=[{fields}], short_name='do_{op['id']}')")
+        lines.append(f"    load(m, {do}, [dict(b, gnd_step=k) for k, (o, b) in enumerate(plan, 1) if o == {op['id']!r}], "
+                     f"{tuple(['gnd_step'] + [n for n, _ in params])!r}" + (f", dates={dates!r})" if dates else ")"))
+        types = {f"${n}": _TYPES[t] for n, t in params}
+        pvars = [names.var(f"${n}") for n, _ in params]
+        if pvars:
+            lines.append(_declare([f"${n}" for n, _ in params], types, names))
+        doing = f"{do}(step, {', '.join(pvars)})" if pvars else f"{do}(step)"
+        selected = ", ".join(["step"] + pvars)
+        common = {"op": op["id"], "params": [n for n, _ in params]}
+        bound = [f"${n}" for n, _ in params]   # variables the do_ atom binds first
+
+        def text(atom, at, bound=bound):
+            (atom,) = _unswap(model, [atom], bound)
+            return _atom_text(atom, names, model, at=at)
+
+        def add(key, kind, locator, modality, require, denial, common=common, **extra):
+            table.append({"key": key, "kind": kind, "locator": locator, "modality": modality, **common, **extra})
+            lines.append(f"    #   {kind} {locator}: {require}")
+            if target == "lqp":
+                lines.append(f"    {require}")
+            else:
+                lines.append(f"    found[{key!r}] = rows({denial})")
+
+        for pre in op.get("preconditions") or []:
+            ordered = _unswap(model, [_op_atom(model, a, True) for a in pre["require"]], bound)
+            atoms = [_atom_text(a, names, model, at="before") for a in ordered]
+            add(f"step:{op['id']}:pre:{pre['id']}", "precondition", f"preconditions[id={pre['id']}]", pre["modality"],
+                f"m.where({doing}, previous(step, before)).require({', '.join(atoms)})",
+                f"m.where({doing}, previous(step, before), not_({', '.join(atoms)})).select({selected})",
+                atoms=pre["require"])
+        for j, effect in enumerate(op.get("effects") or []):
+            ((kind, spec),) = effect.items()
+            if kind == "retract":
+                atom = text(_op_atom(model, spec, False), "before")
+                add(f"step:{op['id']}:retract:{j}", "retract-target", f"effects[{j}].retract", "alethic",
+                    f"m.where({doing}, previous(step, before)).require({atom})",
+                    f"m.where({doing}, previous(step, before), not_({atom})).select({selected})", selector=spec["bind"],
+                    fact_type=spec["fact_type"])
+            elif kind == "assert":
+                atom = text(_op_atom(model, spec, False), "before")
+                add(f"step:{op['id']}:assert:{j}", "assert-redundant", f"effects[{j}].assert", "deontic",
+                    f"m.where({doing}, previous(step, before)).require(not_({atom}))",
+                    f"m.where({doing}, previous(step, before), {atom}).select({selected})", selector=spec["bind"],
+                    fact_type=spec["fact_type"])
+            elif kind == "create":
+                universe = _present(model, names, spec["object_type"], lines)
+                value = names.var(f"${spec['param']}")
+                add(f"step:{op['id']}:create:{j}", "create-freshness", f"effects[{j}].create", "alethic",
+                    f"m.where({doing}, previous(step, before)).require(not_({universe}(before, {value})))",
+                    f"m.where({doing}, previous(step, before), {universe}(before, {value})).select({selected})",
+                    param=spec["param"], object_type=spec["object_type"])
+            else:
+                raise ExportInputError(f"operation {op['id']!r}: effect {kind!r} is not supported by the rules programs")
+        touched = {next(iter(e.values())).get("fact_type") for e in op.get("effects") or []}
+        for j, rule in enumerate(op.get("dynamic_rules") or []):
+            subject = rule["subject"]
+            fact_id, role = subject["fact_type"], subject["value_role"]
+            if fact_id not in touched:
+                continue   # GND gives no verdict when the operation leaves the subject alone
+            entry = {"key": f"step:{op['id']}:dynamic:{j}", "kind": "dynamic-rule", "locator": f"dynamic_rules[{j}]",
+                     "modality": rule["modality"], **common}
+            if not _functional(model, fact_id, set(subject.get("bind") or {}) - {role}):
+                table.append({**entry, "functional": False})
+                continue
+            vtype = model.role_type(fact_id, role)
+            old, new = f"$old_{role}", f"$new_{role}"
+            types = {old: vtype, new: vtype}
+            lines.append(_declare([old, new], types, names))
+
+            def subject_atom(value, at, subject=subject, role=role, fact_id=fact_id, text=text):
+                bind = {**subject.get("bind", {}), role: value}
+                return text(Atom(fact_id, tuple(bind.get(r["role_name"]) for r in model.roles(fact_id))), at)
+            was, now = subject_atom(old, "before"), subject_atom(new, "step")
+            o, n = names.var(old), names.var(new)
+            pinned = (subject.get("bind") or {}).get(role)
+            if pinned is not None:   # the subject names its value too: only that value counts, old and new
+                value = names.var(pinned) if isinstance(pinned, str) and pinned.startswith("$") else _literal(pinned, vtype)
+                was, now = f"{was}, {o} == {value}", f"{now}, {n} == {value}"
+            table.append({**entry, "functional": True})
+            lines.append(f"    #   dynamic-rule dynamic_rules[{j}]: new {rule['op']} old for {fact_id}.{role}")
+            if target == "lqp":
+                lines.append(f"    m.where({doing}, previous(step, before), {was}, {now}).require({n} {_PYOP[rule['op']]} {o})")
+            else:
+                lines.append(f"    found[{entry['key'] + ':old'!r}] = rows(m.where({doing}, previous(step, before), {was}).select(step, {o}))")
+                lines.append(f"    found[{entry['key'] + ':new'!r}] = rows(m.where({doing}, {now}).select(step, {n}))")
+                lines.append(f"    found[{entry['key']!r}] = rows(m.where({doing}, previous(step, before), {was}, {now}, "
+                             f"{n} {_PYOP[_NEGATED[rule['op']]]} {o}).select(step, {o}, {n}))")
+    return lines, table
+
+
+def _present(model: _Model, names: _Names, object_id: str, lines: list[str]) -> str:
+    """The values of an object type that appear in a state's facts, in roles of exactly that type.
+
+    That is what GND's freshness check counts as an existing instance (transition._instance_keys):
+    neither instance rosters nor reference widening.
+    """
+    name = f"{object_id}_present"
+    if name not in names.relations:
+        rel = names.relation(name)
+        primitive = model.primitive(object_id)
+        lines.append(f"    # every {object_id} that appears in a state's facts (what a create must not repeat)")
+        lines.append(f"    {rel} = m.Relationship(fields=[Field('gnd_step', Integer), Field('member', {primitive})], short_name={name!r})")
+        lines.append(f"    h_x = {primitive}.ref()")
+        for fact_id in model.facts:
+            for role in model.roles(fact_id):
+                if role["object_type"] != object_id:
+                    continue
+                args = ", ".join("h_x" if r["role_name"] == role["role_name"] else f"{model.role_type(fact_id, r['role_name'])}.ref()"
+                                 for r in model.roles(fact_id))
+                lines.append(f"    m.where({names.relation(fact_id)}(step, {args})).define({rel}(step, h_x))")
+    return names.relation(name)
+
+
+def _compiled_checks(model: _Model, loaded: Any, names: _Names, target: str) -> tuple[list[str], list[dict[str, Any]]]:
+    """GND compiles some preconditions into standing subset obligations judged on the pre-state
+    (every <of> fact has a matching <in> fact). Obligations that read dynamic derived facts are left out,
+    as GND leaves them out (transition._compiled_verdicts_for_dynamic_walk)."""
+    from gnd import transition
+    dynamic = {row.fact_type for row in transition.derivation_classifications(loaded.model_dump())
+               if row.stability == "dynamic"}
+    lines, table = [], []
+    for op in model.doc.get("operations") or []:
+        reads_dynamic = {pre["id"] for pre in op.get("preconditions") or []
+                         if any(a.get("fact_type") in dynamic for a in pre.get("require") or [])}
+        for entry in loaded.compiled_obligations(str(op["id"])):
+            subset = entry.get("subset")
+            if not subset or entry.get("obligation") in reads_dynamic:
+                continue
+            pairs = [tuple(pair) for pair in entry["role_pairs"]]
+            left_roles = [r["role_name"] for r in model.roles(subset["of"])]
+            variables = {left: f"$c_{left}" for left, _ in pairs}
+            of = Atom(subset["of"], tuple(variables.get(r) or f"$o_{r}" for r in left_roles))
+            right = {right_role: variables[left] for left, right_role in pairs}
+            into = Atom(subset["in"], tuple(right.get(r["role_name"]) for r in model.roles(subset["in"])))
+            of, into = _unswap(model, [of, into])
+            types = {v: t for (_, t), v in zip(_relation_roles(model, of.relation), of.args)}
+            key = f"compiled:{entry['locator']}"
+            table.append({"key": key, "locator": entry["locator"], "modality": entry["modality"], "of": subset["of"],
+                          "in": subset["in"], "roles": left_roles})
+            lines.append(f"    #   compiled {entry['locator']}: every {subset['of']} fact has a matching {subset['in']} fact")
+            lines.append(_declare(sorted(types), types, names))
+            ordered = [names.var(v) for v in of.args]
+            if target == "lqp":
+                lines.append(f"    m.where({_atom_text(of, names, model)}).require({_atom_text(into, names, model)})")
+            else:
+                lines.append(f"    found[{key!r}] = rows(m.where({_atom_text(of, names, model)}, "
+                             f"not_({_atom_text(into, names, model)})).select(step, {', '.join(ordered)}))")
+    return lines, table
+
+
+def _coverage(model: _Model, loaded: Any) -> dict[str, Any]:
+    """What GND's three coverage gates require of the pre-population, per operation (gnd.transition)."""
+    from gnd import transition
+    rows = transition.derivation_classifications(loaded.model_dump())
+    static = {r.fact_type: r for r in rows if r.stability == "static"}
+    dynamic = {r.fact_type: r for r in rows if r.stability == "dynamic"}
+
+    def reads(value: Any) -> set[str]:
+        if isinstance(value, dict):
+            found = {value["fact_type"]} if isinstance(value.get("fact_type"), str) else set()
+            return found.union(*(reads(v) for v in value.values()))
+        if isinstance(value, list):
+            return set().union(*(reads(v) for v in value))
+        return set()
+    per_op = {}
+    for op in loaded.operations:
+        pre_reads = reads(op.get("preconditions") or [])
+        per_op[op["id"]] = {
+            "frame": sorted({e[v]["fact_type"] for e in op.get("effects") or [] for v in ("assert", "retract") if v in e}),
+            "static": {h: sorted(static[h].asserted_dependencies) for h in sorted(pre_reads & set(static))},
+            "dynamic": sorted(set(transition._dynamic_heads_for_step(loaded, op))
+                              | ((pre_reads | reads(op.get("dynamic_rules") or [])) & set(dynamic))),
+        }
+    standing = set()
+    for fact_id, fact_type in model.facts.items():
+        if fact_id in dynamic and fact_type.get("constraints"):
+            standing.add(fact_id)
+        standing |= reads(fact_type.get("constraints") or []) & set(dynamic)
+    standing |= reads(loaded.constraints) & set(dynamic)
+    return {"ops": per_op, "standing": sorted(standing),
+            "closure": {h: sorted({h, *dynamic[h].asserted_dependencies}) for h in dynamic},
+            "multi_clause": any(isinstance(f.get("derivation_rule"), dict) and "clauses" in f["derivation_rule"]
+                                for f in model.facts.values())}
+
+
+def _plan_require_count(table: list[dict[str, Any]]) -> int:
+    """One Require per statement: each precondition atom, each effect check, each comparable dynamic rule."""
+    return sum(len(c.get("atoms") or []) if c["kind"] == "precondition" else (0 if c.get("functional") is False else 1)
+               for c in table)
+
+
+def _plan_constants(model: _Model, loaded: Any, table: list[dict[str, Any]], compiled: list[dict[str, Any]]) -> str:
+    from gnd import transition
+    operations = {op["id"]: {"params": _op_params(model, op), "effects": op.get("effects") or []}
+                  for op in model.doc.get("operations") or []}
+    return (f"MODEL_DIGEST = {transition.transition_model_identity(loaded)!r}\n"
+            f"OPERATIONS_DIGEST = {transition.operations_digest(loaded.operations)!r}\n"
+            f"OPERATIONS = json.loads({json.dumps(operations)!r})\n"
+            f"STEP_CHECKS = json.loads({json.dumps(table)!r})\n"
+            f"DERIVED = {list(model.derived)!r}\n"
+            f"COMPILED = json.loads({json.dumps(compiled)!r})\n"
+            f"COVERAGE = json.loads({json.dumps(_coverage(model, loaded))!r})\n")
 
 
 def _roster_types(model: _Model) -> dict[str, str]:
@@ -1616,8 +2247,17 @@ def render(model_path: Path, target: str) -> str:
     doc = _parse_document(raw.decode("utf-8"))
     model = _Model(doc)
     reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
+    if reference and doc.get("operations"):
+        for head in model.derived:
+            if {a["fact_type"] for a in _rule_atoms(model.facts[head]["derivation_rule"])} & set(reference["owned"]):
+                raise ExportInputError(f"fact type {head!r} is derived from reference facts in a model with operations; "
+                                       "GND's plan walk computes it empty in later states (a checker bug), so there is "
+                                       "no verdict to match")
     reqs = requirements(doc, model)
     names = _Names(model)
+    plan_lines, step_table = _plan_checks(model, names, target) if names.step else ([], [])
+    compiled_lines, compiled_table = _compiled_checks(model, loaded, names, target) if names.step else ([], [])
+    plan_lines += compiled_lines
     spanning = spanning_uniqueness(doc)
     spanning_note = (f"Spanning uniqueness ({', '.join(spanning)}) can only be broken by duplicate rows. PyRel\n"
                      "relations are sets, so the input is refused if it repeats a fact; GND reports those.\n\n"
@@ -1661,7 +2301,9 @@ def render(model_path: Path, target: str) -> str:
          f"ROLES = {({f: [[r['role_name'], model.raw_role_type(f, r['role_name'])] for r in model.roles(f)] for f in model.facts})!r}\n"
          f"ROSTERS = {_roster_types(model)!r}\n"
          f"UNCHECKED = json.loads({json.dumps(model.unchecked)!r})\n"
-         f"REFERENCE = json.loads({json.dumps(reference)!r})\nLIMIT = 1 << 20\n"),
+         f"REFERENCE = json.loads({json.dumps(reference)!r})\nLIMIT = 1 << 20\n"
+         + (_plan_constants(model, loaded, step_table, compiled_table) if names.step else "")
+         + f"PLAN_REQUIRES = {_plan_require_count(step_table) + len(compiled_table)}\n"),
         ("\ndef read_population(path):\n"
         "    with open(path, 'rb') as handle:\n"
         "        raw = handle.read(LIMIT + 1)\n"
@@ -1731,21 +2373,23 @@ def render(model_path: Path, target: str) -> str:
         "    \"\"\"Query rows, sorted, with dates printed as GND prints them (YYYY-MM-DD).\"\"\"\n"
         "    return sorted([v.isoformat() if isinstance(v, datetime.date) else v for v in row]\n"
         "                  for row in query.to_df().itertuples(index=False, name=None))\n"),
-        "\ndef build(population, config):\n"
-        "    from relationalai.semantics import Boolean, Date, Field, Float, Integer, Model, String, not_  # noqa: F401\n"
+        ("\ndef build(states, plan, config):\n" if names.step else "\ndef build(population, config):\n")
+        + "    from relationalai.semantics import Boolean, Date, Field, Float, Integer, Model, String, not_  # noqa: F401\n"
         "    from relationalai.semantics.std import datetime as std_datetime  # noqa: F401\n"
         "    std_date, days = std_datetime.date, std_datetime.days  # noqa: F841\n"
         "    from relationalai.semantics.std import aggregates  # noqa: F401\n"
         "    from relationalai.semantics.std import math as std_math  # noqa: F401\n"
         "    m = Model(SCHEMA, config=config)\n"
-        "    facts = population['facts']\n"
-        "    instances = population.get('instances', {})\n"
+        + ("    step, before = Integer.ref(), Integer.ref()   # a state of the plan, and the one before it\n"
+           if names.step else
+           "    facts = population['facts']\n"
+           "    instances = population.get('instances', {})\n")
         + ("    found = {}\n" if target == "duckdb" else ""),
         "\n    # ---- facts: one relationship per fact type",
         *_relations(model, names),
     ]
     out += _derivations(model, names, target)
-    universes = _universes(model, reqs, names) + _allowed(model, reqs, names) + _helpers(model, names, kinds=("reverse",))
+    universes = _universes(model, reqs, names) + _allowed(model, reqs, names) + _helpers(model, names, kinds=("reverse", "permute"))
     universes += _helpers(model, names)
     if universes:
         out += ["\n    # ---- helper relations the rules refer to", *universes]
@@ -1756,12 +2400,22 @@ def render(model_path: Path, target: str) -> str:
         out.append(f"    # {rule_id}: spanning uniqueness, broken only by a repeated fact; the input is refused instead")
     for rule in model.unchecked:
         out.append(f"    # {rule['id']}: textual rule, not checked by GND or here: {rule['expression']!r}")
+    if names.step:
+        out += plan_lines
     if target == "duckdb":
         out.append("    return found")
     else:
         first = next(f for f, fact in model.facts.items() if not isinstance(fact.get("derivation_rule"), dict))
-        refs = ", ".join(f"{model.role_type(first, r['role_name'])}.ref()" for r in model.roles(first))
+        refs = ", ".join((["Integer.ref()"] if names.step else [])
+                         + [f"{model.role_type(first, r['role_name'])}.ref()" for r in model.roles(first)])
         out.append(f"    probe_vars = [{refs}]")
         out.append(f"    return m, lambda: rows(m.where({names.relation(first)}(*probe_vars)).select(*probe_vars))")
-    out.append(_DUCKDB_MAIN if target == "duckdb" else _LQP_MAIN)
+    main = _DUCKDB_MAIN if target == "duckdb" else _LQP_MAIN
+    if names.step:
+        main = (main.replace("build({'facts': {}, 'population': {}}, config)", "build([{'facts': {}, 'population': {}}], [], config)")
+                    .replace("m, probe = build(population, config)", "m, probe = build([population], [], config)"))
+        if target == "duckdb":   # the plan main replaces the snapshot one
+            main = main.replace("\nif __name__ == '__main__':\n    raise SystemExit(main())\n", "\n")
+        main = _PLAN_HELPERS + main + (_PLAN_MAIN if target == "duckdb" else "")
+    out.append(main)
     return "\n".join(out) + "\n"

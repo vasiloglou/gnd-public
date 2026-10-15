@@ -1,0 +1,22 @@
+{
+ "steps_schema": 1,
+ "model": "m",
+ "steps": [
+  {
+   "op": "init_level",
+   "bindings": {
+    "p": "p1",
+    "l": 3
+   }
+  },
+  {
+   "op": "tagit",
+   "bindings": {
+    "p": "p2",
+    "t": "a"
+   }
+  }
+ ],
+ "model_digest": "sha256:68fe05274d3b18e975f445bbb80b267079870e64e22dd93c0e5ff6f487ccce7e",
+ "operations_digest": "sha256:30418795bf4a68aa5113e607f7d7c3047fff58629aae1d5fb65f3a78a88b4227"
+}

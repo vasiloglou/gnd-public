@@ -342,11 +342,11 @@ def test_cli_refuses_checker_options_with_rules(tmp_path):
     assert run.returncode == 64 and 'apply only to the checker export' in run.stderr
 
 
-def test_operations_are_refused_until_plans_land():
-    doc = _parse_document(MODELS['bookrec'].read_text())
-    doc['operations'] = [{'id': 'x'}]
-    with pytest.raises(ExportInputError, match='operations'):
-        requirements(doc)
+def test_a_model_with_operations_gets_a_plan_checking_program():
+    """Since PL15: operations no longer refuse the export; the program checks plans (--pre, --steps)."""
+    program = render(ROOT / 'tests/fixtures/pyrel-rules-plans/registrar.orm.json', 'duckdb')
+    assert 'def read_steps(' in program and 'def report_plan(' in program
+    assert "previous = m.Relationship(fields=[Field('gnd_step', Integer), Field('gnd_before', Integer)]" in program
 
 
 def test_cli_writes_new_files_only(tmp_path):

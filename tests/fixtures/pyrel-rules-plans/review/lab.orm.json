@@ -1,0 +1,784 @@
+{
+ "version": 2,
+ "model_id": "urn:review:lab",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "tag",
+   "name": "Tag",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "level",
+   "name": "Level",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "n",
+   "name": "N",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "person_level",
+   "reading": "{Person} is at {Level}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "level",
+     "role_name": "level"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "one_level",
+     "type": "uniqueness",
+     "roles": [
+      "person"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "person_tag",
+   "reading": "{Person} has {Tag}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "tag",
+     "role_name": "tag"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "must_tag",
+     "type": "mandatory",
+     "role": "person"
+    }
+   ]
+  },
+  {
+   "id": "tag_count",
+   "reading": "{Person} has {N} tags",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "n",
+     "role_name": "n"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p",
+       "tag": "$t"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "count",
+     "of": "$t",
+     "over": [
+      "$t"
+     ],
+     "as": "$k"
+    },
+    "head": {
+     "person": "$p",
+     "n": "$k"
+    }
+   }
+  }
+ ],
+ "constraints": [
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   },
+   "modality": "alethic",
+   "id": "tag_values",
+   "type": "value",
+   "object_type": "tag",
+   "allowed": [
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   },
+   "modality": "alethic",
+   "id": "pid_values",
+   "type": "value",
+   "object_type": "person_id",
+   "allowed": [
+    "p1",
+    "p2",
+    "p3",
+    "kim"
+   ]
+  },
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   },
+   "modality": "alethic",
+   "id": "max_two",
+   "type": "guarded",
+   "antecedent": [
+    {
+     "fact_type": "tag_count",
+     "bind": {
+      "person": "$p",
+      "n": "$k"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$k",
+     "operator": "<=",
+     "right": 2
+    }
+   }
+  }
+ ],
+ "operations": [
+  {
+   "id": "add",
+   "reading": "add",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "t",
+     "object_type": "tag"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "create": {
+      "object_type": "person",
+      "param": "p"
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p",
+       "tag": "$t"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "tagit",
+   "reading": "tagit",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "t",
+     "object_type": "tag"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p",
+       "tag": "$t"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "untag_all",
+   "reading": "untag_all",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "retag",
+   "reading": "retag",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "t",
+     "object_type": "tag"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p",
+       "tag": "$t"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "set_level",
+   "reading": "set_level",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "l",
+     "object_type": "level"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p",
+       "level": "$l"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "up",
+     "subject": {
+      "fact_type": "person_level",
+      "value_role": "level",
+      "bind": {
+       "person": "$p"
+      }
+     },
+     "op": ">"
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "init_level",
+   "reading": "init_level",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "l",
+     "object_type": "level"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p",
+       "level": "$l"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "deontic",
+     "id": "up2",
+     "subject": {
+      "fact_type": "person_level",
+      "value_role": "level",
+      "bind": {
+       "person": "$p"
+      }
+     },
+     "op": ">"
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "clear_level",
+   "reading": "clear_level",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "up3",
+     "subject": {
+      "fact_type": "person_level",
+      "value_role": "level",
+      "bind": {
+       "person": "$p"
+      }
+     },
+     "op": ">"
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "twin",
+   "reading": "twin",
+   "parameters": [
+    {
+     "name": "a",
+     "object_type": "person"
+    },
+    {
+     "name": "b",
+     "object_type": "person"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "create": {
+      "object_type": "person",
+      "param": "a"
+     }
+    },
+    {
+     "create": {
+      "object_type": "person",
+      "param": "b"
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "needs_two",
+   "reading": "needs_two",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    }
+   ],
+   "preconditions": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "has_two",
+     "require": [
+      {
+       "fact_type": "tag_count",
+       "bind": {
+        "person": "$p",
+        "n": 2
+       }
+      }
+     ]
+    }
+   ],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p",
+       "level": 9
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "soft",
+   "reading": "soft",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "t",
+     "object_type": "tag"
+    }
+   ],
+   "preconditions": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "deontic",
+     "id": "leveled",
+     "require": [
+      {
+       "fact_type": "person_level",
+       "bind": {
+        "person": "$p"
+       }
+      },
+      {
+       "fact_type": "person_tag",
+       "bind": {
+        "tag": "$t"
+       }
+      }
+     ]
+    }
+   ],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p",
+       "tag": "$t"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "lvl_any",
+   "reading": "lvl_any",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "l",
+     "object_type": "level"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p",
+       "level": "$l"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "person_level",
+      "bind": {
+       "person": "$p",
+       "level": "$l"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "eq",
+     "subject": {
+      "fact_type": "person_level",
+      "value_role": "level",
+      "bind": {
+       "person": "$p"
+      }
+     },
+     "op": "="
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "tagdyn",
+   "reading": "tagdyn",
+   "parameters": [
+    {
+     "name": "p",
+     "object_type": "person"
+    },
+    {
+     "name": "t",
+     "object_type": "tag"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "person_tag",
+      "bind": {
+       "person": "$p",
+       "tag": "$t"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "nf",
+     "subject": {
+      "fact_type": "person_tag",
+      "value_role": "tag",
+      "bind": {
+       "person": "$p"
+      }
+     },
+     "op": "!="
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  }
+ ]
+}

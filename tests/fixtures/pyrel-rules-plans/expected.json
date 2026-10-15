@@ -1,0 +1,3544 @@
+{
+ "generated_by": "gnd.api.transition(model, pre, steps, unredacted=True)",
+ "results": {
+  "admit-existing": {
+   "model": "registrar.orm.json",
+   "pre": "admit-existing.pre.json",
+   "steps": "admit-existing.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "admit",
+     "verdicts": [
+      {
+       "kind": "create-freshness",
+       "locator": "$.steps[1].effects[0].create",
+       "modality": "alethic",
+       "verdict": "fail",
+       "offending_facts": [],
+       "message": "step 1 (admit) creates 'student' as 'maya', which already denotes an instance",
+       "value": "maya"
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "admit",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "admit-twice": {
+   "model": "registrar.orm.json",
+   "pre": "admit-twice.pre.json",
+   "steps": "admit-twice.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "admit",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "admit",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "attempt-1-prerequisites": {
+   "model": "registrar.orm.json",
+   "pre": "attempt-1-prerequisites.pre.json",
+   "steps": "attempt-1-prerequisites.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 3,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "offending_facts": [
+       {
+        "$student": "maya",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "MATH220"
+       },
+       {
+        "$student": "maya",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "STAT210"
+       }
+      ]
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "attempt-1-semiderived": {
+   "model": "registrar-semiderived.orm.json",
+   "pre": "attempt-1-semiderived.pre.json",
+   "steps": "attempt-1-semiderived.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "offending_facts": [
+       {
+        "$student": "maya",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "MATH220"
+       },
+       {
+        "$student": "maya",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "STAT210"
+       }
+      ]
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "attempt-2-not-offered": {
+   "model": "registrar.orm.json",
+   "pre": "attempt-2-not-offered.pre.json",
+   "steps": "attempt-2-not-offered.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 3,
+     "operation": "enroll",
+     "verdicts": [
+      {
+       "kind": "precondition",
+       "locator": "$.steps[3].preconditions[id=pre_offered]",
+       "modality": "alethic",
+       "verdict": "fail",
+       "offending_facts": [],
+       "message": "step 3 (enroll) requires offered to hold for {'course': 'CS250', 'term': 'spring'}, and it does not",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "attempt-3-accepted": {
+   "model": "registrar.orm.json",
+   "pre": "attempt-3-accepted.pre.json",
+   "steps": "attempt-3-accepted.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 3,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "drop-a-whole-term": {
+   "model": "registrar.orm.json",
+   "pre": "drop-a-whole-term.pre.json",
+   "steps": "drop-a-whole-term.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "drop_term",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "drop-something-not-taken": {
+   "model": "registrar.orm.json",
+   "pre": "drop-something-not-taken.pre.json",
+   "steps": "drop-something-not-taken.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "drop",
+     "verdicts": [
+      {
+       "kind": "retract-target",
+       "locator": "$.steps[1].effects[0].retract",
+       "modality": "alethic",
+       "verdict": "fail",
+       "offending_facts": [],
+       "message": "step 1 (drop) retracts enrolls matching {'student': 'maya', 'course': 'PHIL101', 'term': 'spring'}, and no fact matches",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "enroll-twice": {
+   "model": "registrar.orm.json",
+   "pre": "enroll-twice.pre.json",
+   "steps": "enroll-twice.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [
+      {
+       "kind": "assert-redundant",
+       "locator": "$.steps[1].effects[0].assert",
+       "modality": "deontic",
+       "verdict": "warning",
+       "offending_facts": [],
+       "message": "step 1 (enroll) asserts enrolls {'student': 'maya', 'course': 'PHIL101', 'term': 'spring'}, which is already present",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "grade-changes": {
+   "model": "registrar.orm.json",
+   "pre": "grade-changes.pre.json",
+   "steps": "grade-changes.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "change_grade",
+     "verdicts": [
+      {
+       "kind": "dynamic-rule",
+       "locator": "$.steps[1].dynamic_rules[0]",
+       "modality": "alethic",
+       "verdict": "fail",
+       "offending_facts": [
+        {
+         "old": "B",
+         "new": "A"
+        }
+       ],
+       "message": "step 1 (change_grade): dynamic rule 'grade_final' requires new = old, and 'A' = 'B' does not hold",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "grade-changes-nonfunctional": {
+   "model": "registrar-nonfunctional.orm.json",
+   "pre": "grade-changes-nonfunctional.pre.json",
+   "steps": "grade-changes-nonfunctional.steps.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "change_grade",
+     "verdicts": [
+      {
+       "kind": "dynamic-rule",
+       "locator": "$.steps[1].dynamic_rules[0]",
+       "modality": "alethic",
+       "verdict": "unchecked",
+       "offending_facts": [],
+       "message": "step 1 (change_grade) cannot compare old and new values of 'grade' on grade_of: no internal uniqueness constraint proves the subject functional",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "grade-first-time": {
+   "model": "registrar.orm.json",
+   "pre": "grade-first-time.pre.json",
+   "steps": "grade-first-time.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "record_grade",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "grade-kept": {
+   "model": "registrar.orm.json",
+   "pre": "grade-kept.pre.json",
+   "steps": "grade-kept.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "change_grade",
+     "verdicts": [
+      {
+       "kind": "assert-redundant",
+       "locator": "$.steps[1].effects[1].assert",
+       "modality": "deontic",
+       "verdict": "warning",
+       "offending_facts": [],
+       "message": "step 1 (change_grade) asserts grade_of {'student': 'maya', 'course': 'CS101', 'grade': 'B'}, which is already present",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "grade-recorded-twice": {
+   "model": "registrar.orm.json",
+   "pre": "grade-recorded-twice.pre.json",
+   "steps": "grade-recorded-twice.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "record_grade",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "record_grade",
+     "verdicts": [
+      {
+       "kind": "assert-redundant",
+       "locator": "$.steps[2].effects[1].assert",
+       "modality": "deontic",
+       "verdict": "warning",
+       "offending_facts": [],
+       "message": "step 2 (record_grade) asserts passed {'student': 'maya', 'course': 'PHIL101'}, which is already present",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "student": "maya",
+          "grade": "A",
+          "course": "PHIL101"
+         },
+         {
+          "student": "maya",
+          "grade": "B",
+          "course": "PHIL101"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "fail",
+      "offending_facts": [
+       {
+        "student": "maya",
+        "grade": "A",
+        "course": "PHIL101"
+       },
+       {
+        "student": "maya",
+        "grade": "B",
+        "course": "PHIL101"
+       }
+      ]
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "pass-then-enroll": {
+   "model": "registrar.orm.json",
+   "pre": "pass-then-enroll.pre.json",
+   "steps": "pass-then-enroll.steps.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "record_grade",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "record_grade",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 3,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "pre-claim-incomplete": {
+   "model": "registrar.orm.json",
+   "pre": "pre-claim-incomplete.pre.json",
+   "steps": "pre-claim-incomplete.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "fail",
+      "findings": [
+       {
+        "kind": "derived-extension-incomplete",
+        "witness": {
+         "course": "CS340",
+         "prerequisite": "CS101"
+        }
+       }
+      ]
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "maya",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "offending_facts": [
+       {
+        "$student": "maya",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "MATH220"
+       },
+       {
+        "$student": "maya",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "STAT210"
+       }
+      ]
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "pre-enrolled-not-offered": {
+   "model": "registrar.orm.json",
+   "pre": "pre-enrolled-not-offered.pre.json",
+   "steps": "pre-enrolled-not-offered.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [
+    {
+     "kind": "compiled-subset",
+     "locator": "$.operations[id=enroll].compiled[0]",
+     "modality": "alethic",
+     "verdict": "fail",
+     "offending_facts": [
+      {
+       "student": "maya",
+       "course": "PHIL101",
+       "term": "winter"
+      }
+     ]
+    }
+   ],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "retake-a-passed-course": {
+   "model": "registrar.orm.json",
+   "pre": "retake-a-passed-course.pre.json",
+   "steps": "retake-a-passed-course.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "fail",
+        "offending_facts": [
+         [
+          "maya",
+          "CS101"
+         ]
+        ]
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "fail",
+      "offending_facts": [
+       [
+        "maya",
+        "CS101"
+       ]
+      ]
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  },
+  "too-many-courses": {
+   "model": "registrar.orm.json",
+   "pre": "too-many-courses.pre.json",
+   "steps": "too-many-courses.steps.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "pre_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "pass",
+      "offending_facts": []
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   },
+   "pre_snapshot_verdicts": [],
+   "steps_out": [
+    {
+     "index": 1,
+     "operation": "enroll",
+     "verdicts": [
+      {
+       "kind": "assert-redundant",
+       "locator": "$.steps[1].effects[0].assert",
+       "modality": "deontic",
+       "verdict": "warning",
+       "offending_facts": [],
+       "message": "step 1 (enroll) asserts enrolls {'student': 'omar', 'course': 'CS101', 'term': 'spring'}, which is already present",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 2,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 3,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 4,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS101"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS230"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 5,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS101"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS230"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "pass",
+        "offending_facts": []
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 6,
+     "operation": "enroll",
+     "verdicts": [],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "omar",
+          "$course": "CS230",
+          "$term": "spring",
+          "$needs": "CS101"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS101"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS230"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "omar",
+          "$total": 22,
+          "$term": "spring"
+         }
+        ]
+       }
+      ],
+      "derivations": []
+     }
+    },
+    {
+     "index": 7,
+     "operation": "enroll",
+     "verdicts": [
+      {
+       "kind": "precondition",
+       "locator": "$.steps[7].preconditions[id=pre_offered]",
+       "modality": "alethic",
+       "verdict": "fail",
+       "offending_facts": [],
+       "message": "step 7 (enroll) requires offered to hold for {'course': 'MATH120', 'term': 'spring'}, and it does not",
+       "value": null
+      }
+     ],
+     "intermediate": {
+      "verdicts": [
+       {
+        "constraint_ref": "fact_types[enrolls].constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         [
+          "omar",
+          "spring"
+         ]
+        ]
+       },
+       {
+        "constraint_ref": "fact_types[grade_of].constraints[0]",
+        "verdict": "pass",
+        "offending_facts": []
+       },
+       {
+        "constraint_ref": "constraints[0]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "omar",
+          "$course": "CS230",
+          "$term": "spring",
+          "$needs": "CS101"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS101"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "CS230"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "MATH220"
+         },
+         {
+          "$student": "omar",
+          "$course": "CS340",
+          "$term": "spring",
+          "$needs": "STAT210"
+         }
+        ]
+       },
+       {
+        "constraint_ref": "constraints[1]",
+        "verdict": "fail",
+        "offending_facts": [
+         [
+          "omar",
+          "MATH120"
+         ]
+        ]
+       },
+       {
+        "constraint_ref": "constraints[2]",
+        "verdict": "fail",
+        "offending_facts": [
+         {
+          "$student": "omar",
+          "$total": 26,
+          "$term": "spring"
+         }
+        ]
+       }
+      ],
+      "derivations": []
+     }
+    }
+   ],
+   "post_snapshot": {
+    "verdicts": [
+     {
+      "constraint_ref": "fact_types[enrolls].constraints[0]",
+      "verdict": "fail",
+      "offending_facts": [
+       [
+        "omar",
+        "spring"
+       ]
+      ]
+     },
+     {
+      "constraint_ref": "fact_types[grade_of].constraints[0]",
+      "verdict": "pass",
+      "offending_facts": []
+     },
+     {
+      "constraint_ref": "constraints[0]",
+      "verdict": "fail",
+      "offending_facts": [
+       {
+        "$student": "omar",
+        "$course": "CS230",
+        "$term": "spring",
+        "$needs": "CS101"
+       },
+       {
+        "$student": "omar",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "CS101"
+       },
+       {
+        "$student": "omar",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "CS230"
+       },
+       {
+        "$student": "omar",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "MATH220"
+       },
+       {
+        "$student": "omar",
+        "$course": "CS340",
+        "$term": "spring",
+        "$needs": "STAT210"
+       }
+      ]
+     },
+     {
+      "constraint_ref": "constraints[1]",
+      "verdict": "fail",
+      "offending_facts": [
+       [
+        "omar",
+        "MATH120"
+       ]
+      ]
+     },
+     {
+      "constraint_ref": "constraints[2]",
+      "verdict": "fail",
+      "offending_facts": [
+       {
+        "$student": "omar",
+        "$total": 26,
+        "$term": "spring"
+       }
+      ]
+     }
+    ],
+    "derivations": [
+     {
+      "fact_type": "prerequisite_chain",
+      "verdict": "pass",
+      "findings": []
+     },
+     {
+      "fact_type": "term_credits",
+      "verdict": "pass",
+      "findings": []
+     }
+    ]
+   }
+  }
+ }
+}

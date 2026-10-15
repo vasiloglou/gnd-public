@@ -1,0 +1,15 @@
+{
+ "steps_schema": 1,
+ "model": "m",
+ "steps": [
+  {
+   "op": "setl2",
+   "bindings": {
+    "p": "p1",
+    "l": 2
+   }
+  }
+ ],
+ "model_digest": "sha256:09eee5c1e6e120100ed8248c4be329cc3663e46ae730368d5f71c9ccfc7a2e94",
+ "operations_digest": "sha256:673d8f640903a092676325ddbff356659f6a141ace0eb7c11838a4c909d6ae47"
+}

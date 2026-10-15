@@ -1,0 +1,44 @@
+{
+ "attempt": 2,
+ "provider": "claude",
+ "model": [
+  "claude-opus-5-5[1m]"
+ ],
+ "seconds": 9.0,
+ "reply": "{\"steps\": [{\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"amount\": 1450, \"due\": \"2025-02-01\"}}, {\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"amount\": 1450, \"due\": \"2025-03-01\"}}, {\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"amount\": 1450, \"due\": \"2025-04-01\"}}, {\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"amount\": 1450, \"due\": \"2025-05-01\"}}, {\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"amount\": 1450, \"due\": \"2025-06-01\"}}, {\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"amount\": 1450, \"due\": \"2025-07-01\"}}]}",
+ "cost_usd": 0.028636,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2791,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 315,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2791,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 315,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 2791,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 2791
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

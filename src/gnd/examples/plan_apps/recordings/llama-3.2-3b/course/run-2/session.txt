@@ -1,0 +1,11 @@
+attempt 1
+  plan  enroll(student='maya', course='CS340', term='spring')
+  pyrel check: exit 1
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+      the rule in PyRel: m.where(enrolls(step, student, course, term), prerequisite_chain(step, course, needs)).require(passed(step, student, needs))
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "STAT210", "$student": "maya", "$term": "spring"}
+attempt 2
+  the bot says: CS340 requires both MATH220 and STAT210, and Maya has not yet passed MATH220.
+  plan  enroll(student='maya', course='MATH220', term='spring')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

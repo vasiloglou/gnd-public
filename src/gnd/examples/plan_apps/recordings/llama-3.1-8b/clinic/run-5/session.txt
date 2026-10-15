@@ -1,0 +1,22 @@
+attempt 1
+  plan  refill_drug(patient='sam', drug='statin', on='2024-03-10')
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-10')
+  plan  refill_drug(patient='sam', drug='aspirin', on='2024-03-10')
+  pyrel check: exit 1
+    states 0-3  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    states 1-3  refill_not_early  violated  {"$d": "statin", "$last": "2024-02-20", "$n": 30, "$on": "2024-03-10", "$p": "sam"}
+      the rule in PyRel: m.where(refill(step, p, d, on), last_refill(step, p, d, last), refill_interval(step, d, n)).require(on >= std_date.add(last, days(n)))
+    state 3  no_interacting_refills  violated  {"$a": "aspirin", "$b": "warfarin", "$on": "2024-03-10", "$p": "sam"}
+      the rule in PyRel: m.where(refill(step, p, a, on), refill(step, p, b, on), interacting_pair(step, a, b)).require(a == b)
+    state 3  no_interacting_refills  violated  {"$a": "warfarin", "$b": "aspirin", "$on": "2024-03-10", "$p": "sam"}
+attempt 2
+  the bot says: Sam's statin should be refilled, but cannot be given before the drug's refill interval has passed since the last refill. The pharmacist will need to judge whether to give it now or later.
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-14')
+  plan  refill_drug(patient='sam', drug='aspirin', on='2024-03-14')
+  pyrel check: exit 1
+    states 0-2  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    state 2  no_interacting_refills  violated  {"$a": "aspirin", "$b": "warfarin", "$on": "2024-03-14", "$p": "sam"}
+    state 2  no_interacting_refills  violated  {"$a": "warfarin", "$b": "aspirin", "$on": "2024-03-14", "$p": "sam"}
+attempt 3
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+no plan was accepted in 3 attempts

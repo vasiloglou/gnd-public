@@ -1,0 +1,30 @@
+{
+ "attempt": 1,
+ "provider": "DeepInfra",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 6.5,
+ "reply": "{\n  \"steps\": [\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"MATH220\",\n        \"term\": \"spring\"\n      },\n      \"requires\": [\n        \"A student can't take a course before passing every course it needs,\"\n        + \" directly or through a chain of prerequisites.\"\n      ]\n    },\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"STAT210\",\n        \"term\": \"spring\"\n      },\n      \"requires\": [\n        \"A student can't take a course before passing every course it needs,\"\n        + \" directly or through a chain of prerequisites.\"\n      ]\n    },\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"term\": \"spring\"\n      },\n      \"requires\": [\n        \"A student can't take a course before passing every course it needs,\"\n        + \" directly or through a chain of prerequisites.\"\n      ]\n    }\n  ]\n}",
+ "usage": {
+  "prompt_tokens": 1821,
+  "completion_tokens": 236,
+  "total_tokens": 2057,
+  "cost": 4.586e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 4.586e-05,
+   "upstream_inference_prompt_cost": 3.642e-05,
+   "upstream_inference_completions_cost": 9.44e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

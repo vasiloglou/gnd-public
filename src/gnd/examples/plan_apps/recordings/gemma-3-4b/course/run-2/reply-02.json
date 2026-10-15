@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 1.1,
+ "reply": "\n```json\n{\n  \"steps\": [\n    {\n      \"op\": \"enroll\",\n      \"reading\": \"Maya enrolls in CS340 in spring\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"term\": \"spring\"\n      }\n    }\n  ],\n  \"reason\": \"Maya has already passed CS101, MATH120 and CS230. She needs to take CS340, which requires CS230, MATH220 and STAT210. Since she has already passed CS230, and MATH120 and STAT210 are prerequisites for CS340, she is able to enroll in CS340.\"\n}\n```",
+ "usage": {
+  "prompt_tokens": 2539,
+  "completion_tokens": 176,
+  "total_tokens": 2715,
+  "cost": 0.00011036,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00011036,
+   "upstream_inference_prompt_cost": 0.00010156,
+   "upstream_inference_completions_cost": 8.8e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

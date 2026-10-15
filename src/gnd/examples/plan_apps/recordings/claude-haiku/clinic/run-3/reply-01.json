@@ -1,0 +1,44 @@
+{
+ "attempt": 1,
+ "provider": "claude",
+ "model": [
+  "claude-haiku-5-5"
+ ],
+ "seconds": 11.4,
+ "reply": "{\"steps\": [{\"op\": \"refill_drug\", \"bindings\": {\"patient\": \"sam\", \"drug\": \"statin\", \"on\": \"2026-10-14\"}}, {\"op\": \"refill_drug\", \"bindings\": {\"patient\": \"sam\", \"drug\": \"warfarin\", \"on\": \"2026-10-14\"}}], \"note\": \"Aspirin is left out because warfarin and aspirin interact, so Sam can't receive both on the same day. Warfarin was chosen over aspirin on judgement: it has the shorter 7-day interval and is the more time-critical anticoagulant. The pharmacist should confirm this choice. All three drugs are past their refill intervals, and the statin, warfarin and aspirin last refills are all well over 60 days old, so the checker may warn on the guideline. The fixture is labelled 10 March 2024, but today is 2026-10-14, so the plan uses today's date.\"}",
+ "cost_usd": 0.00084339,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 665,
+  "cache_read_input_tokens": 1919,
+  "output_tokens": 1382,
+  "output_tokens_details": {
+   "thinking_tokens": 1087
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 665,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 1382,
+    "cache_read_input_tokens": 1919,
+    "cache_creation_input_tokens": 665,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 665
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

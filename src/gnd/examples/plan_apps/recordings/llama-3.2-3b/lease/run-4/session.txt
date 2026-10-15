@@ -1,0 +1,10 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 3
+  the bot says: Payment due on 2025-02-01 is not cancelled
+  plan  schedule_payment(lease='apt-4b', amount='1450', day='2025-03-01')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 1 binds ['amount', 'day', 'lease'] for operation 'schedule_payment', which declares ['amount', 'due', 'lease']; missing ['due']
+no plan was accepted in 3 attempts

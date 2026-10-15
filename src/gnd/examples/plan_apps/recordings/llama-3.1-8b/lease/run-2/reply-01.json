@@ -1,0 +1,30 @@
+{
+ "attempt": 1,
+ "provider": "Novita",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 1.8,
+ "reply": "{\n \"steps\": [\n  {\n   \"op\": \"cancel_payment\",\n   \"bindings\": {\n    \"lease\": \"apt-2a\",\n    \"due\": \"2025-01-01\"\n   },\n   \"requires\": [\n    \"payment_due\"\n   ]\n  },\n  {\n   \"op\": \"schedule_payment\",\n   \"bindings\": {\n    \"lease\": \"apt-4b\",\n    \"due\": \"2025-06-27\"\n   },\n   \"requires\": [\n    \"lease_starts\",\n    \"lease_ends\",\n    \"monthly_rent\"\n   ]\n  },\n  {\n   \"op\": \"schedule_payment\",\n   \"bindings\": {\n    \"lease\": \"apt-4b\",\n    \"due\": \"2025-07-31\"\n   },\n   \"requires\": [\n    \"lease_starts\",\n    \"lease_ends\",\n    \"monthly_rent\"\n   ],\n   \"note\": \"Schedule only one payment per lease. We cannot schedule a payment due on 2025-08-01, as we do not know the monthly rent for the vacated apartment.\"\n  }\n ]}",
+ "usage": {
+  "prompt_tokens": 783,
+  "completion_tokens": 228,
+  "total_tokens": 1011,
+  "cost": 2.706e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 2.706e-05,
+   "upstream_inference_prompt_cost": 1.566e-05,
+   "upstream_inference_completions_cost": 1.14e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

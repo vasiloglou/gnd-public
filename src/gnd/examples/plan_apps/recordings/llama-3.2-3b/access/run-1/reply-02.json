@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 0.7,
+ "reply": "{\n \"steps\": [\n  {\n   \"op\": \"approve\",\n   \"bindings\": {\n    \"approver\": \"carol\",\n    \"employee\": \"bob\",\n    \"system\": \"payroll\"\n   }\n  },\n  {\n   \"op\": \"grant\",\n   \"bindings\": {\n    \"employee\": \"bob\",\n    \"system\": \"payroll\"\n   }\n  }\n ], \n\"reason\": null}",
+ "usage": {
+  "prompt_tokens": 1007,
+  "completion_tokens": 88,
+  "total_tokens": 1095,
+  "cost": 7.939e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 928,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 7.939e-05,
+   "upstream_inference_prompt_cost": 5.035e-05,
+   "upstream_inference_completions_cost": 2.904e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

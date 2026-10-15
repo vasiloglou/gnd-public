@@ -1,0 +1,12 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  plan  approve(employee='bob', system='payroll')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 1 binds ['employee', 'system'] for operation 'approve', which declares ['approver', 'employee', 'system']; missing ['approver']
+attempt 3
+  plan  approve(employee='bob', system='payroll', approver='carol')
+  pyrel check: exit 1
+    state 1  approver_outside_the_chain  violated  [["bob", "carol"]]
+      the rule in PyRel: m.where(approved_by(step, approver, employee, String.ref())).require(not_(management_chain_reverse(step, approver, employee)))
+no plan was accepted in 3 attempts

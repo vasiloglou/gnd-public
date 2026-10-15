@@ -1,0 +1,9 @@
+attempt 1
+  plan  schedule_payment(lease='apt-4b', amount=1450, due='2025-03-03')
+  plan  schedule_payment(lease='apt-4b', amount=1450, due='2025-04-01')
+  plan  schedule_payment(lease='apt-4b', amount=1450, due='2025-05-01')
+  plan  schedule_payment(lease='apt-4b', amount=1450, due='2025-06-03')
+  plan  schedule_payment(lease='apt-4b', amount=1450, due='2025-07-01')
+  plan  schedule_payment(lease='apt-4b', amount=1450, due='2025-07-08')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

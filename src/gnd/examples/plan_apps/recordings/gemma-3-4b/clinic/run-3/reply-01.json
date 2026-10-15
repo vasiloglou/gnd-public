@@ -1,0 +1,30 @@
+{
+ "attempt": 1,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 2.1,
+ "reply": " with explanation:\n\n```json\n{\n  \"steps\": [\n    {\n      \"op\": \"refill_drug\",\n      \"bindings\": {\n        \"patient\": \"sam\",\n        \"drug\": \"statin\",\n        \"on\": \"2024-03-20\"\n      }\n    },\n    {\n      \"op\": \"refill_drug\",\n      \"bindings\": {\n        \"patient\": \"sam\",\n        \"drug\": \"warfarin\",\n        \"on\": \"2024-03-08\"\n      }\n    },\n    {\n      \"op\": \"refill_drug\",\n      \"bindings\": {\n        \"patient\": \"sam\",\n        \"drug\": \"aspirin\",\n        \"on\": \"2024-03-20\"\n      }\n    }\n  ]\n}\n```\n\nExplanation:\n\n1. **Refill Statin:** The statin was last refilled on 2024-02-20, and the refill interval is 30 days.  Today is 2024-03-13, so we can refill it on 2024-03-20.\n2. **Refill Warfarin:** The warfarin was last refilled on 2024-03-01, and the refill interval is 7 days. Today is 2024-03-13, so we can refill it on 2024-03-08.\n3. **Refill Aspirin:** The aspirin was last refilled on 2024-01-15, and the refill interval is 30 days. Today is 2024-03-13, so we can refill it on 2024-03-20.\n\nThe plan fulfills all rules:\n- Only prescribed drugs are refilled.\n- Refill intervals are respected.\n- The interaction between warfarin and aspirin is avoided by not dispensing them on the same day.",
+ "usage": {
+  "prompt_tokens": 1098,
+  "completion_tokens": 459,
+  "total_tokens": 1557,
+  "cost": 4.511e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1088,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 4.511e-05,
+   "upstream_inference_prompt_cost": 2.216e-05,
+   "upstream_inference_completions_cost": 2.295e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

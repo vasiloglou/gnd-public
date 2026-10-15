@@ -1,0 +1,44 @@
+{
+ "attempt": 1,
+ "provider": "claude",
+ "model": [
+  "claude-haiku-5-5"
+ ],
+ "seconds": 9.3,
+ "reply": "{\"steps\": [{\"op\": \"book_hotel\", \"bindings\": {\"trip\": \"lisbon\", \"hotel\": \"alfama-inn\", \"night\": \"2025-05-12\"}}, {\"op\": \"book_hotel\", \"bindings\": {\"trip\": \"lisbon\", \"hotel\": \"alfama-inn\", \"night\": \"2025-05-13\"}}, {\"op\": \"book_hotel\", \"bindings\": {\"trip\": \"lisbon\", \"hotel\": \"alfama-inn\", \"night\": \"2025-05-14\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"tram-28-tour\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"fado-night\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"sintra-day\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"oceanarium\"}}], \"note\": \"Palacio at 300 a night would use the whole 900 budget on three nights, leaving nothing for activities, so Alfama Inn is booked instead (420 total). The Sintra day trip is booked over the Bel\u00e9m walk because both fall in the 13 May morning slot and only one activity can run at a time. Total planned spend is 655 euros, within the 900 budget.\"}",
+ "cost_usd": 0.0007376,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 671,
+  "cache_read_input_tokens": 2370,
+  "output_tokens": 1159,
+  "output_tokens_details": {
+   "thinking_tokens": 706
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 671,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 1159,
+    "cache_read_input_tokens": 2370,
+    "cache_creation_input_tokens": 671,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 671
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

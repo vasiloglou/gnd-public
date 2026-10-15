@@ -1,0 +1,5 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  the bot made no plan: The bot expected a plan as JSON, but instead returned an empty JSON object. The task was to refill Sam's prescriptions, which requires a plan of operations. An empty JSON object is not a valid response.
+no plan was made

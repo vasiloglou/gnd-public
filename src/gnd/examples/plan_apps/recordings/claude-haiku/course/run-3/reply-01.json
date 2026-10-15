@@ -1,0 +1,44 @@
+{
+ "attempt": 1,
+ "provider": "claude",
+ "model": [
+  "claude-haiku-5-5"
+ ],
+ "seconds": 6.8,
+ "reply": "{\"steps\": [{\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"MATH220\", \"term\": \"spring\"}}, {\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"STAT210\", \"term\": \"spring\"}}], \"note\": \"CS340 Machine Learning can't be planned for spring. Maya hasn't passed its prerequisites MATH220 and STAT210, and she can't take a course before passing everything it needs. MATH220 and STAT210 are both offered in spring and her MATH120 prerequisite is passed, so they are planned now (7 credits, 2 courses, within limits). She can take CS340 in a later term, once both are passed and it is offered.\"}",
+ "cost_usd": 0.00047682000000000003,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 670,
+  "cache_read_input_tokens": 3162,
+  "output_tokens": 622,
+  "output_tokens_details": {
+   "thinking_tokens": 387
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 670,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 622,
+    "cache_read_input_tokens": 3162,
+    "cache_creation_input_tokens": 670,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 670
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

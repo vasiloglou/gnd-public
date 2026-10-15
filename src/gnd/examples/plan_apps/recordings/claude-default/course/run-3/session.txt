@@ -1,0 +1,6 @@
+attempt 1
+  the bot says: Maya can't take CS340 Machine Learning this spring. It needs CS230, MATH220 and STAT210, and she has passed only CS230. Grades can't be recorded for courses she hasn't completed, so the plan enrolls her in the two missing prerequisites, MATH220 and STAT210 (7 credits, within the 6-course and 18-credit limits). Once she passes both, she can take CS340 in a later spring term.
+  plan  enroll(student='maya', course='MATH220', term='spring')
+  plan  enroll(student='maya', course='STAT210', term='spring')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

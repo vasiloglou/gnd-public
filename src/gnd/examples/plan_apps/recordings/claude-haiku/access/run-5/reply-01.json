@@ -1,0 +1,44 @@
+{
+ "attempt": 1,
+ "provider": "claude",
+ "model": [
+  "claude-haiku-5-5"
+ ],
+ "seconds": 7.5,
+ "reply": "{\"steps\": [], \"reason\": \"Carol cannot approve Bob's payroll access. Bob reports to Dana, and Dana reports to Carol, so Carol manages Bob through a chain of managers (management_chain lists bob->carol). Approval by a manager in the chain is forbidden. Grant also requires prior approval, so no access can be granted either.\"}",
+ "cost_usd": 0.00044191,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 668,
+  "cache_read_input_tokens": 1961,
+  "output_tokens": 577,
+  "output_tokens_details": {
+   "thinking_tokens": 458
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 668,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 577,
+    "cache_read_input_tokens": 1961,
+    "cache_creation_input_tokens": 668,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 668
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

@@ -1,0 +1,12 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  plan  get_refill_interval(drug='warfarin')
+  plan  check_refill_interval(drug='warfarin', last_refill='2024-03-01')
+  plan  check_interaction(drug='warfarin', other='aspirin')
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-08')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:unknown-operation] step 1 names operation 'get_refill_interval', which this model does not declare
+attempt 3
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+no plan was accepted in 3 attempts

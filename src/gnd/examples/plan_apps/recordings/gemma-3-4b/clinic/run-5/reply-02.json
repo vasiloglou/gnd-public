@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 0.9,
+ "reply": " with explanation:\n```json\n{\n  \"steps\": [],\n  \"reason\": \"The rules require that warfarin and aspirin are not refilled on the same day. The last refill of warfarin was on 2024-03-01 and the last refill of aspirin was on 2024-01-15. The refill interval for warfarin is 7 days and the refill interval for aspirin is 30 days. Therefore, it is possible to refill warfarin and aspirin on the same day. However, since warfarin and aspirin interact, they must not be refilled on the same day.\"\n}\n```",
+ "usage": {
+  "prompt_tokens": 1157,
+  "completion_tokens": 134,
+  "total_tokens": 1291,
+  "cost": 2.994e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1152,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 2.994e-05,
+   "upstream_inference_prompt_cost": 2.324e-05,
+   "upstream_inference_completions_cost": 6.7e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

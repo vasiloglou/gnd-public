@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "Novita",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 1.4,
+ "reply": "{\"steps\": [{\"op\": \"refill_drug\", \"bindings\": {\"patient\": \"sam\", \"drug\": \"aspirin\", \"on\": \"2024-03-27\"}}, {\"op\": \"refill_drug\", \"bindings\": {\"patient\": \"sam\", \"drug\": \"statin\", \"on\": \"2024-03-20\"}, \"requires\": [\"A refill can't be given before the drug's refill interval has passed since the last refill.\", \"A patient never gets two drugs that interact on the same day, whichever way round the interaction is listed.\"]], \"note\": \"No refill of warfarin, guideline but not a rule, so was left out\"}}",
+ "usage": {
+  "prompt_tokens": 1916,
+  "completion_tokens": 146,
+  "total_tokens": 2062,
+  "cost": 4.562e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 4.562e-05,
+   "upstream_inference_prompt_cost": 3.832e-05,
+   "upstream_inference_completions_cost": 7.3e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

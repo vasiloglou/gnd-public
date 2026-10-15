@@ -1,0 +1,44 @@
+{
+ "attempt": 1,
+ "provider": "claude",
+ "model": [
+  "claude-haiku-5-5"
+ ],
+ "seconds": 6.6,
+ "reply": "{\"steps\": [{\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"MATH220\", \"term\": \"spring\"}}, {\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"STAT210\", \"term\": \"spring\"}}], \"note\": \"CS340 Machine Learning was left out. Maya has not yet passed MATH220 or STAT210, and a course can't be taken before every prerequisite is passed. She can take CS340 in the next spring term, once both are passed. Enrolling in MATH220 and STAT210 now totals 7 credits across 2 courses, within the term limits.\"}",
+ "cost_usd": 0.00047242,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 668,
+  "cache_read_input_tokens": 3162,
+  "output_tokens": 614,
+  "output_tokens_details": {
+   "thinking_tokens": 408
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 668,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 614,
+    "cache_read_input_tokens": 3162,
+    "cache_creation_input_tokens": 668,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 668
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

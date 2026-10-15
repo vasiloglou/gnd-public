@@ -1,0 +1,4 @@
+attempt 1
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

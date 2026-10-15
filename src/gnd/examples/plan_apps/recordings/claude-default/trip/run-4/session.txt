@@ -1,0 +1,10 @@
+attempt 1
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-12')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-13')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  plan  book_activity(trip='lisbon', activity='fado-night')
+  plan  book_activity(trip='lisbon', activity='sintra-day')
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

@@ -1,0 +1,13 @@
+attempt 1
+  plan  refill_drug(patient='sam', drug='statin', day='datetime(2024, 3, 21)')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 1 binds ['day', 'drug', 'patient'] for operation 'refill_drug', which declares ['drug', 'on', 'patient']; missing ['on']
+attempt 2
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 3
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-08')
+  plan  refill_drug(patient='sam', drug='aspirin', on='2024-02-15')
+  plan  refill_drug(patient='sam', drug='statin', on='2024-03-21')
+  pyrel check: exit 0 (accepted)
+    states 0-3  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+  executed: the new state is in <workspace>/next.pop.json

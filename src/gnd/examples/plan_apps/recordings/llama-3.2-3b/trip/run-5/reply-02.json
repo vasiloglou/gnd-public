@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 1.1,
+ "reply": "{\n \"steps\": [\n  {\n   \"op\": \"book_hotel\",\n   \"bindings\": {\n    \"trip\": \"lisbon\",\n    \"hotel\": \"palacio\",\n    \"night\": \"2025-05-12\"\n   }\n  },\n  {\n   \"op\": \"book_activity\",\n   \"bindings\": {\n    \"trip\": \"lisbon\",\n    \"activity\": \"tram-28-tour\"\n   }\n  },\n  {\n   \"op\": \"book_hotel\",\n   \"bindings\": {\n    \"trip\": \"lisbon\",\n    \"hotel\": \"alfama-inn\",\n    \"night\": \"2025-05-13\"\n   }\n  },\n  {\n   \"op\": \"book_activity\",\n   \"bindings\": {\n    \"trip\": \"lisbon\",\n    \"activity\": \"sintra-day\"\n   }\n  },\n  {\n   \"op\": \"book_hotel\",\n   \"bindings\": {\n    \"trip\": \"lisbon\",\n    \"hotel\": \"alfama-inn\",\n    \"night\": \"2025-05-14\"\n   }\n  },\n  {\n   \"op\": \"book_activity\",\n   \"bindings\": {\n    \"trip\": \"lisbon\",\n    \"activity\": \"belem-walk\"\n   }\n  }\n ],\n \"reason\": null\n}",
+ "usage": {
+  "prompt_tokens": 1343,
+  "completion_tokens": 272,
+  "total_tokens": 1615,
+  "cost": 0.00015691,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1328,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00015691,
+   "upstream_inference_prompt_cost": 6.715e-05,
+   "upstream_inference_completions_cost": 8.976e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

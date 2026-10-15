@@ -1,0 +1,30 @@
+{
+ "attempt": 1,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 0.9,
+ "reply": " with explanation:\n```json\n{\n  \"steps\": [\n    {\n      \"op\": \"approve\",\n      \"bindings\": {\n        \"employee\": \"bob\",\n        \"approver\": \"carol\",\n        \"system\": \"payroll\"\n      }\n    }\n  ],\n  \"reason\": \"Carol approves Bob's access to payroll. This fulfills the request and adheres to the rules, as Carol approves access for Bob and is not his manager.\"\n}\n```",
+ "usage": {
+  "prompt_tokens": 1089,
+  "completion_tokens": 108,
+  "total_tokens": 1197,
+  "cost": 4.384e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 256,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 4.384e-05,
+   "upstream_inference_prompt_cost": 3.844e-05,
+   "upstream_inference_completions_cost": 5.4e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

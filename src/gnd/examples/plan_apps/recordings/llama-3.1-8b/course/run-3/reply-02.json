@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "DeepInfra",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 12.7,
+ "reply": "{\n \"steps\": [\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"CS230\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"MATH220\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"STAT210\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"CS340\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"record_grade\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"CS230\",\n    \"grade\": \"P\"\n   }\n  },\n  {\n   \"op\": \"record_grade\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"MATH220\",\n    \"grade\": \"P\"\n   }\n  },\n  {\n   \"op\": \"record_grade\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"STAT210\",\n    \"grade\": \"P\"\n   }\n  }\n ]\n}",
+ "usage": {
+  "prompt_tokens": 1876,
+  "completion_tokens": 297,
+  "total_tokens": 2173,
+  "cost": 4.94e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 4.94e-05,
+   "upstream_inference_prompt_cost": 3.752e-05,
+   "upstream_inference_completions_cost": 1.188e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

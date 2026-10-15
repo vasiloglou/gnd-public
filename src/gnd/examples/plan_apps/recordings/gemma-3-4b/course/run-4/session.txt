@@ -1,0 +1,17 @@
+attempt 1
+  plan  enroll(student='maya', course='CS340', term='spring')
+  pyrel check: exit 1
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+      the rule in PyRel: m.where(enrolls(step, student, course, term), prerequisite_chain(step, course, needs)).require(passed(step, student, needs))
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "STAT210", "$student": "maya", "$term": "spring"}
+attempt 2
+  plan  enroll(student='maya', course='CS340', term='spring')
+  pyrel check: exit 1
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "STAT210", "$student": "maya", "$term": "spring"}
+attempt 3
+  plan  enroll(student='maya', course='CS340', term='spring')
+  pyrel check: exit 1
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "STAT210", "$student": "maya", "$term": "spring"}
+no plan was accepted in 3 attempts

@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 1.8,
+ "reply": "```json\n{\n  \"steps\": [\n    {\n      \"op\": \"book_hotel\",\n      \"bindings\": {\n        \"trip\": \"lisbon\",\n        \"hotel\": \"palacio\",\n        \"day\": \"2025-05-12\"\n      }\n    },\n    {\n      \"op\": \"book_activity\",\n      \"bindings\": {\n        \"trip\": \"lisbon\",\n        \"activity\": \"tram-28-tour\"\n      }\n    },\n    {\n      \"op\": \"book_hotel\",\n      \"bindings\": {\n        \"trip\": \"lisbon\",\n        \"hotel\": \"alfama-inn\",\n        \"day\": \"2025-05-13\"\n      }\n    },\n    {\n      \"op\": \"book_activity\",\n      \"bindings\": {\n        \"trip\": \"lisbon\",\n        \"activity\": \"belem-walk\"\n      }\n    },\n    {\n      \"op\": \"book_hotel\",\n      \"bindings\": {\n        \"trip\": \"lisbon\",\n        \"hotel\": \"alfama-inn\",\n        \"day\": \"2025-05-14\"\n      }\n    },\n    {\n      \"op\": \"book_activity\",\n      \"bindings\": {\n        \"trip\": \"lisbon\",\n        \"activity\": \"oceanarium\"\n      }\n    }\n  ]\n}\n```",
+ "usage": {
+  "prompt_tokens": 1926,
+  "completion_tokens": 337,
+  "total_tokens": 2263,
+  "cost": 9.389e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 9.389e-05,
+   "upstream_inference_prompt_cost": 7.704e-05,
+   "upstream_inference_completions_cost": 1.685e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

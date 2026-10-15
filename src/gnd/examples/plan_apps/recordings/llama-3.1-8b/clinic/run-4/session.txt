@@ -1,0 +1,22 @@
+attempt 1
+  the bot says: Aspirin refill is not included due to interaction with warfarin, which would be refilled today.
+  plan  refill_drug(patient='sam', drug='statin', on='2024-03-10')
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-10')
+  pyrel check: exit 1
+    states 0-2  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    states 1-2  refill_not_early  violated  {"$d": "statin", "$last": "2024-02-20", "$n": 30, "$on": "2024-03-10", "$p": "sam"}
+      the rule in PyRel: m.where(refill(step, p, d, on), last_refill(step, p, d, last), refill_interval(step, d, n)).require(on >= std_date.add(last, days(n)))
+attempt 2
+  the bot says: Statin refill was left out because it is before the minimum refill interval and is not already planned to be restored during the visit.
+  plan  refill_drug(drug='warfarin', on='2024-03-24')
+  plan  refill_drug(dream='refill_span_factor', on='2024-04-07')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 1 binds ['drug', 'on'] for operation 'refill_drug', which declares ['drug', 'on', 'patient']; missing ['patient']
+attempt 3
+  the bot says: Cannot refill aspirin today, as this would mean two drugs interact on the same day within the rules; pharmashist's judgement would be required.
+  plan  refill_drug(patient='sam', drug='statin', on='2024-03-10')
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-17')
+  pyrel check: exit 1
+    states 0-2  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    states 1-2  refill_not_early  violated  {"$d": "statin", "$last": "2024-02-20", "$n": 30, "$on": "2024-03-10", "$p": "sam"}
+no plan was accepted in 3 attempts

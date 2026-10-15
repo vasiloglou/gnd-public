@@ -1,0 +1,18 @@
+attempt 1
+  the bot says: Maya can't take CS340 without passing CS230, MATH220 and STAT210. Note: CS250 is offered in the fall, so it can't be taken in the spring.
+  plan  enroll(student='maya', course='CS230', term='spring')
+  plan  enroll(student='maya', course='MATH220', term='spring')
+  plan  enroll(student='maya', course='STAT210', term='spring')
+  plan  record_grade(student='maya', course='CS340', grade='P')
+  pyrel check: exit 1
+    states 1-4  no_retake  violated  [["maya", "CS230"]]
+      the rule in PyRel: m.where(enrolls(step, student, course, String.ref())).require(not_(passed(step, student, course)))
+attempt 2
+  plan  enroll(student='maya', course='CS340', term='spring')
+  pyrel check: exit 1
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+      the rule in PyRel: m.where(enrolls(step, student, course, term), prerequisite_chain(step, course, needs)).require(passed(step, student, needs))
+    state 1  prerequisites_first  violated  {"$course": "CS340", "$needs": "STAT210", "$student": "maya", "$term": "spring"}
+attempt 3
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+no plan was accepted in 3 attempts

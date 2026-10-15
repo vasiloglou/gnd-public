@@ -1,0 +1,10 @@
+attempt 1
+  the bot says: Aspirin is left out because warfarin and aspirin interact, so Sam can't receive both on the same day. Warfarin was chosen over aspirin on judgement: it has the shorter 7-day interval and is the more time-critical anticoagulant. The pharmacist should confirm this choice. All three drugs are past their refill intervals, and the statin, warfarin and aspirin last refills are all well over 60 days old, so the checker may warn on the guideline. The fixture is labelled 10 March 2024, but today is 2026-10-14, so the plan uses today's date.
+  plan  refill_drug(patient='sam', drug='statin', on='2026-10-14')
+  plan  refill_drug(patient='sam', drug='warfarin', on='2026-10-14')
+  pyrel check: exit 0 (accepted)
+    states 0-2  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    states 1-2  not_too_late  warning  {"$d": "statin", "$last": "2024-02-20", "$on": "2026-10-14", "$p": "sam"}
+      the rule in PyRel: m.where(refill(step, p, d, on), last_refill(step, p, d, last)).require(on <= std_date.add(last, days(60)))
+    state 2  not_too_late  warning  {"$d": "warfarin", "$last": "2024-03-01", "$on": "2026-10-14", "$p": "sam"}
+  executed: the new state is in <workspace>/next.pop.json

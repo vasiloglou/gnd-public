@@ -1,0 +1,6 @@
+attempt 1
+  the bot says: Maya can't take CS340 Machine Learning this spring. It needs MATH220 and STAT210, and she hasn't passed either yet. Taking a course at the same time as its prerequisites isn't allowed, and recording grades she hasn't earned would be false. This plan enrolls her in MATH220 and STAT210 this spring (7 credits), which are the last two prerequisites. Once she passes both, she can take CS340 in a later term when it's offered; the catalogue lists it for spring. She has room for more courses this term if she wants, such as PHIL101 (3 credits).
+  plan  enroll(student='maya', course='MATH220', term='spring')
+  plan  enroll(student='maya', course='STAT210', term='spring')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

@@ -1,0 +1,31 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  plan  enroll(student='maya', course='CS230', term='spring')
+  plan  enroll(student='maya', course='MATH220', term='spring')
+  plan  enroll(student='maya', course='STAT210', term='spring')
+  plan  enroll(student='maya', course='CS340', term='spring')
+  plan  record_grade(student='maya', course='CS230', grade='P')
+  plan  record_grade(student='maya', course='MATH220', grade='P')
+  plan  record_grade(student='maya', course='STAT210', grade='P')
+  pyrel check: exit 1
+    states 1-5  no_retake  violated  [["maya", "CS230"]]
+      the rule in PyRel: m.where(enrolls(step, student, course, String.ref())).require(not_(passed(step, student, course)))
+    states 4-5  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+      the rule in PyRel: m.where(enrolls(step, student, course, term), prerequisite_chain(step, course, needs)).require(passed(step, student, needs))
+    states 4-6  prerequisites_first  violated  {"$course": "CS340", "$needs": "STAT210", "$student": "maya", "$term": "spring"}
+    step 5  $.steps[5].effects[1].assert  warning  {"course": "CS230", "student": "maya"}
+    state 6  no_retake  violated  [["maya", "CS230"], ["maya", "MATH220"]]
+    state 7  no_retake  violated  [["maya", "CS230"], ["maya", "MATH220"], ["maya", "STAT210"]]
+attempt 3
+  the bot says: Maya cannot take CS250 because it's offered in fall, not spring.
+  plan  enroll(student='maya', course='CS230', term='spring')
+  plan  enroll(student='maya', course='STAT210', term='spring')
+  plan  enroll(student='maya', course='PHIL101', term='spring')
+  plan  record_grade(student='maya', course='STAT210', grade='P')
+  plan  enroll(student='maya', course='CS340', term='spring')
+  pyrel check: exit 1
+    states 1-3  no_retake  violated  [["maya", "CS230"]]
+    states 4-5  no_retake  violated  [["maya", "CS230"], ["maya", "STAT210"]]
+    state 5  prerequisites_first  violated  {"$course": "CS340", "$needs": "MATH220", "$student": "maya", "$term": "spring"}
+no plan was accepted in 3 attempts

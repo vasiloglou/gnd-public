@@ -1,0 +1,23 @@
+attempt 1
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='sintra-day')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  pyrel check: exit 1
+    state 6  no_overlap  violated  [{"activity": "belem-walk", "day": "2025-05-13", "period": "morning", "trip": "lisbon"}, {"activity": "sintra-day", "day": "2025-05-13", "period": "morning", "trip": "lisbon"}]
+      the rule in PyRel: m.where(booked_slot(step, trip, activity_1, day, period), booked_slot(step, trip, activity_2, day, period)).require(activity_1 == activity_2)
+attempt 2
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 3
+  the bot says: no_overlap
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour', night='2025-05-12')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='sintra-day', night='2025-05-13')
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='oceanarium', night='2025-05-14')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 2 binds ['activity', 'night', 'trip'] for operation 'book_activity', which declares ['activity', 'trip']; missing []
+no plan was accepted in 3 attempts

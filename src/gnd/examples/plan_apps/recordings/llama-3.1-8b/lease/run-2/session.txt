@@ -1,0 +1,20 @@
+attempt 1
+  plan  cancel_payment(lease='apt-2a', due='2025-01-01')
+  plan  schedule_payment(lease='apt-4b', due='2025-06-27')
+  plan  schedule_payment(lease='apt-4b', due='2025-07-31')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 2 binds ['due', 'lease'] for operation 'schedule_payment', which declares ['amount', 'due', 'lease']; missing ['amount']
+attempt 2
+  the bot says: No payment is due after the lease ends.
+  plan  cancel_payment(lease='apt-4b', due='2025-08-01')
+  plan  cancel_payment(lease='apt-2a', due='2025-12-31')
+  plan  schedule_payment(lease='apt-4b', due='2025-07-24', amount=1450)
+  pyrel check: exit 1
+    step 1  $.steps[1].effects[0].retract  violated  {"day": "2025-08-01", "lease": "apt-4b"}
+    step 2  $.steps[2].effects[0].retract  violated  {"day": "2025-12-31", "lease": "apt-2a"}
+attempt 3
+  plan  schedule_payment(lease='apt-4b', due='2025-07-24', amount=1450)
+  plan  cancel_payment(lease='apt-4b', due='2025-07-31')
+  pyrel check: exit 1
+    step 2  $.steps[2].effects[0].retract  violated  {"day": "2025-07-31", "lease": "apt-4b"}
+no plan was accepted in 3 attempts

@@ -355,11 +355,11 @@ def ask(example: Example, question: str, bot: list[str], backend: str, interpret
                                                         "witness": None, "message": reason}]})
             continue
         if not steps:
-            print(f"  the bot made no plan: {reason}")
+            print(f"  the bot made no plan: {_one_line(reason)}")
             print("no plan was made")
             return 1
         if reason:
-            print(f"  the bot says: {reason}")
+            print(f"  the bot says: {_one_line(reason)}")
         for step in steps:
             print(f"  plan  {step['op']}({', '.join(f'{k}={v!r}' for k, v in step['bindings'].items())})")
         with tempfile.TemporaryDirectory(prefix="gnd-plan-") as directory:
@@ -384,6 +384,11 @@ def ask(example: Example, question: str, bot: list[str], backend: str, interpret
         history.append({"plan": steps, "failures": result["failures"]})
     print(f"no plan was accepted in {attempts} attempts")
     return 1
+
+
+def _one_line(text: str) -> str:
+    """The bot's words on one line, so nothing it writes can read as the checker's output."""
+    return " ".join(text.split())
 
 
 def grouped(failures: list[dict]) -> list[tuple[str, dict]]:

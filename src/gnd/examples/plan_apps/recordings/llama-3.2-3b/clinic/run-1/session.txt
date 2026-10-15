@@ -1,0 +1,15 @@
+attempt 1
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-07')
+  pyrel check: exit 1
+    states 0-1  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    state 1  refill_not_early  violated  {"$d": "warfarin", "$last": "2024-03-01", "$n": 7, "$on": "2024-03-07", "$p": "sam"}
+      the rule in PyRel: m.where(refill(step, p, d, on), last_refill(step, p, d, last), refill_interval(step, d, n)).require(on >= std_date.add(last, days(n)))
+attempt 2
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 3
+  plan  refill_drug(patient='sam', drug='statin', on='2024-03-07')
+  plan  refill_drug(patient='sam', drug='aspirin', on='2024-03-15')
+  pyrel check: exit 1
+    states 0-2  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+    states 1-2  refill_not_early  violated  {"$d": "statin", "$last": "2024-02-20", "$n": 30, "$on": "2024-03-07", "$p": "sam"}
+no plan was accepted in 3 attempts

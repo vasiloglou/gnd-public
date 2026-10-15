@@ -1,0 +1,11 @@
+{
+ "steps": [
+  {
+   "op": "grant",
+   "bindings": {
+    "employee": "bob",
+    "system": "payroll"
+   }
+  }
+ ]
+}

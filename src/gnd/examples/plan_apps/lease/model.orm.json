@@ -1,0 +1,337 @@
+{
+ "version": 3,
+ "model_id": "urn:gnd-example:lease",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "lease",
+   "name": "Lease",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "lease_code"
+   }
+  },
+  {
+   "id": "lease_code",
+   "name": "LeaseCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "day",
+   "name": "Day",
+   "kind": "value",
+   "primitive": "Date"
+  },
+  {
+   "id": "amount",
+   "name": "Amount",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "lease_starts",
+   "reading": "{Lease} starts on {Day}",
+   "roles": [
+    {
+     "object_type": "lease",
+     "role_name": "lease"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "lease_ends",
+   "reading": "{Lease} ends on {Day}",
+   "roles": [
+    {
+     "object_type": "lease",
+     "role_name": "lease"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "monthly_rent",
+   "reading": "{Lease} has a monthly rent of {Amount}",
+   "roles": [
+    {
+     "object_type": "lease",
+     "role_name": "lease"
+    },
+    {
+     "object_type": "amount",
+     "role_name": "amount"
+    }
+   ]
+  },
+  {
+   "id": "payment_due",
+   "reading": "{Lease} has {Amount} due on {Day}",
+   "roles": [
+    {
+     "object_type": "lease",
+     "role_name": "lease"
+    },
+    {
+     "object_type": "amount",
+     "role_name": "amount"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one_payment_a_day",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "A lease has one payment due on a given day."
+     },
+     "roles": [
+      "lease",
+      "day"
+     ]
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "due_after_start",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "No payment is due before the lease starts."
+   },
+   "antecedent": [
+    {
+     "fact_type": "payment_due",
+     "bind": {
+      "lease": "$l",
+      "amount": "$a",
+      "day": "$due"
+     }
+    },
+    {
+     "fact_type": "lease_starts",
+     "bind": {
+      "lease": "$l",
+      "day": "$start"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$due",
+     "operator": ">=",
+     "right": "$start"
+    }
+   }
+  },
+  {
+   "id": "due_before_end",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "No payment is due after the lease ends."
+   },
+   "antecedent": [
+    {
+     "fact_type": "payment_due",
+     "bind": {
+      "lease": "$l",
+      "amount": "$a",
+      "day": "$due"
+     }
+    },
+    {
+     "fact_type": "lease_ends",
+     "bind": {
+      "lease": "$l",
+      "day": "$end"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$due",
+     "operator": "<=",
+     "right": "$end"
+    }
+   }
+  },
+  {
+   "id": "rent_amount",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Each payment is the monthly rent."
+   },
+   "antecedent": [
+    {
+     "fact_type": "payment_due",
+     "bind": {
+      "lease": "$l",
+      "amount": "$a",
+      "day": "$due"
+     }
+    },
+    {
+     "fact_type": "monthly_rent",
+     "bind": {
+      "lease": "$l",
+      "amount": "$rent"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$a",
+     "operator": "=",
+     "right": "$rent"
+    }
+   }
+  },
+  {
+   "id": "not_in_last_week",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "deontic",
+   "provenance": {
+    "user_quote": "A payment should be due at least a week before the lease ends."
+   },
+   "antecedent": [
+    {
+     "fact_type": "payment_due",
+     "bind": {
+      "lease": "$l",
+      "amount": "$a",
+      "day": "$due"
+     }
+    },
+    {
+     "fact_type": "lease_ends",
+     "bind": {
+      "lease": "$l",
+      "day": "$end"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$due",
+     "operator": "<=",
+     "right": {
+      "fn": "date_sub",
+      "args": [
+       "$end",
+       {
+        "duration_days": 7
+       }
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "operations": [
+  {
+   "id": "schedule_payment",
+   "reading": "{Lease} has {Amount} due on {Day}",
+   "parameters": [
+    {
+     "name": "lease",
+     "object_type": "lease"
+    },
+    {
+     "name": "amount",
+     "object_type": "amount"
+    },
+    {
+     "name": "due",
+     "object_type": "day"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "payment_due",
+      "bind": {
+       "lease": "$lease",
+       "amount": "$amount",
+       "day": "$due"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Lease} has {Amount} due on {Day}"
+   }
+  },
+  {
+   "id": "cancel_payment",
+   "reading": "{Lease} has nothing due on {Day}",
+   "parameters": [
+    {
+     "name": "lease",
+     "object_type": "lease"
+    },
+    {
+     "name": "due",
+     "object_type": "day"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "payment_due",
+      "bind": {
+       "lease": "$lease",
+       "day": "$due"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Lease} has nothing due on {Day}"
+   }
+  }
+ ]
+}

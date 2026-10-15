@@ -175,6 +175,13 @@ creates, dynamic rules). Failures are printed with GND's locators, such as
 `$.steps[3].preconditions[id=pre_offered]`. A declared after-state (`--post`,
 GND's frame comparison) is refused by name.
 
+Add `--emit-post AFTER.json` to write the plan's last state as a population:
+its facts plus the derived facts PyRel computed for it. The file is created
+fresh, whatever the verdict; the caller publishes it only on exit 0. If it
+can't be written, the program reports the verdict and exits 74. The
+[plan apps](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/plan_apps)
+use it to execute an accepted plan without GND at run time.
+
 The DuckDB version reads every fact list in the input, as GND does. A mandatory
 or inclusive-or rule is vacuous when a fact type it needs is missing from
 `covers`. It also refuses an input that repeats a fact, because PyRel relations

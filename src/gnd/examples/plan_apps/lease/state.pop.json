@@ -1,0 +1,52 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "model_id": "urn:gnd-example:lease",
+  "source": "fixture",
+  "covers": [
+   "lease_ends",
+   "lease_starts",
+   "monthly_rent",
+   "payment_due"
+  ]
+ },
+ "facts": {
+  "lease_starts": [
+   {
+    "lease": "apt-4b",
+    "day": "2025-02-01"
+   },
+   {
+    "lease": "apt-2a",
+    "day": "2025-01-01"
+   }
+  ],
+  "lease_ends": [
+   {
+    "lease": "apt-4b",
+    "day": "2025-07-31"
+   },
+   {
+    "lease": "apt-2a",
+    "day": "2025-12-31"
+   }
+  ],
+  "monthly_rent": [
+   {
+    "lease": "apt-4b",
+    "amount": 1450
+   },
+   {
+    "lease": "apt-2a",
+    "amount": 1200
+   }
+  ],
+  "payment_due": [
+   {
+    "lease": "apt-2a",
+    "amount": 1200,
+    "day": "2025-01-01"
+   }
+  ]
+ }
+}

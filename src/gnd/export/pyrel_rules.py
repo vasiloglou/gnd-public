@@ -1838,9 +1838,10 @@ def main(argv=None):
     plan_mode = '--steps' in argv or '--pre' in argv
     if plan_mode:
         flags = dict(zip(argv[::2], argv[1::2]))
-        if len(argv) != 4 or set(flags) != {'--pre', '--steps'}:
-            print('usage: python THIS_FILE --pre PRE.json --steps STEPS.json   (or: python THIS_FILE POPULATION.json)',
-                  file=sys.stderr)
+        emit_post = flags.pop('--emit-post', None)
+        if len(argv) != 4 + (2 if emit_post else 0) or set(flags) != {'--pre', '--steps'}:
+            print('usage: python THIS_FILE --pre PRE.json --steps STEPS.json [--emit-post POST.json]   '
+                  '(or: python THIS_FILE POPULATION.json)', file=sys.stderr)
             return 64
         population_path, steps_path = flags['--pre'], flags['--steps']
     elif len(argv) != 1:
@@ -1875,8 +1876,33 @@ def main(argv=None):
         print(f'PyRel execution failed: {type(error).__name__}: {error}', file=sys.stderr)
         return 70
     if plan:
-        return report_plan(states, plan, found)
+        exit_code = report_plan(states, plan, found)
+        if emit_post:
+            try:
+                write_post(emit_post, states, found)
+            except OSError as error:  # the verdict stands; only the after-state is missing (never exit 1)
+                print(f'cannot write the post-state: {error}', file=sys.stderr)
+                return 74
+        return exit_code
     return report(population, at_state(found, 0))
+
+
+def write_post(path, states, found):
+    """The plan's last state as a population: its asserted facts plus the derived facts PyRel computed for it.
+
+    Written to a fresh file, whatever the verdict; the caller decides whether to publish it.
+    """
+    last, k = states[-1], len(states) - 1
+    facts = {key: list(rows_) for key, rows_ in last['facts'].items()}
+    for head in DERIVED:
+        roles = [role for role, _ in ROLES[head]]
+        facts[head] = [dict(zip(roles, row[1:])) for row in found[f'computed:{head}'] if row[0] == k]
+    document = {'population': {'model': last['population'].get('model'), 'model_id': last['population'].get('model_id'),
+                               'source': 'synthetic', 'covers': last['population'].get('covers', [])},
+                'facts': facts}
+    with open(path, 'x', encoding='utf-8') as handle:
+        json.dump(document, handle, indent=1, ensure_ascii=False)
+        handle.write('\\n')
 
 
 if __name__ == '__main__':

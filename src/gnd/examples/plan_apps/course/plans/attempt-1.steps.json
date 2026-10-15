@@ -1,0 +1,28 @@
+{
+ "steps": [
+  {
+   "op": "enroll",
+   "bindings": {
+    "student": "maya",
+    "course": "CS340",
+    "term": "spring"
+   }
+  },
+  {
+   "op": "enroll",
+   "bindings": {
+    "student": "maya",
+    "course": "MATH220",
+    "term": "spring"
+   }
+  },
+  {
+   "op": "enroll",
+   "bindings": {
+    "student": "maya",
+    "course": "STAT210",
+    "term": "spring"
+   }
+  }
+ ]
+}

@@ -1,0 +1,144 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "model_id": "urn:gnd-example:trip",
+  "source": "fixture",
+  "covers": [
+   "activity_price",
+   "activity_slot",
+   "activity_total",
+   "booked_slot",
+   "books",
+   "budget",
+   "hotel_total",
+   "nightly_price",
+   "stays",
+   "trip_ends",
+   "trip_starts"
+  ]
+ },
+ "facts": {
+  "trip_starts": [
+   {
+    "trip": "lisbon",
+    "day": "2025-05-12"
+   },
+   {
+    "trip": "porto",
+    "day": "2025-04-01"
+   }
+  ],
+  "trip_ends": [
+   {
+    "trip": "lisbon",
+    "day": "2025-05-15"
+   },
+   {
+    "trip": "porto",
+    "day": "2025-04-02"
+   }
+  ],
+  "budget": [
+   {
+    "trip": "lisbon",
+    "euros": 900
+   },
+   {
+    "trip": "porto",
+    "euros": 300
+   }
+  ],
+  "nightly_price": [
+   {
+    "hotel": "palacio",
+    "euros": 300
+   },
+   {
+    "hotel": "alfama-inn",
+    "euros": 140
+   }
+  ],
+  "activity_price": [
+   {
+    "activity": "tram-28-tour",
+    "euros": 40
+   },
+   {
+    "activity": "fado-night",
+    "euros": 60
+   },
+   {
+    "activity": "sintra-day",
+    "euros": 90
+   },
+   {
+    "activity": "belem-walk",
+    "euros": 35
+   },
+   {
+    "activity": "oceanarium",
+    "euros": 45
+   }
+  ],
+  "activity_slot": [
+   {
+    "activity": "tram-28-tour",
+    "day": "2025-05-12",
+    "period": "morning"
+   },
+   {
+    "activity": "fado-night",
+    "day": "2025-05-12",
+    "period": "evening"
+   },
+   {
+    "activity": "sintra-day",
+    "day": "2025-05-13",
+    "period": "morning"
+   },
+   {
+    "activity": "belem-walk",
+    "day": "2025-05-13",
+    "period": "morning"
+   },
+   {
+    "activity": "oceanarium",
+    "day": "2025-05-14",
+    "period": "morning"
+   }
+  ],
+  "stays": [
+   {
+    "trip": "porto",
+    "hotel": "alfama-inn",
+    "night": "2025-04-01"
+   }
+  ],
+  "books": [
+   {
+    "trip": "porto",
+    "activity": "oceanarium"
+   }
+  ],
+  "hotel_total": [
+   {
+    "trip": "porto",
+    "euros": 140
+   }
+  ],
+  "activity_total": [
+   {
+    "trip": "porto",
+    "euros": 45
+   }
+  ],
+  "booked_slot": [
+   {
+    "trip": "porto",
+    "activity": "oceanarium",
+    "day": "2025-05-14",
+    "period": "morning"
+   }
+  ]
+ }
+}

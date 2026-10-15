@@ -1,0 +1,19 @@
+{
+ "steps": [
+  {
+   "op": "approve",
+   "bindings": {
+    "approver": "carol",
+    "employee": "bob",
+    "system": "payroll"
+   }
+  },
+  {
+   "op": "grant",
+   "bindings": {
+    "employee": "bob",
+    "system": "payroll"
+   }
+  }
+ ]
+}

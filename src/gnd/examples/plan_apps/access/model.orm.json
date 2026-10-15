@@ -1,0 +1,379 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd-example:access",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "employee",
+   "name": "Employee",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "employee_code"
+   }
+  },
+  {
+   "id": "employee_code",
+   "name": "EmployeeCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "system",
+   "name": "System",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "system_code"
+   }
+  },
+  {
+   "id": "system_code",
+   "name": "SystemCode",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "reports_to",
+   "reading": "{Employee} reports to {Employee}",
+   "roles": [
+    {
+     "object_type": "employee",
+     "role_name": "employee"
+    },
+    {
+     "object_type": "employee",
+     "role_name": "manager"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one_manager",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "Each employee reports to one manager."
+     },
+     "roles": [
+      "employee"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "approved",
+   "reading": "{Employee} is approved for {System}",
+   "roles": [
+    {
+     "object_type": "employee",
+     "role_name": "employee"
+    },
+    {
+     "object_type": "system",
+     "role_name": "system"
+    }
+   ]
+  },
+  {
+   "id": "approved_by",
+   "reading": "{Employee} approves {Employee}'s access to {System}",
+   "roles": [
+    {
+     "object_type": "employee",
+     "role_name": "approver"
+    },
+    {
+     "object_type": "employee",
+     "role_name": "employee"
+    },
+    {
+     "object_type": "system",
+     "role_name": "system"
+    }
+   ]
+  },
+  {
+   "id": "has_access",
+   "reading": "{Employee} has access to {System}",
+   "roles": [
+    {
+     "object_type": "employee",
+     "role_name": "employee"
+    },
+    {
+     "object_type": "system",
+     "role_name": "system"
+    }
+   ]
+  },
+  {
+   "id": "management_chain",
+   "reading": "{Employee} is managed, directly or through a chain, by {Employee}",
+   "roles": [
+    {
+     "object_type": "employee",
+     "role_name": "employee"
+    },
+    {
+     "object_type": "employee",
+     "role_name": "manager"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "clauses": [
+     {
+      "body": [
+       {
+        "fact_type": "reports_to",
+        "bind": {
+         "employee": "$e",
+         "manager": "$m"
+        }
+       }
+      ]
+     },
+     {
+      "body": [
+       {
+        "fact_type": "reports_to",
+        "bind": {
+         "employee": "$e",
+         "manager": "$x"
+        }
+       },
+       {
+        "fact_type": "management_chain",
+        "bind": {
+         "employee": "$x",
+         "manager": "$m"
+        }
+       }
+      ]
+     }
+    ],
+    "head": {
+     "employee": "$e",
+     "manager": "$m"
+    }
+   },
+   "constraints": [
+    {
+     "id": "no_management_loop",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "Nobody manages themselves, even through a chain."
+     },
+     "variant": "irreflexive"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "approver_outside_the_chain",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Nobody approves access for someone they manage, directly or through a chain of managers."
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "approved_by",
+     "role": "employee"
+    },
+    {
+     "fact_type": "approved_by",
+     "role": "approver"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "management_chain",
+     "role": "employee"
+    },
+    {
+     "fact_type": "management_chain",
+     "role": "manager"
+    }
+   ]
+  },
+  {
+   "id": "no_self_approval",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Nobody approves their own access."
+   },
+   "antecedent": [
+    {
+     "fact_type": "approved_by",
+     "bind": {
+      "approver": "$a",
+      "employee": "$e",
+      "system": "$s"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$a",
+     "operator": "!=",
+     "right": "$e"
+    }
+   }
+  }
+ ],
+ "operations": [
+  {
+   "id": "approve",
+   "reading": "{Employee:approver} approves {Employee:employee}'s access to {System}",
+   "parameters": [
+    {
+     "name": "approver",
+     "object_type": "employee"
+    },
+    {
+     "name": "employee",
+     "object_type": "employee"
+    },
+    {
+     "name": "system",
+     "object_type": "system"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "approved_by",
+      "bind": {
+       "approver": "$approver",
+       "employee": "$employee",
+       "system": "$system"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "approved",
+      "bind": {
+       "employee": "$employee",
+       "system": "$system"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Employee:approver} approves {Employee:employee}'s access to {System}"
+   }
+  },
+  {
+   "id": "grant",
+   "reading": "{Employee} gets access to {System}",
+   "parameters": [
+    {
+     "name": "employee",
+     "object_type": "employee"
+    },
+    {
+     "name": "system",
+     "object_type": "system"
+    }
+   ],
+   "preconditions": [
+    {
+     "id": "pre_approved",
+     "require": [
+      {
+       "fact_type": "approved",
+       "bind": {
+        "employee": "$employee",
+        "system": "$system"
+       }
+      }
+     ],
+     "modality": "alethic",
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "Access is granted only after it is approved."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "has_access",
+      "bind": {
+       "employee": "$employee",
+       "system": "$system"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Employee} gets access to {System}"
+   }
+  },
+  {
+   "id": "revoke",
+   "reading": "{Employee} loses access to {System}",
+   "parameters": [
+    {
+     "name": "employee",
+     "object_type": "employee"
+    },
+    {
+     "name": "system",
+     "object_type": "system"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "has_access",
+      "bind": {
+       "employee": "$employee",
+       "system": "$system"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Employee} loses access to {System}"
+   }
+  }
+ ]
+}

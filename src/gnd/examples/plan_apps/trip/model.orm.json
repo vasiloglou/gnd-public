@@ -1,0 +1,568 @@
+{
+ "version": 3,
+ "model_id": "urn:gnd-example:trip",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "trip",
+   "name": "Trip",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "trip_code"
+   }
+  },
+  {
+   "id": "trip_code",
+   "name": "TripCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "hotel",
+   "name": "Hotel",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "hotel_code"
+   }
+  },
+  {
+   "id": "hotel_code",
+   "name": "HotelCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "activity",
+   "name": "Activity",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "activity_code"
+   }
+  },
+  {
+   "id": "activity_code",
+   "name": "ActivityCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "period",
+   "name": "Period",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "period_code"
+   }
+  },
+  {
+   "id": "period_code",
+   "name": "PeriodCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "day",
+   "name": "Day",
+   "kind": "value",
+   "primitive": "Date"
+  },
+  {
+   "id": "euros",
+   "name": "Euros",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "trip_starts",
+   "reading": "{Trip} starts on {Day}",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "trip_ends",
+   "reading": "{Trip} ends on {Day}",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "budget",
+   "reading": "{Trip} has a budget of {Euros}",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "euros",
+     "role_name": "euros"
+    }
+   ]
+  },
+  {
+   "id": "nightly_price",
+   "reading": "{Hotel} costs {Euros} a night",
+   "roles": [
+    {
+     "object_type": "hotel",
+     "role_name": "hotel"
+    },
+    {
+     "object_type": "euros",
+     "role_name": "euros"
+    }
+   ]
+  },
+  {
+   "id": "activity_price",
+   "reading": "{Activity} costs {Euros}",
+   "roles": [
+    {
+     "object_type": "activity",
+     "role_name": "activity"
+    },
+    {
+     "object_type": "euros",
+     "role_name": "euros"
+    }
+   ]
+  },
+  {
+   "id": "activity_slot",
+   "reading": "{Activity} takes place on {Day} in the {Period}",
+   "roles": [
+    {
+     "object_type": "activity",
+     "role_name": "activity"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    },
+    {
+     "object_type": "period",
+     "role_name": "period"
+    }
+   ]
+  },
+  {
+   "id": "stays",
+   "reading": "{Trip} stays at {Hotel} on the night of {Day}",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "hotel",
+     "role_name": "hotel"
+    },
+    {
+     "object_type": "day",
+     "role_name": "night"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "one_hotel_a_night",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "A trip has one hotel a night."
+     },
+     "roles": [
+      "trip",
+      "night"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "books",
+   "reading": "{Trip} books {Activity}",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "activity",
+     "role_name": "activity"
+    }
+   ]
+  },
+  {
+   "id": "hotel_total",
+   "reading": "{Trip} spends {Euros} on hotels",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "euros",
+     "role_name": "euros"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "stays",
+      "bind": {
+       "trip": "$t",
+       "hotel": "$h",
+       "night": "$n"
+      }
+     },
+     {
+      "fact_type": "nightly_price",
+      "bind": {
+       "hotel": "$h",
+       "euros": "$p"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$p",
+     "over": [
+      "$n"
+     ],
+     "as": "$total"
+    },
+    "head": {
+     "trip": "$t",
+     "euros": "$total"
+    }
+   }
+  },
+  {
+   "id": "activity_total",
+   "reading": "{Trip} spends {Euros} on activities",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "euros",
+     "role_name": "euros"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "books",
+      "bind": {
+       "trip": "$t",
+       "activity": "$a"
+      }
+     },
+     {
+      "fact_type": "activity_price",
+      "bind": {
+       "activity": "$a",
+       "euros": "$p"
+      }
+     }
+    ],
+    "aggregate": {
+     "fn": "sum",
+     "of": "$p",
+     "over": [
+      "$a"
+     ],
+     "as": "$total"
+    },
+    "head": {
+     "trip": "$t",
+     "euros": "$total"
+    }
+   }
+  },
+  {
+   "id": "booked_slot",
+   "reading": "{Trip} has {Activity} on {Day} in the {Period}",
+   "roles": [
+    {
+     "object_type": "trip",
+     "role_name": "trip"
+    },
+    {
+     "object_type": "activity",
+     "role_name": "activity"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    },
+    {
+     "object_type": "period",
+     "role_name": "period"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "books",
+      "bind": {
+       "trip": "$t",
+       "activity": "$a"
+      }
+     },
+     {
+      "fact_type": "activity_slot",
+      "bind": {
+       "activity": "$a",
+       "day": "$d",
+       "period": "$p"
+      }
+     }
+    ],
+    "head": {
+     "trip": "$t",
+     "activity": "$a",
+     "day": "$d",
+     "period": "$p"
+    }
+   },
+   "constraints": [
+    {
+     "id": "no_overlap",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "A trip has one activity at a time."
+     },
+     "roles": [
+      "trip",
+      "day",
+      "period"
+     ]
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "within_budget",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Hotels and activities together stay within the trip's budget."
+   },
+   "antecedent": [
+    {
+     "fact_type": "hotel_total",
+     "bind": {
+      "trip": "$t",
+      "euros": "$h"
+     }
+    },
+    {
+     "fact_type": "activity_total",
+     "bind": {
+      "trip": "$t",
+      "euros": "$a"
+     }
+    },
+    {
+     "fact_type": "budget",
+     "bind": {
+      "trip": "$t",
+      "euros": "$b"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": {
+      "fn": "add",
+      "args": [
+       "$h",
+       "$a"
+      ]
+     },
+     "operator": "<=",
+     "right": "$b"
+    }
+   }
+  },
+  {
+   "id": "nights_in_trip",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Every night booked falls within the trip."
+   },
+   "antecedent": [
+    {
+     "fact_type": "stays",
+     "bind": {
+      "trip": "$t",
+      "hotel": "$h",
+      "night": "$n"
+     }
+    },
+    {
+     "fact_type": "trip_starts",
+     "bind": {
+      "trip": "$t",
+      "day": "$s"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$n",
+     "operator": ">=",
+     "right": "$s"
+    }
+   }
+  },
+  {
+   "id": "nights_before_end",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "No night is booked on or after the last day."
+   },
+   "antecedent": [
+    {
+     "fact_type": "stays",
+     "bind": {
+      "trip": "$t",
+      "hotel": "$h",
+      "night": "$n"
+     }
+    },
+    {
+     "fact_type": "trip_ends",
+     "bind": {
+      "trip": "$t",
+      "day": "$e"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$n",
+     "operator": "<",
+     "right": "$e"
+    }
+   }
+  }
+ ],
+ "operations": [
+  {
+   "id": "book_hotel",
+   "reading": "{Trip} stays at {Hotel} on the night of {Day}",
+   "parameters": [
+    {
+     "name": "trip",
+     "object_type": "trip"
+    },
+    {
+     "name": "hotel",
+     "object_type": "hotel"
+    },
+    {
+     "name": "night",
+     "object_type": "day"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "stays",
+      "bind": {
+       "trip": "$trip",
+       "hotel": "$hotel",
+       "night": "$night"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Trip} stays at {Hotel} on the night of {Day}"
+   }
+  },
+  {
+   "id": "book_activity",
+   "reading": "{Trip} books {Activity}",
+   "parameters": [
+    {
+     "name": "trip",
+     "object_type": "trip"
+    },
+    {
+     "name": "activity",
+     "object_type": "activity"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "books",
+      "bind": {
+       "trip": "$trip",
+       "activity": "$activity"
+      }
+     }
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "{Trip} books {Activity}"
+   }
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "model_id": "urn:gnd-example:access",
+  "source": "fixture",
+  "covers": [
+   "approved",
+   "approved_by",
+   "has_access",
+   "management_chain",
+   "reports_to"
+  ]
+ },
+ "facts": {
+  "reports_to": [
+   {
+    "employee": "bob",
+    "manager": "dana"
+   },
+   {
+    "employee": "dana",
+    "manager": "carol"
+   },
+   {
+    "employee": "carol",
+    "manager": "ceo"
+   },
+   {
+    "employee": "erin",
+    "manager": "ceo"
+   },
+   {
+    "employee": "frank",
+    "manager": "erin"
+   }
+  ],
+  "approved": [
+   {
+    "employee": "frank",
+    "system": "wiki"
+   }
+  ],
+  "approved_by": [
+   {
+    "approver": "dana",
+    "employee": "frank",
+    "system": "wiki"
+   }
+  ],
+  "has_access": [
+   {
+    "employee": "frank",
+    "system": "wiki"
+   }
+  ],
+  "management_chain": [
+   {
+    "employee": "bob",
+    "manager": "carol"
+   },
+   {
+    "employee": "bob",
+    "manager": "ceo"
+   },
+   {
+    "employee": "bob",
+    "manager": "dana"
+   },
+   {
+    "employee": "carol",
+    "manager": "ceo"
+   },
+   {
+    "employee": "dana",
+    "manager": "carol"
+   },
+   {
+    "employee": "dana",
+    "manager": "ceo"
+   },
+   {
+    "employee": "erin",
+    "manager": "ceo"
+   },
+   {
+    "employee": "frank",
+    "manager": "ceo"
+   },
+   {
+    "employee": "frank",
+    "manager": "erin"
+   }
+  ]
+ }
+}

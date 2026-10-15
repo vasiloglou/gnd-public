@@ -1,0 +1,91 @@
+you: /gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.
+claude: I'll start by locating the model and the planning state before proposing anything.
+  Bash ls -la && find . -name "model.orm.yaml" -not -path "*/node_modules/*" 2>/dev/null | head -20; ls -la .gnd-planning 2>/dev/null; which gnd; gnd --version 2>/dev…
+  Glob **/*.orm.yaml
+claude: The directory has `model.orm.json` and `rules.md`, not a `model.orm.yaml`. I'll read both before deciding anything.
+  Read <workspace>/rules.md
+    → 1 # Registrar rules
+  Read <workspace>/model.orm.json
+    → 1 {
+claude: The model is `model.orm.json`, and the cap is the `credit_cap` constraint (`right: 18`, provenance quoting "at most 18 credits"). Next I'll validate the current model and read the evolution contract and the provenance policy the skill requires before I write a proposal.
+  Bash gnd validate model.orm.json; echo "validate exit=$?"; gnd evolve --help 2>&1 | head -60; echo "---"; sha256sum model.orm.json
+    → refused by Claude Code's permission rules
+  Read <plugin>/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md
+  Read <plugin>/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md
+claude: The model is JSON, but the skill and the contract are written for YAML. I'll check whether `gnd` accepts the JSON file as-is, running the commands one at a time.
+  Bash gnd validate model.orm.json
+  Bash gnd evolve --help
+    → OK: model.orm.json is a valid GND ORM model
+    → usage: gnd evolve [-h] {preview,apply,finalize} ...
+claude: `gnd validate` accepts the JSON model (exit 0). The proposal's closed schema is the next blocker, so I'll look up the exact `ConstraintLocator` and proposal field shapes in the gnd source.
+  Bash cd <repo> && grep -rln "ConstraintLocator" --include=*.py . | grep -v .venv | head -20; grep -rn "class ConstraintLocator" --include=*.py . | grep -v .venv
+  Grep class ConstraintLocator|class ModelIdentityLocator|class EvolutionProposal\b|class EvolutionOperation\b
+  Read <repo>/src/gnd/evolve/models.py
+  Read <repo>/src/gnd/evolve/models.py
+claude: The proposal schema is clear now. Before I write the proposal I need three details: the canonical-digest function, the media type the candidate must carry, and the `user-supplied` provenance requirements.
+  Grep def canonical_sha256|YAML_MEDIA_TYPE|media_type.*!=|def _freeze_json|CANDIDATE_MEDIA|"application/
+  Grep user-supplied
+claude: The `user-supplied` example in the approvals fixture should show the exact provenance shape. I'll read it, along with the canonical-digest source.
+  Bash cd <repo> && sed -n 175,200p src/gnd/examples/approvals/model.orm.yaml; echo ---; <repo>/.venv/bin/python -I -c "import gnd.evolve.models as m, inspect; print(…
+    → refused by Claude Code's permission rules
+claude: Compound shell commands trigger approval here, so I'll use the file tools for reading.
+  Grep def canonical_sha256|def canonical_json|EVOLUTION_SCHEMA_VERSION\s*=|LOCATOR_EVOLUTION_SCHEMA_VERSION\s*=
+  Read <repo>/src/gnd/examples/approvals/model.orm.yaml
+claude: I have the canonical-digest rule and the `user-supplied` shape. I'll write a small script that builds the proposal: it changes only `credit_cap`, computes the digests with gnd's own functions, and checks that the rest of the model is untouched.
+  Write <tmp>
+    → File created successfully at: <tmp>
+  Bash <repo>/.venv/bin/python -I <tmp>
+    → refused by Claude Code's permission rules
+claude: The gnd CLI runs without a prompt, but running Python needs approval that I can't get in this session. I won't try to route around that. I'll build the proposal with the Write tool and hash the files with `shasum`. gnd's own `preview` will check the digests, so any mistake shows up there. First I n…
+  Grep def _canonical_json
+  Bash shasum -a 256 <workspace>/model.orm.json
+claude: I have the canonical form: sorted keys, compact separators, no trailing newline. I'll write the canonical `credit_cap` value and copy the model to make the candidate, then hash both.
+  Write <tmp>
+    → File created successfully at: <tmp>
+  Bash cp <workspace>/model.orm.json <tmp>
+  Bash shasum -a 256 <tmp>
+  Read <tmp>
+claude: Now I'll edit the candidate copy: the bound becomes 6, and the provenance becomes the owner's rule, recorded as `user-supplied`.
+  Edit <tmp>
+    → The file <tmp> has been updated successfully.
+  Edit <tmp>
+    → The file <tmp> has been updated successfully.
+  Bash shasum -a 256 <tmp>
+claude: The candidate's digest is `b86855…`. Next I'll write the proposal file. Its `candidate_model.text` must be the complete edited model as an escaped JSON string, so I'll transcribe it carefully from the Read output above.
+  Write <workspace>/evolve-credit-cap-6.proposal.json
+    → File created successfully at: <workspace>/evolve-credit-cap-6.proposal.json
+claude: The proposal is written. Next is the preview, which doesn't mutate anything. gnd checks every digest and the replay, so it will catch any transcription error.
+  Bash gnd evolve preview model.orm.json evolve-credit-cap-6.proposal.json --workspace . --records .gnd/evolution --out evolve-credit-cap-6.preview.json --format json
+    → Exit code 3: EVOLUTION PREVIEW REFUSED (3): candidate model media type must be application/yaml
+claude: The candidate must carry the YAML media type. The text is still valid YAML because JSON is a YAML subset, so I'll change only the media type, not the bytes.
+  Edit <workspace>/evolve-credit-cap-6.proposal.json
+    → The file <workspace>/evolve-credit-cap-6.proposal.json has been updated successfully.
+  Bash gnd evolve preview model.orm.json evolve-credit-cap-6.proposal.json --workspace . --records .gnd/evolution --out evolve-credit-cap-6.preview.json --format json
+    → <persisted-output>
+claude: The preview ran and produced a 66 KB claim. I'll pull out the decision fields: `breaking`, the warnings, every blast-radius entry, and the digests.
+  Grep ^\s*"(breaking|accepted_blast_radius_sha256|preview_sha256|report_sha256|before_sha256|after_sha256|change|surface|reference|rule_id|severity|message|path|vali…
+claude: The preview is clean: `valid: true`, `breaking: false`, and the blast radius is limited to the `credit_cap` constraint, its provenance, and the verbalization. I'll check the warnings list and the verbalization sentence before applying.
+  Grep "warnings": \[[^\]]*\]|credits? in [A-Za-z]+[^\\]{0,20}|at most [0-9]+ credits[^\\]{0,30}
+claude: Preview is clean: no warnings, no breaking entries, and `valid: true`. The change is a modify-only proposal, so no breaking-acceptance prompt applies. I'll apply the reviewed preview and retain the streams outside the immutable proposal directory.
+  Bash mkdir -p .gnd/evolve-streams/credit-cap-6
+  Bash gnd evolve apply model.orm.json evolve-credit-cap-6.proposal.json --preview evolve-credit-cap-6.preview.json --workspace . --records .gnd/evolution --format js…
+    → (Bash completed with no output)
+claude: Apply returned without an error, but I want to see the payloads, not infer success from silence. I'll read the retained streams and check the model file.
+  Read <workspace>/.gnd/evolve-streams/credit-cap-6/apply.stdout.txt
+    → 1 {
+  Read <workspace>/.gnd/evolve-streams/credit-cap-6/apply.stderr.txt
+    → <system-reminder>Warning: the file exists but the contents are empty.</system-reminder>
+claude: The apply completed: the model CAS published (`c34b19…` → `b86855…`), the conformance result is `0`, `published_with_drift` is `false`, the record was written, and stderr is empty. Last, I'll confirm the file on disk matches the candidate, the model still validates, and the record exists.
+  Bash shasum -a 256 model.orm.json
+  Bash gnd validate model.orm.json
+    → OK: model.orm.json is a valid GND ORM model
+  Bash ls -la .gnd/evolution/credit-cap-6 .gnd/evolution/credit-cap-6/conformance
+    → returned an error (its output is not kept)
+claude: The model on disk matches the candidate digest, validates, and the D-13 `record.json` exists, so the transaction is complete. The conformance directory is absent only because no linked project was declared. Next I'll write the exit receipt for the apply run and check whether a workspace verbalizati…
+  Write <workspace>/.gnd/evolve-streams/credit-cap-6/apply.exit.json
+    → File created successfully at: <workspace>/.gnd/evolve-streams/credit-cap-6/apply.exit.json
+  Bash ls -la <workspace>
+claude: The verbalization was published as `model.verbalization.txt`. I'll check how it reads the cap, since that's what a registrar reviewer would see.
+  Grep credit
+claude: The credit cap is now 6 for every student. The change is applied and recorded, but no downstream conformance check ran, because no generated project is linked to this model. **What changed** - The `credit_cap` constraint's bound went from 18 to 6. Nothing else in the model changed. The 6-course cap…
+  (turn 1 ends)

@@ -1,0 +1,165 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:equality",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "patient",
+   "name": "Patient",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "patient_id"
+   }
+  },
+  {
+   "id": "patient_id",
+   "name": "PatientId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "city",
+   "name": "City",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "city_id"
+   }
+  },
+  {
+   "id": "city_id",
+   "name": "CityId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "sbp",
+   "name": "Sbp",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "dbp",
+   "name": "Dbp",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "patient_has_sbp",
+   "reading": "{Patient} has {Sbp}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "sbp",
+     "role_name": "sbp"
+    }
+   ]
+  },
+  {
+   "id": "patient_has_dbp",
+   "reading": "{Patient} has {Dbp}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "dbp",
+     "role_name": "dbp"
+    }
+   ]
+  },
+  {
+   "id": "patient_visits_city",
+   "reading": "{Patient} visits {City}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "city",
+     "role_name": "city"
+    }
+   ]
+  },
+  {
+   "id": "patient_likes_city",
+   "reading": "{Patient} likes {City}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "city",
+     "role_name": "city"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "eq_sbp_dbp",
+   "type": "equality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: eq_sbp_dbp"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "patient_has_sbp",
+     "role": "patient"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "patient_has_dbp",
+     "role": "patient"
+    }
+   ]
+  },
+  {
+   "id": "eq_visits_likes",
+   "type": "equality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: eq_visits_likes"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "patient_visits_city",
+     "role": "patient"
+    },
+    {
+     "fact_type": "patient_visits_city",
+     "role": "city"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "patient_likes_city",
+     "role": "patient"
+    },
+    {
+     "fact_type": "patient_likes_city",
+     "role": "city"
+    }
+   ]
+  }
+ ]
+}

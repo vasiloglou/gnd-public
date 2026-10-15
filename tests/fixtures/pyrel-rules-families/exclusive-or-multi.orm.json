@@ -1,0 +1,125 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:exclusive-or-multi",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "course",
+   "name": "Course",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "course_id"
+   }
+  },
+  {
+   "id": "course_id",
+   "name": "CourseId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "nick",
+   "name": "Nick",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "person_teaches_course",
+   "reading": "{Person} teaches {Course}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    }
+   ]
+  },
+  {
+   "id": "person_takes_course",
+   "reading": "{Person} takes {Course}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "course",
+     "role_name": "course"
+    }
+   ]
+  },
+  {
+   "id": "person_has_nick",
+   "reading": "{Person} has {Nick}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "nick",
+     "role_name": "nick"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "xor_multi_teach_take",
+   "type": "exclusive-or",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: xor_multi_teach_take"
+   },
+   "role_seqs": [
+    [
+     {
+      "fact_type": "person_teaches_course",
+      "role": "person"
+     },
+     {
+      "fact_type": "person_teaches_course",
+      "role": "course"
+     }
+    ],
+    [
+     {
+      "fact_type": "person_takes_course",
+      "role": "person"
+     },
+     {
+      "fact_type": "person_takes_course",
+      "role": "course"
+     }
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "course-model-from-text-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/turn-01.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-model-from-text rules.md"
+  ],
+  "title": "Claude Code (Haiku) models the registrar's rules (recorded run 1)"
+ },
+ "course-llama-3.2-3b-run-2": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-2/session.txt"
+  ],
+  "title": "Llama 3.2 3B plans Maya's spring semester (recorded run 2)"
+ },
+ "clinic-llama-3.1-8b-run-1": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-1/session.txt"
+  ],
+  "title": "Llama 3.1 8B refills Sam's prescriptions (recorded run 1)"
+ },
+ "clinic-claude-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-1/session.txt"
+  ],
+  "title": "Claude Haiku refills Sam's prescriptions (recorded run 1)"
+ },
+ "access-llama-3.1-8b-run-1": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-1/session.txt"
+  ],
+  "title": "Llama 3.1 8B asks for Bob's payroll access (recorded run 1)"
+ },
+ "access-claude-haiku-run-2": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-2/session.txt"
+  ],
+  "title": "Claude Haiku is asked for the same access (recorded run 2)"
+ },
+ "trip-llama-3.1-8b-run-2": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-2/session.txt"
+  ],
+  "title": "Llama 3.1 8B plans three days in Lisbon (recorded run 2)"
+ },
+ "lease-claude-default-run-1": {
+  "sources": [
+   "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-1/session.txt"
+  ],
+  "title": "Claude Code's default model sets up the rent schedule (recorded run 1)"
+ },
+ "course-model-evolve-haiku-run-1": {
+  "sources": [
+   "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/turn-01.jsonl"
+  ],
+  "said": [
+   "/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student."
+  ],
+  "title": "Claude Code (Haiku) changes the credit cap (recorded run 1)"
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 1.0,
+ "reply": "{\n \"steps\": [\n  {\n   \"op\": \"extract\",\n   \"reading\": \"{Lease} has {Amount} due on {Day}\",\n   \"parameters\": {\n    \"lease\": \"lease\",\n    \"amount\": \"amount\",\n    \"day\": \"day\"\n   },\n   \"requires\": []\n  },\n  {\n   \"op\": \"extract\",\n   \"reading\": \"{Lease} starts on {Day}\",\n   \"parameters\": {\n    \"lease\": \"lease\",\n    \"day\": \"day\"\n   },\n   \"requires\": []\n  },\n  {\n   \"op\": \"extract\",\n   \"reading\": \"{Lease} ends on {Day}\",\n   \"parameters\": {\n    \"lease\": \"lease\",\n    \"day\": \"day\"\n   },\n   \"requires\": []\n  },\n  {\n   \"op\": \"format\",\n   \"reading\": \"{Amount} due on {Day}\",\n   \"parameters\": {\n    \"amount\": \"amount\",\n    \"day\": \"day\"\n   },\n   \"requires\": []\n  },\n  {\n   \"op\": \"schedule_payment\",\n   \"reading\": \"{Amount} due on {Day}\",\n   \"parameters\": {\n    \"amount\": \"amount\",\n    \"day\": \"day\"\n   },\n   \"requires\": []\n  }\n ]",
+ "usage": {
+  "prompt_tokens": 838,
+  "completion_tokens": 267,
+  "total_tokens": 1105,
+  "cost": 0.00013001,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 832,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00013001,
+   "upstream_inference_prompt_cost": 4.19e-05,
+   "upstream_inference_completions_cost": 8.811e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

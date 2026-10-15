@@ -1,0 +1,21 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', day='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', day='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', day='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 1 binds ['day', 'hotel', 'trip'] for operation 'book_hotel', which declares ['hotel', 'night', 'trip']; missing ['night']
+attempt 3
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', day='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', day='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', day='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 3
+    plan  refused  refused  <tmp>/plan.steps.json: refused: [transition:bindings-mismatch] step 1 binds ['day', 'hotel', 'trip'] for operation 'book_hotel', which declares ['hotel', 'night', 'trip']; missing ['night']
+no plan was accepted in 3 attempts

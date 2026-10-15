@@ -1,0 +1,52 @@
+{
+ "population": {
+  "model": "value.orm.json",
+  "model_id": "urn:gnd:pl13a:value",
+  "source": "fixture",
+  "covers": [
+   "item_has_score",
+   "item_has_level",
+   "item_has_age"
+  ]
+ },
+ "facts": {
+  "item_has_score": [
+   {
+    "item": "s0",
+    "score": 150
+   },
+   {
+    "item": "s1",
+    "score": 120
+   },
+   {
+    "item": "s2",
+    "score": -5
+   },
+   {
+    "item": "s3",
+    "score": 100
+   },
+   {
+    "item": "s4",
+    "score": 150
+   }
+  ],
+  "item_has_level": [
+   {
+    "item": "l0",
+    "level": 9
+   },
+   {
+    "item": "l1",
+    "level": 4
+   }
+  ],
+  "item_has_age": [
+   {
+    "item": "a0",
+    "age": 20
+   }
+  ]
+ }
+}

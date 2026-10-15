@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 0.5,
+ "reply": "{\"steps\": [{\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"MATH220\", \"term\": \"spring\"}}], \"note\": \"CS340 requires both MATH220 and STAT210, and Maya has not yet passed MATH220.\"}",
+ "usage": {
+  "prompt_tokens": 1947,
+  "completion_tokens": 61,
+  "total_tokens": 2008,
+  "cost": 0.00011748,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1808,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00011748,
+   "upstream_inference_prompt_cost": 9.735e-05,
+   "upstream_inference_completions_cost": 2.013e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

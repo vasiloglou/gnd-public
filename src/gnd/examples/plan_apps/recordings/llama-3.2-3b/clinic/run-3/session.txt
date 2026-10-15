@@ -1,0 +1,5 @@
+attempt 1
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-27')
+  pyrel check: exit 0 (accepted)
+    states 0-1  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+  executed: the new state is in <workspace>/next.pop.json

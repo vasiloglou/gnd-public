@@ -1,0 +1,123 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:review:md",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "Personid",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "pass_no",
+   "name": "PassNo",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "lic",
+   "name": "Lic",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "nick",
+   "name": "Nick",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "has_pass",
+   "reading": "{Person} {PassNo}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "pass_no",
+     "role_name": "pass_no"
+    }
+   ]
+  },
+  {
+   "id": "has_lic",
+   "reading": "{Person} {Lic}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "lic",
+     "role_name": "lic"
+    }
+   ]
+  },
+  {
+   "id": "has_nick",
+   "reading": "{Person} {Nick}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "nick",
+     "role_name": "nick"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "mand_nick",
+     "type": "mandatory",
+     "role": "person",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "mand_nick"
+     }
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "md",
+   "type": "mandatory-disjunctive",
+   "role_refs": [
+    {
+     "fact_type": "has_pass",
+     "role": "person"
+    },
+    {
+     "fact_type": "has_lic",
+     "role": "person"
+    }
+   ],
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "md"
+   }
+  }
+ ]
+}

@@ -1,0 +1,122 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:review:freq",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "rev",
+   "name": "Rev",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "rev_id"
+   }
+  },
+  {
+   "id": "rev_id",
+   "name": "Revid",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "paper",
+   "name": "Paper",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "paper_id"
+   }
+  },
+  {
+   "id": "paper_id",
+   "name": "Paperid",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "slot",
+   "name": "Slot",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "assign",
+   "reading": "{Rev} {Paper} {Slot}",
+   "roles": [
+    {
+     "object_type": "rev",
+     "role_name": "rev"
+    },
+    {
+     "object_type": "paper",
+     "role_name": "paper"
+    },
+    {
+     "object_type": "slot",
+     "role_name": "slot"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f2",
+     "type": "frequency",
+     "scope": "internal",
+     "roles": [
+      "rev",
+      "paper"
+     ],
+     "bound": {
+      "min": 2,
+      "max": 2
+     },
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "f2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "one",
+   "reading": "{Rev} {Paper}",
+   "roles": [
+    {
+     "object_type": "rev",
+     "role_name": "rev"
+    },
+    {
+     "object_type": "paper",
+     "role_name": "paper"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f1",
+     "type": "frequency",
+     "scope": "internal",
+     "roles": [
+      "rev"
+     ],
+     "bound": {
+      "min": 2,
+      "max": 3
+     },
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "f1"
+     }
+    }
+   ]
+  }
+ ]
+}

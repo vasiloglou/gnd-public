@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Novita",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 1.5,
+ "reply": "{\"steps\": [{\"op\": \"enroll\", \"bindings\": {\"course\": \"CS230\", \"student\": \"maya\", \"term\": \"spring\"}}, {\"op\": \"enroll\", \"bindings\": {\"course\": \"PHIL101\", \"student\": \"maya\", \"term\": \"spring\"}}, {\"op\": \"enroll\", \"bindings\": {\"course\": \"STAT210\", \"student\": \"maya\", \"term\": \"spring\"}}, {\"op\": \"record_grade\", \"bindings\": {\"grade\": \"C\", \"course\": \"STAT210\", \"student\": \"maya\"}}, {\"op\": \"enroll\", \"bindings\": {\"course\": \"CS340\", \"student\": \"maya\", \"term\": \"spring\"}}]}",
+ "usage": {
+  "prompt_tokens": 2294,
+  "completion_tokens": 155,
+  "total_tokens": 2449,
+  "cost": 5.363e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 5.363e-05,
+   "upstream_inference_prompt_cost": 4.588e-05,
+   "upstream_inference_completions_cost": 7.75e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

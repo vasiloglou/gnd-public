@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 1.0,
+ "reply": "{\"steps\": [{\"op\": \"book_hotel\", \"bindings\": {\"trip\": \"lisbon\", \"hotel\": \"palacio\", \"night\": \"2025-05-12\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"tram-28-tour\", \"night\": \"2025-05-12\"}}, {\"op\": \"book_hotel\", \"bindings\": {\"trip\": \"lisbon\", \"hotel\": \"alfama-inn\", \"night\": \"2025-05-13\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"fado-night\", \"night\": \"2025-05-13\"}}, {\"op\": \"book_hotel\", \"bindings\": {\"trip\": \"lisbon\", \"hotel\": \"palacio\", \"night\": \"2025-05-14\"}}, {\"op\": \"book_activity\", \"bindings\": {\"trip\": \"lisbon\", \"activity\": \"sintra-day\", \"night\": \"2025-05-14\"}}], \"note\": \"belem-walk and oceanarium left out, no_overlap violated\"}",
+ "usage": {
+  "prompt_tokens": 1632,
+  "completion_tokens": 248,
+  "total_tokens": 1880,
+  "cost": 0.00016344,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1552,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00016344,
+   "upstream_inference_prompt_cost": 8.16e-05,
+   "upstream_inference_completions_cost": 8.184e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

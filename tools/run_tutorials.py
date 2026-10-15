@@ -118,7 +118,7 @@ def run_pages(pages: list[Path], cwd: Path, python: Path, lane: str = 'offline',
         raise AssertionError('receipts must be a list or None')
     cwd.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
-    for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTEST_ADDOPTS', 'PYTEST_PLUGINS'):
+    for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'GND_PYREL_PYTHON'):
         env.pop(key, None)
     env['PATH'] = str(python.absolute().parent) + os.pathsep + env.get('PATH', '')
     env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'
@@ -147,7 +147,10 @@ def run_pages(pages: list[Path], cwd: Path, python: Path, lane: str = 'offline',
                 checked[block_lane] = require_runtime(block_lane, python, env)
             block_python = Path(env['GND_TUTORIAL_PYREL_PYTHON']) if block_lane == 'pyrel' else python
             block_env = dict(env)
-            block_env['PATH'] = str(block_python.absolute().parent) + os.pathsep + env['PATH']
+            if block_lane == 'pyrel':
+                # Bare `python` and `gnd` keep meaning the GND environment, as in a reader's
+                # shell; the PyRel interpreter is only ever named by this variable.
+                block_env['GND_PYREL_PYTHON'] = str(block_python.absolute())
             argv = ([str(block_python), '-c', code] if language == 'python'
                     else ['/bin/bash', '-euo', 'pipefail', '-c', code])
             started = time.monotonic()
@@ -201,6 +204,9 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'runtime-souffle': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/souffle.md'],
         'runtime-lean': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/lean.md'],
         'runtime-decision': [root / 'docs/runtimes/scenario.md', root / 'docs/runtimes/decision.md'],
+        'plan-apps': [root / 'docs/tutorials/course-planner.md', root / 'docs/tutorials/clinic-refills.md',
+                      root / 'docs/how-to/access-requests.md', root / 'docs/how-to/trip-budget.md',
+                      root / 'docs/how-to/lease-schedule.md', root / 'docs/explanation/rules-as-pyrel.md'],
     }
 
 

@@ -1,0 +1,17 @@
+{
+ "population": {
+  "model": "value.orm.json",
+  "model_id": "urn:gnd:pl13a:value",
+  "source": "fixture",
+  "covers": [
+   "item_has_score",
+   "item_has_level",
+   "item_has_age"
+  ]
+ },
+ "facts": {
+  "item_has_score": [],
+  "item_has_level": [],
+  "item_has_age": []
+ }
+}

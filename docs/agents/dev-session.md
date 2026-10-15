@@ -87,6 +87,14 @@ Other acceptance modes cover other tasks: *exact bytes* when one answer is corre
 acceptable, *sealed tests* when the agent writes code, and *transition* walks with
 required and forbidden operations. See [experiment sessions](../guides/experiments.md).
 
+The same loop over facts instead of plans is in the PyRel tutorials. There the
+contract's verifier is `gnd check`, acceptance is constraint satisfaction with a
+coverage floor, and the feedback for a rule-level failure carries the constraint
+and its offending facts, still without the answer. A stand-in asks for an
+adult-only book for a minor, is refused with `{"$b": "night", "$u": "ada"}`, and
+repairs; see [BookRec chapter 7](../bookrec/07-native.md#5-an-agent-in-the-loop)
+and [Expense chapter 4](../expense/04-native.md#5-an-agent-in-the-loop).
+
 ## Choose the agent
 
 The adapter policy names the agent. It is caller-trusted local configuration, kept out

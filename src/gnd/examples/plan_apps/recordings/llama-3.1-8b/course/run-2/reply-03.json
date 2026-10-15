@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "DeepInfra",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 5.6,
+ "reply": "{\"steps\": [{\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS340\", \"term\": \"spring\"}}, {\"op\": \"record_grade\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS340\", \"grade\": \"P\"}}], \"note\": \"Maya needs to take STAT210 and MATH220 first.\"}",
+ "usage": {
+  "prompt_tokens": 2232,
+  "completion_tokens": 82,
+  "total_tokens": 2314,
+  "cost": 4.792e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 4.792e-05,
+   "upstream_inference_prompt_cost": 4.464e-05,
+   "upstream_inference_completions_cost": 3.28e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

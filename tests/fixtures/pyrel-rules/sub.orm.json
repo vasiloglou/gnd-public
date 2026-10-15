@@ -1,0 +1,169 @@
+{
+ "version": 1,
+ "model_id": "urn:probe:sub",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "team",
+   "name": "Team",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "team_code"
+   }
+  },
+  {
+   "id": "team_code",
+   "name": "TeamCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "level",
+   "name": "Level",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "tag",
+   "name": "Tag",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "manager",
+   "name": "Manager",
+   "kind": "entity",
+   "subtype_of": [
+    "person"
+   ],
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   },
+   "inherits_reference": false
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "member",
+   "reading": "{Person} is in {Team} at {Level}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "team",
+     "role_name": "team"
+    },
+    {
+     "object_type": "level",
+     "role_name": "level"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "type": "uniqueness",
+     "roles": [
+      "person"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lead",
+   "reading": "{Person} leads {Team}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "team",
+     "role_name": "team"
+    }
+   ]
+  },
+  {
+   "id": "person_has_tag",
+   "reading": "{Person} has {Tag}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "tag",
+     "role_name": "tag"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "type": "mandatory",
+     "role": "person"
+    }
+   ]
+  },
+  {
+   "id": "team_badge",
+   "reading": "{Team} has badge {Tag}",
+   "roles": [
+    {
+     "object_type": "team",
+     "role_name": "team"
+    },
+    {
+     "object_type": "tag",
+     "role_name": "badge"
+    }
+   ]
+  },
+  {
+   "id": "manages",
+   "reading": "{Manager} manages {Team}",
+   "roles": [
+    {
+     "object_type": "manager",
+     "role_name": "manager"
+    },
+    {
+     "object_type": "team",
+     "role_name": "team"
+    }
+   ]
+  }
+ ],
+ "constraints": []
+}

@@ -64,3 +64,7 @@ The BookRec tutorial runs this whole handoff with a supplied extension:
 
 The [generated projects guide](../guides/generated-projects.md) documents the layout,
 the architecture contract and every exit.
+
+See it on an application: [Expense chapter 4](../expense/04-native.md#2-set-up-the-project-and-check-both-environments)
+generates the model-facing half, copies the extension over it in one step and
+runs conformance on the result.

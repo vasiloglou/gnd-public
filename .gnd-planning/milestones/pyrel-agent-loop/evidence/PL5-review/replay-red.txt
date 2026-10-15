@@ -1,0 +1,79 @@
+Command output; edited only to substitute machine-local path prefixes.
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_recorded_replay_refuses_drift_under_optimized_python[transition] _____
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1167/test_recorded_replay_refuses_d0')
+kind = 'transition'
+
+    @pytest.mark.parametrize('kind', ['transition', 'population'])
+    def test_recorded_replay_refuses_drift_under_optimized_python(tmp_path, kind):
+        import shutil
+        import subprocess
+        import sys
+    
+        page = (ROOT / 'docs/agents/recorded-sessions.md').read_text()
+        blocks = re.findall(r'```python\n(.*?)\n```', page, re.DOTALL)
+        if kind == 'transition':
+            code = next(code for code in blocks if 'replayed = api.transition(' in code)
+            shutil.copytree(ROOT / 'src/gnd/examples/approvals/recordings', tmp_path / 'approvals/recordings')
+            (tmp_path / 'walk/cand').mkdir(parents=True)
+            stub = 'from gnd import api; api.transition = lambda *a, **k: {"exit_code": 99}\n'
+        else:
+            code = next(code for code in blocks if 'replayed_exit = api.check(' in code)
+            stub = 'from gnd import api; api.check = lambda *a, **k: {"exit_code": 99}\n'
+        result = subprocess.run([sys.executable, '-O', '-c', stub + code], cwd=tmp_path,
+                                capture_output=True, text=True, check=False, timeout=30)
+>       assert result.returncode != 0, result.stdout
+E       AssertionError: claude-code              attempt-0001  recorded band 0  replayed band 99
+E         codex                    attempt-0001  recorded band 0  replayed band 99
+E         qwen3-14b                attempt-0001  recorded band 0  replayed band 99
+E         gemma-3-4b-it            attempt-0001  recorded band 3  replayed band 99
+E         gemma-3-4b-it            attempt-0002  recorded band 0  replayed band 99
+E         llama-3.1-8b-instruct    attempt-0001  recorded band 1  replayed band 99
+E         llama-3.1-8b-instruct    attempt-0002  recorded band 3  replayed band 99
+E         llama-3.1-8b-instruct    attempt-0003  recorded band 1  replayed band 99
+E         llama-3.2-3b-instruct    attempt-0001  recorded band 1  replayed band 99
+E         llama-3.2-3b-instruct    attempt-0002  recorded band 3  replayed band 99
+E         llama-3.2-3b-instruct    attempt-0003  recorded band 3  replayed band 99
+E         
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-O', '-c', 'from gnd imp...orded band 3  replayed band 99\nllama-3.2-3b-instruct    attempt-0003  recorded band 3  replayed band 99\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:246: AssertionError
+____ test_recorded_replay_refuses_drift_under_optimized_python[population] _____
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1167/test_recorded_replay_refuses_d1')
+kind = 'population'
+
+    @pytest.mark.parametrize('kind', ['transition', 'population'])
+    def test_recorded_replay_refuses_drift_under_optimized_python(tmp_path, kind):
+        import shutil
+        import subprocess
+        import sys
+    
+        page = (ROOT / 'docs/agents/recorded-sessions.md').read_text()
+        blocks = re.findall(r'```python\n(.*?)\n```', page, re.DOTALL)
+        if kind == 'transition':
+            code = next(code for code in blocks if 'replayed = api.transition(' in code)
+            shutil.copytree(ROOT / 'src/gnd/examples/approvals/recordings', tmp_path / 'approvals/recordings')
+            (tmp_path / 'walk/cand').mkdir(parents=True)
+            stub = 'from gnd import api; api.transition = lambda *a, **k: {"exit_code": 99}\n'
+        else:
+            code = next(code for code in blocks if 'replayed_exit = api.check(' in code)
+            stub = 'from gnd import api; api.check = lambda *a, **k: {"exit_code": 99}\n'
+        result = subprocess.run([sys.executable, '-O', '-c', stub + code], cwd=tmp_path,
+                                capture_output=True, text=True, check=False, timeout=30)
+>       assert result.returncode != 0, result.stdout
+E       AssertionError: bookrec: 4 sessions, every digest matches
+E         expense: 4 sessions, every digest matches
+E         8 recorded candidates replayed to their recorded verifier exit
+E         
+E       assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-O', '-c', 'from gnd imp...xpense: 4 sessions, every digest matches\n8 recorded candidates replayed to their recorded verifier exit\n', stderr='').returncode
+
+tests/test_pyrel_learning_path.py:246: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pyrel_learning_path.py::test_recorded_replay_refuses_drift_under_optimized_python[transition]
+FAILED tests/test_pyrel_learning_path.py::test_recorded_replay_refuses_drift_under_optimized_python[population]
+2 failed, 51 deselected in 0.79s

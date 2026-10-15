@@ -1,0 +1,332 @@
+# model.orm.yaml — registrar rules (MVP-fast CSDP run over rules.md)
+version: 2
+model_id: urn:gnd:registrar-rules@1
+
+source:
+  kind: text-conversation
+  artifacts: ["rules.md"]
+  started_at: "2026-10-15T00:00:00Z"
+  confidence: standard
+  mode: guided
+
+object_types:
+  - id: student
+    name: Student
+    kind: entity
+    reference: { mode: popular, value_type: student_id }   # OPEN: rules.md names no student identifier
+    provenance: { csdp_step: 1, user_quote: "A student ..." }
+
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+    provenance: { csdp_step: 1, user_quote: "CS101 Intro to Programming | 4 | | spring" }
+
+  - id: student_id
+    name: StudentId
+    kind: value
+    primitive: String
+
+  - id: course_code
+    name: CourseCode
+    kind: value
+    primitive: String
+
+  - id: season
+    name: Season
+    kind: value
+    primitive: String
+
+  - id: credits
+    name: Credits
+    kind: value
+    primitive: Integer
+
+  - id: grade
+    name: Grade
+    kind: value
+    primitive: String                                       # OPEN: no grade scale given
+
+fact_types:
+  - id: course_has_credits
+    reading: "{Course:course} has {Credits:credits} credits"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: credits, role_name: credits }
+    constraints:
+      - type: uniqueness
+        roles: [course]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "Credits column: one value per course in the catalogue." }
+      - type: mandatory
+        role: course
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 5, user_quote: "Every course in the catalogue lists a credit value." }
+
+  - id: course_needs_course
+    reading: "{Course:course} needs {Course:prerequisite}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course, role_name: prerequisite }
+    sample_population:
+      - { course: "MATH220", prerequisite: "MATH120" }
+      - { course: "STAT210", prerequisite: "MATH120" }
+      - { course: "CS230", prerequisite: "CS101" }
+      - { course: "CS250", prerequisite: "CS101" }
+      - { course: "CS340", prerequisite: "CS230" }
+      - { course: "CS340", prerequisite: "MATH220" }
+      - { course: "CS340", prerequisite: "STAT210" }
+    constraints:
+      - type: uniqueness
+        roles: [course, prerequisite]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "Needs column: each prerequisite is listed once per course." }
+
+  - id: course_needs_course_transitively
+    reading: "{Course:course} transitively needs {Course:prerequisite}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course, role_name: prerequisite }
+    derivation: derived
+    storage: computed
+    derivation_rule:
+      clauses:
+        - body:
+            - { fact_type: course_needs_course, bind: { course: "$c", prerequisite: "$p" } }
+          head: { course: "$c", prerequisite: "$p" }
+        - body:
+            - { fact_type: course_needs_course, bind: { course: "$c", prerequisite: "$m" } }
+            - { fact_type: course_needs_course_transitively, bind: { course: "$m", prerequisite: "$p" } }
+          head: { course: "$c", prerequisite: "$p" }
+    provenance: { csdp_step: 3, user_quote: "directly or through a chain of prerequisites" }
+
+  - id: course_offered_in_season
+    reading: "{Course:course} is offered in {Season:season}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: season, role_name: season }
+    sample_population:
+      - { course: "CS101", season: "spring" }
+      - { course: "CS250", season: "fall" }
+
+  - id: student_enrolled_in_course_in_season
+    reading: "{Student:student} enrolled in {Course:course} in {Season:season}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+      - { object_type: season, role_name: season }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [student, season]
+        bound: { max: 6 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "A student takes at most 6 courses in a term." }
+
+  - id: student_term_credits
+    reading: "{Student:student} takes {Credits:credits} credits in {Season:season}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: credits, role_name: credits }
+      - { object_type: season, role_name: season }
+    derivation: derived
+    storage: computed
+    derivation_rule:
+      body:
+        - { fact_type: student_enrolled_in_course_in_season, bind: { student: "$s", course: "$c", season: "$t" } }
+        - { fact_type: course_has_credits, bind: { course: "$c", credits: "$cr" } }
+      aggregate: { fn: sum, of: "$cr", over: ["$c"], as: "$n" }
+      head: { student: "$s", credits: "$n", season: "$t" }
+    provenance: { csdp_step: 3, user_quote: "A student takes at most 18 credits in a term." }
+
+  - id: student_passed_course
+    reading: "{Student:student} passed {Course:course}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+    sample_population:
+      - { student: "Maya", course: "CS101" }
+      - { student: "Maya", course: "MATH120" }
+      - { student: "Maya", course: "CS230" }
+
+  - id: student_has_grade
+    reading: "{Student:student} in {Course:course} received {Grade:grade}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+      - { object_type: grade, role_name: grade }
+    constraints:
+      - type: uniqueness
+        roles: [student, course]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "A student has one grade per course." }
+
+  - id: student_is_admitted
+    reading: "{Student:student} is admitted"
+    roles:
+      - { object_type: student, role_name: student }
+
+constraints:
+  - id: value_season
+    type: value
+    object_type: season
+    allowed: ['spring', 'fall']
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "Terms are the seasons the catalogue names."
+    provenance: { csdp_step: 1, user_quote: "Offered: spring / fall" }
+
+  - id: enrolment_only_if_offered
+    type: subset
+    subset_role_seq:
+      - { fact_type: student_enrolled_in_course_in_season, role: course }
+      - { fact_type: student_enrolled_in_course_in_season, role: season }
+    superset_role_seq:
+      - { fact_type: course_offered_in_season, role: course }
+      - { fact_type: course_offered_in_season, role: season }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 6, user_quote: "Only courses offered that term can be taken." }
+
+  - id: grade_marks_course_passed
+    type: subset
+    subset_role_seq:
+      - { fact_type: student_has_grade, role: student }
+      - { fact_type: student_has_grade, role: course }
+    superset_role_seq:
+      - { fact_type: student_passed_course, role: student }
+      - { fact_type: student_passed_course, role: course }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, user_quote: "Record a grade, which also marks the course as passed." }
+
+  - id: prerequisites_passed_before_enrolment
+    type: guarded
+    antecedent:
+      - { fact_type: student_enrolled_in_course_in_season, bind: { student: $s, course: $c, season: $t } }
+      - { fact_type: course_needs_course_transitively, bind: { course: $c, prerequisite: $p } }
+    consequent:
+      atom: { fact_type: student_passed_course, bind: { student: $s, course: $p } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, user_quote: "A student can't take a course before passing every course it needs, directly or through a chain of prerequisites." }
+
+  - id: no_enrolment_in_passed_course
+    type: guarded
+    antecedent:
+      - { fact_type: student_enrolled_in_course_in_season, bind: { student: $s, course: $c, season: $t } }
+    consequent:
+      absence: { fact_type: student_passed_course, bind: { student: $s, course: $c } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, user_quote: "A student doesn't enroll in a course they have already passed." }
+
+  - id: term_credit_cap
+    type: guarded
+    antecedent:
+      - { fact_type: student_term_credits, bind: { student: $s, credits: $n, season: $t } }
+    consequent:
+      comparison: { operator: "<=", left: $n, right: 18 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { csdp_step: 4, user_quote: "A student takes at most 18 credits in a term." }
+
+  - id: grade_immutable
+    type: textual
+    expression: "A student has one grade per course, and once a grade is recorded it never changes."
+    formal_language: natural
+    formal_expression: null
+    source: explicit
+    status: confirmed
+    modality: deontic              # advisory: textual constraints are never mechanically checked (D-20)
+    provenance: { csdp_step: 4, user_quote: "once a grade is recorded it never changes." }
+
+operations:
+  - id: enroll_student_in_course
+    reading: "{Student:student} enrolls in {Course:course} for {Season:season}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: course, object_type: course }
+      - { name: season, object_type: season }
+    preconditions:
+      - id: course_offered_in_season
+        require:
+          - { fact_type: course_offered_in_season, bind: { course: "$course", season: "$season" } }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 6, user_quote: "Only courses offered that term can be taken." }
+    effects:
+      - assert: { fact_type: student_enrolled_in_course_in_season, bind: { student: "$student", course: "$course", season: "$season" } }
+    frame: { modality: deontic }   # OPEN: rules.md does not say whether an undeclared side effect is a failure
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, user_quote: "Enroll a student in a course for a term." }
+
+  - id: drop_course
+    reading: "{Student:student} drops {Course:course} for {Season:season}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: course, object_type: course }
+      - { name: season, object_type: season }
+    effects:
+      - retract: { fact_type: student_enrolled_in_course_in_season, bind: { student: "$student", course: "$course", season: "$season" } }
+    frame: { modality: deontic }   # OPEN: as above
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, user_quote: "Drop a course, or every course in a term." }
+
+  - id: drop_term
+    reading: "{Student:student} drops every course in {Season:season}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: season, object_type: season }
+    effects:
+      - retract: { fact_type: student_enrolled_in_course_in_season, bind: { student: "$student", season: "$season" } }
+    frame: { modality: deontic }   # OPEN: as above
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, user_quote: "Drop a course, or every course in a term." }
+
+  - id: record_grade
+    reading: "{Student:student} receives {Grade:grade} in {Course:course}"
+    parameters:
+      - { name: student, object_type: student }
+      - { name: course, object_type: course }
+      - { name: grade, object_type: grade }
+    effects:
+      - assert: { fact_type: student_has_grade, bind: { student: "$student", course: "$course", grade: "$grade" } }
+      - assert: { fact_type: student_passed_course, bind: { student: "$student", course: "$course" } }
+    frame: { modality: deontic }   # OPEN: as above
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, user_quote: "Record a grade, which also marks the course as passed." }
+
+  - id: admit_student
+    reading: "{Student:student} is admitted"
+    parameters:
+      - { name: student, object_type: student }
+    effects:
+      - assert: { fact_type: student_is_admitted, bind: { student: "$student" } }
+    frame: { modality: deontic }   # OPEN: as above
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 6, user_quote: "Admit a new student." }
+
+rejected_proposals: []

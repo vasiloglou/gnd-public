@@ -1,0 +1,341 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:frequency",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "panel",
+   "name": "Panel",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "panel_id"
+   }
+  },
+  {
+   "id": "panel_id",
+   "name": "PanelId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "expert",
+   "name": "Expert",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "expert_id"
+   }
+  },
+  {
+   "id": "expert_id",
+   "name": "ExpertId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "team",
+   "name": "Team",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "team_id"
+   }
+  },
+  {
+   "id": "team_id",
+   "name": "TeamId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "member",
+   "name": "Member",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "member_id"
+   }
+  },
+  {
+   "id": "member_id",
+   "name": "MemberId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "club",
+   "name": "Club",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "club_id"
+   }
+  },
+  {
+   "id": "club_id",
+   "name": "ClubId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "player",
+   "name": "Player",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "player_id"
+   }
+  },
+  {
+   "id": "player_id",
+   "name": "PlayerId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "committee",
+   "name": "Committee",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "committee_id"
+   }
+  },
+  {
+   "id": "committee_id",
+   "name": "CommitteeId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "seat",
+   "name": "Seat",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "seat_id"
+   }
+  },
+  {
+   "id": "seat_id",
+   "name": "SeatId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "reviewer",
+   "name": "Reviewer",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "reviewer_id"
+   }
+  },
+  {
+   "id": "reviewer_id",
+   "name": "ReviewerId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "paper",
+   "name": "Paper",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "paper_id"
+   }
+  },
+  {
+   "id": "paper_id",
+   "name": "PaperId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "round",
+   "name": "Round",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "panel_includes_expert",
+   "reading": "{Panel} includes {Expert}",
+   "roles": [
+    {
+     "object_type": "panel",
+     "role_name": "panel"
+    },
+    {
+     "object_type": "expert",
+     "role_name": "expert"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f_panel_2_to_3",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: f_panel_2_to_3"
+     },
+     "scope": "internal",
+     "roles": [
+      "panel"
+     ],
+     "bound": {
+      "min": 2,
+      "max": 3
+     }
+    }
+   ]
+  },
+  {
+   "id": "team_includes_member",
+   "reading": "{Team} includes {Member}",
+   "roles": [
+    {
+     "object_type": "team",
+     "role_name": "team"
+    },
+    {
+     "object_type": "member",
+     "role_name": "member"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f_team_min_2",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: f_team_min_2"
+     },
+     "scope": "internal",
+     "roles": [
+      "team"
+     ],
+     "bound": {
+      "min": 2
+     }
+    }
+   ]
+  },
+  {
+   "id": "club_includes_player",
+   "reading": "{Club} includes {Player}",
+   "roles": [
+    {
+     "object_type": "club",
+     "role_name": "club"
+    },
+    {
+     "object_type": "player",
+     "role_name": "player"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f_club_max_2",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: f_club_max_2"
+     },
+     "scope": "internal",
+     "roles": [
+      "club"
+     ],
+     "bound": {
+      "max": 2
+     }
+    }
+   ]
+  },
+  {
+   "id": "committee_includes_seat",
+   "reading": "{Committee} includes {Seat}",
+   "roles": [
+    {
+     "object_type": "committee",
+     "role_name": "committee"
+    },
+    {
+     "object_type": "seat",
+     "role_name": "seat"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f_committee_exactly_3",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: f_committee_exactly_3"
+     },
+     "scope": "internal",
+     "roles": [
+      "committee"
+     ],
+     "bound": {
+      "min": 3,
+      "max": 3
+     }
+    }
+   ]
+  },
+  {
+   "id": "reviewer_reviews_paper_in_round",
+   "reading": "{Reviewer} reviews {Paper} in {Round}",
+   "roles": [
+    {
+     "object_type": "reviewer",
+     "role_name": "reviewer"
+    },
+    {
+     "object_type": "paper",
+     "role_name": "paper"
+    },
+    {
+     "object_type": "round",
+     "role_name": "round"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "f_reviewer_paper_max_2",
+     "type": "frequency",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: f_reviewer_paper_max_2"
+     },
+     "scope": "internal",
+     "roles": [
+      "reviewer",
+      "paper"
+     ],
+     "bound": {
+      "max": 2
+     }
+    }
+   ]
+  }
+ ]
+}

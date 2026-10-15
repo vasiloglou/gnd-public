@@ -1,0 +1,77 @@
+{
+ "population": {
+  "model": "probe.orm.json",
+  "model_id": "urn:probe:pl12",
+  "source": "synthetic",
+  "covers": [
+   "member",
+   "lead",
+   "person_has_tag",
+   "team_badge"
+  ]
+ },
+ "facts": {
+  "member": [
+   {
+    "person": "p1",
+    "team": "t1",
+    "level": 3
+   },
+   {
+    "person": "p1",
+    "team": "t2",
+    "level": 3
+   },
+   {
+    "person": "p2",
+    "team": "t1",
+    "level": 7
+   },
+   {
+    "person": "p2",
+    "team": "t1",
+    "level": 8
+   },
+   {
+    "person": "p4",
+    "team": "t2",
+    "level": 2
+   }
+  ],
+  "lead": [
+   {
+    "person": "p1",
+    "team": "t2"
+   },
+   {
+    "person": "p3",
+    "team": "t1"
+   }
+  ],
+  "person_has_tag": [
+   {
+    "person": "p1",
+    "tag": "a"
+   },
+   {
+    "person": "p2",
+    "tag": "c"
+   }
+  ],
+  "team_badge": [
+   {
+    "team": "t1",
+    "badge": "a"
+   },
+   {
+    "team": "t2",
+    "badge": "z"
+   }
+  ]
+ },
+ "instances": {
+  "person": [
+   "p9"
+  ]
+ }
+}

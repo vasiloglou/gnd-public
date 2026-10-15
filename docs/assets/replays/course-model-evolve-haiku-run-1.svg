@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="replay-course-model-evolve-haiku-run-1" class="gnd-figure" role="img" viewBox="0 0 760 2104" width="760" height="2104" aria-labelledby="replay-course-model-evolve-haiku-run-1-title replay-course-model-evolve-haiku-run-1-desc">
+<title id="replay-course-model-evolve-haiku-run-1-title">Claude Code (Haiku) changes the credit cap (recorded run 1)</title>
+<desc id="replay-course-model-evolve-haiku-run-1-desc">A replay of a recorded session; the full text is in the transcript below the figure.</desc>
+<style>:where(#replay-course-model-evolve-haiku-run-1){--gf-bg:#f1f4ef;--gf-card:#ffffff;--gf-line:#b7cec5;--gf-ink:#183936;--gf-muted:#5b6f6b;--gf-primary:#164f4b;--gf-accent:#b34e26;--gf-ok:#1f7a4d;--gf-ok-bg:#dcece3;--gf-fail:#b3261e;--gf-fail-bg:#f7dcd6;--gf-warn:#8a5e00;--gf-warn-bg:#fbecc2;--gf-bubble:#164f4b;--gf-bubble-ink:#ffffff;--gf-code:#f6f8f5;--gf-alethic:#6b3fa0;--gf-deontic:#1f5fa8}@media (prefers-color-scheme: dark){:where(#replay-course-model-evolve-haiku-run-1){--gf-bg:#1b2b28;--gf-card:#0f1917;--gf-line:#2d4440;--gf-ink:#e6efec;--gf-muted:#9fb3ae;--gf-primary:#7bd4c6;--gf-accent:#ffb38b;--gf-ok:#6fd39a;--gf-ok-bg:#163b2b;--gf-fail:#ff8f85;--gf-fail-bg:#4a1f1b;--gf-warn:#f2c14e;--gf-warn-bg:#4a3a10;--gf-bubble:#123d39;--gf-bubble-ink:#e6efec;--gf-code:#142320;--gf-alethic:#c3a6ff;--gf-deontic:#8ab8ff}}#replay-course-model-evolve-haiku-run-1 .c-head{fill:var(--gf-accent)}#replay-course-model-evolve-haiku-run-1 .c-ok{fill:var(--gf-ok)}#replay-course-model-evolve-haiku-run-1 .c-fail{fill:var(--gf-fail)}#replay-course-model-evolve-haiku-run-1 .c-pyrel{fill:var(--gf-primary)}#replay-course-model-evolve-haiku-run-1 .c-say{fill:var(--gf-warn)}#replay-course-model-evolve-haiku-run-1 .c-plan{fill:var(--gf-ink)}#replay-course-model-evolve-haiku-run-1 .c-ink{fill:var(--gf-ink)}#replay-course-model-evolve-haiku-run-1 .c-muted{fill:var(--gf-muted)}#replay-course-model-evolve-haiku-run-1 .bg{fill:var(--gf-code)}#replay-course-model-evolve-haiku-run-1 .frame{fill:var(--gf-card);stroke:var(--gf-line)}#replay-course-model-evolve-haiku-run-1 text{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;font-size:12px;white-space:pre}#replay-course-model-evolve-haiku-run-1 .title{font-family:ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:13px;font-weight:600;fill:var(--gf-ink)}#replay-course-model-evolve-haiku-run-1 .l{animation:replay-course-model-evolve-haiku-run-1-in .3s ease-out both}@keyframes replay-course-model-evolve-haiku-run-1-in{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion: reduce){#replay-course-model-evolve-haiku-run-1 .l{animation:none}}</style>
+<rect class="frame" x="0.5" y="0.5" width="759" height="2103" rx="10"/>
+<text class="title" x="18" y="27">Claude Code (Haiku) changes the credit cap (recorded run 1)</text>
+<text class="l c-head" x="18" y="58" xml:space="preserve" style="animation-delay:0.00s">you: /gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every student.</text>
+<text class="l c-say" x="18" y="75" xml:space="preserve" style="animation-delay:0.22s">claude: I'll start by locating the model and the planning state before proposing anything.</text>
+<text class="l c-plan" x="18" y="92" xml:space="preserve" style="animation-delay:0.44s">  Bash ls -la &amp;&amp; find . -name "model.orm.yaml" -not -path "*/node_modules/*" 2&gt;/dev/null | head</text>
+<text class="l c-plan" x="18" y="109" xml:space="preserve" style="animation-delay:0.66s">      -20; ls -la .gnd-planning 2&gt;/dev/null; which gnd; gnd --version 2&gt;/dev…</text>
+<text class="l c-plan" x="18" y="126" xml:space="preserve" style="animation-delay:0.88s">  Glob **/*.orm.yaml</text>
+<text class="l c-say" x="18" y="143" xml:space="preserve" style="animation-delay:1.10s">claude: The directory has `model.orm.json` and `rules.md`, not a `model.orm.yaml`. I'll read</text>
+<text class="l c-say" x="18" y="160" xml:space="preserve" style="animation-delay:1.32s">    both before deciding anything.</text>
+<text class="l c-plan" x="18" y="177" xml:space="preserve" style="animation-delay:1.54s">  Read &lt;workspace&gt;/rules.md</text>
+<text class="l c-ink" x="18" y="194" xml:space="preserve" style="animation-delay:1.76s">    → 1 # Registrar rules</text>
+<text class="l c-plan" x="18" y="211" xml:space="preserve" style="animation-delay:1.98s">  Read &lt;workspace&gt;/model.orm.json</text>
+<text class="l c-ink" x="18" y="228" xml:space="preserve" style="animation-delay:2.20s">    → 1 {</text>
+<text class="l c-say" x="18" y="245" xml:space="preserve" style="animation-delay:2.42s">claude: The model is `model.orm.json`, and the cap is the `credit_cap` constraint (`right: 18`,</text>
+<text class="l c-say" x="18" y="262" xml:space="preserve" style="animation-delay:2.64s">    provenance quoting "at most 18 credits"). Next I'll validate the current model and read the</text>
+<text class="l c-say" x="18" y="279" xml:space="preserve" style="animation-delay:2.86s">    evolution contract and the provenance policy the skill requires before I write a proposal.</text>
+<text class="l c-plan" x="18" y="296" xml:space="preserve" style="animation-delay:3.08s">  Bash gnd validate model.orm.json; echo "validate exit=$?"; gnd evolve --help 2&gt;&amp;1 | head -60;</text>
+<text class="l c-plan" x="18" y="313" xml:space="preserve" style="animation-delay:3.30s">      echo "---"; sha256sum model.orm.json</text>
+<text class="l c-fail" x="18" y="330" xml:space="preserve" style="animation-delay:3.52s">    → refused by Claude Code's permission rules</text>
+<text class="l c-plan" x="18" y="347" xml:space="preserve" style="animation-delay:3.74s">  Read &lt;plugin&gt;/src/gnd/skills/gnd-model-evolve/references/evolution-contract.md</text>
+<text class="l c-plan" x="18" y="364" xml:space="preserve" style="animation-delay:3.96s">  Read &lt;plugin&gt;/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md</text>
+<text class="l c-say" x="18" y="381" xml:space="preserve" style="animation-delay:4.18s">claude: The model is JSON, but the skill and the contract are written for YAML. I'll check</text>
+<text class="l c-say" x="18" y="398" xml:space="preserve" style="animation-delay:4.40s">    whether `gnd` accepts the JSON file as-is, running the commands one at a time.</text>
+<text class="l c-plan" x="18" y="415" xml:space="preserve" style="animation-delay:4.62s">  Bash gnd validate model.orm.json</text>
+<text class="l c-plan" x="18" y="432" xml:space="preserve" style="animation-delay:4.84s">  Bash gnd evolve --help</text>
+<text class="l c-ok" x="18" y="449" xml:space="preserve" style="animation-delay:5.06s">    → OK: model.orm.json is a valid GND ORM model</text>
+<text class="l c-ink" x="18" y="466" xml:space="preserve" style="animation-delay:5.28s">    → usage: gnd evolve [-h] {preview,apply,finalize} ...</text>
+<text class="l c-say" x="18" y="483" xml:space="preserve" style="animation-delay:5.50s">claude: `gnd validate` accepts the JSON model (exit 0). The proposal's closed schema is the next</text>
+<text class="l c-say" x="18" y="500" xml:space="preserve" style="animation-delay:5.72s">     blocker, so I'll look up the exact `ConstraintLocator` and proposal field shapes in the gnd</text>
+<text class="l c-say" x="18" y="517" xml:space="preserve" style="animation-delay:5.94s">     source.</text>
+<text class="l c-plan" x="18" y="534" xml:space="preserve" style="animation-delay:6.16s">  Bash cd &lt;repo&gt; &amp;&amp; grep -rln "ConstraintLocator" --include=*.py . | grep -v .venv | head -20;</text>
+<text class="l c-plan" x="18" y="551" xml:space="preserve" style="animation-delay:6.38s">      grep -rn "class ConstraintLocator" --include=*.py . | grep -v .venv</text>
+<text class="l c-muted" x="18" y="568" xml:space="preserve" style="animation-delay:6.60s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
+<text class="l c-plan" x="18" y="585" xml:space="preserve" style="animation-delay:6.82s">  Read &lt;repo&gt;/src/gnd/evolve/models.py</text>
+<text class="l c-plan" x="18" y="602" xml:space="preserve" style="animation-delay:7.04s">  Read &lt;repo&gt;/src/gnd/evolve/models.py</text>
+<text class="l c-say" x="18" y="619" xml:space="preserve" style="animation-delay:7.26s">claude: The proposal schema is clear now. Before I write the proposal I need three details: the</text>
+<text class="l c-say" x="18" y="636" xml:space="preserve" style="animation-delay:7.48s">    canonical-digest function, the media type the candidate must carry, and the `user-supplied`</text>
+<text class="l c-say" x="18" y="653" xml:space="preserve" style="animation-delay:7.70s">    provenance requirements.</text>
+<text class="l c-muted" x="18" y="670" xml:space="preserve" style="animation-delay:7.92s">  … reads the skill's reference pages (2 calls; all in the transcript)</text>
+<text class="l c-say" x="18" y="687" xml:space="preserve" style="animation-delay:8.14s">claude: The `user-supplied` example in the approvals fixture should show the exact provenance</text>
+<text class="l c-say" x="18" y="704" xml:space="preserve" style="animation-delay:8.36s">    shape. I'll read it, along with the canonical-digest source.</text>
+<text class="l c-plan" x="18" y="721" xml:space="preserve" style="animation-delay:8.58s">  Bash cd &lt;repo&gt; &amp;&amp; sed -n 175,200p src/gnd/examples/approvals/model.orm.yaml; echo ---;</text>
+<text class="l c-plan" x="18" y="738" xml:space="preserve" style="animation-delay:8.80s">      &lt;repo&gt;/.venv/bin/python -I -c "import gnd.evolve.models as m, inspect; print(…</text>
+<text class="l c-fail" x="18" y="755" xml:space="preserve" style="animation-delay:9.02s">    → refused by Claude Code's permission rules</text>
+<text class="l c-say" x="18" y="772" xml:space="preserve" style="animation-delay:9.24s">claude: Compound shell commands trigger approval here, so I'll use the file tools for reading.</text>
+<text class="l c-muted" x="18" y="789" xml:space="preserve" style="animation-delay:9.46s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
+<text class="l c-plan" x="18" y="806" xml:space="preserve" style="animation-delay:9.68s">  Read &lt;repo&gt;/src/gnd/examples/approvals/model.orm.yaml</text>
+<text class="l c-say" x="18" y="823" xml:space="preserve" style="animation-delay:9.90s">claude: I have the canonical-digest rule and the `user-supplied` shape. I'll write a small</text>
+<text class="l c-say" x="18" y="840" xml:space="preserve" style="animation-delay:10.12s">    script that builds the proposal: it changes only `credit_cap`, computes the digests with</text>
+<text class="l c-say" x="18" y="857" xml:space="preserve" style="animation-delay:10.34s">    gnd's own functions, and checks that the rest of the model is untouched.</text>
+<text class="l c-plan" x="18" y="874" xml:space="preserve" style="animation-delay:10.56s">  Write &lt;tmp&gt;</text>
+<text class="l c-ink" x="18" y="891" xml:space="preserve" style="animation-delay:10.78s">    → File created successfully at: &lt;tmp&gt;</text>
+<text class="l c-plan" x="18" y="908" xml:space="preserve" style="animation-delay:11.00s">  Bash &lt;repo&gt;/.venv/bin/python -I &lt;tmp&gt;</text>
+<text class="l c-fail" x="18" y="925" xml:space="preserve" style="animation-delay:11.22s">    → refused by Claude Code's permission rules</text>
+<text class="l c-say" x="18" y="942" xml:space="preserve" style="animation-delay:11.44s">claude: The gnd CLI runs without a prompt, but running Python needs approval that I can't get in</text>
+<text class="l c-say" x="18" y="959" xml:space="preserve" style="animation-delay:11.66s">     this session. I won't try to route around that. I'll build the proposal with the Write tool</text>
+<text class="l c-say" x="18" y="976" xml:space="preserve" style="animation-delay:11.88s">     and hash the files with `shasum`. gnd's own `preview` will check the digests, so any</text>
+<text class="l c-say" x="18" y="993" xml:space="preserve" style="animation-delay:12.10s">    mistake shows up there. First I n…</text>
+<text class="l c-muted" x="18" y="1010" xml:space="preserve" style="animation-delay:12.32s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
+<text class="l c-plan" x="18" y="1027" xml:space="preserve" style="animation-delay:12.54s">  Bash shasum -a 256 &lt;workspace&gt;/model.orm.json</text>
+<text class="l c-say" x="18" y="1044" xml:space="preserve" style="animation-delay:12.76s">claude: I have the canonical form: sorted keys, compact separators, no trailing newline. I'll</text>
+<text class="l c-say" x="18" y="1061" xml:space="preserve" style="animation-delay:12.98s">    write the canonical `credit_cap` value and copy the model to make the candidate, then hash</text>
+<text class="l c-say" x="18" y="1078" xml:space="preserve" style="animation-delay:13.20s">    both.</text>
+<text class="l c-plan" x="18" y="1095" xml:space="preserve" style="animation-delay:13.42s">  Write &lt;tmp&gt;</text>
+<text class="l c-ink" x="18" y="1112" xml:space="preserve" style="animation-delay:13.64s">    → File created successfully at: &lt;tmp&gt;</text>
+<text class="l c-plan" x="18" y="1129" xml:space="preserve" style="animation-delay:13.86s">  Bash cp &lt;workspace&gt;/model.orm.json &lt;tmp&gt;</text>
+<text class="l c-plan" x="18" y="1146" xml:space="preserve" style="animation-delay:14.08s">  Bash shasum -a 256 &lt;tmp&gt;</text>
+<text class="l c-plan" x="18" y="1163" xml:space="preserve" style="animation-delay:14.30s">  Read &lt;tmp&gt;</text>
+<text class="l c-say" x="18" y="1180" xml:space="preserve" style="animation-delay:14.52s">claude: Now I'll edit the candidate copy: the bound becomes 6, and the provenance becomes the</text>
+<text class="l c-say" x="18" y="1197" xml:space="preserve" style="animation-delay:14.74s">    owner's rule, recorded as `user-supplied`.</text>
+<text class="l c-plan" x="18" y="1214" xml:space="preserve" style="animation-delay:14.96s">  Edit &lt;tmp&gt;</text>
+<text class="l c-ink" x="18" y="1231" xml:space="preserve" style="animation-delay:15.18s">    → The file &lt;tmp&gt; has been updated successfully.</text>
+<text class="l c-plan" x="18" y="1248" xml:space="preserve" style="animation-delay:15.40s">  Edit &lt;tmp&gt;</text>
+<text class="l c-ink" x="18" y="1265" xml:space="preserve" style="animation-delay:15.62s">    → The file &lt;tmp&gt; has been updated successfully.</text>
+<text class="l c-plan" x="18" y="1282" xml:space="preserve" style="animation-delay:15.84s">  Bash shasum -a 256 &lt;tmp&gt;</text>
+<text class="l c-say" x="18" y="1299" xml:space="preserve" style="animation-delay:16.06s">claude: The candidate's digest is `b86855…`. Next I'll write the proposal file. Its</text>
+<text class="l c-say" x="18" y="1316" xml:space="preserve" style="animation-delay:16.28s">    `candidate_model.text` must be the complete edited model as an escaped JSON string, so I'll</text>
+<text class="l c-say" x="18" y="1333" xml:space="preserve" style="animation-delay:16.50s">    transcribe it carefully from the Read output above.</text>
+<text class="l c-plan" x="18" y="1350" xml:space="preserve" style="animation-delay:16.72s">  Write &lt;workspace&gt;/evolve-credit-cap-6.proposal.json</text>
+<text class="l c-ink" x="18" y="1367" xml:space="preserve" style="animation-delay:16.94s">    → File created successfully at: &lt;workspace&gt;/evolve-credit-cap-6.proposal.json</text>
+<text class="l c-say" x="18" y="1384" xml:space="preserve" style="animation-delay:17.16s">claude: The proposal is written. Next is the preview, which doesn't mutate anything. gnd checks</text>
+<text class="l c-say" x="18" y="1401" xml:space="preserve" style="animation-delay:17.38s">    every digest and the replay, so it will catch any transcription error.</text>
+<text class="l c-plan" x="18" y="1418" xml:space="preserve" style="animation-delay:17.60s">  Bash gnd evolve preview model.orm.json evolve-credit-cap-6.proposal.json --workspace .</text>
+<text class="l c-plan" x="18" y="1435" xml:space="preserve" style="animation-delay:17.82s">      --records .gnd/evolution --out evolve-credit-cap-6.preview.json --format json</text>
+<text class="l c-fail" x="18" y="1452" xml:space="preserve" style="animation-delay:18.04s">    → Exit code 3: EVOLUTION PREVIEW REFUSED (3): candidate model media type must be</text>
+<text class="l c-fail" x="18" y="1469" xml:space="preserve" style="animation-delay:18.26s">        application/yaml</text>
+<text class="l c-say" x="18" y="1486" xml:space="preserve" style="animation-delay:18.48s">claude: The candidate must carry the YAML media type. The text is still valid YAML because JSON</text>
+<text class="l c-say" x="18" y="1503" xml:space="preserve" style="animation-delay:18.70s">    is a YAML subset, so I'll change only the media type, not the bytes.</text>
+<text class="l c-plan" x="18" y="1520" xml:space="preserve" style="animation-delay:18.92s">  Edit &lt;workspace&gt;/evolve-credit-cap-6.proposal.json</text>
+<text class="l c-ink" x="18" y="1537" xml:space="preserve" style="animation-delay:19.14s">    → The file &lt;workspace&gt;/evolve-credit-cap-6.proposal.json has been updated successfully.</text>
+<text class="l c-plan" x="18" y="1554" xml:space="preserve" style="animation-delay:19.36s">  Bash gnd evolve preview model.orm.json evolve-credit-cap-6.proposal.json --workspace .</text>
+<text class="l c-plan" x="18" y="1571" xml:space="preserve" style="animation-delay:19.58s">      --records .gnd/evolution --out evolve-credit-cap-6.preview.json --format json</text>
+<text class="l c-ink" x="18" y="1588" xml:space="preserve" style="animation-delay:19.80s">    → &lt;persisted-output&gt;</text>
+<text class="l c-say" x="18" y="1605" xml:space="preserve" style="animation-delay:20.02s">claude: The preview ran and produced a 66 KB claim. I'll pull out the decision fields:</text>
+<text class="l c-say" x="18" y="1622" xml:space="preserve" style="animation-delay:20.24s">    `breaking`, the warnings, every blast-radius entry, and the digests.</text>
+<text class="l c-muted" x="18" y="1639" xml:space="preserve" style="animation-delay:20.46s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
+<text class="l c-say" x="18" y="1656" xml:space="preserve" style="animation-delay:20.68s">claude: The preview is clean: `valid: true`, `breaking: false`, and the blast radius is limited</text>
+<text class="l c-say" x="18" y="1673" xml:space="preserve" style="animation-delay:20.90s">    to the `credit_cap` constraint, its provenance, and the verbalization. I'll check the</text>
+<text class="l c-say" x="18" y="1690" xml:space="preserve" style="animation-delay:21.12s">    warnings list and the verbalization sentence before applying.</text>
+<text class="l c-muted" x="18" y="1707" xml:space="preserve" style="animation-delay:21.34s">  … reads the skill's reference pages (1 call; all in the transcript)</text>
+<text class="l c-say" x="18" y="1724" xml:space="preserve" style="animation-delay:21.56s">claude: Preview is clean: no warnings, no breaking entries, and `valid: true`. The change is a</text>
+<text class="l c-say" x="18" y="1741" xml:space="preserve" style="animation-delay:21.78s">    modify-only proposal, so no breaking-acceptance prompt applies. I'll apply the reviewed</text>
+<text class="l c-say" x="18" y="1758" xml:space="preserve" style="animation-delay:22.00s">    preview and retain the streams outside the immutable proposal directory.</text>
+<text class="l c-plan" x="18" y="1775" xml:space="preserve" style="animation-delay:22.22s">  Bash mkdir -p .gnd/evolve-streams/credit-cap-6</text>
+<text class="l c-plan" x="18" y="1792" xml:space="preserve" style="animation-delay:22.44s">  Bash gnd evolve apply model.orm.json evolve-credit-cap-6.proposal.json --preview evolve-</text>
+<text class="l c-plan" x="18" y="1809" xml:space="preserve" style="animation-delay:22.66s">      credit-cap-6.preview.json --workspace . --records .gnd/evolution --format js…</text>
+<text class="l c-ink" x="18" y="1826" xml:space="preserve" style="animation-delay:22.88s">    → (Bash completed with no output)</text>
+<text class="l c-say" x="18" y="1843" xml:space="preserve" style="animation-delay:23.10s">claude: Apply returned without an error, but I want to see the payloads, not infer success from</text>
+<text class="l c-say" x="18" y="1860" xml:space="preserve" style="animation-delay:23.32s">    silence. I'll read the retained streams and check the model file.</text>
+<text class="l c-plan" x="18" y="1877" xml:space="preserve" style="animation-delay:23.54s">  Read &lt;workspace&gt;/.gnd/evolve-streams/credit-cap-6/apply.stdout.txt</text>
+<text class="l c-ink" x="18" y="1894" xml:space="preserve" style="animation-delay:23.76s">    → 1 {</text>
+<text class="l c-plan" x="18" y="1911" xml:space="preserve" style="animation-delay:23.98s">  Read &lt;workspace&gt;/.gnd/evolve-streams/credit-cap-6/apply.stderr.txt</text>
+<text class="l c-ink" x="18" y="1928" xml:space="preserve" style="animation-delay:24.20s">    → &lt;system-reminder&gt;Warning: the file exists but the contents are empty.&lt;/system-reminder&gt;</text>
+<text class="l c-say" x="18" y="1945" xml:space="preserve" style="animation-delay:24.42s">claude: The apply completed: the model CAS published (`c34b19…` → `b86855…`), the conformance</text>
+<text class="l c-say" x="18" y="1962" xml:space="preserve" style="animation-delay:24.64s">    result is `0`, `published_with_drift` is `false`, the record was written, and stderr is</text>
+<text class="l c-say" x="18" y="1979" xml:space="preserve" style="animation-delay:24.86s">    empty. Last, I'll confirm the file on disk matches the candidate, the model still validates,</text>
+<text class="l c-say" x="18" y="1996" xml:space="preserve" style="animation-delay:25.08s">     and the record exists.</text>
+<text class="l c-plan" x="18" y="2013" xml:space="preserve" style="animation-delay:25.30s">  Bash shasum -a 256 model.orm.json</text>
+<text class="l c-plan" x="18" y="2030" xml:space="preserve" style="animation-delay:25.52s">  Bash gnd validate model.orm.json</text>
+<text class="l c-ok" x="18" y="2047" xml:space="preserve" style="animation-delay:25.74s">    → OK: model.orm.json is a valid GND ORM model</text>
+<text class="l c-plan" x="18" y="2064" xml:space="preserve" style="animation-delay:25.96s">  Bash ls -la .gnd/evolution/credit-cap-6 .gnd/evolution/credit-cap-6/conformance</text>
+<text class="l c-muted" x="18" y="2081" xml:space="preserve" style="animation-delay:26.18s">… 16 more lines in the transcript below</text>
+</svg>

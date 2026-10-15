@@ -1,0 +1,50 @@
+{
+ "population": {
+  "model": "names2.orm.json",
+  "model_id": "urn:probe:names2",
+  "source": "synthetic",
+  "covers": [
+   "member",
+   "lead",
+   "found",
+   "team_badge"
+  ]
+ },
+ "facts": {
+  "member": [
+   {
+    "person": "p1",
+    "team": "t1",
+    "level": 1
+   }
+  ],
+  "lead": [
+   {
+    "person": "p1",
+    "team": "t1"
+   }
+  ],
+  "team_badge": [
+   {
+    "team": "t1",
+    "badge": "a"
+   }
+  ],
+  "found": [
+   {
+    "person": "p1",
+    "tag": "a"
+   },
+   {
+    "person": "p9",
+    "tag": "a"
+   }
+  ]
+ },
+ "instances": {
+  "person": [
+   "p1",
+   "zz"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+attempt 1
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 1
+    state 5  within_budget  violated  {"$a": 75, "$b": 900, "$h": 900, "$t": "lisbon"}
+      the rule in PyRel: m.where(hotel_total(step, t, h), activity_total(step, t, a), budget(step, t, b)).require((h + a) <= b)
+    state 6  within_budget  violated  {"$a": 120, "$b": 900, "$h": 900, "$t": "lisbon"}
+attempt 2
+  plan  book_hotel(trip='lisbon', hotel='palacio', night='2025-05-12')
+  plan  book_activity(trip='lisbon', activity='tram-28-tour')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-13')
+  plan  book_activity(trip='lisbon', activity='belem-walk')
+  plan  book_hotel(trip='lisbon', hotel='alfama-inn', night='2025-05-14')
+  plan  book_activity(trip='lisbon', activity='oceanarium')
+  pyrel check: exit 0 (accepted)
+  executed: the new state is in <workspace>/next.pop.json

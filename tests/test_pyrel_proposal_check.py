@@ -63,7 +63,7 @@ def test_check_proposal_validation_order_is_pinned():
     from gnd.export import applications
 
     source = inspect.getsource(applications.check_proposal)
-    order = ['output already exists', 'explicit native interpreter', '_capture(proposal_path',
+    order = ['output already exists', '_interpreter(', '_capture(proposal_path',
              '_preserve_source(', '_check_and_publish(']
     positions = [source.index(marker) for marker in order]
     assert positions == sorted(positions)

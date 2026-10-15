@@ -1,0 +1,28 @@
+{
+ "population": {
+  "model": "mandatory-disjunctive.orm.json",
+  "model_id": "urn:gnd:pl13a:mandatory-disjunctive",
+  "source": "fixture",
+  "covers": [
+   "person_has_passport",
+   "person_has_licence",
+   "person_has_nick"
+  ]
+ },
+ "instances": {
+  "person": [
+   "p1",
+   "p9"
+  ]
+ },
+ "facts": {
+  "person_has_passport": [
+   {
+    "person": "p1",
+    "passport": "X1"
+   }
+  ],
+  "person_has_licence": [],
+  "person_has_nick": []
+ }
+}

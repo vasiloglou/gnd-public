@@ -1,0 +1,56 @@
+{
+ "steps": [
+  {
+   "op": "book_hotel",
+   "bindings": {
+    "trip": "lisbon",
+    "hotel": "alfama-inn",
+    "night": "2025-05-12"
+   }
+  },
+  {
+   "op": "book_hotel",
+   "bindings": {
+    "trip": "lisbon",
+    "hotel": "alfama-inn",
+    "night": "2025-05-13"
+   }
+  },
+  {
+   "op": "book_hotel",
+   "bindings": {
+    "trip": "lisbon",
+    "hotel": "alfama-inn",
+    "night": "2025-05-14"
+   }
+  },
+  {
+   "op": "book_activity",
+   "bindings": {
+    "trip": "lisbon",
+    "activity": "tram-28-tour"
+   }
+  },
+  {
+   "op": "book_activity",
+   "bindings": {
+    "trip": "lisbon",
+    "activity": "fado-night"
+   }
+  },
+  {
+   "op": "book_activity",
+   "bindings": {
+    "trip": "lisbon",
+    "activity": "sintra-day"
+   }
+  },
+  {
+   "op": "book_activity",
+   "bindings": {
+    "trip": "lisbon",
+    "activity": "oceanarium"
+   }
+  }
+ ]
+}

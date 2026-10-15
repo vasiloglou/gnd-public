@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "DeepInfra",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 10.6,
+ "reply": "{\n  \"steps\": [\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS230\",\n        \"term\": \"spring\"\n      }\n    },\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"STAT210\",\n        \"term\": \"spring\"\n      }\n    },\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"PHIL101\",\n        \"term\": \"spring\"\n      }\n    },\n    {\n      \"op\": \"record_grade\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"STAT210\",\n        \"grade\": \"P\"\n      }\n    },\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"term\": \"spring\"\n      }\n    }\n  ],\n  \"note\": \"Maya cannot take CS250 because it's offered in fall, not spring.\"\n}",
+ "usage": {
+  "prompt_tokens": 2531,
+  "completion_tokens": 237,
+  "total_tokens": 2768,
+  "cost": 6.01e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 6.01e-05,
+   "upstream_inference_prompt_cost": 5.062e-05,
+   "upstream_inference_completions_cost": 9.48e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

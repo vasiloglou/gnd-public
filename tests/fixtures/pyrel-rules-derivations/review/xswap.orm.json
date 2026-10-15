@@ -1,0 +1,88 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:xswap",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "code",
+   "name": "Code",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "thing",
+   "name": "Thing",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "code"
+   }
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "ta",
+   "reading": "{Thing} r {Thing}",
+   "roles": [
+    {
+     "object_type": "thing",
+     "role_name": "p"
+    },
+    {
+     "object_type": "thing",
+     "role_name": "q"
+    }
+   ]
+  },
+  {
+   "id": "tb",
+   "reading": "{Thing} r {Thing}",
+   "roles": [
+    {
+     "object_type": "thing",
+     "role_name": "r"
+    },
+    {
+     "object_type": "thing",
+     "role_name": "s"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "cx",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "cx"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "tb",
+     "role": "r"
+    },
+    {
+     "fact_type": "tb",
+     "role": "s"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "ta",
+     "role": "q"
+    },
+    {
+     "fact_type": "ta",
+     "role": "p"
+    }
+   ]
+  }
+ ]
+}

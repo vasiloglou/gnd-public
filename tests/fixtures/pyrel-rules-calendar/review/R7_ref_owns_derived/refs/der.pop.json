@@ -1,0 +1,1 @@
+{"population": {"model": "model.orm.json", "model_id": "urn:gnd:pl14:clinic", "source": "fixture", "covers": ["recent_request"]}, "facts": {"recent_request": [{"patient": "ann", "drug": "statin"}, {"patient": "ben", "drug": "inhaler"}]}}

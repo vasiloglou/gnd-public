@@ -1,0 +1,82 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:review:collide",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "node",
+   "name": "Node",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "node_id"
+   }
+  },
+  {
+   "id": "node_id",
+   "name": "Nodeid",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "likes",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_asym",
+     "type": "ring",
+     "variant": "asymmetric",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_asym"
+     }
+    }
+   ]
+  },
+  {
+   "id": "likes_reverse",
+   "reading": "{Node} {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "c_irr",
+     "type": "ring",
+     "variant": "irreflexive",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "c_irr"
+     }
+    }
+   ]
+  }
+ ]
+}

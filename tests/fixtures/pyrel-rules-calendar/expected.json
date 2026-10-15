@@ -1,0 +1,820 @@
+{
+ "generated_by": "gnd.api.check(model, population, unredacted=True)",
+ "results": {
+  "clinic-birth-out-of-range": {
+   "model": "clinic.orm.json",
+   "population": "clinic-birth-out-of-range.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "1899-12-31",
+      "2027-01-01"
+     ]
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-date-out-of-range": {
+   "model": "clinic.orm.json",
+   "population": "clinic-date-out-of-range.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "unchecked",
+     "reason_code": "term:date-out-of-range",
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ann",
+       "$d": "statin",
+       "$req": "9999-12-20",
+       "$end": "2024-12-01"
+      }
+     ]
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "9999-12-15",
+      "9999-12-20"
+     ]
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-date-sub-below-year-one": {
+   "model": "clinic.orm.json",
+   "population": "clinic-date-sub-below-year-one.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "unchecked",
+     "reason_code": "term:date-out-of-range",
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "0001-01-01",
+      "0001-01-02"
+     ]
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-derived-recent-wrong": {
+   "model": "clinic.orm.json",
+   "population": "clinic-derived-recent-wrong.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "fail",
+     "reason_code": null,
+     "findings": [
+      {
+       "kind": "derived-extension-unsound",
+       "witness": {
+        "patient": "ann",
+        "drug": "inhaler"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "clinic-early-refill": {
+   "model": "clinic.orm.json",
+   "population": "clinic-early-refill.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ann",
+       "$d": "statin",
+       "$req": "2024-02-29",
+       "$last": "2024-01-31",
+       "$n": 30
+      }
+     ]
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-interval-out-of-range": {
+   "model": "clinic.orm.json",
+   "population": "clinic-interval-out-of-range.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ben",
+       "$d": "inhaler",
+       "$req": "2024-07-04",
+       "$last": "2024-06-20",
+       "$n": 181
+      }
+     ]
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      0,
+      181
+     ]
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-no-requests": {
+   "model": "clinic.orm.json",
+   "population": "clinic-no-requests.population.json",
+   "exit_code": 2,
+   "outcome": "inadequate",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "vacuous",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-old-request-warning": {
+   "model": "clinic.orm.json",
+   "population": "clinic-old-request-warning.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "warning",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ann",
+       "$d": "statin",
+       "$req": "2019-12-31"
+      }
+     ]
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-on-time-leap-day": {
+   "model": "clinic.orm.json",
+   "population": "clinic-on-time-leap-day.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-out-of-range-and-failing": {
+   "model": "clinic.orm.json",
+   "population": "clinic-out-of-range-and-failing.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "unchecked",
+     "reason_code": "term:date-out-of-range",
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ann",
+       "$d": "statin",
+       "$req": "9999-12-20",
+       "$end": "2024-12-01"
+      }
+     ]
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      "9999-12-15",
+      "9999-12-20"
+     ]
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-prescription-backwards": {
+   "model": "clinic.orm.json",
+   "population": "clinic-prescription-backwards.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ann",
+       "$d": "statin",
+       "$start": "2024-12-02",
+       "$end": "2024-12-01"
+      }
+     ]
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "clinic-too-close-to-end": {
+   "model": "clinic.orm.json",
+   "population": "clinic-too-close-to-end.population.json",
+   "exit_code": 1,
+   "outcome": "violated",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "refill_not_early",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "request_in_prescription",
+     "constraint_type": "guarded",
+     "verdict": "fail",
+     "reason_code": null,
+     "offending_facts": [
+      {
+       "$p": "ben",
+       "$d": "inhaler",
+       "$req": "2024-07-05",
+       "$end": "2024-07-07"
+      }
+     ]
+    },
+    {
+     "id": "prescription_order",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "requests_this_decade",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "plausible_birth",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    },
+    {
+     "id": "interval_cap",
+     "constraint_type": "value",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": [
+    {
+     "fact_type": "recent_request",
+     "verdict": "pass",
+     "reason_code": null,
+     "findings": []
+    }
+   ]
+  },
+  "workload-at-limit": {
+   "model": "workload.orm.json",
+   "population": "workload-at-limit.population.json",
+   "exit_code": 0,
+   "outcome": "accepted",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "window",
+     "constraint_type": "guarded",
+     "verdict": "pass",
+     "reason_code": null,
+     "offending_facts": []
+    }
+   ],
+   "derivations": []
+  },
+  "workload-over-limit": {
+   "model": "workload.orm.json",
+   "population": "workload-over-limit.population.json",
+   "exit_code": 4,
+   "outcome": "indeterminate",
+   "issues": [],
+   "verdicts": [
+    {
+     "id": "window",
+     "constraint_type": "guarded",
+     "verdict": "unchecked",
+     "reason_code": "term:temporal-work-limit",
+     "offending_facts": []
+    }
+   ],
+   "derivations": []
+  }
+ }
+}

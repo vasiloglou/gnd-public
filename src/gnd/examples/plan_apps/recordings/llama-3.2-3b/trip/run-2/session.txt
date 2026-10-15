@@ -1,0 +1,7 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 3
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+no plan was accepted in 3 attempts

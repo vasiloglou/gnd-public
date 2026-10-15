@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 1.1,
+ "reply": "\n```json\n{\n  \"steps\": [\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"term\": \"spring\"\n      }\n    },\n    {\n      \"op\": \"record_grade\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"grade\": \"A\"\n      }\n    }\n  ],\n  \"note\": \"Maya needs to take CS230, MATH220, and STAT210 to fulfill the prerequisites for CS340.  She has already passed CS101, MATH120 and CS230.\"\n}\n```",
+ "usage": {
+  "prompt_tokens": 2273,
+  "completion_tokens": 176,
+  "total_tokens": 2449,
+  "cost": 7.636e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1168,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 7.636e-05,
+   "upstream_inference_prompt_cost": 6.756e-05,
+   "upstream_inference_completions_cost": 8.8e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

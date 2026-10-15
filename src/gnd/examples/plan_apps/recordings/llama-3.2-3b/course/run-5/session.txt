@@ -1,0 +1,11 @@
+attempt 1
+  the bot's answer was not usable: the bot's answer is not a plan: expected {"steps": [{"op": ..., "bindings": {...}}, ...]}, or {"steps": [], "reason": ...} to decline
+attempt 2
+  plan  admit(student='maya')
+  pyrel check: exit 1
+    step 1  $.steps[1].effects[0].create  violated  "maya"
+attempt 3
+  plan  admit(student='maya')
+  pyrel check: exit 1
+    step 1  $.steps[1].effects[0].create  violated  "maya"
+no plan was accepted in 3 attempts

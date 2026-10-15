@@ -1,0 +1,40 @@
+{
+ "population": {
+  "model": "probe.orm.json",
+  "model_id": "urn:probe:pl12",
+  "source": "synthetic",
+  "covers": [
+   "member",
+   "lead",
+   "person_has_tag",
+   "team_badge"
+  ]
+ },
+ "facts": {
+  "member": [
+   {
+    "person": "p1",
+    "team": "t1",
+    "level": 1
+   },
+   {
+    "person": "p1",
+    "team": "t2",
+    "level": 1
+   }
+  ],
+  "lead": [],
+  "person_has_tag": [
+   {
+    "person": "p1",
+    "tag": "a"
+   }
+  ],
+  "team_badge": [
+   {
+    "team": "t1",
+    "badge": "a"
+   }
+  ]
+ }
+}

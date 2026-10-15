@@ -1,0 +1,94 @@
+{
+ "population": {
+  "model": "model.orm.json",
+  "model_id": "urn:gnd-example:clinic",
+  "source": "fixture",
+  "covers": [
+   "interacting_pair",
+   "interacts",
+   "last_refill",
+   "prescribed",
+   "refill",
+   "refill_interval"
+  ]
+ },
+ "facts": {
+  "prescribed": [
+   {
+    "patient": "sam",
+    "drug": "statin"
+   },
+   {
+    "patient": "sam",
+    "drug": "warfarin"
+   },
+   {
+    "patient": "sam",
+    "drug": "aspirin"
+   },
+   {
+    "patient": "ana",
+    "drug": "statin"
+   }
+  ],
+  "refill_interval": [
+   {
+    "drug": "statin",
+    "days": 30
+   },
+   {
+    "drug": "warfarin",
+    "days": 7
+   },
+   {
+    "drug": "aspirin",
+    "days": 30
+   }
+  ],
+  "last_refill": [
+   {
+    "patient": "sam",
+    "drug": "statin",
+    "day": "2024-02-20"
+   },
+   {
+    "patient": "sam",
+    "drug": "warfarin",
+    "day": "2024-03-01"
+   },
+   {
+    "patient": "sam",
+    "drug": "aspirin",
+    "day": "2024-01-15"
+   },
+   {
+    "patient": "ana",
+    "drug": "statin",
+    "day": "2024-01-02"
+   }
+  ],
+  "refill": [
+   {
+    "patient": "ana",
+    "drug": "statin",
+    "day": "2024-02-05"
+   }
+  ],
+  "interacts": [
+   {
+    "drug": "warfarin",
+    "other": "aspirin"
+   }
+  ],
+  "interacting_pair": [
+   {
+    "drug": "aspirin",
+    "other": "warfarin"
+   },
+   {
+    "drug": "warfarin",
+    "other": "aspirin"
+   }
+  ]
+ }
+}

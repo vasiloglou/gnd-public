@@ -1,0 +1,19 @@
+{
+ "population": {
+  "model": "exclusion.orm.json",
+  "model_id": "urn:gnd:pl13a:exclusion",
+  "source": "fixture",
+  "covers": [
+   "person_married_in",
+   "person_widowed_in",
+   "person_owns_car",
+   "person_rents_car"
+  ]
+ },
+ "facts": {
+  "person_married_in": [],
+  "person_widowed_in": [],
+  "person_owns_car": [],
+  "person_rents_car": []
+ }
+}

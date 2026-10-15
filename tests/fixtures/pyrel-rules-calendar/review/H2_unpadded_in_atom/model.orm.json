@@ -1,0 +1,386 @@
+{
+ "version": 3,
+ "model_id": "urn:gnd:pl14:clinic",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "patient",
+   "name": "Patient",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "patient_code"
+   }
+  },
+  {
+   "id": "patient_code",
+   "name": "PatientCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "drug",
+   "name": "Drug",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "drug_code"
+   }
+  },
+  {
+   "id": "drug_code",
+   "name": "DrugCode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "day",
+   "name": "Day",
+   "kind": "value",
+   "primitive": "Date"
+  },
+  {
+   "id": "days",
+   "name": "Days",
+   "kind": "value",
+   "primitive": "Duration"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "born",
+   "reading": "{Patient} was born on {Day}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "refill_interval",
+   "reading": "{Drug} may be refilled every {Days}",
+   "roles": [
+    {
+     "object_type": "drug",
+     "role_name": "drug"
+    },
+    {
+     "object_type": "days",
+     "role_name": "days"
+    }
+   ]
+  },
+  {
+   "id": "last_refill",
+   "reading": "{Patient} last got {Drug} on {Day}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "drug",
+     "role_name": "drug"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "refill_request",
+   "reading": "{Patient} asks for {Drug} on {Day}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "drug",
+     "role_name": "drug"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "prescribed_from",
+   "reading": "{Patient} is prescribed {Drug} from {Day}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "drug",
+     "role_name": "drug"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "prescribed_until",
+   "reading": "{Patient} is prescribed {Drug} until {Day}",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "drug",
+     "role_name": "drug"
+    },
+    {
+     "object_type": "day",
+     "role_name": "day"
+    }
+   ]
+  },
+  {
+   "id": "recent_request",
+   "reading": "{Patient} asked for {Drug} after the last refill",
+   "roles": [
+    {
+     "object_type": "patient",
+     "role_name": "patient"
+    },
+    {
+     "object_type": "drug",
+     "role_name": "drug"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "refill_request",
+      "bind": {
+       "patient": "$p",
+       "drug": "$d",
+       "day": "$r"
+      }
+     },
+     {
+      "fact_type": "last_refill",
+      "bind": {
+       "patient": "$p",
+       "drug": "$d",
+       "day": "$last"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": ">",
+      "left": "$r",
+      "right": "$last"
+     }
+    ],
+    "head": {
+     "patient": "$p",
+     "drug": "$d"
+    }
+   }
+  }
+ ],
+ "constraints": [
+  {
+   "id": "refill_not_early",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A refill can't be given before the drug's refill interval has passed."
+   },
+   "antecedent": [
+    {
+     "fact_type": "refill_request",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "$req"
+     }
+    },
+    {
+     "fact_type": "last_refill",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "$last"
+     }
+    },
+    {
+     "fact_type": "refill_interval",
+     "bind": {
+      "drug": "$d",
+      "days": "$n"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$req",
+     "operator": ">=",
+     "right": {
+      "fn": "date_add",
+      "args": [
+       "$last",
+       "$n"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "request_in_prescription",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A refill must fall at least 3 days before the prescription ends."
+   },
+   "antecedent": [
+    {
+     "fact_type": "refill_request",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "$req"
+     }
+    },
+    {
+     "fact_type": "prescribed_until",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "$end"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$req",
+     "operator": "<=",
+     "right": {
+      "fn": "date_sub",
+      "args": [
+       "$end",
+       {
+        "duration_days": 3
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "prescription_order",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A prescription starts before it ends."
+   },
+   "antecedent": [
+    {
+     "fact_type": "prescribed_from",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "$start"
+     }
+    },
+    {
+     "fact_type": "prescribed_until",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "$end"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$start",
+     "operator": "<",
+     "right": "$end"
+    }
+   }
+  },
+  {
+   "id": "requests_this_decade",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "deontic",
+   "provenance": {
+    "user_quote": "Requests are dated from 2020 on."
+   },
+   "antecedent": [
+    {
+     "fact_type": "refill_request",
+     "bind": {
+      "patient": "$p",
+      "drug": "$d",
+      "day": "2024-3-01"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$p",
+     "operator": "=",
+     "right": "zed"
+    }
+   }
+  },
+  {
+   "id": "plausible_birth",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "Birth dates are between 1900 and 2026."
+   },
+   "object_type": "day",
+   "range": {
+    "min": "1900-01-01",
+    "max": "2026-12-31"
+   }
+  },
+  {
+   "id": "interval_cap",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "A refill interval is at most 180 days."
+   },
+   "object_type": "days",
+   "range": {
+    "min": 1,
+    "max": 180
+   }
+  }
+ ]
+}

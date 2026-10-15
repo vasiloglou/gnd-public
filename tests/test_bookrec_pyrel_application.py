@@ -23,7 +23,7 @@ def test_native_bookrec_cli_outcomes_and_pairs(tmp_path, mode, expected):
     output = tmp_path / 'result.json'; source = home / 'seed.population.json'
     before = source.read_bytes()
     args = ['complete' if mode == 'complete' else 'recommend', '--model', str(home / model),
-            '--input', str(source), '--output', str(output), '--backend', 'pyrel', '--pyrel-python', str(NATIVE)]
+            '--input', str(source), '--output', str(output), '--backend', 'pyrel', '--pyrel-python', str(NATIVE), '--format', 'json']
     if mode != 'complete':
         args += ['--user', 'nobody' if mode == 'unknown' else 'ada', '--limit',
                  '0' if mode == 'limit' else '101' if mode == 'upper-limit' else '2']
@@ -32,9 +32,13 @@ def test_native_bookrec_cli_outcomes_and_pairs(tmp_path, mode, expected):
     help_run = subprocess.run([sys.executable, '-m', 'bookrec.cli', '--help'], cwd=home / 'extension',
                               capture_output=True, text=True, timeout=20, check=False)
     assert '--backend' in help_run.stdout and '--pyrel-python' in help_run.stdout, 'native application interface is absent'
+    env = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'}
+    if mode == 'advisory':
+        # One case reaches the pinned interpreter through the environment variable instead of the flag.
+        args = [a for a in args if a not in ('--pyrel-python', str(NATIVE))]
+        env['GND_PYREL_PYTHON'] = str(NATIVE)
     completed = subprocess.run([sys.executable, '-m', 'bookrec.cli', *args], cwd=home / 'extension',
-                               env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'}, capture_output=True,
-                               text=True, timeout=150, check=False)
+                               env=env, capture_output=True, text=True, timeout=150, check=False)
     assert completed.returncode == expected, completed.stderr + completed.stdout
     assert source.read_bytes() == before
     if expected:

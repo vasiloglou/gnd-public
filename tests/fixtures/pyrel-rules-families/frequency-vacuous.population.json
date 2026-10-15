@@ -1,0 +1,21 @@
+{
+ "population": {
+  "model": "frequency.orm.json",
+  "model_id": "urn:gnd:pl13a:frequency",
+  "source": "fixture",
+  "covers": [
+   "panel_includes_expert",
+   "team_includes_member",
+   "club_includes_player",
+   "committee_includes_seat",
+   "reviewer_reviews_paper_in_round"
+  ]
+ },
+ "facts": {
+  "panel_includes_expert": [],
+  "team_includes_member": [],
+  "club_includes_player": [],
+  "committee_includes_seat": [],
+  "reviewer_reviews_paper_in_round": []
+ }
+}

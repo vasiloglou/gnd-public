@@ -1,0 +1,140 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:cardinality",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "country",
+   "name": "Country",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "country_id"
+   }
+  },
+  {
+   "id": "country_id",
+   "name": "CountryId",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "person_lives_in_country",
+   "reading": "{Person} lives in {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  },
+  {
+   "id": "person_heads_country",
+   "reading": "{Person} heads {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "card_country_1_to_3",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: card_country_1_to_3"
+   },
+   "scope": "object",
+   "object_type": "country",
+   "bound": {
+    "min": 1,
+    "max": 3
+   }
+  },
+  {
+   "id": "card_person_id_max_4",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "deontic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: card_person_id_max_4"
+   },
+   "scope": "object",
+   "object_type": "person_id",
+   "bound": {
+    "max": 4
+   }
+  },
+  {
+   "id": "card_head_max_1",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: card_head_max_1"
+   },
+   "scope": "role",
+   "role_ref": {
+    "fact_type": "person_heads_country",
+    "role": "person"
+   },
+   "bound": {
+    "max": 1
+   }
+  },
+  {
+   "id": "card_resident_min_2",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: card_resident_min_2"
+   },
+   "scope": "role",
+   "role_ref": {
+    "fact_type": "person_lives_in_country",
+    "role": "person"
+   },
+   "bound": {
+    "min": 2
+   }
+  }
+ ]
+}

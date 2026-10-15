@@ -1,0 +1,15 @@
+{
+ "population": {
+  "model": "textual.orm.json",
+  "model_id": "urn:gnd:review:textual",
+  "source": "fixture",
+  "covers": [
+   "lives",
+   "heads"
+  ]
+ },
+ "facts": {
+  "lives": [],
+  "heads": []
+ }
+}

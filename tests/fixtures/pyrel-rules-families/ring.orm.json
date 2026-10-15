@@ -1,0 +1,379 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:ring",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "node",
+   "name": "Node",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "node_id"
+   }
+  },
+  {
+   "id": "node_id",
+   "name": "NodeId",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "ring_irreflexive",
+   "reading": "{Node} irreflexive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_irreflexive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_irreflexive"
+     },
+     "variant": "irreflexive"
+    }
+   ]
+  },
+  {
+   "id": "ring_asymmetric",
+   "reading": "{Node} asymmetric relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_asymmetric",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_asymmetric"
+     },
+     "variant": "asymmetric"
+    }
+   ]
+  },
+  {
+   "id": "ring_antisymmetric",
+   "reading": "{Node} antisymmetric relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_antisymmetric",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_antisymmetric"
+     },
+     "variant": "antisymmetric"
+    }
+   ]
+  },
+  {
+   "id": "ring_symmetric",
+   "reading": "{Node} symmetric relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_symmetric",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_symmetric"
+     },
+     "variant": "symmetric"
+    }
+   ]
+  },
+  {
+   "id": "ring_intransitive",
+   "reading": "{Node} intransitive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_intransitive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_intransitive"
+     },
+     "variant": "intransitive"
+    }
+   ]
+  },
+  {
+   "id": "ring_transitive",
+   "reading": "{Node} transitive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_transitive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_transitive"
+     },
+     "variant": "transitive"
+    }
+   ]
+  },
+  {
+   "id": "ring_acyclic",
+   "reading": "{Node} acyclic relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_acyclic",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_acyclic"
+     },
+     "variant": "acyclic"
+    }
+   ]
+  },
+  {
+   "id": "ring_purely_reflexive",
+   "reading": "{Node} purely reflexive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_purely_reflexive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_purely_reflexive"
+     },
+     "variant": "purely-reflexive"
+    }
+   ]
+  },
+  {
+   "id": "ring_reflexive",
+   "reading": "{Node} reflexive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_reflexive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_reflexive"
+     },
+     "variant": "reflexive"
+    }
+   ]
+  },
+  {
+   "id": "ring_asymmetric_intransitive",
+   "reading": "{Node} asymmetric intransitive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_asymmetric_intransitive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_asymmetric_intransitive"
+     },
+     "variant": "asymmetric-intransitive"
+    }
+   ]
+  },
+  {
+   "id": "ring_acyclic_intransitive",
+   "reading": "{Node} acyclic intransitive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_acyclic_intransitive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_acyclic_intransitive"
+     },
+     "variant": "acyclic-intransitive"
+    }
+   ]
+  },
+  {
+   "id": "ring_symmetric_irreflexive",
+   "reading": "{Node} symmetric irreflexive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_symmetric_irreflexive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_symmetric_irreflexive"
+     },
+     "variant": "symmetric-irreflexive"
+    }
+   ]
+  },
+  {
+   "id": "ring_symmetric_intransitive",
+   "reading": "{Node} symmetric intransitive relates to {Node}",
+   "roles": [
+    {
+     "object_type": "node",
+     "role_name": "a"
+    },
+    {
+     "object_type": "node",
+     "role_name": "b"
+    }
+   ],
+   "constraints": [
+    {
+     "id": "r_symmetric_intransitive",
+     "type": "ring",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "PL13a agreement fixture: r_symmetric_intransitive"
+     },
+     "variant": "symmetric-intransitive"
+    }
+   ]
+  }
+ ]
+}

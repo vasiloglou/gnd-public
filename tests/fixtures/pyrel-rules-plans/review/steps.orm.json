@@ -1,0 +1,189 @@
+{
+ "version": 2,
+ "model_id": "urn:review:steps",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "recipe",
+   "name": "Recipe",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "rid"
+   }
+  },
+  {
+   "id": "rid",
+   "name": "Rid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "num",
+   "name": "Num",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "has_step",
+   "reading": "{Recipe} has step {Num}",
+   "roles": [
+    {
+     "object_type": "recipe",
+     "role_name": "recipe"
+    },
+    {
+     "object_type": "num",
+     "role_name": "step"
+    }
+   ],
+   "constraints": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "one",
+     "type": "uniqueness",
+     "roles": [
+      "recipe"
+     ]
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   },
+   "modality": "alethic",
+   "id": "small",
+   "type": "guarded",
+   "antecedent": [
+    {
+     "fact_type": "has_step",
+     "bind": {
+      "recipe": "$r",
+      "step": "$s"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "left": "$s",
+     "operator": "<=",
+     "right": 5
+    }
+   }
+  }
+ ],
+ "operations": [
+  {
+   "id": "add_step",
+   "reading": "add_step",
+   "parameters": [
+    {
+     "name": "recipe",
+     "object_type": "recipe"
+    },
+    {
+     "name": "step",
+     "object_type": "num"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "assert": {
+      "fact_type": "has_step",
+      "bind": {
+       "recipe": "$recipe",
+       "step": "$step"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  },
+  {
+   "id": "set_step",
+   "reading": "set_step",
+   "parameters": [
+    {
+     "name": "recipe",
+     "object_type": "recipe"
+    },
+    {
+     "name": "before",
+     "object_type": "num"
+    }
+   ],
+   "preconditions": [],
+   "effects": [
+    {
+     "retract": {
+      "fact_type": "has_step",
+      "bind": {
+       "recipe": "$recipe"
+      }
+     }
+    },
+    {
+     "assert": {
+      "fact_type": "has_step",
+      "bind": {
+       "recipe": "$recipe",
+       "step": "$before"
+      }
+     }
+    }
+   ],
+   "dynamic_rules": [
+    {
+     "source": "explicit",
+     "status": "confirmed",
+     "provenance": {
+      "user_quote": "q"
+     },
+     "modality": "alethic",
+     "id": "grow",
+     "subject": {
+      "fact_type": "has_step",
+      "value_role": "step",
+      "bind": {
+       "recipe": "$recipe"
+      }
+     },
+     "op": ">"
+    }
+   ],
+   "frame": {
+    "modality": "alethic"
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "provenance": {
+    "user_quote": "q"
+   }
+  }
+ ]
+}

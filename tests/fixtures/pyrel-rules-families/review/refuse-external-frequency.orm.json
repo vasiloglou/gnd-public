@@ -1,0 +1,97 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:review:ext_freq",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "Personid",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "country",
+   "name": "Country",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "country_id"
+   }
+  },
+  {
+   "id": "country_id",
+   "name": "Countryid",
+   "kind": "value",
+   "primitive": "String"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "lives",
+   "reading": "{Person} {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  },
+  {
+   "id": "heads",
+   "reading": "{Person} {Country}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "country",
+     "role_name": "country"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "ef",
+   "type": "frequency",
+   "scope": "external",
+   "role_refs": [
+    {
+     "fact_type": "lives",
+     "role": "country"
+    },
+    {
+     "fact_type": "heads",
+     "role": "country"
+    }
+   ],
+   "bound": {
+    "max": 2
+   },
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "ef"
+   }
+  }
+ ]
+}

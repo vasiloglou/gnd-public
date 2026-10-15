@@ -56,3 +56,7 @@ gnd diff old.orm.yaml new.orm.yaml --populations populations/
 
 See [evolution and recovery](../guides/evolution-and-recovery.md) for the proposal
 format, acceptance rules and every exit.
+
+See it on an application: [BookRec chapter 7](../bookrec/07-native.md#7-change-a-rule-without-touching-the-query)
+promotes a should-rule to a must-rule and [Expense chapter 4](../expense/04-native.md#7-change-a-rule-without-touching-the-query)
+lowers a cap, both through a previewed proposal, and rerun the unchanged query.

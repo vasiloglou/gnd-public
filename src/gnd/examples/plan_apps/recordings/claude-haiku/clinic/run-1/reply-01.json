@@ -1,0 +1,44 @@
+{
+ "attempt": 1,
+ "provider": "claude",
+ "model": [
+  "claude-haiku-5-5"
+ ],
+ "seconds": 10.8,
+ "reply": "{\"steps\": [{\"op\": \"refill_drug\", \"bindings\": {\"patient\": \"sam\", \"drug\": \"aspirin\", \"on\": \"2024-03-10\"}}], \"note\": \"Only aspirin is refilled on 2024-03-10. The statin isn't due until 2024-03-21, since its 30-day interval runs from 2024-02-20. Warfarin is eligible, but it interacts with aspirin and the two can't be given on the same day. Aspirin was chosen because its last refill (2024-01-15) would otherwise pass the 60-day guideline on 2024-03-15. Warfarin could be refilled instead at the pharmacist's judgement.\"}",
+ "cost_usd": 0.00088639,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 675,
+  "cache_read_input_tokens": 1919,
+  "output_tokens": 1464,
+  "output_tokens_details": {
+   "thinking_tokens": 1246
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 675,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 1464,
+    "cache_read_input_tokens": 1919,
+    "cache_creation_input_tokens": 675,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 675
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ }
+}

@@ -1,0 +1,238 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:der",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "pcode",
+   "name": "Pcode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "pcode"
+   }
+  },
+  {
+   "id": "num",
+   "name": "Num",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "score",
+   "reading": "{Person} r {Num}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "num",
+     "role_name": "num"
+    }
+   ]
+  },
+  {
+   "id": "vip",
+   "reading": "{Person}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    }
+   ]
+  },
+  {
+   "id": "banned",
+   "reading": "{Person}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    }
+   ]
+  },
+  {
+   "id": "best",
+   "reading": "{Person} r {Num}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "num",
+     "role_name": "num"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "score",
+      "bind": {
+       "person": "$p",
+       "num": "$n"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": ">=",
+      "left": "$n",
+      "right": 5
+     }
+    ],
+    "head": {
+     "person": "$p",
+     "num": "$n"
+    }
+   },
+   "constraints": [
+    {
+     "id": "best_unique",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "best_unique"
+     },
+     "roles": [
+      "person"
+     ]
+    },
+    {
+     "id": "best_mandatory",
+     "type": "mandatory",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "best_mandatory"
+     },
+     "role": "person"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "best_sub_vip",
+   "type": "subset",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "best_sub_vip"
+   },
+   "subset_role_seq": [
+    {
+     "fact_type": "best",
+     "role": "person"
+    }
+   ],
+   "superset_role_seq": [
+    {
+     "fact_type": "vip",
+     "role": "person"
+    }
+   ]
+  },
+  {
+   "id": "best_excl_banned",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "best_excl_banned"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "best",
+     "role": "person"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "banned",
+     "role": "person"
+    }
+   ]
+  },
+  {
+   "id": "num_range",
+   "type": "value",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "num_range"
+   },
+   "object_type": "num",
+   "range": {
+    "min": 0,
+    "max": 9,
+    "min_inclusive": true,
+    "max_inclusive": true
+   }
+  },
+  {
+   "id": "best_card",
+   "type": "cardinality",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "best_card"
+   },
+   "scope": "role",
+   "role_ref": {
+    "fact_type": "best",
+    "role": "person"
+   },
+   "bound": {
+    "max": 1
+   }
+  },
+  {
+   "id": "guard",
+   "type": "guarded",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "guard"
+   },
+   "antecedent": [
+    {
+     "fact_type": "best",
+     "bind": {
+      "person": "$p",
+      "num": "$n"
+     }
+    }
+   ],
+   "consequent": {
+    "comparison": {
+     "operator": "<",
+     "left": "$n",
+     "right": 9
+    }
+   }
+  }
+ ]
+}

@@ -51,6 +51,143 @@ This model's subset rule catches Alice because she is unauthorized. It does not
 encode the distinct-requester policy: an authorized requester could still approve
 their own release. The next native query checks that separate business question.
 
+## Read the rules as PyRel requirements
+
+The audit above is a translator you run, not a program you read. To see the
+model's rules written as PyRel logic, export them as **requirements**: each rule
+becomes `m.where(<domain>).require(<check>)`, where the domain is the facts the
+rule talks about and the check is what must hold for each of them. GND writes
+two versions from the same rules:
+
+| Version | Each rule is | Enforced by |
+|---|---|---|
+| `--rules lqp` | an executable `require` | a RelationalAI engine (the logic reasoner), which reports every violation |
+| `--rules duckdb` | the same `require`, shown as a comment, plus its violation query `m.where(<domain>, <not check>)` | PyRel on local DuckDB, which does not enforce `require` itself |
+
+The logic reasoner's direct LQP compiler lowers a requirement to that same
+violation condition, so both programs state the same rules. The DuckDB version
+also reports vacuous rules and uses GND's exit codes; the LQP version only
+relays the engine's reports.
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd export pyrel release-governance/policy/model.orm.json --rules duckdb --out release-rules.py
+gnd export pyrel release-governance/policy/model.orm.json --rules lqp --out release-rules-lqp.py
+```
+
+```text
+Exported the model's rules as PyRel requirements (duckdb version) to release-rules.py
+Exported the model's rules as PyRel requirements (lqp version) to release-rules-lqp.py
+```
+
+Open `release-rules.py`. The authorization rule reads:
+
+```python
+# authorized_approval (must): Synthetic release governance policy supplied by the tutorial.
+#   rule:      m.where(approval(String.ref(), k0)).require(authorized(k0))
+found['authorized_approval'] = rows(m.where(approval(String.ref(), k0), not_(authorized(k0))).select(k0))
+```
+
+Run the DuckDB version on the invalid snapshot. It prints the same witnesses the
+audit reported:
+
+<!-- gnd-run expect=1 lane=pyrel output=stdout -->
+```sh
+"${GND_TUTORIAL_PYREL_PYTHON:?set the isolated interpreter}" release-rules.py release-governance/policy/invalid.pop.json
+```
+
+```text
+approval_required  violated  ["REL-103"]
+one_approval  violated  [{"release": "REL-104", "reviewer": "Maya"}, {"release": "REL-104", "reviewer": "Noah"}]
+authorized_approval  violated  ["Alice"]
+authorized_approval  violated  ["Zoe"]
+```
+
+The LQP version needs an engine to enforce anything. Without one, `--compile`
+shows how PyRel compiled each requirement. That checks the program is well
+formed, not that the rules hold:
+
+<!-- gnd-run expect=0 lane=pyrel output=stdout -->
+```sh
+"${GND_TUTORIAL_PYREL_PYTHON:?set the isolated interpreter}" release-rules-lqp.py --compile
+```
+
+```text
+3 requirements compiled for 3 rules (expected 3)
+Require{…} domain Logical release_any(string::String) check Logical approval(string::String, string_2::String)
+Require{…} domain Logical approval(string::String, string_2::String) approval(string::String, string_3::String) check Logical =(string_2::String, string_3::String)
+Require{…} domain Logical approval(string::String, string_2::String) check Logical authorized(string_2::String)
+```
+
+With an engine connection named in your `raiconfig.yaml`, run
+`release-rules-lqp.py SNAPSHOT --connection NAME`. That path is not exercised
+here: it needs a RelationalAI engine, which this tutorial does not use.
+
+Both versions cover these rule families:
+
+- mandatory and inclusive-or (mandatory over several roles);
+- internal uniqueness and internal frequency;
+- subset, equality and exclusion;
+- exclusive-or over single roles;
+- value lists and value ranges;
+- every ring variant, including acyclic through a recursive closure;
+- object and role cardinality;
+- guarded rules;
+- derived facts: joins, negation, comparisons, several clauses, recursion,
+  `count`, `sum`, `min` and `max`, and the arithmetic `add`, `sub`, `mul`,
+  `neg` and `abs`;
+- dates and durations: Date roles, Date ranges, date comparisons, and
+  `date_add` and `date_sub` in guarded comparisons;
+- reference populations.
+
+Dates are PyRel `Date` values, and `date_add(x, n)` becomes
+`std_date.add(x, days(n))`. A rule whose computed date would fall outside
+years 1 to 9999, or that needs more than 10,000 date calculations, is reported
+as not checked, as GND reports it. Reference populations are verified with
+GND's own checks when the program is generated, and embedded in it; its header
+names each file and its SHA-256. A plan that restates a reference-owned fact
+type is refused, as GND refuses it.
+
+A derived fact type becomes PyRel `define` rules, and GND's derivation check
+becomes two requirements: every computed fact is in the input, and every fact
+the input states is computed. A derived fact type that is not in `covers` is
+reported as not checked, as GND reports it.
+
+Textual rules are listed as not checked, as GND lists them. External uniqueness
+and frequency, exclusive-or over role sequences, subtypes, disconnected rule
+bodies, opaque derivation rules, `avg`, division, rounding, the other
+non-exact functions, arithmetic on Float values and times of day (`DateTime`)
+are refused by name when you export. So is a fact type
+whose name the program needs for a helper relation, such as `likes_reverse`.
+
+For a model with operations, the program also checks plans:
+
+```text
+python RULES.py --pre STATE.json --steps PLAN.steps.json
+```
+
+It validates the plan as `gnd check --pre --steps` does: the digests, the
+operations and their arguments, and the coverage of the pre-state. It then
+builds every state of the plan and checks them all in one PyRel model: each
+step's preconditions on the state before it, each rule on the state after it,
+and GND's step checks (retracts with a target, redundant asserts, fresh
+creates, dynamic rules). Failures are printed with GND's locators, such as
+`$.steps[3].preconditions[id=pre_offered]`. A declared after-state (`--post`,
+GND's frame comparison) is refused by name.
+
+Add `--emit-post AFTER.json` to write the plan's last state as a population:
+its facts plus the derived facts PyRel computed for it. The file is created
+fresh, whatever the verdict; the caller publishes it only on exit 0. If it
+can't be written, the program reports the verdict and exits 74. The
+[plan apps](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/plan_apps)
+use it to execute an accepted plan without GND at run time.
+
+The DuckDB version reads every fact list in the input, as GND does. A mandatory
+or inclusive-or rule is vacuous when a fact type it needs is missing from
+`covers`. It also refuses an input that repeats a fact, because PyRel relations
+are sets. Its report uses GND's witnesses, in GND's order, and GND's exit codes:
+1 for a broken rule, 4 for a rule it can't check, 2 for a vacuous rule, 0 otherwise.
+
 ## Build your own report with public PyRel APIs
 
 `pyrel_queries.py` declares four relationships, defines supplied rows, joins the

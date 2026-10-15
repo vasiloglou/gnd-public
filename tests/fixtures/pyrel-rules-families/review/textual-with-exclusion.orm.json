@@ -1,0 +1,170 @@
+{
+ "version": 1,
+ "model_id": "urn:gnd:pl13a:exclusion",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "person",
+   "name": "Person",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "person_id"
+   }
+  },
+  {
+   "id": "person_id",
+   "name": "PersonId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "car",
+   "name": "Car",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "car_id"
+   }
+  },
+  {
+   "id": "car_id",
+   "name": "CarId",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "year",
+   "name": "Year",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "person_married_in",
+   "reading": "{Person} married in {Year}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "year",
+     "role_name": "year"
+    }
+   ]
+  },
+  {
+   "id": "person_widowed_in",
+   "reading": "{Person} was widowed in {Year}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "year",
+     "role_name": "year"
+    }
+   ]
+  },
+  {
+   "id": "person_owns_car",
+   "reading": "{Person} owns {Car}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "car",
+     "role_name": "car"
+    }
+   ]
+  },
+  {
+   "id": "person_rents_car",
+   "reading": "{Person} rents {Car}",
+   "roles": [
+    {
+     "object_type": "person",
+     "role_name": "person"
+    },
+    {
+     "object_type": "car",
+     "role_name": "car"
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  {
+   "id": "ex_married_widowed",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: ex_married_widowed"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "person_married_in",
+     "role": "person"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "person_widowed_in",
+     "role": "person"
+    }
+   ]
+  },
+  {
+   "id": "ex_owns_rents",
+   "type": "exclusion",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "PL13a agreement fixture: ex_owns_rents"
+   },
+   "role_seq_a": [
+    {
+     "fact_type": "person_owns_car",
+     "role": "person"
+    },
+    {
+     "fact_type": "person_owns_car",
+     "role": "car"
+    }
+   ],
+   "role_seq_b": [
+    {
+     "fact_type": "person_rents_car",
+     "role": "person"
+    },
+    {
+     "fact_type": "person_rents_car",
+     "role": "car"
+    }
+   ]
+  },
+  {
+   "id": "t1",
+   "type": "textual",
+   "source": "explicit",
+   "status": "confirmed",
+   "modality": "alethic",
+   "provenance": {
+    "user_quote": "t1"
+   },
+   "expression": "people are nice"
+  }
+ ]
+}

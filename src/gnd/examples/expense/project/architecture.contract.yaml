@@ -1,0 +1,107 @@
+{
+  "contract_version": 1,
+  "modules": [
+    {
+      "path": "cli/expense_cli.py",
+      "symbols": [
+        {
+          "name": "main",
+          "parameters": [
+            "argv"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "cli/reporting.py",
+      "symbols": [
+        {
+          "name": "summarize",
+          "parameters": [
+            "facts"
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [],
+  "entry_points": [
+    {
+      "module": "cli.expense_cli",
+      "subcommands": [
+        "approve",
+        "report"
+      ],
+      "flags": [
+        "--model",
+        "--population",
+        "--expense",
+        "--chain",
+        "--output",
+        "--backend",
+        "--pyrel-python"
+      ],
+      "consumes": [
+        "expense_submitted_by_employee",
+        "expense_has_amount",
+        "expense_in_category",
+        "expense_is_approved",
+        "expense_approved_by_chain"
+      ],
+      "produces": [
+        "expense_is_approved",
+        "expense_approved_by_chain"
+      ],
+      "exits": [
+        {
+          "code": 0,
+          "meaning": "accepted result"
+        },
+        {
+          "code": 1,
+          "meaning": "domain refusal or model violation"
+        },
+        {
+          "code": 2,
+          "meaning": "usage error or inadequate checking evidence"
+        },
+        {
+          "code": 3,
+          "meaning": "invalid model or population"
+        }
+      ]
+    }
+  ],
+  "smoke": [
+    {
+      "id": "report-submitted-expenses",
+      "entry_point": "cli.expense_cli",
+      "argv": [
+        "report",
+        "--model",
+        "model.orm.json",
+        "--population",
+        "seed.population.json"
+      ],
+      "expect_exit": 0
+    },
+    {
+      "id": "reject-unknown-expense",
+      "entry_point": "cli.expense_cli",
+      "argv": [
+        "approve",
+        "--model",
+        "model.orm.json",
+        "--population",
+        "seed.population.json",
+        "--expense",
+        "999",
+        "--chain",
+        "finance",
+        "--output",
+        "{tmp}/unknown.json"
+      ],
+      "expect_exit": 1
+    }
+  ]
+}

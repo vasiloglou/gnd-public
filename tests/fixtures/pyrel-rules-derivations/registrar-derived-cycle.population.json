@@ -1,0 +1,170 @@
+{
+ "population": {
+  "model": "registrar-derived.orm.json",
+  "model_id": "urn:gnd:pl13b:registrar-derived",
+  "source": "fixture",
+  "covers": [
+   "course_needs",
+   "passed",
+   "enrolls",
+   "prerequisite_chain",
+   "missing_prerequisite"
+  ]
+ },
+ "facts": {
+  "course_needs": [
+   {
+    "course": "ML",
+    "prerequisite": "LA"
+   },
+   {
+    "course": "LA",
+    "prerequisite": "CALC"
+   },
+   {
+    "course": "ML",
+    "prerequisite": "PROB"
+   },
+   {
+    "course": "PROB",
+    "prerequisite": "CALC"
+   },
+   {
+    "course": "DB",
+    "prerequisite": "CS1"
+   },
+   {
+    "course": "CALC",
+    "prerequisite": "ML"
+   }
+  ],
+  "passed": [
+   {
+    "student": "maya",
+    "course": "CALC"
+   },
+   {
+    "student": "maya",
+    "course": "CS1"
+   },
+   {
+    "student": "omar",
+    "course": "CALC"
+   },
+   {
+    "student": "omar",
+    "course": "LA"
+   },
+   {
+    "student": "omar",
+    "course": "PROB"
+   }
+  ],
+  "enrolls": [
+   {
+    "student": "maya",
+    "course": "ML"
+   },
+   {
+    "student": "omar",
+    "course": "ML"
+   },
+   {
+    "student": "maya",
+    "course": "DB"
+   }
+  ],
+  "prerequisite_chain": [
+   {
+    "course": "CALC",
+    "prerequisite": "CALC"
+   },
+   {
+    "course": "CALC",
+    "prerequisite": "LA"
+   },
+   {
+    "course": "CALC",
+    "prerequisite": "ML"
+   },
+   {
+    "course": "CALC",
+    "prerequisite": "PROB"
+   },
+   {
+    "course": "DB",
+    "prerequisite": "CS1"
+   },
+   {
+    "course": "LA",
+    "prerequisite": "CALC"
+   },
+   {
+    "course": "LA",
+    "prerequisite": "LA"
+   },
+   {
+    "course": "LA",
+    "prerequisite": "ML"
+   },
+   {
+    "course": "LA",
+    "prerequisite": "PROB"
+   },
+   {
+    "course": "ML",
+    "prerequisite": "CALC"
+   },
+   {
+    "course": "ML",
+    "prerequisite": "LA"
+   },
+   {
+    "course": "ML",
+    "prerequisite": "ML"
+   },
+   {
+    "course": "ML",
+    "prerequisite": "PROB"
+   },
+   {
+    "course": "PROB",
+    "prerequisite": "CALC"
+   },
+   {
+    "course": "PROB",
+    "prerequisite": "LA"
+   },
+   {
+    "course": "PROB",
+    "prerequisite": "ML"
+   },
+   {
+    "course": "PROB",
+    "prerequisite": "PROB"
+   }
+  ],
+  "missing_prerequisite": [
+   {
+    "student": "maya",
+    "course": "ML",
+    "prerequisite": "LA"
+   },
+   {
+    "student": "maya",
+    "course": "ML",
+    "prerequisite": "ML"
+   },
+   {
+    "student": "maya",
+    "course": "ML",
+    "prerequisite": "PROB"
+   },
+   {
+    "student": "omar",
+    "course": "ML",
+    "prerequisite": "ML"
+   }
+  ]
+ }
+}

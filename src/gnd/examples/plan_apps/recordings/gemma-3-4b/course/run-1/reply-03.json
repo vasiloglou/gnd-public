@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 1.0,
+ "reply": "```json\n{\n  \"steps\": [\n    {\n      \"op\": \"enroll\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"term\": \"spring\"\n      }\n    },\n    {\n      \"op\": \"record_grade\",\n      \"bindings\": {\n        \"student\": \"maya\",\n        \"course\": \"CS340\",\n        \"grade\": \"A\"\n      }\n    }\n  ],\n  \"note\": \"Maya needs to take MATH220 and STAT210 before enrolling in CS340. These courses are offered in the spring.\"\n}\n```",
+ "usage": {
+  "prompt_tokens": 2570,
+  "completion_tokens": 155,
+  "total_tokens": 2725,
+  "cost": 0.00011055,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00011055,
+   "upstream_inference_prompt_cost": 0.0001028,
+   "upstream_inference_completions_cost": 7.75e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

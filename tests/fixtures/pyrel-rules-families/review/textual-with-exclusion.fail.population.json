@@ -1,0 +1,67 @@
+{
+ "population": {
+  "model": "textual-with-exclusion.orm.json",
+  "model_id": "urn:gnd:pl13a:exclusion",
+  "source": "fixture",
+  "covers": [
+   "person_married_in",
+   "person_widowed_in",
+   "person_owns_car",
+   "person_rents_car"
+  ]
+ },
+ "facts": {
+  "person_married_in": [
+   {
+    "person": "p1",
+    "year": 2000
+   },
+   {
+    "person": "p2",
+    "year": 2000
+   },
+   {
+    "person": "p3",
+    "year": 1999
+   }
+  ],
+  "person_widowed_in": [
+   {
+    "person": "p2",
+    "year": 2005
+   },
+   {
+    "person": "p1",
+    "year": 2006
+   },
+   {
+    "person": "p1",
+    "year": 2007
+   }
+  ],
+  "person_owns_car": [
+   {
+    "person": "p1",
+    "car": "c1"
+   },
+   {
+    "person": "p2",
+    "car": "c2"
+   }
+  ],
+  "person_rents_car": [
+   {
+    "person": "p1",
+    "car": "c1"
+   },
+   {
+    "person": "p2",
+    "car": "c2"
+   },
+   {
+    "person": "p2",
+    "car": "c3"
+   }
+  ]
+ }
+}

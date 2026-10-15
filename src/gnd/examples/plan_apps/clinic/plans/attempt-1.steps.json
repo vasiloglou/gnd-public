@@ -1,0 +1,28 @@
+{
+ "steps": [
+  {
+   "op": "refill_drug",
+   "bindings": {
+    "patient": "sam",
+    "drug": "statin",
+    "on": "2024-03-10"
+   }
+  },
+  {
+   "op": "refill_drug",
+   "bindings": {
+    "patient": "sam",
+    "drug": "warfarin",
+    "on": "2024-03-10"
+   }
+  },
+  {
+   "op": "refill_drug",
+   "bindings": {
+    "patient": "sam",
+    "drug": "aspirin",
+    "on": "2024-03-10"
+   }
+  }
+ ]
+}

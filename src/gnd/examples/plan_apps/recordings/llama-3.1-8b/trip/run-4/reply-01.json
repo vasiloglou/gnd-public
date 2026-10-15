@@ -1,0 +1,30 @@
+{
+ "attempt": 1,
+ "provider": "DeepInfra",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 4.7,
+ "reply": "{\"steps\":[{\"op\":\"book_hotel\",\"bindings\":{\"trip\":\"lisbon\",\"hotel\":\"palacio\",\"night\":\"2025-05-12\"}}},{\"op\":\"book_activity\",\"bindings\":{\"trip\":\"lisbon\",\"activity\":\"tram-28-tour\"}}],\"note\":\"Fado night was left out due to exceeding the budget, but it can be added by removing Oceanarium or Belem walk.\"}",
+ "usage": {
+  "prompt_tokens": 1287,
+  "completion_tokens": 82,
+  "total_tokens": 1369,
+  "cost": 2.902e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 2.902e-05,
+   "upstream_inference_prompt_cost": 2.574e-05,
+   "upstream_inference_completions_cost": 3.28e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:names3",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "code",
+   "name": "Code",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "thing",
+   "name": "Thing",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "code"
+   }
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "takes",
+   "reading": "{Thing} r {Thing}",
+   "roles": [
+    {
+     "object_type": "thing",
+     "role_name": "m"
+    },
+    {
+     "object_type": "thing",
+     "role_name": "found"
+    }
+   ]
+  },
+  {
+   "id": "rows",
+   "reading": "{Thing} r {Thing}",
+   "roles": [
+    {
+     "object_type": "thing",
+     "role_name": "h_x"
+    },
+    {
+     "object_type": "thing",
+     "role_name": "std_math"
+    }
+   ]
+  },
+  {
+   "id": "same",
+   "reading": "{Thing} r {Thing}",
+   "roles": [
+    {
+     "object_type": "thing",
+     "role_name": "aggregates"
+    },
+    {
+     "object_type": "thing",
+     "role_name": "facts"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "takes",
+      "bind": {
+       "m": "$takes",
+       "found": "$takes_"
+      }
+     }
+    ],
+    "head": {
+     "aggregates": "$takes",
+     "facts": "$takes_"
+    }
+   },
+   "constraints": [
+    {
+     "id": "same_unique",
+     "type": "uniqueness",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "same_unique"
+     },
+     "roles": [
+      "aggregates"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "found",
+   "reading": "{Thing} r {Thing}",
+   "roles": [
+    {
+     "object_type": "thing",
+     "role_name": "m"
+    },
+    {
+     "object_type": "thing",
+     "role_name": "h_row"
+    }
+   ],
+   "derivation": "semiderived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "rows",
+      "bind": {
+       "h_x": "$m",
+       "std_math": "$found"
+      }
+     },
+     {
+      "fact_type": "same",
+      "bind": {
+       "aggregates": "$found",
+       "facts": "$h_row"
+      }
+     }
+    ],
+    "head": {
+     "m": "$m",
+     "h_row": "$h_row"
+    }
+   },
+   "constraints": [
+    {
+     "id": "found_mand",
+     "type": "mandatory",
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "found_mand"
+     },
+     "role": "m"
+    }
+   ]
+  }
+ ],
+ "constraints": []
+}

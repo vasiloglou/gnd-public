@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "Parasail",
+ "model": "google/gemma-3-4b-it",
+ "seconds": 1.5,
+ "reply": "```json\n{\"steps\": [{\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS340\", \"term\": \"spring\"}}, {\"op\": \"record_grade\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS340\", \"grade\": \"A\"}}, {\"op\": \"drop\", \"bindings\": {\"student\": \"maya\", \"course\": \"MATH220\", \"term\": \"spring\"}}, {\"op\": \"drop\", \"bindings\": {\"student\": \"maya\", \"course\": \"STAT210\", \"term\": \"spring\"}}]\n```",
+ "usage": {
+  "prompt_tokens": 2570,
+  "completion_tokens": 135,
+  "total_tokens": 2705,
+  "cost": 0.00010955,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00010955,
+   "upstream_inference_prompt_cost": 0.0001028,
+   "upstream_inference_completions_cost": 6.75e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

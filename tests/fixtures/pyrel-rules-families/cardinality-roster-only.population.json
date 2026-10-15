@@ -1,0 +1,23 @@
+{
+ "population": {
+  "model": "cardinality.orm.json",
+  "model_id": "urn:gnd:pl13a:cardinality",
+  "source": "fixture",
+  "covers": [
+   "person_lives_in_country",
+   "person_heads_country"
+  ]
+ },
+ "instances": {
+  "country": [
+   "c1",
+   "c2",
+   "c3",
+   "c4"
+  ]
+ },
+ "facts": {
+  "person_lives_in_country": [],
+  "person_heads_country": []
+ }
+}

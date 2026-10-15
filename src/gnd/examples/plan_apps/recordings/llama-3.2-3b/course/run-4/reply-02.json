@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 1.4,
+ "reply": "{\n \"steps\": [{\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS101\", \"term\": \"spring\"}}, {\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"MATH220\", \"term\": \"spring\"}}, {\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"STAT210\", \"term\": \"spring\"}}, {\"op\": \"record_grade\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS101\", \"grade\": \"A\"}}, {\"op\": \"record_grade\", \"bindings\": {\"student\": \"maya\", \"course\": \"MATH220\", \"grade\": \"A\"}}, {\"op\": \"record_grade\", \"bindings\": {\"student\": \"maya\", \"course\": \"STAT210\", \"grade\": \"A\"}}, {\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS230\", \"term\": \"spring\"}}, {\"op\": \"record_grade\", \"bindings\": {\"student\": \"maya\", \"course\": \"CS230\", \"grade\": \"A\"}}, {\"op\": \"enroll\", \"bindings\": {\"student\": \"maya\", \"course\": \"PHIL101\", \"term\": \"spring\"}}], \"reason\": \"no space left in the term\"",
+ "usage": {
+  "prompt_tokens": 2086,
+  "completion_tokens": 289,
+  "total_tokens": 2375,
+  "cost": 0.00019967,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1840,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.00019967,
+   "upstream_inference_prompt_cost": 0.0001043,
+   "upstream_inference_completions_cost": 9.537e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

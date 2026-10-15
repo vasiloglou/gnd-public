@@ -1,0 +1,22 @@
+{
+ "steps_schema": 1,
+ "model": "m",
+ "steps": [
+  {
+   "op": "add_step",
+   "bindings": {
+    "recipe": "r2",
+    "step": 9
+   }
+  },
+  {
+   "op": "set_step",
+   "bindings": {
+    "recipe": "r1",
+    "before": 1
+   }
+  }
+ ],
+ "model_digest": "sha256:1b26a6a20a9f18bd47729aef7be85fcd576bc87e9b31a65b2386bcaceda47b26",
+ "operations_digest": "sha256:cc27c14945018ded7d3150d81409b3609f989838894499fad92bdd59edf2b23c"
+}

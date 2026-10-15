@@ -1,0 +1,32 @@
+{
+ "files": {
+  "claude-default/run-1/model.orm.yaml": "6664fe559bf49d3a227a13a5531d94c58fa9eb58a02b3f82db391b1b092e8918",
+  "claude-default/run-1/turn-01.jsonl": "e9c6fbca4838aecae137bad7f34d63cd7ef2e41f3569a2f961a6975aed564f66",
+  "claude-default/run-1/turn-02.jsonl": "2595dc75a68e5dd92cbfe871025f62f515805119192f54571e5da6b00f42af59",
+  "claude-default/run-1/validate.txt": "c5c14bd915d75a15c3d118ea156f3bf17d140c0563bfed2a1d07ff022fb31666",
+  "claude-default/run-2/model.orm.json": "497ca980e9ba059e30e740fe373ef2ef58cf07dddf9ad3617f992c65d8f988b3",
+  "claude-default/run-2/turn-01.jsonl": "a72f26dabdf86b7e25e4058f708dd351165fb27bfafb4445d427cd5142b1bacb",
+  "claude-default/run-2/turn-02.jsonl": "b60490a2ed571e5b89596f870695973e12d318ffe4bd4f7c77025ab148b21305",
+  "claude-default/run-2/turn-03.jsonl": "f11d38431fa02789ed8df05eca4189ea4f599168e2e68c9f3dc36ff00267b52b",
+  "claude-default/run-2/turn-04.jsonl": "45cbe298d09107951cee7e2abd04071436437a1e8aef2e89a74238c0ab16aee5",
+  "claude-default/run-2/turn-05.jsonl": "5670923687b899c5f4fe56ede7e4f41d01b356c45167bd672b20bc0ce86b2903",
+  "claude-default/run-2/validate.txt": "340e26dd82980e37d409b9ef08b2f9261a763afaa71a1d75aed516153e790d6f",
+  "claude-haiku/run-1/model.orm.yaml": "7b9f7ec1a42e52901a194d9ea0ccc6a86a0d42af8c5bb61b34a8d158dc76d90e",
+  "claude-haiku/run-1/turn-01.jsonl": "f192ec530267a9a6d3c7e75f385e5c950ced56de61196d5e64641cc4b89ac9f2",
+  "claude-haiku/run-1/validate.txt": "c5c14bd915d75a15c3d118ea156f3bf17d140c0563bfed2a1d07ff022fb31666",
+  "claude-haiku/run-2/model.orm.yaml": "43bb8ee6411df541d030fbb16705a777c496c13c920de97ea81aabe14c709c54",
+  "claude-haiku/run-2/turn-01.jsonl": "ee84f1b5a4a46597b59dad920383308be5fee53e366547e2d5bb69758da0b250",
+  "claude-haiku/run-2/turn-02.jsonl": "a603624b470567f2d532f9ebc2d93411ceb7caa82131c7b48701fc9a2be0e0e6",
+  "claude-haiku/run-2/validate.txt": "c5c14bd915d75a15c3d118ea156f3bf17d140c0563bfed2a1d07ff022fb31666",
+  "results.json": "bcf36213f3b3ad3dcc9d2a8a094937e4418226f66380f5219e5e796db0e823fe"
+ },
+ "sources": {
+  "tools/record_skill_sessions.py": "3d72a07b1bd25abce309888ead094c831f668e19d2def7881f92c06fbf6a2719",
+  "src/gnd/examples/plan_apps/course/rules.md": "346f640129c646d1a99775d6a677dad6fcdc6b0d12d2cbd9bc72a1aaf1c1409d",
+  "src/gnd/skills/gnd-model-from-text/SKILL.md": "ad156002a528eed796db1c8f9eeeb14d12bdb4c1f7150939381973fa3e5ee18b"
+ },
+ "finished_later": {
+  "date": "2026-10-15",
+  "why": "the keep filter for tool output and Claude Code's start event was added after this recording"
+ }
+}

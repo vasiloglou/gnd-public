@@ -1,0 +1,15 @@
+{
+ "steps_schema": 1,
+ "model": "m",
+ "steps": [
+  {
+   "op": "pair",
+   "bindings": {
+    "a": "p2",
+    "b": "p2"
+   }
+  }
+ ],
+ "model_digest": "sha256:f6f1849b2f853ba22dfd551b0bb44a61e0a45cef2a6a61aa4e0de5b6aa8a4f81",
+ "operations_digest": "sha256:8a3923fbfecc3867771b3ee1705d9829143798d8e11551631460ff29264b612b"
+}

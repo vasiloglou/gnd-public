@@ -1,0 +1,53 @@
+{
+  "source_commit": "1495ba2f61eb5f8524b35589b14dc5cd07707b21",
+  "run_exit": 0,
+  "raw_artifacts_verified": 804,
+  "commands_all_exit_zero": 16,
+  "replacements": {
+    "acceptance_root": "<acceptance>",
+    "checkout_root": "<checkout>",
+    "user_home": "<home>"
+  },
+  "files": {
+    "receipt.json": {
+      "raw_sha256": "f207a2274eab5cadc7456c86735a0b732e2a1dc9a08138d5721f0b3f406163c1",
+      "retained_sha256": "6823a52ddc23195e71809df92d3edb288cfb4e63f9891f3bd3d2c0d77093fca9"
+    },
+    "native-corpus.json": {
+      "raw_sha256": "6623b00b16c01e5290e7cd32cca0da4a9dd1a09c801b4cf7025e63cd1660afa4",
+      "retained_sha256": "6623b00b16c01e5290e7cd32cca0da4a9dd1a09c801b4cf7025e63cd1660afa4"
+    },
+    "gnd-corpus.json": {
+      "raw_sha256": "45c355f07e1f0b764c81779d5d7a212c94547538b7ebb4d23c7b5890dc7759fe",
+      "retained_sha256": "45c355f07e1f0b764c81779d5d7a212c94547538b7ebb4d23c7b5890dc7759fe"
+    },
+    "bookrec-offline-steps.json": {
+      "raw_sha256": "4b1f946f9db68a571eb3ec6a13e5ff6bff1003b06a2571068caddd392aef6b39",
+      "retained_sha256": "90a786d24b1ac061d171d725571990cd350d06ac689ce6203fcbfddc3ae374ed"
+    },
+    "bookrec-pyrel-steps.json": {
+      "raw_sha256": "bc3093484fd6f219958e656e9b1b9d2f88fc03a75ac4bbe618f51da4541fc25a",
+      "retained_sha256": "1b293c34d9bae0e58cdedf703be86ceeea994097d6310bfb242072e72a2e4a71"
+    },
+    "expense-offline-steps.json": {
+      "raw_sha256": "a803369840a0e338f99cc59dc03679550571ec1101c3993d923223182bce40f7",
+      "retained_sha256": "8121136d70e179cc69ff8005e14e2beb5dabe357e842ef14fef71dc52bc7fd1e"
+    },
+    "expense-pyrel-steps.json": {
+      "raw_sha256": "46ebbd6a92ac4f8b5dda5b689abbd3acd807bf2ed26faa4ace5ead900cf624d3",
+      "retained_sha256": "e6cb24c647e0ea3b25da2c5846389076aff39d6fb2cb2c7093c2163d175e031e"
+    }
+  },
+  "local_archive": {
+    "path": "<resume>/installed-artifacts.zip",
+    "sha256": "999ee5bb4732a8d1a2f467a70cd5dc344157aeb2a6dd290f58f65d21cb3b00ea",
+    "bytes": 4660215,
+    "note": "Local raw artifact archive, not committed. Includes the original receipt and wheel."
+  },
+  "build_inputs": {
+    "pyproject.toml": "ff0da954a63e4b9f4a1a71a8626574490a813ed122b88375da25cc13ecac357a",
+    "uv.lock": "dfeece33dedc698b2f9f2a83552531a44ad1d7ad31c8a8758da90fb717f88d46",
+    "README.md": "fe1de7996857dfb62c7895908c639e183e100c99c0a3e43e75497ff6d8bd1d99",
+    "tests/fixtures/pyrel_applications/approval.json": "b380a31b92297a00d66997ad87da790ee51868bb4a33b984d525c15a36f735b7"
+  }
+}

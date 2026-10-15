@@ -162,3 +162,7 @@ gnd verbalize population model.orm.yaml catalog.population.json
 
 The format itself is documented in the `gnd-orm-core` reference library, and
 [ORM: the executable ontology](../concepts.md) explains the notation.
+
+See it on an application: BookRec and Expense show the same skill prompt beside
+the rule it produces, read three ways, in [BookRec chapter 7](../bookrec/07-native.md#3-the-rules-three-ways)
+and [Expense chapter 4](../expense/04-native.md#3-the-rules-three-ways).

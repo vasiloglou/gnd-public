@@ -1,0 +1,16 @@
+{
+ "steps_schema": 1,
+ "model": "registrar.orm.json",
+ "model_digest": "sha256:6c5a87882ccdbade99f7293e2d6dd0444873dd38b056c83f8e22b8e51e7bcd1e",
+ "operations_digest": "sha256:da9f1b78fa0cb0b15929d84dcc416e47e10b6a6610e9bd8a32f77cf196c22bbf",
+ "steps": [
+  {
+   "op": "enroll",
+   "bindings": {
+    "student": "maya",
+    "course": "STAT210",
+    "term": "spring"
+   }
+  }
+ ]
+}

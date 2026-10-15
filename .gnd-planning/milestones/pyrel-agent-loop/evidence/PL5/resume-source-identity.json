@@ -1,0 +1,43 @@
+{
+  "source_base": "1495ba2f61eb5f8524b35589b14dc5cd07707b21",
+  "changed_inputs": {
+    "docs/agents/codegen-conformance.md": "880376d011149753da5852790b23463c8d26d2a1aad2c52a94451a5f1ab41c8c",
+    "docs/agents/dev-session.md": "e266027e1014d90ba17f66fe8bd986ef323773a48b1234b24fb4e6c4ff6e7d2f",
+    "docs/agents/evolve.md": "6c51cb6d3bef2322242dd131dff7aca7acde86ce157d2652166349aabf0602a7",
+    "docs/agents/index.md": "d212257ee6dbde0443bd71328d59f16f6d650eebe9f6706a916f052a72714869",
+    "docs/agents/model-from-text.md": "71e218b372b45be5db4e4debf1d9671be2ea3a216518686d0570168aa932afca",
+    "docs/agents/recorded-sessions.md": "c40ae2b90e55d1e14071cbcef2fff54da1343c0ae331663dcc14b38ebed3d950",
+    "docs/bookrec/07-native.md": "d80b39a4fe5de8c6d79635f93bdd863241518402b8ed7d6014244b4e90bc8ee8",
+    "docs/expense/04-native.md": "8df41bf5251bef487d20a073516cb41fe30392bb85062b4723d2b831ab9f0d88",
+    "docs/pyrel-apps.md": "832a7bd79f38d8efa1cf5b4156a8e1d714c69d19f0336bfc182254e777f0898e",
+    "tests/test_pyrel_applications_install.py": "7da32fab177a10982e7ccff69a2dd50b1c85c671828d5b0d824f6ac63a19a08c",
+    "tests/test_pyrel_learning_path.py": "9bc1fb81c9145023383e8c6a0e0d96d1aba2870a5ff0193fb0592e630e34f296",
+    "tests/test_rf7_structure.py": "3d00c3fcaca8548bf932194567b1c4f8089f2bcecacc67c7efbf6866a4ad2a8f",
+    "tools/accept_pyrel_applications_install.py": "4be1160d1be7109cf4e12070d6f5131fc5ed67c24ed38fa50516704bc942894f",
+    "zensical.toml": "d501feebf40b6e2e75a1a4fe7d8f1b04f68789661c42f50ededfcef26d59bb4b",
+    "src/gnd/examples/expense/prepare_meal_cap.py": "1200d95bdce81f462a8ea4be8e5cbdfccf99b56d12232f940798490eb05dfba2"
+  },
+  "screenshots": {
+    "resume-bookrec-1440-dark-recorded.png": "f54cbabbe6b6f0fa7046174b792e51dce760d32ac0c4690840f46fed946d9719",
+    "resume-bookrec-1440-light-recorded.png": "17f119854c3c03b27f6ceac5aa6162a85df2d95e55b35fde8b7a3127afa53f7b",
+    "resume-bookrec-390-dark-recorded.png": "29b22099366fee3a28db09994c07d09c715be8a1a8ec9913ae51b0b4ecdae82c",
+    "resume-bookrec-390-light-recorded.png": "91ccfdccf486b448ef972792baeae6259aac22771a80eb5114e21923d4d39ed4",
+    "resume-bookrec-desktop-light.png": "e67cdd08f8c8d53446dbe1ae2ae7d4ba0a29b3211e5d91cdd53703d9dcaa4c15",
+    "resume-expense-1440-dark-recorded.png": "d04b2aa159cae345bca88d981cdd2e40a489f1ecb6f9de86f2eaa0297bb962b5",
+    "resume-expense-1440-light-recorded.png": "679343bc32da727fbc8807a194b90d3b65752d9dd8eaa2cde124e535de8c9bcd",
+    "resume-expense-390-dark-recorded.png": "58589dc9ee09c0443164aae23ec2ad7bd70363ab1da594718e24d6164194027e",
+    "resume-expense-390-light-recorded.png": "ba2d5bfc44f251f93cfa337dd2e504f12665d75ec31932d6f379c54b2c8f777f"
+  },
+  "viewports": [
+    1440,
+    390
+  ],
+  "viewport_height": 1000,
+  "themes": [
+    "default",
+    "slate"
+  ],
+  "recorded_region": "5a-a-recorded-session",
+  "horizontal_page_overflow": false,
+  "review_status": "Independent review pending; self-check and visual reading only."
+}

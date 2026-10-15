@@ -1,0 +1,379 @@
+{
+  "version": 4,
+  "model_id": "urn:gnd:registrar@1",
+  "source": {
+    "kind": "text-conversation",
+    "artifacts": ["rules.md"],
+    "started_at": "2026-10-15T00:00:00Z",
+    "confidence": "low",
+    "mode": "mvp-fast"
+  },
+  "object_types": [
+    { "id": "student", "name": "Student", "kind": "entity", "reference": { "mode": "popular", "value_type": "student_name" }, "independent": true },
+    { "id": "course", "name": "Course", "kind": "entity", "reference": { "mode": "popular", "value_type": "course_code" } },
+    { "id": "term", "name": "Term", "kind": "entity", "reference": { "mode": "popular", "value_type": "term_name" } },
+    { "id": "student_name", "name": "StudentName", "kind": "value", "primitive": "String" },
+    { "id": "course_code", "name": "CourseCode", "kind": "value", "primitive": "String" },
+    { "id": "term_name", "name": "TermName", "kind": "value", "primitive": "String" },
+    { "id": "course_title", "name": "CourseTitle", "kind": "value", "primitive": "String" },
+    { "id": "credit_count", "name": "CreditCount", "kind": "value", "primitive": "Integer" },
+    { "id": "credit_load", "name": "CreditLoad", "kind": "value", "primitive": "Integer" },
+    { "id": "grade", "name": "Grade", "kind": "value", "primitive": "String" }
+  ],
+  "fact_types": [
+    {
+      "id": "course_has_title",
+      "reading": "{Course} has {CourseTitle}",
+      "roles": [
+        { "object_type": "course", "role_name": "course" },
+        { "object_type": "course_title", "role_name": "title" }
+      ],
+      "sample_population": [
+        { "course": "CS101", "title": "Intro to Programming" },
+        { "course": "CS340", "title": "Machine Learning" }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "CS101 Intro to Programming" },
+      "constraints": [
+        {
+          "type": "uniqueness", "roles": ["course"],
+          "source": "sample", "status": "confirmed", "modality": "deontic",
+          "rationale": "Every catalogue row shows exactly one title per course. Confirmed at review (turn 3) and kept advisory by owner choice: it describes this catalogue rather than a registrar rule.",
+          "provenance": { "csdp_step": 4, "sample_size": 8 }
+        },
+        {
+          "type": "mandatory", "role": "course",
+          "source": "sample", "status": "confirmed", "modality": "deontic",
+          "rationale": "Every catalogue row carries a title. Confirmed at review (turn 3) and kept advisory by owner choice: it describes this catalogue rather than a registrar rule.",
+          "provenance": { "csdp_step": 5, "sample_size": 8 }
+        }
+      ]
+    },
+    {
+      "id": "course_has_credits",
+      "reading": "{Course} is worth {CreditCount}",
+      "roles": [
+        { "object_type": "course", "role_name": "course" },
+        { "object_type": "credit_count", "role_name": "credits" }
+      ],
+      "sample_population": [
+        { "course": "CS101", "credits": 4 },
+        { "course": "STAT210", "credits": 3 }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "| Course | Credits | Needs | Offered |" },
+      "constraints": [
+        {
+          "type": "uniqueness", "roles": ["course"],
+          "source": "sample", "status": "confirmed", "modality": "deontic",
+          "rationale": "Every catalogue row shows exactly one credit value per course. Confirmed at review (turn 3) and kept advisory by owner choice: it describes this catalogue rather than a registrar rule.",
+          "provenance": { "csdp_step": 4, "sample_size": 8, "observed_values": [3, 4] }
+        },
+        {
+          "type": "mandatory", "role": "course",
+          "source": "sample", "status": "confirmed", "modality": "deontic",
+          "rationale": "Every catalogue row carries a credit value, and the 18-credit cap needs one for every course. Confirmed at review (turn 3) and kept advisory by owner choice: it describes this catalogue rather than a registrar rule.",
+          "provenance": { "csdp_step": 5, "sample_size": 8 }
+        }
+      ]
+    },
+    {
+      "id": "course_needs_course",
+      "reading": "{Course:course} needs {Course:prerequisite}",
+      "roles": [
+        { "object_type": "course", "role_name": "course" },
+        { "object_type": "course", "role_name": "prerequisite" }
+      ],
+      "sample_population": [
+        { "course": "CS340", "prerequisite": "CS230" },
+        { "course": "CS340", "prerequisite": "MATH220" },
+        { "course": "CS230", "prerequisite": "CS101" }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "CS340 Machine Learning | 4 | CS230, MATH220, STAT210" },
+      "constraints": [
+        {
+          "type": "uniqueness", "roles": ["course", "prerequisite"],
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 4, "dialogue_turn": 1, "user_quote": "CS340 Machine Learning | 4 | CS230, MATH220, STAT210" }
+        }
+      ]
+    },
+    {
+      "id": "course_requires_course",
+      "reading": "{Course:course} requires {Course:prerequisite}",
+      "roles": [
+        { "object_type": "course", "role_name": "course" },
+        { "object_type": "course", "role_name": "prerequisite" }
+      ],
+      "derivation": "semiderived",
+      "storage": "computed",
+      "derivation_rule": {
+        "clauses": [
+          { "body": [ { "fact_type": "course_needs_course", "bind": { "course": "$c", "prerequisite": "$p" } } ] },
+          { "body": [
+              { "fact_type": "course_needs_course", "bind": { "course": "$c", "prerequisite": "$m" } },
+              { "fact_type": "course_requires_course", "bind": { "course": "$m", "prerequisite": "$p" } }
+          ] }
+        ],
+        "head": { "course": "$c", "prerequisite": "$p" }
+      },
+      "provenance": { "csdp_step": 3, "dialogue_turn": 1, "user_quote": "directly or through a chain of prerequisites" }
+    },
+    {
+      "id": "course_offered_in_term",
+      "reading": "{Course} is offered in {Term}",
+      "roles": [
+        { "object_type": "course", "role_name": "course" },
+        { "object_type": "term", "role_name": "term" }
+      ],
+      "sample_population": [
+        { "course": "CS101", "term": "spring" },
+        { "course": "CS250", "term": "fall" }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "CS250 Databases | 3 | CS101 | fall" },
+      "constraints": [
+        {
+          "type": "uniqueness", "roles": ["course", "term"],
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 4, "dialogue_turn": 1, "user_quote": "Only courses offered that term can be taken." }
+        }
+      ]
+    },
+    {
+      "id": "student_enrolled_in_course_for_term",
+      "reading": "{Student} is enrolled in {Course} for {Term}",
+      "roles": [
+        { "object_type": "student", "role_name": "student" },
+        { "object_type": "course", "role_name": "course" },
+        { "object_type": "term", "role_name": "term" }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "Enroll a student in a course for a term." },
+      "constraints": [
+        {
+          "type": "uniqueness", "roles": ["student", "course", "term"],
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 4, "dialogue_turn": 1, "user_quote": "Enroll a student in a course for a term." }
+        },
+        {
+          "id": "at_most_six_courses_per_term",
+          "type": "frequency", "scope": "internal", "roles": ["student", "term"], "bound": { "max": 6 },
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 7, "dialogue_turn": 1, "user_quote": "A student takes at most 6 courses in a term." }
+        }
+      ]
+    },
+    {
+      "id": "student_passed_course",
+      "reading": "{Student} has passed {Course}",
+      "roles": [
+        { "object_type": "student", "role_name": "student" },
+        { "object_type": "course", "role_name": "course" }
+      ],
+      "sample_population": [
+        { "student": "Maya", "course": "CS101" },
+        { "student": "Maya", "course": "MATH120" },
+        { "student": "Maya", "course": "CS230" }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "Maya has passed CS101, MATH120 and CS230." },
+      "constraints": [
+        {
+          "type": "uniqueness", "roles": ["student", "course"],
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 4, "dialogue_turn": 1, "user_quote": "Maya has passed CS101, MATH120 and CS230." }
+        }
+      ]
+    },
+    {
+      "id": "student_received_grade_for_course",
+      "reading": "{Student} received {Grade} for {Course}",
+      "roles": [
+        { "object_type": "student", "role_name": "student" },
+        { "object_type": "grade", "role_name": "grade" },
+        { "object_type": "course", "role_name": "course" }
+      ],
+      "provenance": { "csdp_step": 1, "dialogue_turn": 1, "user_quote": "A student has one grade per course" },
+      "constraints": [
+        {
+          "id": "one_grade_per_course",
+          "type": "uniqueness", "roles": ["student", "course"],
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 4, "dialogue_turn": 1, "user_quote": "A student has one grade per course" }
+        }
+      ]
+    },
+    {
+      "id": "student_carries_credit_load_in_term",
+      "reading": "{Student} carries {CreditLoad} in {Term}",
+      "roles": [
+        { "object_type": "student", "role_name": "student" },
+        { "object_type": "credit_load", "role_name": "load" },
+        { "object_type": "term", "role_name": "term" }
+      ],
+      "derivation": "derived",
+      "storage": "computed",
+      "derivation_rule": {
+        "body": [
+          { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$s", "course": "$c", "term": "$t" } },
+          { "fact_type": "course_has_credits", "bind": { "course": "$c", "credits": "$cr" } }
+        ],
+        "aggregate": { "fn": "sum", "of": "$cr", "over": ["$c"], "as": "$total" },
+        "head": { "student": "$s", "load": "$total", "term": "$t" }
+      },
+      "provenance": { "csdp_step": 3, "dialogue_turn": 1, "user_quote": "A student takes at most 18 credits in a term." }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "prerequisites_passed_before_enrolling",
+      "type": "guarded",
+      "antecedent": [
+        { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$s", "course": "$c", "term": "$t" } },
+        { "fact_type": "course_requires_course", "bind": { "course": "$c", "prerequisite": "$p" } }
+      ],
+      "consequent": { "atom": { "fact_type": "student_passed_course", "bind": { "student": "$s", "course": "$p" } } },
+      "source": "explicit", "status": "confirmed", "modality": "alethic",
+      "provenance": { "csdp_step": 7, "dialogue_turn": 1, "user_quote": "A student can't take a course before passing every course it needs, directly or through a chain of prerequisites." }
+    },
+    {
+      "id": "no_enrolling_in_passed_course",
+      "type": "guarded",
+      "antecedent": [
+        { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$s", "course": "$c", "term": "$t" } }
+      ],
+      "consequent": { "absence": { "fact_type": "student_passed_course", "bind": { "student": "$s", "course": "$c" } } },
+      "source": "explicit", "status": "confirmed", "modality": "alethic",
+      "provenance": { "csdp_step": 7, "dialogue_turn": 1, "user_quote": "A student doesn't enroll in a course they have already passed." }
+    },
+    {
+      "id": "at_most_eighteen_credits_per_term",
+      "type": "guarded",
+      "antecedent": [
+        { "fact_type": "student_carries_credit_load_in_term", "bind": { "student": "$s", "load": "$n", "term": "$t" } }
+      ],
+      "consequent": { "comparison": { "operator": "<=", "left": "$n", "right": 18 } },
+      "source": "explicit", "status": "confirmed", "modality": "alethic",
+      "provenance": { "csdp_step": 7, "dialogue_turn": 1, "user_quote": "A student takes at most 18 credits in a term." }
+    },
+    {
+      "id": "only_offered_courses_taken",
+      "type": "subset",
+      "subset_role_seq": [
+        { "fact_type": "student_enrolled_in_course_for_term", "role": "course" },
+        { "fact_type": "student_enrolled_in_course_for_term", "role": "term" }
+      ],
+      "superset_role_seq": [
+        { "fact_type": "course_offered_in_term", "role": "course" },
+        { "fact_type": "course_offered_in_term", "role": "term" }
+      ],
+      "source": "explicit", "status": "confirmed", "modality": "alethic",
+      "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Only courses offered that term can be taken." }
+    }
+  ],
+  "operations": [
+    {
+      "id": "enroll",
+      "reading": "Enroll {Student} in {Course} for {Term}",
+      "parameters": [
+        { "name": "student", "object_type": "student" },
+        { "name": "course", "object_type": "course" },
+        { "name": "term", "object_type": "term" }
+      ],
+      "preconditions": [
+        {
+          "id": "course_is_offered",
+          "require": [ { "fact_type": "course_offered_in_term", "bind": { "course": "$course", "term": "$term" } } ],
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Only courses offered that term can be taken." }
+        }
+      ],
+      "effects": [
+        { "assert": { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$student", "course": "$course", "term": "$term" } } }
+      ],
+      "frame": { "modality": "deontic" },
+      "source": "explicit", "status": "confirmed",
+      "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Enroll a student in a course for a term." }
+    },
+    {
+      "id": "drop_course",
+      "reading": "Drop {Course} for {Student} in {Term}",
+      "parameters": [
+        { "name": "student", "object_type": "student" },
+        { "name": "course", "object_type": "course" },
+        { "name": "term", "object_type": "term" }
+      ],
+      "effects": [
+        { "retract": { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$student", "course": "$course", "term": "$term" } } }
+      ],
+      "frame": { "modality": "deontic" },
+      "source": "explicit", "status": "confirmed",
+      "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Drop a course, or every course in a term." }
+    },
+    {
+      "id": "drop_term",
+      "reading": "Drop every course {Student} takes in {Term}",
+      "parameters": [
+        { "name": "student", "object_type": "student" },
+        { "name": "term", "object_type": "term" }
+      ],
+      "effects": [
+        { "retract": { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$student", "term": "$term" } } }
+      ],
+      "frame": { "modality": "deontic" },
+      "source": "explicit", "status": "confirmed",
+      "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Drop a course, or every course in a term." }
+    },
+    {
+      "id": "record_grade",
+      "reading": "Record {Grade} for {Student} in {Course}",
+      "parameters": [
+        { "name": "student", "object_type": "student" },
+        { "name": "course", "object_type": "course" },
+        { "name": "term", "object_type": "term" },
+        { "name": "grade", "object_type": "grade" }
+      ],
+      "effects": [
+        { "assert": { "fact_type": "student_received_grade_for_course", "bind": { "student": "$student", "grade": "$grade", "course": "$course" } } },
+        { "assert": { "fact_type": "student_passed_course", "bind": { "student": "$student", "course": "$course" } } },
+        { "retract": { "fact_type": "student_enrolled_in_course_for_term", "bind": { "student": "$student", "course": "$course", "term": "$term" } } }
+      ],
+      "dynamic_rules": [
+        {
+          "id": "grade_never_changes",
+          "subject": { "fact_type": "student_received_grade_for_course", "value_role": "grade", "bind": { "student": "$student", "course": "$course" } },
+          "op": "=",
+          "source": "explicit", "status": "confirmed", "modality": "alethic",
+          "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "once a grade is recorded it never changes." }
+        }
+      ],
+      "frame": { "modality": "deontic" },
+      "source": "explicit", "status": "confirmed",
+      "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Record a grade, which also marks the course as passed." }
+    },
+    {
+      "id": "admit_student",
+      "reading": "Admit {Student}",
+      "parameters": [ { "name": "student", "object_type": "student" } ],
+      "effects": [ { "create": { "object_type": "student", "param": "student" } } ],
+      "frame": { "modality": "deontic" },
+      "source": "explicit", "status": "confirmed",
+      "provenance": { "csdp_step": 6, "dialogue_turn": 1, "user_quote": "Admit a new student." }
+    }
+  ],
+  "rejected_proposals": [],
+  "deontic_notes": [
+    {
+      "text": "An enrollment is a current registration: record_grade retracts it, so a graded course no longer appears as enrolled.",
+      "rationale": "Owner confirmed at review (turn 3, 'Yes, as you propose')."
+    },
+    {
+      "text": "Every operation's frame is deontic: an undeclared side effect warns instead of failing.",
+      "rationale": "Owner confirmed at review (turn 3, 'Yes, as you propose')."
+    },
+    {
+      "text": "A Student is identified by name; a Term is a season ('spring' or 'fall') with no year, so the 6-course and 18-credit limits apply per season.",
+      "rationale": "Owner confirmed at review (turn 3, 'Yes, as you propose')."
+    },
+    {
+      "text": "The catalogue (course titles, credits, prerequisites, offered terms) is ordinary candidate facts, not a hash-pinned reference population, so codegen accepts the model. Synth still refuses it because of the two structured derivations (prerequisite chain, credit load). references/catalog.pop.json holds the spring catalogue as a plain population.",
+      "rationale": "Owner chose this at turn 5 ('Yes, as you propose'), accepting that a checked population can now change the catalogue."
+    }
+  ]
+}

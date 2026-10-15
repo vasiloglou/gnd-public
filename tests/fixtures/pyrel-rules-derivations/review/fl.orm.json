@@ -1,0 +1,87 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:fl",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "icode",
+   "name": "Icode",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "item",
+   "name": "Item",
+   "kind": "entity",
+   "reference": {
+    "mode": "popular",
+    "value_type": "icode"
+   }
+  },
+  {
+   "id": "qty",
+   "name": "Qty",
+   "kind": "value",
+   "primitive": "Integer"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "stock",
+   "reading": "{Item} r {Qty}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    },
+    {
+     "object_type": "qty",
+     "role_name": "qty"
+    }
+   ]
+  },
+  {
+   "id": "tenth",
+   "reading": "{Item}",
+   "roles": [
+    {
+     "object_type": "item",
+     "role_name": "item"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "stock",
+      "bind": {
+       "item": "$i",
+       "qty": "$q"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "=",
+      "left": {
+       "fn": "add",
+       "args": [
+        "$q",
+        0.1
+       ]
+      },
+      "right": 1.1
+     }
+    ],
+    "head": {
+     "item": "$i"
+    }
+   }
+  }
+ ],
+ "constraints": []
+}

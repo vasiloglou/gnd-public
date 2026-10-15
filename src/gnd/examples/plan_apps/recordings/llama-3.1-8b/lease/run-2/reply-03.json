@@ -1,0 +1,30 @@
+{
+ "attempt": 3,
+ "provider": "DeepInfra",
+ "model": "meta-llama/llama-3.1-8b-instruct",
+ "seconds": 4.2,
+ "reply": "{\"steps\": [{\"op\": \"schedule_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"due\": \"2025-07-24\", \"amount\": 1450}}, {\"op\": \"cancel_payment\", \"bindings\": {\"lease\": \"apt-4b\", \"due\": \"2025-07-31\"}}]}",
+ "usage": {
+  "prompt_tokens": 1273,
+  "completion_tokens": 72,
+  "total_tokens": 1345,
+  "cost": 2.834e-05,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 0,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 2.834e-05,
+   "upstream_inference_prompt_cost": 2.546e-05,
+   "upstream_inference_completions_cost": 2.88e-06
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

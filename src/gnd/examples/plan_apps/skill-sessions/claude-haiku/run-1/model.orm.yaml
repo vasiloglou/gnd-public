@@ -1,0 +1,414 @@
+version: 4
+
+model_id: urn:gnd:registrar-enrolment@1
+
+source:
+  kind: text-conversation
+  session_id: registrar-rules-one-shot
+  artifacts:
+    - "rules.md"
+  started_at: "2026-10-15T00:00:00Z"
+  confidence: low
+  mode: one-shot
+
+object_types:
+  - id: student
+    name: Student
+    kind: entity
+    reference: { mode: popular, value_type: student_id }
+
+  - id: course
+    name: Course
+    kind: entity
+    reference: { mode: popular, value_type: course_code }
+
+  - id: term
+    name: Term
+    kind: entity
+    reference: { mode: popular, value_type: term_label }
+
+  - id: student_id
+    name: StudentId
+    kind: value
+    primitive: String
+
+  - id: course_code
+    name: CourseCode
+    kind: value
+    primitive: String
+
+  - id: term_label
+    name: TermLabel
+    kind: value
+    primitive: String
+
+  - id: season
+    name: Season
+    kind: value
+    primitive: String
+
+  - id: credits
+    name: Credits
+    kind: value
+    primitive: Integer
+
+  - id: grade
+    name: Grade
+    kind: value
+    primitive: String
+
+fact_types:
+  # --- reference schemes -------------------------------------------------
+  - id: student_has_id
+    reading: "{Student} has id {StudentId}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: student_id, role_name: student_id }
+    constraints:
+      - type: uniqueness
+        roles: [student]
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Reference scheme: each Student is identified by exactly one StudentId, and each id identifies one Student. The rules name students but give no identifier; this is an assumption to confirm."
+        provenance:
+          llm_prompt_id: reference-scheme-injective
+          rationale_world_fact: "A popular reference mode requires an injective identifying binary; otherwise the entity is not identified."
+          csdp_step: 1
+          dialogue_turn: 1
+      - type: uniqueness
+        roles: [student_id]
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Reference scheme: a StudentId identifies one Student."
+        provenance:
+          llm_prompt_id: reference-scheme-injective
+          rationale_world_fact: "A popular reference mode requires an injective identifying binary; otherwise the entity is not identified."
+          csdp_step: 1
+          dialogue_turn: 1
+
+  - id: course_has_code
+    reading: "{Course} has code {CourseCode}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course_code, role_name: course_code }
+    sample_population:
+      - { course: "CS101", course_code: "CS101" }
+      - { course: "MATH120", course_code: "MATH120" }
+      - { course: "MATH220", course_code: "MATH220" }
+      - { course: "STAT210", course_code: "STAT210" }
+      - { course: "CS230", course_code: "CS230" }
+      - { course: "CS250", course_code: "CS250" }
+      - { course: "CS340", course_code: "CS340" }
+      - { course: "PHIL101", course_code: "PHIL101" }
+    constraints:
+      - type: uniqueness
+        roles: [course]
+        source: sample
+        status: proposed
+        modality: deontic
+        rationale: "Reference scheme: each Course has one code. Observed in the catalogue table (8 courses, one code each)."
+        provenance:
+          sample_size: 8
+          observed_values: ["CS101", "MATH120", "MATH220", "STAT210", "CS230", "CS250", "CS340", "PHIL101"]
+      - type: uniqueness
+        roles: [course_code]
+        source: sample
+        status: proposed
+        modality: deontic
+        rationale: "Reference scheme: a code names one Course. Observed in the catalogue table."
+        provenance:
+          sample_size: 8
+          observed_values: ["CS101", "MATH120", "MATH220", "STAT210", "CS230", "CS250", "CS340", "PHIL101"]
+
+  - id: term_has_label
+    reading: "{Term} has label {TermLabel}"
+    roles:
+      - { object_type: term, role_name: term }
+      - { object_type: term_label, role_name: term_label }
+    constraints:
+      - type: uniqueness
+        roles: [term]
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Reference scheme for Term. The rules mention terms only generically; the label format is an open question."
+        provenance:
+          llm_prompt_id: reference-scheme-injective
+          rationale_world_fact: "A popular reference mode requires an injective identifying binary; otherwise the entity is not identified."
+          csdp_step: 1
+          dialogue_turn: 1
+      - type: uniqueness
+        roles: [term_label]
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "A term label names one Term."
+        provenance:
+          llm_prompt_id: reference-scheme-injective
+          rationale_world_fact: "A popular reference mode requires an injective identifying binary; otherwise the entity is not identified."
+          csdp_step: 1
+          dialogue_turn: 1
+
+  # --- catalogue ---------------------------------------------------------
+  - id: course_has_credits
+    reading: "{Course} is worth {Credits} credits"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: credits, role_name: credits }
+    sample_population:
+      - { course: "CS101", credits: 4 }
+      - { course: "MATH120", credits: 4 }
+      - { course: "MATH220", credits: 4 }
+      - { course: "STAT210", credits: 3 }
+      - { course: "CS230", credits: 4 }
+      - { course: "CS250", credits: 3 }
+      - { course: "CS340", credits: 4 }
+      - { course: "PHIL101", credits: 3 }
+    constraints:
+      - type: uniqueness
+        roles: [course]
+        source: sample
+        status: proposed
+        modality: deontic
+        rationale: "Each Course has one credit value. Observed in the catalogue table."
+        provenance:
+          sample_size: 8
+          observed_values: [3, 4]
+
+  - id: course_needs_course
+    reading: "{Course:course} needs {Course:prerequisite}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course, role_name: prerequisite }
+    sample_population:
+      - { course: "CS230", prerequisite: "CS101" }
+      - { course: "MATH220", prerequisite: "MATH120" }
+      - { course: "STAT210", prerequisite: "MATH120" }
+      - { course: "CS250", prerequisite: "CS101" }
+      - { course: "CS340", prerequisite: "CS230" }
+      - { course: "CS340", prerequisite: "MATH220" }
+      - { course: "CS340", prerequisite: "STAT210" }
+
+  - id: course_offered_in_season
+    reading: "{Course} is offered in {Season}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: season, role_name: season }
+    sample_population:
+      - { course: "CS101", season: "spring" }
+      - { course: "MATH220", season: "spring" }
+      - { course: "STAT210", season: "spring" }
+      - { course: "CS230", season: "spring" }
+      - { course: "CS250", season: "fall" }
+      - { course: "CS340", season: "spring" }
+      - { course: "PHIL101", season: "spring" }
+
+  - id: term_has_season
+    reading: "{Term} is a {Season} term"
+    roles:
+      - { object_type: term, role_name: term }
+      - { object_type: season, role_name: season }
+    constraints:
+      - type: mandatory
+        role: term
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Offerings are checked by season, so every Term needs a season. Without one the offering guard cannot bind and would pass silently."
+        provenance:
+          llm_prompt_id: term-needs-season
+          rationale_world_fact: "A term with no season cannot be matched against a course's offered seasons."
+          csdp_step: 5
+          dialogue_turn: 1
+
+  # --- registrar facts ---------------------------------------------------
+  - id: student_enrolled_in_course_in_term
+    reading: "{Student} enrolled in {Course} in {Term}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+      - { object_type: term, role_name: term }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [student, term]
+        bound: { max: 6 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          dialogue_turn: 1
+          user_quote: "A student takes at most 6 courses in a term."
+
+  - id: student_passed_course
+    reading: "{Student} passed {Course}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+    sample_population:
+      - { student: "Maya", course: "CS101" }
+      - { student: "Maya", course: "MATH120" }
+      - { student: "Maya", course: "CS230" }
+
+  - id: student_course_grade
+    reading: "{Student} in {Course} got grade {Grade}"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: course, role_name: course }
+      - { object_type: grade, role_name: grade }
+    constraints:
+      - type: uniqueness
+        roles: [student, course]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance:
+          csdp_step: 4
+          dialogue_turn: 1
+          user_quote: "A student has one grade per course, and once a grade is recorded it never changes."
+
+  # --- derived fact types (structured, ORM++) -----------------------------
+  - id: course_transitively_needs_course
+    reading: "{Course:course} transitively needs {Course:prerequisite}"
+    roles:
+      - { object_type: course, role_name: course }
+      - { object_type: course, role_name: prerequisite }
+    derivation: derived
+    storage: computed
+    derivation_rule:
+      clauses:
+        - body:
+            - { fact_type: course_needs_course, bind: { course: "$c", prerequisite: "$p" } }
+        - body:
+            - { fact_type: course_needs_course, bind: { course: "$c", prerequisite: "$m" } }
+            - { fact_type: course_transitively_needs_course, bind: { course: "$m", prerequisite: "$p" } }
+      head: { course: "$c", prerequisite: "$p" }
+
+  - id: student_credits_in_term
+    reading: "{Student} in {Term} takes {Credits} credits"
+    roles:
+      - { object_type: student, role_name: student }
+      - { object_type: term, role_name: term }
+      - { object_type: credits, role_name: credits }
+    derivation: derived
+    storage: computed
+    derivation_rule:
+      body:
+        - { fact_type: student_enrolled_in_course_in_term, bind: { student: "$s", course: "$c", term: "$t" } }
+        - { fact_type: course_has_credits, bind: { course: "$c", credits: "$k" } }
+      aggregate: { fn: sum, of: "$k", over: ["$c"], as: "$total" }
+      head: { student: "$s", term: "$t", credits: "$total" }
+
+constraints:
+  # Enrolment may only be in a course offered in that term's season.
+  - id: enrolment_only_offered_course
+    type: guarded
+    antecedent:
+      - { fact_type: student_enrolled_in_course_in_term, bind: { student: "$s", course: "$c", term: "$t" } }
+      - { fact_type: term_has_season, bind: { term: "$t", season: "$z" } }
+    consequent:
+      atom: { fact_type: course_offered_in_season, bind: { course: "$c", season: "$z" } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "Only courses offered that term can be taken."
+    provenance:
+      csdp_step: 3
+      dialogue_turn: 1
+      user_quote: "Only courses offered that term can be taken."
+
+  # Enrolment requires every prerequisite, direct or through a chain, to be passed.
+  - id: enrolment_requires_passed_prerequisites
+    type: guarded
+    antecedent:
+      - { fact_type: student_enrolled_in_course_in_term, bind: { student: "$s", course: "$c", term: "$t" } }
+      - { fact_type: course_transitively_needs_course, bind: { course: "$c", prerequisite: "$p" } }
+    consequent:
+      atom: { fact_type: student_passed_course, bind: { student: "$s", course: "$p" } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "A student can't take a course before passing every course it needs, directly or through a chain. Chain is handled by the derived transitive fact type."
+    provenance:
+      csdp_step: 3
+      dialogue_turn: 1
+      user_quote: "A student can't take a course before passing every course it needs, directly or through a chain of prerequisites."
+
+  # Enrolment is refused for a course already passed.
+  - id: no_enrolment_in_passed_course
+    type: guarded
+    antecedent:
+      - { fact_type: student_enrolled_in_course_in_term, bind: { student: "$s", course: "$c", term: "$t" } }
+    consequent:
+      absence: { fact_type: student_passed_course, bind: { student: "$s", course: "$c" } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "A student doesn't enroll in a course they have already passed."
+    provenance:
+      csdp_step: 3
+      dialogue_turn: 1
+      user_quote: "A student doesn't enroll in a course they have already passed."
+
+  # Recording a grade marks the course as passed.
+  - id: grade_marks_course_passed
+    type: guarded
+    antecedent:
+      - { fact_type: student_course_grade, bind: { student: "$s", course: "$c", grade: "$g" } }
+    consequent:
+      atom: { fact_type: student_passed_course, bind: { student: "$s", course: "$c" } }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "Record a grade, which also marks the course as passed."
+    provenance:
+      csdp_step: 3
+      dialogue_turn: 1
+      user_quote: "Record a grade, which also marks the course as passed."
+
+  # At most 18 credits in a term.
+  - id: term_credit_cap
+    type: guarded
+    antecedent:
+      - { fact_type: student_credits_in_term, bind: { student: "$s", term: "$t", credits: "$k" } }
+    consequent:
+      comparison: { operator: "<=", left: "$k", right: 18 }
+    source: explicit
+    status: confirmed
+    modality: alethic
+    rationale: "A student takes at most 18 credits in a term."
+    provenance:
+      csdp_step: 3
+      dialogue_turn: 1
+      user_quote: "A student takes at most 18 credits in a term."
+
+  # Season domain (catalogue table values).
+  - type: value
+    object_type: season
+    allowed: ['spring', 'fall']
+    source: sample
+    status: proposed
+    modality: deontic
+    rationale: "Only spring and fall appear in the catalogue table. Whether these are the only seasons is open."
+    provenance:
+      sample_size: 8
+      observed_values: ["spring", "fall"]
+
+  # Grade-immutability is a transition rule; a single population cannot show it.
+  - type: textual
+    expression: "Once a grade is recorded for a student in a course, it never changes."
+    formal_language: natural
+    formal_expression: null
+    source: explicit
+    status: confirmed
+    modality: deontic
+    rationale: "Transition rule, not checkable on one population. Kept deontic to avoid permanent exit 4 (D-20). Override of the explicit-source alethic default is recorded here; owner may upgrade if it moves into operations."
+    provenance:
+      csdp_step: 7
+      dialogue_turn: 1
+      user_quote: "once a grade is recorded it never changes."
+
+rejected_proposals: []

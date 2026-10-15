@@ -1,0 +1,30 @@
+{
+ "attempt": 2,
+ "provider": "Parasail",
+ "model": "meta-llama/llama-3.2-3b-instruct",
+ "seconds": 1.0,
+ "reply": "{\n \"steps\": [\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"MATH220\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"STAT210\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"enroll\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"CS230\",\n    \"term\": \"spring\"\n   }\n  },\n  {\n   \"op\": \"record_grade\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"CS101\",\n    \"grade\": \"pass\"\n   }\n  },\n  {\n   \"op\": \"record_grade\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"MATH120\",\n    \"grade\": \"pass\"\n   }\n  },\n  {\n   \"op\": \"record_grade\",\n   \"bindings\": {\n    \"student\": \"maya\",\n    \"course\": \"CS230\",\n    \"grade\": \"pass\"\n   }\n  }\n ]",
+ "usage": {
+  "prompt_tokens": 1877,
+  "completion_tokens": 255,
+  "total_tokens": 2132,
+  "cost": 0.000178,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1808,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.000178,
+   "upstream_inference_prompt_cost": 9.385e-05,
+   "upstream_inference_completions_cost": 8.415e-05
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ }
+}

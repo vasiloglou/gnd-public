@@ -1,0 +1,52 @@
+{
+ "steps": [
+  {
+   "op": "schedule_payment",
+   "bindings": {
+    "lease": "apt-4b",
+    "amount": 1450,
+    "due": "2025-01-01"
+   }
+  },
+  {
+   "op": "schedule_payment",
+   "bindings": {
+    "lease": "apt-4b",
+    "amount": 1450,
+    "due": "2025-02-01"
+   }
+  },
+  {
+   "op": "schedule_payment",
+   "bindings": {
+    "lease": "apt-4b",
+    "amount": 1450,
+    "due": "2025-03-01"
+   }
+  },
+  {
+   "op": "schedule_payment",
+   "bindings": {
+    "lease": "apt-4b",
+    "amount": 1450,
+    "due": "2025-04-01"
+   }
+  },
+  {
+   "op": "schedule_payment",
+   "bindings": {
+    "lease": "apt-4b",
+    "amount": 1450,
+    "due": "2025-05-01"
+   }
+  },
+  {
+   "op": "schedule_payment",
+   "bindings": {
+    "lease": "apt-4b",
+    "amount": 1450,
+    "due": "2025-06-01"
+   }
+  }
+ ]
+}

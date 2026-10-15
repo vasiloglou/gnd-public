@@ -1,0 +1,3 @@
+Command output; edited only to substitute machine-local path prefixes.
+..                                                                       [100%]
+2 passed, 51 deselected in 0.61s

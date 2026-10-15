@@ -1,0 +1,75 @@
+{
+ "population": {
+  "model": "frequency-integer.orm.json",
+  "model_id": "urn:gnd:review:freq",
+  "source": "fixture",
+  "covers": [
+   "assign",
+   "one"
+  ]
+ },
+ "facts": {
+  "assign": [
+   {
+    "rev": 10,
+    "paper": 1,
+    "slot": 1
+   },
+   {
+    "rev": 10,
+    "paper": 1,
+    "slot": 2
+   },
+   {
+    "rev": 10,
+    "paper": 1,
+    "slot": 3
+   },
+   {
+    "rev": 2,
+    "paper": 1,
+    "slot": 1
+   },
+   {
+    "rev": 9,
+    "paper": 5,
+    "slot": 1
+   },
+   {
+    "rev": 9,
+    "paper": 5,
+    "slot": 2
+   }
+  ],
+  "one": [
+   {
+    "rev": 10,
+    "paper": 1
+   },
+   {
+    "rev": 2,
+    "paper": 1
+   },
+   {
+    "rev": 2,
+    "paper": 2
+   },
+   {
+    "rev": 3,
+    "paper": 1
+   },
+   {
+    "rev": 3,
+    "paper": 2
+   },
+   {
+    "rev": 3,
+    "paper": 3
+   },
+   {
+    "rev": 3,
+    "paper": 4
+   }
+  ]
+ }
+}

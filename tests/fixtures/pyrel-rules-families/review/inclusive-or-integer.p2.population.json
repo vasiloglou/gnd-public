@@ -1,0 +1,40 @@
+{
+ "population": {
+  "model": "inclusive-or-integer.orm.json",
+  "model_id": "urn:gnd:review:md",
+  "source": "fixture",
+  "covers": [
+   "has_pass",
+   "has_lic",
+   "has_nick"
+  ]
+ },
+ "facts": {
+  "has_pass": [
+   {
+    "person": 1,
+    "pass_no": "x"
+   }
+  ],
+  "has_lic": [
+   {
+    "person": 2,
+    "lic": "y"
+   }
+  ],
+  "has_nick": [
+   {
+    "person": 10,
+    "nick": "n"
+   },
+   {
+    "person": 3,
+    "nick": "n"
+   },
+   {
+    "person": 1,
+    "nick": "n"
+   }
+  ]
+ }
+}

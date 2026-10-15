@@ -1,0 +1,195 @@
+{
+ "population": {
+  "model": "registrar-nonfunctional.orm.json",
+  "model_id": "urn:gnd:pl15:registrar-nonfunctional",
+  "source": "fixture",
+  "covers": [
+   "course_needs",
+   "course_credits",
+   "offered",
+   "passed",
+   "enrolls",
+   "grade_of",
+   "prerequisite_chain",
+   "term_credits"
+  ]
+ },
+ "facts": {
+  "course_needs": [
+   {
+    "course": "MATH220",
+    "prerequisite": "MATH120"
+   },
+   {
+    "course": "STAT210",
+    "prerequisite": "MATH120"
+   },
+   {
+    "course": "CS230",
+    "prerequisite": "CS101"
+   },
+   {
+    "course": "CS250",
+    "prerequisite": "CS101"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "CS230"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "MATH220"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "STAT210"
+   }
+  ],
+  "course_credits": [
+   {
+    "course": "CS101",
+    "credits": 4
+   },
+   {
+    "course": "MATH120",
+    "credits": 4
+   },
+   {
+    "course": "MATH220",
+    "credits": 4
+   },
+   {
+    "course": "STAT210",
+    "credits": 3
+   },
+   {
+    "course": "CS230",
+    "credits": 4
+   },
+   {
+    "course": "CS250",
+    "credits": 3
+   },
+   {
+    "course": "CS340",
+    "credits": 4
+   },
+   {
+    "course": "PHIL101",
+    "credits": 3
+   }
+  ],
+  "offered": [
+   {
+    "course": "MATH220",
+    "term": "spring"
+   },
+   {
+    "course": "STAT210",
+    "term": "spring"
+   },
+   {
+    "course": "CS340",
+    "term": "spring"
+   },
+   {
+    "course": "CS101",
+    "term": "spring"
+   },
+   {
+    "course": "PHIL101",
+    "term": "spring"
+   },
+   {
+    "course": "CS230",
+    "term": "spring"
+   },
+   {
+    "course": "CS250",
+    "term": "fall"
+   }
+  ],
+  "passed": [
+   {
+    "student": "maya",
+    "course": "CS101"
+   },
+   {
+    "student": "maya",
+    "course": "MATH120"
+   },
+   {
+    "student": "maya",
+    "course": "CS230"
+   },
+   {
+    "student": "omar",
+    "course": "MATH120"
+   }
+  ],
+  "enrolls": [
+   {
+    "student": "omar",
+    "course": "CS101",
+    "term": "spring"
+   }
+  ],
+  "grade_of": [
+   {
+    "student": "maya",
+    "grade": "B",
+    "course": "CS101"
+   },
+   {
+    "student": "omar",
+    "grade": "B",
+    "course": "MATH120"
+   }
+  ],
+  "prerequisite_chain": [
+   {
+    "course": "CS230",
+    "prerequisite": "CS101"
+   },
+   {
+    "course": "CS250",
+    "prerequisite": "CS101"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "CS101"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "CS230"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "MATH120"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "MATH220"
+   },
+   {
+    "course": "CS340",
+    "prerequisite": "STAT210"
+   },
+   {
+    "course": "MATH220",
+    "prerequisite": "MATH120"
+   },
+   {
+    "course": "STAT210",
+    "prerequisite": "MATH120"
+   }
+  ],
+  "term_credits": [
+   {
+    "student": "omar",
+    "total": 4,
+    "term": "spring"
+   }
+  ]
+ }
+}

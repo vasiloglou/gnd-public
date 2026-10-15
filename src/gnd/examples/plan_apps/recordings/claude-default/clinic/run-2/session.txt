@@ -1,0 +1,6 @@
+attempt 1
+  the bot says: Only warfarin is refilled today. The statin is left out because its 30-day interval since 20 February has not passed; it is next due on 21 March 2024. Aspirin is also eligible, but warfarin and aspirin interact, so Sam can't get both on the same day. Warfarin was chosen because it is on a 7-day cycle and is already past due. Aspirin was last refilled on 15 January, so it should be refilled on a different day, by 15 March, to stay within the 60-day guideline. The pharmacist may prefer aspirin today and warfarin on another day instead.
+  plan  refill_drug(patient='sam', drug='warfarin', on='2024-03-10')
+  pyrel check: exit 0 (accepted)
+    states 0-1  pharmacist_judgement  not checked  (textual rule: The pharmacist uses judgement for anything the rules don't cover.)
+  executed: the new state is in <workspace>/next.pop.json

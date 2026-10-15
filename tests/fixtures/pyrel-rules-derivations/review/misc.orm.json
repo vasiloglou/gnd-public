@@ -1,0 +1,250 @@
+{
+ "version": 2,
+ "model_id": "urn:gnd:review:misc",
+ "source": {
+  "kind": "text-conversation",
+  "confidence": "standard",
+  "mode": "one-shot"
+ },
+ "object_types": [
+  {
+   "id": "s",
+   "name": "S",
+   "kind": "value",
+   "primitive": "String"
+  },
+  {
+   "id": "n",
+   "name": "N",
+   "kind": "value",
+   "primitive": "Integer"
+  },
+  {
+   "id": "x",
+   "name": "X",
+   "kind": "value",
+   "primitive": "Float"
+  }
+ ],
+ "fact_types": [
+  {
+   "id": "v",
+   "reading": "{S} r {N} r {X}",
+   "roles": [
+    {
+     "object_type": "s",
+     "role_name": "s"
+    },
+    {
+     "object_type": "n",
+     "role_name": "n"
+    },
+    {
+     "object_type": "x",
+     "role_name": "x"
+    }
+   ]
+  },
+  {
+   "id": "lt",
+   "reading": "{S}",
+   "roles": [
+    {
+     "object_type": "s",
+     "role_name": "s"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "v",
+      "bind": {
+       "s": "$s",
+       "n": "$n",
+       "x": "$x"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "<",
+      "left": "$s",
+      "right": "e\u0301"
+     }
+    ],
+    "head": {
+     "s": "$s"
+    }
+   }
+  },
+  {
+   "id": "absn",
+   "reading": "{S} r {N}",
+   "roles": [
+    {
+     "object_type": "s",
+     "role_name": "s"
+    },
+    {
+     "object_type": "n",
+     "role_name": "n"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "v",
+      "bind": {
+       "s": "$s",
+       "n": "$n",
+       "x": "$x"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": ">=",
+      "left": {
+       "fn": "abs",
+       "args": [
+        "$n"
+       ]
+      },
+      "right": {
+       "fn": "neg",
+       "args": [
+        {
+         "fn": "sub",
+         "args": [
+          1,
+          "$n"
+         ]
+        }
+       ]
+      }
+     }
+    ],
+    "head": {
+     "s": "$s",
+     "n": {
+      "fn": "abs",
+      "args": [
+       {
+        "fn": "sub",
+        "args": [
+         "$n",
+         7
+        ]
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "xc",
+   "reading": "{S} r {X}",
+   "roles": [
+    {
+     "object_type": "s",
+     "role_name": "s"
+    },
+    {
+     "object_type": "x",
+     "role_name": "x"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "v",
+      "bind": {
+       "s": "$s",
+       "n": "$n",
+       "x": "$x"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "=",
+      "left": "$x",
+      "right": 3
+     }
+    ],
+    "head": {
+     "s": "$s",
+     "x": 2.5
+    }
+   }
+  },
+  {
+   "id": "xn",
+   "reading": "{S}",
+   "roles": [
+    {
+     "object_type": "s",
+     "role_name": "s"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "v",
+      "bind": {
+       "s": "$s",
+       "n": "$n",
+       "x": "$x"
+      }
+     }
+    ],
+    "where": [
+     {
+      "operator": "<",
+      "left": "$x",
+      "right": "$n"
+     }
+    ],
+    "head": {
+     "s": "$s"
+    }
+   }
+  },
+  {
+   "id": "lit",
+   "reading": "{S} r {N}",
+   "roles": [
+    {
+     "object_type": "s",
+     "role_name": "s"
+    },
+    {
+     "object_type": "n",
+     "role_name": "n"
+    }
+   ],
+   "derivation": "derived",
+   "derivation_rule": {
+    "body": [
+     {
+      "fact_type": "v",
+      "bind": {
+       "s": "a\"'b\\\u00e9",
+       "n": "$n",
+       "x": -0.0
+      }
+     }
+    ],
+    "head": {
+     "s": "q\"'\\",
+     "n": "$n"
+    }
+   }
+  }
+ ],
+ "constraints": []
+}

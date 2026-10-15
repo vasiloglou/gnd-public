@@ -1,0 +1,31 @@
+{
+ "population": {
+  "model": "sub.orm.json",
+  "model_id": "urn:probe:sub",
+  "source": "synthetic",
+  "covers": [
+   "member",
+   "lead",
+   "person_has_tag",
+   "team_badge",
+   "manages"
+  ]
+ },
+ "facts": {
+  "member": [],
+  "lead": [],
+  "person_has_tag": [
+   {
+    "person": "p1",
+    "tag": "a"
+   }
+  ],
+  "team_badge": [],
+  "manages": [
+   {
+    "manager": "m7",
+    "team": "t1"
+   }
+  ]
+ }
+}

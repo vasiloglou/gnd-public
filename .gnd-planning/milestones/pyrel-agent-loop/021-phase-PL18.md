@@ -246,3 +246,14 @@ Two came from this branch, and both are fixed:
   `notes/plan-amendment-a1.md`, an image shown as Markdown, as a broken link
   (PL18-Q4). The sentence now describes the Markdown in words; the meaning is
   unchanged.
+
+Full local CI result. All stages ran in a clean worktree of a1d9452; the 6dcc4d9
+fixes were checked separately in a clean worktree.
+
+| Stage (workflow) | Result |
+|---|---|
+| candidate (development.yml) | exit 0: wheel and sdist built, comparison wheel rebuilt from the sdist, SHA256SUMS verified |
+| regression, Python 3.11 | 9 failed, 14882 passed. 7 also fail on origin/main; the 2 from this branch are fixed in 6dcc4d9 (45 passed in those files, clean worktree) |
+| regression, Python 3.13 | the same 9; nothing specific to 3.13 |
+| installed | 10 passed. The candidate was copied without hidden files, as `actions/upload-artifact` does by default. A first run on the raw folder failed only on the `.gitignore` files `uv build` writes, which the artifact step drops |
+| docs (docs.yml) | exit 0: 207 tutorial blocks, strict build with no issues, 10371 links |

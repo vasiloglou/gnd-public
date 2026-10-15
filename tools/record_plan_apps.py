@@ -206,9 +206,15 @@ def preflight_error(args) -> str:
     return ""
 
 
+def git_identity() -> list[str]:
+    """The git user's email and its handle: an agent may copy them into what it writes (audit fields)."""
+    email = subprocess.run(["git", "config", "user.email"], capture_output=True, text=True, check=False).stdout.strip()
+    return [email, email.split("@")[0]] if "@" in email else []
+
+
 def leaks(out: Path, env_file: Path | None) -> list[str]:
     """Recorded files that contain a local path or, when an env file is given, the OpenRouter key."""
-    needles = [str(Path.home()), *LOCAL]
+    needles = [str(Path.home()), *LOCAL, *git_identity()]
     if env_file is not None:
         import importlib.util
         spec = importlib.util.spec_from_file_location("agent_with_env_key", ROOT / "tools/agent_with_env_key.py")

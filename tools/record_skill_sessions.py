@@ -176,10 +176,17 @@ def record_run(name: str, run: int, out: Path, skill: str = "model-from-text") -
     return row
 
 
+def git_identity() -> list[str]:
+    """The git user's email and its handle: an agent may copy them into what it writes (audit fields)."""
+    email = subprocess.run(["git", "config", "user.email"], capture_output=True, text=True, check=False).stdout.strip()
+    return [email, email.split("@")[0]] if "@" in email else []
+
+
 def leaks(out: Path) -> list[str]:
     home = Path.home()
     machine = Path(tempfile.gettempdir()).resolve().parts   # e.g. /private/var/folders/nb/<id>/T
-    needles = [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12]]
+    needles = [*LOCAL, str(home), home.name, "sk-ant-", "sk-or-", *[p for p in machine if len(p) > 12],
+               *git_identity()]
     return [str(p.relative_to(out)) for p in sorted(out.rglob("*")) if p.is_file()
             and any(n in p.read_text(encoding="utf-8", errors="replace") for n in needles)]
 

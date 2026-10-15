@@ -43,9 +43,10 @@ the computer's date; the caveats below say what.
 
 Three things to read from it:
 
-1. **Only the small models repaired a plan after a rule refusal.** The Claude
-   models planned within the rules at the first attempt. Their only repairs
-   fixed the format, such as rent written as text instead of a number.
+1. **Only the small models repaired a plan after a rule refusal.** No Claude
+   plan was ever refused on a rule. Their only repairs fixed the format, such as
+   rent written as text instead of a number, and two Haiku access runs gave an
+   answer that was not a plan before declining.
 2. **Declining is sometimes right.** The access question asks for Carol, who
    manages Bob through Dana, so no allowed plan exists. Both Claude models
    said so every time.

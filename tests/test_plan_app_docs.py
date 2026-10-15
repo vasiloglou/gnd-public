@@ -211,3 +211,12 @@ def test_every_github_link_names_a_file_in_the_repository(page):
     assert '!!! info "Files on GitHub"' in text, page.name
     for path in re.findall(r'https://github\.com/vasiloglou/gnd-public/blob/main/([^)#\s]+)', text):
         assert (ROOT / path).exists(), (page.name, path)
+
+
+@pytest.mark.parametrize('folder', ['recordings', 'skill-sessions', 'skill-sessions-evolve'])
+def test_no_recording_holds_an_email_address(folder):
+    """Close reading three: an agent copied the git user's email into a proposal's audit field."""
+    for path in (APPS / folder).rglob('*'):
+        if path.is_file():
+            found = re.findall(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}', path.read_text(encoding='utf-8'))
+            assert not found, (path, found[:2])

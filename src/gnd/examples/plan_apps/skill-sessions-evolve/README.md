@@ -38,8 +38,16 @@ thinking blocks without signatures. Paths are shortened to `<workspace>`,
   stopped after five refusals with the model unchanged. Gate amendment 3
   describes both.
 - **The skill's pages do not give the proposal format in full.** Both runs read
-  GND's installed source (`src/gnd/evolve/models.py`) and the approvals
-  example's model to find it.
+  GND's installed source (`src/gnd/evolve/models.py`) to find it; run 1 also read
+  the approvals example's model.
+- **The plugin copy did not fence the repository off.** Read and Grep could still
+  reach `<repo>`, including the course example's shipped proposal; neither run
+  opened it. Run 1 also searched `<home>/.claude/`, and both runs wrote scripts
+  to `<tmp>`, outside the workspace. Those outputs are not kept.
+- **Redacted after review.** Claude Code filled the proposal's audit fields with
+  the git user's email address and handle. They are replaced by `<user-email>`
+  and `<user>` (`manifest.json`, `rebound`), and both recorders now search for
+  them.
 - **Hashing was done by hand.** Python was not allowed, so each run wrote the
   canonical JSON itself and hashed it with `shasum`. `gnd evolve preview`
   checks every digest, so a wrong one would have been refused.

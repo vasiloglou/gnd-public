@@ -1,7 +1,7 @@
 {
   "date": "2026-10-13",
   "authority": "owner M3 auto; make the fixes part of M3; go ahead",
-  "spec_sha256": "6155bc7e27ffe083774dc312bfd410a5230f962c2a323479af8feaf1c42f383e",
+  "spec_sha256": "3e82264fd02c24508ac6923d1596532597f8f9daed47b6f9208bb559bc48616e",
   "paid_cap_usd": 0,
   "synthetic_domain_data_authorized": false,
   "upstream_merge_release_certification_authorized": false,

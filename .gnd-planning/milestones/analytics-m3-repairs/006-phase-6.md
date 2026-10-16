@@ -5,7 +5,7 @@ skill: n/a -- repository development, not a gnd-solve station
 scope: phase-6
 date: 2026-10-13
 gate:
-  command: "UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_generated_json.py tests/test_population_load.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py"
+  command: "UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_generated_json.py tests/test_population_load.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py"
   exit: 0
   output: 148 passed in 4.44s
 slow_cadence:
@@ -26,13 +26,13 @@ suffix normalized. This single start is not a completed question/held-out gate.
 
 ## Gate output and commands
 
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_generated_json.py tests/test_population_load.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_generated_json.py tests/test_population_load.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py
 Exit0, 148 passed in 4.44s; retained phase-6-focused.txt.
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline ruff check src/gnd/transition.py tests/test_m3_generated_json.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline ruff check src/gnd/transition.py tests/test_m3_generated_json.py
 Exit0, All checks passed!; phase-6-lint.txt.
-App overlay: UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline --package gnd-analytics --with-editable <GND_WORKTREE> --with rpds-py==2026.9.1 pytest -q apps/gnd-analytics/tests/test_fast_check.py apps/gnd-analytics/tests/test_source_workspace.py apps/gnd-analytics/tests/test_execution_budget.py apps/gnd-analytics/tests/test_parallel_answer.py apps/gnd-analytics/tests/test_checker_audit.py apps/gnd-analytics/tests/test_cli.py
+App overlay: UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline --package downstream-app --with-editable <GND_WORKTREE> --with rpds-py==2026.9.1 pytest -q apps/downstream-app/tests/test_fast_check.py apps/downstream-app/tests/test_source_workspace.py apps/downstream-app/tests/test_execution_budget.py apps/downstream-app/tests/test_parallel_answer.py apps/downstream-app/tests/test_checker_audit.py apps/downstream-app/tests/test_cli.py
 Exit0,90 cases100%; retained app output.
-Native baseline: M3_REPORT_PATH=<temporary report> UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline --package gnd-analytics python <phase-06-native-driver.py> root --seconds 60
+Native baseline: M3_REPORT_PATH=<temporary report> UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline --package downstream-app python <phase-06-native-driver.py> root --seconds 60
 Candidate: same command with --with-editable <GND_WORKTREE> --with rpds-py==2026.9.1, repetitions1/2/3, exit0each. App-owned driver and receipts in M3 evidence; copied summary here.
 
 ## Review and disposition
@@ -63,11 +63,11 @@ Exact native report equality is for tuning dw_5162 single start, not all candida
 [
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-6-spec.md",
-    "sha256": "a55e0e61de9397d0114fe3482511b9be65bc098f3d89178a60aaf2fe586b6ed9"
+    "sha256": "2adc61acbe1c45b32f760b91a059bd85e8fb62240c3fa89c5e9d1b47fc6e652c"
   },
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-6-approval.json",
-    "sha256": "b288daa7b7e3f5c6a6764afa5367b292f9e7018a61220936e43448dd3f45d9d8"
+    "sha256": "bbc76bc867397d41ed6275aebfc6cab8e6bf6238f42d5fb97ea09277ea82c432"
   },
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-6-answers.json",

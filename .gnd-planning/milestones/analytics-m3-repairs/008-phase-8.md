@@ -26,21 +26,21 @@ are not schema positions. No persistent cache or validation bypass. RED6f0665b:
 ## Gate commands and output
 
 uv run pytest -q tests/test_m3_population_schema.py tests/test_population_load.py tests/test_m3_generated_json.py tests/test_m3_indexed_subset.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py tests/test_schema_sync.py tests/test_rf7_consumers.py
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache wrapper used, exit0,227 passed in5.22s;
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache wrapper used, exit0,227 passed in5.22s;
 phase-8-focused.txt. New successor work-bound test catches removed-node-cap mutant,
 phase-8-bound-mutant-red.txt:1 failed in0.06s. Unchanged implementation/direct:
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_population_schema.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_population_schema.py
 Exit0,30 passed in0.07s, phase-8-bound-green.txt. Additional test after review did
 not alter production bytes or existing answers; ruleretained separately.
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline ruff check src/gnd/population.py tests/test_m3_population_schema.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline ruff check src/gnd/population.py tests/test_m3_population_schema.py
 Exit0,All checks passed!, phase-8-lint.txt.
 App affected90 selection repeats exact phase06 overlay command,exit0,100%.
-Full app: UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline --package gnd-analytics --with-editable <GND_WORKTREE> --with rpds-py==2026.9.1 pytest -q apps/gnd-analytics
+Full app: UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline --package downstream-app --with-editable <GND_WORKTREE> --with rpds-py==2026.9.1 pytest -q apps/downstream-app
 Exit0,274cases100%, phase-08-full-app.txt. This is candidate overlay, not adoption.
 
 ## Native measurement
 
-App-owned phase-08-native-driver.py: uv offline --package gnd-analytics,
+App-owned phase-08-native-driver.py: uv offline --package downstream-app,
 json-load --seconds60 originalpinfa population code(equal7f40population code) vs
 --with-editable <GND_WORKTREE> --with rpds-py==2026.9.1 candidate, each3serialruns
 with no warmup. JSON loads1.866828s median→0.832687s; identical bytes/facts/types/

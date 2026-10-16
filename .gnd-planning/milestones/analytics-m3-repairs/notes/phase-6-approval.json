@@ -3,7 +3,7 @@
   "authority": "delegated approval (auto=true): owner M3 auto, make the fixes part of M3, go ahead",
   "instrument": "corpus-first",
   "artifacts": {
-    ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-6-spec.md": "a55e0e61de9397d0114fe3482511b9be65bc098f3d89178a60aaf2fe586b6ed9",
+    ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-6-spec.md": "2adc61acbe1c45b32f760b91a059bd85e8fb62240c3fa89c5e9d1b47fc6e652c",
     ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-6-answers.json": "23ab28ec38c9f134097c312aea41b01e1ec93eaf30e465064a983809c91f931a",
     "tests/test_m3_generated_json.py": "de93313caa39d307baed3c71214fb1941a4d6e17bdaa3b248bdc54e1f09af664"
   },

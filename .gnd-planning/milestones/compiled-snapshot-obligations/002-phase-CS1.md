@@ -78,7 +78,7 @@ publisher or merge is authorized by this record.
 
 Occurrence admission with compiled obligations -> a separately scoped successor
 milestone. All RF9 historical/frozen-authority carryovers keep their existing
-owners. Actual app fast/full acceptance -> gnd-apps owner after adopting the new
+owners. Actual app fast/full acceptance -> downstream-apps owner after adopting the new
 keyword/flag at the exact merged commit. Milestone close and its question sweep
 remain separate work; this record does not declare the milestone closed.
 

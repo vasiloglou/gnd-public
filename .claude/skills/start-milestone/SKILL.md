@@ -9,7 +9,7 @@ Prepare a milestone for execution under this repository's development protocol.
 This skill owns planning; [process-phase](../process-phase/SKILL.md) owns numbered
 phase execution and its owner gates.
 
-Adapted from `gnd-apps/.agents/skills/start-milestone` at source commit
+Adapted from `downstream-apps/.agents/skills/start-milestone` at source commit
 `7e20d01024bf62d9c7779f42c43b1ef54a1f5fbd`. The target repository's planning,
 approval, review and Git contracts replace the app-specific ones. This is a
 source-owned development skill, not an installer-managed packaged skill.

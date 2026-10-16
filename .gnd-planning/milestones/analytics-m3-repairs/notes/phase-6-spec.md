@@ -1,7 +1,7 @@
 # M3 phase06 source execution supplement
 
 Status: owner-decided2026-10-13 under explicit M3 auto, make the fixes part of M3,
-and go ahead. Canonical app contract: gnd-apps/.gnd-analytics/milestones/M3/phase-06-spec.md
+and go ahead. Canonical app contract: downstream-apps/.downstream-app/milestones/M3/phase-06-spec.md
 at8d9cfac; this supplement binds source execution, not a new GND milestone plan.
 Source basefa926ae; topic codex/m3-performance-fixes. Source ownership/PR/explicit
 merge governance retained. Cost0; no new domain data, provider panel or certification.

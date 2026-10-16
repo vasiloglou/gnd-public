@@ -1,5 +1,5 @@
 Working directory: /private/tmp/gnd-m3-performance
-Every command used UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline.
+Every command used UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline.
 
 pytest tests/test_m3_population_shape.py -q
 exit0; phase-12-shape-green.txt;66passed.

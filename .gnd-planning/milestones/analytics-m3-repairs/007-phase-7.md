@@ -5,7 +5,7 @@ skill: n/a -- repository development, not a gnd-solve station
 scope: phase-7
 date: 2026-10-13
 gate:
-  command: "UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_indexed_subset.py tests/test_m3_generated_json.py tests/test_public_branch_runtime.py tests/test_public_correspondence_projection.py tests/test_public_semantic_adapter.py tests/test_public_semantic_composition.py tests/test_rf6_registry.py tests/test_rf1_layering.py tests/test_public_transition_contract.py tests/test_transition_report.py tests/test_v70_phase4_transition.py"
+  command: "UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_indexed_subset.py tests/test_m3_generated_json.py tests/test_public_branch_runtime.py tests/test_public_correspondence_projection.py tests/test_public_semantic_adapter.py tests/test_public_semantic_composition.py tests/test_rf6_registry.py tests/test_rf1_layering.py tests/test_public_transition_contract.py tests/test_transition_report.py tests/test_v70_phase4_transition.py"
   exit: 0
   output: 1172 passed in 24.37s
 slow_cadence:
@@ -26,12 +26,12 @@ retained. Corpus-first RED2086e61,16 intended failures/3 existing scalar control
 
 ## Gates and evidence
 
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_indexed_subset.py tests/test_m3_generated_json.py tests/test_public_branch_runtime.py tests/test_public_correspondence_projection.py tests/test_public_semantic_adapter.py tests/test_public_semantic_composition.py tests/test_rf6_registry.py tests/test_rf1_layering.py tests/test_public_transition_contract.py tests/test_transition_report.py tests/test_v70_phase4_transition.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_indexed_subset.py tests/test_m3_generated_json.py tests/test_public_branch_runtime.py tests/test_public_correspondence_projection.py tests/test_public_semantic_adapter.py tests/test_public_semantic_composition.py tests/test_rf6_registry.py tests/test_rf1_layering.py tests/test_public_transition_contract.py tests/test_transition_report.py tests/test_v70_phase4_transition.py
 Exit0,1172 passed in 24.37s, phase-7-focused.txt.
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_indexed_subset.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_indexed_subset.py
 After review instrument regression, exit0,20 passed in 1.71s (actual output retained
 in phase-7-review-green.txt; includes original19 and added work-counter control).
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline ruff check src/gnd/semantic_rows.py src/gnd/constraint_families.py src/gnd/correspondence.py tests/test_m3_indexed_subset.py .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-native-layer.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline ruff check src/gnd/semantic_rows.py src/gnd/constraint_families.py src/gnd/correspondence.py tests/test_m3_indexed_subset.py .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-native-layer.py
 Exit0,All checks passed!; phase-7-final-lint.txt.
 App phase06 overlay command repeated with both fixes:90 cases100%,exit0,
 phase-07-app-preview.txt. Pin unchanged.
@@ -43,7 +43,7 @@ uv workspace/Python3.13. Each exit0, APIexit2, reports byte-identical (onlyphase
 .json diagnostic normalization). Check7.864→1.315s;
 root repeats[12.325068709033076, 12.288108207983896, 12.41559883399168], median12.325s,
 parser-only median32.128s. All native input hashes match.
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline python .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-native-layer.py <APP_WORKSPACE>/.gnd-analytics/local/beast-2/m3-full-state
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline python .gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-native-layer.py <APP_WORKSPACE>/.downstream-app/local/beast-2/m3-full-state
 Exit0. Both mirrors2119rows on each side, exact pure oracle pass;8476 actual
 identity calls vs16952 bound each, indexed layer~0.0017s,15s alarm percall.
 No generated large domain data. No report-row/data contents committed.
@@ -83,7 +83,7 @@ work required before finalgate. No held-out tuning or sealed438test access, cost
 [
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-7-approval.json",
-    "sha256": "2b28c6ab5832b835501290b79640b11cb3d4641093cc2ab4f307f55a373c5821"
+    "sha256": "9c699b2c9c27ba3a50fa1012fd8e9b2a0339c68cdba8f82138680295f6f8c659"
   },
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-7-codex-followup-review.md",
@@ -95,11 +95,11 @@ work required before finalgate. No held-out tuning or sealed438test access, cost
   },
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-7-review-ruling.json",
-    "sha256": "25a99495e7e16f2e9b69cbeb283e783e0fd999913f596ed46d8f3af42c82273e"
+    "sha256": "2c0b6791be5979dd2ee28ade8ad44b0e9c895b46d5857650a7013f20aedef49b"
   },
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/notes/phase-7-spec.md",
-    "sha256": "6155bc7e27ffe083774dc312bfd410a5230f962c2a323479af8feaf1c42f383e"
+    "sha256": "3e82264fd02c24508ac6923d1596532597f8f9daed47b6f9208bb559bc48616e"
   },
   {
     "path": ".gnd-planning/milestones/analytics-m3-repairs/evidence/phase-7-direct.txt",

@@ -1,6 +1,6 @@
 # Issue 16 compiled snapshot corpus
 
-Public-source model generated from gnd-apps efc9c0e and GND packaged expense data.
+Public-source model generated from downstream-apps efc9c0e and GND packaged expense data.
 No app dependency or private data is required to run these fixtures. The model
 contains 9 object types, 47 fact types and 11 operations; retaining the complete
 bounded model preserves compiler guards and derived-claim consistency.

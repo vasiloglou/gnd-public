@@ -83,15 +83,15 @@
     },
     {
       "path": "/private/tmp/gnd-issue16-audit/expense/plan.orm.json",
-      "sha256": "2aafee2d38aed67ea5954eb4c08c632bcba61cc801ea703bd3e9b5a9d68dc44e"
+      "sha256": "4fe9ddcac0530cf5b988ae3220371968ec280979fa10ec94868439f5f159a1e4"
     },
     {
       "path": "/private/tmp/gnd-issue16-audit/string-role/candidate.pop.json",
-      "sha256": "68926ae461d209cb6c56e48337860becdbd4c4c71f9b74c0713b1a4b146436b3"
+      "sha256": "783e9bc033e66ddc3f1bda53d13e0c272c7c04260b52bd4fe4a296e7ebbbe27f"
     },
     {
       "path": "/private/tmp/gnd-issue16-audit/numeric-role/candidate.pop.json",
-      "sha256": "80e55944d1c465869702b32bfa91951f2363a48a4ce33bfd6a86e33c3b6b736e"
+      "sha256": "fb2acc03e0e94531edd33d5ac454432251f0876104bc9773e667c094224c21b5"
     },
     {
       "path": "/private/tmp/gnd-issue16-audit/trace.txt",

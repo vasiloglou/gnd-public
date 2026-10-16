@@ -2589,7 +2589,7 @@
       ]
     }
   ],
-  "model_id": "urn:gnd-analytics:plan@2",
+  "model_id": "urn:downstream-app:plan@2",
   "object_types": [
     {
       "id": "var",

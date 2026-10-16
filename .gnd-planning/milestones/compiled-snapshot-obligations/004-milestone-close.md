@@ -56,7 +56,7 @@ ordering was corrected by Ruff; this changed no test semantics.
 | CS0 admission refusal | Closed by discriminating API and CLI refusal controls in CS1. |
 | CS0/CS1/CS2 RF9 authority and structure carryovers | Carried to their original RF9/RF6/RF7 owners; this semantic fix does not confer new authority or retire shims. |
 | CS1/CS2 future occurrence admission support | Carried to a separately scoped occurrence-admission milestone, owned by the framework maintainer. |
-| CS1/CS2 external app acceptance | Carried to gnd-apps owner after adoption at exact merged commit; notes/app-regression-recipe.md. |
+| CS1/CS2 external app acceptance | Carried to downstream-apps owner after adoption at exact merged commit; notes/app-regression-recipe.md. |
 | CS1/CS2 close question sweep | Closed by this table and four local close reviews. |
 | CS2 pending plan/close review history | Closed only for the explicitly selected local instrument; previous vendor-panel history remains historical. |
 
@@ -116,13 +116,13 @@ is bounded development completion, not merge, publication or human acceptance.
 
 ## Artifact identities
 
-- .gnd-planning/milestones/compiled-snapshot-obligations/001-phase-CS0.md: c6dea14121cddd2d7348407ca0c0470668486973d382f2dc58cdf2f2ad29d126
-- .gnd-planning/milestones/compiled-snapshot-obligations/002-phase-CS1.md: 7b1e9b40418cbad0908059172ca919e4f5d2814fb2b94416323499b134f23595
+- .gnd-planning/milestones/compiled-snapshot-obligations/001-phase-CS0.md: 4a417b1c7b29ffea382778e073c82ac287a6bc75574ba0b7403b68b999fcd871
+- .gnd-planning/milestones/compiled-snapshot-obligations/002-phase-CS1.md: a2ed4f92aa3338b2e4a8b3e2922df46b6c2f54a865b69dff3fe3ff0548984435
 - .gnd-planning/milestones/compiled-snapshot-obligations/003-phase-CS2.md: b34f4dc48bca18d7fdbeb8b1483de43d34a8adf5d33dfddfeb1d761c80da57ab
-- .gnd-planning/milestones/compiled-snapshot-obligations/notes/compiled-snapshot-obligations-plan.md: bd72e3840587d5b0a88da18061092c2f7537ceb36f9e9f6f6f75479d9aabc5f1
+- .gnd-planning/milestones/compiled-snapshot-obligations/notes/compiled-snapshot-obligations-plan.md: fba63966205df03f581f01ebd32e0011647028165eb8cf33df6895489870be05
 - .gnd-planning/milestones/compiled-snapshot-obligations/notes/app-regression-recipe.md: 91433700a617342601d060590250e154a35718000e5cd3a1b15cc2d0c17cd088
 - .gnd-planning/milestones/compiled-snapshot-obligations/evidence/CS2/agreement.json: eab3dc3c895b8cf2072a6baab7c770e46d0110651663f85a35e7cae526a44270
-- .gnd-planning/milestones/compiled-snapshot-obligations/evidence/CS2/obligation-inventory.txt: 490221942ee274441d6480fbebe31579cc768db45f531672010f65789cab065a
+- .gnd-planning/milestones/compiled-snapshot-obligations/evidence/CS2/obligation-inventory.txt: 2f6ef3279dc1561f1de23ca7fb72df9efefbfdb4364fa56f85fe5453420aec9e
 - .gnd-planning/milestones/compiled-snapshot-obligations/evidence/CS2/close-focused-311.txt: a97f4af95ee0ce240575afd66ed2949186d92569561271fbfa8c82d446b6a668
 - .gnd-planning/milestones/compiled-snapshot-obligations/evidence/CS2/close-focused-313.txt: d45578ab1be53df4b8b2939e10ba62bf9288a12ef10d3eaad1a886d12e04889f
 - tests/test_compiled_snapshot_boundaries.py: 0e2f5972105726afde58cb63a0249af058b85dfcaf938a3d53fd06436fa57acb

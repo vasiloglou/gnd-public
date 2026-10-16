@@ -1,4 +1,4 @@
-# gnd-analytics M3 phase07: indexed production subset evaluation
+# downstream-app M3 phase07: indexed production subset evaluation
 
 Status: scoped specification; execution follows recorded phase06 completion.
 

@@ -8,7 +8,7 @@ Derives from the complete compiled-snapshot-obligations plan r1, merged by the
 owner's request in PR #17. Plan SHA-256:
 `0f4391027a48854b64e5d6d63d3f1393a2608583db3c67a1caff9656b5262516`.
 Runtime inspection/diagnosis baseline: `ab879dc5758123367be748744bbbd331e012f1e3`.
-Issue #16 and its public gnd-apps reproduction at `efc9c0e` are inputs. No panel
+Issue #16 and its public downstream-apps reproduction at `efc9c0e` are inputs. No panel
 opinion or prior certificate covers this spec. The plan's review instrument
 remains an owner selection; no provider invocation is inferred.
 
@@ -84,7 +84,7 @@ explicitly red before any runtime implementation. CS0 alone does not fix #16.
 ### Baseline diagnostic — already measured, read-only
 
 `evidence/CS0/baseline.json` retains a summary of a diagnostic using the reviewed
-public gnd-apps model-building functions from pinned source, packaged expense
+public downstream-apps model-building functions from pinned source, packaged expense
 data and public `api.check`, `api.transition` and batch CLI routes. It writes only
 temporary workspaces outside the repository. Temporary input/driver bytes are
 identified by hashes and are explicitly outside history. The retained summary
@@ -102,7 +102,7 @@ constraints, so a numeric control is not promised band 0.
 
 `tests/fixtures/compiled-snapshot/README.md`: case stories and public commands.
 `model.orm.json`: bounded, self-contained model retaining the issue's operation,
-role metadata and correct structured derivations without a gnd-apps import.
+role metadata and correct structured derivations without a downstream-apps import.
 `nonnumeric.pop.json`, `numeric.pop.json`, `pre.pop.json`, `steps.json`:
 admitted snapshot/control/walk inputs using portable model coordinates.
 `expected.json`: separate current/successor answers. Separate the narrative

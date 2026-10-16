@@ -25,13 +25,13 @@ Corpus-first RED commit0867fcb: four failures and one passing active-budget cont
 
 ## Verification
 
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_compiled_work.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_compiled_work.py
 Exit0,5 passed. Direct output evidence/phase-9-direct.txt.
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline pytest -q tests/test_m3_compiled_work.py tests/test_compiled_snapshot_obligations.py tests/test_m3_population_schema.py tests/test_m3_generated_json.py tests/test_m3_indexed_subset.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline pytest -q tests/test_m3_compiled_work.py tests/test_compiled_snapshot_obligations.py tests/test_m3_population_schema.py tests/test_m3_generated_json.py tests/test_m3_indexed_subset.py tests/test_public_transition_contract.py tests/test_public_transition_trace.py tests/test_transition_report.py tests/test_public_transition_api_guards.py tests/test_public_transition_ir_immutability.py tests/test_v70_phase4_transition.py tests/test_rf1_layering.py
 Exit0,193 passed in8.04s; evidence/phase-9-focused.txt.
-UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline ruff check src/gnd/compiled_obligations.py tests/test_m3_compiled_work.py
+UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline ruff check src/gnd/compiled_obligations.py tests/test_m3_compiled_work.py
 Exit0,All checks passed!; evidence/phase-9-lint.txt.
-App overlay: UV_CACHE_DIR=/private/tmp/gnd-apps-uv-cache uv run --offline --package gnd-analytics --with-editable /private/tmp/gnd-m3-performance --with rpds-py==2026.9.1 pytest -q apps/gnd-analytics/tests/test_fast_check.py apps/gnd-analytics/tests/test_source_workspace.py apps/gnd-analytics/tests/test_execution_budget.py apps/gnd-analytics/tests/test_parallel_answer.py apps/gnd-analytics/tests/test_checker_audit.py apps/gnd-analytics/tests/test_cli.py
+App overlay: UV_CACHE_DIR=/private/tmp/downstream-uv-cache uv run --offline --package downstream-app --with-editable /private/tmp/gnd-m3-performance --with rpds-py==2026.9.1 pytest -q apps/downstream-app/tests/test_fast_check.py apps/downstream-app/tests/test_source_workspace.py apps/downstream-app/tests/test_execution_budget.py apps/downstream-app/tests/test_parallel_answer.py apps/downstream-app/tests/test_checker_audit.py apps/downstream-app/tests/test_cli.py
 Exit0,90 affected controls, evidence/phase-09-app-preview.txt. No adoption.
 
 ## Native evidence and declared output differences

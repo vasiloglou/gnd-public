@@ -14,13 +14,13 @@ operation walk rejects the comparison. The reporter checked consistent derived
 claims and recorded zero derivation failures. An exit of 2 is not a passing
 result; the discrepancy is the absent applicable alethic obligation.
 
-The report used GND `75eda93f314e7ef82578ab4ee212d5e6d964fd71` and gnd-apps
+The report used GND `75eda93f314e7ef82578ab4ee212d5e6d964fd71` and downstream-apps
 `efc9c0e`. Its reproduction and results are external evidence, not a reproduction
 performed during this planning task:
 
-- [Driver](https://github.com/vasiloglou/gnd-apps/blob/efc9c0e/.gnd-analytics/milestones/M3/evidence/audit-driver.py)
-- [Results](https://github.com/vasiloglou/gnd-apps/blob/efc9c0e/.gnd-analytics/milestones/M3/evidence/phase-01-compiled-snapshot-gap.json)
-- [Trace](https://github.com/vasiloglou/gnd-apps/blob/efc9c0e/.gnd-analytics/milestones/M3/evidence/phase-01-expense-trace.txt)
+- [Driver](<downstream-repository>/blob/efc9c0e/.downstream-app/milestones/M3/evidence/audit-driver.py)
+- [Results](<downstream-repository>/blob/efc9c0e/.downstream-app/milestones/M3/evidence/phase-01-compiled-snapshot-gap.json)
+- [Trace](<downstream-repository>/blob/efc9c0e/.downstream-app/milestones/M3/evidence/phase-01-expense-trace.txt)
 
 Current source confirms a contract boundary, not yet a reproduced runtime bug:
 
@@ -111,7 +111,7 @@ set. Redaction and references must use the same existing public boundaries.
 
 CS0 -> CS1 -> CS2 is a hard sequence. Phase specs and owner gates precede each
 implementation. No phase depends on optional provider review, external app
-execution, package publication or a certification run. The gnd-apps report is
+execution, package publication or a certification run. The downstream-apps report is
 input; a portable local fixture is required for development and CI.
 
 ## 4. Phases
@@ -171,7 +171,7 @@ Criteria:
   snapshot representation preserves those precondition meanings.
 - CS2-C3: retained transition-only, intermediate-state and frame counterexamples
   demonstrate why passing this mode cannot establish full-walk correctness.
-- CS2-C4: give gnd-analytics an executable public-interface regression recipe and
+- CS2-C4: give downstream-app an executable public-interface regression recipe and
   exact GND commit identity; its downstream fast-path acceptance remains the app
   owner's gate. Do not claim its M3 gate ran unless it actually did.
 
@@ -249,7 +249,7 @@ All rows are proposals; none is an owner ruling.
 | CS-D2 — Activation/provenance contract | Caller asserts standing operational implications through explicit single/batch API/CLI activation; GND makes no provenance inference. Pin exact interface and unsupported combinations. | CS0 |
 | CS-D3 — Missing coverage and limits | Explicit unchecked/refusal in opted-in snapshots; preserve walk policy. Set exact reason codes, bands and join budget. | CS0 |
 | CS-D4 — Report compatibility | Reuse schema only if stable qualified references, counts and semantic projection can represent the new outcomes faithfully; otherwise version with consumer inventory. | CS0 |
-| CS-D5 — Agreement boundary | Require full agreement for eligible compiled obligations in a declared finite corpus; list transition-only and other walk-only exclusions. No promise of gnd-analytics full-plan equivalence. | CS0 |
+| CS-D5 — Agreement boundary | Require full agreement for eligible compiled obligations in a declared finite corpus; list transition-only and other walk-only exclusions. No promise of downstream-app full-plan equivalence. | CS0 |
 | CS-D6 — Review selection | Select the plan review instrument explicitly; no live paid review has been invoked. | Plan gate |
 
 Next actionable step after plan acceptance: author the CS0 spec and its approval

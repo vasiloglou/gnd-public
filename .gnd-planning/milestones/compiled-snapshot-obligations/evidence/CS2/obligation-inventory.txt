@@ -1,5 +1,5 @@
 TRACE
-  model_digest      sha256:a7ab2fad27db896cbaad9120b21970856bde447259dafe0f1220214a1af1bc53
+  model_digest      sha256:fa31f0d97b825ed1a4155fc0b8d7171341518607d401d5525ad0d35c19e4b741
   operations_digest sha256:2e276de231730ccfdbfb49f703a98d343cdfb42aac04425040eb5124f742d640
 COMPILED OBLIGATIONS
   Eligible standing subsets: snapshots check these only with --compiled-operations.

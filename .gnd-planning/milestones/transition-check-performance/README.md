@@ -15,5 +15,6 @@ deferred to a successor milestone.
 **Decisions:** TP-D1 through TP-D7 are ruled by the owner (2026-10-16). The
 reporter's workload bundle is available.
 
-**Next action:** the owner approves the plan and the TP0 spec, and rules on
-D-p1-1, D-p1-2 and spec D7/D8. After that, run `process-phase TP0 transition-check-performance`.
+**Done:** plan approved ([001](001-plan-gate.md)); TP0 baseline recorded ([002](002-phase-TP0.md)).
+
+**Next action:** run `process-phase TP1 transition-check-performance` (spec, then the owner gate).

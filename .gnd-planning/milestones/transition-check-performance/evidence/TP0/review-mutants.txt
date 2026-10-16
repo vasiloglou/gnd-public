@@ -1,0 +1,5 @@
+KILLED    F5 pre-fix restore (getattr): AssertionError
+KILLED    F3 swapped dump attribution: AssertionError
+KILLED    F4 trace digest of count only: AssertionError
+KILLED    F7 every node counted top-level: AssertionError
+KILLED    F1 pre-fix: no course admission surface: AssertionError

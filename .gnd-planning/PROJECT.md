@@ -84,3 +84,12 @@ approved by the owner by default
 ([gate](milestones/pyrel-agent-loop/001-plan-gate.md)); phases PL0–PL6 run
 on `codex/pyrel-agent-loop`. Real Claude Code and Codex sessions are recorded
 once as evidence (PL4, owner-gated); pages replay deterministic stand-ins.
+
+## transition-check-performance — planning, 2026-10-16
+
+From [issue #24](https://github.com/vasiloglou/gnd-public/issues/24): GND checks
+dominate a downstream application's per-step plan execution. [Draft plan r2](milestones/transition-check-performance/notes/transition-check-performance-plan.md)
+covers TP0 (baseline on the reporter's exact workload), TP1 (one ModelIndex key per
+public call), TP2 (fewer deep copies) and TP3 (opt-in, receipt-bound pre-state
+reuse). Incremental evaluation is deferred. Defaults stay byte-identical. The
+owner ruled TP-D1 to TP-D4. The plan is not reviewed or approved.

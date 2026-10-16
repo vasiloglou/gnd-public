@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-**Awaiting owner review.** This is draft r5. Implementation is blocked until
-the owner approves the plan (r4 or later) and rules on this spec's D-rows. The
-workload input is available.
+**Owner-approved (o3), 2026-10-16.** The approved bytes are r5,
+SHA-256 `2165ada0…1e3b`, recorded in [the plan gate](../001-plan-gate.md),
+with D1–D8 accepted as proposed. Implementation may proceed. The spec is now
+append-only.
 
 ## 2. Provenance
 

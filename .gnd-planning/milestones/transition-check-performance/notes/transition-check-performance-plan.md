@@ -1,6 +1,6 @@
 # Per-step transition and check cost
 
-Draft r5, 2026-10-16. Milestone: `transition-check-performance`.
+Draft r5, 2026-10-16. **Owner-approved 2026-10-16** ([plan gate](../001-plan-gate.md); SHA-256 `01fae9d8…aca3`, before this status line). Milestone: `transition-check-performance`.
 Source: [gnd-public issue #24](https://github.com/vasiloglou/gnd-public/issues/24).
 Inspection baseline: `2d1ff4d` (runtime bytes unchanged since `73ea302`).
 Planning only. Plan approval, phase execution, implementation and publication

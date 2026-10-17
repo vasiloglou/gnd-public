@@ -85,13 +85,16 @@ approved by the owner by default
 on `codex/pyrel-agent-loop`. Real Claude Code and Codex sessions are recorded
 once as evidence (PL4, owner-gated); pages replay deterministic stand-ins.
 
-## transition-check-performance — planning, 2026-10-16
+## transition-check-performance — closed, 2026-10-17
 
-From [issue #24](https://github.com/vasiloglou/gnd-public/issues/24): GND checks
-dominate a downstream application's per-step plan execution. [Draft plan r5](milestones/transition-check-performance/notes/transition-check-performance-plan.md)
-covers TP0 (baseline on the reporter's anonymized workload), TP1 (one ModelIndex
-key per public call), TP2 (fewer deep copies) and TP3 (opt-in, receipt-bound
-pre-state reuse), with an expected ceiling of about 44% less GND wall time.
-Incremental evaluation is deferred. TP-D1 to TP-D7 are ruled. Four local readers
-reviewed r3, two of them confirmed r4, and r5 applies the final fixes. It awaits
-owner approval.
+From [issue #24](https://github.com/vasiloglou/gnd-public/issues/24). This milestone
+cut GND's per-step check cost on a downstream application's plan workload with
+results unchanged. On the reporter's 13-call workload:
+
+- **TP1** computes one ModelIndex key per public call.
+- **TP2** shares fact-type rows with internal readers instead of copying them.
+- **TP3** adds opt-in, receipt-bound pre-state reuse (25 → 19 checker runs).
+
+GND time fell by about a third on the default path and by about 42% with receipts.
+Incremental evaluation is carried to a successor milestone. See the
+[close record](milestones/transition-check-performance/006-milestone-close.md).

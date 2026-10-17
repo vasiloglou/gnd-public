@@ -1,0 +1,469 @@
+{
+  "environment": {
+    "machine": "arm64",
+    "python": "3.14.3",
+    "system": "Darwin"
+  },
+  "schema": "transition-cost-counters/1",
+  "workloads": {
+    "course": {
+      "replay": {
+        "checker_runs": 5,
+        "correspondences": 5,
+        "deepcopy_calls": 119,
+        "deepcopy_nodes": 21492,
+        "extension_views": 5,
+        "model_digests": 40,
+        "model_dumps_other": 105,
+        "model_index_calls": 115,
+        "model_index_key_paths": 115
+      },
+      "surfaces": {
+        "attempt-1.transition": {
+          "checker_runs": 5,
+          "correspondences": 5,
+          "deepcopy_calls": 119,
+          "deepcopy_nodes": 21492,
+          "extension_views": 5,
+          "model_digests": 39,
+          "model_dumps_other": 104,
+          "model_index_calls": 110,
+          "model_index_key_paths": 110
+        },
+        "attempt-2.transition": {
+          "checker_runs": 5,
+          "correspondences": 5,
+          "deepcopy_calls": 119,
+          "deepcopy_nodes": 21492,
+          "extension_views": 5,
+          "model_digests": 39,
+          "model_dumps_other": 104,
+          "model_index_calls": 110,
+          "model_index_key_paths": 110
+        },
+        "attempt-3.transition": {
+          "checker_runs": 5,
+          "correspondences": 5,
+          "deepcopy_calls": 119,
+          "deepcopy_nodes": 21492,
+          "extension_views": 5,
+          "model_digests": 39,
+          "model_dumps_other": 104,
+          "model_index_calls": 110,
+          "model_index_key_paths": 110
+        },
+        "pre.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 19,
+          "deepcopy_nodes": 3742,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "pre.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 20,
+          "deepcopy_nodes": 4090,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "pre.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 20,
+          "deepcopy_nodes": 4032,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        }
+      }
+    },
+    "reporter": {
+      "replay": {
+        "checker_runs": 25,
+        "correspondences": 25,
+        "deepcopy_calls": 1290,
+        "deepcopy_nodes": 2760394,
+        "extension_views": 18,
+        "model_digests": 212,
+        "model_dumps_other": 457,
+        "model_index_calls": 540,
+        "model_index_key_paths": 540
+      },
+      "surfaces": {
+        "00.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "00.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "00.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        },
+        "01.transition": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 158,
+          "deepcopy_nodes": 332783,
+          "extension_views": 3,
+          "model_digests": 25,
+          "model_dumps_other": 60,
+          "model_index_calls": 64,
+          "model_index_key_paths": 64
+        },
+        "01.transition.post": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 156,
+          "deepcopy_nodes": 329252,
+          "extension_views": 2,
+          "model_digests": 24,
+          "model_dumps_other": 57,
+          "model_index_calls": 54,
+          "model_index_key_paths": 54
+        },
+        "02.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "02.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "02.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        },
+        "03.transition": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 160,
+          "deepcopy_nodes": 333362,
+          "extension_views": 3,
+          "model_digests": 25,
+          "model_dumps_other": 60,
+          "model_index_calls": 64,
+          "model_index_key_paths": 64
+        },
+        "03.transition.post": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 158,
+          "deepcopy_nodes": 329753,
+          "extension_views": 2,
+          "model_digests": 24,
+          "model_dumps_other": 57,
+          "model_index_calls": 54,
+          "model_index_key_paths": 54
+        },
+        "04.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "04.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "04.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        },
+        "05.transition": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 160,
+          "deepcopy_nodes": 333637,
+          "extension_views": 3,
+          "model_digests": 25,
+          "model_dumps_other": 60,
+          "model_index_calls": 64,
+          "model_index_key_paths": 64
+        },
+        "05.transition.post": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 158,
+          "deepcopy_nodes": 329918,
+          "extension_views": 2,
+          "model_digests": 24,
+          "model_dumps_other": 57,
+          "model_index_calls": 54,
+          "model_index_key_paths": 54
+        },
+        "06.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "06.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "06.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        },
+        "07.transition": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 160,
+          "deepcopy_nodes": 333867,
+          "extension_views": 3,
+          "model_digests": 25,
+          "model_dumps_other": 60,
+          "model_index_calls": 64,
+          "model_index_key_paths": 64
+        },
+        "07.transition.post": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 158,
+          "deepcopy_nodes": 330056,
+          "extension_views": 2,
+          "model_digests": 24,
+          "model_dumps_other": 57,
+          "model_index_calls": 54,
+          "model_index_key_paths": 54
+        },
+        "08.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "08.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "08.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        },
+        "09.transition": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 160,
+          "deepcopy_nodes": 334062,
+          "extension_views": 3,
+          "model_digests": 25,
+          "model_dumps_other": 60,
+          "model_index_calls": 64,
+          "model_index_key_paths": 64
+        },
+        "09.transition.post": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 158,
+          "deepcopy_nodes": 330173,
+          "extension_views": 2,
+          "model_digests": 24,
+          "model_dumps_other": 57,
+          "model_index_calls": 54,
+          "model_index_key_paths": 54
+        },
+        "10.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "10.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "10.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        },
+        "11.transition": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 156,
+          "deepcopy_nodes": 340274,
+          "extension_views": 3,
+          "model_digests": 25,
+          "model_dumps_other": 60,
+          "model_index_calls": 64,
+          "model_index_key_paths": 64
+        },
+        "11.transition.post": {
+          "checker_runs": 3,
+          "correspondences": 3,
+          "deepcopy_calls": 154,
+          "deepcopy_nodes": 336327,
+          "extension_views": 2,
+          "model_digests": 24,
+          "model_dumps_other": 57,
+          "model_index_calls": 54,
+          "model_index_key_paths": 54
+        },
+        "12.check": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 48,
+          "deepcopy_nodes": 107487,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "12.check.admission": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 110188,
+          "extension_views": 0,
+          "model_digests": 7,
+          "model_dumps_other": 12,
+          "model_index_calls": 13,
+          "model_index_key_paths": 13
+        },
+        "12.check.compiled": {
+          "checker_runs": 1,
+          "correspondences": 1,
+          "deepcopy_calls": 49,
+          "deepcopy_nodes": 116304,
+          "extension_views": 0,
+          "model_digests": 5,
+          "model_dumps_other": 10,
+          "model_index_calls": 14,
+          "model_index_key_paths": 14
+        }
+      }
+    }
+  }
+}

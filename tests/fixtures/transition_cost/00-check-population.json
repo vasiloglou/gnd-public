@@ -1,0 +1,1946 @@
+{
+  "facts": {
+    "aggregate_arg": [
+      {
+        "column": "v_3:c1",
+        "input_column": "v_2:c2",
+        "step": "s_3"
+      }
+    ],
+    "aggregate_filter": [],
+    "aggregate_fn": [
+      {
+        "fn": "count"
+      },
+      {
+        "fn": "sum"
+      },
+      {
+        "fn": "avg"
+      },
+      {
+        "fn": "min"
+      },
+      {
+        "fn": "max"
+      }
+    ],
+    "aggregate_item": [
+      {
+        "column": "v_3:c1",
+        "distinct": false,
+        "fn": "sum",
+        "step": "s_3"
+      }
+    ],
+    "aggregate_result": [
+      {
+        "argument_type": "BIGINT",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "HUGEINT",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "INTEGER",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "DOUBLE",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "FLOAT",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "BOOLEAN",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "VARCHAR",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "DATE",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "TIMESTAMP",
+        "flag": false,
+        "fn": "count",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "BIGINT",
+        "flag": true,
+        "fn": "sum",
+        "type": "HUGEINT"
+      },
+      {
+        "argument_type": "HUGEINT",
+        "flag": true,
+        "fn": "sum",
+        "type": "HUGEINT"
+      },
+      {
+        "argument_type": "INTEGER",
+        "flag": true,
+        "fn": "sum",
+        "type": "HUGEINT"
+      },
+      {
+        "argument_type": "DOUBLE",
+        "flag": true,
+        "fn": "sum",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "FLOAT",
+        "flag": true,
+        "fn": "sum",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "BIGINT",
+        "flag": true,
+        "fn": "avg",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "HUGEINT",
+        "flag": true,
+        "fn": "avg",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "INTEGER",
+        "flag": true,
+        "fn": "avg",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "DOUBLE",
+        "flag": true,
+        "fn": "avg",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "FLOAT",
+        "flag": true,
+        "fn": "avg",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "BIGINT",
+        "flag": true,
+        "fn": "min",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "HUGEINT",
+        "flag": true,
+        "fn": "min",
+        "type": "HUGEINT"
+      },
+      {
+        "argument_type": "INTEGER",
+        "flag": true,
+        "fn": "min",
+        "type": "INTEGER"
+      },
+      {
+        "argument_type": "DOUBLE",
+        "flag": true,
+        "fn": "min",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "FLOAT",
+        "flag": true,
+        "fn": "min",
+        "type": "FLOAT"
+      },
+      {
+        "argument_type": "BOOLEAN",
+        "flag": true,
+        "fn": "min",
+        "type": "BOOLEAN"
+      },
+      {
+        "argument_type": "VARCHAR",
+        "flag": true,
+        "fn": "min",
+        "type": "VARCHAR"
+      },
+      {
+        "argument_type": "DATE",
+        "flag": true,
+        "fn": "min",
+        "type": "DATE"
+      },
+      {
+        "argument_type": "TIMESTAMP",
+        "flag": true,
+        "fn": "min",
+        "type": "TIMESTAMP"
+      },
+      {
+        "argument_type": "BIGINT",
+        "flag": true,
+        "fn": "max",
+        "type": "BIGINT"
+      },
+      {
+        "argument_type": "HUGEINT",
+        "flag": true,
+        "fn": "max",
+        "type": "HUGEINT"
+      },
+      {
+        "argument_type": "INTEGER",
+        "flag": true,
+        "fn": "max",
+        "type": "INTEGER"
+      },
+      {
+        "argument_type": "DOUBLE",
+        "flag": true,
+        "fn": "max",
+        "type": "DOUBLE"
+      },
+      {
+        "argument_type": "FLOAT",
+        "flag": true,
+        "fn": "max",
+        "type": "FLOAT"
+      },
+      {
+        "argument_type": "BOOLEAN",
+        "flag": true,
+        "fn": "max",
+        "type": "BOOLEAN"
+      },
+      {
+        "argument_type": "VARCHAR",
+        "flag": true,
+        "fn": "max",
+        "type": "VARCHAR"
+      },
+      {
+        "argument_type": "DATE",
+        "flag": true,
+        "fn": "max",
+        "type": "DATE"
+      },
+      {
+        "argument_type": "TIMESTAMP",
+        "flag": true,
+        "fn": "max",
+        "type": "TIMESTAMP"
+      }
+    ],
+    "allowed_expr": [
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": "="
+      },
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": "!="
+      },
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": "<>"
+      },
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": "<"
+      },
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": "<="
+      },
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": ">"
+      },
+      {
+        "arity": 2,
+        "kind": "compare",
+        "operator": ">="
+      }
+    ],
+    "answer_item": [
+      {
+        "input_column": "v_3:c1",
+        "output_column": "v_4:c1",
+        "position": 1,
+        "step": "s_4"
+      }
+    ],
+    "answer_item_count": [
+      {
+        "n": 1,
+        "step": "s_4"
+      }
+    ],
+    "answer_item_max": [
+      {
+        "n": 1,
+        "step": "s_4"
+      }
+    ],
+    "answer_limit": [],
+    "answer_order": [],
+    "answer_order_count": [],
+    "answer_order_max": [],
+    "answer_order_present": [],
+    "answer_present": [
+      {
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d"
+      }
+    ],
+    "bad_st01_fields": [],
+    "bad_st01_names": [],
+    "bad_st01_owners": [],
+    "bad_st01_positions": [],
+    "bad_st01_provenance": [],
+    "bad_st02_aggregate_payload": [],
+    "bad_st02_answer_payload": [],
+    "bad_st02_filter_payload": [],
+    "bad_st02_scan_payload": [],
+    "bad_st02_traverse_payload": [],
+    "bad_st03_predecessor": [],
+    "bad_st03_producer": [],
+    "bad_st03_terminal": [],
+    "bad_st04_scan_model": [],
+    "bad_st05_traverse_model": [],
+    "bad_st06_graph": [],
+    "bad_st06_ref": [],
+    "bad_st06_signature": [],
+    "bad_st06_types": [],
+    "bad_st07_groups": [],
+    "bad_st07_item_filter": [],
+    "bad_st07_items": [],
+    "bad_st08_limit": [],
+    "bad_st08_order": [],
+    "bad_st08_projection": [],
+    "bad_st09_identity": [],
+    "bad_st09_keys": [],
+    "bad_st09_multiplicity": [],
+    "bad_st09_nulls": [],
+    "bad_st09_rows": [],
+    "bad_st10_walk": [],
+    "bad_st_p01_traverse_fanout": [],
+    "bad_st_p02_aggregate_fanout": [],
+    "bad_st_p03_literal_known": [],
+    "bad_st_p04_empty": [],
+    "bad_st_p05_large": [],
+    "bool_operator": [
+      {
+        "operator": "and"
+      },
+      {
+        "operator": "or"
+      },
+      {
+        "operator": "not"
+      }
+    ],
+    "column_at": [
+      {
+        "column": "v_0:c1",
+        "position": 1,
+        "variable": "v_0"
+      },
+      {
+        "column": "v_1:c1",
+        "position": 1,
+        "variable": "v_1"
+      },
+      {
+        "column": "v_1:c2",
+        "position": 2,
+        "variable": "v_1"
+      },
+      {
+        "column": "v_2:c1",
+        "position": 1,
+        "variable": "v_2"
+      },
+      {
+        "column": "v_2:c2",
+        "position": 2,
+        "variable": "v_2"
+      },
+      {
+        "column": "v_3:c1",
+        "position": 1,
+        "variable": "v_3"
+      },
+      {
+        "column": "v_4:c1",
+        "position": 1,
+        "variable": "v_4"
+      }
+    ],
+    "column_base_role": [
+      {
+        "column": "v_1:c2",
+        "fact_type": "expense_has_amount",
+        "role": "amount"
+      },
+      {
+        "column": "v_2:c2",
+        "fact_type": "expense_has_amount",
+        "role": "amount"
+      }
+    ],
+    "column_concept": [
+      {
+        "column": "v_0:c1",
+        "concept": "expense"
+      }
+    ],
+    "column_copy": [
+      {
+        "column": "v_1:c1",
+        "operand": "v_0:c1"
+      },
+      {
+        "column": "v_2:c1",
+        "operand": "v_1:c1"
+      },
+      {
+        "column": "v_2:c2",
+        "operand": "v_1:c2"
+      },
+      {
+        "column": "v_4:c1",
+        "operand": "v_3:c1"
+      }
+    ],
+    "column_depends": [
+      {
+        "column": "v_1:c1",
+        "operand": "v_0:c1"
+      },
+      {
+        "column": "v_2:c1",
+        "operand": "v_0:c1"
+      },
+      {
+        "column": "v_2:c1",
+        "operand": "v_1:c1"
+      },
+      {
+        "column": "v_2:c2",
+        "operand": "v_1:c2"
+      },
+      {
+        "column": "v_3:c1",
+        "operand": "v_1:c2"
+      },
+      {
+        "column": "v_3:c1",
+        "operand": "v_2:c2"
+      },
+      {
+        "column": "v_4:c1",
+        "operand": "v_1:c2"
+      },
+      {
+        "column": "v_4:c1",
+        "operand": "v_2:c2"
+      },
+      {
+        "column": "v_4:c1",
+        "operand": "v_3:c1"
+      }
+    ],
+    "column_derived": [
+      {
+        "column": "v_1:c1"
+      },
+      {
+        "column": "v_2:c1"
+      },
+      {
+        "column": "v_2:c2"
+      },
+      {
+        "column": "v_3:c1"
+      },
+      {
+        "column": "v_4:c1"
+      }
+    ],
+    "column_entity_player": [
+      {
+        "column": "v_0:c1",
+        "concept": "expense"
+      },
+      {
+        "column": "v_1:c1",
+        "concept": "expense"
+      },
+      {
+        "column": "v_2:c1",
+        "concept": "expense"
+      }
+    ],
+    "column_name": [
+      {
+        "column": "v_0:c1",
+        "name": "expense"
+      },
+      {
+        "column": "v_1:c1",
+        "name": "expense"
+      },
+      {
+        "column": "v_1:c2",
+        "name": "amount"
+      },
+      {
+        "column": "v_2:c1",
+        "name": "expense"
+      },
+      {
+        "column": "v_2:c2",
+        "name": "amount"
+      },
+      {
+        "column": "v_3:c1",
+        "name": "sum"
+      },
+      {
+        "column": "v_4:c1",
+        "name": "sum"
+      }
+    ],
+    "column_nullable": [
+      {
+        "column": "v_0:c1",
+        "flag": false
+      },
+      {
+        "column": "v_1:c1",
+        "flag": false
+      },
+      {
+        "column": "v_1:c2",
+        "flag": false
+      },
+      {
+        "column": "v_2:c1",
+        "flag": false
+      },
+      {
+        "column": "v_2:c2",
+        "flag": false
+      },
+      {
+        "column": "v_3:c1",
+        "flag": true
+      },
+      {
+        "column": "v_4:c1",
+        "flag": true
+      }
+    ],
+    "column_operand": [
+      {
+        "column": "v_1:c1",
+        "operand": "v_0:c1"
+      },
+      {
+        "column": "v_2:c1",
+        "operand": "v_1:c1"
+      },
+      {
+        "column": "v_2:c2",
+        "operand": "v_1:c2"
+      },
+      {
+        "column": "v_3:c1",
+        "operand": "v_2:c2"
+      },
+      {
+        "column": "v_4:c1",
+        "operand": "v_3:c1"
+      }
+    ],
+    "column_role": [
+      {
+        "column": "v_1:c2",
+        "fact_type": "expense_has_amount",
+        "role": "amount"
+      }
+    ],
+    "column_type": [
+      {
+        "column": "v_0:c1",
+        "type": "BIGINT"
+      },
+      {
+        "column": "v_1:c1",
+        "type": "BIGINT"
+      },
+      {
+        "column": "v_1:c2",
+        "type": "BIGINT"
+      },
+      {
+        "column": "v_2:c1",
+        "type": "BIGINT"
+      },
+      {
+        "column": "v_2:c2",
+        "type": "BIGINT"
+      },
+      {
+        "column": "v_3:c1",
+        "type": "HUGEINT"
+      },
+      {
+        "column": "v_4:c1",
+        "type": "HUGEINT"
+      }
+    ],
+    "concept_column": [
+      {
+        "column": "v_0:c1"
+      }
+    ],
+    "concept_exists": [
+      {
+        "concept": "expense"
+      }
+    ],
+    "concept_type": [
+      {
+        "concept": "expense",
+        "type": "BIGINT"
+      }
+    ],
+    "copy_at": [
+      {
+        "column": "v_1:c1",
+        "input_column": "v_0:c1",
+        "position": 1,
+        "step": "s_1"
+      },
+      {
+        "column": "v_2:c1",
+        "input_column": "v_1:c1",
+        "position": 1,
+        "step": "s_2"
+      },
+      {
+        "column": "v_2:c2",
+        "input_column": "v_1:c2",
+        "position": 2,
+        "step": "s_2"
+      }
+    ],
+    "distinct_key": [],
+    "escape_mode": [
+      {
+        "mode": "none"
+      },
+      {
+        "mode": "backslash"
+      }
+    ],
+    "expr_depends": [
+      {
+        "expression": "s_2:e0",
+        "operand": "s_2:e1"
+      },
+      {
+        "expression": "s_2:e0",
+        "operand": "s_2:e2"
+      }
+    ],
+    "expr_escape": [],
+    "expr_kind": [
+      {
+        "expression": "s_2:e0",
+        "kind": "compare"
+      },
+      {
+        "expression": "s_2:e1",
+        "kind": "ref"
+      },
+      {
+        "expression": "s_2:e2",
+        "kind": "literal"
+      }
+    ],
+    "expr_literal": [
+      {
+        "expression": "s_2:e2",
+        "type": "BIGINT",
+        "value": "500"
+      }
+    ],
+    "expr_negated": [],
+    "expr_operand": [
+      {
+        "expression": "s_2:e0",
+        "operand": "s_2:e1",
+        "position": 1
+      },
+      {
+        "expression": "s_2:e0",
+        "operand": "s_2:e2",
+        "position": 2
+      }
+    ],
+    "expr_operand_count": [
+      {
+        "expression": "s_2:e0",
+        "n": 2
+      }
+    ],
+    "expr_operand_max": [
+      {
+        "expression": "s_2:e0",
+        "n": 2
+      }
+    ],
+    "expr_operator": [
+      {
+        "expression": "s_2:e0",
+        "operator": ">"
+      }
+    ],
+    "expr_ref": [
+      {
+        "column": "v_1:c2",
+        "expression": "s_2:e1"
+      }
+    ],
+    "expr_type": [
+      {
+        "expression": "s_2:e0",
+        "type": "BOOLEAN"
+      },
+      {
+        "expression": "s_2:e1",
+        "type": "BIGINT"
+      },
+      {
+        "expression": "s_2:e2",
+        "type": "BIGINT"
+      }
+    ],
+    "expression_step": [
+      {
+        "expression": "s_2:e0",
+        "step": "s_2"
+      },
+      {
+        "expression": "s_2:e1",
+        "step": "s_2"
+      },
+      {
+        "expression": "s_2:e2",
+        "step": "s_2"
+      }
+    ],
+    "fact_role": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "player": "expense",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_approved_by_chain",
+        "player": "chain",
+        "role": "chain",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "player": "expense",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "player": "amount",
+        "role": "amount",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "player": "expense",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "player": "currency",
+        "role": "currency",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "player": "expense",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "player": "category",
+        "role": "category",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "player": "expense",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "player": "expense",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "player": "employee",
+        "role": "employee",
+        "type": "VARCHAR"
+      }
+    ],
+    "filter_root": [
+      {
+        "expression": "s_2:e0",
+        "step": "s_2"
+      }
+    ],
+    "finish_available": [
+      {
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d"
+      }
+    ],
+    "folded_name": [
+      {
+        "folded": "expense",
+        "name": "expense"
+      },
+      {
+        "folded": "amount",
+        "name": "amount"
+      },
+      {
+        "folded": "sum",
+        "name": "sum"
+      }
+    ],
+    "group_key": [],
+    "group_key_count": [],
+    "group_key_max": [],
+    "has_aggregate_argument": [
+      {
+        "column": "v_3:c1",
+        "step": "s_3"
+      }
+    ],
+    "has_answer_item_step_position": [
+      {
+        "position": 1,
+        "step": "s_4"
+      }
+    ],
+    "has_column_at_variable_column": [
+      {
+        "column": "v_0:c1",
+        "variable": "v_0"
+      },
+      {
+        "column": "v_1:c1",
+        "variable": "v_1"
+      },
+      {
+        "column": "v_1:c2",
+        "variable": "v_1"
+      },
+      {
+        "column": "v_2:c1",
+        "variable": "v_2"
+      },
+      {
+        "column": "v_2:c2",
+        "variable": "v_2"
+      },
+      {
+        "column": "v_3:c1",
+        "variable": "v_3"
+      },
+      {
+        "column": "v_4:c1",
+        "variable": "v_4"
+      }
+    ],
+    "has_column_name_column": [
+      {
+        "column": "v_0:c1"
+      },
+      {
+        "column": "v_1:c1"
+      },
+      {
+        "column": "v_1:c2"
+      },
+      {
+        "column": "v_2:c1"
+      },
+      {
+        "column": "v_2:c2"
+      },
+      {
+        "column": "v_3:c1"
+      },
+      {
+        "column": "v_4:c1"
+      }
+    ],
+    "has_column_nullable_column": [
+      {
+        "column": "v_0:c1"
+      },
+      {
+        "column": "v_1:c1"
+      },
+      {
+        "column": "v_1:c2"
+      },
+      {
+        "column": "v_2:c1"
+      },
+      {
+        "column": "v_2:c2"
+      },
+      {
+        "column": "v_3:c1"
+      },
+      {
+        "column": "v_4:c1"
+      }
+    ],
+    "has_column_type_column": [
+      {
+        "column": "v_0:c1"
+      },
+      {
+        "column": "v_1:c1"
+      },
+      {
+        "column": "v_1:c2"
+      },
+      {
+        "column": "v_2:c1"
+      },
+      {
+        "column": "v_2:c2"
+      },
+      {
+        "column": "v_3:c1"
+      },
+      {
+        "column": "v_4:c1"
+      }
+    ],
+    "has_concept_type_concept": [
+      {
+        "concept": "expense"
+      }
+    ],
+    "has_expr_operand_expression_position": [
+      {
+        "expression": "s_2:e0",
+        "position": 1
+      },
+      {
+        "expression": "s_2:e0",
+        "position": 2
+      }
+    ],
+    "has_fact_role_fact_type_role_player": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "player": "chain",
+        "role": "chain"
+      },
+      {
+        "fact_type": "expense_approved_by_chain",
+        "player": "expense",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "player": "amount",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "player": "expense",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "player": "currency",
+        "role": "currency"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "player": "expense",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "player": "category",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "player": "expense",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "player": "expense",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "player": "employee",
+        "role": "employee"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "player": "expense",
+        "role": "expense"
+      }
+    ],
+    "has_fact_role_fact_type_role_type": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "role": "chain",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_approved_by_chain",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "amount",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "role": "currency",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "role": "category",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "role": "expense",
+        "type": "BIGINT"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "role": "employee",
+        "type": "VARCHAR"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "role": "expense",
+        "type": "BIGINT"
+      }
+    ],
+    "has_filter_root_step": [
+      {
+        "step": "s_2"
+      }
+    ],
+    "has_scan_concept_step": [
+      {
+        "step": "s_0"
+      }
+    ],
+    "has_step_kind_step": [
+      {
+        "step": "s_0"
+      },
+      {
+        "step": "s_1"
+      },
+      {
+        "step": "s_2"
+      },
+      {
+        "step": "s_3"
+      },
+      {
+        "step": "s_4"
+      }
+    ],
+    "has_traverse_on_step": [
+      {
+        "step": "s_1"
+      }
+    ],
+    "key_member": [
+      {
+        "column": "v_0:c1",
+        "key": "key:v_0:c1",
+        "position": 1
+      },
+      {
+        "column": "v_1:c1",
+        "key": "key:v_1:c1",
+        "position": 1
+      },
+      {
+        "column": "v_2:c1",
+        "key": "key:v_2:c1",
+        "position": 1
+      }
+    ],
+    "legacy_join_target": [],
+    "max_distinct_target": [],
+    "metadata_complete": [
+      {
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d"
+      }
+    ],
+    "null_mode": [
+      {
+        "nulls": "first"
+      },
+      {
+        "nulls": "last"
+      }
+    ],
+    "nulls": [],
+    "numeric_type": [
+      {
+        "type": "BIGINT"
+      },
+      {
+        "type": "HUGEINT"
+      },
+      {
+        "type": "INTEGER"
+      },
+      {
+        "type": "DOUBLE"
+      },
+      {
+        "type": "FLOAT"
+      }
+    ],
+    "observation_digest": [],
+    "order_direction": [
+      {
+        "direction": "asc"
+      },
+      {
+        "direction": "desc"
+      }
+    ],
+    "predecessor": [
+      {
+        "previous": "s_0",
+        "step": "s_1"
+      },
+      {
+        "previous": "s_1",
+        "step": "s_2"
+      },
+      {
+        "previous": "s_2",
+        "step": "s_3"
+      },
+      {
+        "previous": "s_3",
+        "step": "s_4"
+      }
+    ],
+    "program_digest": [
+      {
+        "digest": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d"
+      }
+    ],
+    "program_policy": [
+      {
+        "n": 1000,
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d"
+      }
+    ],
+    "program_step": [
+      {
+        "position": 0,
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "step": "s_0"
+      },
+      {
+        "position": 1,
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "step": "s_1"
+      },
+      {
+        "position": 2,
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "step": "s_2"
+      },
+      {
+        "position": 3,
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "step": "s_3"
+      },
+      {
+        "position": 4,
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "step": "s_4"
+      }
+    ],
+    "projected_column": [
+      {
+        "column": "v_3:c1",
+        "step": "s_3"
+      },
+      {
+        "column": "v_4:c1",
+        "step": "s_4"
+      }
+    ],
+    "provenance_exists": [
+      {
+        "column": "v_0:c1"
+      },
+      {
+        "column": "v_1:c1"
+      },
+      {
+        "column": "v_1:c2"
+      },
+      {
+        "column": "v_2:c1"
+      },
+      {
+        "column": "v_2:c2"
+      },
+      {
+        "column": "v_3:c1"
+      },
+      {
+        "column": "v_4:c1"
+      }
+    ],
+    "ready_step": [
+      {
+        "step": "s_0"
+      }
+    ],
+    "required_join": [
+      {
+        "source_column": "v_1:c1",
+        "target_column": "v_1:c2",
+        "variable": "v_1"
+      }
+    ],
+    "required_key": [
+      {
+        "key": "key:v_0:c1",
+        "variable": "v_0"
+      },
+      {
+        "key": "key:v_1:c1",
+        "variable": "v_1"
+      },
+      {
+        "key": "key:v_2:c1",
+        "variable": "v_2"
+      },
+      {
+        "key": "group:v_3",
+        "variable": "v_3"
+      }
+    ],
+    "role_functional": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "role": "expense"
+      }
+    ],
+    "role_literal": [
+      {
+        "fact_type": "expense_approved_by_chain",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_approved_by_chain",
+        "literal": "\"finance\"",
+        "role": "chain"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "1400",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "60",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_amount",
+        "literal": "800",
+        "role": "amount"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_has_currency",
+        "literal": "\"EUR\"",
+        "role": "currency"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "\"equipment\"",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "\"meals\"",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_in_category",
+        "literal": "\"travel\"",
+        "role": "category"
+      },
+      {
+        "fact_type": "expense_is_approved",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "101",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "102",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "103",
+        "role": "expense"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "\"Ari\"",
+        "role": "employee"
+      },
+      {
+        "fact_type": "expense_submitted_by_employee",
+        "literal": "\"Bea\"",
+        "role": "employee"
+      }
+    ],
+    "rows": [],
+    "scan_concept": [
+      {
+        "concept": "expense",
+        "step": "s_0"
+      }
+    ],
+    "schema_count": [
+      {
+        "n": 1,
+        "variable": "v_0"
+      },
+      {
+        "n": 1,
+        "variable": "v_3"
+      },
+      {
+        "n": 1,
+        "variable": "v_4"
+      },
+      {
+        "n": 2,
+        "variable": "v_1"
+      },
+      {
+        "n": 2,
+        "variable": "v_2"
+      }
+    ],
+    "schema_digest": [
+      {
+        "digest": "d1f2e04dc72291e9993e13a9f1f2d345e199e3a570118b6d7f0f5977666d7452",
+        "variable": "v_0"
+      },
+      {
+        "digest": "9f346cd45465a0cc054a22364e213ea9ccfed976a0a265d862a1a88d37b36afc",
+        "variable": "v_1"
+      },
+      {
+        "digest": "da8fde5ef11b7a6ff5591e72dd7f0a0e072d5183f73f119fc08f751e3df340a9",
+        "variable": "v_2"
+      },
+      {
+        "digest": "5f1300832c71cb595b1c21c0e6ae57a479807dbc05a18ef2635613c4d89a6a67",
+        "variable": "v_3"
+      },
+      {
+        "digest": "2eb67eb110cf0a7aa0eb539ba0aed636a074381bd33ab91808ed111d6beb7317",
+        "variable": "v_4"
+      }
+    ],
+    "schema_max": [
+      {
+        "n": 1,
+        "variable": "v_0"
+      },
+      {
+        "n": 1,
+        "variable": "v_3"
+      },
+      {
+        "n": 1,
+        "variable": "v_4"
+      },
+      {
+        "n": 2,
+        "variable": "v_1"
+      },
+      {
+        "n": 2,
+        "variable": "v_2"
+      }
+    ],
+    "soft_cap": [
+      {
+        "n": 1000
+      }
+    ],
+    "source_identity": [
+      {
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "source": "5ecbc665f1905ba7a48474c0971ee87cc9ca96d12ce685106d60148b1074e1f1"
+      }
+    ],
+    "sql_type": [
+      {
+        "type": "BIGINT"
+      },
+      {
+        "type": "HUGEINT"
+      },
+      {
+        "type": "INTEGER"
+      },
+      {
+        "type": "DOUBLE"
+      },
+      {
+        "type": "FLOAT"
+      },
+      {
+        "type": "BOOLEAN"
+      },
+      {
+        "type": "VARCHAR"
+      },
+      {
+        "type": "DATE"
+      },
+      {
+        "type": "TIMESTAMP"
+      }
+    ],
+    "step_executed": [],
+    "step_input": [
+      {
+        "step": "s_1",
+        "variable": "v_0"
+      },
+      {
+        "step": "s_2",
+        "variable": "v_1"
+      },
+      {
+        "step": "s_3",
+        "variable": "v_2"
+      },
+      {
+        "step": "s_4",
+        "variable": "v_3"
+      }
+    ],
+    "step_kind": [
+      {
+        "kind": "scan",
+        "step": "s_0"
+      },
+      {
+        "kind": "traverse",
+        "step": "s_1"
+      },
+      {
+        "kind": "filter",
+        "step": "s_2"
+      },
+      {
+        "kind": "aggregate",
+        "step": "s_3"
+      },
+      {
+        "kind": "answer",
+        "step": "s_4"
+      }
+    ],
+    "step_observed": [],
+    "step_output": [
+      {
+        "step": "s_0",
+        "variable": "v_0"
+      },
+      {
+        "step": "s_1",
+        "variable": "v_1"
+      },
+      {
+        "step": "s_2",
+        "variable": "v_2"
+      },
+      {
+        "step": "s_3",
+        "variable": "v_3"
+      },
+      {
+        "step": "s_4",
+        "variable": "v_4"
+      }
+    ],
+    "text_type": [
+      {
+        "type": "VARCHAR"
+      }
+    ],
+    "traverse_marker": [],
+    "traverse_on": [
+      {
+        "column": "v_0:c1",
+        "fact_type": "expense_has_amount",
+        "optional": false,
+        "source_role": "expense",
+        "step": "s_1"
+      }
+    ],
+    "traverse_role": [
+      {
+        "column": "v_1:c2",
+        "role": "amount",
+        "step": "s_1"
+      }
+    ],
+    "type_compatible": [
+      {
+        "left": "BIGINT",
+        "right": "BIGINT"
+      },
+      {
+        "left": "BIGINT",
+        "right": "HUGEINT"
+      },
+      {
+        "left": "BIGINT",
+        "right": "INTEGER"
+      },
+      {
+        "left": "BIGINT",
+        "right": "DOUBLE"
+      },
+      {
+        "left": "BIGINT",
+        "right": "FLOAT"
+      },
+      {
+        "left": "HUGEINT",
+        "right": "BIGINT"
+      },
+      {
+        "left": "HUGEINT",
+        "right": "HUGEINT"
+      },
+      {
+        "left": "HUGEINT",
+        "right": "INTEGER"
+      },
+      {
+        "left": "HUGEINT",
+        "right": "DOUBLE"
+      },
+      {
+        "left": "HUGEINT",
+        "right": "FLOAT"
+      },
+      {
+        "left": "INTEGER",
+        "right": "BIGINT"
+      },
+      {
+        "left": "INTEGER",
+        "right": "HUGEINT"
+      },
+      {
+        "left": "INTEGER",
+        "right": "INTEGER"
+      },
+      {
+        "left": "INTEGER",
+        "right": "DOUBLE"
+      },
+      {
+        "left": "INTEGER",
+        "right": "FLOAT"
+      },
+      {
+        "left": "DOUBLE",
+        "right": "BIGINT"
+      },
+      {
+        "left": "DOUBLE",
+        "right": "HUGEINT"
+      },
+      {
+        "left": "DOUBLE",
+        "right": "INTEGER"
+      },
+      {
+        "left": "DOUBLE",
+        "right": "DOUBLE"
+      },
+      {
+        "left": "DOUBLE",
+        "right": "FLOAT"
+      },
+      {
+        "left": "FLOAT",
+        "right": "BIGINT"
+      },
+      {
+        "left": "FLOAT",
+        "right": "HUGEINT"
+      },
+      {
+        "left": "FLOAT",
+        "right": "INTEGER"
+      },
+      {
+        "left": "FLOAT",
+        "right": "DOUBLE"
+      },
+      {
+        "left": "FLOAT",
+        "right": "FLOAT"
+      },
+      {
+        "left": "BOOLEAN",
+        "right": "BOOLEAN"
+      },
+      {
+        "left": "VARCHAR",
+        "right": "VARCHAR"
+      },
+      {
+        "left": "DATE",
+        "right": "DATE"
+      },
+      {
+        "left": "TIMESTAMP",
+        "right": "TIMESTAMP"
+      }
+    ],
+    "valid_limit": [],
+    "variable_available": [],
+    "variable_fanout": [],
+    "walk_complete": []
+  },
+  "population": {
+    "covers": [
+      "program_step",
+      "step_kind",
+      "step_input",
+      "step_output",
+      "predecessor",
+      "column_at",
+      "column_name",
+      "column_type",
+      "column_nullable",
+      "column_concept",
+      "column_role",
+      "column_derived",
+      "column_operand",
+      "column_copy",
+      "scan_concept",
+      "traverse_on",
+      "traverse_role",
+      "traverse_marker",
+      "filter_root",
+      "group_key",
+      "aggregate_item",
+      "aggregate_arg",
+      "aggregate_filter",
+      "answer_item",
+      "answer_order",
+      "answer_limit",
+      "expr_kind",
+      "expr_type",
+      "expr_ref",
+      "expr_literal",
+      "expr_operator",
+      "expr_operand",
+      "expr_negated",
+      "expr_escape",
+      "metadata_complete",
+      "step_executed",
+      "variable_available",
+      "walk_complete",
+      "source_identity",
+      "concept_exists",
+      "concept_type",
+      "fact_role",
+      "role_functional",
+      "role_literal",
+      "type_compatible",
+      "numeric_type",
+      "sql_type",
+      "allowed_expr",
+      "step_observed",
+      "rows",
+      "distinct_key",
+      "key_member",
+      "nulls",
+      "observation_digest",
+      "max_distinct_target",
+      "required_key",
+      "required_join",
+      "expression_step",
+      "folded_name",
+      "soft_cap",
+      "program_policy",
+      "legacy_join_target",
+      "copy_at",
+      "valid_limit",
+      "program_digest",
+      "schema_digest",
+      "bad_st01_owners",
+      "bad_st01_fields",
+      "bad_st01_positions",
+      "bad_st01_names",
+      "bad_st01_provenance",
+      "bad_st02_scan_payload",
+      "bad_st02_traverse_payload",
+      "bad_st02_filter_payload",
+      "bad_st02_aggregate_payload",
+      "bad_st02_answer_payload",
+      "bad_st03_producer",
+      "bad_st03_predecessor",
+      "bad_st03_terminal",
+      "bad_st04_scan_model",
+      "bad_st05_traverse_model",
+      "bad_st06_ref",
+      "bad_st06_graph",
+      "bad_st06_signature",
+      "bad_st06_types",
+      "bad_st07_groups",
+      "bad_st07_items",
+      "bad_st07_item_filter",
+      "bad_st08_projection",
+      "bad_st08_order",
+      "bad_st08_limit",
+      "bad_st09_identity",
+      "bad_st09_rows",
+      "bad_st09_nulls",
+      "bad_st09_keys",
+      "bad_st09_multiplicity",
+      "bad_st10_walk",
+      "bad_st_p01_traverse_fanout",
+      "bad_st_p02_aggregate_fanout",
+      "bad_st_p03_literal_known",
+      "bad_st_p04_empty",
+      "bad_st_p05_large",
+      "expr_depends",
+      "column_depends",
+      "column_base_role",
+      "column_entity_player",
+      "variable_fanout",
+      "ready_step",
+      "schema_count",
+      "schema_max",
+      "group_key_count",
+      "group_key_max",
+      "answer_item_count",
+      "answer_item_max",
+      "answer_order_count",
+      "answer_order_max",
+      "expr_operand_count",
+      "expr_operand_max",
+      "projected_column",
+      "has_column_name_column",
+      "has_column_type_column",
+      "has_column_nullable_column",
+      "has_step_kind_step",
+      "provenance_exists",
+      "has_scan_concept_step",
+      "has_traverse_on_step",
+      "has_filter_root_step",
+      "has_answer_item_step_position",
+      "answer_present",
+      "has_concept_type_concept",
+      "has_fact_role_fact_type_role_player",
+      "has_column_at_variable_column",
+      "has_expr_operand_expression_position",
+      "escape_mode",
+      "text_type",
+      "answer_order_present",
+      "has_fact_role_fact_type_role_type",
+      "aggregate_fn",
+      "aggregate_result",
+      "order_direction",
+      "null_mode",
+      "finish_available",
+      "concept_column",
+      "bool_operator",
+      "has_aggregate_argument"
+    ],
+    "model": "steps.orm.json",
+    "model_id": "urn:gnd-fixture:steps@1",
+    "source": "agent-output"
+  }
+}

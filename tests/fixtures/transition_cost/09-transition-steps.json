@@ -1,0 +1,21 @@
+{
+  "model": "steps.orm.json",
+  "model_digest": "sha256:9b971f929c1ec32ca05c5bcf9628b2af55c63cc3f28e9c17666bf06e41dc31d7",
+  "operations_digest": "sha256:3557e035a0143c70f335e3706ac4da60eaa581d629a44c03bf3493c66176fb04",
+  "steps": [
+    {
+      "bindings": {
+        "input": "v_3",
+        "output": "v_4",
+        "previous": "s_3",
+        "previous_output": "v_3",
+        "producer": "s_3",
+        "program": "d24ecda727d51f0616bc089564adc4740373595ae80da4ac63f8856a6a2e383d",
+        "source": "5ecbc665f1905ba7a48474c0971ee87cc9ca96d12ce685106d60148b1074e1f1",
+        "step": "s_4"
+      },
+      "op": "execute_answer"
+    }
+  ],
+  "steps_schema": 1
+}

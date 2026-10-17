@@ -1,0 +1,73 @@
+[
+  {
+    "call": "check",
+    "index": 0,
+    "population": "00-check-population.json"
+  },
+  {
+    "call": "transition",
+    "index": 1,
+    "population": "01-transition-population.json",
+    "steps": "01-transition-steps.json"
+  },
+  {
+    "call": "check",
+    "index": 2,
+    "population": "02-check-population.json"
+  },
+  {
+    "call": "transition",
+    "index": 3,
+    "population": "03-transition-population.json",
+    "steps": "03-transition-steps.json"
+  },
+  {
+    "call": "check",
+    "index": 4,
+    "population": "04-check-population.json"
+  },
+  {
+    "call": "transition",
+    "index": 5,
+    "population": "05-transition-population.json",
+    "steps": "05-transition-steps.json"
+  },
+  {
+    "call": "check",
+    "index": 6,
+    "population": "06-check-population.json"
+  },
+  {
+    "call": "transition",
+    "index": 7,
+    "population": "07-transition-population.json",
+    "steps": "07-transition-steps.json"
+  },
+  {
+    "call": "check",
+    "index": 8,
+    "population": "08-check-population.json"
+  },
+  {
+    "call": "transition",
+    "index": 9,
+    "population": "09-transition-population.json",
+    "steps": "09-transition-steps.json"
+  },
+  {
+    "call": "check",
+    "index": 10,
+    "population": "10-check-population.json"
+  },
+  {
+    "call": "transition",
+    "index": 11,
+    "population": "11-transition-population.json",
+    "steps": "11-transition-steps.json"
+  },
+  {
+    "call": "check",
+    "index": 12,
+    "population": "12-check-population.json"
+  }
+]

@@ -1,0 +1,345 @@
+{
+  "calls": [
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 65,
+        "unchecked": 0,
+        "vacuous": 36,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 0,
+      "payload_digest": "sha256:165e6fe3770f23d626f84f990e7a5cc8ab6771c71c494024219630ddf4bf78b6",
+      "trace_digest": "sha256:8e0df6dee270618084a39a632ecd5eccca9593061a50414cf95b760f7d0c7aae"
+    },
+    {
+      "call": "transition",
+      "counters": {
+        "checker_runs": 3,
+        "correspondences": 3,
+        "deepcopy_calls": 158,
+        "deepcopy_nodes": 332783,
+        "extension_views": 3,
+        "model_digests": 25,
+        "model_dumps_other": 60,
+        "model_index_calls": 64,
+        "model_index_key_paths": 64
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 0,
+        "unchecked": 0,
+        "vacuous": 0,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 1,
+      "payload_digest": "sha256:b3378e109bcf8b688253afc7280f67ae24f98ea2966a1b7b2a51ee36a2988fbd",
+      "trace_digest": "sha256:735f732a7e0c0cbe52b795f87ccac98afa9f1a16812f7b6ebff057465e432b93"
+    },
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 72,
+        "unchecked": 0,
+        "vacuous": 29,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 2,
+      "payload_digest": "sha256:6b26481d86fdbbb28c0a83d2eb90754eb239dd5fb77a3942f9adee8e1e0e0eba",
+      "trace_digest": "sha256:2e25c4b55154730a8b9ac99f92f0bc06d8ddf72eaadc59887ca87eaec637ec14"
+    },
+    {
+      "call": "transition",
+      "counters": {
+        "checker_runs": 3,
+        "correspondences": 3,
+        "deepcopy_calls": 160,
+        "deepcopy_nodes": 333362,
+        "extension_views": 3,
+        "model_digests": 25,
+        "model_dumps_other": 60,
+        "model_index_calls": 64,
+        "model_index_key_paths": 64
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 0,
+        "unchecked": 0,
+        "vacuous": 0,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 3,
+      "payload_digest": "sha256:e60c10e0dba895cbb1529918df2364452e49d067c54f53dcf13bb8b8930402a0",
+      "trace_digest": "sha256:160807c34785c14e7db034e22017910ad23850d75c3ab364384ed6b6602cd4ef"
+    },
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 72,
+        "unchecked": 0,
+        "vacuous": 29,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 4,
+      "payload_digest": "sha256:4faaf81724c0591d8e18c90818665af362a4db5f686be3e331cb1df81ef7b730",
+      "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+    },
+    {
+      "call": "transition",
+      "counters": {
+        "checker_runs": 3,
+        "correspondences": 3,
+        "deepcopy_calls": 160,
+        "deepcopy_nodes": 333637,
+        "extension_views": 3,
+        "model_digests": 25,
+        "model_dumps_other": 60,
+        "model_index_calls": 64,
+        "model_index_key_paths": 64
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 0,
+        "unchecked": 0,
+        "vacuous": 0,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 5,
+      "payload_digest": "sha256:eed319ed7baa836e4d5877e5e9bfd6566a662535a26e72230a62c43fff9cf4d8",
+      "trace_digest": "sha256:b6fa029d1d471ce51b817c2c28bbc56d11a180c39a98ad0e6a1b1c30ae07acd1"
+    },
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 72,
+        "unchecked": 0,
+        "vacuous": 29,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 6,
+      "payload_digest": "sha256:d7493c4cfaa14094ea6ab1ea2a6177b46ed63a097303131f6814088a1b210612",
+      "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+    },
+    {
+      "call": "transition",
+      "counters": {
+        "checker_runs": 3,
+        "correspondences": 3,
+        "deepcopy_calls": 160,
+        "deepcopy_nodes": 333867,
+        "extension_views": 3,
+        "model_digests": 25,
+        "model_dumps_other": 60,
+        "model_index_calls": 64,
+        "model_index_key_paths": 64
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 0,
+        "unchecked": 0,
+        "vacuous": 0,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 7,
+      "payload_digest": "sha256:028a816225d85c097ef03ed0a82e84bef1d6e7cb11eba4c3a4238b14e01ac5eb",
+      "trace_digest": "sha256:b6fa029d1d471ce51b817c2c28bbc56d11a180c39a98ad0e6a1b1c30ae07acd1"
+    },
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 72,
+        "unchecked": 0,
+        "vacuous": 29,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 8,
+      "payload_digest": "sha256:dd94985454783d9807bb77bd12b030efbb719f4815ac7ffc6ef3a5a68957d86f",
+      "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+    },
+    {
+      "call": "transition",
+      "counters": {
+        "checker_runs": 3,
+        "correspondences": 3,
+        "deepcopy_calls": 160,
+        "deepcopy_nodes": 334062,
+        "extension_views": 3,
+        "model_digests": 25,
+        "model_dumps_other": 60,
+        "model_index_calls": 64,
+        "model_index_key_paths": 64
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 0,
+        "unchecked": 0,
+        "vacuous": 0,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 9,
+      "payload_digest": "sha256:06a0de55f675f5ea4d900afd0afcc003584a01867017da30201507ec16e23dac",
+      "trace_digest": "sha256:d492449203169de039d758942934b28a5b21460717ff2c7d1835a009fa0d4b96"
+    },
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 72,
+        "unchecked": 0,
+        "vacuous": 29,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 10,
+      "payload_digest": "sha256:b3fac1935a885c5489cb729e3e55293334bb9cb0c859b4785cc4e61a078c0dbb",
+      "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+    },
+    {
+      "call": "transition",
+      "counters": {
+        "checker_runs": 3,
+        "correspondences": 3,
+        "deepcopy_calls": 156,
+        "deepcopy_nodes": 340274,
+        "extension_views": 3,
+        "model_digests": 25,
+        "model_dumps_other": 60,
+        "model_index_calls": 64,
+        "model_index_key_paths": 64
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 0,
+        "unchecked": 0,
+        "vacuous": 0,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 11,
+      "payload_digest": "sha256:2295d13766c1ac4563173b3e0af53e3cb91e4276c9d8e0f096356ac9a490730a",
+      "trace_digest": "sha256:d492449203169de039d758942934b28a5b21460717ff2c7d1835a009fa0d4b96"
+    },
+    {
+      "call": "check",
+      "counters": {
+        "checker_runs": 1,
+        "correspondences": 1,
+        "deepcopy_calls": 48,
+        "deepcopy_nodes": 107487,
+        "extension_views": 0,
+        "model_digests": 7,
+        "model_dumps_other": 12,
+        "model_index_calls": 13,
+        "model_index_key_paths": 13
+      },
+      "counts": {
+        "fail": 0,
+        "pass": 73,
+        "unchecked": 0,
+        "vacuous": 28,
+        "warning": 0
+      },
+      "exit_code": 2,
+      "index": 12,
+      "payload_digest": "sha256:4b3b6a978e97a7f2d90d681fd51181b992560445e59808a34ad0fc8f411f8393",
+      "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+    }
+  ],
+  "compared": [
+    "exit_code",
+    "counts",
+    "payload_digest",
+    "trace_digest",
+    "counters"
+  ],
+  "equal": true,
+  "excluded_from_payload_digest": [
+    "model_digest",
+    "transition.model_digest",
+    "transition.operations_digest",
+    "transition.computed_post.population.model_id"
+  ],
+  "schema": "transition-cost-import/1",
+  "why_excluded": "identity fields that echo the renamed model_id or digests the transform recomputes"
+}

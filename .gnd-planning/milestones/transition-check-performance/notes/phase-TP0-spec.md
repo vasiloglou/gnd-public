@@ -256,3 +256,41 @@ formats. It is not used here because `counters.json` and `digests.json` are
 internal evidence files that no caller consumes, and the pinned exits and
 counts are already fixed by the bundle. (p1) Expected results are the pinned exits and counts, plus
 counter liveness.
+
+## Implementation findings, recorded as they were found
+
+1. **The import comparison first reported `equal: false`.** Transition payloads echo the
+   renamed `model_id` in `transition.computed_post.population.model_id`, beside the model
+   and operations digests the transform recomputes. Every other field, the counts, the
+   traces and the counters were equal. The comparison now excludes exactly those four
+   identity fields and lists them in `import.json`. The D7 meaning is unchanged: the
+   transform touched names and the digests that cover them.
+2. **`deepcopy_nodes` is interpreter-specific.** 2,760,394 on 3.13 and 3.14, but 2,761,233
+   on 3.11. Node gates compare runs on the same interpreter.
+3. **Python 3.14 is slower on this workload:** a 5.79 s median, against 4.02 s on 3.13 and
+   4.32 s on 3.11. Timings are evidence only. The interpreter is recorded with each run.
+4. **`model_index_calls` equals `model_index_key_paths` (540).** Every call runs the full
+   key path today, as the plan's inspection said.
+5. **The reporter's re-serialized fixture is 836 KB,** because it is indented JSON. That is
+   above the estimate of about 600 KB. The size is recorded as measured.
+6. **No pytest timeout plugin is installed.** The D5 hang guard is an autouse `SIGALRM`
+   fixture (120 s), and it is a no-op where `SIGALRM` does not exist.
+7. **The first counted replay in a process reads slightly more** (1,291 deep-copy calls and
+   2,774,153 nodes, against 1,290 and 2,760,394 later), because one-time caches are filled.
+   The tool now runs one uncounted warm-up replay before the counted one. This came from
+   the review (F6).
+8. **The D1 rationale was partly wrong.** A defining-home-only patch does still count 25
+   checker runs at `_check_dispatch`, because callers reach it through the module global.
+   It does miss `model_digests` and `extension_views`, which read 0. So D1's choice stands
+   (T4 fails under that mutant), but its stated example was inaccurate. This came from the
+   review.
+9. **T6's runtime mutant flips a verdict's `modality`, not a field named `verdict`.**
+   `ConstraintVerdict` has no such field. The mutant still reaches the public payload.
+10. **The normalization fields are only `model` and `population`.** The transition payload
+    has no top-level `pre`, `steps` or `post` path fields. The spec's "when present" clause
+    applies, so nothing changes (review F9).
+11. **The CLI and batch surfaces carry payload digests but no trace digests,** because they
+    run in a subprocess, where `capture_branches()` cannot observe. The batch payload digest
+    was added after the review (F2).
+12. **Review successors** (F1, F3, F4, F5, F7) are separate tests named `test_review_*`.
+    `evidence/TP0/review-mutants.txt` shows each one red against its mutant or pre-fix code.

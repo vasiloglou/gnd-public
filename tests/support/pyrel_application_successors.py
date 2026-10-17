@@ -55,10 +55,21 @@ def query_policy(predecessor):
     return policy
 
 
+#: Later authenticated dynamic-query deltas, outside the PyRel application phases.
+DYNAMIC_SUCCESSORS = [ROOT / '.gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json']
+
+
 def dynamic_rows(rows, predecessor):
     for phase in PHASES:
         rows = delta(rows, authenticated('dynamic-query-successor.json', predecessor, phase))
         predecessor = EVIDENCE / phase / 'dynamic-query-successor.json'
+    for path in DYNAMIC_SUCCESSORS:
+        data = json.loads(path.read_text())
+        assert data['schema_version'] == 1 and data['reason']
+        assert data['predecessor'] == predecessor.relative_to(ROOT).as_posix()
+        assert data['predecessor_sha256'] == hashlib.sha256(predecessor.read_bytes()).hexdigest()
+        rows = delta(rows, data)
+        predecessor = path
     return rows
 
 

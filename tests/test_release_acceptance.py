@@ -45,8 +45,9 @@ def verify_files(root):
         assert name not in expected
         expected.add(name)
         assert hashlib.sha256((root / name).read_bytes()).hexdigest() == sha
+    # uv build writes a .gitignore into every output folder it creates; it is not an artifact.
     actual = {p.relative_to(root).as_posix() for folder in ['release', 'comparison']
-              for p in (root / folder).iterdir() if p.is_file()}
+              for p in (root / folder).iterdir() if p.is_file() and p.name != '.gitignore'}
     assert actual == expected and len(expected) == 3
     assert len(list((root / 'release').glob('*.whl'))) == 1
     assert len(list((root / 'release').glob('*.tar.gz'))) == 1

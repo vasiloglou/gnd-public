@@ -8,6 +8,8 @@ from typing import Any
 
 from pydantic_core import SchemaValidator, core_schema
 
+from gnd import input_policy as _rf7_input
+
 _MAX_DEPTH = 48
 _MAX_NODES = 4096
 _MAX_BYTES = 1024 * 1024
@@ -295,7 +297,7 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
 
 @lru_cache(maxsize=8)
 def _prepared(content: str) -> SchemaValidator:
-    return SchemaValidator(_compile(json.loads(content), root=True))
+    return SchemaValidator(_compile(_rf7_input.loads(content), root=True))
 
 
 def accepts_shape(doc: Any, schema: Any) -> bool:

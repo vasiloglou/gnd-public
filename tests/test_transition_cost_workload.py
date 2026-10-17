@@ -29,7 +29,9 @@ tool = importlib.util.module_from_spec(_SPEC)
 sys.modules["measure_transition_cost"] = tool
 _SPEC.loader.exec_module(tool)
 
-HANG_GUARD_SECONDS = 120  # spec D5: a hang guard, never a performance gate
+#: Spec D5 (amended in TP1): a hang guard, never a performance gate. 120 s fired on the
+#: 77 s tool test when another process loaded the machine, so it is 600 s.
+HANG_GUARD_SECONDS = 600
 
 
 @pytest.fixture(autouse=True)

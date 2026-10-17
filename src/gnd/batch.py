@@ -12,6 +12,7 @@ from gnd.artifacts import ArtifactError, LeafSnapshot, canonical_json_bytes, rea
 from gnd.checker import band as checker_band
 from gnd.checker import check
 from gnd.model import MAX_MODEL_BYTES, ModelValidationError, ValidationIssue, load_model
+from gnd.model_index import scoped as _index_scoped
 from gnd.population import PopulationLoadError, PopulationValidationError, load_population
 
 BATCH_SCHEMA_VERSION = 1
@@ -131,6 +132,7 @@ def _confirm_model_snapshot(model_path: Path, snapshot: LeafSnapshot) -> None:
         raise BatchIOError(f"model changed while it was loaded: {error}") from error
 
 
+@_index_scoped
 def check_population_directory(model_path: Path, populations_dir: Path, *,
                                compiled_operations: bool = False) -> BatchResult:
     if not isinstance(compiled_operations, bool):

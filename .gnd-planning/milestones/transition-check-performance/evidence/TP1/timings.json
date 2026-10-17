@@ -1,0 +1,35 @@
+{
+  "environment": {
+    "machine": "arm64",
+    "python": "3.14.3",
+    "system": "Darwin"
+  },
+  "note": "uninstrumented runs; evidence only, never a gate",
+  "schema": "transition-cost-timings/1",
+  "workloads": {
+    "course": {
+      "median_s": 0.051590083981864154,
+      "repeat": 5,
+      "samples_s": [
+        0.0513680410804227,
+        0.05110566597431898,
+        0.05358158308081329,
+        0.051590083981864154,
+        0.053998916991986334
+      ],
+      "spread": 0.05608153339475933
+    },
+    "reporter": {
+      "median_s": 2.718230374972336,
+      "repeat": 5,
+      "samples_s": [
+        2.718230374972336,
+        2.712887750007212,
+        2.712918541044928,
+        2.7207808339735493,
+        2.8075228749075904
+      ],
+      "spread": 0.034814975865075974
+    }
+  }
+}

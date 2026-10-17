@@ -30,6 +30,7 @@ from gnd.model import (
     load_model,
     structured_derivation_ids,
 )
+from gnd.model_index import scoped as _index_scoped
 from gnd.population import Population, PopulationValidationError, load_population
 from gnd.references import BoundReferenceContext
 from gnd.semantic_registry import capture_branches
@@ -551,6 +552,7 @@ def _reference_wrap(result: _RunResult) -> _RunResult:
     return replace(result, payload=wrapper, json_text=report_module.render_json(wrapper) + "\n")
 
 
+@_index_scoped
 def _run_check(
     model_input: str | os.PathLike[str] | Model,
     population_input: str | os.PathLike[str] | Population,

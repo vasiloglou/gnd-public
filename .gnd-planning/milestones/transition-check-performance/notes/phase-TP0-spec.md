@@ -2,181 +2,257 @@
 
 ## 1. Status
 
-**Awaiting owner review; blocked on input.** Draft only. TP0 implementation
-is blocked until (1) the plan is approved, (2) this spec's open D-rows carry
-owner rulings, and (3) the reporter delivers the workload files
-(TP-D2 (o)). Plan-level TP-D6 (targets) is settled here.
+**Owner-approved (o3), 2026-10-16.** The approved bytes are r5,
+SHA-256 `2165ada0…1e3b`, recorded in [the plan gate](../001-plan-gate.md),
+with D1–D8 accepted as proposed. Implementation may proceed. The spec is now
+append-only.
 
 ## 2. Provenance
 
 - Plan: [transition-check-performance-plan.md](transition-check-performance-plan.md)
-  draft r1, 2026-10-16, §4 TP0 and §10 TP-D2/TP-D6.
-- Source: [issue #24](https://github.com/vasiloglou/gnd-public/issues/24),
-  pinned GND `8a3a98ba`. Inspection baseline `73ea302`. Hotspot files are
-  unchanged between them, apart from a 6-line static helper in `model_index.py`.
-- r2 (o), 2026-10-16: workload changed to the reporter's exact profiled files,
-  following owner-relayed rulings TP-D1 and TP-D2 (plan r2). No review has run
-  over these bytes.
+  draft r4, §4 TP0. Plan-level rulings TP-D1 to TP-D7 are recorded there.
+- Source: [issue #24](https://github.com/vasiloglou/gnd-public/issues/24).
+  Baseline `2d1ff4d`.
+- Review history:
+  - r1 to r3 were drafts.
+  - Four local readers reviewed r3 (SHA-256 `f0073202…dd7b`).
+  - r4 repairs their findings, marked `(p1)`; see
+    [the disposition](plan-review-r1-disposition.md).
+  - Readers 2 and 4 ran the confirmation round over r4 (SHA-256 `64731157…f45d`)
+    and both returned approve-with-fixes. All 17 of their new findings attack
+    text r4 created. Under the declared stop rule, r5 applies their fixes,
+    tagged `(p2)`, and the review stops. **r5's repaired sentences carry no
+    review opinion of their own.**
+- **Planning observations, not TP0 evidence.**
+  - Replaying the anonymized copy and the original gave identical exit codes
+    and counts on all 13 calls. Every call exits 2 with zero failures.
+  - Reader experiments on the copy measured 25 checker runs, 540 `for_model`
+    calls (65 of them from `load_population`) and about 2.77 M deep-copied
+    nodes. 95% of those nodes come from `ModelIndex.fact_types`.
 
 ## 3. Obligations
 
 | Source | Obligation | Discharged in |
 |---|---|---|
-| Plan TP0-C1 | n-step workload across `api.check`, `api.transition` ± post, batch | §6 workload, §8 T1–T3 |
-| Plan TP0-C2 | Deterministic counters without changing runtime code paths | §6 counters, D1, §8 T4–T5 |
-| Plan TP0-C3 | Normalized report digests as parity oracle | §6 parity, D3, §8 T6 |
-| Plan TP0-C4 | Baseline evidence + shape comparison with the issue | §6 baseline, §8 T7 |
-| Plan TP0-C5 / TP-D6 | Counted targets (TP-D2 ruled in plan r2 (o)) | §7 D2, D4 |
-| Plan O9, O12 | Parity includes `compiled_operations` and admission modes | §6 surfaces, §8 T6 |
-| Plan O10 | Layer map zero allowances | §4 rule R5, §8 T8 |
-| Standing rule 2 | Time bounds on added layers | §4 (inapplicable: no runtime layer added) |
+| Plan TP0-C1 | Anonymized workload plus `course` control, with transform-preservation proof | §6 fixture, D7, T1, T2 |
+| Plan TP0-C2 | Counters at every lookup owner, each with a liveness control | §6 counters, T4 |
+| Plan TP0-C3 | Parity digests for every completion-predicate-2 surface, plus captured branch traces | §6 parity, T3, T6, T7 |
+| Plan TP0-C4 | Baseline evidence and shape comparison | §6 baseline, T7 |
+| Plan TP0-C5 | Targets restated in counter units | §6 baseline, D4 |
+| Plan O9, O12 | `compiled_operations`, admission, CLI and with-post surfaces | §6 surfaces, T3, T6 |
+| Plan O14 | No downstream names in committed files | D7, T1 |
+| Plan O10 | Layer map unchanged | §4 rule TP-R5 |
 
-## 4. Standing rules bound to TP0
+## 4. Rules bound to TP0
 
-1. **Totality:** the measurement tool reads only the committed fixture files.
-   Its loader goes through the public `gnd.api` and model and population
-   loaders, which are already total. The tool adds no new document consumer.
-   (o) The imported driver is read as data and reviewed before it
-   runs. It must call only `gnd.api`. Any private import is a refusal that
-   goes back to the reporter.
-2. **Input cap vs algorithm:** inapplicable. TP0 adds no runtime work. The
-   workload test keeps a generous wall ceiling (D5) only as a hang guard.
-3. **Validation order:** inapplicable. TP0 does not change any boundary.
-4. **One walk:** the counters cover every public surface through one
-   instrumentation harness, not one copy per surface.
-5. **One normative home:** the parity normalization fields are defined once,
-   in the tool, and the test imports them. The plan cites the tool.
-6. **Measurement over argument:** this phase *is* the measurement. Every
-   TP1–TP4 "is this needed" question cites TP0 numbers.
-- TP-R1 (same answers): TP0 makes no runtime change. `git diff -- src/gnd` is
+Standing rules (`standing-rules.md`):
+
+1. **Totality:** the tool reads only the committed fixtures, through the
+   public, already-total loaders. It adds no new document consumer.
+2. **Input cap vs algorithm:** does not apply, because TP0 adds no runtime
+   work. A 120 s wall guard per test (D5) is a hang guard only.
+3. **Validation order:** does not apply, because no boundary changes.
+4. **One walk:** one installer patches every lookup owner of every counted
+   callable, found by one scan of loaded `gnd.*` modules. Counters are not
+   patched one call site at a time.
+5. **One normative home:** the counter set and the digest normalization are
+   defined once, in the tool. The test imports them.
+6. **Measurement over argument:** this phase is the measurement.
+
+Plan rules:
+
+- **TP-R1:** TP0 changes no runtime code. `git diff 2d1ff4d -- src/gnd` is
   empty at record time.
-- TP-R2 (CR-01): T5 pins the current mutation-invalidation behavior as the
-  baseline that TP1 must preserve.
-- TP-R4: counters are gates. Timings are evidence only.
+- **TP-R2:** T5 pins today's invalidation, including the operations-only case,
+  as TP1's baseline.
+- **TP-R3:** TP0 creates no receipt. The parity oracle it builds is what TP3's
+  identical-report gate uses.
+- **TP-R4:** counters are gates. Timings are evidence.
+- **TP-R5:** no runtime home and no layer-map entry are added. The tool lives
+  under `tools/`, outside the runtime layer scan.
+- **TP-R6:** the import transform keeps downstream names out of the repository
+  (D7).
 
 ## 5. Goal
 
-`uv run pytest -q tests/test_transition_cost_workload.py` exits 0 on the
-baseline. `uv run python tools/measure_transition_cost.py --out <dir>` exits 0
-and writes `counters.json`, `digests.json` and `timings.json`. Both files are
-retained under `evidence/TP0/`. `git diff 73ea302 -- src/gnd` is empty.
+Two commands exit 0:
+
+- `uv run pytest -q tests/test_transition_cost_workload.py`.
+- `uv run python tools/measure_transition_cost.py --out <dir>`. It writes
+  schema-tagged `counters.json`, `digests.json` and `timings.json`, which are
+  retained under `evidence/TP0/`.
+
+`git diff 2d1ff4d -- src/gnd` is empty.
 
 ## 6. Design
 
-### Workload fixture: `tests/fixtures/transition_cost/` (o)
+### Workload fixture: `tests/fixtures/transition_cost/` (o2, p1)
 
-Supplied by the reporter (TP-D2) and committed unchanged:
+The reporter's reproduction bundle, imported with an anonymizing transform:
 
-- `steps.orm.json`: the generated steps metamodel rendered against the
-  packaged `expense` data (about 36 alethic and deontic rules plus recursive
-  derivations, according to the issue).
-- The state populations (a few hundred facts each).
-- The step documents: the profiled 5-step SUM program, and a 12-step
-  program if supplied.
-- The driver script, which calls only `gnd.api`.
-- `PROVENANCE.md`: source revision, the generator call (`include_step_programs=True`),
-  the SHA-256 of each file, and the statement that every file is built from
-  packaged example data.
+| File | Content |
+|---|---|
+| `steps.orm.json` | generated steps metamodel: 6 operations, 36 constraints, 65 derived fact types |
+| `NN-check-population.json` (7) and `NN-transition-population.json` (6) | the population passed to each call, about 360 facts each |
+| `NN-transition-steps.json` (6) | the step document of each transition. Each is a **1-step** walk. |
+| `calls.json` | the 13-call sequence, alternating check then transition |
+| `PROVENANCE.md` | neutral source description, the transform, and the SHA-256 of every file before and after the transform |
 
-Control: the packaged `src/gnd/examples/plan_apps/course` model with
-`plans/attempt-3.steps.json`, unchanged.
+**Transform** (applied once, by a committed script
+`tests/fixtures/transition_cost/anonymize.py`, about 40 lines, which contains
+no downstream names):
 
-### Measurement tool: `tools/measure_transition_cost.py` (~200 lines)
+1. Set `model_id` to `urn:gnd-fixture:steps@1` in the model and every
+   population.
+2. Set every provenance `user_note` to `Sealed step programs.`
+3. In each step document, set `model` to `steps.orm.json` and recompute
+   `model_digest` and `operations_digest` with `transition_model_identity` and
+   `operations_digest`.
+
+The original digests are verified before the transform, and they matched.
+
+**Proof that the transform preserves results**, recorded at import in
+`evidence/TP0/import.json`: for all 13 calls, the exit codes, counts, counters
+and normalized digests are equal before and after the transform. The original
+bytes are not committed.
+
+**Control:** the packaged `src/gnd/examples/plan_apps/course` model and its
+`plans/attempt-1..3.steps.json`. These files hold bare step lists, so the tool
+wraps each one with the app's own `steps_document` helper
+(`plan_apps/core.py:61`), which adds the header that ties the plan to its
+model. Passed unwrapped, they are refused with exit 3 and 0 checker runs.
+Wrapped, `attempt-3` (3 steps) exits 0 with exactly 5 checker runs and covers
+intermediate checks. `attempt-1` and `attempt-2` exit 1, which gives TP3 its
+failing-receipt case. (p2)
+
+### Measurement tool: `tools/measure_transition_cost.py` (~250 lines)
 
 ```text
-measure_transition_cost.py --out DIR [--repeat N=5] [--workload {fixture,course,all}]
+measure_transition_cost.py --out DIR [--repeat N=5] [--workload {reporter,course,all}]
 ```
 
-Surfaces measured, each with an exit code and a payload:
-`api.check(model, pre)`, `api.check(..., compiled_operations=True)`,
-`api.check(..., admission=True)` (when the fixture supports admission),
-`api.transition(model, pre, steps)`, `api.transition(model, pre, steps, post)`,
-and batch `check --populations` over a directory of the pre population plus
-each loadable intermediate.
+**Surfaces** (p1). Each surface records an exit code, a normalized payload
+digest, and a branch-trace digest taken under `capture_branches()`:
 
-Counters (D1 proposes patch-based counting via `unittest.mock.patch` wrappers
-on the *defining* homes, so runtime code stays unchanged):
+| Surface | Reporter workload | `course` control |
+|---|---|---|
+| `api.check(model, pop)` | 7 check populations | pre population |
+| `api.check(..., compiled_operations=True)` | 7 check populations | pre population |
+| `api.check(..., admission=True)` | 7 check populations (the result is recorded whatever band it lands in) | pre |
+| `api.transition(model, pre, steps)` | 6 calls | `attempt-3` |
+| `api.transition(model, pre, steps, post)` with a declared post | 6 calls; the declared post is the next call's check population (exit 2, 0 failures). The computed post was rejected: it makes every call exit 1. (p2) | — |
+| batch `gnd check --populations DIR` | the 7 check populations | — |
+| CLI `gnd check MODEL POP --format json` | call 00 | pre |
+| CLI `gnd check MODEL --pre PRE --steps STEPS --post POST --format json` (the CLI's transition arm needs all three) | call 01, with call 02's population as post | — |
 
-| Counter key | Wrapped callable |
-|---|---|
-| `checker_runs` | `gnd.checker._core.check` |
-| `model_index_calls` | `gnd.model_index.ModelIndex.for_model` |
-| `model_index_keys` | `gnd.artifacts.canonical_json_bytes` calls made from inside `for_model` |
-| `model_digests` | `gnd.values.model_digest`, patched at its actual lookup owner `gnd.population._model_digest` |
-| `deepcopies_gnd` | `copy.deepcopy` calls whose caller frame is under `src/gnd` |
-| `extension_views` | `gnd.extensions.structured_extension_view` |
-| `correspondences` | `gnd.correspondence.correspond_snapshot` |
+**Counters** (p1). The installer takes each target callable, scans every loaded
+`gnd.*` module for attributes that are that object, and wraps all of them.
+That covers name-bound imports such as `from gnd.checker._core import check`.
+Classmethods and methods such as `ModelIndex.for_model` and `Model.model_dump`
+are patched on their class. (p2)
+Deep copies are the exception. CPython's `copy` module binds `deepcopy` as a
+default argument for its recursion, so no wrapper sees the recursive calls.
+They are counted instead with a profile hook (`sys.setprofile`) that fires on
+`copy.deepcopy.__code__`, whatever the binding.
 
-Output `counters.json`:
+| Counter key | Target | Unit |
+|---|---|---|
+| `checker_runs` | `gnd.checker._core._check_dispatch` | calls (covers `check`, `check_with_anchors` and the partial variants) |
+| `model_index_calls` | `gnd.model_index.ModelIndex.for_model` | calls |
+| `model_index_key_paths` | `Model.model_dump` whose caller is in `gnd.model_index` | calls: the ModelIndex key path. About 540 on the baseline: 13 per check, 64 per transition and 5 per load in the readers' census. (p2) |
+| `model_dumps_other` | `Model.model_dump` from every other caller (marker digest, applicability, extensions, semantic adapter, transition helpers) | calls. About 457 on the baseline. TP1 must not increase it. (p2) |
+| `model_digests` | `gnd.values._model_digest` and every alias (`population._model_digest`, `transition._model_digest`, …) | calls |
+| `deepcopy_calls` | profile hook on `copy.deepcopy.__code__`, outermost frames whose caller is under `src/gnd` | top-level calls, per GND call site |
+| `deepcopy_nodes` | the same hook, every invocation | nodes copied (about 2.77 M on the reporter replay in planning) |
+| `extension_views` | `gnd.extensions.structured_extension_view` and aliases | calls |
+| `correspondences` | `gnd.correspondence.correspond_snapshot` and aliases | calls |
 
-```json
-{"schema": "transition-cost-counters/1", "gnd_commit": "<sha>",
- "workloads": {"fixture-5": {"api.transition": {"exit": 0, "checker_runs": 7, "...": 0}}}}
-```
+`counters.json` has schema `transition-cost-counters/1`. It lists per-workload,
+per-surface counts plus whole-workload totals; for example, `checker_runs` for
+the reporter replay is expected to be 25.
 
-The values shown are illustrative. TP0 records the real ones.
+**Parity.** For each surface, `digests.json` holds the SHA-256 of
+`artifacts.canonical_json_bytes(normalized_payload)` and of the captured
+branch set. `NORMALIZED_FIELDS` blanks exactly the input-path fields of the
+payload: `model`, `population`, and the transition's `pre`, `steps` and `post`
+when they are present. Nothing else is removed. CLI and API payloads differ
+only in those fields (p2). Default payloads carry no timings. Default payloads carry no branch traces either, which is why
+the traces are captured separately. (p1) `capture_branches()` returns an
+unordered set, so the trace digest is taken over the sorted ids. (p2)
 
-### Parity oracle
+**Baseline note:** `evidence/TP0/README.md` records:
 
-`digests.json` maps each workload and surface to the SHA-256 of
-`artifacts.canonical_json_bytes(normalized_payload)`. Normalization (D3)
-removes only fields that legitimately vary between runs (absolute paths, wall
-timings if any are present). The tool lists those fields in one constant,
-`NORMALIZED_FIELDS`. Branch traces are kept in the digest.
-
-### Baseline note: `evidence/TP0/README.md`
-
-Machine, interpreter (3.11 and 3.13), repetition count and medians. It also
-compares the workload's checker-runs-per-step, `for_model`-calls-per-check and
-deep-copy volume with the issue's profile (25 checks, 535 `for_model`, 2.7 M
-deep copies for 5 steps). If the fixture's ratios are far below the issue's,
-D2 is reopened before TP1.
+- the machine and the interpreters: 3.11 and 3.13, plus the session default
+  if it differs;
+- the repetitions, the medians, and the variance between runs. Timing runs
+  are separate, uninstrumented runs, because the deep-copy profile hook slows
+  execution about 2.8 times; (p2)
+- the profiling-inflation caveat;
+- the shape comparison with the issue's figures (25, 535, 2.7 M);
+- the targets restated in counter units (TP0-C5).
 
 ## 7. Decisions
 
 | ID | Question | Readings and cost |
 |---|---|---|
-| D1 | Counting method | (a) test-time `mock.patch` wrappers on defining homes: no runtime diff, but monkeypatch must target the actual lookup owner (AGENTS.md "patch the defining home"); (b) an internal counter hook in runtime: always available to later phases, but changes `src/gnd` in a measurement phase. Proposed: (a). |
-| D2 (= TP-D2) | Workload | **Ruled (o) 2026-10-16:** the reporter's exact profiled files plus `course` control. Remaining sub-question: does the imported driver become the measurement tool's workload runner, or only a reference the tool replicates? Proposed: replicate it in the tool and keep the driver as provenance, so the counters wrap one harness (rule 4). |
-| D3 | Normalization fields | Minimal list (paths, timings) vs also dropping branch traces. Dropping traces would hide internal reorderings that TP-R1 forbids. Proposed: minimal. |
-| D4 (= TP-D6) | Counted targets for TP1–TP3 | As proposed in plan §10. They may be re-argued after TP0 numbers, with the arithmetic recorded (spec contract: ceilings changed after measurement are recorded, not slipped in). |
-| D5 | Hang guard ceiling for the workload test | 120 s wall per test (generous, not a perf gate) vs none. |
-| D6 | Interpreters for the baseline | 3.11 and 3.13 (as CS close) vs 3.11 only. |
+| D1 | Counting method | (a) test-time wrappers at every lookup owner, as above; no runtime diff. (b) a runtime counter hook: always available, but changes `src/gnd`. **Proposed (a).** Readers verified that a defining-home-only patch counts 0 of 25 checker runs. |
+| D2 | Use of the reporter's driver | **Proposed:** reimplement its call logic, about 15 lines, in the tool. Do not commit the driver. One harness carries all counters, and no downstream-authored script lands in the repository. |
+| D3 | Normalization | Minimal: absolute paths only, with branch traces digested separately (proposed). The alternative also drops traces, which would hide the internal reorderings TP-R1 forbids. |
+| D4 | Targets in counter units | TP-D6 as ruled, measured as `model_index_key_paths` (with `model_dumps_other` not increasing), `deepcopy_nodes` and the `checker_runs` workload total. Confirmed or re-argued after the baseline, with the arithmetic (plan D-p1-2). |
+| D5 | Hang guard | 120 s wall per test (proposed), or none. |
+| D6 | Interpreters | 3.11 and 3.13, plus the session default, recorded (proposed). |
+| D8 | Course control wrapping (p2) | Wrap with the app's `steps_document` helper (proposed). The alternative is to commit wrapped copies, which would duplicate packaged data. |
+| D7 | The anonymizing transform | **Agent proposal (p1), not yet ruled.** The three edits listed in §6. The cost is that committed bytes differ from the reporter's. The preservation proof covers exit codes, counts, counters and digests. The alternative is to commit the original bytes, which breaks O14. |
 
 ## 8. Tests
 
-All tests live in `tests/test_transition_cost_workload.py` unless named
-otherwise. Expected exits are on baseline `73ea302`.
+All tests are in `tests/test_transition_cost_workload.py`. They pass on
+baseline `2d1ff4d`.
 
 | # | Case | Expected |
 |---|---|---|
-| T1 | Fixture model validates; state populations load; step documents parse; every file's SHA-256 matches `PROVENANCE.md` | pass |
-| T2 | `api.transition` without post on the supplied programs returns the computed post that the supplied driver reports for the same files | pass |
-| T3 | Batch check over pre plus intermediates exits 0 | pass |
-| T4 | Counter liveness: each counter is > 0 on the 5-step transition, and an artificial extra `api.check` call raises `checker_runs` by exactly 1 (the instrument can score both ends) | pass |
-| T5 | CR-01 baseline: nested mutation of a model dict after loading makes `matches_validation_marker` false and the check refuses | pass |
-| T6 | Parity self-check: two consecutive runs produce identical `digests.json`, and a deliberately perturbed payload produces a different digest (liveness) | pass |
-| T7 | `measure_transition_cost.py --repeat 1 --out tmp` exits 0 and writes the three schema-tagged files | pass |
-| T8 | `tests/test_rf1_layering.py` with `tools/measure_transition_cost.py` excluded from runtime layers (tools are not runtime) | pass |
+| T1 | The model validates. 13 populations load. 6 step documents parse. Every file's SHA-256 matches the post-transform column of `PROVENANCE.md`. `model_id` equals `urn:gnd-fixture:steps@1`, and every `user_note` belongs to the allowed set `{"Sealed step programs."}` (an allowed-values check, so no forbidden name is spelled in the test). | pass |
+| T2 | Replaying `calls.json` gives the pinned exit code and counts for every call (13 rows, all exit 2, zero failures). The wrapped `course` walks give exit 0 (`attempt-3`) and exit 1 (`attempt-1`, `attempt-2`). | pass |
+| T3 | Batch `--populations` over the 7 check populations exits **2** with 0 failures. Both CLI arms give the pinned exits, **and** their normalized payload digests equal those of the matching API calls. Comparing digests rather than exits keeps a mistyped command, which also exits 2, from passing. (p2) | pass |
+| T4 | Counter liveness, both directions. On the reporter replay, `checker_runs == 25`. An extra `api.check` adds exactly 1. Reading `ModelIndex.for_model(m).fact_types` once on a fixed model adds exactly 1 `deepcopy_calls`, plus the `deepcopy_nodes` computed independently from that model's fact-type tree. (p2) Every other counter is above 0 on the replay. The wrapped `course` `attempt-3` walk records exactly 5 `checker_runs`. (p2) | pass |
+| T5 | CR-01 baseline. Mutating a nested constraint after load makes `matches_validation_marker` false. Mutating only an operation leaves the marker true, but changes the ModelIndex key. Both facts are pinned for TP1. | pass |
+| T6 | Parity self-check. Two runs give identical `digests.json`. A runtime mutant (a wrapper that flips one constraint verdict in the checker result) changes the payload digest. A mutant that drops one recorded branch changes the trace digest. (p2) A reordering mutant cannot change a set, so it is not used. | pass |
+| T7 | `measure_transition_cost.py --repeat 1 --out tmp` exits 0 and writes three schema-tagged files that contain every surface in §6. | pass |
 
-Branch walk: every counter has a liveness case (T4). The parity digest has a
-liveness case (T6). The CR-01 pin has a case that would fail if identity-only
-matching were introduced (T5 mutates nested content without replacing the
-object).
+**Branch walk:** every counter has a two-direction liveness case (T4). Both
+digests have mutant cases (T6). The CR-01 pins cover both digest kinds (T5).
+The anonymity check is an allowed-values test, not a forbidden-string scan
+(T1). The old T8 is dropped, because the layer tool does not scan `tools/`, so
+it could never fail. TP-R5 is argued in §4 instead.
+
+**Verification selection:**
+
+- Focused gate: the command in §5, plus `tests/test_rf1_layering.py` and
+  `tests/test_public_transition_contract.py` as unchanged-runtime controls.
+- Slow cadence: the broad suite, run only on explicit owner selection.
 
 ## 9. Out of scope for TP0
 
-Any change under `src/gnd`. Performance targets being met. Running the
-downstream application. Timing-based assertions. TP1–TP4 design choices beyond recording
-the numbers they need.
+Any change under `src/gnd`, and meeting the targets. Running the downstream
+application. Timing assertions. Committing the reporter's original bytes or
+driver.
 
 ## 10. Size
 
-Estimate: fixture imported (size set by the reporter), provenance note ~30 lines,
-tool ~200, tests ~180. Runtime source: 0. To be measured at record time.
+Estimate:
+
+- **Fixture:** about 600 KB of JSON in 21 files, plus a provenance note of
+  about 40 lines.
+- **Code:** a transform script of about 40 lines and a tool of about 250 lines.
+- **Tests:** about 220 lines.
+
+Runtime: 0 lines. The real sizes are measured at record time.
 
 ## 11. Approval instrument
 
-This prose. The fixture is imported after approval. It has no answer key to
-keep apart from it. Expected results are "admits cleanly" plus
-counter liveness, not graded verdicts.
+This prose. The fixture is imported after approval, and it has no answer key
+to keep separate. Corpus-first is the default for phases that ship serialized
+formats. It is not used here because `counters.json` and `digests.json` are
+internal evidence files that no caller consumes, and the pinned exits and
+counts are already fixed by the bundle. (p1) Expected results are the pinned exits and counts, plus
+counter liveness.

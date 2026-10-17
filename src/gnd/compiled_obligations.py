@@ -113,7 +113,7 @@ def compose(model, population, report):
     except CompiledWorkLimit:
         metadata_exhausted = True
     # Opaque rule declarations without a calculated extension cannot imply absence.
-    for fact in ModelIndex.for_model(model).iter_fact_types():
+    for fact in ModelIndex.for_model(model).iter_fact_types_shared():
         if fact.get('derivation') in ('derived', 'semiderived') and not isinstance(
             fact.get('derivation_rule'), dict
         ):

@@ -332,7 +332,7 @@ def _instance_values_of(object_type_id: str, model: Model, population: Populatio
     values: list[Any] = []
     for collected_id in [object_type_id, *sorted(collected - {object_type_id})]:
         values.extend(population.instances.get(collected_id, []))
-    for fact_type in ModelIndex.for_model(model).iter_fact_types():
+    for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
         typed_roles = [
             role.get("role_name")
             for role in fact_type.get("roles") or []

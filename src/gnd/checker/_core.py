@@ -435,7 +435,7 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
             ),
             facts=len(population.facts.get(str(fact_type.get("id")), [])),
         )
-        for fact_type in ModelIndex.for_model(model).iter_fact_types()
+        for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
     }
     return CheckReport(
         verdicts=verdicts,
@@ -1666,7 +1666,7 @@ def _record_aggregate_guarded_outcomes(model: Model, verdicts: Sequence[Constrai
     """Trace guarded verdicts whose antecedent reads an aggregate head."""
     aggregate_heads = {
         str(fact_type.get("id"))
-        for fact_type in ModelIndex.for_model(model).iter_fact_types()
+        for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
         if isinstance((rule := fact_type.get("derivation_rule")), dict)
         and isinstance(rule.get("aggregate"), dict)
     }
@@ -1688,7 +1688,7 @@ def _partial_constraint_report(
     model: Model, population: Population, report: CheckReport,
 ) -> CheckReport:
     if not extension_core.PARTIAL_OPAQUE.get() or not model.constraints and not any(
-        fact_type.get("constraints") for fact_type in ModelIndex.for_model(model).iter_fact_types()
+        fact_type.get("constraints") for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
     ):
         return report
     calculated = extension_core.evaluate_stratified_extensions(
@@ -1702,7 +1702,7 @@ def _partial_constraint_report(
     if not uncertain_heads:
         return report
     by_ref: dict[str, tuple[dict[str, Any], dict[str, Any] | None]] = {}
-    for fact_type in ModelIndex.for_model(model).iter_fact_types():
+    for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
         for index, constraint in enumerate(fact_type.get("constraints") or []):
             by_ref[positional_constraint_ref(str(fact_type.get("id")), index)] = (constraint, fact_type)
     for index, constraint in enumerate(model.constraints):
@@ -1794,7 +1794,7 @@ def _check_dispatch(model: Model, population: Population) -> CheckReport:
     effective_view = extension_core.constraint_view_dispatch(model, population, calculated.extensions)
     replacements: dict[str, ConstraintVerdict] = {}
     report_verdicts = {verdict.constraint_ref: verdict for verdict in report.verdicts}
-    for fact_type in ModelIndex.for_model(model).iter_fact_types():
+    for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
         for index, constraint in enumerate(fact_type.get("constraints") or []):
             ref = positional_constraint_ref(str(fact_type.get("id")), index)
             dependency = next(
@@ -1901,7 +1901,7 @@ def _anchored_verdicts(
 
     obligations = [
         (fact_type, index, constraint)
-        for fact_type in ModelIndex.for_model(model).iter_fact_types()
+        for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
         for index, constraint in enumerate(fact_type.get("constraints") or [])
         if constraint.get("type") == "anchored"
     ]

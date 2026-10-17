@@ -1,0 +1,514 @@
+{
+  "cli": {
+    "cli.batch": {
+      "exit_code": 2,
+      "payload_digest": "sha256:113bb5bc36d65e1329832ed7ea4b1a64b8ea3155f6f238a1c3a472b3585812ff",
+      "rows": 7,
+      "summary": {
+        "aggregate_exit": 2,
+        "outcomes": {
+          "accepted": 0,
+          "ill_formed": 0,
+          "inadequate": 7,
+          "indeterminate": 0,
+          "violated": 0
+        },
+        "projections": 7
+      }
+    },
+    "cli.check.00": {
+      "exit_code": 2,
+      "payload_digest": "sha256:1c4bfb48395704af8f5c47a51b8ab215aa460d0262da62562d3c706f15fec8c4",
+      "process_exit": 2
+    },
+    "cli.course.check.pre": {
+      "exit_code": 0,
+      "payload_digest": "sha256:6e6fcebcd8e7636ef139ca870aa8045c271eae8a134e9daa2d0cadff49f38a5d",
+      "process_exit": 0
+    },
+    "cli.transition.01": {
+      "exit_code": 2,
+      "payload_digest": "sha256:41938ce48185e743f55e7996c8d9d03e5f88b438741226f57b523bc2daa203a9",
+      "process_exit": 2
+    }
+  },
+  "normalized_fields": [
+    "model",
+    "population"
+  ],
+  "schema": "transition-cost-digests/1",
+  "workloads": {
+    "course": {
+      "attempt-1.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 1,
+        "payload_digest": "sha256:16955d77b412d1b802798db8954f7bbb53e5f6246b6361de239be45412abad27",
+        "trace_digest": "sha256:0fb9c0e529311b6001fbcdf328bd1f416d9647ae9ad5d73ece8a4993e7204c8e"
+      },
+      "attempt-2.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 1,
+        "payload_digest": "sha256:eb95a69f37c15fb4b0fb4a381624c1834fd6780e008b88471059216a719e92d2",
+        "trace_digest": "sha256:48d9ffceaf03ea125fec7e776b25c27d906e6150fe4722f11600364ea6553a54"
+      },
+      "attempt-3.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 0,
+        "payload_digest": "sha256:35817777361bead85706cc816a7020185e1b0bf56d697d42759eb9cd0cbbc628",
+        "trace_digest": "sha256:0f04e34d2a9aa61f739f8942a9a1363502109e60f5a91408f979b9ca3b5bab86"
+      },
+      "pre.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 7,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 0,
+        "payload_digest": "sha256:6e6fcebcd8e7636ef139ca870aa8045c271eae8a134e9daa2d0cadff49f38a5d",
+        "trace_digest": "sha256:25c87e56cd7c7f2259f91b958b832f058690ab465c0b0ec9799cdaa08bc0255a"
+      },
+      "pre.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 7,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 0,
+        "payload_digest": "sha256:c981bdcf5b2501151531f40fe9f7a432ed9b900ae739d25083fb791e719f9236",
+        "trace_digest": "sha256:25c87e56cd7c7f2259f91b958b832f058690ab465c0b0ec9799cdaa08bc0255a"
+      },
+      "pre.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 8,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 0,
+        "payload_digest": "sha256:dc527fac6902282e998ac7234e696a4621b302ce80cc75bb65bc1a26200fbd58",
+        "trace_digest": "sha256:3f55b815ccac3a1ff1def4b5068085ec92a47c51467d42edfc4856e2f24a14f7"
+      }
+    },
+    "reporter": {
+      "00.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 65,
+          "unchecked": 0,
+          "vacuous": 36,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:1c4bfb48395704af8f5c47a51b8ab215aa460d0262da62562d3c706f15fec8c4",
+        "trace_digest": "sha256:8e0df6dee270618084a39a632ecd5eccca9593061a50414cf95b760f7d0c7aae"
+      },
+      "00.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 65,
+          "unchecked": 0,
+          "vacuous": 36,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:a7ce58ed9a12c5c4df97ee6cec0f94a26b571d225eb440f2d3fc39e27de12cee",
+        "trace_digest": "sha256:8e0df6dee270618084a39a632ecd5eccca9593061a50414cf95b760f7d0c7aae"
+      },
+      "00.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 65,
+          "unchecked": 0,
+          "vacuous": 37,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:5c54e3cbea360d552c7877ac3a6795c39eeee1c756e41668d44338306cdb5d4f",
+        "trace_digest": "sha256:ef3d66683a1e358d6a03187e8d8bcb5d3fa58ec51107e3f1d6b1679fc3217425"
+      },
+      "01.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:a0c9a0c7d19bace4e3d23f5ad4583be81a5f62977440e9dfd314e682f14c2901",
+        "trace_digest": "sha256:735f732a7e0c0cbe52b795f87ccac98afa9f1a16812f7b6ebff057465e432b93"
+      },
+      "01.transition.post": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:41938ce48185e743f55e7996c8d9d03e5f88b438741226f57b523bc2daa203a9",
+        "trace_digest": "sha256:f42f6aec04b1617e0869ca442c6d74f8c739e875c69a07dac61f51f419438364"
+      },
+      "02.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:265000be6bc61d0499db3390f2b95d2769676d94463cffc17eb3e4c55171239a",
+        "trace_digest": "sha256:2e25c4b55154730a8b9ac99f92f0bc06d8ddf72eaadc59887ca87eaec637ec14"
+      },
+      "02.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:683b06ffd91624b3f4019ca6514fe45219a4b5ac78f6901e8a17c053aa13d9b0",
+        "trace_digest": "sha256:2e25c4b55154730a8b9ac99f92f0bc06d8ddf72eaadc59887ca87eaec637ec14"
+      },
+      "02.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 30,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:f21dcc0e1ffba15fbbe551d5dd6db6b3e85a27842771faae899f32fba6639837",
+        "trace_digest": "sha256:b02f0f1aa48515edd53afc00411bfcb43c9e364af575dbc487aa46841a8655e1"
+      },
+      "03.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:9e35d8a30948d64f741314dca6c1ab6c5752b3e2c8eb40d9bd12ad5993343119",
+        "trace_digest": "sha256:160807c34785c14e7db034e22017910ad23850d75c3ab364384ed6b6602cd4ef"
+      },
+      "03.transition.post": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:30fe2ffa9b01fa9fb9fbdb33dc5d20eb66b8d2f64384ab03901bbcf39209b1bd",
+        "trace_digest": "sha256:f42f6aec04b1617e0869ca442c6d74f8c739e875c69a07dac61f51f419438364"
+      },
+      "04.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:133d457f5c3e1f7b6d9bfa0a02c9b85cfe7121ca595862214f3cb13041a7212e",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "04.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:ee803f8d19f40f434c5e2a21f8fe74e55776816b9b10b45b3da1102bf7c6ec9e",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "04.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 30,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:46c2d134b459837bdd56915062ff65d43b1647f9248c458e4ddc94704eb9fbf4",
+        "trace_digest": "sha256:7b7aca9a92babfedb6948f965af82611892be81df5b40f45736e4feee2e361f7"
+      },
+      "05.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:e2d4e908b57c249c6b2e57730f149a01a6bb0d36f52471e22beea8a503a17583",
+        "trace_digest": "sha256:b6fa029d1d471ce51b817c2c28bbc56d11a180c39a98ad0e6a1b1c30ae07acd1"
+      },
+      "05.transition.post": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:82a2e03ed5ed239002cf4fa4568f45bef5c7212b2ac960fdc8cbaf5f3629a528",
+        "trace_digest": "sha256:9ff2090230016189ff951d1a99efd1e235eca8b39c15c0ba14c8056f289f1e93"
+      },
+      "06.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:0c43bc69f384b84a54616ed9c89478cec93f59de8adc380a212fad1742d4e343",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "06.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:f3404f4c88ebe49f1123b9d0b98721d8556c4cdd712693bbbc545233f9be58d5",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "06.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 30,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:25f128ce8fe97efcee1d2e673d69c52ebd545291e5078899c0cfeeca71bd6930",
+        "trace_digest": "sha256:7b7aca9a92babfedb6948f965af82611892be81df5b40f45736e4feee2e361f7"
+      },
+      "07.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:4c136c2808be0a60e1da4e2627e3fbf6148d973eec2c09c8104519f1dc377771",
+        "trace_digest": "sha256:b6fa029d1d471ce51b817c2c28bbc56d11a180c39a98ad0e6a1b1c30ae07acd1"
+      },
+      "07.transition.post": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:723eeba6668309603a04138aad68ffa463d1a904cb2ae6deb4ffc578f2e3f5ca",
+        "trace_digest": "sha256:9ff2090230016189ff951d1a99efd1e235eca8b39c15c0ba14c8056f289f1e93"
+      },
+      "08.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:2153b3db71d62e95cd94499791f3912c0fc5a4f4bd39d715a6be682ff1e8a464",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "08.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:e4656a73c0c855d0e40ea879f01765e2986cd98e751ccb8676ba8477f68b050d",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "08.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 30,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:ef3b291a1aadd91fe3d540ddc893ca842da4dfc87cf167c9938a8aaf9f99b152",
+        "trace_digest": "sha256:7b7aca9a92babfedb6948f965af82611892be81df5b40f45736e4feee2e361f7"
+      },
+      "09.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:cf6656773938734be3eac3168c22448b6630ca2209908184a1212e4b8c03249c",
+        "trace_digest": "sha256:d492449203169de039d758942934b28a5b21460717ff2c7d1835a009fa0d4b96"
+      },
+      "09.transition.post": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:96d248c3814e96f8d8209ecba1fac19e916bd7bd7ef00801eeb59ce353eb3815",
+        "trace_digest": "sha256:9a439ac4329ca3abb7ab2807f2d994ed4489770fb54831229bc3d2358af1638c"
+      },
+      "10.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:e8ff5d65a1859a71ab3cd276de04ccd78ed4c7a6b6f3ca04cd6fd2cf5fb7e709",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "10.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 29,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:f40d1da31db9ac71b19689727a18e60c66de2d3c0c89a2e923482736469eeb63",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "10.check.compiled": {
+        "counts": {
+          "fail": 0,
+          "pass": 72,
+          "unchecked": 0,
+          "vacuous": 30,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:b5eadaad5521ed2a21b55e38c546ecd92f1fbc7f4d83dbc8fa5c7da5470cf211",
+        "trace_digest": "sha256:7b7aca9a92babfedb6948f965af82611892be81df5b40f45736e4feee2e361f7"
+      },
+      "11.transition": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:8582c1400037a8b0275f9f0ba62ddd6a855c8f6037634a34b2e3709c40343f96",
+        "trace_digest": "sha256:d492449203169de039d758942934b28a5b21460717ff2c7d1835a009fa0d4b96"
+      },
+      "11.transition.post": {
+        "counts": {
+          "fail": 0,
+          "pass": 0,
+          "unchecked": 0,
+          "vacuous": 0,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:70629d26be34e33fb7a39ceccd90b1e08bd1a001e67a48feefe7eb63364bff7b",
+        "trace_digest": "sha256:9a439ac4329ca3abb7ab2807f2d994ed4489770fb54831229bc3d2358af1638c"
+      },
+      "12.check": {
+        "counts": {
+          "fail": 0,
+          "pass": 73,
+          "unchecked": 0,
+          "vacuous": 28,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:b7c59ba1e5452d94a6ff45ba7f30ea4292205c968ba50ec491a2e51e214d14b2",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "12.check.admission": {
+        "counts": {
+          "fail": 0,
+          "pass": 73,
+          "unchecked": 0,
+          "vacuous": 28,
+          "warning": 0
+        },
+        "exit_code": 2,
+        "payload_digest": "sha256:3b406b47006739e2a63b4215402329a339bf2fbff713b0e23c872ed2779fd84f",
+        "trace_digest": "sha256:668aec394be06eee59a6594a7e4729cfde479da501c68d2c9c09480ca4b68d92"
+      },
+      "12.check.compiled": {
+        "counts": {
+          "fail": 1,
+          "pass": 73,
+          "unchecked": 0,
+          "vacuous": 28,
+          "warning": 0
+        },
+        "exit_code": 1,
+        "payload_digest": "sha256:5366b70ba7d99fc8b66bb6d8729f3c2dc8a6f4e3170834b7bb13bb4ac09085b1",
+        "trace_digest": "sha256:99e4fbc33f3a6f69edd549cf607e2c7145497ba29f70528dee83777379d8ca20"
+      }
+    }
+  }
+}

@@ -3,7 +3,9 @@
 The package version is provisionally 0.1.0; production publication remains a
 separate release decision.
 
-`api.check_with_receipt` now allows receipt-bound reuse of a transition pre-state check.
+Checks and transitions do less internal work. Each public call now computes the model's index key once, and the checker reads fact types without copying them. Results are unchanged. On a 13-call plan workload, GND time per call fell by about a third.
+
+`api.check_with_receipt` now allows receipt-bound reuse of a transition pre-state check. On the same workload, it cuts checker runs from 25 to 19.
 
 ## Documentation for agentic data apps
 

@@ -15,3 +15,11 @@ def test_phase2_public_context_signatures() -> None:
         is inspect.Parameter.KEYWORD_ONLY
     )
 
+
+
+def test_receipt_keyword_signature() -> None:
+    parameter = inspect.signature(api.transition).parameters["pre_receipt"]
+    assert parameter.kind is inspect.Parameter.KEYWORD_ONLY
+    assert parameter.default is None
+    assert tuple(inspect.signature(api.check_with_receipt).parameters) == (
+        "model", "population", "unredacted")

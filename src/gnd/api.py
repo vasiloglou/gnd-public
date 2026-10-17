@@ -13,7 +13,7 @@ from dataclasses import (  # noqa: F401 -- historical compatibility binding  # n
 from pathlib import Path
 from typing import Any
 
-from gnd import checker as checker_module  # noqa: F401 -- historical compatibility binding
+from gnd import checker as checker_module
 from gnd import input_policy as _rf7_input
 from gnd import model as model_module
 from gnd import redaction as redaction_module
@@ -29,7 +29,7 @@ from gnd.assurance import (
 from gnd.assurance_evidence import (
     load_assurance_evidence,  # noqa: F401 -- historical compatibility binding
 )
-from gnd.checker import CheckReport  # noqa: F401 -- historical compatibility binding
+from gnd.checker import CheckReport
 from gnd.checking_service import (
     RunResult as _RunResult,
 )
@@ -85,6 +85,7 @@ from gnd.export.service import (
 from gnd.export.service import (
     verify_souffle as verify_souffle,  # noqa: PLC0414 -- compatibility surface
 )
+from gnd.extension_preparation import calculation_scope
 from gnd.model import (
     Model,
     ModelValidationError,
@@ -92,6 +93,7 @@ from gnd.model import (
     load_model,  # noqa: F401 -- historical compatibility binding
     structured_derivation_ids,
 )
+from gnd.model_index import ModelIndex, index_scope
 from gnd.model_index import scoped as _index_scoped
 from gnd.population import (
     Population,
@@ -100,8 +102,9 @@ from gnd.population import (
     load_population,  # noqa: F401 -- historical compatibility binding
 )
 from gnd.references import BoundReferenceContext
-from gnd.semantic_registry import capture_branches
+from gnd.semantic_registry import capture_branches, record_branch
 from gnd.terms import uses_temporal  # noqa: F401 -- historical compatibility binding
+from gnd.values import _content_digest
 from gnd.witness.service import (
     replay as replay,  # noqa: PLC0414 -- compatibility surface
 )
@@ -112,11 +115,117 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused")  # noqa: RUF022 - approved stable order
 
 
 
 
+
+
+_RECEIPT_TOKEN = object()
+
+
+@dataclass(frozen=True, init=False)
+class CheckReceipt:
+    """Proof, held in this process only, that GND checked a population against a model.
+
+    A transition may skip only its pre-state check. This binds the model object,
+    ModelIndex key, population content digest and validation marker, default check
+    options, internal CheckReport and recorded branch ids. Callers cannot construct
+    or serialize it. Reuse requires exit 0 or 2, a non-anchored model and a cacheable
+    key. References and other check modes are unsupported. This guards accidental
+    stale reuse, not hostile code in the same process.
+    """
+
+    model: Model
+    model_key: str | None
+    population_digest: str
+    options: tuple
+    report: CheckReport | None
+    branches: frozenset[str]
+    reusable: bool
+    _token: object
+
+    def __new__(cls):
+        raise TypeError("CheckReceipt is minted by check_with_receipt")
+
+    def __reduce__(self):
+        raise TypeError("CheckReceipt cannot be serialized")
+
+
+class ReceiptRefused(ValueError):
+    """A checked pre-state receipt cannot be reused for this transition."""
+
+    def __init__(self, reason: str):
+        self.reason = reason
+        super().__init__(reason)
+
+
+def check_with_receipt(
+    model: Model, population: Population, *, unredacted: bool = False
+) -> tuple[dict[str, Any], CheckReceipt]:
+    """Return the check payload and an opaque, in-process CheckReceipt."""
+    if not isinstance(model, Model) or not isinstance(population, Population):
+        raise TypeError("check_with_receipt requires loaded Model and Population objects")
+    with index_scope(), calculation_scope(model, population):
+        anchored = any(c.get("type") == "anchored"
+                       for ft in ModelIndex.for_model(model).iter_fact_types_shared()
+                       for c in ft.get("constraints") or [])
+        # The direct route pre-runs the transition's own pre-check once and feeds that
+        # report to the api.check builder. Anything that cannot yield a reusable receipt
+        # (an anchored model, an unvalidated population, or a pre-run that raises) takes
+        # the normal api.check route instead, so the payload always equals api.check's.
+        direct = not anchored and population.matches_validation_marker(model)
+        report = None
+        if direct:
+            try:
+                with capture_branches() as branches:
+                    report = checker_module.check(model, population)
+            except Exception:  # noqa: BLE001 -- api.check maps the same failure to a payload
+                direct = False
+        if direct:
+            def precomputed(_model, _population):
+                # Re-record the pre-run's branch ids inside the builder's own trace capture,
+                # so assurance certification sees the same trace as api.check (TP3 review B1).
+                for branch_id in branches:
+                    record_branch(branch_id)
+                return report
+
+            result = _run_check(model, population, unredacted=unredacted,
+                                evaluator=precomputed)
+        else:
+            with capture_branches() as branches:
+                result = _run_check(model, population, unredacted=unredacted)
+            report = result.report
+        key = ModelIndex.for_model(model).digest
+        receipt = object.__new__(CheckReceipt)
+        for name, value in {
+            "model": model, "model_key": key, "population_digest": _content_digest(population),
+            "options": (), "report": report, "branches": frozenset(branches),
+            "reusable": direct and result.exit_code in (0, 2) and key is not None,
+            "_token": _RECEIPT_TOKEN,
+        }.items():
+            object.__setattr__(receipt, name, value)
+    return result.payload, receipt
+
+
+def _validate_pre_receipt(receipt, model, pre, references) -> None:
+    if not isinstance(receipt, CheckReceipt) or getattr(receipt, "_token", None) is not _RECEIPT_TOKEN:
+        raise ReceiptRefused("foreign")
+    if not isinstance(model, Model) or not isinstance(pre, Population):
+        raise ReceiptRefused("path-inputs")
+    if not receipt.reusable:
+        raise ReceiptRefused("not-reusable")
+    if references is not None or receipt.options != ():
+        raise ReceiptRefused("options")
+    if model is not receipt.model:
+        raise ReceiptRefused("model-object")
+    if ModelIndex.for_model(model).digest != receipt.model_key:
+        raise ReceiptRefused("model-changed")
+    if not pre.matches_validation_marker(model):
+        raise ReceiptRefused("population-unvalidated")
+    if _content_digest(pre) != receipt.population_digest:
+        raise ReceiptRefused("population-changed")
 
 
 def _check_model_input(value: object) -> None:
@@ -219,6 +328,7 @@ def _run_transition_raw(
     post_input: str | os.PathLike[str] | Population | None = None,
     *,
     references: BoundReferenceContext | None = None,
+    pre_receipt: CheckReceipt | None = None,
 ) -> _RunResult:
     plan_mode = post_input is None
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
@@ -372,14 +482,17 @@ def _run_transition_raw(
         )
 
     try:
+        # The keyword is passed only with a receipt, so the default call is unchanged.
+        reuse = {} if pre_receipt is None else {"pre_receipt": pre_receipt}
         with capture_branches() as semantic_trace:
             if plan_mode:
-                planned = transition_module.evaluate_plan(model, populations["pre"], steps)
+                planned = transition_module.evaluate_plan(
+                    model, populations["pre"], steps, **reuse)
                 walk = planned.report
             else:
                 planned = None
                 walk = transition_module.evaluate(
-                    model, populations["pre"], populations["post"], steps
+                    model, populations["pre"], populations["post"], steps, **reuse
                 )
             exit_code = transition_module.band(walk)
     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
@@ -479,12 +592,16 @@ def _run_transition(
     *,
     unredacted: bool = False,
     references: BoundReferenceContext | None = None,
+    pre_receipt: CheckReceipt | None = None,
 ) -> _RunResult:
+    if pre_receipt is not None:
+        _validate_pre_receipt(pre_receipt, model_input, pre_input, references)
     kind: redaction_module.OutputKind = "plan" if post_input is None else "transition"
     return _reference_wrap(
         _project_result(
             _run_transition_raw(
-                model_input, pre_input, steps_input, post_input, references=references
+                model_input, pre_input, steps_input, post_input, references=references,
+                pre_receipt=pre_receipt
             ),
             kind,
             unredacted=unredacted,
@@ -742,6 +859,7 @@ def transition(
     *,
     unredacted: bool = False,
     references: BoundReferenceContext | None = None,
+    pre_receipt: CheckReceipt | None = None,
 ) -> dict[str, Any]:
     """Audit a declared post, or compute it when ``post`` is omitted."""
     _check_model_input(model)
@@ -750,7 +868,8 @@ def transition(
     if post is not None:
         _check_population_input(post, name="post")
     return _run_transition(
-        model, pre, steps, post, unredacted=unredacted, references=references
+        model, pre, steps, post, unredacted=unredacted, references=references,
+        pre_receipt=pre_receipt
     ).payload
 
 

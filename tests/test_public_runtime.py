@@ -49,7 +49,7 @@ def test_installed_import_help_and_api_surface(package_probe):
             timeout=60,
         )
         assert run.returncode == 0, run.stderr
-    code = "from gnd import api; import importlib.util; assert api.__all__ == ('validate','check','transition','verbalize','diff','witness','replay'); assert importlib.util.find_spec('faker') is None; assert importlib.util.find_spec('pytest') is None"
+    code = "from gnd import api; import importlib.util; assert api.__all__ == ('validate','check','transition','verbalize','diff','witness','replay','check_with_receipt','CheckReceipt','ReceiptRefused'); assert importlib.util.find_spec('faker') is None; assert importlib.util.find_spec('pytest') is None"
     run = subprocess.run(
         [str(probe["python"]), "-c", code],
         cwd=probe["outside"],

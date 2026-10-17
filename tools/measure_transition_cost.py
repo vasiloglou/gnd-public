@@ -203,12 +203,18 @@ def replay(workload: str) -> Callable[[], list[dict[str, Any]]]:
 
     def run_reporter() -> list[dict[str, Any]]:
         payloads = []
+        receipt = None
         for call in calls:
             population = load_population(REPORTER / call["population"], model=model)
             if call["call"] == "check":
-                payloads.append(api.check(model, population))
+                if workload == "reporter-receipts":
+                    payload, receipt = api.check_with_receipt(model, population)
+                    payloads.append(payload)
+                else:
+                    payloads.append(api.check(model, population))
             else:
-                payloads.append(api.transition(model, population, steps[call["index"]]))
+                payloads.append(api.transition(model, population, steps[call["index"]],
+                                               pre_receipt=receipt))
         return payloads
 
     return run_reporter

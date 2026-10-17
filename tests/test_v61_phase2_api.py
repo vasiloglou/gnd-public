@@ -34,7 +34,7 @@ def _assert_subset(payload: dict[str, object], expected: dict[str, object]) -> N
 
 def test_public_all_is_exact() -> None:
     api = _api()
-    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay')
+    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused')
     assert {name for name in vars(api) if not name.startswith('_')} >= set(api.__all__)
 
 def test_public_signatures_are_stable() -> None:
@@ -44,7 +44,7 @@ def test_public_signatures_are_stable() -> None:
     compiled = inspect.signature(api.check).parameters['compiled_operations']
     assert compiled.kind is inspect.Parameter.KEYWORD_ONLY
     assert compiled.default is False
-    assert tuple(inspect.signature(api.transition).parameters) == ('model', 'pre', 'steps', 'post', 'unredacted', 'references')
+    assert tuple(inspect.signature(api.transition).parameters) == ('model', 'pre', 'steps', 'post', 'unredacted', 'references', 'pre_receipt')
     for function in (api.validate, api.check, api.transition):
         parameter = inspect.signature(function).parameters['unredacted']
         assert parameter.kind is inspect.Parameter.KEYWORD_ONLY

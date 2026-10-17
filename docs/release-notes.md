@@ -3,6 +3,8 @@
 The package version is provisionally 0.1.0; production publication remains a
 separate release decision.
 
+`api.check_with_receipt` now allows receipt-bound reuse of a transition pre-state check.
+
 ## Documentation for agentic data apps
 
 The documentation is reorganized around agents: GND as skills plus Python, an executable

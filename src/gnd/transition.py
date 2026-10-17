@@ -1905,6 +1905,8 @@ def _evaluate_to_state(
     model: Model,
     pre: Population,
     steps: list[dict[str, Any]],
+    *,
+    pre_receipt: Any = None,
 ) -> tuple[TransitionReport, State, Population | None]:
     """Evaluate the shared pre/step spine and return its admitted final state."""
     fixed_facts = {}
@@ -1918,8 +1920,11 @@ def _evaluate_to_state(
         }
     declared = _operations_by_id(model)
     with calculation_scope(model, pre):
+        if pre_receipt is not None:
+            for branch_id in pre_receipt.branches:
+                record_branch(branch_id)
         report = TransitionReport(
-            pre_snapshot=check(model, pre),
+            pre_snapshot=check(model, pre) if pre_receipt is None else pre_receipt.report,
             pre_snapshot_verdicts=_compiled_verdicts_for_dynamic_walk(model, pre),
         )
         covers = list(pre.covers or [])
@@ -2033,9 +2038,11 @@ def evaluate(
     pre: Population,
     post: Population,
     steps: list[dict[str, Any]],
+    *,
+    pre_receipt: Any = None,
 ) -> TransitionReport:
     """The whole declared-post walk, in the normative evaluation order."""
-    report, state, computed_final = _evaluate_to_state(model, pre, steps)
+    report, state, computed_final = _evaluate_to_state(model, pre, steps, pre_receipt=pre_receipt)
     report.frame_verdicts = _frame_verdicts(report.frame_grading, state, post)
     # The declared POST snapshot is deliberately last. A walk first establishes
     # its PRE obligations, each complete intermediate state, and the frame delta
@@ -2072,9 +2079,11 @@ def evaluate_plan(
     model: Model,
     pre: Population,
     steps: list[dict[str, Any]],
+    *,
+    pre_receipt: Any = None,
 ) -> ComputedTransition:
     """Apply a walk and return its computed post without a frame comparison."""
-    report, state, _ = _evaluate_to_state(model, pre, steps)
+    report, state, _ = _evaluate_to_state(model, pre, steps, pre_receipt=pre_receipt)
     loadable_document = {
         "population": {
             "model": pre.model,

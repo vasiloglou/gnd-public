@@ -22,6 +22,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Check calendar deadlines | Date/Duration guarded comparisons | Calendar days only; no live clock, timezones, or business calendar | [Data and transitions](../guides/data-and-transitions.md) |
 | Use a fixed catalog | Version-4 reference populations with path and byte-hash binding | Candidate/reference fact ownership is disjoint | [Data and transitions](../guides/data-and-transitions.md) |
 | Audit an operation walk | `check --pre --steps --post`; `api.transition` | Frame checks cover the walk's touched fact types | [Python API](python-api.md) |
+| Reuse a checked pre-state | `api.check_with_receipt`; `api.transition(pre_receipt=...)` | In-process, default options; only the pre-state check is skipped | [Python API](python-api.md#reusing-a-checked-pre-state) |
 | Generate a Python project | `codegen` plus explicitly selected skill | Developer writes extension behavior; temporal models refused | [Generated projects](../guides/generated-projects.md) |
 | Detect model/project drift | `conformance`; static architecture checks | Does not execute the app or verify all extension behavior | [Generated projects](../guides/generated-projects.md) |
 | Change an existing model | Staged `evolve preview/apply/finalize` | Explicit reviewed changes; no automatic regeneration | [Evolution](../guides/evolution-and-recovery.md) |

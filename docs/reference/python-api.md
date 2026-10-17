@@ -5,7 +5,7 @@ inputs, check candidate facts, explain them, or audit a state change. The API
 returns ordinary dictionaries; your application decides how to display a
 finding and what action to take.
 
-The seven supported functions are `validate`, `check`, `transition`,
+The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
 `verbalize`, `diff`, `witness`, and `replay`. Code generation, experiment
 orchestration, and model evolution have CLI and skill workflows described in
 the [task guides](../advanced.md).
@@ -322,3 +322,34 @@ Known alethic violations appear as `compiled-subset` verdicts and band 1; missin
 coverage/unknown inputs appear as unchecked. Reports carry no proof-backed
 assurance for this new mode. `admission=True` cannot be combined with it. Use
 `api.transition` for step, dynamic, intermediate-state and frame obligations.
+
+## Reusing a checked pre-state
+
+`check_with_receipt(model, population, *, unredacted=False)` accepts loaded objects
+and returns `(payload, receipt)`. The payload is the same as `check` produces.
+Pass the receipt as `transition(..., pre_receipt=receipt)` to skip the pre-state
+check. Intermediate and post checks still run.
+
+The `CheckReceipt` docstring defines the receipt contract. GND alone mints these
+opaque values. Reuse binds the same model object and unchanged model content,
+a validated population with the same content, the stored report and branch ids,
+and default check options. Exit 0 or 2 can be reused; anchored models and models
+without a cacheable key cannot.
+
+Invalid reuse raises `ReceiptRefused`, a `ValueError` with a `reason` attribute.
+The first failing guard wins, in this order:
+
+| Reason | Meaning |
+|---|---|
+| `foreign` | GND did not mint this receipt |
+| `path-inputs` | Model or pre-state is a path |
+| `not-reusable` | The check failed or its route cannot be reused |
+| `options` | References or different check options were requested |
+| `model-object` | A different model object was supplied |
+| `model-changed` | Model content changed, including operations |
+| `population-unvalidated` | The pre-state lacks a current validation marker |
+| `population-changed` | Validated pre-state content differs from the receipt |
+
+Receipts stay in one process and cannot be serialized. There is no CLI option.
+Only default check options are supported; compiled operations, admission,
+anchors and references are outside this feature.

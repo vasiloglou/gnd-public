@@ -13,11 +13,11 @@ FIXTURES = Path(__file__).parent / "fixtures/public-launch-phase-2"
 
 
 def test_public_exports_and_current_keyword_signatures():
-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay")
+    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused")
     expected = {
         "validate": ("model", "unredacted", "references"),
         "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references"),
-        "transition": ("model", "pre", "steps", "post", "unredacted", "references"),
+        "transition": ("model", "pre", "steps", "post", "unredacted", "references", "pre_receipt"),
     }
     for name, parameters in expected.items():
         signature = inspect.signature(getattr(api, name))
